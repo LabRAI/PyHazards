@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "PyHazard"
-version = "1.1.0"
+version = "1.0.1"
 description = "A Python framework for AI-powered hazard prediction and risk assessment"
 readme = "README.md"
 authors = [{ name = "Xueqi Cheng", email = "xc25@fsu.edu" }]
@@ -12,13 +12,11 @@ license = { text = "MIT" }
 requires-python = ">=3.8, <3.13"
 
 dependencies = [
-    "torch-geometric>=2.0.0",
+    "torch>=2.3.0,<3.0",
     "numpy>=1.19.0",
     "scipy>=1.6.0",
-    "networkx>=2.5",
     "scikit-learn>=0.24.0",
     "tqdm>=4.50.0",
-    "torchdata>=0.7.0,<0.8.0",
     "pyyaml>=5.3.0",
     "pydantic>=2.0.0"
 ]
@@ -41,13 +39,6 @@ classifiers = [
 [project.urls]
 Homepage = "https://labrai.github.io/PyHazard"
 Repository = "https://github.com/LabRAI/PyHazard"
-
-[project.optional-dependencies]
-# torch 2.3 cannot be installed directly from PyPI, users must add -f
-torch = ["torch==2.3.0"]
-# DGL cannot be installed directly from PyPI, users must add -f
-dgl = ["dgl==2.2.1"]
-
 
 [tool.setuptools]
 include-package-data = true

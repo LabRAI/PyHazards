@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: PyHazard
-Version: 1.1.0
+Version: 1.0.1
 Summary: A Python framework for AI-powered hazard prediction and risk assessment
 Author-email: Xueqi Cheng <xc25@fsu.edu>
 License: MIT
@@ -21,19 +21,13 @@ Classifier: Operating System :: OS Independent
 Requires-Python: <3.13,>=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
-Requires-Dist: torch-geometric>=2.0.0
+Requires-Dist: torch<3.0,>=2.3.0
 Requires-Dist: numpy>=1.19.0
 Requires-Dist: scipy>=1.6.0
-Requires-Dist: networkx>=2.5
 Requires-Dist: scikit-learn>=0.24.0
 Requires-Dist: tqdm>=4.50.0
-Requires-Dist: torchdata<0.8.0,>=0.7.0
 Requires-Dist: pyyaml>=5.3.0
 Requires-Dist: pydantic>=2.0.0
-Provides-Extra: torch
-Requires-Dist: torch==2.3.0; extra == "torch"
-Provides-Extra: dgl
-Requires-Dist: dgl==2.2.1; extra == "dgl"
 Dynamic: license-file
 
 # PyHazard
@@ -47,16 +41,15 @@ Dynamic: license-file
 [![Stars](https://img.shields.io/github/stars/LabRAI/PyHazard)](https://github.com/LabRAI/PyHazard)
 [![GitHub forks](https://img.shields.io/github/forks/LabRAI/PyHazard)](https://github.com/LabRAI/PyHazard)
 
-PyHazard is a Python framework for AI-powered hazard prediction and risk assessment. It provides a modular and extensible architecture for building, training, and deploying machine learning models to predict and analyze natural hazards and environmental risks.
+PyHazard is a Python framework for AI-powered hazard prediction and risk assessment. It provides a modular, hazard-first architecture for building, training, and deploying machine learning models to predict and analyze natural hazards (earthquake, wildfire, flood, hurricane, landslide, etc.).
 
 ## Features
 
-- **Modular Architecture**: Easy-to-extend framework for implementing custom hazard prediction models
-- **Graph Neural Networks**: Built-in support for graph-based data representation and GNN models
-- **Flexible Datasets**: Unified dataset interface supporting both DGL and PyTorch Geometric
-- **GPU Acceleration**: Full CUDA support for training and inference
-- **Extensible Models**: Base classes for implementing custom prediction models
-- **Production Ready**: Type hints, proper error handling, and comprehensive testing
+- **Hazard-First Design**: Unified dataset interface for tabular, temporal, and raster data
+- **Simple Models**: Ready-to-use MLP/CNN/temporal encoders with task heads (classification, regression, segmentation)
+- **Trainer API**: Fit/evaluate/predict with optional mixed precision and multi-GPU (DDP) support
+- **Metrics**: Built-in classification/regression/segmentation metrics
+- **Extensible**: Registries for datasets, models, transforms, and pipelines
 
 ## Installation
 
@@ -72,45 +65,54 @@ pip install PyHazard
 
 This will install PyHazard with minimal dependencies.
 
-### CPU Version with Deep Learning Support
+Python 3.8 and PyTorch (CUDA 12.6 example)
+-----------------------------------------
+
+If you need a specific PyTorch build (e.g., CUDA 12.6), install PyTorch first, then install PyHazard:
 
 ```bash
-pip install "PyHazard[torch,dgl]" \
-  --index-url https://download.pytorch.org/whl/cpu \
-  --extra-index-url https://pypi.org/simple \
-  -f https://data.dgl.ai/wheels/repo.html
-```
+# Example for CUDA 12.6 wheels
+pip install torch --index-url https://download.pytorch.org/whl/cu126
 
-### GPU Version (CUDA 12.1)
-
-```bash
-pip install "PyHazard[torch,dgl]" \
-  --index-url https://download.pytorch.org/whl/cu121 \
-  --extra-index-url https://pypi.org/simple \
-  -f https://data.dgl.ai/wheels/torch-2.3/cu121/repo.html
+pip install PyHazard
 ```
 
 ## Quick Start
 
-Here's a simple example to get started with PyHazard:
+Here's a simple example to get started with PyHazard using a toy tabular dataset:
 
 ```python
-import pyhazard
-from pyhazard.datasets import Cora
-from pyhazard.models.nn import GCN
+import torch
+from pyhazard.datasets import DataBundle, DataSplit, Dataset, FeatureSpec, LabelSpec
+from pyhazard.models import build_model
+from pyhazard.engine import Trainer
+from pyhazard.metrics import ClassificationMetrics
 
-# Load a dataset
-dataset = Cora(api_type='pyg')
+class ToyHazard(Dataset):
+    def _load(self):
+        x = torch.randn(500, 16)
+        y = torch.randint(0, 2, (500,))
+        splits = {
+            "train": DataSplit(x[:350], y[:350]),
+            "val": DataSplit(x[350:425], y[350:425]),
+            "test": DataSplit(x[425:], y[425:]),
+        }
+        return DataBundle(
+            splits=splits,
+            feature_spec=FeatureSpec(input_dim=16, description="toy features"),
+            label_spec=LabelSpec(num_targets=2, task_type="classification"),
+        )
 
-# Initialize a model (example using built-in GCN)
-model = GCN(
-    input_dim=dataset.num_features,
-    hidden_dim=64,
-    output_dim=dataset.num_classes
-)
+data = ToyHazard().load()
+model = build_model(name="mlp", task="classification", in_dim=16, out_dim=2)
+trainer = Trainer(model=model, metrics=[ClassificationMetrics()], mixed_precision=True)
 
-# Your training and prediction code here
-# ...
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+loss_fn = torch.nn.CrossEntropyLoss()
+
+trainer.fit(data, optimizer=optimizer, loss_fn=loss_fn, max_epochs=5)
+results = trainer.evaluate(data, split="test")
+print(results)
 ```
 
 ### Using CUDA

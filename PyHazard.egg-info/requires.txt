@@ -1,15 +1,7 @@
-torch-geometric>=2.0.0
+torch<3.0,>=2.3.0
 numpy>=1.19.0
 scipy>=1.6.0
-networkx>=2.5
 scikit-learn>=0.24.0
 tqdm>=4.50.0
-torchdata<0.8.0,>=0.7.0
 pyyaml>=5.3.0
 pydantic>=2.0.0
-
-[dgl]
-dgl==2.2.1
-
-[torch]
-torch==2.3.0

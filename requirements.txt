@@ -1,10 +1,6 @@
-torch==2.3.0
-torch-geometric>=2.0.0
 numpy
 scipy
-networkx
 scikit-learn
 tqdm
 pyyaml
 pydantic
-torchdata>=0.7.0,<0.8.0

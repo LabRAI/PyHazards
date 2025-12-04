@@ -253,34 +253,27 @@
 <p>PyHazard requires Python 3.8+ and can be installed using pip. We recommend using a conda environment for installation.</p>
 <section id="installing-pyhazard">
 <h2>Installing PyHazard<a class="headerlink" href="#installing-pyhazard" title="Link to this heading">¶</a></h2>
-<p>To get started with PyHazard, set up your environment by installing the required dependencies:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<p>Base install:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pyhazards
 </pre></div>
 </div>
-<p>Ensure you have Python installed (version 3.8 or higher recommended) along with the necessary libraries listed
-in <cite>requirements.txt</cite>.</p>
-<p>Specifically, using following command to install <cite>dgl 2.2.1</cite> and ensure your <cite>pytorch==2.3.0</cite>.</p>
-<section id="for-cpu">
-<h3>For CPU<a class="headerlink" href="#for-cpu" title="Link to this heading">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">dgl</span><span class="o">==</span><span class="m">2</span>.2.1<span class="w"> </span>-f<span class="w"> </span>https://data.dgl.ai/wheels/torch-2.3/repo.html
+<p>PyTorch notes (Python 3.8, CUDA 12.6 example):</p>
+<ul>
+<li><p>Install the matching PyTorch wheel first, then install PyHazard.</p></li>
+<li><p>Example (CUDA 12.6):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cu126
+pip<span class="w"> </span>install<span class="w"> </span>pyhazards
 </pre></div>
 </div>
-</section>
-<section id="for-gpu-cuda-12-1">
-<h3>For GPU (cuda 12.1)<a class="headerlink" href="#for-gpu-cuda-12-1" title="Link to this heading">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">dgl</span><span class="o">==</span><span class="m">2</span>.2.1<span class="w"> </span>-f<span class="w"> </span>https://data.dgl.ai/wheels/torch-2.3/cu121/repo.html
-</pre></div>
-</div>
-</section>
+</li>
+<li><p>No DGL or PyTorch Geometric is required.</p></li>
+</ul>
 </section>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Python &gt;= 3.8</p></li>
-<li><p>PyTorch == 2.3</p></li>
-<li><p>torch-geometric &gt;= 2.6.0</p></li>
-<li><p>dgl == 2.2.1</p></li>
-<li><p>CUDA 12.1</p></li>
+<li><p>PyTorch == 2.3.0</p></li>
 </ul>
 </section>
 </section>
@@ -341,11 +334,7 @@ in <cite>requirements.txt</cite>.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Installation</a><ul>
-<li><a class="reference internal" href="#installing-pyhazard">Installing PyHazard</a><ul>
-<li><a class="reference internal" href="#for-cpu">For CPU</a></li>
-<li><a class="reference internal" href="#for-gpu-cuda-12-1">For GPU (cuda 12.1)</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#installing-pyhazard">Installing PyHazard</a></li>
 <li><a class="reference internal" href="#requirements">Requirements</a></li>
 </ul>
 </li>

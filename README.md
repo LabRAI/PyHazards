@@ -33,22 +33,16 @@ pip install PyHazard
 
 This will install PyHazard with minimal dependencies.
 
-### CPU Version with Deep Learning Support
+Python 3.8 and PyTorch (CUDA 12.6 example)
+-----------------------------------------
+
+If you need a specific PyTorch build (e.g., CUDA 12.6), install PyTorch first, then install PyHazard:
 
 ```bash
-pip install "PyHazard[torch,dgl]" \
-  --index-url https://download.pytorch.org/whl/cpu \
-  --extra-index-url https://pypi.org/simple \
-  -f https://data.dgl.ai/wheels/repo.html
-```
+# Example for CUDA 12.6 wheels
+pip install torch --index-url https://download.pytorch.org/whl/cu126
 
-### GPU Version (CUDA 12.1)
-
-```bash
-pip install "PyHazard[torch,dgl]" \
-  --index-url https://download.pytorch.org/whl/cu121 \
-  --extra-index-url https://pypi.org/simple \
-  -f https://data.dgl.ai/wheels/torch-2.3/cu121/repo.html
+pip install pyhazards
 ```
 
 ## Quick Start
