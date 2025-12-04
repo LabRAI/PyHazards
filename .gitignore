@@ -1,20 +1,22 @@
-# Byte-compiled / optimized / DLL files
+# Byte-compiled / cache
 __pycache__/
 *.py[cod]
-*$py.class
+*.so
 
-# build
-PyGIP.egg-info/
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
+
+# Build artifacts
 dist/
+build/
+*.egg-info/
 
-# IDEs
-.vscode/
-.idea/
-
-# OS
+# Editor / OS
 .DS_Store
-.AppleDouble
-.LSOverride
+.vscode/
 
-#virtual environments folder
-.venv
+# Docs build outputs
+docs/build/
