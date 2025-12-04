@@ -12,7 +12,7 @@
    :target: https://github.com/LabRAI/PyHazard/actions
    :alt: Build Status
 
-.. image:: https://img.shields.io/github/license/LabRAI/PyHazard.svg
+.. image:: https://img.shields.io/badge/license-MIT-green
    :target: https://github.com/LabRAI/PyHazard/blob/main/LICENSE
    :alt: License
 

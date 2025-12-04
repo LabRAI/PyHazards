@@ -2,7 +2,7 @@
 
 [![PyPI - Version](https://img.shields.io/pypi/v/pyhazards)](https://pypi.org/project/pyhazards)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/LabRAI/PyHazards/docs.yml)](https://github.com/LabRAI/PyHazards/actions)
-[![License](https://img.shields.io/github/license/LabRAI/PyHazards.svg)](https://github.com/LabRAI/PyHazards/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/LabRAI/PyHazard/blob/main/LICENSE)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/pyhazards)](https://pypi.org/project/pyhazards)
 [![Issues](https://img.shields.io/github/issues/LabRAI/PyHazards)](https://github.com/LabRAI/PyHazards/issues)
 [![Pull Requests](https://img.shields.io/github/issues-pr/LabRAI/PyHazards)](https://github.com/LabRAI/PyHazards/pulls)
