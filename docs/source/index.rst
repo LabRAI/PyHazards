@@ -90,6 +90,61 @@ Basic Usage Example (toy dataset):
     results = trainer.evaluate(data, split="test")
     print(results)
 
+Wildfire Mamba (spatio-temporal toy)
+------------------------------------
+
+Mamba-style county/day wildfire model with a graph-aware Dataset and collate.
+
+.. code-block:: python
+
+    import torch
+    from pyhazards.datasets import DataBundle, DataSplit, FeatureSpec, LabelSpec, GraphTemporalDataset, graph_collate
+    from pyhazards.engine import Trainer
+    from pyhazards.models import build_model
+
+    past_days = 8
+    num_counties = 4
+    num_features = 6
+    samples = 32
+
+    # Fake county/day ERA5-like tensor and binary fire labels
+    x = torch.randn(samples, past_days, num_counties, num_features)
+    y = torch.randint(0, 2, (samples, num_counties)).float()
+    adjacency = torch.eye(num_counties)  # replace with distance/correlation matrix
+
+    train_ds = GraphTemporalDataset(x[:24], y[:24], adjacency=adjacency)
+    val_ds = GraphTemporalDataset(x[24:], y[24:], adjacency=adjacency)
+
+    bundle = DataBundle(
+        splits={
+            "train": DataSplit(train_ds, None),
+            "val": DataSplit(val_ds, None),
+        },
+        feature_spec=FeatureSpec(input_dim=num_features, extra={"past_days": past_days, "counties": num_counties}),
+        label_spec=LabelSpec(num_targets=num_counties, task_type="classification"),
+    )
+
+    model = build_model(
+        name="wildfire_mamba",
+        task="classification",
+        in_dim=num_features,
+        num_counties=num_counties,
+        past_days=past_days,
+        adjacency=adjacency,
+    )
+
+    trainer = Trainer(model=model, mixed_precision=False)
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+    loss_fn = torch.nn.BCEWithLogitsLoss()
+
+    trainer.fit(bundle, optimizer=optimizer, loss_fn=loss_fn, max_epochs=2, batch_size=4, collate_fn=graph_collate)
+
+    # Next-day fire probabilities for one window
+    with torch.no_grad():
+        logits = model(x[:1])
+        probs = torch.sigmoid(logits)
+        print(probs.shape)  # (1, num_counties)
+
 Core Components
 ---------------
 
