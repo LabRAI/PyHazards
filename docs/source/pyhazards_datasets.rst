@@ -14,7 +14,7 @@ Datasets
    :header-rows: 0
    :class: dataset-list
 
-   * - ``MERRA-2``
+   * - ``MERRA2``
      - MERRA-2 is a global weather and climate dataset created by NASA that provides long-term records of atmospheric conditions from 1980 to the present. The data are organized on a regular global grid with hourly to monthly updates and a spatial resolution of about 0.5° × 0.625°, and include variables such as temperature, wind, humidity, surface fluxes, and aerosols, making it useful for large-scale climate and hazard analysis worldwide.
    * - ``ERA5``
      - ERA5 is a global reanalysis dataset produced by ECMWF and is commonly used as a reference for weather and climate studies. It covers the period from 1950 to the present and provides hourly data on a global grid at roughly 0.25° resolution, including precipitation, temperature, wind, and land-surface variables, which allows detailed environmental and hazard modeling at a global scale.
