@@ -3,6 +3,7 @@ Datasets
 
 Summary
 -------
+PyHazards provides a unified dataset interface for hazard prediction across tabular, temporal, and raster data. Each dataset returns a DataBundle containing splits, feature specs, label specs, and metadata.
 
 Datasets
 --------------------
