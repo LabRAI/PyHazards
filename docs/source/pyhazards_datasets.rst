@@ -10,7 +10,7 @@ Datasets
 --------------------
 
 .. list-table::
-   :widths: 18 82
+   :widths: 10 90
    :header-rows: 0
    :class: dataset-list
 
