@@ -258,7 +258,7 @@
 
 
 <div class="viewcode-block" id="Trainer">
-<a class="viewcode-back" href="../../../api/pyhazards.html#pyhazards.Trainer">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.engine.html#pyhazards.Trainer">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Trainer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Lightweight training abstraction with a familiar API:</span>
@@ -281,7 +281,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Trainer.fit">
-<a class="viewcode-back" href="../../../api/pyhazards.html#pyhazards.Trainer.fit">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.engine.html#pyhazards.Trainer.fit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">DataBundle</span><span class="p">,</span>
@@ -323,7 +323,7 @@
 
 
 <div class="viewcode-block" id="Trainer.evaluate">
-<a class="viewcode-back" href="../../../api/pyhazards.html#pyhazards.Trainer.evaluate">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.engine.html#pyhazards.Trainer.evaluate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">DataBundle</span><span class="p">,</span>
@@ -351,7 +351,7 @@
 
 
 <div class="viewcode-block" id="Trainer.predict">
-<a class="viewcode-back" href="../../../api/pyhazards.html#pyhazards.Trainer.predict">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.engine.html#pyhazards.Trainer.predict">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">DataBundle</span><span class="p">,</span>
@@ -373,13 +373,13 @@
 
 
 <div class="viewcode-block" id="Trainer.save_checkpoint">
-<a class="viewcode-back" href="../../../api/pyhazards.html#pyhazards.Trainer.save_checkpoint">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.engine.html#pyhazards.Trainer.save_checkpoint">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">save_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">({</span><span class="s2">&quot;model_state&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()},</span> <span class="n">path</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Trainer._make_loader">
-<a class="viewcode-back" href="../../../api/pyhazards.html#pyhazards.Trainer._make_loader">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.engine.html#pyhazards.Trainer._make_loader">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_make_loader</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">inputs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
@@ -400,7 +400,7 @@
 
 
 <div class="viewcode-block" id="Trainer._to_device">
-<a class="viewcode-back" href="../../../api/pyhazards.html#pyhazards.Trainer._to_device">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.engine.html#pyhazards.Trainer._to_device">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_to_device</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>

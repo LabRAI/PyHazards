@@ -251,24 +251,24 @@
 
 
 <div class="viewcode-block" id="MetricBase">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.MetricBase">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.MetricBase">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MetricBase</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
 <div class="viewcode-block" id="MetricBase.update">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.MetricBase.update">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.MetricBase.update">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preds</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">targets</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="o">...</span></div>
 
 
 <div class="viewcode-block" id="MetricBase.compute">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.MetricBase.compute">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.MetricBase.compute">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
         <span class="o">...</span></div>
 
 
 <div class="viewcode-block" id="MetricBase.reset">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.MetricBase.reset">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.MetricBase.reset">[docs]</a>
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="o">...</span></div>
@@ -277,27 +277,27 @@
 
 
 <div class="viewcode-block" id="ClassificationMetrics">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.ClassificationMetrics">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.ClassificationMetrics">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ClassificationMetrics</span><span class="p">(</span><span class="n">MetricBase</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 
 <div class="viewcode-block" id="ClassificationMetrics.reset">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.ClassificationMetrics.reset">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.ClassificationMetrics.reset">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_preds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_targets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></div>
 
 
 <div class="viewcode-block" id="ClassificationMetrics.update">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.ClassificationMetrics.update">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.ClassificationMetrics.update">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preds</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">targets</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_preds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">targets</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="ClassificationMetrics.compute">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.ClassificationMetrics.compute">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.ClassificationMetrics.compute">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
         <span class="n">preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preds</span><span class="p">)</span>
         <span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_targets</span><span class="p">)</span>
@@ -309,27 +309,27 @@
 
 
 <div class="viewcode-block" id="RegressionMetrics">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.RegressionMetrics">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.RegressionMetrics">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RegressionMetrics</span><span class="p">(</span><span class="n">MetricBase</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 
 <div class="viewcode-block" id="RegressionMetrics.reset">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.RegressionMetrics.reset">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.RegressionMetrics.reset">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_preds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_targets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></div>
 
 
 <div class="viewcode-block" id="RegressionMetrics.update">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.RegressionMetrics.update">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.RegressionMetrics.update">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preds</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">targets</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_preds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">targets</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="RegressionMetrics.compute">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.RegressionMetrics.compute">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.RegressionMetrics.compute">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
         <span class="n">preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preds</span><span class="p">)</span>
         <span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_targets</span><span class="p">)</span>
@@ -341,28 +341,28 @@
 
 
 <div class="viewcode-block" id="SegmentationMetrics">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.SegmentationMetrics">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.SegmentationMetrics">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SegmentationMetrics</span><span class="p">(</span><span class="n">MetricBase</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span> <span class="o">=</span> <span class="n">num_classes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 
 <div class="viewcode-block" id="SegmentationMetrics.reset">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.SegmentationMetrics.reset">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.SegmentationMetrics.reset">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_preds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_targets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></div>
 
 
 <div class="viewcode-block" id="SegmentationMetrics.update">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.SegmentationMetrics.update">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.SegmentationMetrics.update">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preds</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">targets</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_preds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">targets</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="SegmentationMetrics.compute">
-<a class="viewcode-back" href="../../api/pyhazards.html#pyhazards.SegmentationMetrics.compute">[docs]</a>
+<a class="viewcode-back" href="../../api/pyhazards.metrics.html#pyhazards.SegmentationMetrics.compute">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
         <span class="n">preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preds</span><span class="p">)</span>
         <span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_targets</span><span class="p">)</span>
