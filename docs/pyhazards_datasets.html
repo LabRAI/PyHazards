@@ -11,6 +11,7 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=aab0eeca" />
     
     
 
@@ -252,7 +253,7 @@
 <h1>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">¶</a></h1>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
-<p>PyHazards provides a unified dataset interface for hazard prediction across tabular, temporal, and raster data. Each dataset returns a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code> containing splits, feature specs, label specs, and metadata.</p>
+<p>PyHazards provides a unified dataset interface for hazard prediction across tabular, temporal, and raster data. Each dataset returns a DataBundle containing splits, feature specs, label specs, and metadata.</p>
 </section>
 <section id="id1">
 <h2>Datasets<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
@@ -263,27 +264,158 @@
 <col style="width: 82.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MERRA2</span></code></p></td>
-<td><p>MERRA-2 is a global weather and climate dataset created by NASA that provides long-term records of atmospheric conditions from 1980 to the present. The data are organized on a regular global grid with hourly to monthly updates and a spatial resolution of about 0.5° × 0.625°, and include variables such as temperature, wind, humidity, surface fluxes, and aerosols, making it useful for large-scale climate and hazard analysis worldwide.</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MERRA-2</span> <span class="pre">(NASA</span> <span class="pre">GMAO)</span></code></p></td>
+<td><p>Data format: commonly distributed as NetCDF (and also accessible via NASA services); data structure: gridded arrays (tensor-like) with dynamic surface fields, vertical profile fields, and static layers; dimensions: time is the temporal index (hourly), latitude and longitude are the spatial grid axes (about 0.5 deg x 0.625 deg), and vertical variables include an additional pressure-level axis; update frequency: released with a typical latency of a few weeks after real time; tasks: provide core meteorological drivers for weather/climate forecasting (e.g., WxC-style pipelines) and support hazard prediction studies such as wildfire and hurricane by linking hazard outcomes to atmospheric and land-surface conditions; link: <a class="reference external" href="https://gmao.gsfc.nasa.gov/gmao-products/merra-2/">MERRA-2 overview</a>; reference: <a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">Gelaro et al. (2017)</a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ERA5</span></code></p></td>
-<td><p>ERA5 is a global reanalysis dataset produced by ECMWF and is commonly used as a reference for weather and climate studies. It covers the period from 1950 to the present and provides hourly data on a global grid at roughly 0.25° resolution, including precipitation, temperature, wind, and land-surface variables, which allows detailed environmental and hazard modeling at a global scale.</p></td>
+<td><p>Data format: commonly distributed as GRIB and NetCDF via Copernicus CDS; data structure: gridded arrays (tensor-like) with single-level fields and optional pressure/model-level fields; dimensions: time is the temporal index (hourly), latitude and longitude are the spatial grid axes (commonly 0.25 deg x 0.25 deg on CDS products), and vertical products include an additional level axis; update frequency: updated daily with a short-latency stream (ERA5T) and later consolidated into the final ERA5; tasks: support weather/climate prediction and benchmarking, and serve as standardized meteorological covariates for hazard prediction such as wildfire danger, heavy-rain/flooding, and hurricane-related environmental conditions; link: <a class="reference external" href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview">ERA5 single levels</a>; reference: <a class="reference external" href="https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803">Hersbach et al. (2020)</a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NOAA</span> <span class="pre">Flood</span> <span class="pre">Events</span> <span class="pre">(Storm</span> <span class="pre">Events</span> <span class="pre">Database)</span></code></p></td>
-<td><p>The NOAA Flood Events dataset collects reported flood events across the United States, including when and where floods occurred and the impacts they caused. The data are stored as event-based records rather than grid data, usually at county or local levels, and span many decades, making them suitable for analyzing flood patterns and risks within the U.S.</p></td>
+<td><p>Data format: commonly distributed as tabular text (CSV) and database extracts; data structure: event-based records (not tensors) where each row is an event report with fields rather than gridded axes; dimensions/fields: time fields represent event begin/end timestamps, location fields represent reporting geography (often county/zone and coordinates where available), and impact fields represent reported damages and casualties; update frequency: updated on a rolling basis with a typical delay of about 75–90 days after the end of the data month; tasks: support flood occurrence/impact analysis, event frequency and trend studies, and supervised modeling where the target is event occurrence or impact rather than meteorological state; link: <a class="reference external" href="https://www.ncei.noaa.gov/products/storm-events-database">Storm Events Database</a>; reference: <a class="reference external" href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648">NCEI metadata record</a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">FIRMS</span> <span class="pre">(Fire</span> <span class="pre">Information</span> <span class="pre">for</span> <span class="pre">Resource</span> <span class="pre">Management</span> <span class="pre">System)</span></code></p></td>
-<td><p>FIRMS (Fire Information for Resource Management System) provides near-real-time satellite observations of active fires around the world. The dataset consists of time-stamped fire locations detected by MODIS and VIIRS sensors at spatial resolutions between about 375 m and 1 km, and is widely used for global wildfire monitoring and analysis.</p></td>
+<td><p>Data format: commonly distributed as tabular and GIS-ready formats (CSV, Shapefile/GeoJSON/KML) depending on access method; data structure: event/point detections (not tensors) where each record is a time-stamped fire/hotspot detection; dimensions/fields: time is detection timestamp, location is latitude/longitude (point geometry), and attributes include sensor/product fields such as confidence and radiative measures (product-dependent); update frequency: near-real-time publication refreshed multiple times per day, with detections typically available within hours of satellite overpass; tasks: operational wildfire monitoring/nowcasting and rapid situational awareness, and serving as event labels/targets for wildfire prediction pipelines when combined with meteorology and fuels/land layers; link: <a class="reference external" href="https://firms.modaps.eosdis.nasa.gov/">FIRMS portal</a>; reference: <a class="reference external" href="https://doi.org/10.1016/j.rse.2013.08.008">VIIRS active fire product paper</a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MTBS</span> <span class="pre">(Monitoring</span> <span class="pre">Trends</span> <span class="pre">in</span> <span class="pre">Burn</span> <span class="pre">Severity)</span></code></p></td>
-<td><p>MTBS (Monitoring Trends in Burn Severity) is a dataset that maps wildfire burn areas and severity across the United States. It focuses on large fires since 1984 and uses Landsat satellite imagery at 30 m resolution, making it useful for studying long-term wildfire impacts and regional fire risk.</p></td>
+<td><p>Data format: commonly distributed as GIS rasters and vectors (e.g., GeoTIFF and shapefiles/geodatabases); data structure: mapped fire perimeters and burn severity layers (not a single tensor) where products are organized by fire event and can be aggregated by year; dimensions/fields: spatial axes represent 30 m raster grids for severity layers and polygon geometries for perimeters, and time is represented by fire year/event metadata; update frequency: produced on an annual cycle as new fire-year products are completed; tasks: post-fire impact assessment, long-term wildfire regime/trend analysis, and providing training/validation layers for models that predict burn severity/extent or relate severity to meteorology, fuels, and topography; link: <a class="reference external" href="https://burnseverity.cr.usgs.gov/">MTBS portal</a>; reference: <a class="reference external" href="https://doi.org/10.4996/fireecology.0301003">Eidenshink et al. (2007)</a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">LANDFIRE</span> <span class="pre">Fuel</span> <span class="pre">(USFS</span> <span class="pre">/</span> <span class="pre">LANDFIRE)</span></code></p></td>
-<td><p>LANDFIRE provides fuel and vegetation information across the United States to support wildfire modeling and risk assessment. The data are distributed as raster layers at about 30 m resolution and describe fuel models, canopy structure, and vegetation types, helping researchers and practitioners understand and simulate wildfire behavior at landscape scales.</p></td>
+<td><p>Data format: commonly distributed as GIS rasters (e.g., GeoTIFF) and supporting metadata; data structure: gridded map layers (raster matrices) describing vegetation and fuels at national scale; dimensions/fields: spatial axes represent ~30 m raster grids, time is represented by product version/year (and disturbance layers where applicable), and values encode vegetation/fuel attributes such as type, cover, height, and fuel descriptors; update frequency: released as versioned updates and commonly treated as an annual updating program in applied workflows; tasks: fuels/vegetation characterization for wildfire behavior simulation, landscape-scale wildfire risk assessment, and static covariates for wildfire occurrence/spread models paired with dynamic meteorological predictors; link: <a class="reference external" href="https://landfire.gov/getdata.php">LANDFIRE data access</a>; reference: <a class="reference external" href="https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning">LANDFIRE program overview</a>.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+</section>
+<section id="dataset-inspection">
+<h2>Dataset inspection<a class="headerlink" href="#dataset-inspection" title="Link to this heading">¶</a></h2>
+<p>A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF files.</p>
+<aside class="topic">
+<p class="topic-title">1) Setup (imports the data)</p>
+<p>This block imports the dependencies used throughout the inspection workflow.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+</pre></div>
+</div>
+</aside>
+<aside class="topic">
+<p class="topic-title">2) Config (paths + date + filename patterns)</p>
+<p>Set the root directory and choose a test day. The code assumes one file per day.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ROOT</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/home/runyang/WxC/Prithvi-WxC/data/merra2&quot;</span><span class="p">)</span>
+
+<span class="n">DATE_START</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">DATE_END</span>   <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+<span class="n">TEST_DAY</span> <span class="o">=</span> <span class="n">DATE_START</span>
+
+<span class="n">PATTERN_SFC</span> <span class="o">=</span> <span class="s2">&quot;MERRA2_sfc_</span><span class="si">{yyyymmdd}</span><span class="s2">.nc&quot;</span>
+<span class="n">PATTERN_PRES</span> <span class="o">=</span> <span class="s2">&quot;MERRA_pres_</span><span class="si">{yyyymmdd}</span><span class="s2">.nc&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">yyyymmdd</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="n">date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+   <span class="k">return</span> <span class="n">d</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">build_path</span><span class="p">(</span><span class="n">kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="n">date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+   <span class="k">if</span> <span class="n">kind</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;sfc&#39;</span><span class="p">,</span> <span class="s1">&#39;surface&#39;</span><span class="p">]:</span>
+      <span class="k">return</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="n">PATTERN_SFC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">yyyymmdd</span><span class="o">=</span><span class="n">yyyymmdd</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+   <span class="k">if</span> <span class="n">kind</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;pres&#39;</span><span class="p">,</span> <span class="s1">&#39;pressure&#39;</span><span class="p">]:</span>
+      <span class="k">return</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="n">PATTERN_PRES</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">yyyymmdd</span><span class="o">=</span><span class="n">yyyymmdd</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+   <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;kind must be &#39;sfc&#39; or &#39;pres&#39;&quot;</span><span class="p">)</span>
+
+<span class="n">build_path</span><span class="p">(</span><span class="s1">&#39;sfc&#39;</span><span class="p">,</span> <span class="n">TEST_DAY</span><span class="p">),</span> <span class="n">build_path</span><span class="p">(</span><span class="s1">&#39;pres&#39;</span><span class="p">,</span> <span class="n">TEST_DAY</span><span class="p">)</span>
+</pre></div>
+</div>
+</aside>
+<aside class="topic">
+<p class="topic-title">3) Load helpers</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">xarray.open_dataset</span></code> so you can work with named dimensions and variables.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">open_merra</span><span class="p">(</span><span class="n">kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Open one daily MERRA2 file as an xarray Dataset.&quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">build_path</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing file: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># engine=None lets xarray pick; you can set engine=&#39;netcdf4&#39; or &#39;h5netcdf&#39; if needed.</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="n">chunks</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ds</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">list_vars</span><span class="p">(</span><span class="n">ds</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">max_show</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">da</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">data_vars</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;var&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;dims&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">dims</span><span class="p">),</span>
+            <span class="s1">&#39;shape&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">shape</span><span class="p">)),</span>
+            <span class="s1">&#39;dtype&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+        <span class="p">})</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;var&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">max_show</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_show</span> <span class="k">else</span> <span class="n">df</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">inspect_ds</span><span class="p">(</span><span class="n">ds</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dataset&#39;</span><span class="p">,</span> <span class="n">max_vars</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;=== </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> ===&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;dims:&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">dims</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;coords:&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;n_vars:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">data_vars</span><span class="p">))</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">list_vars</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">max_show</span><span class="o">=</span><span class="n">max_vars</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">summarize_da</span><span class="p">(</span><span class="n">da</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">load</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Global numeric summary for a DataArray.&quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">da</span>
+    <span class="k">if</span> <span class="n">load</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="c1"># Works for dask-backed arrays too</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span>
+        <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="s1">&#39;std&#39;</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="p">})</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">data_vars</span><span class="p">})</span>
+</pre></div>
+</div>
+</aside>
+<aside class="topic">
+<p class="topic-title">4) Load + quick inspect (dims, coords, basic stats)</p>
+<p>Load both surface and pressure-level files and print basic metadata.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ds_sfc</span>  <span class="o">=</span> <span class="n">open_merra</span><span class="p">(</span><span class="s1">&#39;sfc&#39;</span><span class="p">,</span>  <span class="n">TEST_DAY</span><span class="p">)</span>
+<span class="n">ds_pres</span> <span class="o">=</span> <span class="n">open_merra</span><span class="p">(</span><span class="s1">&#39;pres&#39;</span><span class="p">,</span> <span class="n">TEST_DAY</span><span class="p">)</span>
+
+<span class="n">inspect_ds</span><span class="p">(</span><span class="n">ds_sfc</span><span class="p">,</span>  <span class="s1">&#39;SFC (one day)&#39;</span><span class="p">)</span>
+<span class="n">inspect_ds</span><span class="p">(</span><span class="n">ds_pres</span><span class="p">,</span> <span class="s1">&#39;PRES (one day)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</aside>
+<aside class="topic">
+<p class="topic-title">5) Variable-level inspect</p>
+<p>Pick a variable (e.g., <cite>T2M</cite>) and compute global statistics.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="o">=</span> <span class="s1">&#39;T2M&#39;</span>  <span class="c1"># change if your file uses a different naming</span>
+
+<span class="k">if</span> <span class="n">VAR</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ds_sfc</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">VAR</span><span class="si">}</span><span class="s2"> not found in ds_sfc. Pick one from the table above.&quot;</span><span class="p">)</span>
+
+<span class="n">da</span> <span class="o">=</span> <span class="n">ds_sfc</span><span class="p">[</span><span class="n">VAR</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;dims:&#39;</span><span class="p">,</span> <span class="n">da</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;shape:&#39;</span><span class="p">,</span> <span class="n">da</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">summarize_da</span><span class="p">(</span><span class="n">da</span><span class="p">)</span>
+</pre></div>
+</div>
+</aside>
+<aside class="topic">
+<p class="topic-title">6) Plot a lat-lon map for a variable</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="o">=</span> <span class="s2">&quot;T2M&quot;</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">ds_sfc</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">ds_sfc</span><span class="p">[</span><span class="s2">&quot;lon&quot;</span><span class="p">],</span> <span class="n">ds_sfc</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">],</span> <span class="n">Z</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2"> (t=</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</aside>
 </section>
 <section id="core-classes">
 <h2>Core classes<a class="headerlink" href="#core-classes" title="Link to this heading">¶</a></h2>
@@ -382,6 +514,7 @@
 <li><a class="reference internal" href="#">Datasets</a><ul>
 <li><a class="reference internal" href="#summary">Summary</a></li>
 <li><a class="reference internal" href="#id1">Datasets</a></li>
+<li><a class="reference internal" href="#dataset-inspection">Dataset inspection</a></li>
 <li><a class="reference internal" href="#core-classes">Core classes</a></li>
 <li><a class="reference internal" href="#example-skeleton">Example skeleton</a></li>
 </ul>

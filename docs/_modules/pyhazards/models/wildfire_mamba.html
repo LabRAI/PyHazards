@@ -10,6 +10,7 @@
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=aab0eeca" />
     
     
 
@@ -342,7 +343,7 @@
 
 
 <div class="viewcode-block" id="WildfireMamba">
-<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.WildfireMamba">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.WildfireMamba">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">WildfireMamba</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Mamba-based spatio-temporal wildfire model for county-day ERA5 features.</span>
@@ -397,7 +398,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">set_adjacency</span><span class="p">(</span><span class="n">adjacency</span><span class="p">)</span>
 
 <div class="viewcode-block" id="WildfireMamba.set_adjacency">
-<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.WildfireMamba.set_adjacency">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.WildfireMamba.set_adjacency">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_adjacency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adj</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set/override the spatial adjacency.&quot;&quot;&quot;</span>
         <span class="n">adj</span> <span class="o">=</span> <span class="n">_normalize_adjacency</span><span class="p">(</span><span class="n">adj</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span>
@@ -405,7 +406,7 @@
 
 
 <div class="viewcode-block" id="WildfireMamba._get_adjacency">
-<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.WildfireMamba._get_adjacency">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.WildfireMamba._get_adjacency">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_adjacency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_adjacency</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">eye</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_counties</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cls_head</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
@@ -420,7 +421,7 @@
 
 
 <div class="viewcode-block" id="WildfireMamba._temporal_delta">
-<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.WildfireMamba._temporal_delta">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.WildfireMamba._temporal_delta">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_temporal_delta</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
         <span class="c1"># prepend zeros so delta has the same length as the input sequence</span>
@@ -429,7 +430,7 @@
 
 
 <div class="viewcode-block" id="WildfireMamba.forward">
-<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.WildfireMamba.forward">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.WildfireMamba.forward">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">adjacency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
@@ -466,7 +467,7 @@
 
 
 <div class="viewcode-block" id="wildfire_mamba_builder">
-<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.wildfire_mamba_builder">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.wildfire_mamba_builder">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">wildfire_mamba_builder</span><span class="p">(</span>
     <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">in_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>

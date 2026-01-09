@@ -386,8 +386,250 @@ This delegates to registry metadata to keep a consistent interface.</p>
 </dd></dl>
 
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+<section id="module-pyhazards.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhazards.models" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.CNNPatchEncoder">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">CNNPatchEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/backbones.html#CNNPatchEncoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.CNNPatchEncoder" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Lightweight CNN encoder for raster patches.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.CNNPatchEncoder.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/backbones.html#CNNPatchEncoder.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.CNNPatchEncoder.forward" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.ClassificationHead">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">ClassificationHead</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/heads.html#ClassificationHead"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.ClassificationHead" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Simple classification head.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.ClassificationHead.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/heads.html#ClassificationHead.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.ClassificationHead.forward" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.MLPBackbone">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">MLPBackbone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/backbones.html#MLPBackbone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.MLPBackbone" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Simple MLP for tabular features.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.MLPBackbone.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/backbones.html#MLPBackbone.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.MLPBackbone.forward" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.RegressionHead">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">RegressionHead</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/heads.html#RegressionHead"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.RegressionHead" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Regression head for scalar or multi-target outputs.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.RegressionHead.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/heads.html#RegressionHead.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.RegressionHead.forward" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.SegmentationHead">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">SegmentationHead</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/heads.html#SegmentationHead"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.SegmentationHead" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Segmentation head for raster masks.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.SegmentationHead.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/heads.html#SegmentationHead.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.SegmentationHead.forward" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.TemporalEncoder">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">TemporalEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/backbones.html#TemporalEncoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.TemporalEncoder" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>GRU-based encoder for time-series signals.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.TemporalEncoder.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/backbones.html#TemporalEncoder.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.TemporalEncoder.forward" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.TverskyLoss">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">TverskyLoss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_logits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_aspp.html#TverskyLoss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.TverskyLoss" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Tversky loss for binary segmentation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.TverskyLoss.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_aspp.html#TverskyLoss.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.TverskyLoss.forward" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.WildfireASPP">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">WildfireASPP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspp_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dilations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">3,</span> <span class="pre">6,</span> <span class="pre">12)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_aspp.html#WildfireASPP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WildfireASPP" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyhazards.models.WildfireCNNASPP" title="pyhazards.models.cnn_aspp.WildfireCNNASPP"><code class="xref py py-class docutils literal notranslate"><span class="pre">WildfireCNNASPP</span></code></a></p>
+<p>Backward-compatible name for the CNN + ASPP wildfire model.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.WildfireCNNASPP">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">WildfireCNNASPP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspp_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dilations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">3,</span> <span class="pre">6,</span> <span class="pre">12)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/cnn_aspp.html#WildfireCNNASPP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WildfireCNNASPP" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>CNN + ASPP wildfire segmentation model.</p>
+<dl class="simple">
+<dt>Input:</dt><dd><p>x : (B, C, H, W) float tensor</p>
+</dd>
+<dt>Output:</dt><dd><p>logits : (B, 1, H, W) float tensor
+(sigmoid applied externally)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.WildfireCNNASPP.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/cnn_aspp.html#WildfireCNNASPP.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WildfireCNNASPP.forward" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.WildfireMamba">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">WildfireMamba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_counties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_days</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gcn_hidden</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mamba_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conv_kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjacency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_count_head</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_mamba.html#WildfireMamba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WildfireMamba" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Mamba-based spatio-temporal wildfire model for county-day ERA5 features.</p>
+<p>Input shape: (batch, past_days, num_counties, num_features)
+Output: logits per county for the next day (use sigmoid for probabilities)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.WildfireMamba._get_adjacency">
+<span class="sig-name descname"><span class="pre">_get_adjacency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_mamba.html#WildfireMamba._get_adjacency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WildfireMamba._get_adjacency" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.WildfireMamba._temporal_delta">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_temporal_delta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_mamba.html#WildfireMamba._temporal_delta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WildfireMamba._temporal_delta" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.WildfireMamba.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjacency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_mamba.html#WildfireMamba.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WildfireMamba.forward" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span>) – Tensor shaped (batch, past_days, num_counties, in_dim)</p></li>
+<li><p><strong>adjacency</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>]</span>) – Optional (N, N) or (B, N, N) adjacency override.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(batch, num_counties)
+- optional counts: (batch, num_counties) if with_count_head is enabled.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>logits</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.WildfireMamba.set_adjacency">
+<span class="sig-name descname"><span class="pre">set_adjacency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_mamba.html#WildfireMamba.set_adjacency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WildfireMamba.set_adjacency" title="Link to this definition">¶</a></dt>
+<dd><p>Set/override the spatial adjacency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhazards.models.available_models">
+<span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">available_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/registry.html#available_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.available_models" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhazards.models.build_model">
+<span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">build_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/builder.html#build_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.build_model" title="Link to this definition">¶</a></dt>
+<dd><p>Build a model by name and task.
+This delegates to registry metadata to keep a consistent interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhazards.models.cnn_aspp_builder">
+<span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">cnn_aspp_builder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspp_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dilations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">3,</span> <span class="pre">6,</span> <span class="pre">12)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/cnn_aspp.html#cnn_aspp_builder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.cnn_aspp_builder" title="Link to this definition">¶</a></dt>
+<dd><p>PyHazards-style model builder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhazards.models.register_model">
+<span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">register_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">builder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/registry.html#register_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.register_model" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhazards.models.wildfire_aspp_builder">
+<span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">wildfire_aspp_builder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_aspp.html#wildfire_aspp_builder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.wildfire_aspp_builder" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhazards.models.wildfire_mamba_builder">
+<span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">wildfire_mamba_builder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_counties</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_days</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_mamba.html#wildfire_mamba_builder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.wildfire_mamba_builder" title="Link to this definition">¶</a></dt>
+<dd><p>Builder used by the model registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.models.WildfireMamba" title="pyhazards.models.wildfire_mamba.WildfireMamba"><code class="xref py py-class docutils literal notranslate"><span class="pre">WildfireMamba</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
@@ -471,7 +713,55 @@ This delegates to registry metadata to keep a consistent interface.</p>
 <li><a class="reference internal" href="#pyhazards.models.registry.register_model"><code class="docutils literal notranslate"><span class="pre">register_model()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-pyhazards.models">Module contents</a><ul>
+<li><a class="reference internal" href="#pyhazards.models.CNNPatchEncoder"><code class="docutils literal notranslate"><span class="pre">CNNPatchEncoder</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.CNNPatchEncoder.forward"><code class="docutils literal notranslate"><span class="pre">CNNPatchEncoder.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.ClassificationHead"><code class="docutils literal notranslate"><span class="pre">ClassificationHead</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.ClassificationHead.forward"><code class="docutils literal notranslate"><span class="pre">ClassificationHead.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.MLPBackbone"><code class="docutils literal notranslate"><span class="pre">MLPBackbone</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.MLPBackbone.forward"><code class="docutils literal notranslate"><span class="pre">MLPBackbone.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.RegressionHead"><code class="docutils literal notranslate"><span class="pre">RegressionHead</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.RegressionHead.forward"><code class="docutils literal notranslate"><span class="pre">RegressionHead.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.SegmentationHead"><code class="docutils literal notranslate"><span class="pre">SegmentationHead</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.SegmentationHead.forward"><code class="docutils literal notranslate"><span class="pre">SegmentationHead.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.TemporalEncoder"><code class="docutils literal notranslate"><span class="pre">TemporalEncoder</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.TemporalEncoder.forward"><code class="docutils literal notranslate"><span class="pre">TemporalEncoder.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.TverskyLoss"><code class="docutils literal notranslate"><span class="pre">TverskyLoss</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.TverskyLoss.forward"><code class="docutils literal notranslate"><span class="pre">TverskyLoss.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.WildfireASPP"><code class="docutils literal notranslate"><span class="pre">WildfireASPP</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.WildfireCNNASPP"><code class="docutils literal notranslate"><span class="pre">WildfireCNNASPP</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.WildfireCNNASPP.forward"><code class="docutils literal notranslate"><span class="pre">WildfireCNNASPP.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.WildfireMamba"><code class="docutils literal notranslate"><span class="pre">WildfireMamba</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.WildfireMamba._get_adjacency"><code class="docutils literal notranslate"><span class="pre">WildfireMamba._get_adjacency()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.WildfireMamba._temporal_delta"><code class="docutils literal notranslate"><span class="pre">WildfireMamba._temporal_delta()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.WildfireMamba.forward"><code class="docutils literal notranslate"><span class="pre">WildfireMamba.forward()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.WildfireMamba.set_adjacency"><code class="docutils literal notranslate"><span class="pre">WildfireMamba.set_adjacency()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.available_models"><code class="docutils literal notranslate"><span class="pre">available_models()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.build_model"><code class="docutils literal notranslate"><span class="pre">build_model()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.cnn_aspp_builder"><code class="docutils literal notranslate"><span class="pre">cnn_aspp_builder()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.register_model"><code class="docutils literal notranslate"><span class="pre">register_model()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.wildfire_aspp_builder"><code class="docutils literal notranslate"><span class="pre">wildfire_aspp_builder()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.wildfire_mamba_builder"><code class="docutils literal notranslate"><span class="pre">wildfire_mamba_builder()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
