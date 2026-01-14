@@ -136,8 +136,6 @@ A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF file
       inspect_ds(ds_sfc,  'SFC (one day)')
       inspect_ds(ds_pres, 'PRES (one day)')
 
-    **Example output (SFC, one day)**
-
    ::
 
       === SFC (one day) ===
@@ -183,10 +181,12 @@ A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF file
       print('shape:', da.shape)
       summarize_da(da)      
 
-   .. dims: ('time', 'lat', 'lon')
+   ::
+      dims: ('time', 'lat', 'lon')
       shape: (8, 361, 576)
 
-   .. min     221.406586
+   ::
+      min     221.406586
       max     321.713318
       mean    277.793854
       std      20.137274
@@ -204,10 +204,7 @@ A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF file
       plt.title(f"{var} (t={t})")
       plt.show()
 
-    `Download example output (PDF) <../_static/t2m_example.pdf>`_
-
-
-
+   `Download example output (PDF) <../_static/t2m_example.pdf>`_
 
 Core classes
 ------------
