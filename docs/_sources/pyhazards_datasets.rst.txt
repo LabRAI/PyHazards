@@ -136,6 +136,37 @@ A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF file
       inspect_ds(ds_sfc,  'SFC (one day)')
       inspect_ds(ds_pres, 'PRES (one day)')
 
+    **Example output (SFC, one day)**
+
+   ::
+
+      === SFC (one day) ===
+      dims: {'time': 8, 'lat': 361, 'lon': 576}
+      coords: ['time', 'lat', 'lon']
+      n_vars: 24
+      /tmp/ipykernel_2608020/271347245.py:25: FutureWarning:
+        The return type of `Dataset.dims` will be changed to return a set of
+        dimension names in future. To access a mapping from dimension names
+        to lengths, please use `Dataset.sizes`.
+        print('dims:', dict(ds.dims))
+
+   .. figure:: ../_static/surface.png
+      :width: 700px
+      :align: center
+
+   ::
+
+      === PRES (one day) ===
+      dims: {'time': 8, 'lev': 14, 'lat': 361, 'lon': 576}
+      coords: ['lon', 'lat', 'lev', 'time']
+      n_vars: 10
+      /tmp/ipykernel_2608020/271347245.py:25: FutureWarning: The return type of `Dataset.dims` will be changed to return a set of dimension names in future, in order to be more consistent with `DataArray.dims`. To access a mapping from dimension names to lengths, please use `Dataset.sizes`.
+      print('dims:', dict(ds.dims))
+
+   .. figure:: ../_static/vertical.png
+      :width: 700px
+      :align: center
+
 .. topic:: 5) Variable-level inspect
 
    Pick a variable (e.g., `T2M`) and compute global statistics.
@@ -152,6 +183,15 @@ A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF file
       print('shape:', da.shape)
       summarize_da(da)      
 
+   .. dims: ('time', 'lat', 'lon')
+      shape: (8, 361, 576)
+
+   .. min     221.406586
+      max     321.713318
+      mean    277.793854
+      std      20.137274
+      dtype: float64
+
 .. topic:: 6) Plot a lat-lon map for a variable
 
    .. code-block:: python
@@ -163,6 +203,11 @@ A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF file
       plt.gca().set_aspect("equal")
       plt.title(f"{var} (t={t})")
       plt.show()
+
+    `Download example output (PDF) <../_static/t2m_example.pdf>`_
+
+
+
 
 Core classes
 ------------
