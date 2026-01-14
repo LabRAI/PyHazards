@@ -182,10 +182,12 @@ A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF file
       summarize_da(da)      
 
    ::
+
       dims: ('time', 'lat', 'lon')
       shape: (8, 361, 576)
 
    ::
+   
       min     221.406586
       max     321.713318
       mean    277.793854
@@ -204,7 +206,7 @@ A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF file
       plt.title(f"{var} (t={t})")
       plt.show()
 
-   `Download example output (PDF) <../_static/t2m_example.pdf>`_
+   `View full-resolution output (PDF) <../_static/t2m_example.pdf>`_
 
 Core classes
 ------------
