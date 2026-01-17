@@ -10,22 +10,33 @@ Datasets
 --------------------
 
 .. list-table::
-   :widths: 10 90
+   :widths: 12 88
    :header-rows: 0
    :class: dataset-list
 
-   * - ``MERRA-2 (NASA GMAO)``
-     - Data format: commonly distributed as NetCDF (and also accessible via NASA services); data structure: gridded arrays (tensor-like) with dynamic surface fields, vertical profile fields, and static layers; dimensions: time is the temporal index (hourly), latitude and longitude are the spatial grid axes (about 0.5 deg x 0.625 deg), and vertical variables include an additional pressure-level axis; update frequency: released with a typical latency of a few weeks after real time; tasks: provide core meteorological drivers for weather/climate forecasting (e.g., WxC-style pipelines) and support hazard prediction studies such as wildfire and hurricane by linking hazard outcomes to atmospheric and land-surface conditions; link: `MERRA-2 overview <https://gmao.gsfc.nasa.gov/gmao-products/merra-2/>`_; reference: `Gelaro et al. (2017) <https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml>`_.
-   * - ``ERA5``
-     - Data format: commonly distributed as GRIB and NetCDF via Copernicus CDS; data structure: gridded arrays (tensor-like) with single-level fields and optional pressure/model-level fields; dimensions: time is the temporal index (hourly), latitude and longitude are the spatial grid axes (commonly 0.25 deg x 0.25 deg on CDS products), and vertical products include an additional level axis; update frequency: updated daily with a short-latency stream (ERA5T) and later consolidated into the final ERA5; tasks: support weather/climate prediction and benchmarking, and serve as standardized meteorological covariates for hazard prediction such as wildfire danger, heavy-rain/flooding, and hurricane-related environmental conditions; link: `ERA5 single levels <https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview>`_; reference: `Hersbach et al. (2020) <https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803>`_.
-   * - ``NOAA Flood Events (Storm Events Database)``
-     - Data format: commonly distributed as tabular text (CSV) and database extracts; data structure: event-based records (not tensors) where each row is an event report with fields rather than gridded axes; dimensions/fields: time fields represent event begin/end timestamps, location fields represent reporting geography (often county/zone and coordinates where available), and impact fields represent reported damages and casualties; update frequency: updated on a rolling basis with a typical delay of about 75–90 days after the end of the data month; tasks: support flood occurrence/impact analysis, event frequency and trend studies, and supervised modeling where the target is event occurrence or impact rather than meteorological state; link: `Storm Events Database <https://www.ncei.noaa.gov/products/storm-events-database>`_; reference: `NCEI metadata record <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648>`_.
-   * - ``FIRMS (Fire Information for Resource Management System)``
-     - Data format: commonly distributed as tabular and GIS-ready formats (CSV, Shapefile/GeoJSON/KML) depending on access method; data structure: event/point detections (not tensors) where each record is a time-stamped fire/hotspot detection; dimensions/fields: time is detection timestamp, location is latitude/longitude (point geometry), and attributes include sensor/product fields such as confidence and radiative measures (product-dependent); update frequency: near-real-time publication refreshed multiple times per day, with detections typically available within hours of satellite overpass; tasks: operational wildfire monitoring/nowcasting and rapid situational awareness, and serving as event labels/targets for wildfire prediction pipelines when combined with meteorology and fuels/land layers; link: `FIRMS portal <https://firms.modaps.eosdis.nasa.gov/>`_; reference: `VIIRS active fire product paper <https://doi.org/10.1016/j.rse.2013.08.008>`_.
-   * - ``MTBS (Monitoring Trends in Burn Severity)``
-     - Data format: commonly distributed as GIS rasters and vectors (e.g., GeoTIFF and shapefiles/geodatabases); data structure: mapped fire perimeters and burn severity layers (not a single tensor) where products are organized by fire event and can be aggregated by year; dimensions/fields: spatial axes represent 30 m raster grids for severity layers and polygon geometries for perimeters, and time is represented by fire year/event metadata; update frequency: produced on an annual cycle as new fire-year products are completed; tasks: post-fire impact assessment, long-term wildfire regime/trend analysis, and providing training/validation layers for models that predict burn severity/extent or relate severity to meteorology, fuels, and topography; link: `MTBS portal <https://burnseverity.cr.usgs.gov/>`_; reference: `Eidenshink et al. (2007) <https://doi.org/10.4996/fireecology.0301003>`_.
-   * - ``LANDFIRE Fuel (USFS / LANDFIRE)``
-     - Data format: commonly distributed as GIS rasters (e.g., GeoTIFF) and supporting metadata; data structure: gridded map layers (raster matrices) describing vegetation and fuels at national scale; dimensions/fields: spatial axes represent ~30 m raster grids, time is represented by product version/year (and disturbance layers where applicable), and values encode vegetation/fuel attributes such as type, cover, height, and fuel descriptors; update frequency: released as versioned updates and commonly treated as an annual updating program in applied workflows; tasks: fuels/vegetation characterization for wildfire behavior simulation, landscape-scale wildfire risk assessment, and static covariates for wildfire occurrence/spread models paired with dynamic meteorological predictors; link: `LANDFIRE data access <https://landfire.gov/getdata.php>`_; reference: `LANDFIRE program overview <https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning>`_.
+   * - :doc:`merra2 <datasets/merra2>`
+     - NASA GMAO global atmospheric reanalysis that provides hourly gridded meteorological fields widely used as environmental drivers in climate and hazard modeling (see `Gelaro et al., 2017 <https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml>`_; `overview <https://gmao.gsfc.nasa.gov/gmao-products/merra-2/>`_).
+
+   * - :doc:`era5 <datasets/era5>`
+     - ECMWF’s high-resolution global reanalysis distributed via Copernicus CDS, commonly used as standardized meteorological covariates across weather, climate, and hazard benchmarks (`Hersbach et al., 2020 <https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803>`_; `CDS dataset page <https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview>`_).
+
+   * - :doc:`firms <datasets/firms>`
+     - Near-real-time active fire detections from MODIS/VIIRS that support operational wildfire monitoring and provide event labels for downstream modeling (`FIRMS portal <https://firms.modaps.eosdis.nasa.gov/>`_; `Schroeder et al., 2014 <https://doi.org/10.1016/j.rse.2013.08.008>`_).
+
+   * - :doc:`mtbs <datasets/mtbs>`
+     - U.S. burn severity and fire perimeter products designed for post-fire assessment and long-term wildfire regime analysis (`MTBS <https://burnseverity.cr.usgs.gov/>`_; `Eidenshink et al., 2007 <https://doi.org/10.4996/fireecology.0301003>`_).
+
+   * - :doc:`landfire <datasets/landfire>`
+     - National-scale vegetation and fuels layers used for wildfire behavior, risk assessment, and as static covariates paired with dynamic meteorology (`LANDFIRE data access <https://landfire.gov/getdata.php>`_; `program overview <https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning>`_).
+
+   * - :doc:`wfigs <datasets/wfigs>`
+     - Best-available near-real-time U.S. wildfire perimeter polygons for incident tracking, operational situational awareness, and perimeter-based evaluation (`WFIGS perimeters <https://data-nifc.opendata.arcgis.com/datasets/nifc::wfigs-current-interagency-fire-perimeters/about>`_).
+
+   * - :doc:`goesr <datasets/goesr>`
+     - GOES-R Geostationary Lightning Mapper (GLM) observations offering high-frequency lightning activity useful for convection proxies and ignition-related analyses (`GLM metadata <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc%3AC01527>`_; `Goodman et al., 2013 <https://doi.org/10.1016/j.atmosres.2013.01.006>`_).
+
+   * - :doc:`noaa_flood <datasets/noaa_flood>`
+     - Event-based flood reports from NOAA’s Storm Events Database, often used for occurrence/impact analyses and as supervised targets (`Storm Events Database <https://www.ncei.noaa.gov/products/storm-events-database>`_).
 
 Dataset inspection
 ------------------
