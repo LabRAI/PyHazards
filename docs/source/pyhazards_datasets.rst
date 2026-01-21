@@ -5,74 +5,67 @@ Datasets
    :local:
    :depth: 2
 
-Summary
--------
-
-PyHazards provides a unified dataset interface for hazard prediction across tabular, temporal, and raster data. Each dataset returns a DataBundle containing splits, feature specs, label specs, and metadata.
-
-.. toctree::
-   :maxdepth: 1
-   :hidden:
-
-   datasets/merra2
-   datasets/era5
-   datasets/firms
-   datasets/mtbs
-   datasets/landfire
-   datasets/wfigs
-   datasets/goesr
-   datasets/noaa_flood
-
 
 Meteorological Reanalysis
 -------------------------
 
-.. list-table::
-   :widths: 18 82
-   :header-rows: 0
-   :class: dataset-list
+.. rubric:: :doc:`MERRA-2 <datasets/merra2>`
 
-   * - :doc:`MERRA-2 <datasets/merra2>`
-     - NASA GMAO global atmospheric reanalysis that provides hourly gridded meteorological fields widely used as environmental drivers in climate and hazard modeling (see `Gelaro et al., 2017 <https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml>`_; `overview <https://gmao.gsfc.nasa.gov/gmao-products/merra-2/>`_).
+NASA GMAO global atmospheric reanalysis that provides hourly gridded
+meteorological fields widely used as environmental drivers in climate
+and hazard modeling (see `Gelaro et al., 2017
+<https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml>`_;
+`overview <https://gmao.gsfc.nasa.gov/gmao-products/merra-2/>`_).
 
-   * - :doc:`ERA5 <datasets/era5>`
-     - ECMWF’s high-resolution global reanalysis distributed via Copernicus CDS, commonly used as standardized meteorological covariates across weather, climate, and hazard benchmarks (`Hersbach et al., 2020 <https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803>`_; `CDS dataset page <https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview>`_).
+.. rubric:: :doc:`ERA5 <datasets/era5>`
+
+ECMWF’s high-resolution global reanalysis distributed via Copernicus CDS,
+commonly used as standardized meteorological covariates across weather,
+climate, and hazard benchmarks (`Hersbach et al., 2020
+<https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803>`_;
+`CDS dataset page
+<https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels>`_).
 
 
 Wildfire Remote Sensing and Perimeters
 --------------------------------------
 
-.. list-table::
-   :widths: 18 82
-   :header-rows: 0
-   :class: dataset-list
+.. rubric:: :doc:`FIRMS Active Fires <datasets/firms>`
 
-   * - :doc:`FIRMS Active Fires <datasets/firms>`
-     - Near-real-time active fire detections from MODIS/VIIRS that support operational wildfire monitoring and provide event labels for downstream modeling (`FIRMS portal <https://firms.modaps.eosdis.nasa.gov/>`_; `Schroeder et al., 2014 <https://doi.org/10.1016/j.rse.2013.08.008>`_).
+Near-real-time active fire detections from MODIS/VIIRS that support
+operational wildfire monitoring and provide event labels for downstream
+modeling (`FIRMS portal <https://firms.modaps.eosdis.nasa.gov/>`_;
+`Schroeder et al., 2014 <https://doi.org/10.1016/j.rse.2013.08.008>`_).
 
-   * - :doc:`MTBS Burn Severity <datasets/mtbs>`
-     - U.S. burn severity and fire perimeter products designed for post-fire assessment and long-term wildfire regime analysis (`MTBS <https://burnseverity.cr.usgs.gov/>`_; `Eidenshink et al., 2007 <https://doi.org/10.4996/fireecology.0301003>`_).
+.. rubric:: :doc:`MTBS Burn Severity <datasets/mtbs>`
 
-   * - :doc:`LANDFIRE Fuels & Vegetation <datasets/landfire>`
-     - National-scale vegetation and fuels layers used for wildfire behavior, risk assessment, and as static covariates paired with dynamic meteorology (`LANDFIRE data access <https://landfire.gov/getdata.php>`_; `program overview <https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning>`_).
+U.S. burn severity and fire perimeter products designed for post-fire
+assessment and long-term wildfire regime analysis (`Eidenshink et al.,
+2007 <https://doi.org/10.4996/fireecology.0301003>`_).
 
-   * - :doc:`WFIGS Fire Perimeters <datasets/wfigs>`
-     - Best-available near-real-time U.S. wildfire perimeter polygons for incident tracking, operational situational awareness, and perimeter-based evaluation (`WFIGS perimeters <https://data-nifc.opendata.arcgis.com/datasets/nifc::wfigs-current-interagency-fire-perimeters/about>`_).
+.. rubric:: :doc:`LANDFIRE Fuels & Vegetation <datasets/landfire>`
+
+National-scale vegetation and fuels layers used for wildfire behavior,
+risk assessment, and as static covariates paired with dynamic
+meteorology (`LANDFIRE data access <https://landfire.gov/>`_).
 
 
 Lightning and Hydrology Events
 ------------------------------
 
-.. list-table::
-   :widths: 18 82
-   :header-rows: 0
-   :class: dataset-list
+.. rubric:: :doc:`GOES-R GLM Lightning <datasets/goesr>`
 
-   * - :doc:`GOES-R GLM Lightning <datasets/goesr>`
-     - GOES-R Geostationary Lightning Mapper (GLM) observations offering high-frequency lightning activity useful for convection proxies and ignition-related analyses (`GLM metadata <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc%3AC01527>`_; `Goodman et al., 2013 <https://doi.org/10.1016/j.atmosres.2013.01.006>`_).
+GOES-R Geostationary Lightning Mapper (GLM) observations offering
+high-frequency lightning activity useful for convection proxies and
+ignition-related analyses (`Goodman et al., 2013
+<https://doi.org/10.1016/j.atmosres.2013.01.006>`_).
 
-   * - :doc:`NOAA Storm Events (Flood) <datasets/noaa_flood>`
-     - Event-based flood reports from NOAA’s Storm Events Database, often used for occurrence/impact analyses and as supervised targets (`Storm Events Database <https://www.ncei.noaa.gov/products/storm-events-database>`_).
+.. rubric:: :doc:`NOAA Storm Events (Flood) <datasets/noaa_flood>`
+
+Event-based flood reports from NOAA’s Storm Events Database, often used
+for occurrence/impact analyses and as supervised targets
+(`Storm Events Database
+<https://www.ncei.noaa.gov/products/storm-events-database>`_).
 
 
 Dataset inspection
