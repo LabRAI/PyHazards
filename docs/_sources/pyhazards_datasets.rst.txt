@@ -1,42 +1,72 @@
 Datasets
-===================
+========
 
-Summary
--------
+.. contents::
+   :local:
+   :depth: 2
 
-PyHazards provides a unified dataset interface for hazard prediction across tabular, temporal, and raster data. Each dataset returns a DataBundle containing splits, feature specs, label specs, and metadata.
 
-Datasets
---------------------
+Meteorological Reanalysis
+-------------------------
 
-.. list-table::
-   :widths: 12 88
-   :header-rows: 0
-   :class: dataset-list
+.. rubric:: :doc:`MERRA-2 <datasets/merra2>`
 
-   * - :doc:`merra2 <datasets/merra2>`
-     - NASA GMAO global atmospheric reanalysis that provides hourly gridded meteorological fields widely used as environmental drivers in climate and hazard modeling (see `Gelaro et al., 2017 <https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml>`_; `overview <https://gmao.gsfc.nasa.gov/gmao-products/merra-2/>`_).
+NASA GMAO global atmospheric reanalysis that provides hourly gridded
+meteorological fields widely used as environmental drivers in climate
+and hazard modeling (see `Gelaro et al., 2017
+<https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml>`_;
+`overview <https://gmao.gsfc.nasa.gov/gmao-products/merra-2/>`_).
 
-   * - :doc:`era5 <datasets/era5>`
-     - ECMWF’s high-resolution global reanalysis distributed via Copernicus CDS, commonly used as standardized meteorological covariates across weather, climate, and hazard benchmarks (`Hersbach et al., 2020 <https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803>`_; `CDS dataset page <https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview>`_).
+.. rubric:: :doc:`ERA5 <datasets/era5>`
 
-   * - :doc:`firms <datasets/firms>`
-     - Near-real-time active fire detections from MODIS/VIIRS that support operational wildfire monitoring and provide event labels for downstream modeling (`FIRMS portal <https://firms.modaps.eosdis.nasa.gov/>`_; `Schroeder et al., 2014 <https://doi.org/10.1016/j.rse.2013.08.008>`_).
+ECMWF’s high-resolution global reanalysis distributed via Copernicus CDS,
+commonly used as standardized meteorological covariates across weather,
+climate, and hazard benchmarks (`Hersbach et al., 2020
+<https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803>`_;
+`CDS dataset page
+<https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels>`_).
 
-   * - :doc:`mtbs <datasets/mtbs>`
-     - U.S. burn severity and fire perimeter products designed for post-fire assessment and long-term wildfire regime analysis (`MTBS <https://burnseverity.cr.usgs.gov/>`_; `Eidenshink et al., 2007 <https://doi.org/10.4996/fireecology.0301003>`_).
 
-   * - :doc:`landfire <datasets/landfire>`
-     - National-scale vegetation and fuels layers used for wildfire behavior, risk assessment, and as static covariates paired with dynamic meteorology (`LANDFIRE data access <https://landfire.gov/getdata.php>`_; `program overview <https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning>`_).
+Wildfire Remote Sensing and Perimeters
+--------------------------------------
 
-   * - :doc:`wfigs <datasets/wfigs>`
-     - Best-available near-real-time U.S. wildfire perimeter polygons for incident tracking, operational situational awareness, and perimeter-based evaluation (`WFIGS perimeters <https://data-nifc.opendata.arcgis.com/datasets/nifc::wfigs-current-interagency-fire-perimeters/about>`_).
+.. rubric:: :doc:`FIRMS Active Fires <datasets/firms>`
 
-   * - :doc:`goesr <datasets/goesr>`
-     - GOES-R Geostationary Lightning Mapper (GLM) observations offering high-frequency lightning activity useful for convection proxies and ignition-related analyses (`GLM metadata <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc%3AC01527>`_; `Goodman et al., 2013 <https://doi.org/10.1016/j.atmosres.2013.01.006>`_).
+Near-real-time active fire detections from MODIS/VIIRS that support
+operational wildfire monitoring and provide event labels for downstream
+modeling (`FIRMS portal <https://firms.modaps.eosdis.nasa.gov/>`_;
+`Schroeder et al., 2014 <https://doi.org/10.1016/j.rse.2013.08.008>`_).
 
-   * - :doc:`noaa_flood <datasets/noaa_flood>`
-     - Event-based flood reports from NOAA’s Storm Events Database, often used for occurrence/impact analyses and as supervised targets (`Storm Events Database <https://www.ncei.noaa.gov/products/storm-events-database>`_).
+.. rubric:: :doc:`MTBS Burn Severity <datasets/mtbs>`
+
+U.S. burn severity and fire perimeter products designed for post-fire
+assessment and long-term wildfire regime analysis (`Eidenshink et al.,
+2007 <https://doi.org/10.4996/fireecology.0301003>`_).
+
+.. rubric:: :doc:`LANDFIRE Fuels & Vegetation <datasets/landfire>`
+
+National-scale vegetation and fuels layers used for wildfire behavior,
+risk assessment, and as static covariates paired with dynamic
+meteorology (`LANDFIRE data access <https://landfire.gov/>`_).
+
+
+Lightning and Hydrology Events
+------------------------------
+
+.. rubric:: :doc:`GOES-R GLM Lightning <datasets/goesr>`
+
+GOES-R Geostationary Lightning Mapper (GLM) observations offering
+high-frequency lightning activity useful for convection proxies and
+ignition-related analyses (`Goodman et al., 2013
+<https://doi.org/10.1016/j.atmosres.2013.01.006>`_).
+
+.. rubric:: :doc:`NOAA Storm Events (Flood) <datasets/noaa_flood>`
+
+Event-based flood reports from NOAA’s Storm Events Database, often used
+for occurrence/impact analyses and as supervised targets
+(`Storm Events Database
+<https://www.ncei.noaa.gov/products/storm-events-database>`_).
+
 
 Dataset inspection
 ------------------
@@ -147,35 +177,6 @@ A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF file
       inspect_ds(ds_sfc,  'SFC (one day)')
       inspect_ds(ds_pres, 'PRES (one day)')
 
-   ::
-
-      === SFC (one day) ===
-      dims: {'time': 8, 'lat': 361, 'lon': 576}
-      coords: ['time', 'lat', 'lon']
-      n_vars: 24
-      /tmp/ipykernel_2608020/271347245.py:25: FutureWarning:
-        The return type of `Dataset.dims` will be changed to return a set of
-        dimension names in future. To access a mapping from dimension names
-        to lengths, please use `Dataset.sizes`.
-        print('dims:', dict(ds.dims))
-
-   .. figure:: ../_static/surface.png
-      :width: 700px
-      :align: center
-
-   ::
-
-      === PRES (one day) ===
-      dims: {'time': 8, 'lev': 14, 'lat': 361, 'lon': 576}
-      coords: ['lon', 'lat', 'lev', 'time']
-      n_vars: 10
-      /tmp/ipykernel_2608020/271347245.py:25: FutureWarning: The return type of `Dataset.dims` will be changed to return a set of dimension names in future, in order to be more consistent with `DataArray.dims`. To access a mapping from dimension names to lengths, please use `Dataset.sizes`.
-      print('dims:', dict(ds.dims))
-
-   .. figure:: ../_static/vertical.png
-      :width: 700px
-      :align: center
-
 .. topic:: 5) Variable-level inspect
 
    Pick a variable (e.g., `T2M`) and compute global statistics.
@@ -192,19 +193,6 @@ A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF file
       print('shape:', da.shape)
       summarize_da(da)      
 
-   ::
-
-      dims: ('time', 'lat', 'lon')
-      shape: (8, 361, 576)
-
-   ::
-
-      min     221.406586
-      max     321.713318
-      mean    277.793854
-      std      20.137274
-      dtype: float64
-
 .. topic:: 6) Plot a lat-lon map for a variable
 
    .. code-block:: python
@@ -216,10 +204,6 @@ A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF file
       plt.gca().set_aspect("equal")
       plt.title(f"{var} (t={t})")
       plt.show()
-
-   .. figure:: ../_static/t2m.png
-      :width: 700px
-      :align: center
 
 Core classes
 ------------

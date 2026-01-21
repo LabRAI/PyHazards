@@ -1,16 +1,16 @@
 <!doctype html>
 <html class="no-js" lang="en" data-content_root="./">
-  <head><meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Models" href="pyhazards_models.html"><link rel="prev" title="Quick Start" href="quick_start.html">
-        <link rel="canonical" href="https://labrai.github.io/PyHazards/pyhazards_datasets.html">
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Models" href="pyhazards_models.html" /><link rel="prev" title="Quick Start" href="quick_start.html" />
+        <link rel="canonical" href="https://labrai.github.io/PyHazards/pyhazards_datasets.html" />
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Datasets - PyHazards 1.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=aab0eeca" />
     
     
@@ -18,8 +18,8 @@
 
 <style>
   body {
-    --color-code-background: #f2f2f2;
-  --color-code-foreground: #1e1e1e;
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
   
   }
   @media not print {
@@ -146,10 +146,14 @@
   </symbol>
 </svg>
 
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
-<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
-<label class="overlay sidebar-overlay" for="__navigation"></label>
-<label class="overlay toc-overlay" for="__toc"></label>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
 
 <a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
@@ -159,7 +163,8 @@
   <header class="mobile-header">
     <div class="header-left">
       <label class="nav-overlay-icon" for="__navigation">
-        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
       </label>
     </div>
     <div class="header-center">
@@ -167,7 +172,8 @@
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
-        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
           <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
           <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
           <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
@@ -175,7 +181,8 @@
         </button>
       </div>
       <label class="toc-overlay-icon toc-header-icon" for="__toc">
-        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
     </div>
   </header>
@@ -183,6 +190,7 @@
     <div class="sidebar-container">
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
   
   <span class="sidebar-brand-text">PyHazards 1.0.1 documentation</span>
   
@@ -237,7 +245,8 @@
   </a>
 </div>
 <div class="theme-toggle-container theme-toggle-content">
-            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
               <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
@@ -245,49 +254,65 @@
             </button>
           </div>
           <label class="toc-overlay-icon toc-content-icon" for="__toc">
-            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
           <section id="datasets">
 <h1>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">¶</a></h1>
-<section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
-<p>PyHazards provides a unified dataset interface for hazard prediction across tabular, temporal, and raster data. Each dataset returns a DataBundle containing splits, feature specs, label specs, and metadata.</p>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#meteorological-reanalysis" id="id1">Meteorological Reanalysis</a></p></li>
+<li><p><a class="reference internal" href="#wildfire-remote-sensing-and-perimeters" id="id2">Wildfire Remote Sensing and Perimeters</a></p></li>
+<li><p><a class="reference internal" href="#lightning-and-hydrology-events" id="id3">Lightning and Hydrology Events</a></p></li>
+<li><p><a class="reference internal" href="#dataset-inspection" id="id4">Dataset inspection</a></p></li>
+<li><p><a class="reference internal" href="#core-classes" id="id5">Core classes</a></p></li>
+<li><p><a class="reference internal" href="#example-skeleton" id="id6">Example skeleton</a></p></li>
+</ul>
+</nav>
+<section id="meteorological-reanalysis">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Meteorological Reanalysis</a><a class="headerlink" href="#meteorological-reanalysis" title="Link to this heading">¶</a></h2>
+<p class="rubric"><a class="reference internal" href="datasets/merra2.html"><span class="doc">MERRA-2</span></a></p>
+<p>NASA GMAO global atmospheric reanalysis that provides hourly gridded
+meteorological fields widely used as environmental drivers in climate
+and hazard modeling (see <a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">Gelaro et al., 2017</a>;
+<a class="reference external" href="https://gmao.gsfc.nasa.gov/gmao-products/merra-2/">overview</a>).</p>
+<p class="rubric"><a class="reference internal" href="datasets/era5.html"><span class="doc">ERA5</span></a></p>
+<p>ECMWF’s high-resolution global reanalysis distributed via Copernicus CDS,
+commonly used as standardized meteorological covariates across weather,
+climate, and hazard benchmarks (<a class="reference external" href="https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803">Hersbach et al., 2020</a>;
+<a class="reference external" href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels">CDS dataset page</a>).</p>
 </section>
-<section id="id1">
-<h2>Datasets<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
-<div class="table-wrapper colwidths-given dataset-list docutils container">
-<table class="dataset-list docutils align-default">
-<colgroup>
-<col style="width: 10.0%" />
-<col style="width: 90.0%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MERRA-2</span> <span class="pre">(NASA</span> <span class="pre">GMAO)</span></code></p></td>
-<td><p>Data format: commonly distributed as NetCDF (and also accessible via NASA services); data structure: gridded arrays (tensor-like) with dynamic surface fields, vertical profile fields, and static layers; dimensions: time is the temporal index (hourly), latitude and longitude are the spatial grid axes (about 0.5 deg x 0.625 deg), and vertical variables include an additional pressure-level axis; update frequency: released with a typical latency of a few weeks after real time; tasks: provide core meteorological drivers for weather/climate forecasting (e.g., WxC-style pipelines) and support hazard prediction studies such as wildfire and hurricane by linking hazard outcomes to atmospheric and land-surface conditions; link: <a class="reference external" href="https://gmao.gsfc.nasa.gov/gmao-products/merra-2/">MERRA-2 overview</a>; reference: <a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">Gelaro et al. (2017)</a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ERA5</span></code></p></td>
-<td><p>Data format: commonly distributed as GRIB and NetCDF via Copernicus CDS; data structure: gridded arrays (tensor-like) with single-level fields and optional pressure/model-level fields; dimensions: time is the temporal index (hourly), latitude and longitude are the spatial grid axes (commonly 0.25 deg x 0.25 deg on CDS products), and vertical products include an additional level axis; update frequency: updated daily with a short-latency stream (ERA5T) and later consolidated into the final ERA5; tasks: support weather/climate prediction and benchmarking, and serve as standardized meteorological covariates for hazard prediction such as wildfire danger, heavy-rain/flooding, and hurricane-related environmental conditions; link: <a class="reference external" href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview">ERA5 single levels</a>; reference: <a class="reference external" href="https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803">Hersbach et al. (2020)</a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NOAA</span> <span class="pre">Flood</span> <span class="pre">Events</span> <span class="pre">(Storm</span> <span class="pre">Events</span> <span class="pre">Database)</span></code></p></td>
-<td><p>Data format: commonly distributed as tabular text (CSV) and database extracts; data structure: event-based records (not tensors) where each row is an event report with fields rather than gridded axes; dimensions/fields: time fields represent event begin/end timestamps, location fields represent reporting geography (often county/zone and coordinates where available), and impact fields represent reported damages and casualties; update frequency: updated on a rolling basis with a typical delay of about 75–90 days after the end of the data month; tasks: support flood occurrence/impact analysis, event frequency and trend studies, and supervised modeling where the target is event occurrence or impact rather than meteorological state; link: <a class="reference external" href="https://www.ncei.noaa.gov/products/storm-events-database">Storm Events Database</a>; reference: <a class="reference external" href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648">NCEI metadata record</a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">FIRMS</span> <span class="pre">(Fire</span> <span class="pre">Information</span> <span class="pre">for</span> <span class="pre">Resource</span> <span class="pre">Management</span> <span class="pre">System)</span></code></p></td>
-<td><p>Data format: commonly distributed as tabular and GIS-ready formats (CSV, Shapefile/GeoJSON/KML) depending on access method; data structure: event/point detections (not tensors) where each record is a time-stamped fire/hotspot detection; dimensions/fields: time is detection timestamp, location is latitude/longitude (point geometry), and attributes include sensor/product fields such as confidence and radiative measures (product-dependent); update frequency: near-real-time publication refreshed multiple times per day, with detections typically available within hours of satellite overpass; tasks: operational wildfire monitoring/nowcasting and rapid situational awareness, and serving as event labels/targets for wildfire prediction pipelines when combined with meteorology and fuels/land layers; link: <a class="reference external" href="https://firms.modaps.eosdis.nasa.gov/">FIRMS portal</a>; reference: <a class="reference external" href="https://doi.org/10.1016/j.rse.2013.08.008">VIIRS active fire product paper</a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MTBS</span> <span class="pre">(Monitoring</span> <span class="pre">Trends</span> <span class="pre">in</span> <span class="pre">Burn</span> <span class="pre">Severity)</span></code></p></td>
-<td><p>Data format: commonly distributed as GIS rasters and vectors (e.g., GeoTIFF and shapefiles/geodatabases); data structure: mapped fire perimeters and burn severity layers (not a single tensor) where products are organized by fire event and can be aggregated by year; dimensions/fields: spatial axes represent 30 m raster grids for severity layers and polygon geometries for perimeters, and time is represented by fire year/event metadata; update frequency: produced on an annual cycle as new fire-year products are completed; tasks: post-fire impact assessment, long-term wildfire regime/trend analysis, and providing training/validation layers for models that predict burn severity/extent or relate severity to meteorology, fuels, and topography; link: <a class="reference external" href="https://burnseverity.cr.usgs.gov/">MTBS portal</a>; reference: <a class="reference external" href="https://doi.org/10.4996/fireecology.0301003">Eidenshink et al. (2007)</a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">LANDFIRE</span> <span class="pre">Fuel</span> <span class="pre">(USFS</span> <span class="pre">/</span> <span class="pre">LANDFIRE)</span></code></p></td>
-<td><p>Data format: commonly distributed as GIS rasters (e.g., GeoTIFF) and supporting metadata; data structure: gridded map layers (raster matrices) describing vegetation and fuels at national scale; dimensions/fields: spatial axes represent ~30 m raster grids, time is represented by product version/year (and disturbance layers where applicable), and values encode vegetation/fuel attributes such as type, cover, height, and fuel descriptors; update frequency: released as versioned updates and commonly treated as an annual updating program in applied workflows; tasks: fuels/vegetation characterization for wildfire behavior simulation, landscape-scale wildfire risk assessment, and static covariates for wildfire occurrence/spread models paired with dynamic meteorological predictors; link: <a class="reference external" href="https://landfire.gov/getdata.php">LANDFIRE data access</a>; reference: <a class="reference external" href="https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning">LANDFIRE program overview</a>.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
+<section id="wildfire-remote-sensing-and-perimeters">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Wildfire Remote Sensing and Perimeters</a><a class="headerlink" href="#wildfire-remote-sensing-and-perimeters" title="Link to this heading">¶</a></h2>
+<p class="rubric"><a class="reference internal" href="datasets/firms.html"><span class="doc">FIRMS Active Fires</span></a></p>
+<p>Near-real-time active fire detections from MODIS/VIIRS that support
+operational wildfire monitoring and provide event labels for downstream
+modeling (<a class="reference external" href="https://firms.modaps.eosdis.nasa.gov/">FIRMS portal</a>;
+<a class="reference external" href="https://doi.org/10.1016/j.rse.2013.08.008">Schroeder et al., 2014</a>).</p>
+<p class="rubric"><a class="reference internal" href="datasets/mtbs.html"><span class="doc">MTBS Burn Severity</span></a></p>
+<p>U.S. burn severity and fire perimeter products designed for post-fire
+assessment and long-term wildfire regime analysis (<a class="reference external" href="https://doi.org/10.4996/fireecology.0301003">Eidenshink et al.,
+2007</a>).</p>
+<p class="rubric"><a class="reference internal" href="datasets/landfire.html"><span class="doc">LANDFIRE Fuels &amp; Vegetation</span></a></p>
+<p>National-scale vegetation and fuels layers used for wildfire behavior,
+risk assessment, and as static covariates paired with dynamic
+meteorology (<a class="reference external" href="https://landfire.gov/">LANDFIRE data access</a>).</p>
+</section>
+<section id="lightning-and-hydrology-events">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Lightning and Hydrology Events</a><a class="headerlink" href="#lightning-and-hydrology-events" title="Link to this heading">¶</a></h2>
+<p class="rubric"><a class="reference internal" href="datasets/goesr.html"><span class="doc">GOES-R GLM Lightning</span></a></p>
+<p>GOES-R Geostationary Lightning Mapper (GLM) observations offering
+high-frequency lightning activity useful for convection proxies and
+ignition-related analyses (<a class="reference external" href="https://doi.org/10.1016/j.atmosres.2013.01.006">Goodman et al., 2013</a>).</p>
+<p class="rubric"><a class="reference internal" href="datasets/noaa_flood.html"><span class="doc">NOAA Storm Events (Flood)</span></a></p>
+<p>Event-based flood reports from NOAA’s Storm Events Database, often used
+for occurrence/impact analyses and as supervised targets
+(<a class="reference external" href="https://www.ncei.noaa.gov/products/storm-events-database">Storm Events Database</a>).</p>
 </section>
 <section id="dataset-inspection">
-<h2>Dataset inspection<a class="headerlink" href="#dataset-inspection" title="Link to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Dataset inspection</a><a class="headerlink" href="#dataset-inspection" title="Link to this heading">¶</a></h2>
 <p>A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF files.</p>
 <aside class="topic">
 <p class="topic-title">1) Setup (imports the data)</p>
@@ -418,7 +443,7 @@
 </aside>
 </section>
 <section id="core-classes">
-<h2>Core classes<a class="headerlink" href="#core-classes" title="Link to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Core classes</a><a class="headerlink" href="#core-classes" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Dataset</span></code>: base class to implement <code class="docutils literal notranslate"><span class="pre">_load()</span></code> and return a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>: holds named <code class="docutils literal notranslate"><span class="pre">DataSplit</span></code> objects, plus <code class="docutils literal notranslate"><span class="pre">feature_spec</span></code> and <code class="docutils literal notranslate"><span class="pre">label_spec</span></code>.</p></li>
@@ -427,7 +452,7 @@
 </ul>
 </section>
 <section id="example-skeleton">
-<h2>Example skeleton<a class="headerlink" href="#example-skeleton" title="Link to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Example skeleton</a><a class="headerlink" href="#example-skeleton" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">DataBundle</span><span class="p">,</span> <span class="n">DataSplit</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">FeatureSpec</span><span class="p">,</span> <span class="n">LabelSpec</span><span class="p">,</span> <span class="n">register_dataset</span>
@@ -512,8 +537,9 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Datasets</a><ul>
-<li><a class="reference internal" href="#summary">Summary</a></li>
-<li><a class="reference internal" href="#id1">Datasets</a></li>
+<li><a class="reference internal" href="#meteorological-reanalysis">Meteorological Reanalysis</a></li>
+<li><a class="reference internal" href="#wildfire-remote-sensing-and-perimeters">Wildfire Remote Sensing and Perimeters</a></li>
+<li><a class="reference internal" href="#lightning-and-hydrology-events">Lightning and Hydrology Events</a></li>
 <li><a class="reference internal" href="#dataset-inspection">Dataset inspection</a></li>
 <li><a class="reference internal" href="#core-classes">Core classes</a></li>
 <li><a class="reference internal" href="#example-skeleton">Example skeleton</a></li>
@@ -531,6 +557,6 @@
 </div><script src="_static/documentation_options.js?v=e7fff540"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>
