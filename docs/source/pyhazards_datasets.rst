@@ -1,5 +1,9 @@
 Datasets
-===================
+========
+
+.. contents::
+   :local:
+   :depth: 2
 
 Summary
 -------
@@ -19,8 +23,9 @@ PyHazards provides a unified dataset interface for hazard prediction across tabu
    datasets/goesr
    datasets/noaa_flood
 
-Datasets
---------
+
+Meteorological Reanalysis
+-------------------------
 
 .. list-table::
    :widths: 18 82
@@ -32,6 +37,15 @@ Datasets
 
    * - :doc:`ERA5 <datasets/era5>`
      - ECMWF’s high-resolution global reanalysis distributed via Copernicus CDS, commonly used as standardized meteorological covariates across weather, climate, and hazard benchmarks (`Hersbach et al., 2020 <https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803>`_; `CDS dataset page <https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview>`_).
+
+
+Wildfire Remote Sensing and Perimeters
+--------------------------------------
+
+.. list-table::
+   :widths: 18 82
+   :header-rows: 0
+   :class: dataset-list
 
    * - :doc:`FIRMS Active Fires <datasets/firms>`
      - Near-real-time active fire detections from MODIS/VIIRS that support operational wildfire monitoring and provide event labels for downstream modeling (`FIRMS portal <https://firms.modaps.eosdis.nasa.gov/>`_; `Schroeder et al., 2014 <https://doi.org/10.1016/j.rse.2013.08.008>`_).
@@ -45,11 +59,21 @@ Datasets
    * - :doc:`WFIGS Fire Perimeters <datasets/wfigs>`
      - Best-available near-real-time U.S. wildfire perimeter polygons for incident tracking, operational situational awareness, and perimeter-based evaluation (`WFIGS perimeters <https://data-nifc.opendata.arcgis.com/datasets/nifc::wfigs-current-interagency-fire-perimeters/about>`_).
 
+
+Lightning and Hydrology Events
+------------------------------
+
+.. list-table::
+   :widths: 18 82
+   :header-rows: 0
+   :class: dataset-list
+
    * - :doc:`GOES-R GLM Lightning <datasets/goesr>`
      - GOES-R Geostationary Lightning Mapper (GLM) observations offering high-frequency lightning activity useful for convection proxies and ignition-related analyses (`GLM metadata <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc%3AC01527>`_; `Goodman et al., 2013 <https://doi.org/10.1016/j.atmosres.2013.01.006>`_).
 
    * - :doc:`NOAA Storm Events (Flood) <datasets/noaa_flood>`
      - Event-based flood reports from NOAA’s Storm Events Database, often used for occurrence/impact analyses and as supervised targets (`Storm Events Database <https://www.ncei.noaa.gov/products/storm-events-database>`_).
+
 
 Dataset inspection
 ------------------
