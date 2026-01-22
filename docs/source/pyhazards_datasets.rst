@@ -15,41 +15,28 @@ Datasets
    :class: dataset-list
 
    * - :doc:`merra2 <datasets/merra2>`
-     - Global atmospheric reanalysis (NASA GMAO) with hourly gridded fields used as meteorological drivers for hazard modeling (e.g., wildfire, hurricane). Reference: `Gelaro et al. (2017) <https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml>`_.
+     - Global atmospheric reanalysis from NASA GMAO MERRA-2 (overview <https://gmao.gsfc.nasa.gov/gmao-products/merra-2/>), widely used as hourly gridded meteorological drivers for hazard modeling; see Gelaro et al. (2017) <https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml>.
 
    * - :doc:`era5 <datasets/era5>`
-     - ECMWF reanalysis providing hourly single-level and pressure-level variables via Copernicus CDS; widely used as standardized covariates for weather/climate and hazard prediction benchmarks. Reference: `Hersbach et al. (2020) <https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803>`_.
+     - ECMWF ERA5 reanalysis served via the Copernicus CDS <https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview>, providing hourly single-/pressure-level variables for benchmarks and hazard covariates; see Hersbach et al. (2020) <https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803>.
 
    * - :doc:`noaa_flood <datasets/noaa_flood>`
-     - NOAA Storm Events Database records flood-related event reports (time, location, impacts), commonly used for event-level labeling and flood occurrence/impact analysis. Reference: `NOAA NCEI (C00648) <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648>`_.
+     - Flood-related event reports from the NOAA Storm Events Database <https://www.ncei.noaa.gov/products/storm-events-database>_ (time, location, impacts), commonly used for event-level labeling and impact analysis; see NCEI record (C00648) <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648>_.
 
    * - :doc:`firms <datasets/firms>`
-     - Near-real-time satellite active fire detections (MODIS/VIIRS) used for operational monitoring and as wildfire occurrence labels in prediction pipelines. Reference: `Giglio et al. (2013) <https://doi.org/10.1016/j.rse.2013.08.008>`_.
+     - Near-real-time active fire detections from NASA FIRMS <https://firms.modaps.eosdis.nasa.gov/>_ (MODIS/VIIRS), used for operational monitoring and as wildfire occurrence labels; see Schroeder et al. (2014) <https://doi.org/10.1016/j.rse.2013.08.008>_.
 
    * - :doc:`mtbs <datasets/mtbs>`
-     - US wildfire perimeters and burn severity products (Landsat-derived), widely used for post-fire assessment and long-term wildfire regime analysis. Reference: `Eidenshink et al. (2007) <https://doi.org/10.4996/fireecology.0301003>`_.
+     - US wildfire perimeters and burn severity layers from MTBS <https://burnseverity.cr.usgs.gov/>_ (Landsat-derived), used for post-fire assessment and long-term regime studies; see Eidenshink et al. (2007) <https://doi.org/10.4996/fireecology.0301003>_.
 
    * - :doc:`landfire <datasets/landfire>`
-     - US vegetation and fuels layers (e.g., fuel models, structure, cover) used as static landscape covariates for wildfire behavior and risk modeling. Reference: `LANDFIRE Program <https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning>`_.
+     - Nationwide fuels and vegetation layers from the USFS LANDFIRE <https://landfire.gov/>_ program, often used as static landscape covariates for wildfire behavior and risk modeling; see the program overview <https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning>_.
 
-   * - :doc:`<datasets/wfigs>`
-     - Authoritative incident-level wildfire records maintained by U.S. interagency fire management systems, describing ignition time, location, status, and extent of real wildfire events. Commonly used as ground-truth labels for wildfire occurrence and for validating satellite-based fire detections. Reference: `WFIGS portal <https://data-nifc.opendata.arcgis.com/>`_.
+   * - :doc:`wfigs <datasets/wfigs>`
+     - Authoritative incident-level wildfire records from the U.S. interagency WFIGS <https://data-nifc.opendata.arcgis.com/>_ ecosystem (ignition, location, status, extent), commonly used as ground-truth labels for wildfire occurrence.
 
-   * - :doc:`<datasets/goesr>`
-     - High-frequency geostationary satellite observations from the NOAA GOES-R series, providing multispectral imagery for continuous monitoring of atmospheric and surface conditions. Frequently used for early wildfire detection, fire evolution analysis, and integration with fire and meteorological datasets. Reference: `GOES-R Program <https://www.goes-r.gov/>`_.
-
-.. toctree::
-   :maxdepth: 1
-   :hidden:
-
-   datasets/merra2
-   datasets/era5
-   datasets/noaa_flood
-   datasets/firms
-   datasets/mtbs
-   datasets/landfire
-   datasets/wfigs
-   datasets/goesr
+   * - :doc:`goesr <datasets/goesr>`
+     - High-frequency geostationary multispectral imagery from the NOAA GOES-R series <https://www.goes-r.gov/>_, supporting continuous monitoring (e.g., smoke/thermal context) and early detection workflows when paired with fire and meteorology datasets.
 
 Dataset inspection
 ------------------
