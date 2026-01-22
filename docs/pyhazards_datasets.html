@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="MERRA-2" href="datasets/merra2.html" /><link rel="prev" title="Quick Start" href="quick_start.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Models" href="pyhazards_models.html" /><link rel="prev" title="Quick Start" href="quick_start.html" />
         <link rel="canonical" href="https://labrai.github.io/PyHazards/pyhazards_datasets.html" />
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
@@ -207,15 +207,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
-<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Datasets</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Datasets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="datasets/merra2.html">MERRA-2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/era5.html">ERA5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/noaa_flood.html">NOAA Flood Events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/firms.html">FIRMS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/mtbs.html">MTBS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/landfire.html">LANDFIRE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/wfigs.html">WFIGS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/goesr.html">GOES-R</a></li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Datasets</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Datasets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_models.html">Models</a></li>
@@ -285,28 +277,28 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="datasets/merra2.html"><span class="doc">merra2</span></a></p></td>
-<td><p>Global atmospheric reanalysis from NASA GMAO MERRA-2 (overview &lt;<a class="reference external" href="https://gmao.gsfc.nasa.gov/gmao-products/merra-2/">https://gmao.gsfc.nasa.gov/gmao-products/merra-2/</a>&gt;), widely used as hourly gridded meteorological drivers for hazard modeling; see Gelaro et al. (2017) &lt;<a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml</a>&gt;.</p></td>
+<td><p>Global atmospheric reanalysis from NASA GMAO MERRA-2 (<a class="reference external" href="https://gmao.gsfc.nasa.gov/gmao-products/merra-2/">overview</a>), widely used as hourly gridded meteorological drivers for hazard modeling; see <a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">Gelaro et al. (2017)</a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="datasets/era5.html"><span class="doc">era5</span></a></p></td>
-<td><p>ECMWF ERA5 reanalysis served via the Copernicus CDS &lt;<a class="reference external" href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview">https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview</a>&gt;, providing hourly single-/pressure-level variables for benchmarks and hazard covariates; see Hersbach et al. (2020) &lt;<a class="reference external" href="https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803">https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803</a>&gt;.</p></td>
+<td><p>ECMWF ERA5 reanalysis served via the <a class="reference external" href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview">Copernicus CDS</a>, providing hourly single-/pressure-level variables for benchmarks and hazard covariates; see <a class="reference external" href="https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803">Hersbach et al. (2020)</a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="datasets/noaa_flood.html"><span class="doc">noaa_flood</span></a></p></td>
-<td><p>Flood-related event reports from the NOAA Storm Events Database &lt;<a class="reference external" href="https://www.ncei.noaa.gov/products/storm-events-database">https://www.ncei.noaa.gov/products/storm-events-database</a>&gt;_ (time, location, impacts), commonly used for event-level labeling and impact analysis; see NCEI record (C00648) &lt;<a class="reference external" href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648">https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648</a>&gt;_.</p></td>
+<td><p>Flood-related event reports from the <cite>NOAA Storm Events Database &lt;https://www.ncei.noaa.gov/products/storm-events-database&gt;_</cite> (time, location, impacts), commonly used for event-level labeling and impact analysis; see <a href="#id2"><span class="problematic" id="id3">`</span></a>NCEI record &lt;<a class="reference external" href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648">https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648</a>&gt;`_(C00648).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="datasets/firms.html"><span class="doc">firms</span></a></p></td>
-<td><p>Near-real-time active fire detections from NASA FIRMS &lt;<a class="reference external" href="https://firms.modaps.eosdis.nasa.gov/">https://firms.modaps.eosdis.nasa.gov/</a>&gt;_ (MODIS/VIIRS), used for operational monitoring and as wildfire occurrence labels; see Schroeder et al. (2014) &lt;<a class="reference external" href="https://doi.org/10.1016/j.rse.2013.08.008">https://doi.org/10.1016/j.rse.2013.08.008</a>&gt;_.</p></td>
+<td><p>Near-real-time active fire detections from <a class="reference external" href="https://firms.modaps.eosdis.nasa.gov/">NASA FIRMS</a> (MODIS/VIIRS), used for operational monitoring and as wildfire occurrence labels; see <a class="reference external" href="https://doi.org/10.1016/j.rse.2013.08.008">Schroeder et al. (2014)</a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="datasets/mtbs.html"><span class="doc">mtbs</span></a></p></td>
-<td><p>US wildfire perimeters and burn severity layers from MTBS &lt;<a class="reference external" href="https://burnseverity.cr.usgs.gov/">https://burnseverity.cr.usgs.gov/</a>&gt;_ (Landsat-derived), used for post-fire assessment and long-term regime studies; see Eidenshink et al. (2007) &lt;<a class="reference external" href="https://doi.org/10.4996/fireecology.0301003">https://doi.org/10.4996/fireecology.0301003</a>&gt;_.</p></td>
+<td><p>US wildfire perimeters and burn severity layers from <a class="reference external" href="https://burnseverity.cr.usgs.gov/">MTBS</a> (Landsat-derived), used for post-fire assessment and long-term regime studies; see <a class="reference external" href="https://doi.org/10.4996/fireecology.0301003">Eidenshink et al. (2007)</a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="datasets/landfire.html"><span class="doc">landfire</span></a></p></td>
-<td><p>Nationwide fuels and vegetation layers from the USFS LANDFIRE &lt;<a class="reference external" href="https://landfire.gov/">https://landfire.gov/</a>&gt;_ program, often used as static landscape covariates for wildfire behavior and risk modeling; see the program overview &lt;<a class="reference external" href="https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning">https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning</a>&gt;_.</p></td>
+<td><p>Nationwide fuels and vegetation layers from the <a class="reference external" href="https://landfire.gov/">USFS LANDFIRE</a> program, often used as static landscape covariates for wildfire behavior and risk modeling; see <a class="reference external" href="https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning">the program overview</a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="datasets/wfigs.html"><span class="doc">wfigs</span></a></p></td>
-<td><p>Authoritative incident-level wildfire records from the U.S. interagency WFIGS &lt;<a class="reference external" href="https://data-nifc.opendata.arcgis.com/">https://data-nifc.opendata.arcgis.com/</a>&gt;_ ecosystem (ignition, location, status, extent), commonly used as ground-truth labels for wildfire occurrence.</p></td>
+<td><p>Authoritative incident-level wildfire records from the <a class="reference external" href="https://data-nifc.opendata.arcgis.com/">U.S. interagency WFIGS</a> ecosystem (ignition, location, status, extent), commonly used as ground-truth labels for wildfire occurrence.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="datasets/goesr.html"><span class="doc">goesr</span></a></p></td>
-<td><p>High-frequency geostationary multispectral imagery from the NOAA GOES-R series &lt;<a class="reference external" href="https://www.goes-r.gov/">https://www.goes-r.gov/</a>&gt;_, supporting continuous monitoring (e.g., smoke/thermal context) and early detection workflows when paired with fire and meteorology datasets.</p></td>
+<td><p>High-frequency geostationary multispectral imagery from the <a class="reference external" href="https://www.goes-r.gov/">NOAA GOES-R series</a>, supporting continuous monitoring (e.g., smoke/thermal context) and early detection workflows when paired with fire and meteorology datasets.</p></td>
 </tr>
 </tbody>
 </table>
@@ -489,12 +481,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="datasets/merra2.html">
+          <a class="next-page" href="pyhazards_models.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">MERRA-2</div>
+                <div class="title">Models</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
