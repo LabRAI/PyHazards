@@ -1,10 +1,7 @@
 import random
 from pathlib import Path
-
-import matplotlib.pyplot as plt
 import numpy as np
 import torch
-from huggingface_hub import hf_hub_download, snapshot_download
 from datetime import datetime, timedelta
 
 # Set backend etc.
