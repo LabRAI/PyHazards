@@ -48,6 +48,8 @@ Datasets
    datasets/firms
    datasets/mtbs
    datasets/landfire
+   datasets/wfigs
+   datasets/goesr
 
 Dataset inspection
 ------------------
