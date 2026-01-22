@@ -3,11 +3,11 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="merra2" href="firms.html" /><link rel="prev" title="merra2" href="era5.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="FIRMS" href="firms.html" /><link rel="prev" title="ERA5" href="era5.html" />
         <link rel="canonical" href="https://labrai.github.io/PyHazards/datasets/noaa_flood.html" />
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>noaa_flood.rst - PyHazards 1.0.1 documentation</title>
+        <title>NOAA Flood Events - PyHazards 1.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
@@ -208,12 +208,12 @@
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Datasets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="merra2.html">merra2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="era5.html">merra2</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">noaa_flood.rst</a></li>
-<li class="toctree-l2"><a class="reference internal" href="firms.html">merra2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mtbs.html">merra2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="landfire.html">merra2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="merra2.html">MERRA-2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="era5.html">ERA5</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firms.html">FIRMS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mtbs.html">MTBS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="landfire.html">LANDFIRE</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_models.html">Models</a></li>
@@ -267,14 +267,67 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="noaa-flood-rst">
-<h1>noaa_flood.rst<a class="headerlink" href="#noaa-flood-rst" title="Link to this heading">¶</a></h1>
-<p>MERRA-2 (NASA GMAO) reanalysis dataset.</p>
+          <section id="noaa-flood-events">
+<h1>NOAA Flood Events<a class="headerlink" href="#noaa-flood-events" title="Link to this heading">¶</a></h1>
+<p>Event-based flood and severe weather records compiled by the U.S. National Oceanic and Atmospheric
+Administration (NOAA), providing historical reports of flood occurrence and impacts.</p>
+<hr class="docutils" />
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p><strong>NOAA Flood Events</strong> are derived from the NOAA Storm Events Database, which documents the occurrence,
+location, timing, and impacts of severe weather events across the United States. Flood-related events
+are reported by local weather offices and emergency management agencies.</p>
+<p>This dataset is widely used for flood frequency analysis, impact assessment, and as event-level labels
+or targets in supervised hazard modeling, particularly when paired with meteorological reanalysis data.</p>
+</section>
+<hr class="docutils" />
+<section id="data-characteristics">
+<h2>Data Characteristics<a class="headerlink" href="#data-characteristics" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Spatial coverage:</strong> United States</p></li>
+<li><p><strong>Temporal coverage:</strong> Historical records with monthly updates</p></li>
+<li><p><strong>Temporal resolution:</strong> Event-based (begin and end timestamps)</p></li>
+<li><p><strong>Data structure:</strong> Tabular event records (not gridded tensors)</p></li>
+<li><p><strong>Data format:</strong> CSV, database extracts</p></li>
+<li><p><strong>Coordinate system:</strong> Administrative regions and point locations (where available)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading">¶</a></h2>
+<p>Typical flood event records include:</p>
+<ul class="simple">
+<li><p>Event start and end time</p></li>
+<li><p>Event location (state, county/zone, and coordinates when available)</p></li>
+<li><p>Event type and narrative descriptions</p></li>
+<li><p>Reported impacts such as property damage, crop damage, injuries, and fatalities</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="typical-use-cases">
+<h2>Typical Use Cases<a class="headerlink" href="#typical-use-cases" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Flood occurrence and frequency analysis</p></li>
+<li><p>Impact and damage assessment studies</p></li>
+<li><p>Supervised learning with flood events as prediction targets</p></li>
+<li><p>Integration with meteorological drivers for flood hazard modeling</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="access">
+<h2>Access<a class="headerlink" href="#access" title="Link to this heading">¶</a></h2>
+<p>NOAA Storm Events data are publicly available via NOAA NCEI:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.ncei.noaa.gov/products/storm-events-database">Storm Events Database</a></p></li>
+<li><p><a class="reference external" href="https://www.ncei.noaa.gov/">NOAA NCEI</a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
 <section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">Gelaro et al. (2017)</a></p></li>
-</ul>
+<p>NOAA National Centers for Environmental Information (NCEI).
+<em>Storm Events Database Documentation</em>.
+<a class="reference external" href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648">https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648</a></p>
 </section>
 </section>
 
@@ -288,7 +341,7 @@
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">merra2</div>
+                <div class="title">FIRMS</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -299,7 +352,7 @@
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">merra2</div>
+                <div class="title">ERA5</div>
                 
               </div>
             </a>
@@ -333,7 +386,12 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">noaa_flood.rst</a><ul>
+<li><a class="reference internal" href="#">NOAA Flood Events</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#data-characteristics">Data Characteristics</a></li>
+<li><a class="reference internal" href="#variables">Variables</a></li>
+<li><a class="reference internal" href="#typical-use-cases">Typical Use Cases</a></li>
+<li><a class="reference internal" href="#access">Access</a></li>
 <li><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>

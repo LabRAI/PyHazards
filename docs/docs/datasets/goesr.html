@@ -3,11 +3,11 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="LANDFIRE" href="landfire.html" /><link rel="prev" title="FIRMS" href="firms.html" />
-        <link rel="canonical" href="https://labrai.github.io/PyHazards/datasets/mtbs.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
+        <link rel="canonical" href="https://labrai.github.io/PyHazards/datasets/goesr.html" />
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>MTBS - PyHazards 1.0.1 documentation</title>
+        <title>GOES-R - PyHazards 1.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
@@ -206,13 +206,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick Start</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
-<ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Datasets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Datasets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="merra2.html">MERRA-2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="era5.html">ERA5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="noaa_flood.html">NOAA Flood Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="firms.html">FIRMS</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">MTBS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mtbs.html">MTBS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="landfire.html">LANDFIRE</a></li>
 </ul>
 </li>
@@ -247,7 +247,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../_sources/datasets/mtbs.rst.txt" title="View this page">
+  <a class="muted-link" href="../_sources/datasets/goesr.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -267,68 +267,68 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="mtbs">
-<h1>MTBS<a class="headerlink" href="#mtbs" title="Link to this heading">¶</a></h1>
-<p>National-scale wildfire burn severity and perimeter dataset produced by the U.S. Geological Survey (USGS),
-supporting post-fire impact assessment and long-term wildfire regime analysis.</p>
+          <section id="goes-r">
+<h1>GOES-R<a class="headerlink" href="#goes-r" title="Link to this heading">¶</a></h1>
+<p>High-frequency geostationary satellite observations from NOAA’s GOES-R series, providing continuous
+multispectral imagery for monitoring atmospheric and surface processes.</p>
 <hr class="docutils" />
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
-<p><strong>MTBS (Monitoring Trends in Burn Severity)</strong> is a long-term remote sensing program that maps wildfire
-perimeters and burn severity across the United States using Landsat imagery. Burn severity is derived
-from spectral change metrics and categorized into standardized severity classes.</p>
-<p>MTBS is widely used for post-fire ecological assessment, wildfire regime and trend analysis, and as
-training or validation data for models that predict burn extent, burn severity, or fire impacts.</p>
+<p><strong>GOES-R</strong> refers to the latest generation of NOAA geostationary operational environmental satellites,
+including GOES-16, GOES-17, and GOES-18. The series carries the Advanced Baseline Imager (ABI), which
+provides rapid-refresh, multispectral observations over the Americas.</p>
+<p>GOES-R data are widely used for real-time monitoring of weather systems, smoke and fire evolution, and
+early wildfire detection, particularly where high temporal resolution is critical.</p>
 </section>
 <hr class="docutils" />
 <section id="data-characteristics">
 <h2>Data Characteristics<a class="headerlink" href="#data-characteristics" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><strong>Spatial coverage:</strong> United States</p></li>
-<li><p><strong>Spatial resolution:</strong> 30 m (Landsat-based)</p></li>
-<li><p><strong>Temporal coverage:</strong> Annual fire-year products</p></li>
-<li><p><strong>Data structure:</strong> Event-based raster layers and vector perimeters</p></li>
-<li><p><strong>Data format:</strong> GeoTIFF, Shapefile, File Geodatabase</p></li>
-<li><p><strong>Coordinate system:</strong> Projected coordinate systems (product-dependent)</p></li>
+<li><p><strong>Spatial coverage:</strong> Western Hemisphere (geostationary view)</p></li>
+<li><p><strong>Spatial resolution:</strong> ~0.5–2 km (band-dependent)</p></li>
+<li><p><strong>Temporal resolution:</strong> 1–15 minutes (mode-dependent)</p></li>
+<li><p><strong>Data structure:</strong> Gridded satellite imagery (raster time series)</p></li>
+<li><p><strong>Data format:</strong> NetCDF</p></li>
+<li><p><strong>Coordinate system:</strong> Geostationary projection (with latitude–longitude products available)</p></li>
 </ul>
 </section>
 <hr class="docutils" />
 <section id="variables">
 <h2>Variables<a class="headerlink" href="#variables" title="Link to this heading">¶</a></h2>
-<p>MTBS products typically include:</p>
+<p>GOES-R ABI products include multiple spectral bands and derived fields, such as:</p>
 <ul class="simple">
-<li><p>Fire perimeter polygons for individual fire events</p></li>
-<li><p>Burn severity raster layers (e.g., dNBR, RdNBR)</p></li>
-<li><p>Categorical burn severity classifications</p></li>
-<li><p>Fire metadata such as ignition year and fire name</p></li>
+<li><p>Visible and infrared radiance and brightness temperature</p></li>
+<li><p>Cloud and atmospheric motion indicators</p></li>
+<li><p>Fire-related thermal anomalies and contextual imagery</p></li>
+<li><p>Smoke, aerosol, and atmospheric structure diagnostics</p></li>
 </ul>
 </section>
 <hr class="docutils" />
 <section id="typical-use-cases">
 <h2>Typical Use Cases<a class="headerlink" href="#typical-use-cases" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Post-fire burn severity and impact assessment</p></li>
-<li><p>Long-term wildfire regime and trend analysis</p></li>
-<li><p>Model evaluation and validation for fire extent and severity prediction</p></li>
-<li><p>Integration with meteorology, fuels, and topography for fire impact studies</p></li>
+<li><p>Early detection and monitoring of wildfire ignition and growth</p></li>
+<li><p>Analysis of fire and smoke evolution at high temporal resolution</p></li>
+<li><p>Integration with ground-truth fire records and reanalysis data</p></li>
+<li><p>Real-time and near-real-time hazard situational awareness</p></li>
 </ul>
 </section>
 <hr class="docutils" />
 <section id="access">
 <h2>Access<a class="headerlink" href="#access" title="Link to this heading">¶</a></h2>
-<p>MTBS data products are publicly available through USGS portals:</p>
+<p>GOES-R data are distributed by NOAA through multiple access points:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://burnseverity.cr.usgs.gov/">MTBS data portal</a></p></li>
-<li><p><a class="reference external" href="https://www.usgs.gov/programs/mtbs">USGS MTBS overview</a></p></li>
+<li><p><a class="reference external" href="https://www.goes-r.gov/">GOES-R Program</a></p></li>
+<li><p><a class="reference external" href="https://www.noaa.gov/information-technology/open-data-dissemination">NOAA Big Data Program</a></p></li>
 </ul>
 </section>
 <hr class="docutils" />
 <section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
-<p>Eidenshink, J., Schwind, B., Brewer, K., Zhu, Z., Quayle, B., &amp; Howard, S. (2007).
-<em>A project for monitoring trends in burn severity</em>.
-Fire Ecology, 3(1), 3–21.
-<a class="reference external" href="https://doi.org/10.4996/fireecology.0301003">https://doi.org/10.4996/fireecology.0301003</a></p>
+<p>Schmit, T. J., Griffith, P., Gunshor, M. M., <em>et al.</em> (2017).
+<em>A closer look at the ABI on the GOES-R series</em>.
+Bulletin of the American Meteorological Society, 98(4), 681–698.
+<a class="reference external" href="https://doi.org/10.1175/BAMS-D-15-00230.1">https://doi.org/10.1175/BAMS-D-15-00230.1</a></p>
 </section>
 </section>
 
@@ -337,26 +337,8 @@ Fire Ecology, 3(1), 3–21.
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="landfire.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">LANDFIRE</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="firms.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-              <div class="page-info">
-                <div class="context">
-                  <span>Previous</span>
-                </div>
-                
-                <div class="title">FIRMS</div>
-                
-              </div>
-            </a>
+          
+          
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -387,7 +369,7 @@ Fire Ecology, 3(1), 3–21.
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">MTBS</a><ul>
+<li><a class="reference internal" href="#">GOES-R</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#data-characteristics">Data Characteristics</a></li>
 <li><a class="reference internal" href="#variables">Variables</a></li>

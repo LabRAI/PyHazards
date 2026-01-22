@@ -32,6 +32,12 @@ Datasets
    * - :doc:`landfire <datasets/landfire>`
      - US vegetation and fuels layers (e.g., fuel models, structure, cover) used as static landscape covariates for wildfire behavior and risk modeling. Reference: `LANDFIRE Program <https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning>`_.
 
+   * - :doc:`<datasets/wfigs>`
+     - Authoritative incident-level wildfire records maintained by U.S. interagency fire management systems, describing ignition time, location, status, and extent of real wildfire events. Commonly used as ground-truth labels for wildfire occurrence and for validating satellite-based fire detections. Reference: `WFIGS portal <https://data-nifc.opendata.arcgis.com/>`_.
+
+   * - :doc:`<datasets/goesr>`
+     - High-frequency geostationary satellite observations from the NOAA GOES-R series, providing multispectral imagery for continuous monitoring of atmospheric and surface conditions. Frequently used for early wildfire detection, fire evolution analysis, and integration with fire and meteorological datasets. Reference: `GOES-R Program <https://www.goes-r.gov/>`_.
+
 .. toctree::
    :maxdepth: 1
    :hidden:

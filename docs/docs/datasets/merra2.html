@@ -3,11 +3,11 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="merra2" href="era5.html" /><link rel="prev" title="Datasets" href="../pyhazards_datasets.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="ERA5" href="era5.html" /><link rel="prev" title="Datasets" href="../pyhazards_datasets.html" />
         <link rel="canonical" href="https://labrai.github.io/PyHazards/datasets/merra2.html" />
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>merra2 - PyHazards 1.0.1 documentation</title>
+        <title>MERRA-2 - PyHazards 1.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
@@ -208,12 +208,12 @@
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Datasets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">merra2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="era5.html">merra2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="noaa_flood.html">noaa_flood.rst</a></li>
-<li class="toctree-l2"><a class="reference internal" href="firms.html">merra2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mtbs.html">merra2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="landfire.html">merra2</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">MERRA-2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="era5.html">ERA5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firms.html">FIRMS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mtbs.html">MTBS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="landfire.html">LANDFIRE</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_models.html">Models</a></li>
@@ -267,14 +267,68 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="merra2">
-<h1>merra2<a class="headerlink" href="#merra2" title="Link to this heading">¶</a></h1>
-<p>MERRA-2 (NASA GMAO) reanalysis dataset.</p>
+          <section id="merra-2">
+<h1>MERRA-2<a class="headerlink" href="#merra-2" title="Link to this heading">¶</a></h1>
+<p>Global atmospheric reanalysis dataset produced by NASA Global Modeling and Assimilation Office (GMAO),
+providing physically consistent meteorological fields for weather, climate, and hazard modeling.</p>
+<hr class="docutils" />
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p><strong>MERRA-2 (Modern-Era Retrospective analysis for Research and Applications, Version 2)</strong> is a global
+atmospheric reanalysis that assimilates satellite and conventional observations into a numerical
+weather prediction system to produce gridded, time-continuous estimates of the atmospheric state.</p>
+<p>It is widely used as a core meteorological driver in climate analysis and hazard prediction pipelines,
+including wildfire, hurricane, drought, and extreme heat studies.</p>
+</section>
+<hr class="docutils" />
+<section id="data-characteristics">
+<h2>Data Characteristics<a class="headerlink" href="#data-characteristics" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Spatial coverage:</strong> Global</p></li>
+<li><p><strong>Spatial resolution:</strong> ~0.5° latitude × 0.625° longitude</p></li>
+<li><p><strong>Temporal resolution:</strong> Hourly</p></li>
+<li><p><strong>Vertical structure:</strong> Surface fields and multi-level pressure profiles</p></li>
+<li><p><strong>Data format:</strong> NetCDF</p></li>
+<li><p><strong>Coordinate system:</strong> Regular latitude–longitude grid</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading">¶</a></h2>
+<p>MERRA-2 provides a broad set of atmospheric and land-surface variables, including but not limited to:</p>
+<ul class="simple">
+<li><p>Near-surface meteorology (2 m temperature, humidity, wind)</p></li>
+<li><p>Surface energy fluxes and precipitation</p></li>
+<li><p>Atmospheric pressure-level variables (temperature, winds, geopotential height)</p></li>
+<li><p>Land-surface states (soil moisture, skin temperature)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="typical-use-cases">
+<h2>Typical Use Cases<a class="headerlink" href="#typical-use-cases" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Meteorological forcing for wildfire and natural hazard prediction models</p></li>
+<li><p>Climate diagnostics and long-term trend analysis</p></li>
+<li><p>Environmental covariates for spatiotemporal machine learning models</p></li>
+<li><p>Benchmark reanalysis input for weather–climate pipelines (e.g., WxC-style workflows)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="access">
+<h2>Access<a class="headerlink" href="#access" title="Link to this heading">¶</a></h2>
+<p>MERRA-2 data can be accessed via NASA GMAO and Earthdata services:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://gmao.gsfc.nasa.gov/gmao-products/merra-2/">MERRA-2 overview</a></p></li>
+<li><p><a class="reference external" href="https://earthdata.nasa.gov/">NASA Earthdata</a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
 <section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">Gelaro et al. (2017)</a></p></li>
-</ul>
+<p>Gelaro, R., McCarty, W., Suárez, M. J., <em>et al.</em> (2017).
+<em>The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA-2)</em>.
+Journal of Climate, 30(14), 5419–5454.
+<a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">https://doi.org/10.1175/JCLI-D-16-0758.1</a></p>
 </section>
 </section>
 
@@ -288,7 +342,7 @@
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">merra2</div>
+                <div class="title">ERA5</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -333,7 +387,12 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">merra2</a><ul>
+<li><a class="reference internal" href="#">MERRA-2</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#data-characteristics">Data Characteristics</a></li>
+<li><a class="reference internal" href="#variables">Variables</a></li>
+<li><a class="reference internal" href="#typical-use-cases">Typical Use Cases</a></li>
+<li><a class="reference internal" href="#access">Access</a></li>
 <li><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
