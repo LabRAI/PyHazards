@@ -21,7 +21,7 @@ Datasets
      - ECMWF ERA5 reanalysis served via the `Copernicus CDS <https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview>`_, providing hourly single-/pressure-level variables for benchmarks and hazard covariates; see `Hersbach et al. (2020) <https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803>`_.
 
    * - :doc:`noaa_flood <datasets/noaa_flood>`
-     - Flood-related event reports from the `NOAA Storm Events Database <https://www.ncei.noaa.gov/products/storm-events-database>_` (time, location, impacts), commonly used for event-level labeling and impact analysis; see `NCEI record <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648>`_(C00648).
+     - Flood-related event reports from the `NOAA Storm Events Database <https://www.ncei.noaa.gov/products/storm-events-database>`_ (time, location, impacts), commonly used for event-level labeling and impact analysis; see `NCEI record <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648>`_(C00648).
 
    * - :doc:`firms <datasets/firms>`
      - Near-real-time active fire detections from `NASA FIRMS <https://firms.modaps.eosdis.nasa.gov/>`_ (MODIS/VIIRS), used for operational monitoring and as wildfire occurrence labels; see `Schroeder et al. (2014) <https://doi.org/10.1016/j.rse.2013.08.008>`_.
@@ -47,17 +47,10 @@ quickly explore dataset structure and contents through a unified API.
 The example below demonstrates how to inspect a daily MERRA-2 file using
 the PyHazards dataset interface.
 
-.. code-block:: python
+.. code-block:: bash
 
-   import pyhazards
+   python -m pyhazards.datasets.inspection --root /path/to/Prithvi-WxC/data/merra-2 --day 2024-01-01
 
-   dataset = pyhazards.datasets.MERRA2(
-       root="/path/to/merra2",
-       start_date="2024-01-01",
-       end_date="2024-01-31",
-   )
-
-   dataset.inspect(day="2024-01-01")
 
 Core classes
 ------------

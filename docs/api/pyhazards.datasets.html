@@ -207,17 +207,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Datasets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../datasets/merra2.html">MERRA-2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../datasets/era5.html">ERA5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../datasets/noaa_flood.html">NOAA Flood Events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../datasets/firms.html">FIRMS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../datasets/mtbs.html">MTBS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../datasets/landfire.html">LANDFIRE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../datasets/wfigs.html">WFIGS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../datasets/goesr.html">GOES-R</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_models.html">Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_metrics.html">Metrics</a></li>
@@ -470,206 +460,14 @@ Subclasses should load data and return a DataBundle with splits ready for traini
 </dd></dl>
 
 </section>
-<section id="module-pyhazards.datasets.transforms">
-<span id="pyhazards-datasets-transforms-package"></span><h2>pyhazards.datasets.transforms package<a class="headerlink" href="#module-pyhazards.datasets.transforms" title="Link to this heading">¶</a></h2>
-<p>Reusable transforms for preprocessing hazard datasets.
-Currently placeholders; implement normalization, index computation, temporal windowing, etc.</p>
+<section id="pyhazards-datasets-transforms-package">
+<h2>pyhazards.datasets.transforms package<a class="headerlink" href="#pyhazards-datasets-transforms-package" title="Link to this heading">¶</a></h2>
 </section>
-<section id="module-pyhazards.datasets.hazards">
-<span id="pyhazards-datasets-hazards-package"></span><h2>pyhazards.datasets.hazards package<a class="headerlink" href="#module-pyhazards.datasets.hazards" title="Link to this heading">¶</a></h2>
-<p>Namespace for hazard-specific dataset loaders (earthquake, wildfire, flood, hurricane, landslide, etc.).
-Populate with concrete Dataset subclasses and register them in pyhazards.datasets.registry.</p>
+<section id="pyhazards-datasets-hazards-package">
+<h2>pyhazards.datasets.hazards package<a class="headerlink" href="#pyhazards-datasets-hazards-package" title="Link to this heading">¶</a></h2>
 </section>
-<section id="module-pyhazards.datasets">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhazards.datasets" title="Link to this heading">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="pyhazards.datasets.DataBundle">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">DataBundle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">splits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_spec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_spec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/base.html#DataBundle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.DataBundle" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Bundle of train/val/test splits plus metadata.
-Keeps feature/label specs to make model construction easy.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.DataBundle.feature_spec">
-<span class="sig-name descname"><span class="pre">feature_spec</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#pyhazards.datasets.base.FeatureSpec" title="pyhazards.datasets.base.FeatureSpec"><code class="xref py py-class docutils literal notranslate"><span class="pre">FeatureSpec</span></code></a></em><a class="headerlink" href="#pyhazards.datasets.DataBundle.feature_spec" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyhazards.datasets.DataBundle.get_split">
-<span class="sig-name descname"><span class="pre">get_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/base.html#DataBundle.get_split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.DataBundle.get_split" title="Link to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.datasets.base.DataSplit" title="pyhazards.datasets.base.DataSplit"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSplit</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.DataBundle.label_spec">
-<span class="sig-name descname"><span class="pre">label_spec</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#pyhazards.datasets.base.LabelSpec" title="pyhazards.datasets.base.LabelSpec"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelSpec</span></code></a></em><a class="headerlink" href="#pyhazards.datasets.DataBundle.label_spec" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.DataBundle.metadata">
-<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#pyhazards.datasets.DataBundle.metadata" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.DataBundle.splits">
-<span class="sig-name descname"><span class="pre">splits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <a class="reference internal" href="#pyhazards.datasets.base.DataSplit" title="pyhazards.datasets.base.DataSplit"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSplit</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#pyhazards.datasets.DataBundle.splits" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="pyhazards.datasets.DataSplit">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">DataSplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/base.html#DataSplit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.DataSplit" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Container for a single split.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.DataSplit.inputs">
-<span class="sig-name descname"><span class="pre">inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></em><a class="headerlink" href="#pyhazards.datasets.DataSplit.inputs" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.DataSplit.metadata">
-<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#pyhazards.datasets.DataSplit.metadata" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.DataSplit.targets">
-<span class="sig-name descname"><span class="pre">targets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></em><a class="headerlink" href="#pyhazards.datasets.DataSplit.targets" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="pyhazards.datasets.Dataset">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/base.html#Dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.Dataset" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Base class for hazard datasets.
-Subclasses should load data and return a DataBundle with splits ready for training.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="pyhazards.datasets.Dataset._load">
-<span class="sig-name descname"><span class="pre">_load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/base.html#Dataset._load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.Dataset._load" title="Link to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.datasets.base.DataBundle" title="pyhazards.datasets.base.DataBundle"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBundle</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pyhazards.datasets.Dataset.load">
-<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/base.html#Dataset.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.Dataset.load" title="Link to this definition">¶</a></dt>
-<dd><p>Return a DataBundle. Optionally return a specific split if provided.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.datasets.base.DataBundle" title="pyhazards.datasets.base.DataBundle"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBundle</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.Dataset.name">
-<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'base'</span></em><a class="headerlink" href="#pyhazards.datasets.Dataset.name" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="pyhazards.datasets.FeatureSpec">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">FeatureSpec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dim=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/base.html#FeatureSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.FeatureSpec" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Describes input features (shapes, dtypes, normalization).</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.FeatureSpec.channels">
-<span class="sig-name descname"><span class="pre">channels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pyhazards.datasets.FeatureSpec.channels" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.FeatureSpec.description">
-<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pyhazards.datasets.FeatureSpec.description" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.FeatureSpec.extra">
-<span class="sig-name descname"><span class="pre">extra</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#pyhazards.datasets.FeatureSpec.extra" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.FeatureSpec.input_dim">
-<span class="sig-name descname"><span class="pre">input_dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pyhazards.datasets.FeatureSpec.input_dim" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="pyhazards.datasets.GraphTemporalDataset">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">GraphTemporalDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjacency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/graph.html#GraphTemporalDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.GraphTemporalDataset" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
-<p>Simple container for county/day style tensors with an optional adjacency.</p>
-<p>Each sample is a window of shape (past_days, num_counties, num_features) and a label
-of shape (num_counties,).</p>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="pyhazards.datasets.LabelSpec">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">LabelSpec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_targets=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_type='regression'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/base.html#LabelSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.LabelSpec" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Describes labels/targets for downstream tasks.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.LabelSpec.description">
-<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pyhazards.datasets.LabelSpec.description" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.LabelSpec.extra">
-<span class="sig-name descname"><span class="pre">extra</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code><span class="pre">]</span></em><a class="headerlink" href="#pyhazards.datasets.LabelSpec.extra" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.LabelSpec.num_targets">
-<span class="sig-name descname"><span class="pre">num_targets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pyhazards.datasets.LabelSpec.num_targets" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyhazards.datasets.LabelSpec.task_type">
-<span class="sig-name descname"><span class="pre">task_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'regression'</span></em><a class="headerlink" href="#pyhazards.datasets.LabelSpec.task_type" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyhazards.datasets.available_datasets">
-<span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">available_datasets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/registry.html#available_datasets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.available_datasets" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyhazards.datasets.graph_collate">
-<span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">graph_collate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/graph.html#graph_collate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.graph_collate" title="Link to this definition">¶</a></dt>
-<dd><p>Collate function that stacks x and adjacency if provided.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyhazards.datasets.load_dataset">
-<span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">load_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/registry.html#load_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.load_dataset" title="Link to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.datasets.base.Dataset" title="pyhazards.datasets.base.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pyhazards.datasets.register_dataset">
-<span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">register_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">builder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/registry.html#register_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.register_dataset" title="Link to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -760,50 +558,9 @@ of shape (num_counties,).</p>
 <li><a class="reference internal" href="#pyhazards.datasets.registry.register_dataset"><code class="docutils literal notranslate"><span class="pre">register_dataset()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pyhazards.datasets.transforms">pyhazards.datasets.transforms package</a></li>
-<li><a class="reference internal" href="#module-pyhazards.datasets.hazards">pyhazards.datasets.hazards package</a></li>
-<li><a class="reference internal" href="#module-pyhazards.datasets">Module contents</a><ul>
-<li><a class="reference internal" href="#pyhazards.datasets.DataBundle"><code class="docutils literal notranslate"><span class="pre">DataBundle</span></code></a><ul>
-<li><a class="reference internal" href="#pyhazards.datasets.DataBundle.feature_spec"><code class="docutils literal notranslate"><span class="pre">DataBundle.feature_spec</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.DataBundle.get_split"><code class="docutils literal notranslate"><span class="pre">DataBundle.get_split()</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.DataBundle.label_spec"><code class="docutils literal notranslate"><span class="pre">DataBundle.label_spec</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.DataBundle.metadata"><code class="docutils literal notranslate"><span class="pre">DataBundle.metadata</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.DataBundle.splits"><code class="docutils literal notranslate"><span class="pre">DataBundle.splits</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#pyhazards.datasets.DataSplit"><code class="docutils literal notranslate"><span class="pre">DataSplit</span></code></a><ul>
-<li><a class="reference internal" href="#pyhazards.datasets.DataSplit.inputs"><code class="docutils literal notranslate"><span class="pre">DataSplit.inputs</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.DataSplit.metadata"><code class="docutils literal notranslate"><span class="pre">DataSplit.metadata</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.DataSplit.targets"><code class="docutils literal notranslate"><span class="pre">DataSplit.targets</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#pyhazards.datasets.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a><ul>
-<li><a class="reference internal" href="#pyhazards.datasets.Dataset._load"><code class="docutils literal notranslate"><span class="pre">Dataset._load()</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.Dataset.load"><code class="docutils literal notranslate"><span class="pre">Dataset.load()</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.Dataset.name"><code class="docutils literal notranslate"><span class="pre">Dataset.name</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#pyhazards.datasets.FeatureSpec"><code class="docutils literal notranslate"><span class="pre">FeatureSpec</span></code></a><ul>
-<li><a class="reference internal" href="#pyhazards.datasets.FeatureSpec.channels"><code class="docutils literal notranslate"><span class="pre">FeatureSpec.channels</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.FeatureSpec.description"><code class="docutils literal notranslate"><span class="pre">FeatureSpec.description</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.FeatureSpec.extra"><code class="docutils literal notranslate"><span class="pre">FeatureSpec.extra</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.FeatureSpec.input_dim"><code class="docutils literal notranslate"><span class="pre">FeatureSpec.input_dim</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#pyhazards.datasets.GraphTemporalDataset"><code class="docutils literal notranslate"><span class="pre">GraphTemporalDataset</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.LabelSpec"><code class="docutils literal notranslate"><span class="pre">LabelSpec</span></code></a><ul>
-<li><a class="reference internal" href="#pyhazards.datasets.LabelSpec.description"><code class="docutils literal notranslate"><span class="pre">LabelSpec.description</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.LabelSpec.extra"><code class="docutils literal notranslate"><span class="pre">LabelSpec.extra</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.LabelSpec.num_targets"><code class="docutils literal notranslate"><span class="pre">LabelSpec.num_targets</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.LabelSpec.task_type"><code class="docutils literal notranslate"><span class="pre">LabelSpec.task_type</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#pyhazards.datasets.available_datasets"><code class="docutils literal notranslate"><span class="pre">available_datasets()</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.graph_collate"><code class="docutils literal notranslate"><span class="pre">graph_collate()</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.load_dataset"><code class="docutils literal notranslate"><span class="pre">load_dataset()</span></code></a></li>
-<li><a class="reference internal" href="#pyhazards.datasets.register_dataset"><code class="docutils literal notranslate"><span class="pre">register_dataset()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#pyhazards-datasets-transforms-package">pyhazards.datasets.transforms package</a></li>
+<li><a class="reference internal" href="#pyhazards-datasets-hazards-package">pyhazards.datasets.hazards package</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>

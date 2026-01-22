@@ -281,7 +281,7 @@
 <td><p>ECMWF ERA5 reanalysis served via the <a class="reference external" href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview">Copernicus CDS</a>, providing hourly single-/pressure-level variables for benchmarks and hazard covariates; see <a class="reference external" href="https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803">Hersbach et al. (2020)</a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="datasets/noaa_flood.html"><span class="doc">noaa_flood</span></a></p></td>
-<td><p>Flood-related event reports from the <cite>NOAA Storm Events Database &lt;https://www.ncei.noaa.gov/products/storm-events-database&gt;_</cite> (time, location, impacts), commonly used for event-level labeling and impact analysis; see <a href="#id2"><span class="problematic" id="id3">`</span></a>NCEI record &lt;<a class="reference external" href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648">https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648</a>&gt;`_(C00648).</p></td>
+<td><p>Flood-related event reports from the <a class="reference external" href="https://www.ncei.noaa.gov/products/storm-events-database">NOAA Storm Events Database</a> (time, location, impacts), commonly used for event-level labeling and impact analysis; see <a href="#id2"><span class="problematic" id="id3">`</span></a>NCEI record &lt;<a class="reference external" href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648">https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648</a>&gt;`_(C00648).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="datasets/firms.html"><span class="doc">firms</span></a></p></td>
 <td><p>Near-real-time active fire detections from <a class="reference external" href="https://firms.modaps.eosdis.nasa.gov/">NASA FIRMS</a> (MODIS/VIIRS), used for operational monitoring and as wildfire occurrence labels; see <a class="reference external" href="https://doi.org/10.1016/j.rse.2013.08.008">Schroeder et al. (2014)</a>.</p></td>
@@ -308,15 +308,7 @@
 quickly explore dataset structure and contents through a unified API.</p>
 <p>The example below demonstrates how to inspect a daily MERRA-2 file using
 the PyHazards dataset interface.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pyhazards</span>
-
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">pyhazards</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MERRA2</span><span class="p">(</span>
-    <span class="n">root</span><span class="o">=</span><span class="s2">&quot;/path/to/merra2&quot;</span><span class="p">,</span>
-    <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;2024-01-01&quot;</span><span class="p">,</span>
-    <span class="n">end_date</span><span class="o">=</span><span class="s2">&quot;2024-01-31&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="n">dataset</span><span class="o">.</span><span class="n">inspect</span><span class="p">(</span><span class="n">day</span><span class="o">=</span><span class="s2">&quot;2024-01-01&quot;</span><span class="p">)</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspection<span class="w"> </span>--root<span class="w"> </span>/path/to/Prithvi-WxC/data/merra-2<span class="w"> </span>--day<span class="w"> </span><span class="m">2024</span>-01-01
 </pre></div>
 </div>
 </section>
