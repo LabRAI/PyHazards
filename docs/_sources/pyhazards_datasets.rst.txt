@@ -38,12 +38,6 @@ Datasets
    * - :doc:`goesr <datasets/goesr>`
      - High-frequency geostationary multispectral imagery from the `NOAA GOES-R series <https://www.goes-r.gov/>`_, supporting continuous monitoring (e.g., smoke/thermal context) and early detection workflows when paired with fire and meteorology datasets.
 
-.. toctree::
-   :maxdepth: 1
-   :hidden:
- 
-
-
 Dataset inspection
 ------------------
 
