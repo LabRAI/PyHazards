@@ -49,7 +49,7 @@ the PyHazards dataset interface.
 
 .. code-block:: bash
 
-   python -m pyhazards.datasets.inspection --root /path/to/Prithvi-WxC/data/merra-2 --day 2024-01-01
+   python -m pyhazards.datasets.inspection --date 2024-01-01 --outdir outputs/
 
 
 Core classes
