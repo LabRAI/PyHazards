@@ -7,6 +7,8 @@ from .registry import available_models, register_model
 from .wildfire_mamba import WildfireMamba, wildfire_mamba_builder
 from .wildfire_aspp import WildfireASPP, TverskyLoss, wildfire_aspp_builder
 from .cnn_aspp import WildfireCNNASPP, cnn_aspp_builder
+from .hydrographnet import HydroGraphNet, hydrographnet_builder
+
 
 __all__ = [
     # Core API
@@ -32,6 +34,7 @@ __all__ = [
     "wildfire_aspp_builder",
     "WildfireCNNASPP",
     "cnn_aspp_builder",
+    "hydrographnet",
 ]
 
 # -------------------------------------------------
@@ -91,3 +94,15 @@ register_model(
         "dropout": 0.0,
     },
 )
+
+
+register_model(
+    name="hydrographnet",
+    builder=hydrographnet_builder,
+    defaults={
+        "hidden_dim": 64,
+        "harmonics": 5,
+        "num_gn_blocks": 5,
+    },
+)
+
