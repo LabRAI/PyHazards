@@ -1,8 +1,34 @@
 MERRA-2
 =======
 
-Global atmospheric reanalysis dataset produced by NASA Global Modeling and Assimilation Office (GMAO),
+Global atmospheric reanalysis produced by NASA Global Modeling and Assimilation Office (GMAO),
 providing physically consistent meteorological fields for weather, climate, and hazard modeling.
+
+.. admonition:: At-a-glance (Quick Facts)
+   :class: note
+
+   .. list-table::
+      :widths: 26 74
+      :stub-columns: 1
+
+      * - Producer
+        - NASA GMAO (GEOS)
+      * - Spatial coverage
+        - Global
+      * - Spatial resolution
+        - ~0.5° (lat) × 0.625° (lon)
+      * - Temporal resolution
+        - Hourly (also 3-hourly / daily / monthly products)
+      * - **Data update frequency**
+        - **Published monthly; typically available ~2–3 weeks after month end.**
+      * - Period of record
+        - 1980–present
+      * - Format
+        - NetCDF4
+      * - Grid / CRS
+        - Regular latitude–longitude grid
+      * - Typical role in PyHazards
+        - Core meteorological driver (forcing + covariates)
 
 ----
 
@@ -13,20 +39,40 @@ Overview
 atmospheric reanalysis that assimilates satellite and conventional observations into a numerical
 weather prediction system to produce gridded, time-continuous estimates of the atmospheric state.
 
-It is widely used as a core meteorological driver in climate analysis and hazard prediction pipelines,
+It is widely used as a meteorological backbone for climate analysis and hazard prediction pipelines,
 including wildfire, hurricane, drought, and extreme heat studies.
+
+----
+
+Stats
+-----
+
+.. list-table::
+   :header-rows: 1
+   :widths: 22 22 22 34
+
+   * - Spatial
+     - Temporal
+     - Update cadence
+     - Coverage
+   * - 0.5° × 0.625°
+     - Hourly
+     - Monthly (+ ~2–3 weeks latency)
+     - Global, 1980–present
 
 ----
 
 Data Characteristics
 --------------------
 
-- **Spatial coverage:** Global  
-- **Spatial resolution:** ~0.5° latitude × 0.625° longitude  
-- **Temporal resolution:** Hourly  
-- **Vertical structure:** Surface fields and multi-level pressure profiles  
-- **Data format:** NetCDF  
-- **Coordinate system:** Regular latitude–longitude grid  
+- **Spatial coverage:** Global
+- **Spatial resolution:** ~0.5° latitude × 0.625° longitude
+- **Temporal resolution:** Hourly (with derived 3-hourly/daily/monthly products)
+- **Vertical structure:** Surface fields and multi-level pressure profiles
+- **Data format:** NetCDF4
+- **Coordinate system:** Regular latitude–longitude grid
+- **Data update frequency:** Monthly publication; new data typically appear ~2–3 weeks after month end
+  (common operational latency for standard MERRA-2 streams)
 
 ----
 
@@ -55,10 +101,14 @@ Typical Use Cases
 Access
 ------
 
-MERRA-2 data can be accessed via NASA GMAO and Earthdata services:
+MERRA-2 data can be accessed via NASA Earthdata / GES DISC services:
 
-- `MERRA-2 overview <https://gmao.gsfc.nasa.gov/gmao-products/merra-2/>`_
+- `MERRA-2 overview (GMAO) <https://gmao.gsfc.nasa.gov/gmao-products/merra-2/>`_
 - `NASA Earthdata <https://earthdata.nasa.gov/>`_
+
+.. note::
+   For standard MERRA-2 streams, operational latency is commonly documented as
+   ~2–3 weeks after the end of each month (monthly publication cadence).
 
 ----
 
