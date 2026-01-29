@@ -206,17 +206,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pyhazards_datasets.html">Datasets</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Datasets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/merra2.html">MERRA-2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/era5.html">ERA5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/noaa_flood.html">NOAA Flood Events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/firms.html">FIRMS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/mtbs.html">MTBS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/landfire.html">LANDFIRE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/wfigs.html">WFIGS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/goesr.html">GOES-R</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_models.html">Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_metrics.html">Metrics</a></li>
@@ -271,7 +261,7 @@
 
 
 <div class="viewcode-block" id="register_dataset">
-<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.register_dataset">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.datasets.registry.register_dataset">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">register_dataset</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">builder</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_DATASET_REGISTRY</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; already registered.&quot;</span><span class="p">)</span>
@@ -280,14 +270,14 @@
 
 
 <div class="viewcode-block" id="available_datasets">
-<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.available_datasets">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.datasets.registry.available_datasets">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">available_datasets</span><span class="p">():</span>
     <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_DATASET_REGISTRY</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 
 
 <div class="viewcode-block" id="load_dataset">
-<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.load_dataset">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.datasets.registry.load_dataset">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_dataset</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dataset</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_DATASET_REGISTRY</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; is not registered. Known: </span><span class="si">{</span><span class="n">available_datasets</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>

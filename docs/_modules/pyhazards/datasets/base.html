@@ -206,17 +206,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pyhazards_datasets.html">Datasets</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Datasets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/merra2.html">MERRA-2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/era5.html">ERA5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/noaa_flood.html">NOAA Flood Events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/firms.html">FIRMS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/mtbs.html">MTBS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/landfire.html">LANDFIRE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/wfigs.html">WFIGS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/goesr.html">GOES-R</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_models.html">Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_metrics.html">Metrics</a></li>
@@ -268,7 +258,7 @@
 
 
 <div class="viewcode-block" id="FeatureSpec">
-<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.FeatureSpec">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.datasets.base.FeatureSpec">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">FeatureSpec</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Describes input features (shapes, dtypes, normalization).&quot;&quot;&quot;</span>
@@ -280,7 +270,7 @@
 
 
 <div class="viewcode-block" id="LabelSpec">
-<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.LabelSpec">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.datasets.base.LabelSpec">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">LabelSpec</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Describes labels/targets for downstream tasks.&quot;&quot;&quot;</span>
@@ -292,7 +282,7 @@
 
 
 <div class="viewcode-block" id="DataSplit">
-<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.DataSplit">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.datasets.base.DataSplit">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">DataSplit</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for a single split.&quot;&quot;&quot;</span>
@@ -303,7 +293,7 @@
 
 
 <div class="viewcode-block" id="DataBundle">
-<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.DataBundle">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.datasets.base.DataBundle">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">DataBundle</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -316,7 +306,7 @@
     <span class="n">metadata</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DataBundle.get_split">
-<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.DataBundle.get_split">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.datasets.base.DataBundle.get_split">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataSplit</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">splits</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Split &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; not found. Available: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splits</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -326,7 +316,7 @@
 
 
 <div class="viewcode-block" id="Transform">
-<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.Transform">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.datasets.base.Transform">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Transform</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Callable data transform.&quot;&quot;&quot;</span>
 
@@ -336,7 +326,7 @@
 
 
 <div class="viewcode-block" id="Dataset">
-<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.Dataset">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.datasets.base.Dataset">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Dataset</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class for hazard datasets.</span>
@@ -349,7 +339,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">cache_dir</span> <span class="o">=</span> <span class="n">cache_dir</span>
 
 <div class="viewcode-block" id="Dataset.load">
-<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.Dataset.load">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.datasets.base.Dataset.load">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">split</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">transforms</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Transform</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataBundle</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a DataBundle. Optionally return a specific split if provided.</span>
@@ -369,7 +359,7 @@
 
 
 <div class="viewcode-block" id="Dataset._load">
-<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.Dataset._load">[docs]</a>
+<a class="viewcode-back" href="../../../api/pyhazards.datasets.html#pyhazards.datasets.base.Dataset._load">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_load</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataBundle</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Subclasses must implement _load() to return a DataBundle.&quot;</span><span class="p">)</span></div>
 </div>
