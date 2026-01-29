@@ -1,8 +1,34 @@
 MTBS
 ====
 
-National-scale wildfire burn severity and perimeter dataset produced by the U.S. Geological Survey (USGS),
+National-scale wildfire burn severity and perimeter dataset produced by the U.S. Geological Survey (USGS) and partners,
 supporting post-fire impact assessment and long-term wildfire regime analysis.
+
+.. admonition:: At-a-glance (Quick Facts)
+   :class: note
+
+   .. list-table::
+      :widths: 26 74
+      :stub-columns: 1
+
+      * - Producer
+        - USGS + USDA Forest Service (interagency MTBS program)
+      * - Spatial coverage
+        - United States (CONUS + Alaska + Hawaii + Puerto Rico)
+      * - Spatial resolution
+        - 30 m (Landsat-based)
+      * - Data structure
+        - Event-based rasters + vector perimeters (per-fire bundles; mosaics available)
+      * - Formats
+        - GeoTIFF, Shapefile, File Geodatabase
+      * - Projection / CRS
+        - Projected coordinate systems (product-dependent; distributed with metadata)
+      * - **Data update frequency**
+        - **Continuous mapping + quarterly releases (typically Feb / May / Aug / Nov).**
+      * - Period of record
+        - 1984–near present (inventory grows with releases)
+      * - Typical role in PyHazards
+        - Post-fire labels / validation targets (extent, severity classes, burn metrics)
 
 ----
 
@@ -18,15 +44,39 @@ training or validation data for models that predict burn extent, burn severity, 
 
 ----
 
+Stats
+-----
+
+.. list-table::
+   :header-rows: 1
+   :widths: 22 22 26 30
+
+   * - Spatial
+     - Temporal
+     - Update cadence
+     - Representation
+   * - 30 m (Landsat)
+     - Fire-event / fire-year
+     - Continuous mapping; quarterly releases
+     - Per-fire rasters + perimeters (vector)
+
+----
+
 Data Characteristics
 --------------------
 
-- **Spatial coverage:** United States  
-- **Spatial resolution:** 30 m (Landsat-based)  
-- **Temporal coverage:** Annual fire-year products  
-- **Data structure:** Event-based raster layers and vector perimeters  
-- **Data format:** GeoTIFF, Shapefile, File Geodatabase  
-- **Coordinate system:** Projected coordinate systems (product-dependent)  
+- **Spatial coverage:** United States
+- **Spatial resolution:** 30 m (Landsat-based)
+- **Temporal coverage:** Fire-event products aggregated by fire year; historical archive from 1984 onward
+- **Data structure:** Event-based raster layers and vector perimeters
+- **Data format:** GeoTIFF, Shapefile, File Geodatabase
+- **Coordinate system:** Projected coordinate systems (product-dependent)
+- **Data update frequency:** Continuous mapping with **quarterly releases** (commonly Feb / May / Aug / Nov)
+
+.. note::
+   MTBS is not strictly “near-real-time”. Product availability depends on suitable pre-/post-fire Landsat
+   imagery and production workflow; recent fire seasons are typically populated progressively across
+   quarterly releases.
 
 ----
 

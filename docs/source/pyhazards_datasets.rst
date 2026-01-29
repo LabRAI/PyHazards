@@ -49,7 +49,7 @@ the PyHazards dataset interface.
 
 .. code-block:: bash
 
-   python -m pyhazards.datasets.inspection --date 2024-01-01 --outdir outputs/
+   python -m pyhazards.datasets.inspection 20260101
 
 
 Core classes

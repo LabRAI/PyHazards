@@ -263,14 +263,86 @@
 <h1>GOES-R<a class="headerlink" href="#goes-r" title="Link to this heading">¶</a></h1>
 <p>High-frequency geostationary satellite observations from NOAA’s GOES-R series, providing continuous
 multispectral imagery for monitoring atmospheric and surface processes.</p>
+<div class="note admonition">
+<p class="admonition-title">At-a-glance (Quick Facts)</p>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26.0%" />
+<col style="width: 74.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><th class="stub"><p>Provider</p></th>
+<td><p>NOAA GOES-R Program</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Payload (core)</p></th>
+<td><p>ABI (Advanced Baseline Imager) multispectral imagery</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Spatial coverage</p></th>
+<td><p>Western Hemisphere / Americas (geostationary view)</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Spatial resolution</p></th>
+<td><p>~0.5–2 km (band-dependent)</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Temporal resolution (typical)</p></th>
+<td><p><strong>Mode 6 default:</strong> Full Disk 10 min; CONUS 5 min; Mesoscale 1 min</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p><strong>Data update frequency</strong></p></th>
+<td><p><strong>Continuous ingest; new files are added as soon as available.</strong>
+(Scan cadence depends on sector/mode; see above.)</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Latency (depends on access route)</p></th>
+<td><p>Cloud/Open-Data: near real time; CLASS subscription can be ~30 min–2 hr after observation</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Format</p></th>
+<td><p>NetCDF (ABI Level 1b / Level 2+ products)</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Projection / CRS</p></th>
+<td><p>ABI fixed grid (geostationary projection); lat–lon remaps are available for some workflows</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Typical role in PyHazards</p></th>
+<td><p>Rapid-refresh imagery for smoke/fire evolution, ignition monitoring, and situational awareness</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <hr class="docutils" />
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
-<p><strong>GOES-R</strong> refers to the latest generation of NOAA geostationary operational environmental satellites,
-including GOES-16, GOES-17, and GOES-18. The series carries the Advanced Baseline Imager (ABI), which
-provides rapid-refresh, multispectral observations over the Americas.</p>
+<p><strong>GOES-R</strong> refers to NOAA’s current-generation geostationary operational environmental satellites.
+The series carries the Advanced Baseline Imager (ABI), which provides rapid-refresh, multispectral
+observations over the Americas.</p>
 <p>GOES-R data are widely used for real-time monitoring of weather systems, smoke and fire evolution, and
 early wildfire detection, particularly where high temporal resolution is critical.</p>
+</section>
+<hr class="docutils" />
+<section id="stats">
+<h2>Stats<a class="headerlink" href="#stats" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 22.0%" />
+<col style="width: 28.0%" />
+<col style="width: 28.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Spatial</p></th>
+<th class="head"><p>Temporal</p></th>
+<th class="head"><p>Refresh / update cadence</p></th>
+<th class="head"><p>Representation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0.5–2 km (band-dependent)</p></td>
+<td><p>1–10 min (sector/mode)</p></td>
+<td><p>Continuous ingest; files appear as soon as available</p></td>
+<td><p>Raster imagery time series (ABI fixed grid)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 <hr class="docutils" />
 <section id="data-characteristics">
@@ -278,11 +350,22 @@ early wildfire detection, particularly where high temporal resolution is critica
 <ul class="simple">
 <li><p><strong>Spatial coverage:</strong> Western Hemisphere (geostationary view)</p></li>
 <li><p><strong>Spatial resolution:</strong> ~0.5–2 km (band-dependent)</p></li>
-<li><p><strong>Temporal resolution:</strong> 1–15 minutes (mode-dependent)</p></li>
+<li><p><strong>Temporal resolution:</strong> 1–15 minutes (mode/sector-dependent; typical default Mode 6 cadence below)</p></li>
+<li><p><strong>Typical scan cadence (Mode 6 default):</strong>
+- Full Disk: every 10 minutes
+- CONUS: every 5 minutes
+- Mesoscale: every 1 minute</p></li>
 <li><p><strong>Data structure:</strong> Gridded satellite imagery (raster time series)</p></li>
 <li><p><strong>Data format:</strong> NetCDF</p></li>
-<li><p><strong>Coordinate system:</strong> Geostationary projection (with latitude–longitude products available)</p></li>
+<li><p><strong>Coordinate system:</strong> ABI fixed grid (geostationary projection; lat–lon remaps can be generated)</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>“Data update frequency” in GOES-R is best interpreted as <strong>(1) observation refresh cadence</strong>
+(sector/mode) + <strong>(2) distribution latency</strong> (varies by access channel). For near-real-time pipelines,
+cloud/open-data mirrors typically publish granules as soon as they are available; some archival/subscription
+services may have longer delays.</p>
+</div>
 </section>
 <hr class="docutils" />
 <section id="variables">
@@ -311,7 +394,7 @@ early wildfire detection, particularly where high temporal resolution is critica
 <p>GOES-R data are distributed by NOAA through multiple access points:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.goes-r.gov/">GOES-R Program</a></p></li>
-<li><p><a class="reference external" href="https://www.noaa.gov/information-technology/open-data-dissemination">NOAA Big Data Program</a></p></li>
+<li><p><a class="reference external" href="https://www.noaa.gov/information-technology/open-data-dissemination">NOAA Open Data Dissemination</a></p></li>
 </ul>
 </section>
 <hr class="docutils" />
@@ -363,6 +446,7 @@ Bulletin of the American Meteorological Society, 98(4), 681–698.
             <ul>
 <li><a class="reference internal" href="#">GOES-R</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#stats">Stats</a></li>
 <li><a class="reference internal" href="#data-characteristics">Data Characteristics</a></li>
 <li><a class="reference internal" href="#variables">Variables</a></li>
 <li><a class="reference internal" href="#typical-use-cases">Typical Use Cases</a></li>

@@ -4,6 +4,30 @@ LANDFIRE
 National-scale vegetation, fuel, and landscape characterization dataset produced by the U.S. Forest Service,
 supporting wildfire behavior modeling and landscape-scale fire risk assessment.
 
+.. admonition:: At-a-glance (Quick Facts)
+   :class: note
+
+   .. list-table::
+      :widths: 26 74
+      :stub-columns: 1
+
+      * - Producer
+        - U.S. Forest Service (LANDFIRE Program)
+      * - Spatial coverage
+        - United States (CONUS + Alaska/Hawaii; some products include PRVI)
+      * - Spatial resolution
+        - ~30 m (product-dependent)
+      * - Data structure
+        - Gridded raster layers (static / slowly varying background covariates)
+      * - Formats
+        - GeoTIFF (commonly distributed); additional GIS packages may be provided
+      * - Projection / CRS
+        - Projected coordinate systems (product-dependent; distributed with dataset metadata)
+      * - **Data update frequency**
+        - **Annual/yearly updates (versioned “LF YYYY Update” suites), targeting products current to the previous year.**
+      * - Typical role in PyHazards
+        - Fuels + vegetation + canopy covariates for behavior/spread/risk modeling
+
 ----
 
 Overview
@@ -11,22 +35,42 @@ Overview
 
 **LANDFIRE (Landscape Fire and Resource Management Planning Tools)** is a geospatial data program that
 provides consistent, nationwide maps of vegetation, fuels, and fire regimes across the United States.
-The products are derived from remote sensing, field observations, and ecological modeling.
+Products are derived from remote sensing, field observations, disturbance mapping, and ecological modeling.
 
 LANDFIRE datasets are widely used as static or slowly varying background layers in wildfire modeling,
 including fire behavior simulation, fire spread modeling, and wildfire risk assessment pipelines.
 
 ----
 
+Stats
+-----
+
+.. list-table::
+   :header-rows: 1
+   :widths: 22 22 26 30
+
+   * - Spatial
+     - Update cadence
+     - Primary layers
+     - Representation
+   * - ~30 m
+     - Annual (versioned updates)
+     - Fuels / vegetation / canopy / fire regime
+     - Raster grids (GeoTIFF)
+
+----
+
 Data Characteristics
 --------------------
 
-- **Spatial coverage:** United States  
-- **Spatial resolution:** ~30 m  
-- **Temporal coverage:** Versioned updates (quasi-annual releases)  
-- **Data structure:** Gridded raster layers (static or slowly varying)  
-- **Data format:** GeoTIFF  
-- **Coordinate system:** Projected coordinate systems (product-dependent)  
+- **Spatial coverage:** United States
+- **Spatial resolution:** ~30 m (product-dependent)
+- **Temporal coverage:** Versioned releases (annual/yearly update suites)
+- **Data structure:** Gridded raster layers (static or slowly varying)
+- **Data format:** GeoTIFF
+- **Coordinate system:** Projected coordinate systems (product-dependent)
+- **Data update frequency:** Annual/yearly updates; “LF YYYY Update” products aim to be current to the
+  previous year (reduced-latency update strategy)
 
 ----
 
@@ -38,7 +82,7 @@ LANDFIRE products include multiple thematic layers, such as:
 - Fuel models (e.g., Fire Behavior Fuel Models)
 - Vegetation type, cover, and height
 - Canopy characteristics (canopy cover, base height, bulk density)
-- Fire regime and disturbance descriptors
+- Fire regime and disturbance descriptors (annual disturbance / transitions)
 
 ----
 
