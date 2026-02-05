@@ -263,8 +263,10 @@
 <h1>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">¶</a></h1>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
-<p>PyHazards provides a unified dataset interface for hazard prediction across tabular, temporal, and raster data.
-Each dataset returns a DataBundle containing splits, feature specs, label specs, and metadata.</p>
+<p>PyHazards maintains a curated catalog of commonly used hazard datasets and provides
+dataset-specific utilities for <strong>download / preprocessing / inspection / visualization</strong>.</p>
+<p>Each dataset page describes: (1) what the dataset is, (2) how to obtain it, and (3) how to
+quickly validate local data files via an inspection entrypoint (when available).</p>
 </section>
 <section id="id1">
 <h2>Datasets<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
@@ -305,96 +307,94 @@ Each dataset returns a DataBundle containing splits, feature specs, label specs,
 </section>
 <section id="dataset-inspection">
 <h2>Dataset inspection<a class="headerlink" href="#dataset-inspection" title="Link to this heading">¶</a></h2>
-<p>PyHazards provides a built-in inspection utility that allows users to quickly explore dataset structure and contents through a unified API.</p>
-<p>The example below demonstrates how to inspect a daily MERRA-2 file using the PyHazards dataset interface.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># One command: download raw MERRA-2 (if needed) -&gt; merge SFC+PRES -&gt; inspect -&gt; save plots/tables</span>
+<p>PyHazards provides dataset inspection entrypoints to quickly validate local files and produce
+basic summaries/plots.</p>
+<p>Currently implemented:</p>
+<ul class="simple">
+<li><p><strong>MERRA-2 (merra2)</strong>: one-shot pipeline to <strong>download raw MERRA-2 → merge SFC+PRES → inspect → save plots/tables</strong>.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># One command: download (if needed) -&gt; merge -&gt; inspect -&gt; save outputs</span>
 python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspection<span class="w"> </span><span class="m">20260101</span>
 </pre></div>
 </div>
-<p>Notes:</p>
+<section id="notes-merra-2">
+<h3>Notes (MERRA-2)<a class="headerlink" href="#notes-merra-2" title="Link to this heading">¶</a></h3>
 <ul>
-<li><p>MERRA-2 download requires Earthdata credentials via environment variables:</p>
+<li><p>Download requires Earthdata credentials via environment variables:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">EARTHDATA_USERNAME</span><span class="o">=</span><span class="s2">&quot;YOUR_USERNAME&quot;</span>
 <span class="n">export</span> <span class="n">EARTHDATA_PASSWORD</span><span class="o">=</span><span class="s2">&quot;YOUR_PASSWORD&quot;</span>
 </pre></div>
 </div>
 </li>
-<li><p>By default, outputs are written to <code class="docutils literal notranslate"><span class="pre">outputs/</span></code> (can be changed via <code class="docutils literal notranslate"><span class="pre">--outdir</span></code>).</p></li>
-<li><p>The same inspection pattern is expected to be supported by other datasets (e.g., <code class="docutils literal notranslate"><span class="pre">mtbs</span></code>, <code class="docutils literal notranslate"><span class="pre">era5</span></code>),
-with dataset-specific I/O handled inside each dataset implementation.</p></li>
+<li><p>Date formats accepted: <code class="docutils literal notranslate"><span class="pre">YYYYMMDD</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">20260101</span></code>) or ISO <code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD</span></code>.</p></li>
+<li><p>Optional flags commonly used:
+- <code class="docutils literal notranslate"><span class="pre">--outdir</span> <span class="pre">outputs</span></code> (default: <code class="docutils literal notranslate"><span class="pre">outputs</span></code> under repo root)
+- <code class="docutils literal notranslate"><span class="pre">--skip-download</span></code> / <code class="docutils literal notranslate"><span class="pre">--skip-merge</span></code> for re-running on existing files
+- <code class="docutils literal notranslate"><span class="pre">--force-download</span></code> to re-fetch raw files
+- <code class="docutils literal notranslate"><span class="pre">--var</span> <span class="pre">T2M</span></code> to choose the plotted surface variable (default: <code class="docutils literal notranslate"><span class="pre">T2M</span></code>)</p></li>
 </ul>
 </section>
-<section id="core-classes">
-<h2>Core classes<a class="headerlink" href="#core-classes" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">Dataset</span></code>: base class to implement <code class="docutils literal notranslate"><span class="pre">_load()</span></code> and return a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>: holds named <code class="docutils literal notranslate"><span class="pre">DataSplit</span></code> objects, plus <code class="docutils literal notranslate"><span class="pre">feature_spec</span></code> and <code class="docutils literal notranslate"><span class="pre">label_spec</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">FeatureSpec</span></code> / <code class="docutils literal notranslate"><span class="pre">LabelSpec</span></code>: describe inputs/targets to simplify model construction.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">register_dataset</span></code> / <code class="docutils literal notranslate"><span class="pre">load_dataset</span></code>: lightweight registry for discovering datasets by name.</p></li>
-</ul>
 </section>
 <section id="example-skeleton">
 <h2>Example skeleton<a class="headerlink" href="#example-skeleton" title="Link to this heading">¶</a></h2>
-<p>This is a minimal end-to-end skeleton showing <strong>load data → inspect → visualization</strong>.
-The key point is to make the data flow explicit (i.e., you should see a line like
-<code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">=</span> <span class="pre">load_dataset(&quot;merra2&quot;)</span></code> or <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">=</span> <span class="pre">load_dataset(&quot;mtbs&quot;)</span></code>).</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 0) Pick a dataset to load (use accordingly)</span>
-<span class="c1">#    Options include: &quot;merra2&quot;, &quot;mtbs&quot;, &quot;era5&quot;, &quot;firms&quot;, &quot;landfire&quot;, &quot;wfigs&quot;, &quot;goesr&quot;, ...</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+<p>A “nice” skeleton should make it explicit <strong>what data you load</strong> and how it flows into
+<strong>inspection/visualization</strong>.</p>
+<p>Below is the recommended pattern: set <code class="docutils literal notranslate"><span class="pre">data</span></code> to a dataset name (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;merra2&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;mtbs&quot;</span></code>)
+and run the dataset’s inspection entrypoint accordingly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
 
-<span class="n">dataset_name</span> <span class="o">=</span> <span class="s2">&quot;merra2&quot;</span>  <span class="c1"># or: &quot;mtbs&quot;, &quot;era5&quot;, ...</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>   <span class="c1"># dataset-specific config/paths can be passed via kwargs</span>
+<span class="c1"># 1) Choose what dataset you want to load/inspect</span>
+<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;merra2&quot;</span>   <span class="c1"># e.g., &quot;merra2&quot;, &quot;mtbs&quot;, &quot;era5&quot;, &quot;firms&quot;, &quot;landfire&quot;, &quot;wfigs&quot;, &quot;goesr&quot; (use accordingly)</span>
 
-<span class="c1"># 1) Load / materialize a DataBundle (dataset decides how to interpret the &quot;key&quot; such as date/id)</span>
-<span class="c1">#    Example key: a daily date for MERRA-2, or an event/scene id for other datasets.</span>
-<span class="n">bundle</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;20260101&quot;</span><span class="p">)</span>  <span class="c1"># replace &quot;key&quot; with the appropriate identifier</span>
+<span class="c1"># 2) Choose the dataset key (identifier)</span>
+<span class="c1">#    - For MERRA-2, the key is a daily date: &quot;YYYYMMDD&quot; (e.g., &quot;20260101&quot;)</span>
+<span class="c1">#    - For other datasets (e.g., MTBS), the key could be an event/scene id (to be defined per dataset)</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;20260101&quot;</span>
 
-<span class="c1"># 2) Inspect the returned structure</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;splits:&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">bundle</span><span class="o">.</span><span class="n">splits</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;feature_spec:&quot;</span><span class="p">,</span> <span class="n">bundle</span><span class="o">.</span><span class="n">feature_spec</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;label_spec:&quot;</span><span class="p">,</span> <span class="n">bundle</span><span class="o">.</span><span class="n">label_spec</span><span class="p">)</span>
+<span class="c1"># 3) Run the inspection pipeline (download/preprocess if needed -&gt; inspect -&gt; visualize -&gt; save outputs)</span>
+<span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="s2">&quot;merra2&quot;</span><span class="p">:</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pyhazards.datasets.inspection&quot;</span><span class="p">,</span>
+        <span class="n">key</span><span class="p">,</span>
+        <span class="s2">&quot;--var&quot;</span><span class="p">,</span> <span class="s2">&quot;T2M&quot;</span><span class="p">,</span>           <span class="c1"># change variable to plot (e.g., QV2M)</span>
+        <span class="s2">&quot;--outdir&quot;</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span>    <span class="c1"># output folder under repo root by default</span>
+    <span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Convention for other datasets:</span>
+    <span class="c1"># provide a dataset-specific inspection entrypoint:</span>
+    <span class="c1">#   python -m pyhazards.datasets.&lt;dataset&gt;.inspection &lt;key&gt; ...</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;pyhazards.datasets.</span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">.inspection&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="s2">&quot;--outdir&quot;</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">]</span>
 
-<span class="n">split</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">splits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">bundle</span><span class="o">.</span><span class="n">splits</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
-<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">split</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">split</span><span class="o">.</span><span class="n">y</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x:&quot;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;shape&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="s2">&quot;y:&quot;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s2">&quot;shape&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># 3) Visualization (examples; use the appropriate visualization for your data type)</span>
-<span class="c1">#    Raster: show a 2D slice (H x W) or a channel (C) at a given timestep (T)</span>
-<span class="c1">#    Time series: plot a variable curve over time; Tabular: histogram/boxplot</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.viz</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_raster</span>  <span class="c1"># replace with your actual viz utility</span>
-
-<span class="n">show_raster</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">: first sample (train)&quot;</span><span class="p">)</span>  <span class="c1"># use accordingly</span>
+<span class="c1"># 4) After running, check outputs/ for saved artifacts (tables + plots).</span>
+<span class="c1">#    Example (MERRA-2): CSV tables for variable inventory + a PDF plot for the selected surface variable.</span>
 </pre></div>
 </div>
 </section>
-<section id="implementing-a-custom-dataset-developer-example">
-<h2>Implementing a custom dataset (developer example)<a class="headerlink" href="#implementing-a-custom-dataset-developer-example" title="Link to this heading">¶</a></h2>
-<p>If you want to add a new dataset to PyHazards, implement <code class="docutils literal notranslate"><span class="pre">Dataset._load()</span></code> and register it.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">DataBundle</span><span class="p">,</span> <span class="n">DataSplit</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">FeatureSpec</span><span class="p">,</span> <span class="n">LabelSpec</span><span class="p">,</span> <span class="n">register_dataset</span>
-<span class="p">)</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">MyHazardDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;my_hazard&quot;</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,))</span>
-        <span class="n">splits</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">800</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="mi">800</span><span class="p">]),</span>
-            <span class="s2">&quot;val&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">800</span><span class="p">:</span><span class="mi">900</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">800</span><span class="p">:</span><span class="mi">900</span><span class="p">]),</span>
-            <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">900</span><span class="p">:],</span> <span class="n">y</span><span class="p">[</span><span class="mi">900</span><span class="p">:]),</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">DataBundle</span><span class="p">(</span>
-            <span class="n">splits</span><span class="o">=</span><span class="n">splits</span><span class="p">,</span>
-            <span class="n">feature_spec</span><span class="o">=</span><span class="n">FeatureSpec</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;example features&quot;</span><span class="p">),</span>
-            <span class="n">label_spec</span><span class="o">=</span><span class="n">LabelSpec</span><span class="p">(</span><span class="n">num_targets</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">),</span>
-        <span class="p">)</span>
-
-<span class="n">register_dataset</span><span class="p">(</span><span class="n">MyHazardDataset</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">MyHazardDataset</span><span class="p">)</span>
+<section id="inspection-entrypoints-convention-for-all-datasets">
+<h2>Inspection entrypoints (convention for all datasets)<a class="headerlink" href="#inspection-entrypoints-convention-for-all-datasets" title="Link to this heading">¶</a></h2>
+<p>Each dataset should expose a minimal inspection entrypoint that supports the same user experience:</p>
+<ul class="simple">
+<li><p><strong>Input</strong>: a dataset identifier (<code class="docutils literal notranslate"><span class="pre">key</span></code>) such as a date/event id.</p></li>
+<li><p><strong>Work</strong>: download/prepare (if needed) → open files → summarize → visualize.</p></li>
+<li><p><strong>Output</strong>: saved artifacts under <code class="docutils literal notranslate"><span class="pre">outputs/</span></code> (tables + figures).</p></li>
+</ul>
+<p>Recommended CLI shape (dataset-specific):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example convention (to be implemented per dataset):</span>
+python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.&lt;dataset&gt;.inspection<span class="w"> </span>&lt;key&gt;<span class="w"> </span>--outdir<span class="w"> </span>outputs
 </pre></div>
 </div>
+</section>
+<section id="developer-note">
+<h2>Developer note<a class="headerlink" href="#developer-note" title="Link to this heading">¶</a></h2>
+<p>If you plan to add inspection for a new dataset, mirror the MERRA-2 inspection pattern:</p>
+<ol class="arabic simple">
+<li><p>parse CLI args (key + outdir + skip/force flags),</p></li>
+<li><p>materialize required local files (download/preprocess),</p></li>
+<li><p>open files and print structure/statistics,</p></li>
+<li><p>generate at least one saved visualization to <code class="docutils literal notranslate"><span class="pre">outputs/</span></code>.</p></li>
+</ol>
 </section>
 </section>
 
@@ -456,10 +456,13 @@ The key point is to make the data flow explicit (i.e., you should see a line lik
 <li><a class="reference internal" href="#">Datasets</a><ul>
 <li><a class="reference internal" href="#summary">Summary</a></li>
 <li><a class="reference internal" href="#id1">Datasets</a></li>
-<li><a class="reference internal" href="#dataset-inspection">Dataset inspection</a></li>
-<li><a class="reference internal" href="#core-classes">Core classes</a></li>
+<li><a class="reference internal" href="#dataset-inspection">Dataset inspection</a><ul>
+<li><a class="reference internal" href="#notes-merra-2">Notes (MERRA-2)</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#example-skeleton">Example skeleton</a></li>
-<li><a class="reference internal" href="#implementing-a-custom-dataset-developer-example">Implementing a custom dataset (developer example)</a></li>
+<li><a class="reference internal" href="#inspection-entrypoints-convention-for-all-datasets">Inspection entrypoints (convention for all datasets)</a></li>
+<li><a class="reference internal" href="#developer-note">Developer note</a></li>
 </ul>
 </li>
 </ul>
