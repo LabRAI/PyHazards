@@ -4,7 +4,12 @@ Datasets
 Summary
 -------
 
-PyHazards provides a unified dataset interface for hazard prediction across tabular, temporal, and raster data. Each dataset returns a DataBundle containing splits, feature specs, label specs, and metadata.
+PyHazards maintains a curated catalog of commonly used hazard datasets and provides
+dataset-specific utilities for **download / preprocessing / inspection / visualization**.
+
+Each dataset page describes: (1) what the dataset is, (2) how to obtain it, and (3) how to
+quickly validate local data files via an inspection entrypoint (when available).
+
 
 Datasets
 --------------------
@@ -38,53 +43,103 @@ Datasets
    * - :doc:`goesr <datasets/goesr>`
      - High-frequency geostationary multispectral imagery from the `NOAA GOES-R series <https://www.goes-r.gov/>`_, supporting continuous monitoring (e.g., smoke/thermal context) and early detection workflows when paired with fire and meteorology datasets.
 
+
 Dataset inspection
 ------------------
 
-PyHazards provides a built-in inspection utility that allows users to
-quickly explore dataset structure and contents through a unified API.
+PyHazards provides dataset inspection entrypoints to quickly validate local files and produce
+basic summaries/plots.
 
-The example below demonstrates how to inspect a daily MERRA-2 file using
-the PyHazards dataset interface.
+Currently implemented:
+
+- **MERRA-2 (merra2)**: one-shot pipeline to **download raw MERRA-2 → merge SFC+PRES → inspect → save plots/tables**.
 
 .. code-block:: bash
 
+   # One command: download (if needed) -> merge -> inspect -> save outputs
    python -m pyhazards.datasets.inspection 20260101
 
 
-Core classes
-------------
+Notes (MERRA-2)
+~~~~~~~~~~~~~~~
 
-- ``Dataset``: base class to implement ``_load()`` and return a ``DataBundle``.
-- ``DataBundle``: holds named ``DataSplit`` objects, plus ``feature_spec`` and ``label_spec``.
-- ``FeatureSpec`` / ``LabelSpec``: describe inputs/targets to simplify model construction.
-- ``register_dataset`` / ``load_dataset``: lightweight registry for discovering datasets by name.
+- Download requires Earthdata credentials via environment variables::
+
+     export EARTHDATA_USERNAME="YOUR_USERNAME"
+     export EARTHDATA_PASSWORD="YOUR_PASSWORD"
+
+- Date formats accepted: ``YYYYMMDD`` (e.g., ``20260101``) or ISO ``YYYY-MM-DD``.
+- Optional flags commonly used:
+  - ``--outdir outputs`` (default: ``outputs`` under repo root)
+  - ``--skip-download`` / ``--skip-merge`` for re-running on existing files
+  - ``--force-download`` to re-fetch raw files
+  - ``--var T2M`` to choose the plotted surface variable (default: ``T2M``)
+
 
 Example skeleton
 ----------------
 
+A "nice" skeleton should make it explicit **what data you load** and how it flows into
+**inspection/visualization**.
+
+Below is the recommended pattern: set ``data`` to a dataset name (e.g., ``"merra2"`` or ``"mtbs"``)
+and run the dataset's inspection entrypoint accordingly.
+
 .. code-block:: python
 
-    import torch
-    from pyhazards.datasets import (
-        DataBundle, DataSplit, Dataset, FeatureSpec, LabelSpec, register_dataset
-    )
+   import subprocess
 
-    class MyHazardDataset(Dataset):
-        name = "my_hazard"
+   # 1) Choose what dataset you want to load/inspect
+   data = "merra2"   # e.g., "merra2", "mtbs", "era5", "firms", "landfire", "wfigs", "goesr" (use accordingly)
 
-        def _load(self):
-            x = torch.randn(1000, 16)
-            y = torch.randint(0, 2, (1000,))
-            splits = {
-                "train": DataSplit(x[:800], y[:800]),
-                "val": DataSplit(x[800:900], y[800:900]),
-                "test": DataSplit(x[900:], y[900:]),
-            }
-            return DataBundle(
-                splits=splits,
-                feature_spec=FeatureSpec(input_dim=16, description="example features"),
-                label_spec=LabelSpec(num_targets=2, task_type="classification"),
-            )
+   # 2) Choose the dataset key (identifier)
+   #    - For MERRA-2, the key is a daily date: "YYYYMMDD" (e.g., "20260101")
+   #    - For other datasets (e.g., MTBS), the key could be an event/scene id (to be defined per dataset)
+   key = "20260101"
 
-    register_dataset(MyHazardDataset.name, MyHazardDataset)
+   # 3) Run the inspection pipeline (download/preprocess if needed -> inspect -> visualize -> save outputs)
+   if data == "merra2":
+       cmd = [
+           "python", "-m", "pyhazards.datasets.inspection",
+           key,
+           "--var", "T2M",           # change variable to plot (e.g., QV2M)
+           "--outdir", "outputs",    # output folder under repo root by default
+       ]
+   else:
+       # Convention for other datasets:
+       # provide a dataset-specific inspection entrypoint:
+       #   python -m pyhazards.datasets.<dataset>.inspection <key> ...
+       cmd = ["python", "-m", f"pyhazards.datasets.{data}.inspection", key, "--outdir", "outputs"]
+
+   subprocess.run(cmd, check=True)
+
+   # 4) After running, check outputs/ for saved artifacts (tables + plots).
+   #    Example (MERRA-2): CSV tables for variable inventory + a PDF plot for the selected surface variable.
+
+
+Inspection entrypoints (convention for all datasets)
+----------------------------------------------------
+
+Each dataset should expose a minimal inspection entrypoint that supports the same user experience:
+
+- **Input**: a dataset identifier (``key``) such as a date/event id.
+- **Work**: download/prepare (if needed) → open files → summarize → visualize.
+- **Output**: saved artifacts under ``outputs/`` (tables + figures).
+
+Recommended CLI shape (dataset-specific):
+
+.. code-block:: bash
+
+   # Example convention (to be implemented per dataset):
+   python -m pyhazards.datasets.<dataset>.inspection <key> --outdir outputs
+
+
+Developer note
+--------------
+
+If you plan to add inspection for a new dataset, mirror the MERRA-2 inspection pattern:
+
+1) parse CLI args (key + outdir + skip/force flags),
+2) materialize required local files (download/preprocess),
+3) open files and print structure/statistics,
+4) generate at least one saved visualization to ``outputs/``.
