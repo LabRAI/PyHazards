@@ -319,8 +319,9 @@ python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspe
 </pre></div>
 </div>
 </li>
-<li><p>Outputs are written to <code class="docutils literal notranslate"><span class="pre">outputs/</span></code> under the repo root by default (can be changed via <code class="docutils literal notranslate"><span class="pre">--outdir</span></code>).</p></li>
-<li><p>Merged NetCDF files are written under <code class="docutils literal notranslate"><span class="pre">Prithvi-WxC/data/merra-2</span></code> by default (repo-root inferred automatically).</p></li>
+<li><p>By default, outputs are written to <code class="docutils literal notranslate"><span class="pre">outputs/</span></code> (can be changed via <code class="docutils literal notranslate"><span class="pre">--outdir</span></code>).</p></li>
+<li><p>The same inspection pattern is expected to be supported by other datasets (e.g., <code class="docutils literal notranslate"><span class="pre">mtbs</span></code>, <code class="docutils literal notranslate"><span class="pre">era5</span></code>),
+with dataset-specific I/O handled inside each dataset implementation.</p></li>
 </ul>
 </section>
 <section id="core-classes">
@@ -334,27 +335,37 @@ python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspe
 </section>
 <section id="example-skeleton">
 <h2>Example skeleton<a class="headerlink" href="#example-skeleton" title="Link to this heading">¶</a></h2>
-<p>This section provides a minimal, user-facing skeleton that makes the data flow explicit:
-<strong>load/download</strong> → <strong>merge</strong> → <strong>inspect</strong> → <strong>visualize</strong>.</p>
-<section id="recommended-one-shot-inspection-cli-merra-2">
-<h3>Recommended: one-shot inspection CLI (MERRA-2)<a class="headerlink" href="#recommended-one-shot-inspection-cli-merra-2" title="Link to this heading">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Full pipeline (recommended)</span>
-python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspection<span class="w"> </span><span class="m">20260101</span>
+<p>This is a minimal end-to-end skeleton showing <strong>load data → inspect → visualization</strong>.
+The key point is to make the data flow explicit (i.e., you should see a line like
+<code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">=</span> <span class="pre">load_dataset(&quot;merra2&quot;)</span></code> or <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">=</span> <span class="pre">load_dataset(&quot;mtbs&quot;)</span></code>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 0) Pick a dataset to load (use accordingly)</span>
+<span class="c1">#    Options include: &quot;merra2&quot;, &quot;mtbs&quot;, &quot;era5&quot;, &quot;firms&quot;, &quot;landfire&quot;, &quot;wfigs&quot;, &quot;goesr&quot;, ...</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
 
-<span class="c1"># Change the surface variable to summarize/plot (default: T2M)</span>
-python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspection<span class="w"> </span><span class="m">20260101</span><span class="w"> </span>--var<span class="w"> </span>QV2M
+<span class="n">dataset_name</span> <span class="o">=</span> <span class="s2">&quot;merra2&quot;</span>  <span class="c1"># or: &quot;mtbs&quot;, &quot;era5&quot;, ...</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>   <span class="c1"># dataset-specific config/paths can be passed via kwargs</span>
 
-<span class="c1"># If raw/merged files already exist, skip steps accordingly</span>
-python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspection<span class="w"> </span><span class="m">20260101</span><span class="w"> </span>--skip-download<span class="w"> </span>--skip-merge
+<span class="c1"># 1) Load / materialize a DataBundle (dataset decides how to interpret the &quot;key&quot; such as date/id)</span>
+<span class="c1">#    Example key: a daily date for MERRA-2, or an event/scene id for other datasets.</span>
+<span class="n">bundle</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s2">&quot;20260101&quot;</span><span class="p">)</span>  <span class="c1"># replace &quot;key&quot; with the appropriate identifier</span>
 
-<span class="c1"># Force re-download even if files already exist</span>
-python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspection<span class="w"> </span><span class="m">20260101</span><span class="w"> </span>--force-download
+<span class="c1"># 2) Inspect the returned structure</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;splits:&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">bundle</span><span class="o">.</span><span class="n">splits</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;feature_spec:&quot;</span><span class="p">,</span> <span class="n">bundle</span><span class="o">.</span><span class="n">feature_spec</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;label_spec:&quot;</span><span class="p">,</span> <span class="n">bundle</span><span class="o">.</span><span class="n">label_spec</span><span class="p">)</span>
 
-<span class="c1"># Change output directory (relative to repo root, unless absolute path)</span>
-python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspection<span class="w"> </span><span class="m">20260101</span><span class="w"> </span>--outdir<span class="w"> </span>outputs_merra2_20260101
+<span class="n">split</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">splits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">bundle</span><span class="o">.</span><span class="n">splits</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">split</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">split</span><span class="o">.</span><span class="n">y</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x:&quot;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;shape&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="s2">&quot;y:&quot;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s2">&quot;shape&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span>
+
+<span class="c1"># 3) Visualization (examples; use the appropriate visualization for your data type)</span>
+<span class="c1">#    Raster: show a 2D slice (H x W) or a channel (C) at a given timestep (T)</span>
+<span class="c1">#    Time series: plot a variable curve over time; Tabular: histogram/boxplot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.viz</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_raster</span>  <span class="c1"># replace with your actual viz utility</span>
+
+<span class="n">show_raster</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">: first sample (train)&quot;</span><span class="p">)</span>  <span class="c1"># use accordingly</span>
 </pre></div>
 </div>
-</section>
 </section>
 <section id="implementing-a-custom-dataset-developer-example">
 <h2>Implementing a custom dataset (developer example)<a class="headerlink" href="#implementing-a-custom-dataset-developer-example" title="Link to this heading">¶</a></h2>
@@ -447,10 +458,7 @@ python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspe
 <li><a class="reference internal" href="#id1">Datasets</a></li>
 <li><a class="reference internal" href="#dataset-inspection">Dataset inspection</a></li>
 <li><a class="reference internal" href="#core-classes">Core classes</a></li>
-<li><a class="reference internal" href="#example-skeleton">Example skeleton</a><ul>
-<li><a class="reference internal" href="#recommended-one-shot-inspection-cli-merra-2">Recommended: one-shot inspection CLI (MERRA-2)</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#example-skeleton">Example skeleton</a></li>
 <li><a class="reference internal" href="#implementing-a-custom-dataset-developer-example">Implementing a custom dataset (developer example)</a></li>
 </ul>
 </li>

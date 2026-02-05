@@ -60,8 +60,9 @@ Notes:
      export EARTHDATA_USERNAME="YOUR_USERNAME"
      export EARTHDATA_PASSWORD="YOUR_PASSWORD"
 
-- Outputs are written to ``outputs/`` under the repo root by default (can be changed via ``--outdir``).
-- Merged NetCDF files are written under ``Prithvi-WxC/data/merra-2`` by default (repo-root inferred automatically).
+- By default, outputs are written to ``outputs/`` (can be changed via ``--outdir``).
+- The same inspection pattern is expected to be supported by other datasets (e.g., ``mtbs``, ``era5``),
+  with dataset-specific I/O handled inside each dataset implementation.
 
 
 Core classes
@@ -76,28 +77,38 @@ Core classes
 Example skeleton
 ----------------
 
-This section provides a minimal, user-facing skeleton that makes the data flow explicit:
-**load/download** → **merge** → **inspect** → **visualize**.
+This is a minimal end-to-end skeleton showing **load data → inspect → visualization**.
+The key point is to make the data flow explicit (i.e., you should see a line like
+``data = load_dataset("merra2")`` or ``data = load_dataset("mtbs")``).
 
-Recommended: one-shot inspection CLI (MERRA-2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. code-block:: python
 
-.. code-block:: bash
+   # 0) Pick a dataset to load (use accordingly)
+   #    Options include: "merra2", "mtbs", "era5", "firms", "landfire", "wfigs", "goesr", ...
+   from pyhazards.datasets import load_dataset
 
-   # Full pipeline (recommended)
-   python -m pyhazards.datasets.inspection 20260101
+   dataset_name = "merra2"  # or: "mtbs", "era5", ...
+   data = load_dataset(dataset_name)   # dataset-specific config/paths can be passed via kwargs
 
-   # Change the surface variable to summarize/plot (default: T2M)
-   python -m pyhazards.datasets.inspection 20260101 --var QV2M
+   # 1) Load / materialize a DataBundle (dataset decides how to interpret the "key" such as date/id)
+   #    Example key: a daily date for MERRA-2, or an event/scene id for other datasets.
+   bundle = data.load(key="20260101")  # replace "key" with the appropriate identifier
 
-   # If raw/merged files already exist, skip steps accordingly
-   python -m pyhazards.datasets.inspection 20260101 --skip-download --skip-merge
+   # 2) Inspect the returned structure
+   print("splits:", list(bundle.splits.keys()))
+   print("feature_spec:", bundle.feature_spec)
+   print("label_spec:", bundle.label_spec)
 
-   # Force re-download even if files already exist
-   python -m pyhazards.datasets.inspection 20260101 --force-download
+   split = bundle.splits.get("train", next(iter(bundle.splits.values())))
+   x, y = split.x, split.y
+   print("x:", getattr(x, "shape", type(x)), "y:", getattr(y, "shape", type(y)))
 
-   # Change output directory (relative to repo root, unless absolute path)
-   python -m pyhazards.datasets.inspection 20260101 --outdir outputs_merra2_20260101
+   # 3) Visualization (examples; use the appropriate visualization for your data type)
+   #    Raster: show a 2D slice (H x W) or a channel (C) at a given timestep (T)
+   #    Time series: plot a variable curve over time; Tabular: histogram/boxplot
+   from pyhazards.viz import show_raster  # replace with your actual viz utility
+
+   show_raster(x[0], title=f"{dataset_name}: first sample (train)")  # use accordingly
 
 
 Implementing a custom dataset (developer example)
