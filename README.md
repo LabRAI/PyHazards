@@ -9,45 +9,32 @@
 [![Stars](https://img.shields.io/github/stars/LabRAI/PyHazards)](https://github.com/LabRAI/PyHazards)
 [![GitHub forks](https://img.shields.io/github/forks/LabRAI/PyHazards)](https://github.com/LabRAI/PyHazards)
 
-PyHazards is a Python framework for AI-powered hazard prediction and risk assessment. It provides a modular, hazard-first architecture for building, training, and deploying machine learning models to predict and analyze natural hazards (earthquake, wildfire, flood, hurricane, landslide, etc.).
+## Introduction
 
-## Features
+PyHazards is a Python framework for AI-powered hazard prediction and risk assessment. It provides a hazard-first API for loading data, building models, running end-to-end experiments, and extending with your own modules.
 
-- **Hazard-First Design**: Unified dataset interface for tabular, temporal, and raster data
-- **Simple Models**: Ready-to-use MLP/CNN/temporal encoders with task heads (classification, regression, segmentation)
-- **Trainer API**: Fit/evaluate/predict with optional mixed precision and multi-GPU (DDP) support
-- **Metrics**: Built-in classification/regression/segmentation metrics
-- **Extensible**: Registries for datasets, models, transforms, and pipelines
+## Core Components
 
-## Installation
+- **Datasets**: Unified interfaces for tabular, temporal, raster, and graph-style hazard data through `DataBundle`.
+- **Models**: Built-in hazard models plus reusable backbones/heads via a registry-driven model API.
+- **Engine**: `Trainer` for fit/evaluate/predict workflows with mixed precision and distributed options.
+- **Metrics and Utilities**: Classification/regression/segmentation metrics, hardware helpers, and reproducibility tools.
 
-PyHazards supports both CPU and GPU environments. Make sure you have Python installed (version >= 3.8, <3.13).
-
-### Base Installation
-
-Install the core package:
+## Install
 
 ```bash
 pip install pyhazards
 ```
 
-This will install PyHazards with minimal dependencies.
-
-Python 3.8 and PyTorch (CUDA 12.6 example)
------------------------------------------
-
-If you need a specific PyTorch build (e.g., CUDA 12.6), install PyTorch first, then install PyHazards:
+Optional CUDA setup:
 
 ```bash
-# Example for CUDA 12.6 wheels
-pip install torch --index-url https://download.pytorch.org/whl/cu126
-
-pip install pyhazards
+export PYHAZARDS_DEVICE=cuda:0
 ```
 
-## Quick Start
+## Load Data
 
-Load one dataset:
+Example using the implemented ERA5 flood subset loader:
 
 ```python
 from pyhazards.data.load_hydrograph_data import load_hydrograph_data
@@ -61,10 +48,33 @@ print(data.label_spec)
 print(list(data.splits.keys()))  # ["train"]
 ```
 
-Build one implemented model:
+## Load Model
+
+Example using `wildfire_aspp`:
 
 ```python
 from pyhazards.models import build_model
+
+model = build_model(
+    name="wildfire_aspp",
+    task="segmentation",
+    in_channels=12,
+)
+print(type(model).__name__)
+```
+
+## Full Test
+
+Short end-to-end example using real ERA5 data and an implemented flood model:
+
+```python
+import torch
+from pyhazards.data.load_hydrograph_data import load_hydrograph_data
+from pyhazards.datasets import graph_collate
+from pyhazards.engine import Trainer
+from pyhazards.models import build_model
+
+data = load_hydrograph_data("pyhazards/data/era5_subset", max_nodes=50)
 
 model = build_model(
     name="hydrographnet",
@@ -73,36 +83,43 @@ model = build_model(
     edge_in_dim=3,
     out_dim=1,
 )
-print(type(model).__name__)
+
+trainer = Trainer(model=model, mixed_precision=False)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+loss_fn = torch.nn.MSELoss()
+
+trainer.fit(
+    data,
+    optimizer=optimizer,
+    loss_fn=loss_fn,
+    max_epochs=1,
+    batch_size=1,
+    collate_fn=graph_collate,
+)
+
+metrics = trainer.evaluate(
+    data,
+    split="train",
+    batch_size=1,
+    collate_fn=graph_collate,
+)
+print(metrics)
 ```
 
-### Using CUDA
+## Custom Module
 
-To use CUDA for GPU acceleration, set the environment variable:
+To upload and use your own data/model modules:
 
-```shell
-export PYHAZARDS_DEVICE=cuda:0
-```
+1. Upload your raw data files to your project path and write a dataset loader that returns a `DataBundle`.
+2. Register your model with `register_model` and a builder function that returns an `nn.Module`.
+3. Build with `build_model(...)` and train/evaluate through `Trainer`.
 
-Or specify the device in your code:
+Implementation details:
 
-```python
-from pyhazards.utils import set_device
+- [Implementation Guideline](.github/IMPLEMENTATION.md)
+- [Contributors Guideline](.github/CONTRIBUTING.md)
 
-set_device("cuda:0")
-```
-
-## Documentation
-
-Full documentation is available at: [https://labrai.github.io/PyHazards](https://labrai.github.io/PyHazards)
-
-## Contributing
-
-We welcome contributions! Please see our:
-- [Implementation Guideline](.github/IMPLEMENTATION.md) - For implementing new models
-- [Contributors Guideline](.github/CONTRIBUTING.md) - For contributing to the project
-
-## Citation
+## How to Cite
 
 If you use PyHazards in your research, please cite:
 
@@ -114,6 +131,10 @@ If you use PyHazards in your research, please cite:
   url={https://github.com/LabRAI/PyHazards}
 }
 ```
+
+## Documentation
+
+Full documentation is available at: [https://labrai.github.io/PyHazards](https://labrai.github.io/PyHazards)
 
 ## License
 
