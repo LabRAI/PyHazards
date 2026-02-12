@@ -10,36 +10,34 @@ PyHazards provides a lightweight, extensible model architecture with:
 - Task heads: classification, regression, segmentation.
 - A registry-driven builder so you can construct built-ins by name or register your own.
 
-Implemented models (hazard focus ranking)
------------------------------------------
+Hazard-focused model tables
+---------------------------
 
-The table below summarizes all currently registered models (``available_models()``), ranked by hazard focus specialization.
+Wildfire
+~~~~~~~~
 
 .. list-table::
-   :widths: 18 82
-   :header-rows: 0
+   :widths: 45 55
+   :header-rows: 1
    :class: dataset-list
 
-   * - ``wildfire_mamba``
-     - **Rank 1 (Wildfire-focused)**. Mamba + GCN spatio-temporal model for county-day wildfire prediction (classification).
+   * - Module to call model
+     - Description
+   * - ``build_model(name="wildfire_aspp", task="segmentation", in_channels=12)``
+     - CNN+ASPP wildfire spread segmentation model. See `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread: An ASPP-Enabled CNN Approach <https://ieeexplore.ieee.org/document/10568207>`_.
 
-   * - ``wildfire_aspp``
-     - **Rank 1 (Wildfire-focused)**. Backward-compatible wildfire segmentation model aliasing ``wildfire_cnn_aspp``.
+Flood
+~~~~~
 
-   * - ``wildfire_cnn_aspp``
-     - **Rank 1 (Wildfire-focused)**. CNN + ASPP raster model for wildfire segmentation.
+.. list-table::
+   :widths: 45 55
+   :header-rows: 1
+   :class: dataset-list
 
-   * - ``hydrographnet``
-     - **Rank 2 (Hydrology/Flood-focused)**. Graph-network regression model for hydrologic forecasting tasks.
-
-   * - ``mlp``
-     - **Rank 3 (Generic multi-hazard)**. General-purpose tabular backbone + task head for baseline hazard modeling.
-
-   * - ``cnn``
-     - **Rank 3 (Generic multi-hazard)**. General-purpose raster backbone + task head for image/grid hazard inputs.
-
-   * - ``temporal``
-     - **Rank 3 (Generic multi-hazard)**. General-purpose temporal backbone + task head for sequence-based hazard signals.
+   * - Module to call model
+     - Description
+   * - ``build_model(name="hydrographnet", task="regression", node_in_dim=2, edge_in_dim=3, out_dim=1)``
+     - Physics-informed/interpretable graph model for flood forecasting. See `Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_.
 
 Core modules
 ------------

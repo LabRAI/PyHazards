@@ -264,39 +264,86 @@
 <p>This guide will help you get started with PyHazards quickly using the hazard-first API.</p>
 <section id="basic-usage">
 <h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading">¶</a></h2>
-<section id="toy-example-tabular-classification">
-<h3>Toy Example (tabular classification)<a class="headerlink" href="#toy-example-tabular-classification" title="Link to this heading">¶</a></h3>
+<section id="how-to-load-data-real-era5-subset-for-flood-modeling">
+<h3>How to load data (real ERA5 subset for flood modeling)<a class="headerlink" href="#how-to-load-data-real-era5-subset-for-flood-modeling" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.data.load_hydrograph_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hydrograph_data</span>
+
+<span class="c1"># Uses bundled NetCDF files under pyhazards/data/era5_subset</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_hydrograph_data</span><span class="p">(</span>
+    <span class="n">era5_path</span><span class="o">=</span><span class="s2">&quot;pyhazards/data/era5_subset&quot;</span><span class="p">,</span>
+    <span class="n">max_nodes</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">feature_spec</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">label_spec</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">splits</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>  <span class="c1"># dict_keys([&quot;train&quot;])</span>
+</pre></div>
+</div>
+</section>
+<section id="how-to-load-models">
+<h3>How to load models<a class="headerlink" href="#how-to-load-models" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
+
+<span class="c1"># Wildfire model (ASPP-enabled CNN)</span>
+<span class="n">wildfire_model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;wildfire_aspp&quot;</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;segmentation&quot;</span><span class="p">,</span>
+    <span class="n">in_channels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Flood model (HydroGraphNet)</span>
+<span class="n">flood_model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hydrographnet&quot;</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;regression&quot;</span><span class="p">,</span>
+    <span class="n">node_in_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">edge_in_dim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">out_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">wildfire_model</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">flood_model</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="end-to-end-example-real-data-implemented-flood-model">
+<h3>End-to-end example (real data + implemented flood model)<a class="headerlink" href="#end-to-end-example-real-data-implemented-flood-model" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataBundle</span><span class="p">,</span> <span class="n">DataSplit</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">FeatureSpec</span><span class="p">,</span> <span class="n">LabelSpec</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.data.load_hydrograph_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hydrograph_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">graph_collate</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trainer</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClassificationMetrics</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">ToyHazard</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">500</span><span class="p">,))</span>
-        <span class="n">splits</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">350</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="mi">350</span><span class="p">]),</span>
-            <span class="s2">&quot;val&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">350</span><span class="p">:</span><span class="mi">425</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">350</span><span class="p">:</span><span class="mi">425</span><span class="p">]),</span>
-            <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">425</span><span class="p">:],</span> <span class="n">y</span><span class="p">[</span><span class="mi">425</span><span class="p">:]),</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">DataBundle</span><span class="p">(</span>
-            <span class="n">splits</span><span class="o">=</span><span class="n">splits</span><span class="p">,</span>
-            <span class="n">feature_spec</span><span class="o">=</span><span class="n">FeatureSpec</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;toy features&quot;</span><span class="p">),</span>
-            <span class="n">label_spec</span><span class="o">=</span><span class="n">LabelSpec</span><span class="p">(</span><span class="n">num_targets</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">),</span>
-        <span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_hydrograph_data</span><span class="p">(</span><span class="s2">&quot;pyhazards/data/era5_subset&quot;</span><span class="p">,</span> <span class="n">max_nodes</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 
-<span class="n">data</span> <span class="o">=</span> <span class="n">ToyHazard</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;mlp&quot;</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span> <span class="n">in_dim</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">out_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">ClassificationMetrics</span><span class="p">()],</span> <span class="n">mixed_precision</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hydrographnet&quot;</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;regression&quot;</span><span class="p">,</span>
+    <span class="n">node_in_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">edge_in_dim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">out_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
 
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">mixed_precision</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
-<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
 
-<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_fn</span><span class="o">=</span><span class="n">loss_fn</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
+    <span class="n">loss_fn</span><span class="o">=</span><span class="n">loss_fn</span><span class="p">,</span>
+    <span class="n">max_epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">collate_fn</span><span class="o">=</span><span class="n">graph_collate</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># This DataBundle currently has only the &quot;train&quot; split</span>
+<span class="n">train_metrics</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">collate_fn</span><span class="o">=</span><span class="n">graph_collate</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">train_metrics</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -387,7 +434,9 @@
             <ul>
 <li><a class="reference internal" href="#">Quick Start</a><ul>
 <li><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
-<li><a class="reference internal" href="#toy-example-tabular-classification">Toy Example (tabular classification)</a></li>
+<li><a class="reference internal" href="#how-to-load-data-real-era5-subset-for-flood-modeling">How to load data (real ERA5 subset for flood modeling)</a></li>
+<li><a class="reference internal" href="#how-to-load-models">How to load models</a></li>
+<li><a class="reference internal" href="#end-to-end-example-real-data-implemented-flood-model">End-to-end example (real data + implemented flood model)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#gpu-support">GPU Support</a></li>

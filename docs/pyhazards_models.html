@@ -270,40 +270,50 @@
 <li><p>A registry-driven builder so you can construct built-ins by name or register your own.</p></li>
 </ul>
 </section>
-<section id="implemented-models-hazard-focus-ranking">
-<h2>Implemented models (hazard focus ranking)<a class="headerlink" href="#implemented-models-hazard-focus-ranking" title="Link to this heading">¶</a></h2>
-<p>The table below summarizes all currently registered models (<code class="docutils literal notranslate"><span class="pre">available_models()</span></code>), ranked by hazard focus specialization.</p>
+<section id="hazard-focused-model-tables">
+<h2>Hazard-focused model tables<a class="headerlink" href="#hazard-focused-model-tables" title="Link to this heading">¶</a></h2>
+<section id="wildfire">
+<h3>Wildfire<a class="headerlink" href="#wildfire" title="Link to this heading">¶</a></h3>
 <div class="table-wrapper colwidths-given dataset-list docutils container">
 <table class="dataset-list docutils align-default">
 <colgroup>
-<col style="width: 18.0%" />
-<col style="width: 82.0%" />
+<col style="width: 45.0%" />
+<col style="width: 55.0%" />
 </colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Module to call model</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
 <tbody>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wildfire_mamba</span></code></p></td>
-<td><p><strong>Rank 1 (Wildfire-focused)</strong>. Mamba + GCN spatio-temporal model for county-day wildfire prediction (classification).</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">wildfire_aspp</span></code></p></td>
-<td><p><strong>Rank 1 (Wildfire-focused)</strong>. Backward-compatible wildfire segmentation model aliasing <code class="docutils literal notranslate"><span class="pre">wildfire_cnn_aspp</span></code>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wildfire_cnn_aspp</span></code></p></td>
-<td><p><strong>Rank 1 (Wildfire-focused)</strong>. CNN + ASPP raster model for wildfire segmentation.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code></p></td>
-<td><p><strong>Rank 2 (Hydrology/Flood-focused)</strong>. Graph-network regression model for hydrologic forecasting tasks.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mlp</span></code></p></td>
-<td><p><strong>Rank 3 (Generic multi-hazard)</strong>. General-purpose tabular backbone + task head for baseline hazard modeling.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cnn</span></code></p></td>
-<td><p><strong>Rank 3 (Generic multi-hazard)</strong>. General-purpose raster backbone + task head for image/grid hazard inputs.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">temporal</span></code></p></td>
-<td><p><strong>Rank 3 (Generic multi-hazard)</strong>. General-purpose temporal backbone + task head for sequence-based hazard signals.</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">build_model(name=&quot;wildfire_aspp&quot;,</span> <span class="pre">task=&quot;segmentation&quot;,</span> <span class="pre">in_channels=12)</span></code></p></td>
+<td><p>CNN+ASPP wildfire spread segmentation model. See <a class="reference external" href="https://ieeexplore.ieee.org/document/10568207">Application of Explainable Artificial Intelligence in Predicting Wildfire Spread: An ASPP-Enabled CNN Approach</a>.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+</section>
+<section id="flood">
+<h3>Flood<a class="headerlink" href="#flood" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-given dataset-list docutils container">
+<table class="dataset-list docutils align-default">
+<colgroup>
+<col style="width: 45.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Module to call model</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">build_model(name=&quot;hydrographnet&quot;,</span> <span class="pre">task=&quot;regression&quot;,</span> <span class="pre">node_in_dim=2,</span> <span class="pre">edge_in_dim=3,</span> <span class="pre">out_dim=1)</span></code></p></td>
+<td><p>Physics-informed/interpretable graph model for flood forecasting. See <a class="reference external" href="https://onlinelibrary.wiley.com/doi/10.1111/mice.13484">Interpretable physics-informed graph neural networks for flood forecasting</a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 </section>
 <section id="core-modules">
 <h2>Core modules<a class="headerlink" href="#core-modules" title="Link to this heading">¶</a></h2>
@@ -479,7 +489,11 @@
             <ul>
 <li><a class="reference internal" href="#">Models</a><ul>
 <li><a class="reference internal" href="#summary">Summary</a></li>
-<li><a class="reference internal" href="#implemented-models-hazard-focus-ranking">Implemented models (hazard focus ranking)</a></li>
+<li><a class="reference internal" href="#hazard-focused-model-tables">Hazard-focused model tables</a><ul>
+<li><a class="reference internal" href="#wildfire">Wildfire</a></li>
+<li><a class="reference internal" href="#flood">Flood</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#core-modules">Core modules</a></li>
 <li><a class="reference internal" href="#build-a-built-in-model">Build a built-in model</a></li>
 <li><a class="reference internal" href="#register-a-custom-model">Register a custom model</a></li>
