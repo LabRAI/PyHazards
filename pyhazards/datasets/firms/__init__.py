@@ -1,0 +1,2 @@
+"""FIRMS dataset utilities."""
+
