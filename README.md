@@ -119,6 +119,10 @@ Implementation details:
 - [Implementation Guideline](.github/IMPLEMENTATION.md)
 - [Contributors Guideline](.github/CONTRIBUTING.md)
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=LabRAI/PyHazards&type=Date&from=2026-01-01)](https://www.star-history.com/#LabRAI/PyHazards&Date)
+
 ## How to Cite
 
 If you use PyHazards in your research, please cite:
