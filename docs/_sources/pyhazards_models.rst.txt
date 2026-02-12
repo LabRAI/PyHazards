@@ -10,27 +10,27 @@ Wildfire
 ~~~~~~~~
 
 .. list-table::
-   :widths: 45 55
+   :widths: 15 85
    :header-rows: 1
    :class: dataset-list
 
    * - Module
      - Description
    * - ``wildfire_aspp``
-     - An explainable CNN model with an ASPP mechanism (CNN-ASPP) for next-day wildfire spread prediction using environmental variables from the Next Day Wildfire Spread dataset; compared against RF, SVM, ANN, and a baseline CNN. See `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread: An ASPP-Enabled CNN Approach <https://ieeexplore.ieee.org/document/10568207>`_.
+     - An explainable CNN model with an ASPP mechanism (CNN-ASPP) for next-day wildfire spread prediction using environmental variables from the Next Day Wildfire Spread dataset; compared against RF, SVM, ANN, and a baseline CNN. See `Marjani et al. (2024) <https://ieeexplore.ieee.org/document/10568207>`_.
 
 Flood
 ~~~~~
 
 .. list-table::
-   :widths: 45 55
+   :widths: 15 85
    :header-rows: 1
    :class: dataset-list
 
    * - Module
      - Description
    * - ``hydrographnet``
-     - A novel physics-informed GNN framework that integrates the Kolmogorov-Arnold Network (KAN) to enhance interpretability for unstructured mesh-based flood forecasting. See `Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_.
+     - A novel physics-informed GNN framework that integrates the Kolmogorov-Arnold Network (KAN) to enhance interpretability for unstructured mesh-based flood forecasting. See `Taghizadeh et al. (2025) <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_.
 
 Core modules
 ------------

@@ -19,7 +19,7 @@ Datasets
    :header-rows: 1
    :class: dataset-list
 
-   * - module
+   * - Module
      - Description
 
    * - :doc:`merra2 <datasets/merra2>`
