@@ -5,8 +5,11 @@ This guide will help you get started with PyHazards quickly using the hazard-fir
 Basic Usage
 -----------
 
-How to load one dataset (real ERA5 subset for flood modeling)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Use the following minimal workflow to get started quickly: load one dataset, build one model, then run a short end-to-end test.
+
+Load Dataset (ERA5 example)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This example loads the implemented ERA5 flood subset and returns a ``DataBundle`` that contains feature/label specs and splits.
 
 .. code-block:: python
 
@@ -21,8 +24,9 @@ How to load one dataset (real ERA5 subset for flood modeling)
     print(data.label_spec)
     print(list(data.splits.keys()))  # ["train"]
 
-How to build one implemented model
+Load Model (HydroGraphNet example)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This example builds the implemented ``hydrographnet`` model for graph-based flood regression.
 
 .. code-block:: python
 
@@ -36,6 +40,49 @@ How to build one implemented model
         out_dim=1,
     )
     print(type(model).__name__)
+
+Full Test (ERA5 + HydroGraphNet)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This short script runs one training epoch and then evaluates on the available split to verify the end-to-end pipeline.
+
+.. code-block:: python
+
+    import torch
+    from pyhazards.data.load_hydrograph_data import load_hydrograph_data
+    from pyhazards.datasets import graph_collate
+    from pyhazards.engine import Trainer
+    from pyhazards.models import build_model
+
+    data = load_hydrograph_data("pyhazards/data/era5_subset", max_nodes=50)
+
+    model = build_model(
+        name="hydrographnet",
+        task="regression",
+        node_in_dim=2,
+        edge_in_dim=3,
+        out_dim=1,
+    )
+
+    trainer = Trainer(model=model, mixed_precision=False)
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+    loss_fn = torch.nn.MSELoss()
+
+    trainer.fit(
+        data,
+        optimizer=optimizer,
+        loss_fn=loss_fn,
+        max_epochs=1,
+        batch_size=1,
+        collate_fn=graph_collate,
+    )
+
+    metrics = trainer.evaluate(
+        data,
+        split="train",
+        batch_size=1,
+        collate_fn=graph_collate,
+    )
+    print(metrics)
 
 GPU Support
 -----------

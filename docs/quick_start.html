@@ -199,8 +199,22 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pyhazards_datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyhazards_models.html">Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_merra2_inspection.html">pyhazards.datasets.merra2.inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_era5_inspection.html">pyhazards.datasets.era5.inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_noaa_flood_inspection.html">pyhazards.datasets.noaa_flood.inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_firms_inspection.html">pyhazards.datasets.firms.inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_mtbs_inspection.html">pyhazards.datasets.mtbs.inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_landfire_inspection.html">pyhazards.datasets.landfire.inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_wfigs_inspection.html">pyhazards.datasets.wfigs.inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_goesr_inspection.html">pyhazards.datasets.goesr.inspection</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">wildfire_aspp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_hydrographnet.html">hydrographnet</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_utils.html">Utils</a></li>
@@ -254,8 +268,10 @@
 <p>This guide will help you get started with PyHazards quickly using the hazard-first API.</p>
 <section id="basic-usage">
 <h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading">¶</a></h2>
-<section id="how-to-load-one-dataset-real-era5-subset-for-flood-modeling">
-<h3>How to load one dataset (real ERA5 subset for flood modeling)<a class="headerlink" href="#how-to-load-one-dataset-real-era5-subset-for-flood-modeling" title="Link to this heading">¶</a></h3>
+<p>Use the following minimal workflow to get started quickly: load one dataset, build one model, then run a short end-to-end test.</p>
+<section id="load-dataset-era5-example">
+<h3>Load Dataset (ERA5 example)<a class="headerlink" href="#load-dataset-era5-example" title="Link to this heading">¶</a></h3>
+<p>This example loads the implemented ERA5 flood subset and returns a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code> that contains feature/label specs and splits.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.data.load_hydrograph_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hydrograph_data</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">load_hydrograph_data</span><span class="p">(</span>
@@ -269,8 +285,9 @@
 </pre></div>
 </div>
 </section>
-<section id="how-to-build-one-implemented-model">
-<h3>How to build one implemented model<a class="headerlink" href="#how-to-build-one-implemented-model" title="Link to this heading">¶</a></h3>
+<section id="load-model-hydrographnet-example">
+<h3>Load Model (HydroGraphNet example)<a class="headerlink" href="#load-model-hydrographnet-example" title="Link to this heading">¶</a></h3>
+<p>This example builds the implemented <code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code> model for graph-based flood regression.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
@@ -281,6 +298,48 @@
     <span class="n">out_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="full-test-era5-hydrographnet">
+<h3>Full Test (ERA5 + HydroGraphNet)<a class="headerlink" href="#full-test-era5-hydrographnet" title="Link to this heading">¶</a></h3>
+<p>This short script runs one training epoch and then evaluates on the available split to verify the end-to-end pipeline.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.data.load_hydrograph_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hydrograph_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">graph_collate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trainer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_hydrograph_data</span><span class="p">(</span><span class="s2">&quot;pyhazards/data/era5_subset&quot;</span><span class="p">,</span> <span class="n">max_nodes</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hydrographnet&quot;</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;regression&quot;</span><span class="p">,</span>
+    <span class="n">node_in_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">edge_in_dim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">out_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">mixed_precision</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
+
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
+    <span class="n">loss_fn</span><span class="o">=</span><span class="n">loss_fn</span><span class="p">,</span>
+    <span class="n">max_epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">collate_fn</span><span class="o">=</span><span class="n">graph_collate</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">collate_fn</span><span class="o">=</span><span class="n">graph_collate</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -371,8 +430,9 @@
             <ul>
 <li><a class="reference internal" href="#">Quick Start</a><ul>
 <li><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
-<li><a class="reference internal" href="#how-to-load-one-dataset-real-era5-subset-for-flood-modeling">How to load one dataset (real ERA5 subset for flood modeling)</a></li>
-<li><a class="reference internal" href="#how-to-build-one-implemented-model">How to build one implemented model</a></li>
+<li><a class="reference internal" href="#load-dataset-era5-example">Load Dataset (ERA5 example)</a></li>
+<li><a class="reference internal" href="#load-model-hydrographnet-example">Load Model (HydroGraphNet example)</a></li>
+<li><a class="reference internal" href="#full-test-era5-hydrographnet">Full Test (ERA5 + HydroGraphNet)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#gpu-support">GPU Support</a></li>
