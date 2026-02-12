@@ -1,6 +1,6 @@
 # PyHazards
 
-[![PyPI - Version](https://img.shields.io/pypi/v/pyhazards)](https://pypi.org/project/pyhazards)
+[![PyPI - Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpypi.org%2Fpypi%2Fpyhazards%2Fjson&query=%24.info.version&prefix=v&label=PyPI)](https://pypi.org/project/pyhazards)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/LabRAI/PyHazards/ci.yml?branch=main)](https://github.com/LabRAI/PyHazards/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/LabRAI/PyHazards/blob/main/LICENSE)
 [![PyPI - Downloads](https://img.shields.io/badge/downloads-check%20PyPI-blue)](https://pypi.org/project/pyhazards)

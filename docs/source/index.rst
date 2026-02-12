@@ -4,7 +4,7 @@
      <img src="_static/logo.png" alt="PyHazards Icon" style="max-width: 260px; height: auto;">
    </div>
 
-.. image:: https://img.shields.io/pypi/v/pyhazards
+.. image:: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpypi.org%2Fpypi%2Fpyhazards%2Fjson&query=%24.info.version&prefix=v&label=PyPI
    :target: https://pypi.org/project/pyhazards
    :alt: PyPI Version
 

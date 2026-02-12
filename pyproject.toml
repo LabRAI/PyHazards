@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyhazards"
-version = "1.0.3"
+version = "1.0.4"
 description = "A Python framework for AI-powered hazard prediction and risk assessment"
 readme = "README.md"
 authors = [{ name = "Xueqi Cheng", email = "xc25@fsu.edu" }]
