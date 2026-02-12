@@ -1,12 +1,13 @@
 How to Cite
 ===========
-If you find it useful, please considering cite the following work:
+If you use PyHazards in your research, please cite:
 
-.. .. code-block:: bibtex
+.. code-block:: bibtex
 
-..    @article{li2025intellectual,
-..       title={Intellectual Property in Graph-Based Machine Learning as a Service: Attacks and Defenses},
-..       author={Li, Lincan and Shen, Bolin and Zhao, Chenxi and Sun, Yuxiang and Zhao, Kaixiang and Pan, Shirui and Dong, Yushun},
-..       journal={arXiv preprint arXiv:2508.19641},
-..       year={2025}
-..     }
+   @misc{pyhazards2025,
+     title        = {PyHazards: An Open-Source Library for AI-Powered Hazard Prediction},
+     author       = {Xueqi Cheng and Yushun Dong and Yangshuang Xu and Runyang Xu and Lex Schneier and Sharan Kumar Reddy Kodudula and Deyang Hsu and Dacheng Shen},
+     year         = {2025},
+     howpublished = {\url{https://github.com/LabRAI/PyHazards}},
+     note         = {GitHub repository}
+   }
