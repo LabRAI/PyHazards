@@ -47,40 +47,33 @@ pip install pyhazards
 
 ## Quick Start
 
-Here's a simple example to get started with PyHazards using a toy tabular dataset:
+Load one dataset:
 
 ```python
-import torch
-from pyhazards.datasets import DataBundle, DataSplit, Dataset, FeatureSpec, LabelSpec
+from pyhazards.data.load_hydrograph_data import load_hydrograph_data
+
+data = load_hydrograph_data(
+    era5_path="pyhazards/data/era5_subset",
+    max_nodes=50,
+)
+print(data.feature_spec)
+print(data.label_spec)
+print(list(data.splits.keys()))  # ["train"]
+```
+
+Build one implemented model:
+
+```python
 from pyhazards.models import build_model
-from pyhazards.engine import Trainer
-from pyhazards.metrics import ClassificationMetrics
 
-class ToyHazard(Dataset):
-    def _load(self):
-        x = torch.randn(500, 16)
-        y = torch.randint(0, 2, (500,))
-        splits = {
-            "train": DataSplit(x[:350], y[:350]),
-            "val": DataSplit(x[350:425], y[350:425]),
-            "test": DataSplit(x[425:], y[425:]),
-        }
-        return DataBundle(
-            splits=splits,
-            feature_spec=FeatureSpec(input_dim=16, description="toy features"),
-            label_spec=LabelSpec(num_targets=2, task_type="classification"),
-        )
-
-data = ToyHazard().load()
-model = build_model(name="mlp", task="classification", in_dim=16, out_dim=2)
-trainer = Trainer(model=model, metrics=[ClassificationMetrics()], mixed_precision=True)
-
-optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-loss_fn = torch.nn.CrossEntropyLoss()
-
-trainer.fit(data, optimizer=optimizer, loss_fn=loss_fn, max_epochs=5)
-results = trainer.evaluate(data, split="test")
-print(results)
+model = build_model(
+    name="hydrographnet",
+    task="regression",
+    node_in_dim=2,
+    edge_in_dim=3,
+    out_dim=1,
+)
+print(type(model).__name__)
 ```
 
 ### Using CUDA
