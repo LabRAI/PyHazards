@@ -39,10 +39,12 @@ Example using the implemented ERA5 flood subset loader:
 ```python
 from pyhazards.data.load_hydrograph_data import load_hydrograph_data
 
+print("[Step 1/3] Loading ERA5 dataset...")
 data = load_hydrograph_data(
     era5_path="pyhazards/data/era5_subset",
     max_nodes=50,
 )
+print("[Step 1/3] Dataset loaded.")
 print(data.feature_spec)
 print(data.label_spec)
 print(list(data.splits.keys()))  # ["train"]
@@ -55,11 +57,13 @@ Example using `wildfire_aspp`:
 ```python
 from pyhazards.models import build_model
 
+print("[Step 2/3] Building model...")
 model = build_model(
     name="wildfire_aspp",
     task="segmentation",
     in_channels=12,
 )
+print("[Step 2/3] Model built.")
 print(type(model).__name__)
 ```
 
@@ -88,6 +92,7 @@ trainer = Trainer(model=model, mixed_precision=False)
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 loss_fn = torch.nn.MSELoss()
 
+print("[Step 3/3] Running one training epoch...")
 trainer.fit(
     data,
     optimizer=optimizer,
@@ -97,6 +102,7 @@ trainer.fit(
     collate_fn=graph_collate,
 )
 
+print("[Step 3/3] Evaluating on train split...")
 metrics = trainer.evaluate(
     data,
     split="train",
@@ -104,6 +110,22 @@ metrics = trainer.evaluate(
     collate_fn=graph_collate,
 )
 print(metrics)
+```
+
+## Quick Verification (`test.py`)
+
+Run the built-in GPU smoke test:
+
+```bash
+python test.py
+```
+
+`test.py` is a validation/smoke test only. It verifies pipeline correctness and integration, not final benchmark performance.
+
+It prints step-by-step status (dataset load, model build, forward pass, train/eval) and ends with:
+
+```text
+PASS: end-to-end implementation is working.
 ```
 
 ## Custom Module

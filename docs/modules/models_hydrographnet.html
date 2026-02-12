@@ -7,7 +7,7 @@
         <link rel="canonical" href="https://labrai.github.io/PyHazards/modules/models_hydrographnet.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>hydrographnet - PyHazards 1.0.1 documentation</title>
+        <title>hydrographnet - PyHazards 1.0.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -163,7 +163,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">PyHazards 1.0.1 documentation</div></a>
+      <a href="../index.html"><div class="brand">PyHazards 1.0.3 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -184,7 +184,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
-  <span class="sidebar-brand-text">PyHazards 1.0.1 documentation</span>
+  <span class="sidebar-brand-text">PyHazards 1.0.3 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -267,8 +267,13 @@
 <h1>hydrographnet<a class="headerlink" href="#hydrographnet" title="Link to this heading">¶</a></h1>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code> is a physics-informed graph neural network for flood forecasting that integrates KAN-style
-feature encoding and message passing over mesh/node connectivity.</p>
+<p><code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code> is a physics-inspired graph neural network for flood forecasting with:</p>
+<ul class="simple">
+<li><p>KAN-style node encoding</p></li>
+<li><p>residual message-passing processor blocks</p></li>
+<li><p>residual delta-state decoding (depth/volume style update)</p></li>
+<li><p>optional autoregressive rollout via <code class="docutils literal notranslate"><span class="pre">predict_steps</span></code></p></li>
+</ul>
 </section>
 <section id="example-usage">
 <h2>Example usage<a class="headerlink" href="#example-usage" title="Link to this heading">¶</a></h2>
@@ -287,9 +292,10 @@ feature encoding and message passing over mesh/node connectivity.</p>
     <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
     <span class="s2">&quot;adj&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
     <span class="s2">&quot;coords&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;predict_steps&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (1, 6, 1)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (1, 2, 6, 1)</span>
 </pre></div>
 </div>
 </section>
@@ -364,7 +370,7 @@ feature encoding and message passing over mesh/node connectivity.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=e7fff540"></script>
+</div><script src="../_static/documentation_options.js?v=6e0e1bcd"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

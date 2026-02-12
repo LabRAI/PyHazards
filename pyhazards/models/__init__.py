@@ -7,7 +7,7 @@ from .registry import available_models, register_model
 from .wildfire_mamba import WildfireMamba, wildfire_mamba_builder
 from .wildfire_aspp import WildfireASPP, TverskyLoss, wildfire_aspp_builder
 from .cnn_aspp import WildfireCNNASPP, cnn_aspp_builder
-from .hydrographnet import HydroGraphNet, hydrographnet_builder
+from .hydrographnet import HydroGraphNet, HydroGraphNetLoss, hydrographnet_builder
 
 
 __all__ = [
@@ -34,7 +34,9 @@ __all__ = [
     "wildfire_aspp_builder",
     "WildfireCNNASPP",
     "cnn_aspp_builder",
-    "hydrographnet",
+    "HydroGraphNet",
+    "HydroGraphNetLoss",
+    "hydrographnet_builder",
 ]
 
 # -------------------------------------------------
@@ -105,4 +107,3 @@ register_model(
         "num_gn_blocks": 5,
     },
 )
-

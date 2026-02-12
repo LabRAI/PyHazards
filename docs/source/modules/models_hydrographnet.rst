@@ -4,8 +4,12 @@ hydrographnet
 Description
 -----------
 
-``hydrographnet`` is a physics-informed graph neural network for flood forecasting that integrates KAN-style
-feature encoding and message passing over mesh/node connectivity.
+``hydrographnet`` is a physics-inspired graph neural network for flood forecasting with:
+
+- KAN-style node encoding
+- residual message-passing processor blocks
+- residual delta-state decoding (depth/volume style update)
+- optional autoregressive rollout via ``predict_steps``
 
 Example usage
 -------------
@@ -27,7 +31,7 @@ Example usage
        "x": torch.randn(1, 3, 6, 2),
        "adj": torch.eye(6).unsqueeze(0),
        "coords": torch.randn(6, 2),
+       "predict_steps": 2,
    }
    y = model(batch)
-   print(y.shape)  # (1, 6, 1)
-
+   print(y.shape)  # (1, 2, 6, 1)
