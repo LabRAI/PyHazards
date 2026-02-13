@@ -200,14 +200,14 @@
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_merra2_inspection.html">pyhazards.datasets.merra2.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_era5_inspection.html">pyhazards.datasets.era5.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_noaa_flood_inspection.html">pyhazards.datasets.noaa_flood.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_firms_inspection.html">pyhazards.datasets.firms.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_mtbs_inspection.html">pyhazards.datasets.mtbs.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_landfire_inspection.html">pyhazards.datasets.landfire.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_wfigs_inspection.html">pyhazards.datasets.wfigs.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_goesr_inspection.html">pyhazards.datasets.goesr.inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_merra2_inspection.html">merra2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_era5_inspection.html">era5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_noaa_flood_inspection.html">noaa_flood</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_firms_inspection.html">firms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_mtbs_inspection.html">mtbs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_landfire_inspection.html">landfire</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_wfigs_inspection.html">wfigs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_goesr_inspection.html">goesr</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -307,18 +307,8 @@
 </section>
 <section id="load-data">
 <h1>Load Data<a class="headerlink" href="#load-data" title="Link to this heading">¶</a></h1>
-<p>Use <code class="docutils literal notranslate"><span class="pre">load_hydrograph_data</span></code> to load the implemented ERA5-based hydrograph/flood subset used by HydroGraphNet.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.data.load_hydrograph_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hydrograph_data</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Step 1/3] Loading ERA5-based hydrograph subset...&quot;</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">load_hydrograph_data</span><span class="p">(</span>
-    <span class="n">era5_path</span><span class="o">=</span><span class="s2">&quot;pyhazards/data/era5_subset&quot;</span><span class="p">,</span>
-    <span class="n">max_nodes</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Step 1/3] Dataset loaded.&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">feature_spec</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">label_spec</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">splits</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>  <span class="c1"># [&quot;train&quot;]</span>
+<p>Use the dataset module entrypoint for consistent dataset inspection/loading across datasets.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.era5.inspection<span class="w"> </span>--path<span class="w"> </span>pyhazards/data/era5_subset<span class="w"> </span>--max-vars<span class="w"> </span><span class="m">10</span>
 </pre></div>
 </div>
 </section>
@@ -341,7 +331,8 @@
 </section>
 <section id="full-test">
 <h1>Full Test<a class="headerlink" href="#full-test" title="Link to this heading">¶</a></h1>
-<p>Validation example: load the same ERA5-based hydrograph subset and run one epoch with <code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code>.</p>
+<p>Validation example: load the same ERA5-based hydrograph subset and run one epoch with <code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code>.
+This uses <code class="docutils literal notranslate"><span class="pre">load_hydrograph_data</span></code> as the model-specific adapter after dataset inspection.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.data.load_hydrograph_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hydrograph_data</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">graph_collate</span>

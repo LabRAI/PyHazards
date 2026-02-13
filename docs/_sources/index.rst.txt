@@ -69,21 +69,11 @@ Install from PyPI. If you plan to run on GPU, install a compatible PyTorch build
 Load Data
 ---------
 
-Use ``load_hydrograph_data`` to load the implemented ERA5-based hydrograph/flood subset used by HydroGraphNet.
+Use the dataset module entrypoint for consistent dataset inspection/loading across datasets.
 
-.. code-block:: python
+.. code-block:: bash
 
-    from pyhazards.data.load_hydrograph_data import load_hydrograph_data
-
-    print("[Step 1/3] Loading ERA5-based hydrograph subset...")
-    data = load_hydrograph_data(
-        era5_path="pyhazards/data/era5_subset",
-        max_nodes=50,
-    )
-    print("[Step 1/3] Dataset loaded.")
-    print(data.feature_spec)
-    print(data.label_spec)
-    print(list(data.splits.keys()))  # ["train"]
+    python -m pyhazards.datasets.era5.inspection --path pyhazards/data/era5_subset --max-vars 10
 
 Load Model
 ----------
@@ -109,6 +99,7 @@ Full Test
 ---------
 
 Validation example: load the same ERA5-based hydrograph subset and run one epoch with ``hydrographnet``.
+This uses ``load_hydrograph_data`` as the model-specific adapter after dataset inspection.
 
 .. code-block:: python
 

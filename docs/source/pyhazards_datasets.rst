@@ -14,6 +14,8 @@ quickly validate local data files via an inspection entrypoint (when available).
 Datasets
 --------------------
 
+Click a module name to open its merged detail page (dataset summary + short usage example).
+
 .. list-table::
    :widths: 15 85
    :header-rows: 1

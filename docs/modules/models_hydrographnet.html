@@ -7,7 +7,7 @@
         <link rel="canonical" href="https://labrai.github.io/PyHazards/modules/models_hydrographnet.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>hydrographnet - PyHazards 1.0.3 documentation</title>
+        <title>hydrographnet - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -163,7 +163,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">PyHazards 1.0.3 documentation</div></a>
+      <a href="../index.html"><div class="brand">PyHazards 1.0.4 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -184,7 +184,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
-  <span class="sidebar-brand-text">PyHazards 1.0.3 documentation</span>
+  <span class="sidebar-brand-text">PyHazards 1.0.4 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -200,14 +200,14 @@
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="datasets_merra2_inspection.html">pyhazards.datasets.merra2.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_era5_inspection.html">pyhazards.datasets.era5.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_noaa_flood_inspection.html">pyhazards.datasets.noaa_flood.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_firms_inspection.html">pyhazards.datasets.firms.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_mtbs_inspection.html">pyhazards.datasets.mtbs.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_landfire_inspection.html">pyhazards.datasets.landfire.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_wfigs_inspection.html">pyhazards.datasets.wfigs.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_goesr_inspection.html">pyhazards.datasets.goesr.inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_merra2_inspection.html">merra2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_era5_inspection.html">era5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_noaa_flood_inspection.html">noaa_flood</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_firms_inspection.html">firms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_mtbs_inspection.html">mtbs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_landfire_inspection.html">landfire</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_wfigs_inspection.html">wfigs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_goesr_inspection.html">goesr</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -267,18 +267,23 @@
 <h1>hydrographnet<a class="headerlink" href="#hydrographnet" title="Link to this heading">¶</a></h1>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code> is a physics-inspired graph neural network for flood forecasting with:</p>
-<ul class="simple">
-<li><p>KAN-style node encoding</p></li>
-<li><p>residual message-passing processor blocks</p></li>
-<li><p>residual delta-state decoding (depth/volume style update)</p></li>
-<li><p>optional autoregressive rollout via <code class="docutils literal notranslate"><span class="pre">predict_steps</span></code></p></li>
-</ul>
+<p><code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code> is a physics-informed graph neural network for flood forecasting with
+interpretable KAN-style components, residual message passing, and delta-state decoding.</p>
+<p>The model summary follows Taghizadeh et al. (2025):
+<a class="reference external" href="https://onlinelibrary.wiley.com/doi/10.1111/mice.13484">Interpretable physics-informed graph neural networks for flood forecasting</a>.</p>
+<p>In PyHazards, this module is built from the model registry and is typically used with the
+ERA5-based hydrograph adapter <code class="docutils literal notranslate"><span class="pre">load_hydrograph_data</span></code> for end-to-end validation.</p>
 </section>
-<section id="example-usage">
-<h2>Example usage<a class="headerlink" href="#example-usage" title="Link to this heading">¶</a></h2>
+<section id="example-of-how-to-use-it">
+<h2>Example of how to use it<a class="headerlink" href="#example-of-how-to-use-it" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.data.load_hydrograph_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hydrograph_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">graph_collate</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_hydrograph_data</span><span class="p">(</span><span class="s2">&quot;pyhazards/data/era5_subset&quot;</span><span class="p">,</span> <span class="n">max_nodes</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="n">graph_collate</span><span class="p">([</span><span class="n">sample</span><span class="p">])</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hydrographnet&quot;</span><span class="p">,</span>
@@ -288,14 +293,8 @@
     <span class="n">out_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">batch</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-    <span class="s2">&quot;adj&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
-    <span class="s2">&quot;coords&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-    <span class="s2">&quot;predict_steps&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-<span class="p">}</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (1, 2, 6, 1)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -358,7 +357,7 @@
             <ul>
 <li><a class="reference internal" href="#">hydrographnet</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+<li><a class="reference internal" href="#example-of-how-to-use-it">Example of how to use it</a></li>
 </ul>
 </li>
 </ul>
@@ -370,7 +369,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=6e0e1bcd"></script>
+</div><script src="../_static/documentation_options.js?v=862d5a7d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

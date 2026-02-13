@@ -4,20 +4,28 @@ hydrographnet
 Description
 -----------
 
-``hydrographnet`` is a physics-inspired graph neural network for flood forecasting with:
+``hydrographnet`` is a physics-informed graph neural network for flood forecasting with
+interpretable KAN-style components, residual message passing, and delta-state decoding.
 
-- KAN-style node encoding
-- residual message-passing processor blocks
-- residual delta-state decoding (depth/volume style update)
-- optional autoregressive rollout via ``predict_steps``
+The model summary follows Taghizadeh et al. (2025):
+`Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_.
 
-Example usage
--------------
+In PyHazards, this module is built from the model registry and is typically used with the
+ERA5-based hydrograph adapter ``load_hydrograph_data`` for end-to-end validation.
+
+Example of how to use it
+------------------------
 
 .. code-block:: python
 
    import torch
+   from pyhazards.data.load_hydrograph_data import load_hydrograph_data
+   from pyhazards.datasets import graph_collate
    from pyhazards.models import build_model
+
+   data = load_hydrograph_data("pyhazards/data/era5_subset", max_nodes=50)
+   sample = data.splits["train"].inputs[0]
+   batch = graph_collate([sample])
 
    model = build_model(
        name="hydrographnet",
@@ -27,11 +35,5 @@ Example usage
        out_dim=1,
    )
 
-   batch = {
-       "x": torch.randn(1, 3, 6, 2),
-       "adj": torch.eye(6).unsqueeze(0),
-       "coords": torch.randn(6, 2),
-       "predict_steps": 2,
-   }
    y = model(batch)
-   print(y.shape)  # (1, 2, 6, 1)
+   print(y.shape)

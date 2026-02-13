@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="pyhazards.datasets.noaa_flood.inspection" href="datasets_noaa_flood_inspection.html"><link rel="prev" title="pyhazards.datasets.merra2.inspection" href="datasets_merra2_inspection.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="noaa_flood" href="datasets_noaa_flood_inspection.html"><link rel="prev" title="merra2" href="datasets_merra2_inspection.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/modules/datasets_era5_inspection.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>pyhazards.datasets.era5.inspection - PyHazards 1.0.1 documentation</title>
+        <title>era5 - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -163,7 +163,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">PyHazards 1.0.1 documentation</div></a>
+      <a href="../index.html"><div class="brand">PyHazards 1.0.4 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -184,7 +184,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
-  <span class="sidebar-brand-text">PyHazards 1.0.1 documentation</span>
+  <span class="sidebar-brand-text">PyHazards 1.0.4 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -200,14 +200,14 @@
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="datasets_merra2_inspection.html">pyhazards.datasets.merra2.inspection</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">pyhazards.datasets.era5.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_noaa_flood_inspection.html">pyhazards.datasets.noaa_flood.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_firms_inspection.html">pyhazards.datasets.firms.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_mtbs_inspection.html">pyhazards.datasets.mtbs.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_landfire_inspection.html">pyhazards.datasets.landfire.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_wfigs_inspection.html">pyhazards.datasets.wfigs.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_goesr_inspection.html">pyhazards.datasets.goesr.inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_merra2_inspection.html">merra2</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">era5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_noaa_flood_inspection.html">noaa_flood</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_firms_inspection.html">firms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_mtbs_inspection.html">mtbs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_landfire_inspection.html">landfire</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_wfigs_inspection.html">wfigs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_goesr_inspection.html">goesr</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -263,16 +263,35 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="pyhazards-datasets-era5-inspection">
-<h1>pyhazards.datasets.era5.inspection<a class="headerlink" href="#pyhazards-datasets-era5-inspection" title="Link to this heading">¶</a></h1>
+          <section id="era5">
+<h1>era5<a class="headerlink" href="#era5" title="Link to this heading">¶</a></h1>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
-<p>CLI entrypoint for ERA5 file inspection. It validates local NetCDF files, prints discovered dimensions/variables,
-and falls back to HDF5-level inspection when optional xarray NetCDF backends are unavailable.</p>
+<p>ERA5 is the ECMWF reanalysis distributed via Copernicus CDS and is widely used as a meteorological
+baseline for hazard modeling. This module is the dataset-level inspection entrypoint for local ERA5
+NetCDF files.</p>
+<p>For full background and publication details, see <a class="reference internal" href="../datasets/era5.html"><span class="doc">ERA5 dataset page</span></a>.</p>
+<p>Note on alignment: use <code class="docutils literal notranslate"><span class="pre">pyhazards.datasets.era5.inspection</span></code> for consistent dataset inspection.
+For HydroGraphNet training/validation, <code class="docutils literal notranslate"><span class="pre">load_hydrograph_data</span></code> is the model-specific adapter that
+converts ERA5 NetCDF files into a graph <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>.</p>
 </section>
-<section id="example-usage">
-<h2>Example usage<a class="headerlink" href="#example-usage" title="Link to this heading">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.era5.inspection<span class="w"> </span>--path<span class="w"> </span>pyhazards/data/era5_subset<span class="w"> </span>--max-vars<span class="w"> </span><span class="m">10</span>
+<section id="example-of-how-to-use-it">
+<h2>Example of how to use it<a class="headerlink" href="#example-of-how-to-use-it" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inspect local ERA5 NetCDF files</span>
+python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.era5.inspection<span class="w"> </span>--path<span class="w"> </span>pyhazards/data/era5_subset<span class="w"> </span>--max-vars<span class="w"> </span><span class="m">10</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+
+<span class="c1"># Step 1: inspect dataset files (canonical dataset entrypoint)</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pyhazards.datasets.era5.inspection&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--path&quot;</span><span class="p">,</span> <span class="s2">&quot;pyhazards/data/era5_subset&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--max-vars&quot;</span><span class="p">,</span> <span class="s2">&quot;10&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -288,7 +307,7 @@ and falls back to HDF5-level inspection when optional xarray NetCDF backends are
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">pyhazards.datasets.noaa_flood.inspection</div>
+                <div class="title">noaa_flood</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -299,7 +318,7 @@ and falls back to HDF5-level inspection when optional xarray NetCDF backends are
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">pyhazards.datasets.merra2.inspection</div>
+                <div class="title">merra2</div>
                 
               </div>
             </a>
@@ -333,9 +352,9 @@ and falls back to HDF5-level inspection when optional xarray NetCDF backends are
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">pyhazards.datasets.era5.inspection</a><ul>
+<li><a class="reference internal" href="#">era5</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+<li><a class="reference internal" href="#example-of-how-to-use-it">Example of how to use it</a></li>
 </ul>
 </li>
 </ul>
@@ -347,7 +366,7 @@ and falls back to HDF5-level inspection when optional xarray NetCDF backends are
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=e7fff540"></script>
+</div><script src="../_static/documentation_options.js?v=862d5a7d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

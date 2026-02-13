@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="pyhazards.datasets.era5.inspection" href="datasets_era5_inspection.html"><link rel="prev" title="Datasets" href="../pyhazards_datasets.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="era5" href="datasets_era5_inspection.html"><link rel="prev" title="Datasets" href="../pyhazards_datasets.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/modules/datasets_merra2_inspection.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>pyhazards.datasets.merra2.inspection - PyHazards 1.0.1 documentation</title>
+        <title>merra2 - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -163,7 +163,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">PyHazards 1.0.1 documentation</div></a>
+      <a href="../index.html"><div class="brand">PyHazards 1.0.4 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -184,7 +184,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
-  <span class="sidebar-brand-text">PyHazards 1.0.1 documentation</span>
+  <span class="sidebar-brand-text">PyHazards 1.0.4 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -200,14 +200,14 @@
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">pyhazards.datasets.merra2.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_era5_inspection.html">pyhazards.datasets.era5.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_noaa_flood_inspection.html">pyhazards.datasets.noaa_flood.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_firms_inspection.html">pyhazards.datasets.firms.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_mtbs_inspection.html">pyhazards.datasets.mtbs.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_landfire_inspection.html">pyhazards.datasets.landfire.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_wfigs_inspection.html">pyhazards.datasets.wfigs.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets_goesr_inspection.html">pyhazards.datasets.goesr.inspection</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">merra2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_era5_inspection.html">era5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_noaa_flood_inspection.html">noaa_flood</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_firms_inspection.html">firms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_mtbs_inspection.html">mtbs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_landfire_inspection.html">landfire</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_wfigs_inspection.html">wfigs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets_goesr_inspection.html">goesr</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -263,17 +263,30 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="pyhazards-datasets-merra2-inspection">
-<h1>pyhazards.datasets.merra2.inspection<a class="headerlink" href="#pyhazards-datasets-merra2-inspection" title="Link to this heading">¶</a></h1>
+          <section id="merra2">
+<h1>merra2<a class="headerlink" href="#merra2" title="Link to this heading">¶</a></h1>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
-<p>CLI entrypoint for the MERRA-2 inspection workflow in PyHazards. It wraps the full pipeline in
-<code class="docutils literal notranslate"><span class="pre">pyhazards.datasets.inspection</span></code> (download/preprocess/inspect/outputs).</p>
+<p>MERRA-2 is a global atmospheric reanalysis from NASA GMAO, commonly used as hourly gridded
+meteorological forcing for hazard modeling. This module is the callable inspection entrypoint for
+MERRA-2 data in PyHazards and runs the one-shot inspect pipeline.</p>
+<p>For full background and publication details, see <a class="reference internal" href="../datasets/merra2.html"><span class="doc">MERRA-2 dataset page</span></a>.</p>
 </section>
-<section id="example-usage">
-<h2>Example usage<a class="headerlink" href="#example-usage" title="Link to this heading">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Full pipeline for one date key</span>
+<section id="example-of-how-to-use-it">
+<h2>Example of how to use it<a class="headerlink" href="#example-of-how-to-use-it" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># End-to-end MERRA-2 inspection workflow for one date key</span>
 python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.merra2.inspection<span class="w"> </span><span class="m">20260101</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+
+<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pyhazards.datasets.merra2.inspection&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;20260101&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -289,7 +302,7 @@ python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.merra
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">pyhazards.datasets.era5.inspection</div>
+                <div class="title">era5</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -334,9 +347,9 @@ python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.merra
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">pyhazards.datasets.merra2.inspection</a><ul>
+<li><a class="reference internal" href="#">merra2</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#example-usage">Example usage</a></li>
+<li><a class="reference internal" href="#example-of-how-to-use-it">Example of how to use it</a></li>
 </ul>
 </li>
 </ul>
@@ -348,7 +361,7 @@ python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.merra
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=e7fff540"></script>
+</div><script src="../_static/documentation_options.js?v=862d5a7d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

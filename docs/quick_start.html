@@ -7,7 +7,7 @@
         <link rel="canonical" href="https://labrai.github.io/PyHazards/quick_start.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>Quick Start - PyHazards 1.0.1 documentation</title>
+        <title>Quick Start - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -163,7 +163,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">PyHazards 1.0.1 documentation</div></a>
+      <a href="index.html"><div class="brand">PyHazards 1.0.4 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -184,7 +184,7 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
-  <span class="sidebar-brand-text">PyHazards 1.0.1 documentation</span>
+  <span class="sidebar-brand-text">PyHazards 1.0.4 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -200,14 +200,14 @@
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_merra2_inspection.html">pyhazards.datasets.merra2.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_era5_inspection.html">pyhazards.datasets.era5.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_noaa_flood_inspection.html">pyhazards.datasets.noaa_flood.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_firms_inspection.html">pyhazards.datasets.firms.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_mtbs_inspection.html">pyhazards.datasets.mtbs.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_landfire_inspection.html">pyhazards.datasets.landfire.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_wfigs_inspection.html">pyhazards.datasets.wfigs.inspection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/datasets_goesr_inspection.html">pyhazards.datasets.goesr.inspection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_merra2_inspection.html">merra2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_era5_inspection.html">era5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_noaa_flood_inspection.html">noaa_flood</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_firms_inspection.html">firms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_mtbs_inspection.html">mtbs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_landfire_inspection.html">landfire</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_wfigs_inspection.html">wfigs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/datasets_goesr_inspection.html">goesr</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -271,17 +271,9 @@
 <p>Use the following minimal workflow to get started quickly: load one dataset, build one model, then run a short end-to-end test.</p>
 <section id="load-dataset-era5-example">
 <h3>Load Dataset (ERA5 example)<a class="headerlink" href="#load-dataset-era5-example" title="Link to this heading">¶</a></h3>
-<p>This example loads the implemented ERA5 flood subset and returns a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code> that contains feature/label specs and splits.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.data.load_hydrograph_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hydrograph_data</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">load_hydrograph_data</span><span class="p">(</span>
-    <span class="n">era5_path</span><span class="o">=</span><span class="s2">&quot;pyhazards/data/era5_subset&quot;</span><span class="p">,</span>
-    <span class="n">max_nodes</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">feature_spec</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">label_spec</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">splits</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>  <span class="c1"># [&quot;train&quot;]</span>
+<p>This example uses the canonical ERA5 dataset module entrypoint to inspect/validate local ERA5 files.
+This keeps dataset usage aligned with other dataset modules in PyHazards.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.era5.inspection<span class="w"> </span>--path<span class="w"> </span>pyhazards/data/era5_subset<span class="w"> </span>--max-vars<span class="w"> </span><span class="m">10</span>
 </pre></div>
 </div>
 </section>
@@ -303,7 +295,8 @@
 </section>
 <section id="full-test-era5-hydrographnet">
 <h3>Full Test (ERA5 + HydroGraphNet)<a class="headerlink" href="#full-test-era5-hydrographnet" title="Link to this heading">¶</a></h3>
-<p>This short script runs one training epoch and then evaluates on the available split to verify the end-to-end pipeline.</p>
+<p>This short script runs one training epoch and then evaluates on the available split to verify the end-to-end pipeline.
+It uses <code class="docutils literal notranslate"><span class="pre">load_hydrograph_data</span></code> as the model-specific ERA5-to-graph adapter for HydroGraphNet.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.data.load_hydrograph_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hydrograph_data</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">graph_collate</span>
@@ -448,7 +441,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=e7fff540"></script>
+</div><script src="_static/documentation_options.js?v=862d5a7d"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

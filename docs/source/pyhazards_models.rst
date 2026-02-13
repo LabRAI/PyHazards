@@ -15,6 +15,7 @@ Model
 -----
 
 We implemented different hazard prediction models for flood, wildfire, earthquake, weather, and more.
+Click a module name to open its detail page with summary and usage example.
 
 Wildfire
 ~~~~~~~~

@@ -9,20 +9,12 @@ Use the following minimal workflow to get started quickly: load one dataset, bui
 
 Load Dataset (ERA5 example)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-This example loads the implemented ERA5 flood subset and returns a ``DataBundle`` that contains feature/label specs and splits.
+This example uses the canonical ERA5 dataset module entrypoint to inspect/validate local ERA5 files.
+This keeps dataset usage aligned with other dataset modules in PyHazards.
 
-.. code-block:: python
+.. code-block:: bash
 
-    from pyhazards.data.load_hydrograph_data import load_hydrograph_data
-
-    data = load_hydrograph_data(
-        era5_path="pyhazards/data/era5_subset",
-        max_nodes=50,
-    )
-
-    print(data.feature_spec)
-    print(data.label_spec)
-    print(list(data.splits.keys()))  # ["train"]
+    python -m pyhazards.datasets.era5.inspection --path pyhazards/data/era5_subset --max-vars 10
 
 Load Model (HydroGraphNet example)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -44,6 +36,7 @@ This example builds the implemented ``hydrographnet`` model for graph-based floo
 Full Test (ERA5 + HydroGraphNet)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 This short script runs one training epoch and then evaluates on the available split to verify the end-to-end pipeline.
+It uses ``load_hydrograph_data`` as the model-specific ERA5-to-graph adapter for HydroGraphNet.
 
 .. code-block:: python
 
