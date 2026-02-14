@@ -284,6 +284,11 @@ class ConvLEMWildfire(nn.Module):
         Returns:
             logits: Binary classification logits (batch, num_counties)
         """
+        # Handle dictionary input from graph_collate
+        if isinstance(x, dict):
+            adjacency = x.get("adj", adjacency)
+            x = x["x"]
+            
         B, T, N, F = x.shape
         
         # Validate input dimensions
