@@ -290,12 +290,12 @@
 </section>
 <section id="core-components">
 <h1>Core Components<a class="headerlink" href="#core-components" title="Link to this heading">¶</a></h1>
-<p>Use this as the minimal path: install the package, load one implemented dataset, build one implemented model, then run one end-to-end validation test.</p>
+<p>PyHazards is organized around four core components that map to a full hazard ML workflow: data preparation, model construction, experiment execution, and evaluation.</p>
 <ul class="simple">
-<li><p><strong>Datasets</strong>: Unified interfaces for tabular, temporal, raster, and graph-style hazard data through <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>.</p></li>
-<li><p><strong>Models</strong>: Built-in hazard models plus reusable backbones/heads via a registry-driven model API.</p></li>
-<li><p><strong>Engine</strong>: <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> for fit/evaluate/predict workflows with mixed precision and distributed options.</p></li>
-<li><p><strong>Metrics and Utilities</strong>: Classification/regression/segmentation metrics, hardware helpers, and reproducibility tools.</p></li>
+<li><p><strong>Datasets</strong>: Standardized dataset interfaces expose tabular, temporal, raster, and graph-style hazard data through <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code> so data loading stays consistent across tasks.</p></li>
+<li><p><strong>Models</strong>: A registry-based model API provides built-in hazard architectures and reusable backbones/heads, making it straightforward to swap models or add your own.</p></li>
+<li><p><strong>Engine</strong>: <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> centralizes fit/evaluate/predict loops with optional mixed precision and distributed execution.</p></li>
+<li><p><strong>Metrics and Utilities</strong>: Task-specific metrics plus hardware/reproducibility helpers support reliable evaluation and repeatable experiments.</p></li>
 </ul>
 </section>
 <section id="install">

@@ -15,12 +15,12 @@ PyHazards is a Python framework for AI-powered hazard prediction and risk assess
 
 ## Core Components
 
-Use this as the minimal path: install the package, load one implemented dataset, build one implemented model, then run one end-to-end validation test.
+PyHazards is organized around four core components that map to a full hazard ML workflow: data preparation, model construction, experiment execution, and evaluation.
 
-- **Datasets**: Unified interfaces for tabular, temporal, raster, and graph-style hazard data through `DataBundle`.
-- **Models**: Built-in hazard models plus reusable backbones/heads via a registry-driven model API.
-- **Engine**: `Trainer` for fit/evaluate/predict workflows with mixed precision and distributed options.
-- **Metrics and Utilities**: Classification/regression/segmentation metrics, hardware helpers, and reproducibility tools.
+- **Datasets**: Standardized dataset interfaces expose tabular, temporal, raster, and graph-style hazard data through `DataBundle` so data loading stays consistent across tasks.
+- **Models**: A registry-based model API provides built-in hazard architectures and reusable backbones/heads, making it straightforward to swap models or add your own.
+- **Engine**: `Trainer` centralizes fit/evaluate/predict loops with optional mixed precision and distributed execution.
+- **Metrics and Utilities**: Task-specific metrics plus hardware/reproducibility helpers support reliable evaluation and repeatable experiments.
 
 ## Install
 
