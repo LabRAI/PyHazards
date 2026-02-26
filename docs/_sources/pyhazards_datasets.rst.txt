@@ -81,6 +81,44 @@ Notes (MERRA-2)
   - ``--var T2M`` to choose the plotted surface variable (default: ``T2M``)
 
 
+Dataloader (v3)
+---------------
+
+Minimal API with a structured request object for multi-source fusion
+(e.g., FIRMS + ERA5).
+
+API
+~~~
+
+.. literalinclude:: ../../pyhazards/datasets/dataloader/README.md
+   :language: markdown
+   :start-after: ## API
+   :end-before: ## `GeoLoadInput`
+
+GeoLoadInput
+~~~~~~~~~~~~
+
+.. literalinclude:: ../../pyhazards/datasets/dataloader/README.md
+   :language: markdown
+   :start-after: ## `GeoLoadInput`
+   :end-before: ## Optional
+
+Optional fields
+~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../../pyhazards/datasets/dataloader/README.md
+   :language: markdown
+   :start-after: ## Optional
+   :end-before: ## Example
+
+Example
+~~~~~~~
+
+.. literalinclude:: ../../pyhazards/datasets/dataloader/README.md
+   :language: markdown
+   :start-after: ## Example
+
+
 Example skeleton
 ----------------
 
