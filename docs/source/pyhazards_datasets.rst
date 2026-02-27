@@ -129,11 +129,6 @@ and run the dataset's inspection entrypoint accordingly.
    #    Example (MERRA-2): CSV tables for variable inventory + a PDF plot for the selected surface variable.
 
 
-.. image:: /_static/result/inspection1.png
-   :width: 90%
-   :alt: Inspection output example
-
-
 Inspection entrypoints (convention for all datasets)
 ----------------------------------------------------
 
