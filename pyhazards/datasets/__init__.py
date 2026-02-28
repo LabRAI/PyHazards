@@ -14,3 +14,15 @@ __all__ = [
     "GraphTemporalDataset",
     "graph_collate",
 ]
+from .wildfire_fpa_fod import FPAFODWildfireTabular, FPAFODWildfireWeekly
+
+# Register datasets so framework load_dataset(...) can find them
+register_dataset(
+    name="wildfire_fpa_fod_tabular",
+    builder=lambda **kwargs: FPAFODWildfireTabular(**kwargs),
+)
+
+register_dataset(
+    name="wildfire_fpa_fod_weekly",
+    builder=lambda **kwargs: FPAFODWildfireWeekly(**kwargs),
+)

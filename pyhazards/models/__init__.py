@@ -7,8 +7,11 @@ from .registry import available_models, register_model
 from .wildfire_mamba import WildfireMamba, wildfire_mamba_builder
 from .wildfire_aspp import WildfireASPP, TverskyLoss, wildfire_aspp_builder
 from .cnn_aspp import WildfireCNNASPP, cnn_aspp_builder
-from .hydrographnet import HydroGraphNet, HydroGraphNetLoss, hydrographnet_builder
 
+# pyhazards/models/__init__.py
+from .wildfire_fpa_mlp import build_wildfire_fpa_mlp  # noqa: F401
+from .wildfire_fpa_lstm import build_wildfire_fpa_lstm  # noqa: F401
+from .wildfire_fpa_autoencoder import build_wildfire_fpa_ae  # noqa: F401
 
 __all__ = [
     # Core API
@@ -34,9 +37,6 @@ __all__ = [
     "wildfire_aspp_builder",
     "WildfireCNNASPP",
     "cnn_aspp_builder",
-    "HydroGraphNet",
-    "HydroGraphNetLoss",
-    "hydrographnet_builder",
 ]
 
 # -------------------------------------------------
@@ -94,16 +94,5 @@ register_model(
         "aspp_channels": 32,
         "dilations": (1, 3, 6, 12),
         "dropout": 0.0,
-    },
-)
-
-
-register_model(
-    name="hydrographnet",
-    builder=hydrographnet_builder,
-    defaults={
-        "hidden_dim": 64,
-        "harmonics": 5,
-        "num_gn_blocks": 5,
     },
 )
