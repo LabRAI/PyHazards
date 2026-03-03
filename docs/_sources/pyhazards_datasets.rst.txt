@@ -45,6 +45,12 @@ Click a module name to open its unified dataset page (description + how to use i
    * - :doc:`wfigs <datasets/wfigs>`
      - Authoritative incident-level wildfire records from the `U.S. interagency WFIGS <https://data-nifc.opendata.arcgis.com/>`_ ecosystem (ignition, location, status, extent), commonly used as ground-truth labels for wildfire occurrence.
 
+   * - :doc:`fpa_fod_tabular <datasets/fpa_fod_tabular>`
+     - Incident-level tabular dataset derived from FPA-FOD wildfire records for cause or grouped size-class classification, with support for user-provided sqlite/CSV/Parquet inputs and a deterministic micro mode.
+
+   * - :doc:`fpa_fod_weekly <datasets/fpa_fod_weekly>`
+     - Weekly aggregated FPA-FOD sequences for next-week wildfire count forecasting by size group, with chronological splits and optional seasonal time features.
+
    * - :doc:`goesr <datasets/goesr>`
      - High-frequency geostationary multispectral imagery from the `NOAA GOES-R series <https://www.goes-r.gov/>`_, supporting continuous monitoring (e.g., smoke/thermal context) and early detection workflows when paired with fire and meteorology datasets.
 
@@ -167,4 +173,6 @@ If you plan to add inspection for a new dataset, mirror the MERRA-2 inspection p
    datasets/mtbs
    datasets/landfire
    datasets/wfigs
+   datasets/fpa_fod_tabular
+   datasets/fpa_fod_weekly
    datasets/goesr

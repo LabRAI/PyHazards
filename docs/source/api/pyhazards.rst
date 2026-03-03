@@ -20,4 +20,4 @@ Module contents
    :members:
    :undoc-members:
    :show-inheritance:
-   :exclude-members: GraphTemporalDataset, graph_collate, WildfireMamba, wildfire_mamba_builder
+   :exclude-members: GraphTemporalDataset, graph_collate, WildfireMamba, wildfire_mamba_builder, WildfireFPALSTM, wildfire_fpa_lstm_builder, WildfireFPAAutoencoder, wildfire_fpa_autoencoder_builder

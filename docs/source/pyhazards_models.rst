@@ -29,6 +29,10 @@ Wildfire
      - Description
    * - :doc:`wildfire_aspp <modules/models_wildfire_aspp>`
      - An explainable CNN model with an ASPP mechanism (CNN-ASPP) for next-day wildfire spread prediction using environmental variables from the Next Day Wildfire Spread dataset; compared against RF, SVM, ANN, and a baseline CNN. See `Marjani et al. (2024) <https://ieeexplore.ieee.org/document/10568207>`_.
+   * - :doc:`wildfire_fpa_dnn <modules/models_wildfire_fpa_dnn>`
+     - The DNN classification component from the FPA-FOD wildfire framework, used for wildfire cause and size prediction from incident-level features. See `Shen et al. (2023) <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
+   * - :doc:`wildfire_fpa_forecast <modules/models_wildfire_fpa_forecast>`
+     - The LSTM + autoencoder forecasting component from the same FPA-FOD framework, implemented in PyHazards as a combined weekly-sequence forecaster for imminent wildfire activity, especially high-risk regions such as California. See `Shen et al. (2023) <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
 
 Flood
 ~~~~~
@@ -97,4 +101,6 @@ Design notes
    :hidden:
 
    modules/models_wildfire_aspp
+   modules/models_wildfire_fpa_dnn
+   modules/models_wildfire_fpa_forecast
    modules/models_hydrographnet

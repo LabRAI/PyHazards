@@ -1,8 +1,7 @@
-.. raw:: html
-
-   <div style="margin: 30px 0; text-align: center;">
-     <img src="_static/logo.png" alt="PyHazards Icon" style="max-width: 260px; height: auto;">
-   </div>
+.. image:: _static/logo.png
+   :alt: PyHazards Icon
+   :width: 260px
+   :align: center
 
 .. image:: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpypi.org%2Fpypi%2Fpyhazards%2Fjson&query=%24.info.version&prefix=v&label=PyPI
    :target: https://pypi.org/project/pyhazards

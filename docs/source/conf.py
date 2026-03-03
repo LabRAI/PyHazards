@@ -47,7 +47,8 @@ napoleon_numpy_docstring = True
 html_theme = 'furo'
 html_static_path = ['_static']
 html_baseurl = "https://labrai.github.io/PyHazards/"
-html_logo = None
+html_logo = "_static/logo.png"
+html_favicon = "_static/logo.png"
 html_title = "PyHazards 1.0.4 documentation"
 
 html_theme_options = {
