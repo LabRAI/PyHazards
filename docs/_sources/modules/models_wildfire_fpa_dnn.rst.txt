@@ -9,7 +9,7 @@ framework. In PyHazards it is implemented as a configurable multilayer perceptro
 cause or size-class prediction.
 
 This corresponds to the classification stage described in:
-`Prediction of the cause and size of wildfire using artificial intelligence <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
+`Developing risk assessment framework for wildfire in the United States - A deep learning approach to safety and sustainability <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
 
 Example of how to use it
 ------------------------
