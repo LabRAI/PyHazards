@@ -1,5 +1,5 @@
-wildfire_aspp
-=============
+CNN-ASPP
+========
 
 Description
 -----------

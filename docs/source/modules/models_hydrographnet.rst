@@ -1,4 +1,4 @@
-hydrographnet
+HydroGraphNet
 =============
 
 Description
