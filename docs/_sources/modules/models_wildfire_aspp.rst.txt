@@ -13,6 +13,11 @@ The model summary follows Marjani et al. (2024):
 In PyHazards, this module is built from the model registry and can be used directly for wildfire
 segmentation experiments.
 
+Modular
+-------
+
+``wildfire_aspp``
+
 Example of how to use it
 ------------------------
 

@@ -15,39 +15,34 @@ Model
 -----
 
 We implemented different hazard prediction models for flood, wildfire, earthquake, weather, and more.
-Click a module name to open its detail page with summary and usage example.
+Click a model name to open its detail page with summary and usage example.
 
 Wildfire
 ~~~~~~~~
 
 .. list-table::
-   :widths: 25 20 55
+   :widths: 30 70
    :header-rows: 1
    :class: dataset-list
 
    * - Model
-     - Modular
      - Description
-   * - CNN-ASPP
-     - :doc:`wildfire_aspp <modules/models_wildfire_aspp>`
+   * - :doc:`CNN-ASPP <modules/models_wildfire_aspp>`
      - An explainable CNN model with an ASPP mechanism (CNN-ASPP) for next-day wildfire spread prediction using environmental variables from the Next Day Wildfire Spread dataset; compared against RF, SVM, ANN, and a baseline CNN. See `Marjani et al. (2024) <https://ieeexplore.ieee.org/document/10568207>`_.
-   * - DNN-LSTM-AutoEncoder
-     - :doc:`wildfire_fpa <modules/models_wildfire_fpa>`
+   * - :doc:`DNN-LSTM-AutoEncoder <modules/models_wildfire_fpa>`
      - A two-stage deep-learning framework that first applies a DNN to wildfire cause and size prediction from incident-level features, then applies an LSTM + autoencoder stack to forecast imminent wildfire activity from weekly sequences in high-risk regions such as California. See `Shen et al. (2023) <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
 
 Flood
 ~~~~~
 
 .. list-table::
-   :widths: 25 20 55
+   :widths: 30 70
    :header-rows: 1
    :class: dataset-list
 
    * - Model
-     - Modular
      - Description
-   * - HydroGraphNet
-     - :doc:`hydrographnet <modules/models_hydrographnet>`
+   * - :doc:`HydroGraphNet <modules/models_hydrographnet>`
      - A novel physics-informed GNN framework that integrates the Kolmogorov-Arnold Network (KAN) to enhance interpretability for unstructured mesh-based flood forecasting. See `Taghizadeh et al. (2025) <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_.
 
 Build and register custom model

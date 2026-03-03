@@ -4,6 +4,11 @@ NOAA Flood Events
 Event-based flood and severe weather records compiled by NOAA, providing historical reports of flood
 occurrence and impacts across the United States.
 
+Modular
+-------
+
+``noaa_flood``
+
 .. admonition:: At-a-glance (Quick Facts)
    :class: note
 

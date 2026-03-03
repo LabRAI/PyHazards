@@ -4,6 +4,11 @@ GOES-R
 High-frequency geostationary satellite observations from NOAA’s GOES-R series, providing continuous
 multispectral imagery for monitoring atmospheric and surface processes.
 
+Modular
+-------
+
+``goesr``
+
 .. admonition:: At-a-glance (Quick Facts)
    :class: note
 

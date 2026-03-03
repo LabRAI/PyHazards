@@ -4,6 +4,11 @@ MTBS
 National-scale wildfire burn severity and perimeter dataset produced by the U.S. Geological Survey (USGS) and partners,
 supporting post-fire impact assessment and long-term wildfire regime analysis.
 
+Modular
+-------
+
+``mtbs``
+
 .. admonition:: At-a-glance (Quick Facts)
    :class: note
 

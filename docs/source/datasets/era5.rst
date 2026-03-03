@@ -4,6 +4,11 @@ ERA5
 Global atmospheric reanalysis produced by the European Centre for Medium-Range Weather Forecasts (ECMWF),
 providing high-resolution meteorological fields for weather, climate, and hazard-related applications.
 
+Modular
+-------
+
+``era5``
+
 .. admonition:: At-a-glance (Quick Facts)
    :class: note
 

@@ -4,6 +4,11 @@ WFIGS
 Authoritative incident-level wildfire records maintained by U.S. interagency fire management systems,
 providing official information on real wildfire incidents across the United States.
 
+Modular
+-------
+
+``wfigs``
+
 .. admonition:: At-a-glance (Quick Facts)
    :class: note
 

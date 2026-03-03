@@ -13,6 +13,11 @@ The model summary follows Taghizadeh et al. (2025):
 In PyHazards, this module is built from the model registry and is typically used with the
 ERA5-based hydrograph adapter ``load_hydrograph_data`` for end-to-end validation.
 
+Modular
+-------
+
+``hydrographnet``
+
 Example of how to use it
 ------------------------
 

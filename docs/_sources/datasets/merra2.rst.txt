@@ -4,6 +4,11 @@ MERRA-2
 Global atmospheric reanalysis produced by NASA Global Modeling and Assimilation Office (GMAO),
 providing physically consistent meteorological fields for weather, climate, and hazard modeling.
 
+Modular
+-------
+
+``merra2``
+
 .. admonition:: At-a-glance (Quick Facts)
    :class: note
 

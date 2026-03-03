@@ -4,6 +4,11 @@ FPA-FOD Weekly
 Weekly wildfire forecasting dataset derived from FPA-FOD incident records, aggregated into next-week
 count targets by size group.
 
+Modular
+-------
+
+``fpa_fod_weekly``
+
 Overview
 --------
 

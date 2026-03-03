@@ -4,6 +4,11 @@ LANDFIRE
 National-scale vegetation, fuel, and landscape characterization dataset produced by the U.S. Forest Service,
 supporting wildfire behavior modeling and landscape-scale fire risk assessment.
 
+Modular
+-------
+
+``landfire``
+
 .. admonition:: At-a-glance (Quick Facts)
    :class: note
 

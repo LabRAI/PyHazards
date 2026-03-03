@@ -4,6 +4,11 @@ FPA-FOD Tabular
 Incident-level tabular dataset derived from the Fire Program Analysis Fire-Occurrence Database (FPA-FOD),
 packaged for wildfire cause or size classification in PyHazards.
 
+Modular
+-------
+
+``fpa_fod_tabular``
+
 Overview
 --------
 

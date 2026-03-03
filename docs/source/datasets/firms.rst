@@ -4,6 +4,11 @@ FIRMS
 Near-real-time global active fire detection dataset provided by NASA, based on satellite thermal anomaly
 observations for operational wildfire monitoring and hazard analysis.
 
+Modular
+-------
+
+``firms``
+
 .. admonition:: At-a-glance (Quick Facts)
    :class: note
 

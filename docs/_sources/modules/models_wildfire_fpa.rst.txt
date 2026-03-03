@@ -15,6 +15,11 @@ The framework comprises two sequential model stages:
 
 PyHazards keeps those stages modular internally, but exposes them under one public model name.
 
+Modular
+-------
+
+``wildfire_fpa``
+
 Example of how to use it
 ------------------------
 

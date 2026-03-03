@@ -281,59 +281,47 @@ quickly validate local data files via an inspection entrypoint (when available).
 </section>
 <section id="id1">
 <h2>Datasets<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
-<p>Click a module name to open its unified dataset page (description + how to use in PyHazards).</p>
+<p>Click a dataset name to open its unified dataset page (description + how to use in PyHazards).</p>
 <div class="table-wrapper colwidths-given dataset-list docutils container">
 <table class="dataset-list docutils align-default">
 <colgroup>
-<col style="width: 18.0%" />
-<col style="width: 18.0%" />
-<col style="width: 64.0%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Dataset</p></th>
-<th class="head"><p>Modular</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>MERRA-2</p></td>
-<td><p><a class="reference internal" href="datasets/merra2.html"><span class="doc">merra2</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="datasets/merra2.html"><span class="doc">MERRA-2</span></a></p></td>
 <td><p>Global atmospheric reanalysis from NASA GMAO MERRA-2 (<a class="reference external" href="https://gmao.gsfc.nasa.gov/gmao-products/merra-2/">overview</a>), widely used as hourly gridded meteorological drivers for hazard modeling; see <a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">Gelaro et al. (2017)</a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>ERA5</p></td>
-<td><p><a class="reference internal" href="datasets/era5.html"><span class="doc">era5</span></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="datasets/era5.html"><span class="doc">ERA5</span></a></p></td>
 <td><p>ECMWF ERA5 reanalysis served via the <a class="reference external" href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview">Copernicus CDS</a>, providing hourly single-/pressure-level variables for benchmarks and hazard covariates; see <a class="reference external" href="https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803">Hersbach et al. (2020)</a>.</p></td>
 </tr>
-<tr class="row-even"><td><p>NOAA Flood Events</p></td>
-<td><p><a class="reference internal" href="datasets/noaa_flood.html"><span class="doc">noaa_flood</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="datasets/noaa_flood.html"><span class="doc">NOAA Flood Events</span></a></p></td>
 <td><p>Flood-related event reports from the <a class="reference external" href="https://www.ncei.noaa.gov/products/storm-events-database">NOAA Storm Events Database</a> (time, location, impacts), commonly used for event-level labeling and impact analysis.</p></td>
 </tr>
-<tr class="row-odd"><td><p>FIRMS</p></td>
-<td><p><a class="reference internal" href="datasets/firms.html"><span class="doc">firms</span></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="datasets/firms.html"><span class="doc">FIRMS</span></a></p></td>
 <td><p>Near-real-time active fire detections from <a class="reference external" href="https://firms.modaps.eosdis.nasa.gov/">NASA FIRMS</a> (MODIS/VIIRS), used for operational monitoring and as wildfire occurrence labels; see <a class="reference external" href="https://doi.org/10.1016/j.rse.2013.08.008">Schroeder et al. (2014)</a>.</p></td>
 </tr>
-<tr class="row-even"><td><p>MTBS</p></td>
-<td><p><a class="reference internal" href="datasets/mtbs.html"><span class="doc">mtbs</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="datasets/mtbs.html"><span class="doc">MTBS</span></a></p></td>
 <td><p>US wildfire perimeters and burn severity layers from <a class="reference external" href="https://burnseverity.cr.usgs.gov/">MTBS</a> (Landsat-derived), used for post-fire assessment and long-term regime studies; see <a class="reference external" href="https://doi.org/10.4996/fireecology.0301003">Eidenshink et al. (2007)</a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p>LANDFIRE</p></td>
-<td><p><a class="reference internal" href="datasets/landfire.html"><span class="doc">landfire</span></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="datasets/landfire.html"><span class="doc">LANDFIRE</span></a></p></td>
 <td><p>Nationwide fuels and vegetation layers from the <a class="reference external" href="https://landfire.gov/">USFS LANDFIRE</a> program, often used as static landscape covariates for wildfire behavior and risk modeling; see <a class="reference external" href="https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning">the program overview</a>.</p></td>
 </tr>
-<tr class="row-even"><td><p>WFIGS</p></td>
-<td><p><a class="reference internal" href="datasets/wfigs.html"><span class="doc">wfigs</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="datasets/wfigs.html"><span class="doc">WFIGS</span></a></p></td>
 <td><p>Authoritative incident-level wildfire records from the <a class="reference external" href="https://data-nifc.opendata.arcgis.com/">U.S. interagency WFIGS</a> ecosystem (ignition, location, status, extent), commonly used as ground-truth labels for wildfire occurrence.</p></td>
 </tr>
-<tr class="row-odd"><td><p>FPA-FOD Tabular</p></td>
-<td><p><a class="reference internal" href="datasets/fpa_fod_tabular.html"><span class="doc">fpa_fod_tabular</span></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="datasets/fpa_fod_tabular.html"><span class="doc">FPA-FOD Tabular</span></a></p></td>
 <td><p>Incident-level tabular dataset derived from FPA-FOD wildfire records for cause or grouped size-class classification, with support for user-provided sqlite/CSV/Parquet inputs and a deterministic micro mode.</p></td>
 </tr>
-<tr class="row-even"><td><p>FPA-FOD Weekly</p></td>
-<td><p><a class="reference internal" href="datasets/fpa_fod_weekly.html"><span class="doc">fpa_fod_weekly</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="datasets/fpa_fod_weekly.html"><span class="doc">FPA-FOD Weekly</span></a></p></td>
 <td><p>Weekly aggregated FPA-FOD sequences for next-week wildfire count forecasting by size group, with chronological splits and optional seasonal time features.</p></td>
 </tr>
-<tr class="row-odd"><td><p>GOES-R</p></td>
-<td><p><a class="reference internal" href="datasets/goesr.html"><span class="doc">goesr</span></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="datasets/goesr.html"><span class="doc">GOES-R</span></a></p></td>
 <td><p>High-frequency geostationary multispectral imagery from the <a class="reference external" href="https://www.goes-r.gov/">NOAA GOES-R series</a>, supporting continuous monitoring (e.g., smoke/thermal context) and early detection workflows when paired with fire and meteorology datasets.</p></td>
 </tr>
 </tbody>
