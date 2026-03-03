@@ -218,8 +218,7 @@
 </li>
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Models</a><input aria-label="Toggle navigation of Models" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">wildfire_aspp</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html">wildfire_fpa_dnn</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html">wildfire_fpa_forecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">wildfire_fpa</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_hydrographnet.html">hydrographnet</a></li>
 </ul>
 </li>
@@ -280,7 +279,7 @@
 <li><p>Backbones for common data types: MLP (tabular), CNN patch encoder (raster), temporal encoder (time-series).</p></li>
 <li><p>Task heads: classification, regression, segmentation.</p></li>
 <li><p>A registry-driven builder so you can construct built-ins by name or register your own.</p></li>
-<li><p>Hazard-focused implementations such as <code class="docutils literal notranslate"><span class="pre">wildfire_aspp</span></code> and <code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code>.</p></li>
+<li><p>Hazard-focused implementations such as <code class="docutils literal notranslate"><span class="pre">wildfire_aspp</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfire_fpa</span></code>, and <code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code>.</p></li>
 </ul>
 </section>
 <section id="model">
@@ -292,23 +291,24 @@ Click a module name to open its detail page with summary and usage example.</p>
 <div class="table-wrapper colwidths-given dataset-list docutils container">
 <table class="dataset-list docutils align-default">
 <colgroup>
-<col style="width: 15.0%" />
-<col style="width: 85.0%" />
+<col style="width: 25.0%" />
+<col style="width: 20.0%" />
+<col style="width: 55.0%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Module</p></th>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Modular</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_aspp.html"><span class="doc">wildfire_aspp</span></a></p></td>
+<tr class="row-even"><td><p>CNN-ASPP</p></td>
+<td><p><a class="reference internal" href="modules/models_wildfire_aspp.html"><span class="doc">wildfire_aspp</span></a></p></td>
 <td><p>An explainable CNN model with an ASPP mechanism (CNN-ASPP) for next-day wildfire spread prediction using environmental variables from the Next Day Wildfire Spread dataset; compared against RF, SVM, ANN, and a baseline CNN. See <a class="reference external" href="https://ieeexplore.ieee.org/document/10568207">Marjani et al. (2024)</a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html"><span class="doc">wildfire_fpa_dnn</span></a></p></td>
-<td><p>The DNN classification component from the FPA-FOD wildfire framework, used for wildfire cause and size prediction from incident-level features. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Shen et al. (2023)</a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html"><span class="doc">wildfire_fpa_forecast</span></a></p></td>
-<td><p>The LSTM + autoencoder forecasting component from the same FPA-FOD framework, implemented in PyHazards as a combined weekly-sequence forecaster for imminent wildfire activity, especially high-risk regions such as California. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Shen et al. (2023)</a>.</p></td>
+<tr class="row-odd"><td><p>DNN-LSTM-AutoEncoder</p></td>
+<td><p><a class="reference internal" href="modules/models_wildfire_fpa.html"><span class="doc">wildfire_fpa</span></a></p></td>
+<td><p>A two-stage deep-learning framework that first applies a DNN to wildfire cause and size prediction from incident-level features, then applies an LSTM + autoencoder stack to forecast imminent wildfire activity from weekly sequences in high-risk regions such as California. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Shen et al. (2023)</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -319,16 +319,19 @@ Click a module name to open its detail page with summary and usage example.</p>
 <div class="table-wrapper colwidths-given dataset-list docutils container">
 <table class="dataset-list docutils align-default">
 <colgroup>
-<col style="width: 15.0%" />
-<col style="width: 85.0%" />
+<col style="width: 25.0%" />
+<col style="width: 20.0%" />
+<col style="width: 55.0%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>Module</p></th>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Modular</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_hydrographnet.html"><span class="doc">hydrographnet</span></a></p></td>
+<tr class="row-even"><td><p>HydroGraphNet</p></td>
+<td><p><a class="reference internal" href="modules/models_hydrographnet.html"><span class="doc">hydrographnet</span></a></p></td>
 <td><p>A novel physics-informed GNN framework that integrates the Kolmogorov-Arnold Network (KAN) to enhance interpretability for unstructured mesh-based flood forecasting. See <a class="reference external" href="https://onlinelibrary.wiley.com/doi/10.1111/mice.13484">Taghizadeh et al. (2025)</a>.</p></td>
 </tr>
 </tbody>

@@ -1,10 +1,13 @@
-wildfire_fpa_forecast
-=====================
+:orphan:
+
+FPA-FOD Internal Forecast
+=========================
 
 Description
 -----------
 
-``wildfire_fpa_forecast`` is the forecasting component of the FPA-FOD wildfire framework. It combines:
+``wildfire_fpa_forecast`` is the internal forecasting stage used beneath the public ``wildfire_fpa``
+framework entrypoint. It combines:
 
 - an LSTM temporal encoder over weekly sequences, and
 - an autoencoder-derived latent summary of the same sequence,
@@ -20,11 +23,9 @@ Example of how to use it
 .. code-block:: python
 
    import torch
-   from pyhazards.models import build_model
+   from pyhazards.models.wildfire_fpa_forecast import WildfireFPAForecast
 
-   model = build_model(
-       name="wildfire_fpa_forecast",
-       task="forecasting",
+   model = WildfireFPAForecast(
        input_dim=7,
        output_dim=5,
        lookback=12,
@@ -40,4 +41,5 @@ Notes
 
 - ``forward_with_reconstruction(...)`` returns both the forecast and the sequence reconstruction.
 - PyHazards also keeps standalone temporal and reconstruction components available for lower-level
-  experimentation, but the paper-facing entrypoint is ``wildfire_fpa_forecast``.
+  experimentation, but the paper-facing entrypoint is ``wildfire_fpa`` with
+  ``task="forecasting"``.

@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html">
-        <link rel="canonical" href="https://labrai.github.io/PyHazards/_modules/pyhazards/engine/inference.html">
+        <link rel="canonical" href="https://labrai.github.io/PyHazards/_modules/pyhazards/models/wildfire_fpa.html">
         <link rel="prefetch" href="../../../_static/logo.png" as="image">
 
     <link rel="shortcut icon" href="../../../_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>pyhazards.engine.inference - PyHazards 1.0.4 documentation</title>
+        <title>pyhazards.models.wildfire_fpa - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -263,36 +263,114 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for pyhazards.engine.inference</h1><div class="highlight"><pre>
+          <h1>Source code for pyhazards.models.wildfire_fpa</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.wildfire_fpa_dnn</span><span class="w"> </span><span class="kn">import</span> <span class="n">WildfireFPADNN</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.wildfire_fpa_forecast</span><span class="w"> </span><span class="kn">import</span> <span class="n">WildfireFPAForecast</span>
 
 
-<div class="viewcode-block" id="SlidingWindowInference">
-<a class="viewcode-back" href="../../../api/pyhazards.engine.html#pyhazards.engine.inference.SlidingWindowInference">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">SlidingWindowInference</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Placeholder for sliding-window inference over large rasters or grids.</span>
-<span class="sd">    Implement windowing logic and stitching as needed.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WildfireFPA">
+<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.WildfireFPA">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WildfireFPA</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Paper-facing wrapper for the two-stage FPA-FOD wildfire framework.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">window_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">window_fn</span> <span class="o">=</span> <span class="n">window_fn</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">component</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="n">normalized_stage</span> <span class="o">=</span> <span class="n">stage</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">normalized_stage</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span> <span class="s2">&quot;forecasting&quot;</span><span class="p">,</span> <span class="s2">&quot;regression&quot;</span><span class="p">}:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported wildfire_fpa stage: </span><span class="si">{</span><span class="n">stage</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Provide a window_fn to generate windows from inputs.&quot;</span><span class="p">)</span>
-        <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
-            <span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_fn</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
-                <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">window</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">outputs</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stage</span> <span class="o">=</span> <span class="s2">&quot;forecasting&quot;</span> <span class="k">if</span> <span class="n">normalized_stage</span> <span class="o">==</span> <span class="s2">&quot;regression&quot;</span> <span class="k">else</span> <span class="n">normalized_stage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">=</span> <span class="n">component</span>
 
+<div class="viewcode-block" id="WildfireFPA.forward">
+<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.WildfireFPA.forward">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WildfireFPA.forward_with_reconstruction">
+<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.WildfireFPA.forward_with_reconstruction">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward_with_reconstruction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;forward_with_reconstruction&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="s2">&quot;forward_with_reconstruction is only available for the forecasting stage &quot;</span>
+                <span class="s2">&quot;of wildfire_fpa.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">forward_with_reconstruction</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="wildfire_fpa_builder">
+<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.wildfire_fpa_builder">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">wildfire_fpa_builder</span><span class="p">(</span>
+    <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">in_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">input_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">out_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">output_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">hidden_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
+    <span class="n">activation</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;relu&quot;</span><span class="p">,</span>
+    <span class="n">dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">latent_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
+    <span class="n">num_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">ae_hidden_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">ae_num_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">lookback</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">:</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">kwargs</span>
+    <span class="n">normalized_task</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">normalized_task</span> <span class="o">==</span> <span class="s2">&quot;classification&quot;</span><span class="p">:</span>
+        <span class="n">feature_dim</span> <span class="o">=</span> <span class="n">in_dim</span> <span class="k">if</span> <span class="n">in_dim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">input_dim</span>
+        <span class="k">if</span> <span class="n">feature_dim</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;wildfire_fpa classification requires in_dim (or input_dim).&quot;</span><span class="p">)</span>
+
+        <span class="n">component</span> <span class="o">=</span> <span class="n">WildfireFPADNN</span><span class="p">(</span>
+            <span class="n">in_dim</span><span class="o">=</span><span class="n">feature_dim</span><span class="p">,</span>
+            <span class="n">out_dim</span><span class="o">=</span><span class="n">out_dim</span> <span class="k">if</span> <span class="n">out_dim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">(</span><span class="n">output_dim</span> <span class="k">if</span> <span class="n">output_dim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">5</span><span class="p">),</span>
+            <span class="n">depth</span><span class="o">=</span><span class="n">depth</span><span class="p">,</span>
+            <span class="n">hidden_dim</span><span class="o">=</span><span class="n">hidden_dim</span><span class="p">,</span>
+            <span class="n">activation</span><span class="o">=</span><span class="n">activation</span><span class="p">,</span>
+            <span class="n">dropout</span><span class="o">=</span><span class="mf">0.0</span> <span class="k">if</span> <span class="n">dropout</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">dropout</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">WildfireFPA</span><span class="p">(</span><span class="n">stage</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="n">component</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">normalized_task</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;forecasting&quot;</span><span class="p">,</span> <span class="s2">&quot;regression&quot;</span><span class="p">}:</span>
+        <span class="n">sequence_dim</span> <span class="o">=</span> <span class="n">input_dim</span> <span class="k">if</span> <span class="n">input_dim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">in_dim</span>
+        <span class="k">if</span> <span class="n">sequence_dim</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;wildfire_fpa forecasting requires input_dim (or in_dim).&quot;</span><span class="p">)</span>
+
+        <span class="n">component</span> <span class="o">=</span> <span class="n">WildfireFPAForecast</span><span class="p">(</span>
+            <span class="n">input_dim</span><span class="o">=</span><span class="n">sequence_dim</span><span class="p">,</span>
+            <span class="n">hidden_dim</span><span class="o">=</span><span class="n">hidden_dim</span><span class="p">,</span>
+            <span class="n">output_dim</span><span class="o">=</span><span class="n">output_dim</span> <span class="k">if</span> <span class="n">output_dim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">(</span><span class="n">out_dim</span> <span class="k">if</span> <span class="n">out_dim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">5</span><span class="p">),</span>
+            <span class="n">latent_dim</span><span class="o">=</span><span class="n">latent_dim</span><span class="p">,</span>
+            <span class="n">num_layers</span><span class="o">=</span><span class="n">num_layers</span><span class="p">,</span>
+            <span class="n">ae_hidden_dim</span><span class="o">=</span><span class="n">ae_hidden_dim</span><span class="p">,</span>
+            <span class="n">ae_num_layers</span><span class="o">=</span><span class="n">ae_num_layers</span><span class="p">,</span>
+            <span class="n">dropout</span><span class="o">=</span><span class="mf">0.2</span> <span class="k">if</span> <span class="n">dropout</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">dropout</span><span class="p">,</span>
+            <span class="n">lookback</span><span class="o">=</span><span class="n">lookback</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">WildfireFPA</span><span class="p">(</span><span class="n">stage</span><span class="o">=</span><span class="n">normalized_task</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="n">component</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s2">&quot;wildfire_fpa supports task=&#39;classification&#39; for the DNN stage and &quot;</span>
+        <span class="s2">&quot;task in {&#39;forecasting&#39;, &#39;regression&#39;} for the LSTM + autoencoder stage.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;WildfireFPA&quot;</span><span class="p">,</span> <span class="s2">&quot;wildfire_fpa_builder&quot;</span><span class="p">]</span>
 </pre></div>
         </article>
       </div>

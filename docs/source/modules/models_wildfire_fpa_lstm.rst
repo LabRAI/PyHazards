@@ -6,8 +6,8 @@ FPA-FOD Internal LSTM
 Description
 -----------
 
-``wildfire_fpa_lstm`` is the standalone LSTM component used beneath the paper-facing forecast model
-family. It consumes a rolling lookback window and predicts next-week wildfire counts.
+``wildfire_fpa_lstm`` is the standalone LSTM component used beneath the public ``wildfire_fpa``
+framework. It consumes a rolling lookback window and predicts next-week wildfire counts.
 
 Example of how to use it
 ------------------------
@@ -15,11 +15,9 @@ Example of how to use it
 .. code-block:: python
 
    import torch
-   from pyhazards.models import build_model
+   from pyhazards.models.wildfire_fpa_lstm import WildfireFPALSTM
 
-   model = build_model(
-       name="wildfire_fpa_lstm",
-       task="forecasting",
+   model = WildfireFPALSTM(
        input_dim=7,
        output_dim=5,
        lookback=12,

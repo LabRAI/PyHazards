@@ -1,11 +1,13 @@
-wildfire_fpa_dnn
-================
+:orphan:
+
+FPA-FOD Internal DNN
+====================
 
 Description
 -----------
 
-``wildfire_fpa_dnn`` is the paper-facing DNN classification component from the FPA-FOD wildfire
-framework. In PyHazards it is implemented as a configurable multilayer perceptron for incident-level
+``wildfire_fpa_dnn`` is the internal DNN stage used beneath the public ``wildfire_fpa`` framework
+entrypoint. In PyHazards it is implemented as a configurable multilayer perceptron for incident-level
 cause or size-class prediction.
 
 This corresponds to the classification stage described in:
@@ -17,11 +19,9 @@ Example of how to use it
 .. code-block:: python
 
    import torch
-   from pyhazards.models import build_model
+   from pyhazards.models.wildfire_fpa_dnn import WildfireFPADNN
 
-   model = build_model(
-       name="wildfire_fpa_dnn",
-       task="classification",
+   model = WildfireFPADNN(
        in_dim=8,
        out_dim=5,
        hidden_dim=64,
@@ -35,4 +35,4 @@ Example of how to use it
 Notes
 -----
 
-- ``wildfire_fpa_dnn`` is the primary PyHazards registry name for this classifier.
+- The public paper-facing registry name is ``wildfire_fpa`` with ``task="classification"``.

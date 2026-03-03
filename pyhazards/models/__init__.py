@@ -4,13 +4,7 @@ from .heads import ClassificationHead, RegressionHead, SegmentationHead
 from .registry import available_models, register_model
 
 # Wildfire models
-from .wildfire_fpa_autoencoder import (
-    WildfireFPAAutoencoder,
-    wildfire_fpa_autoencoder_builder,
-)
-from .wildfire_fpa_dnn import WildfireFPADNN, wildfire_fpa_dnn_builder
-from .wildfire_fpa_forecast import WildfireFPAForecast, wildfire_fpa_forecast_builder
-from .wildfire_fpa_lstm import WildfireFPALSTM, wildfire_fpa_lstm_builder
+from .wildfire_fpa import WildfireFPA, wildfire_fpa_builder
 from .wildfire_mamba import WildfireMamba, wildfire_mamba_builder
 from .wildfire_aspp import WildfireASPP, TverskyLoss, wildfire_aspp_builder
 from .cnn_aspp import WildfireCNNASPP, cnn_aspp_builder
@@ -34,12 +28,8 @@ __all__ = [
     "SegmentationHead",
 
     # Wildfire models
-    "WildfireFPADNN",
-    "wildfire_fpa_dnn_builder",
-    "WildfireFPAAutoencoder",
-    "wildfire_fpa_autoencoder_builder",
-    "WildfireFPAForecast",
-    "wildfire_fpa_forecast_builder",
+    "WildfireFPA",
+    "wildfire_fpa_builder",
     "WildfireMamba",
     "wildfire_mamba_builder",
     "WildfireASPP",
@@ -77,50 +67,17 @@ register_model(
 # Register wildfire models
 # -------------------------------------------------
 register_model(
-    "wildfire_fpa_dnn",
-    wildfire_fpa_dnn_builder,
+    "wildfire_fpa",
+    wildfire_fpa_builder,
     defaults={
         "out_dim": 5,
+        "output_dim": 5,
         "depth": 2,
         "hidden_dim": 64,
         "activation": "relu",
-        "dropout": 0.0,
-    },
-)
-
-register_model(
-    "wildfire_fpa_forecast",
-    wildfire_fpa_forecast_builder,
-    defaults={
-        "hidden_dim": 64,
-        "output_dim": 5,
+        "dropout": None,
         "latent_dim": 32,
         "num_layers": 1,
-        "dropout": 0.2,
-        "lookback": 50,
-    },
-)
-
-register_model(
-    "wildfire_fpa_autoencoder",
-    wildfire_fpa_autoencoder_builder,
-    defaults={
-        "hidden_dim": 64,
-        "latent_dim": 32,
-        "num_layers": 1,
-        "dropout": 0.2,
-        "lookback": 50,
-    },
-)
-
-register_model(
-    "wildfire_fpa_lstm",
-    wildfire_fpa_lstm_builder,
-    defaults={
-        "hidden_dim": 64,
-        "output_dim": 5,
-        "num_layers": 1,
-        "dropout": 0.2,
         "lookback": 50,
     },
 )

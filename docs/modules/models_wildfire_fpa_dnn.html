@@ -3,12 +3,12 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="wildfire_fpa_forecast" href="models_wildfire_fpa_forecast.html"><link rel="prev" title="wildfire_aspp" href="models_wildfire_aspp.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/modules/models_wildfire_fpa_dnn.html">
         <link rel="prefetch" href="../_static/logo.png" as="image">
 
     <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>wildfire_fpa_dnn - PyHazards 1.0.4 documentation</title>
+        <title>FPA-FOD Internal DNN - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -202,7 +202,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick Start</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../datasets/merra2.html">MERRA-2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../datasets/era5.html">ERA5</a></li>
@@ -216,10 +216,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../datasets/goesr.html">GOES-R</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="models_wildfire_aspp.html">wildfire_aspp</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">wildfire_fpa_dnn</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models_wildfire_fpa_forecast.html">wildfire_fpa_forecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models_wildfire_fpa.html">wildfire_fpa</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_hydrographnet.html">hydrographnet</a></li>
 </ul>
 </li>
@@ -271,12 +270,12 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="wildfire-fpa-dnn">
-<h1>wildfire_fpa_dnn<a class="headerlink" href="#wildfire-fpa-dnn" title="Link to this heading">¶</a></h1>
+          <section id="fpa-fod-internal-dnn">
+<h1>FPA-FOD Internal DNN<a class="headerlink" href="#fpa-fod-internal-dnn" title="Link to this heading">¶</a></h1>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">wildfire_fpa_dnn</span></code> is the paper-facing DNN classification component from the FPA-FOD wildfire
-framework. In PyHazards it is implemented as a configurable multilayer perceptron for incident-level
+<p><code class="docutils literal notranslate"><span class="pre">wildfire_fpa_dnn</span></code> is the internal DNN stage used beneath the public <code class="docutils literal notranslate"><span class="pre">wildfire_fpa</span></code> framework
+entrypoint. In PyHazards it is implemented as a configurable multilayer perceptron for incident-level
 cause or size-class prediction.</p>
 <p>This corresponds to the classification stage described in:
 <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States - A deep learning approach to safety and sustainability</a>.</p>
@@ -284,11 +283,9 @@ cause or size-class prediction.</p>
 <section id="example-of-how-to-use-it">
 <h2>Example of how to use it<a class="headerlink" href="#example-of-how-to-use-it" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models.wildfire_fpa_dnn</span><span class="w"> </span><span class="kn">import</span> <span class="n">WildfireFPADNN</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;wildfire_fpa_dnn&quot;</span><span class="p">,</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">WildfireFPADNN</span><span class="p">(</span>
     <span class="n">in_dim</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
     <span class="n">out_dim</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
     <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
@@ -304,7 +301,7 @@ cause or size-class prediction.</p>
 <section id="notes">
 <h2>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">wildfire_fpa_dnn</span></code> is the primary PyHazards registry name for this classifier.</p></li>
+<li><p>The public paper-facing registry name is <code class="docutils literal notranslate"><span class="pre">wildfire_fpa</span></code> with <code class="docutils literal notranslate"><span class="pre">task=&quot;classification&quot;</span></code>.</p></li>
 </ul>
 </section>
 </section>
@@ -314,26 +311,8 @@ cause or size-class prediction.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="models_wildfire_fpa_forecast.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">wildfire_fpa_forecast</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="models_wildfire_aspp.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-              <div class="page-info">
-                <div class="context">
-                  <span>Previous</span>
-                </div>
-                
-                <div class="title">wildfire_aspp</div>
-                
-              </div>
-            </a>
+          
+          
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -364,7 +343,7 @@ cause or size-class prediction.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">wildfire_fpa_dnn</a><ul>
+<li><a class="reference internal" href="#">FPA-FOD Internal DNN</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#example-of-how-to-use-it">Example of how to use it</a></li>
 <li><a class="reference internal" href="#notes">Notes</a></li>

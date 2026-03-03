@@ -43,4 +43,3 @@ Module contents
    :members:
    :undoc-members:
    :show-inheritance:
-   :exclude-members: WildfireFPALSTM, wildfire_fpa_lstm_builder, WildfireFPAAutoencoder, wildfire_fpa_autoencoder_builder

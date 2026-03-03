@@ -10,7 +10,7 @@ def test_fpa_fod_trainer_smoke():
     train = bundle.get_split("train")
 
     model = build_model(
-        name="wildfire_fpa_dnn",
+        name="wildfire_fpa",
         task="classification",
         in_dim=train.inputs.shape[1],
         out_dim=int(train.targets.max().item() + 1),
