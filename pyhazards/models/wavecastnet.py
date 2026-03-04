@@ -432,9 +432,94 @@ class WaveCastNetLoss(nn.Module):
         
         return loss.mean()
 
+class WavefieldMetrics:
+    """
+    Metrics for wavefield forecasting evaluation as described in WaveCastNet paper.
+    
+    Includes:
+    - ACC (Accuracy): Cosine similarity between predicted and ground truth (Eq. 17)
+    - RFNE (Relative Frobenius Norm Error): Normalized prediction error (Eq. 18)
+    """
+    
+    @staticmethod
+    def accuracy(pred: torch.Tensor, target: torch.Tensor) -> float:
+        """
+        Compute ACC metric (Equation 17 from paper).
+        
+        ACC = Σ(ŷ · y) / sqrt(Σ(ŷ²) · Σ(y²))
+        
+        This is essentially cosine similarity averaged over all elements.
+        
+        Args:
+            pred: Predicted wavefield (B, C, T, H, W)
+            target: Ground truth wavefield (B, C, T, H, W)
+        
+        Returns:
+            ACC value in [0, 1], where 1 is perfect prediction
+        """
+        # Flatten spatial and temporal dimensions
+        pred_flat = pred.reshape(pred.size(0), -1)
+        target_flat = target.reshape(target.size(0), -1)
+        
+        # Compute cosine similarity per sample
+        numerator = (pred_flat * target_flat).sum(dim=1)
+        pred_norm = torch.sqrt((pred_flat ** 2).sum(dim=1))
+        target_norm = torch.sqrt((target_flat ** 2).sum(dim=1))
+        denominator = pred_norm * target_norm
+        
+        # Average over batch
+        acc = (numerator / denominator.clamp(min=1e-8)).mean()
+        
+        return acc.item()
+    
+    @staticmethod
+    def rfne(pred: torch.Tensor, target: torch.Tensor) -> float:
+        """
+        Compute RFNE metric (Equation 18 from paper).
+        
+        RFNE = sqrt(Σ(ŷ - y)²) / sqrt(Σ(y²))
+        
+        This is the relative Frobenius norm error.
+        
+        Args:
+            pred: Predicted wavefield (B, C, T, H, W)
+            target: Ground truth wavefield (B, C, T, H, W)
+        
+        Returns:
+            RFNE value, where 0 is perfect prediction
+        """
+        # Compute Frobenius norm of error
+        error_norm = torch.sqrt(((pred - target) ** 2).sum())
+        
+        # Compute Frobenius norm of target
+        target_norm = torch.sqrt((target ** 2).sum())
+        
+        # Relative error
+        rfne = error_norm / target_norm.clamp(min=1e-8)
+        
+        return rfne.item()
+    
+    @staticmethod
+    def compute_all(pred: torch.Tensor, target: torch.Tensor) -> dict:
+        """
+        Compute all metrics at once.
+        
+        Args:
+            pred: Predicted wavefield (B, C, T, H, W)
+            target: Ground truth wavefield (B, C, T, H, W)
+        
+        Returns:
+            Dictionary with all metric values
+        """
+        return {
+            "ACC": WavefieldMetrics.accuracy(pred, target),
+            "RFNE": WavefieldMetrics.rfne(pred, target),
+        }
+
 __all__ = [
     "WaveCastNet",
     "ConvLEMCell",
     "wavecastnet_builder",
     "WaveCastNetLoss",
+    "WavefieldMetrics",
 ]
