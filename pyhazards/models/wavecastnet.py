@@ -340,4 +340,58 @@ class WaveCastNet(nn.Module):
         
         return output
 
-__all__ = ["ConvLEMCell", "WaveCastNet"]
+def wavecastnet_builder(
+    task: str,
+    in_channels: int,
+    height: int,
+    width: int,
+    temporal_in: int,
+    temporal_out: int,
+    **kwargs,
+) -> WaveCastNet:
+    """
+    Builder function for WaveCastNet wavefield forecasting model.
+    
+    Args:
+        task: Task type (must be 'regression')
+        in_channels: Number of input channels (3 for X, Y, Z velocity)
+        height: Spatial grid height (e.g., 344)
+        width: Spatial grid width (e.g., 224)
+        temporal_in: Input sequence length in timesteps (e.g., 60)
+        temporal_out: Output sequence length in timesteps (e.g., 60)
+        **kwargs: Additional hyperparameters:
+            - hidden_dim: Hidden state dimension (default: 144)
+            - num_layers: Number of encoder/decoder layer pairs (default: 2)
+            - kernel_size: Conv2d kernel size (default: 3)
+            - dt: Time step parameter for LEM (default: 1.0)
+            - activation: Activation function 'tanh' or 'relu' (default: 'tanh')
+            - dropout: Dropout rate (default: 0.1)
+    
+    Returns:
+        WaveCastNet model instance
+    
+    Raises:
+        ValueError: If task is not 'regression'
+    """
+    # Validate task
+    if task.lower() != "regression":
+        raise ValueError(
+            f"WaveCastNet only supports regression tasks for wavefield forecasting, "
+            f"got task='{task}'"
+        )
+    
+    return WaveCastNet(
+        in_channels=in_channels,
+        height=height,
+        width=width,
+        temporal_in=temporal_in,
+        temporal_out=temporal_out,
+        hidden_dim=kwargs.get("hidden_dim", 144),
+        num_layers=kwargs.get("num_layers", 2),
+        kernel_size=kwargs.get("kernel_size", 3),
+        dt=kwargs.get("dt", 1.0),
+        activation=kwargs.get("activation", "tanh"),
+        dropout=kwargs.get("dropout", 0.1),
+    )
+
+__all__ = ["ConvLEMCell", "WaveCastNet", "wavecastnet_builder"]
