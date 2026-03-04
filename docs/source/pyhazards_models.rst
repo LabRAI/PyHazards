@@ -101,3 +101,4 @@ Design notes
    modules/models_wildfire_aspp
    modules/models_wildfire_fpa
    modules/models_hydrographnet
+   modules/models_wavecastnet
