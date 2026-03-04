@@ -394,4 +394,47 @@ def wavecastnet_builder(
         dropout=kwargs.get("dropout", 0.1),
     )
 
-__all__ = ["ConvLEMCell", "WaveCastNet", "wavecastnet_builder"]
+class WaveCastNetLoss(nn.Module):
+    """
+    Huber loss for wavefield forecasting as described in WaveCastNet paper (Eq. 3-4).
+    
+    The Huber loss combines L1 and L2 loss for robustness:
+    - L2 loss (quadratic) for small errors: smooth gradients
+    - L1 loss (linear) for large errors: reduces impact of outliers
+    
+    Args:
+        delta: Threshold parameter (default: 1.0)
+    """
+    
+    def __init__(self, delta: float = 1.0):
+        super().__init__()
+        self.delta = delta
+    
+    def forward(self, pred: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        """
+        Compute Huber loss.
+        
+        Args:
+            pred: Predicted wavefield (B, C, T, H, W)
+            target: Ground truth wavefield (B, C, T, H, W)
+        
+        Returns:
+            Scalar loss value
+        """
+        diff = pred - target
+        abs_diff = torch.abs(diff)
+        
+        # Huber loss: quadratic for small errors, linear for large errors
+        quadratic = 0.5 * diff ** 2
+        linear = self.delta * abs_diff - 0.5 * self.delta ** 2
+        
+        loss = torch.where(abs_diff <= self.delta, quadratic, linear)
+        
+        return loss.mean()
+
+__all__ = [
+    "WaveCastNet",
+    "ConvLEMCell",
+    "wavecastnet_builder",
+    "WaveCastNetLoss",
+]
