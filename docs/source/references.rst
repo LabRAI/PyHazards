@@ -24,3 +24,4 @@ Model Publications
 
 - Marjani et al. (2024). *Application of Explainable Artificial Intelligence in Predicting Wildfire Spread: An ASPP-Enabled CNN Approach*. `[link] <https://ieeexplore.ieee.org/document/10568207>`__.
 - Taghizadeh et al. (2025). *Interpretable physics-informed graph neural networks for flood forecasting*. `[link] <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`__.
+- Lyu et al. (2025). *Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning*. `[link] <https://doi.org/10.1038/s41467-025-65435-2>`__.
