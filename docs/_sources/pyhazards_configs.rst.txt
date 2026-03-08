@@ -35,5 +35,6 @@ Each experiment config contains four sections:
 - ``model``: which registered model to build and with which parameters
 - ``report``: where to write JSON, Markdown, or CSV outputs
 
-Next step: pair this page with :doc:`pyhazards_reports` when you want to export
-or compare benchmark outputs.
+Next step: pair this page with :doc:`pyhazards_benchmarks` when you want to
+match configs to implemented evaluation paths, and with
+:doc:`pyhazards_reports` when you want to export benchmark outputs.

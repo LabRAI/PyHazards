@@ -29,6 +29,14 @@ NON_CATALOG_MODELS = {
     "temporal",
 }
 
+HAZARD_DISPLAY_ORDER = [
+    "Wildfire",
+    "Earthquake",
+    "Flood",
+    "Hurricane",
+    "Tropical Cyclone",
+]
+
 
 class PaperReference(BaseModel):
     title: str
@@ -153,9 +161,15 @@ def group_cards_by_hazard(cards: Sequence[ModelCard]) -> Dict[str, List[ModelCar
     grouped: Dict[str, List[ModelCard]] = defaultdict(list)
     for card in cards:
         grouped[card.hazard].append(card)
+
+    def order_key(hazard: str) -> tuple[int, str]:
+        if hazard in HAZARD_DISPLAY_ORDER:
+            return (HAZARD_DISPLAY_ORDER.index(hazard), hazard.lower())
+        return (len(HAZARD_DISPLAY_ORDER), hazard.lower())
+
     return {
         hazard: sorted(hazard_cards, key=lambda item: item.display_name.lower())
-        for hazard, hazard_cards in sorted(grouped.items(), key=lambda item: item[0].lower())
+        for hazard, hazard_cards in sorted(grouped.items(), key=lambda item: order_key(item[0]))
     }
 
 
@@ -198,8 +212,10 @@ def render_model_page(cards: Sequence[ModelCard]) -> str:
         "-------------",
         "",
         "The public catalog below is generated from ``pyhazards/model_cards/*.yaml``.",
-        "Use this page for model discovery and quick registry lookup; use the",
-        "Implementation Guide for contributor workflow details.",
+        "Use this page for model discovery and quick registry lookup. Use the",
+        ":doc:`pyhazards_benchmarks` page to see which hazard tasks and smoke",
+        "configs are currently implemented, and use the Implementation Guide",
+        "for contributor workflow details.",
         "",
     ]
 

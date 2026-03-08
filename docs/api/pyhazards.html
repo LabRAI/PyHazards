@@ -237,9 +237,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_dnn.html">Wildfire FPA DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_forecast.html">Wildfire FPA Forecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_lstm.html">Wildfire FPA LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_dnn.html">DNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../interactive_map.html">Wildfire Interactive Map</a></li>
@@ -300,238 +300,6 @@
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pyhazards.benchmarks.html">pyhazards.benchmarks package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.base">pyhazards.benchmarks.base module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark"><code class="docutils literal notranslate"><span class="pre">Benchmark</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">Benchmark._abc_impl</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark.aggregate_metrics"><code class="docutils literal notranslate"><span class="pre">Benchmark.aggregate_metrics()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">Benchmark.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark.export_report"><code class="docutils literal notranslate"><span class="pre">Benchmark.export_report()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">Benchmark.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark.name"><code class="docutils literal notranslate"><span class="pre">Benchmark.name</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.registry">pyhazards.benchmarks.registry module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.registry.available_benchmarks"><code class="docutils literal notranslate"><span class="pre">available_benchmarks()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.registry.build_benchmark"><code class="docutils literal notranslate"><span class="pre">build_benchmark()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.registry.get_benchmark"><code class="docutils literal notranslate"><span class="pre">get_benchmark()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.registry.register_benchmark"><code class="docutils literal notranslate"><span class="pre">register_benchmark()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.runner">pyhazards.benchmarks.runner module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.runner.resolve_benchmark"><code class="docutils literal notranslate"><span class="pre">resolve_benchmark()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.runner.run_benchmark"><code class="docutils literal notranslate"><span class="pre">run_benchmark()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.schemas">pyhazards.benchmarks.schemas module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult.artifacts"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.artifacts</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult.benchmark_name"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.benchmark_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult.metadata"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.metadata</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.metrics</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult.predictions"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.predictions</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkRunSummary"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkRunSummary.benchmark_name"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.benchmark_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkRunSummary.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkRunSummary.metadata"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.metadata</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkRunSummary.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.metrics</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkRunSummary.report_paths"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.report_paths</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.earthquake">pyhazards.benchmarks.earthquake module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark._abc_impl</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.name"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.name</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.wildfire">pyhazards.benchmarks.wildfire module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.wildfire.WildfireBenchmark"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.wildfire.WildfireBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark._abc_impl</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.wildfire.WildfireBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.wildfire.WildfireBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.wildfire.WildfireBenchmark.name"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.name</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.flood">pyhazards.benchmarks.flood module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.flood.FloodBenchmark"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.flood.FloodBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark._abc_impl</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.flood.FloodBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.flood.FloodBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.flood.FloodBenchmark.name"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.name</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.tc">pyhazards.benchmarks.tc module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.tc.TropicalCycloneBenchmark"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.tc.TropicalCycloneBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark._abc_impl</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.name"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.name</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks">Module contents</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark"><code class="docutils literal notranslate"><span class="pre">Benchmark</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">Benchmark._abc_impl</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark.aggregate_metrics"><code class="docutils literal notranslate"><span class="pre">Benchmark.aggregate_metrics()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">Benchmark.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark.export_report"><code class="docutils literal notranslate"><span class="pre">Benchmark.export_report()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">Benchmark.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark.name"><code class="docutils literal notranslate"><span class="pre">Benchmark.name</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult.artifacts"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.artifacts</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult.benchmark_name"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.benchmark_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult.metadata"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.metadata</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.metrics</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult.predictions"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.predictions</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkRunSummary"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkRunSummary.benchmark_name"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.benchmark_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkRunSummary.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkRunSummary.metadata"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.metadata</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkRunSummary.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.metrics</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkRunSummary.report_paths"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.report_paths</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.EarthquakeBenchmark"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.EarthquakeBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark._abc_impl</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.EarthquakeBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.EarthquakeBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.EarthquakeBenchmark.name"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.name</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.FloodBenchmark"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.FloodBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark._abc_impl</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.FloodBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.FloodBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.FloodBenchmark.name"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.name</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.TropicalCycloneBenchmark"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.TropicalCycloneBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark._abc_impl</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.TropicalCycloneBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.TropicalCycloneBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.TropicalCycloneBenchmark.name"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.name</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.WildfireBenchmark"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.WildfireBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark._abc_impl</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.WildfireBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.evaluate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.WildfireBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.WildfireBenchmark.name"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.name</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.available_benchmarks"><code class="docutils literal notranslate"><span class="pre">available_benchmarks()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.build_benchmark"><code class="docutils literal notranslate"><span class="pre">build_benchmark()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.get_benchmark"><code class="docutils literal notranslate"><span class="pre">get_benchmark()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.register_benchmark"><code class="docutils literal notranslate"><span class="pre">register_benchmark()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.run_benchmark"><code class="docutils literal notranslate"><span class="pre">run_benchmark()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="pyhazards.configs.html">pyhazards.configs package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.configs.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.configs.html#module-pyhazards.configs._schema">pyhazards.configs._schema module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.BenchmarkConfig"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.BenchmarkConfig.eval_split"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.eval_split</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.BenchmarkConfig.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.BenchmarkConfig.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.metrics</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.BenchmarkConfig.name"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.BenchmarkConfig.params"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.params</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.DatasetRef"><code class="docutils literal notranslate"><span class="pre">DatasetRef</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.DatasetRef.name"><code class="docutils literal notranslate"><span class="pre">DatasetRef.name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.DatasetRef.params"><code class="docutils literal notranslate"><span class="pre">DatasetRef.params</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.benchmark"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.benchmark</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.dataset"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.dataset</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.metadata"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.metadata</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.model"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.model</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.report"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.report</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.seed"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.seed</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.to_dict()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ModelRef"><code class="docutils literal notranslate"><span class="pre">ModelRef</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ModelRef.name"><code class="docutils literal notranslate"><span class="pre">ModelRef.name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ModelRef.params"><code class="docutils literal notranslate"><span class="pre">ModelRef.params</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ModelRef.task"><code class="docutils literal notranslate"><span class="pre">ModelRef.task</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ReportConfig"><code class="docutils literal notranslate"><span class="pre">ReportConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ReportConfig.formats"><code class="docutils literal notranslate"><span class="pre">ReportConfig.formats</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ReportConfig.output_dir"><code class="docutils literal notranslate"><span class="pre">ReportConfig.output_dir</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.dump_experiment_config"><code class="docutils literal notranslate"><span class="pre">dump_experiment_config()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.load_experiment_config"><code class="docutils literal notranslate"><span class="pre">load_experiment_config()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.configs.html#module-pyhazards.configs">Module contents</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.BenchmarkConfig"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.BenchmarkConfig.eval_split"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.eval_split</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.BenchmarkConfig.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.BenchmarkConfig.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.metrics</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.BenchmarkConfig.name"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.BenchmarkConfig.params"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.params</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.DatasetRef"><code class="docutils literal notranslate"><span class="pre">DatasetRef</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.DatasetRef.name"><code class="docutils literal notranslate"><span class="pre">DatasetRef.name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.DatasetRef.params"><code class="docutils literal notranslate"><span class="pre">DatasetRef.params</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.benchmark"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.benchmark</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.dataset"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.dataset</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.metadata"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.metadata</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.model"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.model</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.report"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.report</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.seed"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.seed</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.to_dict()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ModelRef"><code class="docutils literal notranslate"><span class="pre">ModelRef</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ModelRef.name"><code class="docutils literal notranslate"><span class="pre">ModelRef.name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ModelRef.params"><code class="docutils literal notranslate"><span class="pre">ModelRef.params</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ModelRef.task"><code class="docutils literal notranslate"><span class="pre">ModelRef.task</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ReportConfig"><code class="docutils literal notranslate"><span class="pre">ReportConfig</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ReportConfig.formats"><code class="docutils literal notranslate"><span class="pre">ReportConfig.formats</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ReportConfig.output_dir"><code class="docutils literal notranslate"><span class="pre">ReportConfig.output_dir</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.dump_experiment_config"><code class="docutils literal notranslate"><span class="pre">dump_experiment_config()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.load_experiment_config"><code class="docutils literal notranslate"><span class="pre">load_experiment_config()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards.datasets.html">pyhazards.datasets package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyhazards.datasets.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyhazards.datasets.html#module-pyhazards.datasets.base">pyhazards.datasets.base module</a><ul>
@@ -672,11 +440,11 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards.models.html">pyhazards.models package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyhazards.models.html#model-catalog">Model Catalog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#wildfire">Wildfire</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#earthquake">Earthquake</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#flood">Flood</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#hurricane">Hurricane</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#tropical-cyclone">Tropical Cyclone</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#wildfire">Wildfire</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pyhazards.models.html#submodules">Submodules</a></li>
@@ -909,6 +677,278 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="pyhazards.benchmarks.html">pyhazards.benchmarks package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.base">pyhazards.benchmarks.base module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark"><code class="docutils literal notranslate"><span class="pre">Benchmark</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">Benchmark._abc_impl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark.aggregate_metrics"><code class="docutils literal notranslate"><span class="pre">Benchmark.aggregate_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">Benchmark.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark.export_report"><code class="docutils literal notranslate"><span class="pre">Benchmark.export_report()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">Benchmark.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.base.Benchmark.name"><code class="docutils literal notranslate"><span class="pre">Benchmark.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.registry">pyhazards.benchmarks.registry module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.registry.available_benchmarks"><code class="docutils literal notranslate"><span class="pre">available_benchmarks()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.registry.build_benchmark"><code class="docutils literal notranslate"><span class="pre">build_benchmark()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.registry.get_benchmark"><code class="docutils literal notranslate"><span class="pre">get_benchmark()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.registry.register_benchmark"><code class="docutils literal notranslate"><span class="pre">register_benchmark()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.runner">pyhazards.benchmarks.runner module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.runner.resolve_benchmark"><code class="docutils literal notranslate"><span class="pre">resolve_benchmark()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.runner.run_benchmark"><code class="docutils literal notranslate"><span class="pre">run_benchmark()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.schemas">pyhazards.benchmarks.schemas module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult.artifacts"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.artifacts</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult.benchmark_name"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.benchmark_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult.metadata"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.metrics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkResult.predictions"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.predictions</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkRunSummary"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkRunSummary.benchmark_name"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.benchmark_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkRunSummary.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkRunSummary.metadata"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkRunSummary.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.metrics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkRunSummary.report_paths"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.report_paths</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.earthquake">pyhazards.benchmarks.earthquake module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark._abc_impl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.metric_names_by_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.name"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.wildfire">pyhazards.benchmarks.wildfire module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.wildfire.WildfireBenchmark"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.wildfire.WildfireBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark._abc_impl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.wildfire.WildfireBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.wildfire.WildfireBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.wildfire.WildfireBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.metric_names_by_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.wildfire.WildfireBenchmark.name"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.flood">pyhazards.benchmarks.flood module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.flood.FloodBenchmark"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.flood.FloodBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark._abc_impl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.flood.FloodBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.flood.FloodBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.flood.FloodBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.metric_names_by_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.flood.FloodBenchmark.name"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks.tc">pyhazards.benchmarks.tc module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.tc.TropicalCycloneBenchmark"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.tc.TropicalCycloneBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark._abc_impl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.metric_names_by_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.name"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.benchmarks.html#module-pyhazards.benchmarks">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark"><code class="docutils literal notranslate"><span class="pre">Benchmark</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">Benchmark._abc_impl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark.aggregate_metrics"><code class="docutils literal notranslate"><span class="pre">Benchmark.aggregate_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">Benchmark.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark.export_report"><code class="docutils literal notranslate"><span class="pre">Benchmark.export_report()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">Benchmark.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark.name"><code class="docutils literal notranslate"><span class="pre">Benchmark.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult.artifacts"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.artifacts</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult.benchmark_name"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.benchmark_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult.metadata"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.metrics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkResult.predictions"><code class="docutils literal notranslate"><span class="pre">BenchmarkResult.predictions</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkRunSummary"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkRunSummary.benchmark_name"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.benchmark_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkRunSummary.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkRunSummary.metadata"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkRunSummary.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.metrics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.BenchmarkRunSummary.report_paths"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunSummary.report_paths</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.EarthquakeBenchmark"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.EarthquakeBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark._abc_impl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.EarthquakeBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.EarthquakeBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.EarthquakeBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.metric_names_by_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.EarthquakeBenchmark.name"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.FloodBenchmark"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.FloodBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark._abc_impl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.FloodBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.FloodBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.FloodBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.metric_names_by_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.FloodBenchmark.name"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.TropicalCycloneBenchmark"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.TropicalCycloneBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark._abc_impl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.TropicalCycloneBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.TropicalCycloneBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.TropicalCycloneBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.metric_names_by_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.TropicalCycloneBenchmark.name"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.WildfireBenchmark"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.WildfireBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark._abc_impl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.WildfireBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.WildfireBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.WildfireBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.metric_names_by_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.WildfireBenchmark.name"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.available_benchmarks"><code class="docutils literal notranslate"><span class="pre">available_benchmarks()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.build_benchmark"><code class="docutils literal notranslate"><span class="pre">build_benchmark()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.get_benchmark"><code class="docutils literal notranslate"><span class="pre">get_benchmark()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.register_benchmark"><code class="docutils literal notranslate"><span class="pre">register_benchmark()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.run_benchmark"><code class="docutils literal notranslate"><span class="pre">run_benchmark()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyhazards.configs.html">pyhazards.configs package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.configs.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.configs.html#module-pyhazards.configs._schema">pyhazards.configs._schema module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.BenchmarkConfig"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.BenchmarkConfig.eval_split"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.eval_split</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.BenchmarkConfig.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.BenchmarkConfig.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.metrics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.BenchmarkConfig.name"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.BenchmarkConfig.params"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.params</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.DatasetRef"><code class="docutils literal notranslate"><span class="pre">DatasetRef</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.DatasetRef.name"><code class="docutils literal notranslate"><span class="pre">DatasetRef.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.DatasetRef.params"><code class="docutils literal notranslate"><span class="pre">DatasetRef.params</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.benchmark"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.benchmark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.dataset"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.dataset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.metadata"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.model"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.report"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.report</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.seed"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.seed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ModelRef"><code class="docutils literal notranslate"><span class="pre">ModelRef</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ModelRef.name"><code class="docutils literal notranslate"><span class="pre">ModelRef.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ModelRef.params"><code class="docutils literal notranslate"><span class="pre">ModelRef.params</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ModelRef.task"><code class="docutils literal notranslate"><span class="pre">ModelRef.task</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ReportConfig"><code class="docutils literal notranslate"><span class="pre">ReportConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ReportConfig.formats"><code class="docutils literal notranslate"><span class="pre">ReportConfig.formats</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.ReportConfig.output_dir"><code class="docutils literal notranslate"><span class="pre">ReportConfig.output_dir</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.dump_experiment_config"><code class="docutils literal notranslate"><span class="pre">dump_experiment_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs._schema.load_experiment_config"><code class="docutils literal notranslate"><span class="pre">load_experiment_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.configs.html#module-pyhazards.configs">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.BenchmarkConfig"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.BenchmarkConfig.eval_split"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.eval_split</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.BenchmarkConfig.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.BenchmarkConfig.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.metrics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.BenchmarkConfig.name"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.BenchmarkConfig.params"><code class="docutils literal notranslate"><span class="pre">BenchmarkConfig.params</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.DatasetRef"><code class="docutils literal notranslate"><span class="pre">DatasetRef</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.DatasetRef.name"><code class="docutils literal notranslate"><span class="pre">DatasetRef.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.DatasetRef.params"><code class="docutils literal notranslate"><span class="pre">DatasetRef.params</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.benchmark"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.benchmark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.dataset"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.dataset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.metadata"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.model"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.report"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.report</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.seed"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.seed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ExperimentConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">ExperimentConfig.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ModelRef"><code class="docutils literal notranslate"><span class="pre">ModelRef</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ModelRef.name"><code class="docutils literal notranslate"><span class="pre">ModelRef.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ModelRef.params"><code class="docutils literal notranslate"><span class="pre">ModelRef.params</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ModelRef.task"><code class="docutils literal notranslate"><span class="pre">ModelRef.task</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ReportConfig"><code class="docutils literal notranslate"><span class="pre">ReportConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ReportConfig.formats"><code class="docutils literal notranslate"><span class="pre">ReportConfig.formats</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.ReportConfig.output_dir"><code class="docutils literal notranslate"><span class="pre">ReportConfig.output_dir</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.dump_experiment_config"><code class="docutils literal notranslate"><span class="pre">dump_experiment_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.configs.html#pyhazards.configs.load_experiment_config"><code class="docutils literal notranslate"><span class="pre">load_experiment_config()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyhazards.reports.html">pyhazards.reports package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.reports.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.reports.html#module-pyhazards.reports.base">pyhazards.reports.base module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport.artifacts"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.artifacts</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport.benchmark_name"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.benchmark_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport.metadata"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.metrics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport.to_dict"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base._markdown_report"><code class="docutils literal notranslate"><span class="pre">_markdown_report()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base._write_csv"><code class="docutils literal notranslate"><span class="pre">_write_csv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.export_report_bundle"><code class="docutils literal notranslate"><span class="pre">export_report_bundle()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.reports.html#module-pyhazards.reports">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport.artifacts"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.artifacts</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport.benchmark_name"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.benchmark_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.hazard_task</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport.metadata"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.metrics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport.to_dict"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.export_report_bundle"><code class="docutils literal notranslate"><span class="pre">export_report_bundle()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards.engine.html">pyhazards.engine package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyhazards.engine.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyhazards.engine.html#module-pyhazards.engine.trainer">pyhazards.engine.trainer module</a><ul>
@@ -990,38 +1030,6 @@
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.metrics.html#pyhazards.metrics.SegmentationMetrics.compute"><code class="docutils literal notranslate"><span class="pre">SegmentationMetrics.compute()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.metrics.html#pyhazards.metrics.SegmentationMetrics.reset"><code class="docutils literal notranslate"><span class="pre">SegmentationMetrics.reset()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.metrics.html#pyhazards.metrics.SegmentationMetrics.update"><code class="docutils literal notranslate"><span class="pre">SegmentationMetrics.update()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="pyhazards.reports.html">pyhazards.reports package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.reports.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.reports.html#module-pyhazards.reports.base">pyhazards.reports.base module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport.artifacts"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.artifacts</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport.benchmark_name"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.benchmark_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport.metadata"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.metadata</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.metrics</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.BenchmarkReport.to_dict"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.to_dict()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base._markdown_report"><code class="docutils literal notranslate"><span class="pre">_markdown_report()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base._write_csv"><code class="docutils literal notranslate"><span class="pre">_write_csv()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.base.export_report_bundle"><code class="docutils literal notranslate"><span class="pre">export_report_bundle()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.reports.html#module-pyhazards.reports">Module contents</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport.artifacts"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.artifacts</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport.benchmark_name"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.benchmark_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport.hazard_task"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.hazard_task</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport.metadata"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.metadata</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport.metrics"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.metrics</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.BenchmarkReport.to_dict"><code class="docutils literal notranslate"><span class="pre">BenchmarkReport.to_dict()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.reports.html#pyhazards.reports.export_report_bundle"><code class="docutils literal notranslate"><span class="pre">export_report_bundle()</span></code></a></li>
 </ul>
 </li>
 </ul>

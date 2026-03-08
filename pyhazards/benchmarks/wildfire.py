@@ -27,6 +27,10 @@ def _spread_metrics(logits: torch.Tensor, targets: torch.Tensor) -> Dict[str, fl
 class WildfireBenchmark(Benchmark):
     name = "wildfire"
     hazard_task = "wildfire.danger"
+    metric_names_by_task = {
+        "wildfire.danger": ["accuracy", "macro_f1"],
+        "wildfire.spread": ["iou", "f1"],
+    }
 
     def evaluate(self, model: nn.Module, data: DataBundle, config: ExperimentConfig) -> BenchmarkResult:
         split = data.get_split(config.benchmark.eval_split)

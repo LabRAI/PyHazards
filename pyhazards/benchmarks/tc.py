@@ -13,6 +13,9 @@ from .schemas import BenchmarkResult
 class TropicalCycloneBenchmark(Benchmark):
     name = "tc"
     hazard_task = "tc.track_intensity"
+    metric_names_by_task = {
+        "tc.track_intensity": ["track_error", "intensity_mae"],
+    }
 
     def evaluate(self, model: nn.Module, data: DataBundle, config: ExperimentConfig) -> BenchmarkResult:
         split = data.get_split(config.benchmark.eval_split)

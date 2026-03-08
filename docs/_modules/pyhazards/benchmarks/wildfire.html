@@ -216,15 +216,35 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_eqnet.html">EQNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_eqtransformer.html">EQTransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_floodcast.html">FloodCast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_fourcastnet_tc.html">FourCastNet TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_gpd.html">GPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_graphcast_tc.html">GraphCast TC Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_hurricast.html">Hurricast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_neuralhydrology_ealstm.html">EA-LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_neuralhydrology_lstm.html">NeuralHydrology LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_pangu_tc.html">Pangu TC Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_phasenet.html">PhaseNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_saf_net.html">SAF-Net</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_tcif_fusion.html">TCIF-fusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_tropicalcyclone_mlp.html">tropicalcyclone_MLP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_tropicyclonenet.html">TropiCycloneNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_urbanfloodcast.html">UrbanFloodCast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_dnn.html">DNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../interactive_map.html">Wildfire Interactive Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_benchmarks.html">Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_configs.html">Configs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_reports.html">Reports</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_utils.html">Utils</a></li>
@@ -299,6 +319,10 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">WildfireBenchmark</span><span class="p">(</span><span class="n">Benchmark</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;wildfire&quot;</span>
     <span class="n">hazard_task</span> <span class="o">=</span> <span class="s2">&quot;wildfire.danger&quot;</span>
+    <span class="n">metric_names_by_task</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;wildfire.danger&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;macro_f1&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;wildfire.spread&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;iou&quot;</span><span class="p">,</span> <span class="s2">&quot;f1&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
 
 <div class="viewcode-block" id="WildfireBenchmark.evaluate">
 <a class="viewcode-back" href="../../../api/pyhazards.benchmarks.html#pyhazards.benchmarks.wildfire.WildfireBenchmark.evaluate">[docs]</a>

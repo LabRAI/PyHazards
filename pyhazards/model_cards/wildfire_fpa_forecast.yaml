@@ -1,5 +1,5 @@
 model_name: wildfire_fpa_forecast
-display_name: Wildfire FPA Forecast
+display_name: LSTM-AutoEncoder
 hazard: Wildfire
 source_file: pyhazards/models/wildfire_fpa_forecast.py
 builder_name: wildfire_fpa_forecast_builder

@@ -17,6 +17,10 @@ from .schemas import BenchmarkResult
 class FloodBenchmark(Benchmark):
     name = "flood"
     hazard_task = "flood.streamflow"
+    metric_names_by_task = {
+        "flood.streamflow": ["mae", "rmse"],
+        "flood.inundation": ["pixel_mae", "iou", "f1"],
+    }
 
     def evaluate(self, model: nn.Module, data: DataBundle, config: ExperimentConfig) -> BenchmarkResult:
         split = data.get_split(config.benchmark.eval_split)

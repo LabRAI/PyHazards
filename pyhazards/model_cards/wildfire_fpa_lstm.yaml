@@ -1,5 +1,5 @@
 model_name: wildfire_fpa_lstm
-display_name: Wildfire FPA LSTM
+display_name: LSTM
 hazard: Wildfire
 source_file: pyhazards/models/wildfire_fpa_lstm.py
 builder_name: wildfire_fpa_lstm_builder

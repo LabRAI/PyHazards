@@ -15,6 +15,10 @@ from .schemas import BenchmarkResult
 class EarthquakeBenchmark(Benchmark):
     name = "earthquake"
     hazard_task = "earthquake.picking"
+    metric_names_by_task = {
+        "earthquake.picking": ["p_pick_mae", "s_pick_mae", "precision", "recall", "f1"],
+        "earthquake.forecasting": ["mae", "mse"],
+    }
 
     def evaluate(self, model: nn.Module, data: DataBundle, config: ExperimentConfig) -> BenchmarkResult:
         split = data.get_split(config.benchmark.eval_split)

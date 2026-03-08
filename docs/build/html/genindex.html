@@ -235,9 +235,9 @@
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html">Wildfire FPA DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html">Wildfire FPA Forecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_lstm.html">Wildfire FPA LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html">DNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interactive_map.html">Wildfire Interactive Map</a></li>
@@ -1231,6 +1231,24 @@
           <li><a href="api/pyhazards.reports.html#pyhazards.reports.BenchmarkReport.metadata">(pyhazards.reports.BenchmarkReport attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api/pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.metric_names_by_task">metric_names_by_task (pyhazards.benchmarks.earthquake.EarthquakeBenchmark attribute)</a>
+
+        <ul>
+          <li><a href="api/pyhazards.benchmarks.html#pyhazards.benchmarks.EarthquakeBenchmark.metric_names_by_task">(pyhazards.benchmarks.EarthquakeBenchmark attribute)</a>
+</li>
+          <li><a href="api/pyhazards.benchmarks.html#pyhazards.benchmarks.flood.FloodBenchmark.metric_names_by_task">(pyhazards.benchmarks.flood.FloodBenchmark attribute)</a>
+</li>
+          <li><a href="api/pyhazards.benchmarks.html#pyhazards.benchmarks.FloodBenchmark.metric_names_by_task">(pyhazards.benchmarks.FloodBenchmark attribute)</a>
+</li>
+          <li><a href="api/pyhazards.benchmarks.html#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.metric_names_by_task">(pyhazards.benchmarks.tc.TropicalCycloneBenchmark attribute)</a>
+</li>
+          <li><a href="api/pyhazards.benchmarks.html#pyhazards.benchmarks.TropicalCycloneBenchmark.metric_names_by_task">(pyhazards.benchmarks.TropicalCycloneBenchmark attribute)</a>
+</li>
+          <li><a href="api/pyhazards.benchmarks.html#pyhazards.benchmarks.wildfire.WildfireBenchmark.metric_names_by_task">(pyhazards.benchmarks.wildfire.WildfireBenchmark attribute)</a>
+</li>
+          <li><a href="api/pyhazards.benchmarks.html#pyhazards.benchmarks.WildfireBenchmark.metric_names_by_task">(pyhazards.benchmarks.WildfireBenchmark attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/pyhazards.html#pyhazards.MetricBase">MetricBase (class in pyhazards)</a>
 
         <ul>
@@ -1271,6 +1289,8 @@
           <li><a href="api/pyhazards.models.html#pyhazards.models.backbones.MLPBackbone">(class in pyhazards.models.backbones)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyhazards.configs.html#pyhazards.configs._schema.ExperimentConfig.model">model (pyhazards.configs._schema.ExperimentConfig attribute)</a>
 
         <ul>
@@ -1279,8 +1299,6 @@
           <li><a href="api/pyhazards.html#pyhazards.ExperimentConfig.model">(pyhazards.ExperimentConfig attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyhazards.html#pyhazards.ModelRef">ModelRef (class in pyhazards)</a>
 
         <ul>

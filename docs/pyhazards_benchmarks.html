@@ -237,9 +237,9 @@
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html">Wildfire FPA DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html">Wildfire FPA Forecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_lstm.html">Wildfire FPA LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html">DNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interactive_map.html">Wildfire Interactive Map</a></li>
@@ -298,16 +298,62 @@
 <h1>Benchmarks<a class="headerlink" href="#benchmarks" title="Link to this heading">¶</a></h1>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
-<p>Use the benchmarks layer when you want hazard-specific evaluation contracts that
-stay stable across datasets and models.</p>
+<p>Use this page to browse the implemented benchmark families, see which
+hazard tasks are covered today, and find the smoke configs that exercise
+each evaluation path.</p>
 </section>
-<section id="what-this-page-covers">
-<h2>What This Page Covers<a class="headerlink" href="#what-this-page-covers" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">pyhazards.benchmarks</span></code> registries and benchmark classes</p></li>
-<li><p>the shared <code class="docutils literal notranslate"><span class="pre">BenchmarkRunner</span></code> workflow</p></li>
-<li><p>hazard-task specific evaluation paths for earthquake, wildfire, flood, and tropical cyclone experiments</p></li>
-</ul>
+<section id="implemented-benchmarks">
+<h2>Implemented Benchmarks<a class="headerlink" href="#implemented-benchmarks" title="Link to this heading">¶</a></h2>
+<p>The summary below is generated from registered benchmark families,
+canonical hazard tasks, and the smoke configs under
+<code class="docutils literal notranslate"><span class="pre">pyhazards/configs/*/*_smoke.yaml</span></code>.</p>
+<div class="table-wrapper colwidths-given dataset-list docutils container">
+<table class="dataset-list docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Hazard Family</p></th>
+<th class="head"><p>Benchmark</p></th>
+<th class="head"><p>Implemented Tasks</p></th>
+<th class="head"><p>Key Metrics</p></th>
+<th class="head"><p>Smoke Configs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Wildfire</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark</span></code> (<code class="docutils literal notranslate"><span class="pre">wildfire</span></code>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">wildfire.danger</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfire.spread</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">accuracy</span></code>, <code class="docutils literal notranslate"><span class="pre">macro_f1</span></code>, <code class="docutils literal notranslate"><span class="pre">iou</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">wildfire_danger_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfire_spread_smoke.yaml</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Earthquake</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark</span></code> (<code class="docutils literal notranslate"><span class="pre">earthquake</span></code>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">earthquake.picking</span></code>, <code class="docutils literal notranslate"><span class="pre">earthquake.forecasting</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">p_pick_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">s_pick_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">precision</span></code>, <code class="docutils literal notranslate"><span class="pre">recall</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code>, <code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">mse</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">phasenet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">eqtransformer_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">gpd_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">eqnet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wavecastnet_benchmark_smoke.yaml</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Flood</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FloodBenchmark</span></code> (<code class="docutils literal notranslate"><span class="pre">flood</span></code>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">flood.streamflow</span></code>, <code class="docutils literal notranslate"><span class="pre">flood.inundation</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">rmse</span></code>, <code class="docutils literal notranslate"><span class="pre">pixel_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">iou</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">hydrographnet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">neuralhydrology_lstm_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">neuralhydrology_ealstm_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">floodcast_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">urbanfloodcast_smoke.yaml</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Tropical Cyclone / Hurricane</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark</span></code> (<code class="docutils literal notranslate"><span class="pre">tc</span></code>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tc.track_intensity</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">track_error</span></code>, <code class="docutils literal notranslate"><span class="pre">intensity_mae</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">hurricast_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">tropicalcyclone_mlp_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">tropicyclonenet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">saf_net_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">tcif_fusion_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">graphcast_tc_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">pangu_tc_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">fourcastnet_tc_smoke.yaml</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Hurricane baselines use the shared tropical-cyclone benchmark family
+and are exercised through the <code class="docutils literal notranslate"><span class="pre">tc.track_intensity</span></code> smoke configs.</p>
 </section>
 <section id="typical-usage">
 <h2>Typical Usage<a class="headerlink" href="#typical-usage" title="Link to this heading">¶</a></h2>
@@ -322,10 +368,11 @@ stay stable across datasets and models.</p>
 </section>
 <section id="command-line-entry-point">
 <h2>Command-Line Entry Point<a class="headerlink" href="#command-line-entry-point" title="Link to this heading">¶</a></h2>
-<p>Use <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/run_benchmark.py</span> <span class="pre">--help</span></code> to inspect the shared benchmark
-runner CLI and list available hazard tasks.</p>
-<p>Next step: pair this page with <a class="reference internal" href="pyhazards_configs.html"><span class="doc">Configs</span></a> when you want to author
-or compare benchmark configs.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/run_benchmark.py</span> <span class="pre">--help</span></code> to inspect the shared
+benchmark runner CLI and list available hazard tasks.</p>
+<p>Next step: pair this page with <a class="reference internal" href="pyhazards_configs.html"><span class="doc">Configs</span></a> when you want
+to author experiment YAML files and <a class="reference internal" href="pyhazards_reports.html"><span class="doc">Reports</span></a> when you
+want to export comparable benchmark summaries.</p>
 </section>
 </section>
 
@@ -386,7 +433,7 @@ or compare benchmark configs.</p>
             <ul>
 <li><a class="reference internal" href="#">Benchmarks</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
-<li><a class="reference internal" href="#what-this-page-covers">What This Page Covers</a></li>
+<li><a class="reference internal" href="#implemented-benchmarks">Implemented Benchmarks</a></li>
 <li><a class="reference internal" href="#typical-usage">Typical Usage</a></li>
 <li><a class="reference internal" href="#command-line-entry-point">Command-Line Entry Point</a></li>
 </ul>

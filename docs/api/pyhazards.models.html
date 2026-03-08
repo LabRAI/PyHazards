@@ -237,9 +237,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_dnn.html">Wildfire FPA DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_forecast.html">Wildfire FPA Forecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_lstm.html">Wildfire FPA LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_dnn.html">DNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../interactive_map.html">Wildfire Interactive Map</a></li>
@@ -300,6 +300,19 @@
 <h2>Model Catalog<a class="headerlink" href="#model-catalog" title="Link to this heading">¶</a></h2>
 <p>This page mirrors the public model catalog and then lists the package
 submodules for API lookup.</p>
+<section id="wildfire">
+<h3>Wildfire<a class="headerlink" href="#wildfire" title="Link to this heading">¶</a></h3>
+<p><a class="reference internal" href="../modules/models_wildfire_aspp.html"><span class="doc">CNN-ASPP</span></a></p>
+<p>An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction.</p>
+<p><a class="reference internal" href="../modules/models_wildfire_fpa_dnn.html"><span class="doc">DNN</span></a></p>
+<p>A feed-forward wildfire danger classifier for incident-level FPA-FOD features.</p>
+<p><a class="reference internal" href="../modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a></p>
+<p>A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting.</p>
+<p><a class="reference internal" href="../modules/models_wildfire_fpa_lstm.html"><span class="doc">LSTM</span></a></p>
+<p>A sequence-only wildfire forecasting baseline for next-window size-group counts.</p>
+<p><a class="reference internal" href="../modules/models_wildfire_fpa_forecast.html"><span class="doc">LSTM-AutoEncoder</span></a></p>
+<p>An LSTM plus autoencoder wildfire forecasting baseline for next-window count prediction.</p>
+</section>
 <section id="earthquake">
 <h3>Earthquake<a class="headerlink" href="#earthquake" title="Link to this heading">¶</a></h3>
 <p><a class="reference internal" href="../modules/models_eqnet.html"><span class="doc">EQNet</span></a></p>
@@ -347,19 +360,6 @@ submodules for API lookup.</p>
 <p>A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting.</p>
 <p><a class="reference internal" href="../modules/models_tropicyclonenet.html"><span class="doc">TropiCycloneNet</span></a></p>
 <p>A GRU plus attention baseline for all-basin tropical cyclone forecasting.</p>
-</section>
-<section id="wildfire">
-<h3>Wildfire<a class="headerlink" href="#wildfire" title="Link to this heading">¶</a></h3>
-<p><a class="reference internal" href="../modules/models_wildfire_aspp.html"><span class="doc">CNN-ASPP</span></a></p>
-<p>An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction.</p>
-<p><a class="reference internal" href="../modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a></p>
-<p>A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting.</p>
-<p><a class="reference internal" href="../modules/models_wildfire_fpa_dnn.html"><span class="doc">Wildfire FPA DNN</span></a></p>
-<p>A feed-forward wildfire danger classifier for incident-level FPA-FOD features.</p>
-<p><a class="reference internal" href="../modules/models_wildfire_fpa_forecast.html"><span class="doc">Wildfire FPA Forecast</span></a></p>
-<p>An LSTM plus autoencoder wildfire forecasting baseline for next-window count prediction.</p>
-<p><a class="reference internal" href="../modules/models_wildfire_fpa_lstm.html"><span class="doc">Wildfire FPA LSTM</span></a></p>
-<p>A sequence-only wildfire forecasting baseline for next-window size-group counts.</p>
 </section>
 </section>
 <section id="submodules">
@@ -1559,11 +1559,11 @@ This delegates to registry metadata to keep a consistent interface.</p>
             <ul>
 <li><a class="reference internal" href="#">pyhazards.models package</a><ul>
 <li><a class="reference internal" href="#model-catalog">Model Catalog</a><ul>
+<li><a class="reference internal" href="#wildfire">Wildfire</a></li>
 <li><a class="reference internal" href="#earthquake">Earthquake</a></li>
 <li><a class="reference internal" href="#flood">Flood</a></li>
 <li><a class="reference internal" href="#hurricane">Hurricane</a></li>
 <li><a class="reference internal" href="#tropical-cyclone">Tropical Cyclone</a></li>
-<li><a class="reference internal" href="#wildfire">Wildfire</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>

@@ -14,8 +14,31 @@ Model Catalog
 -------------
 
 The public catalog below is generated from ``pyhazards/model_cards/*.yaml``.
-Use this page for model discovery and quick registry lookup; use the
-Implementation Guide for contributor workflow details.
+Use this page for model discovery and quick registry lookup. Use the
+:doc:`pyhazards_benchmarks` page to see which hazard tasks and smoke
+configs are currently implemented, and use the Implementation Guide
+for contributor workflow details.
+
+Wildfire
+~~~~~~~~
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+   :class: dataset-list
+
+   * - Model
+     - Description
+   * - :doc:`CNN-ASPP <modules/models_wildfire_aspp>`
+     - An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction. See `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_.
+   * - :doc:`DNN <modules/models_wildfire_fpa_dnn>`
+     - A feed-forward wildfire danger classifier for incident-level FPA-FOD features. See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
+   * - :doc:`DNN-LSTM-AutoEncoder <modules/models_wildfire_fpa>`
+     - A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting. See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
+   * - :doc:`LSTM <modules/models_wildfire_fpa_lstm>`
+     - A sequence-only wildfire forecasting baseline for next-window size-group counts. See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
+   * - :doc:`LSTM-AutoEncoder <modules/models_wildfire_fpa_forecast>`
+     - An LSTM plus autoencoder wildfire forecasting baseline for next-window count prediction. See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
 
 Earthquake
 ~~~~~~~~~~
@@ -96,27 +119,6 @@ Tropical Cyclone
      - A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting. See `TCIF-fusion repository <https://github.com/wangchong96/TCIF-fusion>`_.
    * - :doc:`TropiCycloneNet <modules/models_tropicyclonenet>`
      - A GRU plus attention baseline for all-basin tropical cyclone forecasting. See `TropiCycloneNet repository <https://github.com/xiaochengfuhuo/TropiCycloneNet>`_.
-
-Wildfire
-~~~~~~~~
-
-.. list-table::
-   :widths: 30 70
-   :header-rows: 1
-   :class: dataset-list
-
-   * - Model
-     - Description
-   * - :doc:`CNN-ASPP <modules/models_wildfire_aspp>`
-     - An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction. See `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_.
-   * - :doc:`DNN-LSTM-AutoEncoder <modules/models_wildfire_fpa>`
-     - A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting. See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
-   * - :doc:`Wildfire FPA DNN <modules/models_wildfire_fpa_dnn>`
-     - A feed-forward wildfire danger classifier for incident-level FPA-FOD features. See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
-   * - :doc:`Wildfire FPA Forecast <modules/models_wildfire_fpa_forecast>`
-     - An LSTM plus autoencoder wildfire forecasting baseline for next-window count prediction. See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
-   * - :doc:`Wildfire FPA LSTM <modules/models_wildfire_fpa_lstm>`
-     - A sequence-only wildfire forecasting baseline for next-window size-group counts. See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
 
 Using the Registry
 ------------------

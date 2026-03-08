@@ -236,9 +236,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_dnn.html">Wildfire FPA DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_forecast.html">Wildfire FPA Forecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_lstm.html">Wildfire FPA LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_dnn.html">DNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../interactive_map.html">Wildfire Interactive Map</a></li>
@@ -307,6 +307,10 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">EarthquakeBenchmark</span><span class="p">(</span><span class="n">Benchmark</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;earthquake&quot;</span>
     <span class="n">hazard_task</span> <span class="o">=</span> <span class="s2">&quot;earthquake.picking&quot;</span>
+    <span class="n">metric_names_by_task</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;earthquake.picking&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;p_pick_mae&quot;</span><span class="p">,</span> <span class="s2">&quot;s_pick_mae&quot;</span><span class="p">,</span> <span class="s2">&quot;precision&quot;</span><span class="p">,</span> <span class="s2">&quot;recall&quot;</span><span class="p">,</span> <span class="s2">&quot;f1&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;earthquake.forecasting&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;mae&quot;</span><span class="p">,</span> <span class="s2">&quot;mse&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
 
 <div class="viewcode-block" id="EarthquakeBenchmark.evaluate">
 <a class="viewcode-back" href="../../../api/pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.evaluate">[docs]</a>

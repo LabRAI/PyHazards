@@ -7,13 +7,13 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   pyhazards.benchmarks
-   pyhazards.configs
    pyhazards.datasets
    pyhazards.models
+   pyhazards.benchmarks
+   pyhazards.configs
+   pyhazards.reports
    pyhazards.engine
    pyhazards.metrics
-   pyhazards.reports
    pyhazards.utils
 
 Submodules

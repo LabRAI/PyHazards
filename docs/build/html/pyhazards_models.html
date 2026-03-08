@@ -237,9 +237,9 @@
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html">Wildfire FPA DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html">Wildfire FPA Forecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_lstm.html">Wildfire FPA LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html">DNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interactive_map.html">Wildfire Interactive Map</a></li>
@@ -305,8 +305,43 @@ through the shared PyHazards registry.</p>
 <section id="model-catalog">
 <h2>Model Catalog<a class="headerlink" href="#model-catalog" title="Link to this heading">¶</a></h2>
 <p>The public catalog below is generated from <code class="docutils literal notranslate"><span class="pre">pyhazards/model_cards/*.yaml</span></code>.
-Use this page for model discovery and quick registry lookup; use the
-Implementation Guide for contributor workflow details.</p>
+Use this page for model discovery and quick registry lookup. Use the
+<a class="reference internal" href="pyhazards_benchmarks.html"><span class="doc">Benchmarks</span></a> page to see which hazard tasks and smoke
+configs are currently implemented, and use the Implementation Guide
+for contributor workflow details.</p>
+<section id="wildfire">
+<h3>Wildfire<a class="headerlink" href="#wildfire" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-given dataset-list docutils container">
+<table class="dataset-list docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_aspp.html"><span class="doc">CNN-ASPP</span></a></p></td>
+<td><p>An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction. See <a class="reference external" href="https://ieeexplore.ieee.org/document/10568207">Application of Explainable Artificial Intelligence in Predicting Wildfire Spread</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html"><span class="doc">DNN</span></a></p></td>
+<td><p>A feed-forward wildfire danger classifier for incident-level FPA-FOD features. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a></p></td>
+<td><p>A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wildfire_fpa_lstm.html"><span class="doc">LSTM</span></a></p></td>
+<td><p>A sequence-only wildfire forecasting baseline for next-window size-group counts. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html"><span class="doc">LSTM-AutoEncoder</span></a></p></td>
+<td><p>An LSTM plus autoencoder wildfire forecasting baseline for next-window count prediction. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <section id="earthquake">
 <h3>Earthquake<a class="headerlink" href="#earthquake" title="Link to this heading">¶</a></h3>
 <div class="table-wrapper colwidths-given dataset-list docutils container">
@@ -433,39 +468,6 @@ Implementation Guide for contributor workflow details.</p>
 </table>
 </div>
 </section>
-<section id="wildfire">
-<h3>Wildfire<a class="headerlink" href="#wildfire" title="Link to this heading">¶</a></h3>
-<div class="table-wrapper colwidths-given dataset-list docutils container">
-<table class="dataset-list docutils align-default">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Model</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_aspp.html"><span class="doc">CNN-ASPP</span></a></p></td>
-<td><p>An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction. See <a class="reference external" href="https://ieeexplore.ieee.org/document/10568207">Application of Explainable Artificial Intelligence in Predicting Wildfire Spread</a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a></p></td>
-<td><p>A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html"><span class="doc">Wildfire FPA DNN</span></a></p></td>
-<td><p>A feed-forward wildfire danger classifier for incident-level FPA-FOD features. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html"><span class="doc">Wildfire FPA Forecast</span></a></p></td>
-<td><p>An LSTM plus autoencoder wildfire forecasting baseline for next-window count prediction. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_fpa_lstm.html"><span class="doc">Wildfire FPA LSTM</span></a></p></td>
-<td><p>A sequence-only wildfire forecasting baseline for next-window size-group counts. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
 </section>
 <section id="using-the-registry">
 <h2>Using the Registry<a class="headerlink" href="#using-the-registry" title="Link to this heading">¶</a></h2>
@@ -577,11 +579,11 @@ load the model by name through the shared registry.</p>
 <li><a class="reference internal" href="#">Models</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#model-catalog">Model Catalog</a><ul>
+<li><a class="reference internal" href="#wildfire">Wildfire</a></li>
 <li><a class="reference internal" href="#earthquake">Earthquake</a></li>
 <li><a class="reference internal" href="#flood">Flood</a></li>
 <li><a class="reference internal" href="#hurricane">Hurricane</a></li>
 <li><a class="reference internal" href="#tropical-cyclone">Tropical Cyclone</a></li>
-<li><a class="reference internal" href="#wildfire">Wildfire</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#using-the-registry">Using the Registry</a><ul>

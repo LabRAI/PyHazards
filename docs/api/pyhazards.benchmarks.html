@@ -237,9 +237,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_dnn.html">Wildfire FPA DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_forecast.html">Wildfire FPA Forecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_lstm.html">Wildfire FPA LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_dnn.html">DNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../interactive_map.html">Wildfire Interactive Map</a></li>
@@ -507,6 +507,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.benchmarks.earthquake.EarthquakeBenchmark.metric_names_by_task">
+<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'earthquake.forecasting':</span> <span class="pre">['mae',</span> <span class="pre">'mse'],</span> <span class="pre">'earthquake.picking':</span> <span class="pre">['p_pick_mae',</span> <span class="pre">'s_pick_mae',</span> <span class="pre">'precision',</span> <span class="pre">'recall',</span> <span class="pre">'f1']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.earthquake.EarthquakeBenchmark.name">
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'earthquake'</span></em><a class="headerlink" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.name" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -538,6 +543,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.wildfire.WildfireBenchmark.hazard_task">
 <span class="sig-name descname"><span class="pre">hazard_task</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wildfire.danger'</span></em><a class="headerlink" href="#pyhazards.benchmarks.wildfire.WildfireBenchmark.hazard_task" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.benchmarks.wildfire.WildfireBenchmark.metric_names_by_task">
+<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'wildfire.danger':</span> <span class="pre">['accuracy',</span> <span class="pre">'macro_f1'],</span> <span class="pre">'wildfire.spread':</span> <span class="pre">['iou',</span> <span class="pre">'f1']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.wildfire.WildfireBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -575,6 +585,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.benchmarks.flood.FloodBenchmark.metric_names_by_task">
+<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'flood.inundation':</span> <span class="pre">['pixel_mae',</span> <span class="pre">'iou',</span> <span class="pre">'f1'],</span> <span class="pre">'flood.streamflow':</span> <span class="pre">['mae',</span> <span class="pre">'rmse']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.flood.FloodBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.flood.FloodBenchmark.name">
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'flood'</span></em><a class="headerlink" href="#pyhazards.benchmarks.flood.FloodBenchmark.name" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -606,6 +621,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.tc.TropicalCycloneBenchmark.hazard_task">
 <span class="sig-name descname"><span class="pre">hazard_task</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'tc.track_intensity'</span></em><a class="headerlink" href="#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.hazard_task" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.benchmarks.tc.TropicalCycloneBenchmark.metric_names_by_task">
+<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'tc.track_intensity':</span> <span class="pre">['track_error',</span> <span class="pre">'intensity_mae']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -762,6 +782,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.benchmarks.EarthquakeBenchmark.metric_names_by_task">
+<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'earthquake.forecasting':</span> <span class="pre">['mae',</span> <span class="pre">'mse'],</span> <span class="pre">'earthquake.picking':</span> <span class="pre">['p_pick_mae',</span> <span class="pre">'s_pick_mae',</span> <span class="pre">'precision',</span> <span class="pre">'recall',</span> <span class="pre">'f1']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.EarthquakeBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.EarthquakeBenchmark.name">
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'earthquake'</span></em><a class="headerlink" href="#pyhazards.benchmarks.EarthquakeBenchmark.name" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -790,6 +815,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.FloodBenchmark.hazard_task">
 <span class="sig-name descname"><span class="pre">hazard_task</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'flood.streamflow'</span></em><a class="headerlink" href="#pyhazards.benchmarks.FloodBenchmark.hazard_task" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.benchmarks.FloodBenchmark.metric_names_by_task">
+<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'flood.inundation':</span> <span class="pre">['pixel_mae',</span> <span class="pre">'iou',</span> <span class="pre">'f1'],</span> <span class="pre">'flood.streamflow':</span> <span class="pre">['mae',</span> <span class="pre">'rmse']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.FloodBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -824,6 +854,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.benchmarks.TropicalCycloneBenchmark.metric_names_by_task">
+<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'tc.track_intensity':</span> <span class="pre">['track_error',</span> <span class="pre">'intensity_mae']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.TropicalCycloneBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.TropicalCycloneBenchmark.name">
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'tc'</span></em><a class="headerlink" href="#pyhazards.benchmarks.TropicalCycloneBenchmark.name" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -852,6 +887,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.WildfireBenchmark.hazard_task">
 <span class="sig-name descname"><span class="pre">hazard_task</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wildfire.danger'</span></em><a class="headerlink" href="#pyhazards.benchmarks.WildfireBenchmark.hazard_task" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.benchmarks.WildfireBenchmark.metric_names_by_task">
+<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'wildfire.danger':</span> <span class="pre">['accuracy',</span> <span class="pre">'macro_f1'],</span> <span class="pre">'wildfire.spread':</span> <span class="pre">['iou',</span> <span class="pre">'f1']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.WildfireBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -992,6 +1032,7 @@
 <li><a class="reference internal" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark._abc_impl</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.evaluate()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.hazard_task</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.metric_names_by_task</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.name"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.name</span></code></a></li>
 </ul>
 </li>
@@ -1002,6 +1043,7 @@
 <li><a class="reference internal" href="#pyhazards.benchmarks.wildfire.WildfireBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark._abc_impl</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.wildfire.WildfireBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.evaluate()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.wildfire.WildfireBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.hazard_task</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.benchmarks.wildfire.WildfireBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.metric_names_by_task</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.wildfire.WildfireBenchmark.name"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.name</span></code></a></li>
 </ul>
 </li>
@@ -1012,6 +1054,7 @@
 <li><a class="reference internal" href="#pyhazards.benchmarks.flood.FloodBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark._abc_impl</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.flood.FloodBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.evaluate()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.flood.FloodBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.hazard_task</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.benchmarks.flood.FloodBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.metric_names_by_task</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.flood.FloodBenchmark.name"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.name</span></code></a></li>
 </ul>
 </li>
@@ -1022,6 +1065,7 @@
 <li><a class="reference internal" href="#pyhazards.benchmarks.tc.TropicalCycloneBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark._abc_impl</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.evaluate()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.hazard_task</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.metric_names_by_task</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.tc.TropicalCycloneBenchmark.name"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.name</span></code></a></li>
 </ul>
 </li>
@@ -1058,6 +1102,7 @@
 <li><a class="reference internal" href="#pyhazards.benchmarks.EarthquakeBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark._abc_impl</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.EarthquakeBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.evaluate()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.EarthquakeBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.hazard_task</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.benchmarks.EarthquakeBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.metric_names_by_task</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.EarthquakeBenchmark.name"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.name</span></code></a></li>
 </ul>
 </li>
@@ -1065,6 +1110,7 @@
 <li><a class="reference internal" href="#pyhazards.benchmarks.FloodBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark._abc_impl</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.FloodBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.evaluate()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.FloodBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.hazard_task</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.benchmarks.FloodBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.metric_names_by_task</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.FloodBenchmark.name"><code class="docutils literal notranslate"><span class="pre">FloodBenchmark.name</span></code></a></li>
 </ul>
 </li>
@@ -1072,6 +1118,7 @@
 <li><a class="reference internal" href="#pyhazards.benchmarks.TropicalCycloneBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark._abc_impl</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.TropicalCycloneBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.evaluate()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.TropicalCycloneBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.hazard_task</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.benchmarks.TropicalCycloneBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.metric_names_by_task</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.TropicalCycloneBenchmark.name"><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark.name</span></code></a></li>
 </ul>
 </li>
@@ -1079,6 +1126,7 @@
 <li><a class="reference internal" href="#pyhazards.benchmarks.WildfireBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark._abc_impl</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.WildfireBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.evaluate()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.WildfireBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.hazard_task</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.benchmarks.WildfireBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.metric_names_by_task</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.WildfireBenchmark.name"><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark.name</span></code></a></li>
 </ul>
 </li>
