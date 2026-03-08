@@ -34,10 +34,6 @@ An explainable CNN segmentation model with an ASPP mechanism for next-day wildfi
 
 A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting.
 
-:doc:`Wildfire Mamba </modules/models_wildfire_mamba>`
-
-A Mamba-inspired spatio-temporal wildfire model that mixes county-level temporal encoders with a lightweight graph convolution over spatial adjacency.
-
 Submodules
 ----------
 

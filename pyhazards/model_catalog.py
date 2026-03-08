@@ -88,6 +88,7 @@ class ModelCard(BaseModel):
     model_name: str
     display_name: str
     hazard: str
+    include_in_public_catalog: bool = True
     source_file: str
     builder_name: str
     summary: str
@@ -158,6 +159,10 @@ def group_cards_by_hazard(cards: Sequence[ModelCard]) -> Dict[str, List[ModelCar
     }
 
 
+def public_catalog_cards(cards: Sequence[ModelCard]) -> List[ModelCard]:
+    return [card for card in cards if card.include_in_public_catalog]
+
+
 def _paper_sentence(card: ModelCard) -> str:
     return "See `{title} <{url}>`_.".format(
         title=card.paper.title,
@@ -175,7 +180,7 @@ def _indent_block(text: str, prefix: str = "   ") -> str:
 
 
 def render_model_page(cards: Sequence[ModelCard]) -> str:
-    grouped = group_cards_by_hazard(cards)
+    grouped = group_cards_by_hazard(public_catalog_cards(cards))
     lines: List[str] = [
         GENERATED_MARKER,
         "",
@@ -288,7 +293,7 @@ def render_model_page(cards: Sequence[ModelCard]) -> str:
             "",
         ]
     )
-    for card in cards:
+    for card in public_catalog_cards(cards):
         lines.append("   modules/{slug}".format(slug=card.module_doc_name))
 
     lines.append("")
@@ -296,7 +301,7 @@ def render_model_page(cards: Sequence[ModelCard]) -> str:
 
 
 def render_api_page(cards: Sequence[ModelCard]) -> str:
-    grouped = group_cards_by_hazard(cards)
+    grouped = group_cards_by_hazard(public_catalog_cards(cards))
     lines: List[str] = [
         GENERATED_MARKER,
         "",
@@ -380,13 +385,20 @@ def render_module_page(card: ModelCard) -> str:
     lines: List[str] = [
         GENERATED_MARKER,
         "",
-        title,
-        "=" * len(title),
-        "",
-        "Description",
-        "-----------",
-        "",
     ]
+    if not card.include_in_public_catalog:
+        lines.extend([":orphan:", ""])
+
+    lines.extend(
+        [
+            title,
+            "=" * len(title),
+            "",
+            "Description",
+            "-----------",
+            "",
+        ]
+    )
     for paragraph in card.description:
         lines.append(paragraph)
         lines.append("")

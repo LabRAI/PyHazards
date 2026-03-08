@@ -133,7 +133,14 @@ Update docs so users can discover and run it:
 
 1. add or update `pyhazards/model_cards/<model_name>.yaml`
 2. keep the paper citation, usage snippet, and smoke-test spec in that card
-3. run `python scripts/render_model_docs.py` if you want to preview the generated pages locally
+3. set `include_in_public_catalog: false` in the card when a model should stay implemented but not appear in the public model table
+4. run `python scripts/render_model_docs.py` if you want to preview the generated pages locally
+5. when you need the published GitHub Pages site updated locally too, run:
+   ```bash
+   cd docs
+   sphinx-build -b html source build/html
+   cp -r build/html/* .
+   ```
 
 The model page and per-model docs are generated automatically from the card, including new
 hazard-scenario tables when needed. Keep the card focused on I/O contract, supported tasks,
@@ -173,3 +180,4 @@ Once configured, the workflow does the following for catalog-backed model PRs:
 2. comment with actionable blockers when the implementation is not ready
 3. merge passing PRs automatically
 4. regenerate the model page and module docs on the resulting push
+5. rebuild the committed `docs/` HTML site so GitHub Pages reflects the new catalog

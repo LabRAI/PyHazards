@@ -24,6 +24,7 @@ Open these files first and treat them as the source of truth for model PR handli
 - `.github/workflows/model-pr-bot.yml`
 - `.github/workflows/model-docs-sync.yml`
 - `.github/IMPLEMENTATION.md`
+- `docs/README.md`
 
 Do not begin with broad repo discovery unless one of those files is missing or broken.
 
@@ -57,6 +58,13 @@ Do not begin with broad repo discovery unless one of those files is missing or b
    python scripts/verify_table_entries.py
    python -m pytest tests/test_model_catalog.py
    ```
+   If the change should be visible on the published docs site, rebuild the committed HTML too:
+   ```bash
+   cd docs
+   sphinx-build -b html source build/html
+   cp -r build/html/* .
+   ```
+   Do not stop after updating `docs/source/`; this repo publishes the committed `docs/` HTML artifacts.
 
 4. Decide whether to fix or block.
    Patch the PR yourself when the issue is localized and the correct change is clear.
@@ -66,6 +74,7 @@ Do not begin with broad repo discovery unless one of those files is missing or b
 5. If the PR passes, keep docs aligned and merge when the user asked for processing rather than pure review.
    Generated model tables come from `pyhazards/model_cards/*.yaml`, so a new hazard scenario appears as a new section automatically after `python scripts/render_model_docs.py`.
    Do not hand-edit `docs/source/pyhazards_models.rst` or the generated module pages.
+   If a model should remain implemented but not appear in the public catalog, set `include_in_public_catalog: false` in its model card instead of editing generated docs.
 
 6. Report back concisely.
    Include:
@@ -86,5 +95,6 @@ Do not begin with broad repo discovery unless one of those files is missing or b
 ## Operational Notes
 
 - The GitHub Actions bot comments on blocked model PRs, merges passing ones, and syncs generated model docs on push.
+- The published site is driven by committed files under `docs/`, so after catalog changes you must think in two stages: generate `docs/source`, then build/copy the HTML site artifacts.
 - Email notification is intentionally not part of the workflow.
 - If GitHub posting or merging is unavailable in the current environment, still run the local review path and return the exact comment or merge recommendation to the user.

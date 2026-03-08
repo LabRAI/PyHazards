@@ -59,8 +59,6 @@ Wildfire
      - An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction. See `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_.
    * - :doc:`DNN-LSTM-AutoEncoder <modules/models_wildfire_fpa>`
      - A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting. See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
-   * - :doc:`Wildfire Mamba <modules/models_wildfire_mamba>`
-     - A Mamba-inspired spatio-temporal wildfire model that mixes county-level temporal encoders with a lightweight graph convolution over spatial adjacency. See `Mamba: Linear-Time Sequence Modeling with Selective State Spaces <https://arxiv.org/abs/2312.00752>`_.
 
 Build and register custom model
 -------------------------------
@@ -120,4 +118,3 @@ Design notes
    modules/models_wavecastnet
    modules/models_wildfire_aspp
    modules/models_wildfire_fpa
-   modules/models_wildfire_mamba
