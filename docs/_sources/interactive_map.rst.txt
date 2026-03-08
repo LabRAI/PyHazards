@@ -1,14 +1,18 @@
-Interactive Map
-===============
+Wildfire Interactive Map
+========================
 
 PyHazards includes a lightweight launcher for the external **RAI Fire**
-interactive wildfire map. Use it when you want a browser-based view of the map
-without leaving the broader PyHazards workflow.
+interactive wildfire map. This companion site is specific to wildfire use
+cases; it is not a general interactive map for every hazard domain in
+PyHazards.
+
+Use it when you want a browser-based wildfire view without leaving the broader
+PyHazards workflow.
 
 What This Page Covers
 ---------------------
 
-- the live RAI Fire website,
+- the live wildfire-focused RAI Fire website,
 - the built-in launcher command,
 - the small Python helper exposed by the package.
 
@@ -42,9 +46,9 @@ Python API
 Notes
 -----
 
-The interactive map is an external companion application. PyHazards links to it
-and provides a launcher, but it does not host the web application inside the
-Python package itself.
+The interactive map is an external companion application for wildfire
+visualization. PyHazards links to it and provides a launcher, but it does not
+host the web application inside the Python package itself.
 
 Module Reference
 ----------------

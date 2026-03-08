@@ -53,10 +53,12 @@ run experiments, and extend the library.
 Core Capabilities
 -----------------
 
-- Inspect hazard datasets through consistent command-line inspection workflows
-  and reference pages.
-- Build registered models through a unified model registry.
-- Train, evaluate, and predict with shared engine interfaces.
+- Inspect hazard datasets through consistent command-line inspection workflows,
+  dataset reference pages, and lightweight validation steps before training.
+- Build registered models through a unified model registry with stable builder
+  interfaces across hazard scenarios.
+- Train, evaluate, and predict with shared engine interfaces so experiments,
+  smoke tests, and model comparisons follow a consistent workflow.
 
 Getting Started
 ---------------
@@ -94,7 +96,7 @@ Documentation Guide
 - :doc:`quick_start`: run the shortest end-to-end workflow in the library.
 - :doc:`pyhazards_datasets`: browse supported datasets and inspection commands.
 - :doc:`pyhazards_models`: browse the public model catalog and registry usage.
-- :doc:`interactive_map`: open the companion wildfire map at
+- :doc:`interactive_map`: open the wildfire-only companion map at
   ``https://rai-fire.com/``.
 - :doc:`implementation`: use the contributor guide for adding datasets, models,
   and public catalog updates.
