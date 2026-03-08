@@ -7,10 +7,10 @@
         <link rel="canonical" href="https://labrai.github.io/PyHazards/pyhazards_datasets.html">
         <link rel="prefetch" href="_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
         <title>Datasets - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=aab0eeca" />
     
@@ -276,9 +276,10 @@
 <h1>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">¶</a></h1>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
-<p>Use this page to browse the built-in dataset references and the inspection
-commands that help you validate local files before training.</p>
-<p>Each dataset page answers three practical questions:</p>
+<p>Use this page to survey the supported PyHazards datasets, understand what each
+data source provides, and find the inspection workflows used to validate local
+files before training.</p>
+<p>Each dataset page is organized around three practical questions:</p>
 <ol class="arabic simple">
 <li><p>What is this dataset?</p></li>
 <li><p>How do I obtain or prepare it?</p></li>
@@ -334,8 +335,8 @@ commands that help you validate local files before training.</p>
 </table>
 </div>
 </section>
-<section id="dataset-inspection">
-<h2>Dataset inspection<a class="headerlink" href="#dataset-inspection" title="Link to this heading">¶</a></h2>
+<section id="inspection-workflows">
+<h2>Inspection Workflows<a class="headerlink" href="#inspection-workflows" title="Link to this heading">¶</a></h2>
 <p>PyHazards provides inspection entrypoints so you can validate local files and
 produce basic summaries before writing a training loop.</p>
 <p>Current end-to-end example:</p>
@@ -419,10 +420,10 @@ Minimal API with a structured request object.
 </pre></div>
 </div>
 </section>
-<section id="minimal-inspection-workflow">
-<h2>Minimal Inspection Workflow<a class="headerlink" href="#minimal-inspection-workflow" title="Link to this heading">¶</a></h2>
-<p>Use the following pattern when you want to script dataset inspection in a
-repeatable way.</p>
+<section id="scripted-inspection-pattern">
+<h2>Scripted Inspection Pattern<a class="headerlink" href="#scripted-inspection-pattern" title="Link to this heading">¶</a></h2>
+<p>Use the following pattern when you want a repeatable inspection step inside a
+scripted workflow.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;merra2&quot;</span>
@@ -458,7 +459,8 @@ artifacts.</p></li>
 </section>
 <section id="for-contributors">
 <h2>For Contributors<a class="headerlink" href="#for-contributors" title="Link to this heading">¶</a></h2>
-<p>If you add a new dataset inspection entrypoint, mirror the existing pattern:</p>
+<p>If you add a new dataset inspection entrypoint, keep it consistent with the
+existing inspection workflow:</p>
 <ol class="arabic simple">
 <li><p>parse CLI args (key + outdir + skip/force flags),</p></li>
 <li><p>materialize required local files (download/preprocess),</p></li>
@@ -528,12 +530,12 @@ artifacts.</p></li>
 <li><a class="reference internal" href="#">Datasets</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#dataset-catalog">Dataset Catalog</a></li>
-<li><a class="reference internal" href="#dataset-inspection">Dataset inspection</a><ul>
+<li><a class="reference internal" href="#inspection-workflows">Inspection Workflows</a><ul>
 <li><a class="reference internal" href="#notes-merra-2">Notes (MERRA-2)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#simple-dataloader-helper">Simple Dataloader Helper</a></li>
-<li><a class="reference internal" href="#minimal-inspection-workflow">Minimal Inspection Workflow</a></li>
+<li><a class="reference internal" href="#scripted-inspection-pattern">Scripted Inspection Pattern</a></li>
 <li><a class="reference internal" href="#inspection-cli-convention">Inspection CLI Convention</a></li>
 <li><a class="reference internal" href="#for-contributors">For Contributors</a></li>
 </ul>

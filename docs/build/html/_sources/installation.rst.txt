@@ -1,8 +1,9 @@
 Installation
 ============
 
-PyHazards supports Python 3.8 through 3.12 and installs with ``pip``. This page
-covers the recommended install paths for users and contributors.
+Use this page to install PyHazards, verify that the package imports correctly,
+and choose the right setup path for local use or contribution. PyHazards
+supports Python 3.8 through 3.12 and installs with ``pip``.
 
 Requirements
 ------------
@@ -10,8 +11,8 @@ Requirements
 - Python ``>=3.8, <3.13``
 - PyTorch ``>=2.3, <3.0``
 
-Basic Install
--------------
+Install from PyPI
+-----------------
 
 Install from PyPI:
 
@@ -35,7 +36,7 @@ Example for CUDA 12.6:
 Install from Source
 -------------------
 
-Use an editable install if you are contributing code or documentation:
+Use an editable install when you are contributing code or documentation:
 
 .. code-block:: bash
 
@@ -46,7 +47,8 @@ Use an editable install if you are contributing code or documentation:
 Verify the Installation
 -----------------------
 
-Run a small import check:
+Run a small import check to confirm that the package is available in the
+environment:
 
 .. code-block:: bash
 
@@ -57,5 +59,5 @@ You should see the installed package version printed to stdout.
 Next Steps
 ----------
 
-- Continue to :doc:`quick_start` for a first runnable example.
+- Continue to :doc:`quick_start` for the first end-to-end workflow.
 - See :doc:`implementation` if you are setting up a contributor workflow.

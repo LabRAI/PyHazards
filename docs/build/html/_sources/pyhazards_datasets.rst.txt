@@ -4,10 +4,11 @@ Datasets
 Overview
 --------
 
-Use this page to browse the built-in dataset references and the inspection
-commands that help you validate local files before training.
+Use this page to survey the supported PyHazards datasets, understand what each
+data source provides, and find the inspection workflows used to validate local
+files before training.
 
-Each dataset page answers three practical questions:
+Each dataset page is organized around three practical questions:
 
 1. What is this dataset?
 2. How do I obtain or prepare it?
@@ -57,8 +58,8 @@ Select a dataset name below to open its reference page.
      - High-frequency geostationary multispectral imagery from the `NOAA GOES-R series <https://www.goes-r.gov/>`_, supporting continuous monitoring (e.g., smoke/thermal context) and early detection workflows when paired with fire and meteorology datasets.
 
 
-Dataset inspection
-------------------
+Inspection Workflows
+--------------------
 
 PyHazards provides inspection entrypoints so you can validate local files and
 produce basic summaries before writing a training loop.
@@ -98,11 +99,11 @@ Simple Dataloader Helper
    :language: markdown
 
 
-Minimal Inspection Workflow
+Scripted Inspection Pattern
 ---------------------------
 
-Use the following pattern when you want to script dataset inspection in a
-repeatable way.
+Use the following pattern when you want a repeatable inspection step inside a
+scripted workflow.
 
 .. code-block:: python
 
@@ -143,7 +144,8 @@ Recommended dataset-specific CLI:
 For Contributors
 ----------------
 
-If you add a new dataset inspection entrypoint, mirror the existing pattern:
+If you add a new dataset inspection entrypoint, keep it consistent with the
+existing inspection workflow:
 
 1) parse CLI args (key + outdir + skip/force flags),
 2) materialize required local files (download/preprocess),

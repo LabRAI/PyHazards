@@ -1,12 +1,14 @@
 Quick Start
-=================
-This page is the shortest end-to-end path through PyHazards: verify the install,
-inspect one dataset, build one model, and run one short training loop.
+===========
+
+Use this page after :doc:`installation` to run the first end-to-end PyHazards
+workflow: verify the package, inspect example data, build a model, and execute
+one short training loop.
 
 Step 1: Verify the Package
 --------------------------
 
-Confirm that Python can import the package:
+Confirm that Python can import the package cleanly:
 
 .. code-block:: bash
 
@@ -15,7 +17,8 @@ Confirm that Python can import the package:
 Step 2: Inspect Example Data
 ----------------------------
 
-Use the ERA5 inspection entrypoint to validate the bundled sample data:
+Use the ERA5 inspection entrypoint to validate the bundled sample data before
+training:
 
 .. code-block:: bash
 
@@ -24,7 +27,7 @@ Use the ERA5 inspection entrypoint to validate the bundled sample data:
 Step 3: Build a Model
 ---------------------
 
-Build ``hydrographnet`` from the model registry:
+Instantiate ``hydrographnet`` through the unified model registry:
 
 .. code-block:: python
 
@@ -42,8 +45,8 @@ Build ``hydrographnet`` from the model registry:
 Step 4: Run a Short Train/Evaluate Loop
 ---------------------------------------
 
-This example uses the ERA5 subset plus ``hydrographnet`` to confirm that the
-dataset, model, and training engine work together.
+This example pairs the ERA5 subset with ``hydrographnet`` to confirm that the
+dataset, model, and training engine work together in one workflow.
 
 .. code-block:: python
 
@@ -84,12 +87,12 @@ dataset, model, and training engine work together.
     )
     print(metrics)
 
-Step 5: Choose What to Explore Next
------------------------------------
+Step 5: Next Steps
+------------------
 
-- Go to :doc:`pyhazards_datasets` if you want to browse supported datasets.
-- Go to :doc:`pyhazards_models` if you want to compare built-in models.
-- Go to :doc:`implementation` if you want to add your own dataset or model.
+- Go to :doc:`pyhazards_datasets` to browse supported datasets.
+- Go to :doc:`pyhazards_models` to compare built-in models.
+- Go to :doc:`implementation` to add your own dataset or model.
 
 Device Notes
 ------------
