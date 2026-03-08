@@ -44,30 +44,35 @@
 Overview
 --------
 
-PyHazards is a Python library for hazard-focused machine learning. It provides a
-consistent interface for dataset inspection, model construction, experiment
-execution, and hazard-specific extensions.
+PyHazards is an open-source Python library for AI-based natural hazard
+modeling, providing unified interfaces for datasets, models, training
+pipelines, and evaluation. It is designed for researchers, practitioners, and
+contributors who need a consistent way to inspect data, build hazard models,
+run experiments, and extend the library.
 
-The documentation is organized around two common workflows:
+Core Capabilities
+-----------------
 
-1. **Use the library**: install PyHazards, inspect data, build a model, and run a
-   short experiment.
-2. **Extend the library**: add a dataset, register a model, and keep the docs and
-   smoke tests aligned with the existing project structure.
+- Inspect hazard datasets through consistent command-line inspection workflows
+  and reference pages.
+- Build registered models through a unified model registry.
+- Train, evaluate, and predict with shared engine interfaces.
 
-What You Can Do with PyHazards
-------------------------------
-
-- Inspect hazard datasets through consistent CLI entrypoints and dataset pages.
-- Build registered models by name instead of wiring architectures manually.
-- Train, evaluate, and predict with a shared ``Trainer`` interface.
-- Publish hazard-specific model docs and examples through the library's catalog
-  workflow.
-
-Minimal Example
+Getting Started
 ---------------
 
-Build a registered model in one step:
+If you are new to PyHazards, use the documentation in this order:
+
+1. :doc:`installation` - set up the environment and verify the package.
+2. :doc:`quick_start` - run a first end-to-end workflow.
+3. :doc:`pyhazards_datasets` and :doc:`pyhazards_models` - explore supported
+   data sources and model implementations.
+
+Illustrative Example
+~~~~~~~~~~~~~~~~~~~~
+
+The example below shows how to instantiate a registered model through the
+unified model registry.
 
 .. code-block:: python
 
@@ -81,37 +86,30 @@ Build a registered model in one step:
         out_dim=1,
     )
 
-Start Here
-----------
+Documentation Guide
+-------------------
 
-If you are new to PyHazards, use the docs in this order:
-
-1. :doc:`installation` for environment setup and verification.
-2. :doc:`quick_start` for the first runnable workflow.
-3. :doc:`pyhazards_datasets` and :doc:`pyhazards_models` to browse the built-in
-   dataset and model references.
-
-Documentation Map
------------------
-
-- :doc:`installation`: install from PyPI or source and verify the package.
-- :doc:`quick_start`: run one small end-to-end example.
-- :doc:`pyhazards_datasets`: browse datasets and inspection commands.
+- :doc:`installation`: set up PyHazards from PyPI or source and verify the
+  environment.
+- :doc:`quick_start`: run the shortest end-to-end workflow in the library.
+- :doc:`pyhazards_datasets`: browse supported datasets and inspection commands.
 - :doc:`pyhazards_models`: browse the public model catalog and registry usage.
 - :doc:`interactive_map`: open the companion wildfire map at
   ``https://rai-fire.com/``.
-- :doc:`implementation`: contributor-oriented guidance for adding datasets and
-  models.
+- :doc:`implementation`: use the contributor guide for adding datasets, models,
+  and public catalog updates.
 
 For Contributors
 ----------------
 
-PyHazards is registry-driven. If you plan to contribute a new dataset or model,
-start with :doc:`implementation` and then use the reference pages for the
-relevant subsystem.
+PyHazards is registry-driven and uses model cards to generate the public model
+catalog. If you plan to contribute a dataset or model, start with
+:doc:`implementation` and then use the dataset and model reference pages to
+keep registry wiring, smoke tests, and generated docs aligned with the library
+workflow.
 
-How to Cite
------------
+Citation
+--------
 
 If you use PyHazards in your research, please cite:
 
