@@ -5,9 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/api/pyhazards.models.html">
+        <link rel="prefetch" href="../_static/logo.png" as="image">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>pyhazards.models package - PyHazards 1.0.1 documentation</title>
+    <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>pyhazards.models package - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -163,7 +164,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">PyHazards 1.0.1 documentation</div></a>
+      <a href="../index.html"><div class="brand">PyHazards 1.0.4 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,8 +184,11 @@
     <div class="sidebar-container">
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.png" alt="Logo"/>
+  </div>
   
-  <span class="sidebar-brand-text">PyHazards 1.0.1 documentation</span>
+  <span class="sidebar-brand-text">PyHazards 1.0.4 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -199,8 +203,27 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../pyhazards_models.html">Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/merra2.html">MERRA-2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/era5.html">ERA5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/firms.html">FIRMS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/mtbs.html">MTBS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/landfire.html">LANDFIRE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/wfigs.html">WFIGS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/fpa_fod_tabular.html">FPA-FOD Tabular</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/fpa_fod_weekly.html">FPA-FOD Weekly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/goesr.html">GOES-R</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wavecastnet.html">WaveCastNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_mamba.html">Wildfire Mamba</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_utils.html">Utils</a></li>
@@ -251,6 +274,30 @@
         <article role="main" id="furo-main-content">
           <section id="pyhazards-models-package">
 <h1>pyhazards.models package<a class="headerlink" href="#pyhazards-models-package" title="Link to this heading">¶</a></h1>
+<section id="model-catalog">
+<h2>Model Catalog<a class="headerlink" href="#model-catalog" title="Link to this heading">¶</a></h2>
+<p>This summary is generated from <code class="docutils literal notranslate"><span class="pre">pyhazards/model_cards/*.yaml</span></code> so the API index
+and the main model page stay aligned.</p>
+<section id="earthquake">
+<h3>Earthquake<a class="headerlink" href="#earthquake" title="Link to this heading">¶</a></h3>
+<p><a class="reference internal" href="../modules/models_wavecastnet.html"><span class="doc">WaveCastNet</span></a></p>
+<p>A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield forecasting and early-warning style rollout experiments.</p>
+</section>
+<section id="flood">
+<h3>Flood<a class="headerlink" href="#flood" title="Link to this heading">¶</a></h3>
+<p><a class="reference internal" href="../modules/models_hydrographnet.html"><span class="doc">HydroGraphNet</span></a></p>
+<p>A physics-informed graph neural network for flood forecasting with interpretable KAN-style components, residual message passing, and delta-state decoding.</p>
+</section>
+<section id="wildfire">
+<h3>Wildfire<a class="headerlink" href="#wildfire" title="Link to this heading">¶</a></h3>
+<p><a class="reference internal" href="../modules/models_wildfire_aspp.html"><span class="doc">CNN-ASPP</span></a></p>
+<p>An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction.</p>
+<p><a class="reference internal" href="../modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a></p>
+<p>A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting.</p>
+<p><a class="reference internal" href="../modules/models_wildfire_mamba.html"><span class="doc">Wildfire Mamba</span></a></p>
+<p>A Mamba-inspired spatio-temporal wildfire model that mixes county-level temporal encoders with a lightweight graph convolution over spatial adjacency.</p>
+</section>
+</section>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
 </section>
@@ -413,6 +460,119 @@ This delegates to registry metadata to keep a consistent interface.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.ConvLEMCell">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">ConvLEMCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tanh'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_reset_gate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wavecastnet.html#ConvLEMCell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.ConvLEMCell" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Convolutional Long Expressive Memory (ConvLEM) cell used by WaveCastNet.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.ConvLEMCell.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wavecastnet.html#ConvLEMCell.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.ConvLEMCell.forward" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.ConvLEMCell.reset_parameters">
+<span class="sig-name descname"><span class="pre">reset_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wavecastnet.html#ConvLEMCell.reset_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.ConvLEMCell.reset_parameters" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.HydroGraphNet">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">HydroGraphNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_in_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_in_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">harmonics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_gn_blocks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rollout_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enforce_nonnegative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/hydrographnet.html#HydroGraphNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.HydroGraphNet" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>PhysicsNeMo-inspired HydroGraphNet:
+encoder -&gt; message-passing processor -&gt; residual delta-state decoder.</p>
+<p>Supports one-step forward prediction and autoregressive rollout.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.HydroGraphNet._edge_index">
+<span class="sig-name descname"><span class="pre">_edge_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/hydrographnet.html#HydroGraphNet._edge_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.HydroGraphNet._edge_index" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.HydroGraphNet._match_edge_dim">
+<span class="sig-name descname"><span class="pre">_match_edge_dim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_feat</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/hydrographnet.html#HydroGraphNet._match_edge_dim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.HydroGraphNet._match_edge_dim" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.HydroGraphNet._one_step">
+<span class="sig-name descname"><span class="pre">_one_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/hydrographnet.html#HydroGraphNet._one_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.HydroGraphNet._one_step" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.HydroGraphNet._prepare_edge_inputs">
+<span class="sig-name descname"><span class="pre">_prepare_edge_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">senders</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">receivers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/hydrographnet.html#HydroGraphNet._prepare_edge_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.HydroGraphNet._prepare_edge_inputs" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.HydroGraphNet.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/hydrographnet.html#HydroGraphNet.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.HydroGraphNet.forward" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.HydroGraphNet.rollout">
+<span class="sig-name descname"><span class="pre">rollout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_steps</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/hydrographnet.html#HydroGraphNet.rollout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.HydroGraphNet.rollout" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.HydroGraphNetLoss">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">HydroGraphNetLoss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">supervised_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuity_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/hydrographnet.html#HydroGraphNetLoss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.HydroGraphNetLoss" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Supervised regression loss with optional continuity regularization.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.HydroGraphNetLoss.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prev_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/hydrographnet.html#HydroGraphNetLoss.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.HydroGraphNetLoss.forward" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.models.MLPBackbone">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">MLPBackbone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/backbones.html#MLPBackbone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.MLPBackbone" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
@@ -478,6 +638,89 @@ This delegates to registry metadata to keep a consistent interface.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.WaveCastNet">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">WaveCastNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temporal_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temporal_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">144</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tanh'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wavecastnet.html#WaveCastNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WaveCastNet" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Sequence-to-sequence wavefield forecasting model based on ConvLEM cells.</p>
+<p>Input shape: (B, C, T_in, H, W)
+Output shape: (B, C, T_out, H, W)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.WaveCastNet._init_states">
+<span class="sig-name descname"><span class="pre">_init_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wavecastnet.html#WaveCastNet._init_states"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WaveCastNet._init_states" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.WaveCastNet.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wavecastnet.html#WaveCastNet.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WaveCastNet.forward" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.WaveCastNetLoss">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">WaveCastNetLoss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wavecastnet.html#WaveCastNetLoss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WaveCastNetLoss" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Huber loss used in the WaveCastNet paper.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.WaveCastNetLoss.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wavecastnet.html#WaveCastNetLoss.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WaveCastNetLoss.forward" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.WavefieldMetrics">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">WavefieldMetrics</span></span><a class="reference internal" href="../_modules/pyhazards/models/wavecastnet.html#WavefieldMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WavefieldMetrics" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>ACC and RFNE metrics reported in the WaveCastNet paper.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.WavefieldMetrics.accuracy">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wavecastnet.html#WavefieldMetrics.accuracy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WavefieldMetrics.accuracy" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.WavefieldMetrics.compute_all">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compute_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wavecastnet.html#WavefieldMetrics.compute_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WavefieldMetrics.compute_all" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.WavefieldMetrics.rfne">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rfne</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wavecastnet.html#WavefieldMetrics.rfne"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WavefieldMetrics.rfne" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.models.WildfireASPP">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">WildfireASPP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspp_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dilations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">3,</span> <span class="pre">6,</span> <span class="pre">12)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_aspp.html#WildfireASPP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WildfireASPP" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyhazards.models.WildfireCNNASPP" title="pyhazards.models.cnn_aspp.WildfireCNNASPP"><code class="xref py py-class docutils literal notranslate"><span class="pre">WildfireCNNASPP</span></code></a></p>
@@ -502,6 +745,33 @@ This delegates to registry metadata to keep a consistent interface.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.models.WildfireFPA">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">WildfireFPA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_fpa.html#WildfireFPA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WildfireFPA" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Paper-facing wrapper for the two-stage FPA-FOD wildfire framework.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.WildfireFPA.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_fpa.html#WildfireFPA.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WildfireFPA.forward" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.models.WildfireFPA.forward_with_reconstruction">
+<span class="sig-name descname"><span class="pre">forward_with_reconstruction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_fpa.html#WildfireFPA.forward_with_reconstruction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.WildfireFPA.forward_with_reconstruction" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code>]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -600,6 +870,16 @@ This delegates to registry metadata to keep a consistent interface.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="pyhazards.models.hydrographnet_builder">
+<span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">hydrographnet_builder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_in_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_in_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dim</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/hydrographnet.html#hydrographnet_builder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.hydrographnet_builder" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.models.HydroGraphNet" title="pyhazards.models.hydrographnet.HydroGraphNet"><code class="xref py py-class docutils literal notranslate"><span class="pre">HydroGraphNet</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pyhazards.models.register_model">
 <span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">register_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">builder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/registry.html#register_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.register_model" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -610,8 +890,28 @@ This delegates to registry metadata to keep a consistent interface.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="pyhazards.models.wavecastnet_builder">
+<span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">wavecastnet_builder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temporal_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temporal_out</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wavecastnet.html#wavecastnet_builder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.wavecastnet_builder" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.models.WaveCastNet" title="pyhazards.models.wavecastnet.WaveCastNet"><code class="xref py py-class docutils literal notranslate"><span class="pre">WaveCastNet</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pyhazards.models.wildfire_aspp_builder">
-<span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">wildfire_aspp_builder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_aspp.html#wildfire_aspp_builder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.wildfire_aspp_builder" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">wildfire_aspp_builder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_aspp.html#wildfire_aspp_builder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.wildfire_aspp_builder" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhazards.models.wildfire_fpa_builder">
+<span class="sig-prename descclassname"><span class="pre">pyhazards.models.</span></span><span class="sig-name descname"><span class="pre">wildfire_fpa_builder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'relu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ae_hidden_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ae_num_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/models/wildfire_fpa.html#wildfire_fpa_builder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.models.wildfire_fpa_builder" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span></p>
@@ -671,6 +971,12 @@ This delegates to registry metadata to keep a consistent interface.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">pyhazards.models package</a><ul>
+<li><a class="reference internal" href="#model-catalog">Model Catalog</a><ul>
+<li><a class="reference internal" href="#earthquake">Earthquake</a></li>
+<li><a class="reference internal" href="#flood">Flood</a></li>
+<li><a class="reference internal" href="#wildfire">Wildfire</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-pyhazards.models.backbones">pyhazards.models.backbones module</a><ul>
 <li><a class="reference internal" href="#pyhazards.models.backbones.CNNPatchEncoder"><code class="docutils literal notranslate"><span class="pre">CNNPatchEncoder</span></code></a><ul>
@@ -722,6 +1028,24 @@ This delegates to registry metadata to keep a consistent interface.</p>
 <li><a class="reference internal" href="#pyhazards.models.ClassificationHead.forward"><code class="docutils literal notranslate"><span class="pre">ClassificationHead.forward()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#pyhazards.models.ConvLEMCell"><code class="docutils literal notranslate"><span class="pre">ConvLEMCell</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.ConvLEMCell.forward"><code class="docutils literal notranslate"><span class="pre">ConvLEMCell.forward()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.ConvLEMCell.reset_parameters"><code class="docutils literal notranslate"><span class="pre">ConvLEMCell.reset_parameters()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.HydroGraphNet"><code class="docutils literal notranslate"><span class="pre">HydroGraphNet</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.HydroGraphNet._edge_index"><code class="docutils literal notranslate"><span class="pre">HydroGraphNet._edge_index()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.HydroGraphNet._match_edge_dim"><code class="docutils literal notranslate"><span class="pre">HydroGraphNet._match_edge_dim()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.HydroGraphNet._one_step"><code class="docutils literal notranslate"><span class="pre">HydroGraphNet._one_step()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.HydroGraphNet._prepare_edge_inputs"><code class="docutils literal notranslate"><span class="pre">HydroGraphNet._prepare_edge_inputs()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.HydroGraphNet.forward"><code class="docutils literal notranslate"><span class="pre">HydroGraphNet.forward()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.HydroGraphNet.rollout"><code class="docutils literal notranslate"><span class="pre">HydroGraphNet.rollout()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.HydroGraphNetLoss"><code class="docutils literal notranslate"><span class="pre">HydroGraphNetLoss</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.HydroGraphNetLoss.forward"><code class="docutils literal notranslate"><span class="pre">HydroGraphNetLoss.forward()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#pyhazards.models.MLPBackbone"><code class="docutils literal notranslate"><span class="pre">MLPBackbone</span></code></a><ul>
 <li><a class="reference internal" href="#pyhazards.models.MLPBackbone.forward"><code class="docutils literal notranslate"><span class="pre">MLPBackbone.forward()</span></code></a></li>
 </ul>
@@ -742,9 +1066,29 @@ This delegates to registry metadata to keep a consistent interface.</p>
 <li><a class="reference internal" href="#pyhazards.models.TverskyLoss.forward"><code class="docutils literal notranslate"><span class="pre">TverskyLoss.forward()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#pyhazards.models.WaveCastNet"><code class="docutils literal notranslate"><span class="pre">WaveCastNet</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.WaveCastNet._init_states"><code class="docutils literal notranslate"><span class="pre">WaveCastNet._init_states()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.WaveCastNet.forward"><code class="docutils literal notranslate"><span class="pre">WaveCastNet.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.WaveCastNetLoss"><code class="docutils literal notranslate"><span class="pre">WaveCastNetLoss</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.WaveCastNetLoss.forward"><code class="docutils literal notranslate"><span class="pre">WaveCastNetLoss.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.WavefieldMetrics"><code class="docutils literal notranslate"><span class="pre">WavefieldMetrics</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.WavefieldMetrics.accuracy"><code class="docutils literal notranslate"><span class="pre">WavefieldMetrics.accuracy()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.WavefieldMetrics.compute_all"><code class="docutils literal notranslate"><span class="pre">WavefieldMetrics.compute_all()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.WavefieldMetrics.rfne"><code class="docutils literal notranslate"><span class="pre">WavefieldMetrics.rfne()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#pyhazards.models.WildfireASPP"><code class="docutils literal notranslate"><span class="pre">WildfireASPP</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.models.WildfireCNNASPP"><code class="docutils literal notranslate"><span class="pre">WildfireCNNASPP</span></code></a><ul>
 <li><a class="reference internal" href="#pyhazards.models.WildfireCNNASPP.forward"><code class="docutils literal notranslate"><span class="pre">WildfireCNNASPP.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.models.WildfireFPA"><code class="docutils literal notranslate"><span class="pre">WildfireFPA</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.models.WildfireFPA.forward"><code class="docutils literal notranslate"><span class="pre">WildfireFPA.forward()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.WildfireFPA.forward_with_reconstruction"><code class="docutils literal notranslate"><span class="pre">WildfireFPA.forward_with_reconstruction()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#pyhazards.models.WildfireMamba"><code class="docutils literal notranslate"><span class="pre">WildfireMamba</span></code></a><ul>
@@ -757,8 +1101,11 @@ This delegates to registry metadata to keep a consistent interface.</p>
 <li><a class="reference internal" href="#pyhazards.models.available_models"><code class="docutils literal notranslate"><span class="pre">available_models()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.models.build_model"><code class="docutils literal notranslate"><span class="pre">build_model()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.models.cnn_aspp_builder"><code class="docutils literal notranslate"><span class="pre">cnn_aspp_builder()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.hydrographnet_builder"><code class="docutils literal notranslate"><span class="pre">hydrographnet_builder()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.models.register_model"><code class="docutils literal notranslate"><span class="pre">register_model()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.wavecastnet_builder"><code class="docutils literal notranslate"><span class="pre">wavecastnet_builder()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.models.wildfire_aspp_builder"><code class="docutils literal notranslate"><span class="pre">wildfire_aspp_builder()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.models.wildfire_fpa_builder"><code class="docutils literal notranslate"><span class="pre">wildfire_fpa_builder()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.models.wildfire_mamba_builder"><code class="docutils literal notranslate"><span class="pre">wildfire_mamba_builder()</span></code></a></li>
 </ul>
 </li>
@@ -773,7 +1120,7 @@ This delegates to registry metadata to keep a consistent interface.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=e7fff540"></script>
+</div><script src="../_static/documentation_options.js?v=862d5a7d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

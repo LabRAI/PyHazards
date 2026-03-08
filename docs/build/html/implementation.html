@@ -5,9 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="How to Cite" href="cite.html"><link rel="prev" title="Utils" href="pyhazards_utils.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/implementation.html">
+        <link rel="prefetch" href="_static/logo.png" as="image">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>Implementation Guide - PyHazards 1.0.1 documentation</title>
+    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>Implementation Guide - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -163,7 +164,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">PyHazards 1.0.1 documentation</div></a>
+      <a href="index.html"><div class="brand">PyHazards 1.0.4 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,8 +184,11 @@
     <div class="sidebar-container">
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/logo.png" alt="Logo"/>
+  </div>
   
-  <span class="sidebar-brand-text">PyHazards 1.0.1 documentation</span>
+  <span class="sidebar-brand-text">PyHazards 1.0.4 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -199,8 +203,27 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pyhazards_datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyhazards_models.html">Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="datasets/merra2.html">MERRA-2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/era5.html">ERA5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/firms.html">FIRMS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/mtbs.html">MTBS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/landfire.html">LANDFIRE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/wfigs.html">WFIGS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/fpa_fod_tabular.html">FPA-FOD Tabular</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/fpa_fod_weekly.html">FPA-FOD Weekly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/goesr.html">GOES-R</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_mamba.html">Wildfire Mamba</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_utils.html">Utils</a></li>
@@ -251,7 +274,11 @@
         <article role="main" id="furo-main-content">
           <section id="implementation-guide">
 <h1>Implementation Guide<a class="headerlink" href="#implementation-guide" title="Link to this heading">¶</a></h1>
-<p>PyHazards is modular and registry-driven. This guide shows how to add your own datasets, models, transforms, and metrics in line with the hazard-first architecture.</p>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
+<p>PyHazards is modular and registry-driven. This guide shows how to add your own datasets and models in line
+with the hazard-first architecture.</p>
+</section>
 <section id="datasets">
 <h2>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">¶</a></h2>
 <p>Implement a dataset by subclassing <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> and returning a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code> from <code class="docutils literal notranslate"><span class="pre">_load()</span></code>. Register it so users can load by name.</p>
@@ -281,10 +308,6 @@
 </pre></div>
 </div>
 </section>
-<section id="transforms">
-<h2>Transforms<a class="headerlink" href="#transforms" title="Link to this heading">¶</a></h2>
-<p>Create reusable preprocessing functions (e.g., normalization, index computation, temporal windowing) that accept and return a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>. Chain them via the <code class="docutils literal notranslate"><span class="pre">transforms</span></code> argument to <code class="docutils literal notranslate"><span class="pre">Dataset.load()</span></code>.</p>
-</section>
 <section id="models">
 <h2>Models<a class="headerlink" href="#models" title="Link to this heading">¶</a></h2>
 <p>Use the provided backbones (MLP, CNN patch encoder, temporal encoder) and task heads (classification, regression, segmentation) via <code class="docutils literal notranslate"><span class="pre">build_model</span></code>. To add a custom model, register a builder:</p>
@@ -304,26 +327,6 @@
 <span class="n">register_model</span><span class="p">(</span><span class="s2">&quot;my_mlp&quot;</span><span class="p">,</span> <span class="n">my_model_builder</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;hidden_dim&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">})</span>
 </pre></div>
 </div>
-</section>
-<section id="training">
-<h2>Training<a class="headerlink" href="#training" title="Link to this heading">¶</a></h2>
-<p>Use the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> for fit/evaluate/predict with optional AMP and multi-GPU (DDP) support:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trainer</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClassificationMetrics</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># build_model(...) or a registered model</span>
-<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">ClassificationMetrics</span><span class="p">()],</span> <span class="n">mixed_precision</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
-<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
-
-<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_bundle</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_fn</span><span class="o">=</span><span class="n">loss_fn</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">data_bundle</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="metrics">
-<h2>Metrics<a class="headerlink" href="#metrics" title="Link to this heading">¶</a></h2>
-<p>Metrics subclass <code class="docutils literal notranslate"><span class="pre">MetricBase</span></code> with <code class="docutils literal notranslate"><span class="pre">update/compute/reset</span></code>. Add your own and pass them to <code class="docutils literal notranslate"><span class="pre">Trainer</span></code>; for distributed training, aggregate on CPU after collecting predictions/targets.</p>
 </section>
 </section>
 
@@ -383,11 +386,9 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Implementation Guide</a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
 <li><a class="reference internal" href="#datasets">Datasets</a></li>
-<li><a class="reference internal" href="#transforms">Transforms</a></li>
 <li><a class="reference internal" href="#models">Models</a></li>
-<li><a class="reference internal" href="#training">Training</a></li>
-<li><a class="reference internal" href="#metrics">Metrics</a></li>
 </ul>
 </li>
 </ul>
@@ -399,7 +400,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=e7fff540"></script>
+</div><script src="_static/documentation_options.js?v=862d5a7d"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

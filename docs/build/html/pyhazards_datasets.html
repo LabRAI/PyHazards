@@ -3,11 +3,12 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Models" href="pyhazards_models.html"><link rel="prev" title="Quick Start" href="quick_start.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="MERRA-2" href="datasets/merra2.html"><link rel="prev" title="Quick Start" href="quick_start.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/pyhazards_datasets.html">
+        <link rel="prefetch" href="_static/logo.png" as="image">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>Datasets - PyHazards 1.0.1 documentation</title>
+    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>Datasets - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -163,7 +164,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">PyHazards 1.0.1 documentation</div></a>
+      <a href="index.html"><div class="brand">PyHazards 1.0.4 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,8 +184,11 @@
     <div class="sidebar-container">
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/logo.png" alt="Logo"/>
+  </div>
   
-  <span class="sidebar-brand-text">PyHazards 1.0.1 documentation</span>
+  <span class="sidebar-brand-text">PyHazards 1.0.4 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -199,8 +203,27 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyhazards_models.html">Models</a></li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Datasets</a><input aria-label="Toggle navigation of Datasets" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="datasets/merra2.html">MERRA-2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/era5.html">ERA5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/firms.html">FIRMS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/mtbs.html">MTBS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/landfire.html">LANDFIRE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/wfigs.html">WFIGS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/fpa_fod_tabular.html">FPA-FOD Tabular</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/fpa_fod_weekly.html">FPA-FOD Weekly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/goesr.html">GOES-R</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_mamba.html">Wildfire Mamba</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_utils.html">Utils</a></li>
@@ -253,34 +276,55 @@
 <h1>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">¶</a></h1>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
-<p>PyHazards provides a unified dataset interface for hazard prediction across tabular, temporal, and raster data. Each dataset returns a DataBundle containing splits, feature specs, label specs, and metadata.</p>
+<p>PyHazards maintains a curated catalog of commonly used hazard datasets and provides
+dataset-specific utilities for <strong>download / preprocessing / inspection / visualization</strong>.</p>
+<p>Each dataset page describes: (1) what the dataset is, (2) how to obtain it, and (3) how to
+quickly validate local data files via an inspection entrypoint (when available).</p>
 </section>
 <section id="id1">
 <h2>Datasets<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>Click a dataset name to open its unified dataset page (description + how to use in PyHazards).</p>
 <div class="table-wrapper colwidths-given dataset-list docutils container">
 <table class="dataset-list docutils align-default">
 <colgroup>
-<col style="width: 10.0%" />
-<col style="width: 90.0%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Dataset</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
 <tbody>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MERRA-2</span> <span class="pre">(NASA</span> <span class="pre">GMAO)</span></code></p></td>
-<td><p>Data format: commonly distributed as NetCDF (and also accessible via NASA services); data structure: gridded arrays (tensor-like) with dynamic surface fields, vertical profile fields, and static layers; dimensions: time is the temporal index (hourly), latitude and longitude are the spatial grid axes (about 0.5 deg x 0.625 deg), and vertical variables include an additional pressure-level axis; update frequency: released with a typical latency of a few weeks after real time; tasks: provide core meteorological drivers for weather/climate forecasting (e.g., WxC-style pipelines) and support hazard prediction studies such as wildfire and hurricane by linking hazard outcomes to atmospheric and land-surface conditions; link: <a class="reference external" href="https://gmao.gsfc.nasa.gov/gmao-products/merra-2/">MERRA-2 overview</a>; reference: <a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">Gelaro et al. (2017)</a>.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="datasets/merra2.html"><span class="doc">MERRA-2</span></a></p></td>
+<td><p>Global atmospheric reanalysis from NASA GMAO MERRA-2 (<a class="reference external" href="https://gmao.gsfc.nasa.gov/gmao-products/merra-2/">overview</a>), widely used as hourly gridded meteorological drivers for hazard modeling; see <a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">Gelaro et al. (2017)</a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ERA5</span></code></p></td>
-<td><p>Data format: commonly distributed as GRIB and NetCDF via Copernicus CDS; data structure: gridded arrays (tensor-like) with single-level fields and optional pressure/model-level fields; dimensions: time is the temporal index (hourly), latitude and longitude are the spatial grid axes (commonly 0.25 deg x 0.25 deg on CDS products), and vertical products include an additional level axis; update frequency: updated daily with a short-latency stream (ERA5T) and later consolidated into the final ERA5; tasks: support weather/climate prediction and benchmarking, and serve as standardized meteorological covariates for hazard prediction such as wildfire danger, heavy-rain/flooding, and hurricane-related environmental conditions; link: <a class="reference external" href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview">ERA5 single levels</a>; reference: <a class="reference external" href="https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803">Hersbach et al. (2020)</a>.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="datasets/era5.html"><span class="doc">ERA5</span></a></p></td>
+<td><p>ECMWF ERA5 reanalysis served via the <a class="reference external" href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview">Copernicus CDS</a>, providing hourly single-/pressure-level variables for benchmarks and hazard covariates; see <a class="reference external" href="https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803">Hersbach et al. (2020)</a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NOAA</span> <span class="pre">Flood</span> <span class="pre">Events</span> <span class="pre">(Storm</span> <span class="pre">Events</span> <span class="pre">Database)</span></code></p></td>
-<td><p>Data format: commonly distributed as tabular text (CSV) and database extracts; data structure: event-based records (not tensors) where each row is an event report with fields rather than gridded axes; dimensions/fields: time fields represent event begin/end timestamps, location fields represent reporting geography (often county/zone and coordinates where available), and impact fields represent reported damages and casualties; update frequency: updated on a rolling basis with a typical delay of about 75–90 days after the end of the data month; tasks: support flood occurrence/impact analysis, event frequency and trend studies, and supervised modeling where the target is event occurrence or impact rather than meteorological state; link: <a class="reference external" href="https://www.ncei.noaa.gov/products/storm-events-database">Storm Events Database</a>; reference: <a class="reference external" href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648">NCEI metadata record</a>.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="datasets/noaa_flood.html"><span class="doc">NOAA Flood Events</span></a></p></td>
+<td><p>Flood-related event reports from the <a class="reference external" href="https://www.ncei.noaa.gov/products/storm-events-database">NOAA Storm Events Database</a> (time, location, impacts), commonly used for event-level labeling and impact analysis.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">FIRMS</span> <span class="pre">(Fire</span> <span class="pre">Information</span> <span class="pre">for</span> <span class="pre">Resource</span> <span class="pre">Management</span> <span class="pre">System)</span></code></p></td>
-<td><p>Data format: commonly distributed as tabular and GIS-ready formats (CSV, Shapefile/GeoJSON/KML) depending on access method; data structure: event/point detections (not tensors) where each record is a time-stamped fire/hotspot detection; dimensions/fields: time is detection timestamp, location is latitude/longitude (point geometry), and attributes include sensor/product fields such as confidence and radiative measures (product-dependent); update frequency: near-real-time publication refreshed multiple times per day, with detections typically available within hours of satellite overpass; tasks: operational wildfire monitoring/nowcasting and rapid situational awareness, and serving as event labels/targets for wildfire prediction pipelines when combined with meteorology and fuels/land layers; link: <a class="reference external" href="https://firms.modaps.eosdis.nasa.gov/">FIRMS portal</a>; reference: <a class="reference external" href="https://doi.org/10.1016/j.rse.2013.08.008">VIIRS active fire product paper</a>.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="datasets/firms.html"><span class="doc">FIRMS</span></a></p></td>
+<td><p>Near-real-time active fire detections from <a class="reference external" href="https://firms.modaps.eosdis.nasa.gov/">NASA FIRMS</a> (MODIS/VIIRS), used for operational monitoring and as wildfire occurrence labels; see <a class="reference external" href="https://doi.org/10.1016/j.rse.2013.08.008">Schroeder et al. (2014)</a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MTBS</span> <span class="pre">(Monitoring</span> <span class="pre">Trends</span> <span class="pre">in</span> <span class="pre">Burn</span> <span class="pre">Severity)</span></code></p></td>
-<td><p>Data format: commonly distributed as GIS rasters and vectors (e.g., GeoTIFF and shapefiles/geodatabases); data structure: mapped fire perimeters and burn severity layers (not a single tensor) where products are organized by fire event and can be aggregated by year; dimensions/fields: spatial axes represent 30 m raster grids for severity layers and polygon geometries for perimeters, and time is represented by fire year/event metadata; update frequency: produced on an annual cycle as new fire-year products are completed; tasks: post-fire impact assessment, long-term wildfire regime/trend analysis, and providing training/validation layers for models that predict burn severity/extent or relate severity to meteorology, fuels, and topography; link: <a class="reference external" href="https://burnseverity.cr.usgs.gov/">MTBS portal</a>; reference: <a class="reference external" href="https://doi.org/10.4996/fireecology.0301003">Eidenshink et al. (2007)</a>.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="datasets/mtbs.html"><span class="doc">MTBS</span></a></p></td>
+<td><p>US wildfire perimeters and burn severity layers from <a class="reference external" href="https://burnseverity.cr.usgs.gov/">MTBS</a> (Landsat-derived), used for post-fire assessment and long-term regime studies; see <a class="reference external" href="https://doi.org/10.4996/fireecology.0301003">Eidenshink et al. (2007)</a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">LANDFIRE</span> <span class="pre">Fuel</span> <span class="pre">(USFS</span> <span class="pre">/</span> <span class="pre">LANDFIRE)</span></code></p></td>
-<td><p>Data format: commonly distributed as GIS rasters (e.g., GeoTIFF) and supporting metadata; data structure: gridded map layers (raster matrices) describing vegetation and fuels at national scale; dimensions/fields: spatial axes represent ~30 m raster grids, time is represented by product version/year (and disturbance layers where applicable), and values encode vegetation/fuel attributes such as type, cover, height, and fuel descriptors; update frequency: released as versioned updates and commonly treated as an annual updating program in applied workflows; tasks: fuels/vegetation characterization for wildfire behavior simulation, landscape-scale wildfire risk assessment, and static covariates for wildfire occurrence/spread models paired with dynamic meteorological predictors; link: <a class="reference external" href="https://landfire.gov/getdata.php">LANDFIRE data access</a>; reference: <a class="reference external" href="https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning">LANDFIRE program overview</a>.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="datasets/landfire.html"><span class="doc">LANDFIRE</span></a></p></td>
+<td><p>Nationwide fuels and vegetation layers from the <a class="reference external" href="https://landfire.gov/">USFS LANDFIRE</a> program, often used as static landscape covariates for wildfire behavior and risk modeling; see <a class="reference external" href="https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning">the program overview</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="datasets/wfigs.html"><span class="doc">WFIGS</span></a></p></td>
+<td><p>Authoritative incident-level wildfire records from the <a class="reference external" href="https://data-nifc.opendata.arcgis.com/">U.S. interagency WFIGS</a> ecosystem (ignition, location, status, extent), commonly used as ground-truth labels for wildfire occurrence.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="datasets/fpa_fod_tabular.html"><span class="doc">FPA-FOD Tabular</span></a></p></td>
+<td><p>Incident-level tabular dataset derived from FPA-FOD wildfire records for cause or grouped size-class classification, with support for user-provided sqlite/CSV/Parquet inputs and a deterministic micro mode.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="datasets/fpa_fod_weekly.html"><span class="doc">FPA-FOD Weekly</span></a></p></td>
+<td><p>Weekly aggregated FPA-FOD sequences for next-week wildfire count forecasting by size group, with chronological splits and optional seasonal time features.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="datasets/goesr.html"><span class="doc">GOES-R</span></a></p></td>
+<td><p>High-frequency geostationary multispectral imagery from the <a class="reference external" href="https://www.goes-r.gov/">NOAA GOES-R series</a>, supporting continuous monitoring (e.g., smoke/thermal context) and early detection workflows when paired with fire and meteorology datasets.</p></td>
 </tr>
 </tbody>
 </table>
@@ -288,170 +332,150 @@
 </section>
 <section id="dataset-inspection">
 <h2>Dataset inspection<a class="headerlink" href="#dataset-inspection" title="Link to this heading">¶</a></h2>
-<p>A short, step-by-step example to inspect and visualize daily MERRA-2 NetCDF files.</p>
-<aside class="topic">
-<p class="topic-title">1) Setup (imports the data)</p>
-<p>This block imports the dependencies used throughout the inspection workflow.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
-</pre></div>
-</div>
-</aside>
-<aside class="topic">
-<p class="topic-title">2) Config (paths + date + filename patterns)</p>
-<p>Set the root directory and choose a test day. The code assumes one file per day.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ROOT</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/home/runyang/WxC/Prithvi-WxC/data/merra2&quot;</span><span class="p">)</span>
-
-<span class="n">DATE_START</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">DATE_END</span>   <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
-<span class="n">TEST_DAY</span> <span class="o">=</span> <span class="n">DATE_START</span>
-
-<span class="n">PATTERN_SFC</span> <span class="o">=</span> <span class="s2">&quot;MERRA2_sfc_</span><span class="si">{yyyymmdd}</span><span class="s2">.nc&quot;</span>
-<span class="n">PATTERN_PRES</span> <span class="o">=</span> <span class="s2">&quot;MERRA_pres_</span><span class="si">{yyyymmdd}</span><span class="s2">.nc&quot;</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">yyyymmdd</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="n">date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-   <span class="k">return</span> <span class="n">d</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">build_path</span><span class="p">(</span><span class="n">kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="n">date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
-   <span class="k">if</span> <span class="n">kind</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;sfc&#39;</span><span class="p">,</span> <span class="s1">&#39;surface&#39;</span><span class="p">]:</span>
-      <span class="k">return</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="n">PATTERN_SFC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">yyyymmdd</span><span class="o">=</span><span class="n">yyyymmdd</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
-   <span class="k">if</span> <span class="n">kind</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;pres&#39;</span><span class="p">,</span> <span class="s1">&#39;pressure&#39;</span><span class="p">]:</span>
-      <span class="k">return</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="n">PATTERN_PRES</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">yyyymmdd</span><span class="o">=</span><span class="n">yyyymmdd</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
-   <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;kind must be &#39;sfc&#39; or &#39;pres&#39;&quot;</span><span class="p">)</span>
-
-<span class="n">build_path</span><span class="p">(</span><span class="s1">&#39;sfc&#39;</span><span class="p">,</span> <span class="n">TEST_DAY</span><span class="p">),</span> <span class="n">build_path</span><span class="p">(</span><span class="s1">&#39;pres&#39;</span><span class="p">,</span> <span class="n">TEST_DAY</span><span class="p">)</span>
-</pre></div>
-</div>
-</aside>
-<aside class="topic">
-<p class="topic-title">3) Load helpers</p>
-<p>Use <code class="docutils literal notranslate"><span class="pre">xarray.open_dataset</span></code> so you can work with named dimensions and variables.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">open_merra</span><span class="p">(</span><span class="n">kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Open one daily MERRA2 file as an xarray Dataset.&quot;&quot;&quot;</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">build_path</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing file: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="c1"># engine=None lets xarray pick; you can set engine=&#39;netcdf4&#39; or &#39;h5netcdf&#39; if needed.</span>
-    <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="n">chunks</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ds</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">list_vars</span><span class="p">(</span><span class="n">ds</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">max_show</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-    <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">da</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">data_vars</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-            <span class="s1">&#39;var&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-            <span class="s1">&#39;dims&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">dims</span><span class="p">),</span>
-            <span class="s1">&#39;shape&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">shape</span><span class="p">)),</span>
-            <span class="s1">&#39;dtype&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
-        <span class="p">})</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;var&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">max_show</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_show</span> <span class="k">else</span> <span class="n">df</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">inspect_ds</span><span class="p">(</span><span class="n">ds</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dataset&#39;</span><span class="p">,</span> <span class="n">max_vars</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;=== </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> ===&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;dims:&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">dims</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;coords:&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;n_vars:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">data_vars</span><span class="p">))</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">list_vars</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">max_show</span><span class="o">=</span><span class="n">max_vars</span><span class="p">))</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">summarize_da</span><span class="p">(</span><span class="n">da</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">load</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Global numeric summary for a DataArray.&quot;&quot;&quot;</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">da</span>
-    <span class="k">if</span> <span class="n">load</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-    <span class="c1"># Works for dask-backed arrays too</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span>
-        <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-        <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-        <span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-        <span class="s1">&#39;std&#39;</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-    <span class="p">})</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">data_vars</span><span class="p">})</span>
-</pre></div>
-</div>
-</aside>
-<aside class="topic">
-<p class="topic-title">4) Load + quick inspect (dims, coords, basic stats)</p>
-<p>Load both surface and pressure-level files and print basic metadata.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ds_sfc</span>  <span class="o">=</span> <span class="n">open_merra</span><span class="p">(</span><span class="s1">&#39;sfc&#39;</span><span class="p">,</span>  <span class="n">TEST_DAY</span><span class="p">)</span>
-<span class="n">ds_pres</span> <span class="o">=</span> <span class="n">open_merra</span><span class="p">(</span><span class="s1">&#39;pres&#39;</span><span class="p">,</span> <span class="n">TEST_DAY</span><span class="p">)</span>
-
-<span class="n">inspect_ds</span><span class="p">(</span><span class="n">ds_sfc</span><span class="p">,</span>  <span class="s1">&#39;SFC (one day)&#39;</span><span class="p">)</span>
-<span class="n">inspect_ds</span><span class="p">(</span><span class="n">ds_pres</span><span class="p">,</span> <span class="s1">&#39;PRES (one day)&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</aside>
-<aside class="topic">
-<p class="topic-title">5) Variable-level inspect</p>
-<p>Pick a variable (e.g., <cite>T2M</cite>) and compute global statistics.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="o">=</span> <span class="s1">&#39;T2M&#39;</span>  <span class="c1"># change if your file uses a different naming</span>
-
-<span class="k">if</span> <span class="n">VAR</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ds_sfc</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">VAR</span><span class="si">}</span><span class="s2"> not found in ds_sfc. Pick one from the table above.&quot;</span><span class="p">)</span>
-
-<span class="n">da</span> <span class="o">=</span> <span class="n">ds_sfc</span><span class="p">[</span><span class="n">VAR</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;dims:&#39;</span><span class="p">,</span> <span class="n">da</span><span class="o">.</span><span class="n">dims</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;shape:&#39;</span><span class="p">,</span> <span class="n">da</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="n">summarize_da</span><span class="p">(</span><span class="n">da</span><span class="p">)</span>
-</pre></div>
-</div>
-</aside>
-<aside class="topic">
-<p class="topic-title">6) Plot a lat-lon map for a variable</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="o">=</span> <span class="s2">&quot;T2M&quot;</span>
-<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">Z</span> <span class="o">=</span> <span class="n">ds_sfc</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">ds_sfc</span><span class="p">[</span><span class="s2">&quot;lon&quot;</span><span class="p">],</span> <span class="n">ds_sfc</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">],</span> <span class="n">Z</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2"> (t=</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</aside>
-</section>
-<section id="core-classes">
-<h2>Core classes<a class="headerlink" href="#core-classes" title="Link to this heading">¶</a></h2>
+<p>PyHazards provides dataset inspection entrypoints to quickly validate local files and produce
+basic summaries/plots.</p>
+<p>Currently implemented:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">Dataset</span></code>: base class to implement <code class="docutils literal notranslate"><span class="pre">_load()</span></code> and return a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>: holds named <code class="docutils literal notranslate"><span class="pre">DataSplit</span></code> objects, plus <code class="docutils literal notranslate"><span class="pre">feature_spec</span></code> and <code class="docutils literal notranslate"><span class="pre">label_spec</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">FeatureSpec</span></code> / <code class="docutils literal notranslate"><span class="pre">LabelSpec</span></code>: describe inputs/targets to simplify model construction.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">register_dataset</span></code> / <code class="docutils literal notranslate"><span class="pre">load_dataset</span></code>: lightweight registry for discovering datasets by name.</p></li>
+<li><p><strong>MERRA-2 (merra2)</strong>: one-shot pipeline to <strong>download raw MERRA-2 → merge SFC+PRES → inspect → save plots/tables</strong>.</p></li>
 </ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># One command: download (if needed) -&gt; merge -&gt; inspect -&gt; save outputs</span>
+python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspection<span class="w"> </span><span class="m">20260101</span>
+</pre></div>
+</div>
+<section id="notes-merra-2">
+<h3>Notes (MERRA-2)<a class="headerlink" href="#notes-merra-2" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p>Download requires Earthdata credentials via environment variables:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">EARTHDATA_USERNAME</span><span class="o">=</span><span class="s2">&quot;YOUR_USERNAME&quot;</span>
+<span class="n">export</span> <span class="n">EARTHDATA_PASSWORD</span><span class="o">=</span><span class="s2">&quot;YOUR_PASSWORD&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Date formats accepted: <code class="docutils literal notranslate"><span class="pre">YYYYMMDD</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">20260101</span></code>) or ISO <code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD</span></code>.</p></li>
+<li><p>Optional flags commonly used:
+- <code class="docutils literal notranslate"><span class="pre">--outdir</span> <span class="pre">outputs</span></code> (default: <code class="docutils literal notranslate"><span class="pre">outputs</span></code> under repo root)
+- <code class="docutils literal notranslate"><span class="pre">--skip-download</span></code> / <code class="docutils literal notranslate"><span class="pre">--skip-merge</span></code> for re-running on existing files
+- <code class="docutils literal notranslate"><span class="pre">--force-download</span></code> to re-fetch raw files
+- <code class="docutils literal notranslate"><span class="pre">--var</span> <span class="pre">T2M</span></code> to choose the plotted surface variable (default: <code class="docutils literal notranslate"><span class="pre">T2M</span></code>)</p></li>
+</ul>
+</section>
+</section>
+<section id="dataloader">
+<h2>Dataloader<a class="headerlink" href="#dataloader" title="Link to this heading">¶</a></h2>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gh"># Dataloader V3</span>
+
+Minimal API with a structured request object.
+
+<span class="gu">## API</span>
+<span class="sb">```python</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataloader_v3</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">GeoLoadInput</span><span class="p">,</span>
+    <span class="n">load_data</span><span class="p">,</span>
+    <span class="n">save_sample_h5</span><span class="p">,</span>
+    <span class="n">load_sample_h5</span><span class="p">,</span>
+    <span class="n">to_torch_batch</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="sb">```</span>
+
+<span class="gu">## `GeoLoadInput` (required format)</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`data_sources: list[str]`</span>  
+  Example: <span class="sb">`[&quot;FIRMS&quot;, &quot;ERA5&quot;]`</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`temporal_window: tuple[str, str]`</span>  
+  Format: <span class="sb">`(&quot;YYYY-MM-DD&quot;, &quot;YYYY-MM-DD&quot;)`</span> or <span class="sb">`(&quot;YYYY-MM-DD HH:MM:SS&quot;, &quot;...&quot;)`</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`area_of_interest_bbox: tuple[float, float, float, float]`</span>  
+  Order: <span class="sb">`(min_lon, min_lat, max_lon, max_lat)`</span>
+
+<span class="gu">## Optional</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`spatial_resolution_deg: float = 0.1`</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`root_dir: str = &quot;/home/yangshuang&quot;`</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`synthetic_time: bool = False`</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`temporal_cadence: str = &quot;D&quot;`</span> (<span class="sb">`&quot;D&quot;`</span>, <span class="sb">`&quot;H&quot;`</span>, <span class="sb">`&quot;15min&quot;`</span>, ...)
+<span class="k">-</span><span class="w"> </span><span class="sb">`target_hazards: list[str] | None = None`</span> (if set and no mapping, default code is <span class="sb">`1`</span>)
+<span class="k">-</span><span class="w"> </span><span class="sb">`label_source: str | None = None`</span> (<span class="sb">`&quot;firms&quot; | &quot;noaa&quot; | &quot;mtbs&quot;`</span>, else auto-infer)
+<span class="k">-</span><span class="w"> </span><span class="sb">`label_mapping: dict[str, int] | None = None`</span>
+
+<span class="gu">## Example</span>
+<span class="sb">```python</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataloader_v3</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeoLoadInput</span><span class="p">,</span> <span class="n">load_data</span><span class="p">,</span> <span class="n">save_sample_h5</span>
+
+<span class="n">req</span> <span class="o">=</span> <span class="n">GeoLoadInput</span><span class="p">(</span>
+    <span class="n">data_sources</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FIRMS&quot;</span><span class="p">],</span>
+    <span class="n">temporal_window</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2023-01-02&quot;</span><span class="p">),</span>
+    <span class="n">area_of_interest_bbox</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">87.8</span><span class="p">,</span> <span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">79.8</span><span class="p">,</span> <span class="mf">31.5</span><span class="p">),</span>
+    <span class="n">spatial_resolution_deg</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">synthetic_time</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">temporal_cadence</span><span class="o">=</span><span class="s2">&quot;D&quot;</span><span class="p">,</span>
+    <span class="n">target_hazards</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;wildfire&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+<span class="n">save_sample_h5</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="s2">&quot;/home/yangshuang/output/sample_v3.h5&quot;</span><span class="p">)</span>
+<span class="n">sample2</span> <span class="o">=</span> <span class="n">load_sample_h5</span><span class="p">(</span><span class="s2">&quot;/home/yangshuang/output/sample_v3.h5&quot;</span><span class="p">)</span>
+<span class="n">x_t</span><span class="p">,</span> <span class="n">y_t</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">to_torch_batch</span><span class="p">(</span><span class="n">sample2</span><span class="p">)</span>
+<span class="sb">```</span>
+</pre></div>
+</div>
 </section>
 <section id="example-skeleton">
 <h2>Example skeleton<a class="headerlink" href="#example-skeleton" title="Link to this heading">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">DataBundle</span><span class="p">,</span> <span class="n">DataSplit</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">FeatureSpec</span><span class="p">,</span> <span class="n">LabelSpec</span><span class="p">,</span> <span class="n">register_dataset</span>
-<span class="p">)</span>
+<p>A “nice” skeleton should make it explicit <strong>what data you load</strong> and how it flows into
+<strong>inspection/visualization</strong>.</p>
+<p>Below is the recommended pattern: set <code class="docutils literal notranslate"><span class="pre">data</span></code> to a dataset name (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;merra2&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;mtbs&quot;</span></code>)
+and run the dataset’s inspection entrypoint accordingly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">MyHazardDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;my_hazard&quot;</span>
+<span class="c1"># 1) Choose what dataset you want to load/inspect</span>
+<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;merra2&quot;</span>   <span class="c1"># e.g., &quot;merra2&quot;, &quot;mtbs&quot;, &quot;era5&quot;, &quot;firms&quot;, &quot;landfire&quot;, &quot;wfigs&quot;, &quot;goesr&quot; (use accordingly)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,))</span>
-        <span class="n">splits</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">800</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="mi">800</span><span class="p">]),</span>
-            <span class="s2">&quot;val&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">800</span><span class="p">:</span><span class="mi">900</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">800</span><span class="p">:</span><span class="mi">900</span><span class="p">]),</span>
-            <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">900</span><span class="p">:],</span> <span class="n">y</span><span class="p">[</span><span class="mi">900</span><span class="p">:]),</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">DataBundle</span><span class="p">(</span>
-            <span class="n">splits</span><span class="o">=</span><span class="n">splits</span><span class="p">,</span>
-            <span class="n">feature_spec</span><span class="o">=</span><span class="n">FeatureSpec</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;example features&quot;</span><span class="p">),</span>
-            <span class="n">label_spec</span><span class="o">=</span><span class="n">LabelSpec</span><span class="p">(</span><span class="n">num_targets</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">),</span>
-        <span class="p">)</span>
+<span class="c1"># 2) Choose the dataset key (identifier)</span>
+<span class="c1">#    - For MERRA-2, the key is a daily date: &quot;YYYYMMDD&quot; (e.g., &quot;20260101&quot;)</span>
+<span class="c1">#    - For other datasets (e.g., MTBS), the key could be an event/scene id (to be defined per dataset)</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;20260101&quot;</span>
 
-<span class="n">register_dataset</span><span class="p">(</span><span class="n">MyHazardDataset</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">MyHazardDataset</span><span class="p">)</span>
+<span class="c1"># 3) Run the inspection pipeline (download/preprocess if needed -&gt; inspect -&gt; visualize -&gt; save outputs)</span>
+<span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="s2">&quot;merra2&quot;</span><span class="p">:</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pyhazards.datasets.inspection&quot;</span><span class="p">,</span>
+        <span class="n">key</span><span class="p">,</span>
+        <span class="s2">&quot;--var&quot;</span><span class="p">,</span> <span class="s2">&quot;T2M&quot;</span><span class="p">,</span>           <span class="c1"># change variable to plot (e.g., QV2M)</span>
+        <span class="s2">&quot;--outdir&quot;</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span>    <span class="c1"># output folder under repo root by default</span>
+    <span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Convention for other datasets:</span>
+    <span class="c1"># provide a dataset-specific inspection entrypoint:</span>
+    <span class="c1">#   python -m pyhazards.datasets.&lt;dataset&gt;.inspection &lt;key&gt; ...</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;pyhazards.datasets.</span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">.inspection&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="s2">&quot;--outdir&quot;</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">]</span>
+
+<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 4) After running, check outputs/ for saved artifacts (tables + plots).</span>
+<span class="c1">#    Example (MERRA-2): CSV tables for variable inventory + a PDF plot for the selected surface variable.</span>
 </pre></div>
+</div>
+</section>
+<section id="inspection-entrypoints-convention-for-all-datasets">
+<h2>Inspection entrypoints (convention for all datasets)<a class="headerlink" href="#inspection-entrypoints-convention-for-all-datasets" title="Link to this heading">¶</a></h2>
+<p>Each dataset should expose a minimal inspection entrypoint that supports the same user experience:</p>
+<ul class="simple">
+<li><p><strong>Input</strong>: a dataset identifier (<code class="docutils literal notranslate"><span class="pre">key</span></code>) such as a date/event id.</p></li>
+<li><p><strong>Work</strong>: download/prepare (if needed) → open files → summarize → visualize.</p></li>
+<li><p><strong>Output</strong>: saved artifacts under <code class="docutils literal notranslate"><span class="pre">outputs/</span></code> (tables + figures).</p></li>
+</ul>
+<p>Recommended CLI shape (dataset-specific):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example convention (to be implemented per dataset):</span>
+python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.&lt;dataset&gt;.inspection<span class="w"> </span>&lt;key&gt;<span class="w"> </span>--outdir<span class="w"> </span>outputs
+</pre></div>
+</div>
+</section>
+<section id="developer-note">
+<h2>Developer note<a class="headerlink" href="#developer-note" title="Link to this heading">¶</a></h2>
+<p>If you plan to add inspection for a new dataset, mirror the MERRA-2 inspection pattern:</p>
+<ol class="arabic simple">
+<li><p>parse CLI args (key + outdir + skip/force flags),</p></li>
+<li><p>materialize required local files (download/preprocess),</p></li>
+<li><p>open files and print structure/statistics,</p></li>
+<li><p>generate at least one saved visualization to <code class="docutils literal notranslate"><span class="pre">outputs/</span></code>.</p></li>
+</ol>
+<div class="toctree-wrapper compound">
 </div>
 </section>
 </section>
@@ -461,12 +485,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="pyhazards_models.html">
+          <a class="next-page" href="datasets/merra2.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Models</div>
+                <div class="title">MERRA-2</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -514,9 +538,14 @@
 <li><a class="reference internal" href="#">Datasets</a><ul>
 <li><a class="reference internal" href="#summary">Summary</a></li>
 <li><a class="reference internal" href="#id1">Datasets</a></li>
-<li><a class="reference internal" href="#dataset-inspection">Dataset inspection</a></li>
-<li><a class="reference internal" href="#core-classes">Core classes</a></li>
+<li><a class="reference internal" href="#dataset-inspection">Dataset inspection</a><ul>
+<li><a class="reference internal" href="#notes-merra-2">Notes (MERRA-2)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dataloader">Dataloader</a></li>
 <li><a class="reference internal" href="#example-skeleton">Example skeleton</a></li>
+<li><a class="reference internal" href="#inspection-entrypoints-convention-for-all-datasets">Inspection entrypoints (convention for all datasets)</a></li>
+<li><a class="reference internal" href="#developer-note">Developer note</a></li>
 </ul>
 </li>
 </ul>
@@ -528,7 +557,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=e7fff540"></script>
+</div><script src="_static/documentation_options.js?v=862d5a7d"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

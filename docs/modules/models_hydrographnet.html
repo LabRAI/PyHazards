@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Engine" href="../pyhazards_engine.html"><link rel="prev" title="DNN-LSTM-AutoEncoder" href="models_wildfire_fpa.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="WaveCastNet" href="models_wavecastnet.html"><link rel="prev" title="Models" href="../pyhazards_models.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/modules/models_hydrographnet.html">
         <link rel="prefetch" href="../_static/logo.png" as="image">
 
@@ -217,9 +217,11 @@
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models_wildfire_mamba.html">Wildfire Mamba</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_engine.html">Engine</a></li>
@@ -274,27 +276,27 @@
 <h1>HydroGraphNet<a class="headerlink" href="#hydrographnet" title="Link to this heading">¶</a></h1>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code> is a physics-informed graph neural network for flood forecasting with
-interpretable KAN-style components, residual message passing, and delta-state decoding.</p>
-<p>The model summary follows Taghizadeh et al. (2025):
-<a class="reference external" href="https://onlinelibrary.wiley.com/doi/10.1111/mice.13484">Interpretable physics-informed graph neural networks for flood forecasting</a>.</p>
-<p>In PyHazards, this module is built from the model registry and is typically used with the
-ERA5-based hydrograph adapter <code class="docutils literal notranslate"><span class="pre">load_hydrograph_data</span></code> for end-to-end validation.</p>
+<p><code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code> is the PyHazards entrypoint for flood forecasting on irregular meshes with graph-structured hydrologic state updates.</p>
+<p>In PyHazards, this model is typically paired with the ERA5-based hydrograph adapter <code class="docutils literal notranslate"><span class="pre">load_hydrograph_data</span></code> for end-to-end smoke validation.</p>
 </section>
-<section id="modular">
-<h2>Modular<a class="headerlink" href="#modular" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code></p>
+<section id="paper">
+<h2>Paper<a class="headerlink" href="#paper" title="Link to this heading">¶</a></h2>
+<p>See <a class="reference external" href="https://onlinelibrary.wiley.com/doi/10.1111/mice.13484">Interpretable physics-informed graph neural networks for flood forecasting</a>.</p>
+</section>
+<section id="registry-name">
+<h2>Registry Name<a class="headerlink" href="#registry-name" title="Link to this heading">¶</a></h2>
+<p>Primary entrypoint: <code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code></p>
+</section>
+<section id="supported-tasks">
+<h2>Supported Tasks<a class="headerlink" href="#supported-tasks" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">regression</span></code></p></li>
+</ul>
 </section>
 <section id="example-of-how-to-use-it">
 <h2>Example of how to use it<a class="headerlink" href="#example-of-how-to-use-it" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.data.load_hydrograph_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hydrograph_data</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">graph_collate</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">load_hydrograph_data</span><span class="p">(</span><span class="s2">&quot;pyhazards/data/era5_subset&quot;</span><span class="p">,</span> <span class="n">max_nodes</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-<span class="n">sample</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">splits</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">batch</span> <span class="o">=</span> <span class="n">graph_collate</span><span class="p">([</span><span class="n">sample</span><span class="p">])</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hydrographnet&quot;</span><span class="p">,</span>
@@ -304,10 +306,21 @@ ERA5-based hydrograph adapter <code class="docutils literal notranslate"><span c
     <span class="n">out_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;adj&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="s2">&quot;coords&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="p">}</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>The smoke test uses a synthetic graph batch so it stays CPU-safe in CI.</p></li>
+</ul>
 </section>
 </section>
 
@@ -316,23 +329,23 @@ ERA5-based hydrograph adapter <code class="docutils literal notranslate"><span c
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../pyhazards_engine.html">
+          <a class="next-page" href="models_wavecastnet.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Engine</div>
+                <div class="title">WaveCastNet</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="models_wildfire_fpa.html">
+          <a class="prev-page" href="../pyhazards_models.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">DNN-LSTM-AutoEncoder</div>
+                <div class="title">Models</div>
                 
               </div>
             </a>
@@ -368,8 +381,11 @@ ERA5-based hydrograph adapter <code class="docutils literal notranslate"><span c
             <ul>
 <li><a class="reference internal" href="#">HydroGraphNet</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#modular">Modular</a></li>
+<li><a class="reference internal" href="#paper">Paper</a></li>
+<li><a class="reference internal" href="#registry-name">Registry Name</a></li>
+<li><a class="reference internal" href="#supported-tasks">Supported Tasks</a></li>
 <li><a class="reference internal" href="#example-of-how-to-use-it">Example of how to use it</a></li>
+<li><a class="reference internal" href="#notes">Notes</a></li>
 </ul>
 </li>
 </ul>

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="CNN-ASPP" href="modules/models_wildfire_aspp.html"><link rel="prev" title="GOES-R" href="datasets/goesr.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="HydroGraphNet" href="modules/models_hydrographnet.html"><link rel="prev" title="GOES-R" href="datasets/goesr.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/pyhazards_models.html">
         <link rel="prefetch" href="_static/logo.png" as="image">
 
@@ -217,9 +217,11 @@
 </ul>
 </li>
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Models</a><input aria-label="Toggle navigation of Models" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_mamba.html">Wildfire Mamba</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_engine.html">Engine</a></li>
@@ -279,15 +281,15 @@
 <li><p>Backbones for common data types: MLP (tabular), CNN patch encoder (raster), temporal encoder (time-series).</p></li>
 <li><p>Task heads: classification, regression, segmentation.</p></li>
 <li><p>A registry-driven builder so you can construct built-ins by name or register your own.</p></li>
-<li><p>Hazard-focused implementations for wildfire, flood, earthquake, and more.</p></li>
+<li><p>Hazard-focused implementations for wildfire, flood, earthquake, weather, and more.</p></li>
 </ul>
 </section>
 <section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Link to this heading">¶</a></h2>
-<p>We implemented different hazard prediction models for flood, wildfire, earthquake, weather, and more.
-Click a model name to open its detail page with summary and usage example.</p>
-<section id="wildfire">
-<h3>Wildfire<a class="headerlink" href="#wildfire" title="Link to this heading">¶</a></h3>
+<p>The public model catalog is generated from <code class="docutils literal notranslate"><span class="pre">pyhazards/model_cards/*.yaml</span></code>.
+Add or update a model card to refresh the model tables and detail pages automatically.</p>
+<section id="earthquake">
+<h3>Earthquake<a class="headerlink" href="#earthquake" title="Link to this heading">¶</a></h3>
 <div class="table-wrapper colwidths-given dataset-list docutils container">
 <table class="dataset-list docutils align-default">
 <colgroup>
@@ -300,11 +302,8 @@ Click a model name to open its detail page with summary and usage example.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_aspp.html"><span class="doc">CNN-ASPP</span></a></p></td>
-<td><p>An explainable CNN model with an ASPP mechanism (CNN-ASPP) for next-day wildfire spread prediction using environmental variables from the Next Day Wildfire Spread dataset; compared against RF, SVM, ANN, and a baseline CNN. See <a class="reference external" href="https://ieeexplore.ieee.org/document/10568207">Marjani et al. (2024)</a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a></p></td>
-<td><p>A two-stage deep-learning framework that first applies a DNN to wildfire cause and size prediction from incident-level features, then applies an LSTM + autoencoder stack to forecast imminent wildfire activity from weekly sequences in high-risk regions such as California. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Shen et al. (2023)</a>.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wavecastnet.html"><span class="doc">WaveCastNet</span></a></p></td>
+<td><p>A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield forecasting and early-warning style rollout experiments. See <a class="reference external" href="https://doi.org/10.1038/s41467-025-65435-2">Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -325,7 +324,34 @@ Click a model name to open its detail page with summary and usage example.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference internal" href="modules/models_hydrographnet.html"><span class="doc">HydroGraphNet</span></a></p></td>
-<td><p>A novel physics-informed GNN framework that integrates the Kolmogorov-Arnold Network (KAN) to enhance interpretability for unstructured mesh-based flood forecasting. See <a class="reference external" href="https://onlinelibrary.wiley.com/doi/10.1111/mice.13484">Taghizadeh et al. (2025)</a>.</p></td>
+<td><p>A physics-informed graph neural network for flood forecasting with interpretable KAN-style components, residual message passing, and delta-state decoding. See <a class="reference external" href="https://onlinelibrary.wiley.com/doi/10.1111/mice.13484">Interpretable physics-informed graph neural networks for flood forecasting</a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="wildfire">
+<h3>Wildfire<a class="headerlink" href="#wildfire" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-given dataset-list docutils container">
+<table class="dataset-list docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_aspp.html"><span class="doc">CNN-ASPP</span></a></p></td>
+<td><p>An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction. See <a class="reference external" href="https://ieeexplore.ieee.org/document/10568207">Application of Explainable Artificial Intelligence in Predicting Wildfire Spread</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a></p></td>
+<td><p>A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_mamba.html"><span class="doc">Wildfire Mamba</span></a></p></td>
+<td><p>A Mamba-inspired spatio-temporal wildfire model that mixes county-level temporal encoders with a lightweight graph convolution over spatial adjacency. See <a class="reference external" href="https://arxiv.org/abs/2312.00752">Mamba: Linear-Time Sequence Modeling with Selective State Spaces</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -351,7 +377,8 @@ Click a model name to open its detail page with summary and usage example.</p>
 </section>
 <section id="register-a-custom-model">
 <h3>Register a custom model<a class="headerlink" href="#register-a-custom-model" title="Link to this heading">¶</a></h3>
-<p>Create a builder function that returns an <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code> and register it with a name. The registry handles defaults and discoverability.</p>
+<p>Create a builder function that returns an <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code> and register it with a name.
+The registry handles defaults and discoverability.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_model</span><span class="p">,</span> <span class="n">build_model</span>
 
@@ -388,12 +415,12 @@ Click a model name to open its detail page with summary and usage example.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="modules/models_wildfire_aspp.html">
+          <a class="next-page" href="modules/models_hydrographnet.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">CNN-ASPP</div>
+                <div class="title">HydroGraphNet</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -441,8 +468,9 @@ Click a model name to open its detail page with summary and usage example.</p>
 <li><a class="reference internal" href="#">Models</a><ul>
 <li><a class="reference internal" href="#summary">Summary</a></li>
 <li><a class="reference internal" href="#model">Model</a><ul>
-<li><a class="reference internal" href="#wildfire">Wildfire</a></li>
+<li><a class="reference internal" href="#earthquake">Earthquake</a></li>
 <li><a class="reference internal" href="#flood">Flood</a></li>
+<li><a class="reference internal" href="#wildfire">Wildfire</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#build-and-register-custom-model">Build and register custom model</a><ul>

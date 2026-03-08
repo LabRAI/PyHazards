@@ -217,9 +217,11 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_mamba.html">Wildfire Mamba</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_engine.html">Engine</a></li>
@@ -384,10 +386,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards.models.html">pyhazards.models package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pyhazards.models.html#model-category">Model Category</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#cnn-aspp">CNN-ASPP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#dnn-lstm-autoencoder">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#hydrographnet">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyhazards.models.html#model-catalog">Model Catalog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#earthquake">Earthquake</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#flood">Flood</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#wildfire">Wildfire</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pyhazards.models.html#submodules">Submodules</a></li>
@@ -441,6 +443,11 @@
 <li class="toctree-l4"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.ClassificationHead.forward"><code class="docutils literal notranslate"><span class="pre">ClassificationHead.forward()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.ConvLEMCell"><code class="docutils literal notranslate"><span class="pre">ConvLEMCell</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.ConvLEMCell.forward"><code class="docutils literal notranslate"><span class="pre">ConvLEMCell.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.ConvLEMCell.reset_parameters"><code class="docutils literal notranslate"><span class="pre">ConvLEMCell.reset_parameters()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.HydroGraphNet"><code class="docutils literal notranslate"><span class="pre">HydroGraphNet</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.HydroGraphNet._edge_index"><code class="docutils literal notranslate"><span class="pre">HydroGraphNet._edge_index()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.HydroGraphNet._match_edge_dim"><code class="docutils literal notranslate"><span class="pre">HydroGraphNet._match_edge_dim()</span></code></a></li>
@@ -474,6 +481,21 @@
 <li class="toctree-l4"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.TverskyLoss.forward"><code class="docutils literal notranslate"><span class="pre">TverskyLoss.forward()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.WaveCastNet"><code class="docutils literal notranslate"><span class="pre">WaveCastNet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.WaveCastNet._init_states"><code class="docutils literal notranslate"><span class="pre">WaveCastNet._init_states()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.WaveCastNet.forward"><code class="docutils literal notranslate"><span class="pre">WaveCastNet.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.WaveCastNetLoss"><code class="docutils literal notranslate"><span class="pre">WaveCastNetLoss</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.WaveCastNetLoss.forward"><code class="docutils literal notranslate"><span class="pre">WaveCastNetLoss.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.WavefieldMetrics"><code class="docutils literal notranslate"><span class="pre">WavefieldMetrics</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.WavefieldMetrics.accuracy"><code class="docutils literal notranslate"><span class="pre">WavefieldMetrics.accuracy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.WavefieldMetrics.compute_all"><code class="docutils literal notranslate"><span class="pre">WavefieldMetrics.compute_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.WavefieldMetrics.rfne"><code class="docutils literal notranslate"><span class="pre">WavefieldMetrics.rfne()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.WildfireASPP"><code class="docutils literal notranslate"><span class="pre">WildfireASPP</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.WildfireCNNASPP"><code class="docutils literal notranslate"><span class="pre">WildfireCNNASPP</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.WildfireCNNASPP.forward"><code class="docutils literal notranslate"><span class="pre">WildfireCNNASPP.forward()</span></code></a></li>
@@ -496,6 +518,7 @@
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.cnn_aspp_builder"><code class="docutils literal notranslate"><span class="pre">cnn_aspp_builder()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.hydrographnet_builder"><code class="docutils literal notranslate"><span class="pre">hydrographnet_builder()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.register_model"><code class="docutils literal notranslate"><span class="pre">register_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.wavecastnet_builder"><code class="docutils literal notranslate"><span class="pre">wavecastnet_builder()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.wildfire_aspp_builder"><code class="docutils literal notranslate"><span class="pre">wildfire_aspp_builder()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.wildfire_fpa_builder"><code class="docutils literal notranslate"><span class="pre">wildfire_fpa_builder()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyhazards.models.html#pyhazards.models.wildfire_mamba_builder"><code class="docutils literal notranslate"><span class="pre">wildfire_mamba_builder()</span></code></a></li>

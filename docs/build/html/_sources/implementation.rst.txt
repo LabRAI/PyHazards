@@ -1,7 +1,11 @@
 Implementation Guide
 ====================
 
-PyHazards is modular and registry-driven. This guide shows how to add your own datasets, models, transforms, and metrics in line with the hazard-first architecture.
+Summary
+-------
+
+PyHazards is modular and registry-driven. This guide shows how to add your own datasets and models in line
+with the hazard-first architecture.
 
 Datasets
 --------
@@ -34,11 +38,6 @@ Implement a dataset by subclassing ``Dataset`` and returning a ``DataBundle`` fr
 
     register_dataset(MyHazard.name, MyHazard)
 
-Transforms
-----------
-
-Create reusable preprocessing functions (e.g., normalization, index computation, temporal windowing) that accept and return a ``DataBundle``. Chain them via the ``transforms`` argument to ``Dataset.load()``.
-
 Models
 ------
 
@@ -60,26 +59,3 @@ Use the provided backbones (MLP, CNN patch encoder, temporal encoder) and task h
         return layers
 
     register_model("my_mlp", my_model_builder, defaults={"hidden_dim": 128})
-
-Training
---------
-
-Use the ``Trainer`` for fit/evaluate/predict with optional AMP and multi-GPU (DDP) support:
-
-.. code-block:: python
-
-    from pyhazards.engine import Trainer
-    from pyhazards.metrics import ClassificationMetrics
-
-    model = ...  # build_model(...) or a registered model
-    trainer = Trainer(model=model, metrics=[ClassificationMetrics()], mixed_precision=True)
-    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-    loss_fn = torch.nn.CrossEntropyLoss()
-
-    trainer.fit(data_bundle, optimizer=optimizer, loss_fn=loss_fn, max_epochs=10)
-    results = trainer.evaluate(data_bundle, split="test")
-
-Metrics
--------
-
-Metrics subclass ``MetricBase`` with ``update/compute/reset``. Add your own and pass them to ``Trainer``; for distributed training, aggregate on CPU after collecting predictions/targets.

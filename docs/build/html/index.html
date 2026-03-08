@@ -5,9 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Installation" href="installation.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/index.html">
+        <link rel="prefetch" href="_static/logo.png" as="image">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>PyHazards 1.0.1 documentation</title>
+    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -163,7 +164,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="#"><div class="brand">PyHazards 1.0.1 documentation</div></a>
+      <a href="#"><div class="brand">PyHazards 1.0.4 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,8 +184,11 @@
     <div class="sidebar-container">
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/logo.png" alt="Logo"/>
+  </div>
   
-  <span class="sidebar-brand-text">PyHazards 1.0.1 documentation</span>
+  <span class="sidebar-brand-text">PyHazards 1.0.4 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -199,8 +203,27 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pyhazards_datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyhazards_models.html">Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="datasets/merra2.html">MERRA-2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/era5.html">ERA5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/firms.html">FIRMS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/mtbs.html">MTBS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/landfire.html">LANDFIRE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/wfigs.html">WFIGS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/fpa_fod_tabular.html">FPA-FOD Tabular</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/fpa_fod_weekly.html">FPA-FOD Weekly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/goesr.html">GOES-R</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_mamba.html">Wildfire Mamba</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_utils.html">Utils</a></li>
@@ -249,144 +272,149 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <div style="margin: 30px 0; text-align: center;">
-  <img src="_static/logo.png" alt="PyHazards Icon" style="max-width: 260px; height: auto;">
-</div><a class="reference external image-reference" href="https://pypi.org/project/pyhazards"><img alt="PyPI Version" src="https://img.shields.io/pypi/v/pyhazards" />
+          <a class="reference internal image-reference" href="_images/logo.png"><img alt="PyHazards Icon" class="align-center" src="_images/logo.png" style="width: 260px;" />
 </a>
-<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazard/actions"><img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/LabRAI/PyHazard/docs.yml" />
+<a class="reference external image-reference" href="https://pypi.org/project/pyhazards"><img alt="PyPI Version" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpypi.org%2Fpypi%2Fpyhazards%2Fjson&amp;query=%24.info.version&amp;prefix=v&amp;label=PyPI" />
 </a>
-<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazard/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-green" />
+<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards/actions/workflows/ci.yml"><img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/LabRAI/PyHazards/ci.yml?branch=main" />
 </a>
-<a class="reference external image-reference" href="https://pypi.org/project/pyhazards"><img alt="PyPI Downloads" src="https://img.shields.io/pypi/dm/pyhazards" />
+<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-green" />
 </a>
-<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazard"><img alt="Issues" src="https://img.shields.io/github/issues/LabRAI/PyHazard" />
+<a class="reference external image-reference" href="https://pypi.org/project/pyhazards"><img alt="PyPI Downloads" src="https://img.shields.io/badge/downloads-check%20PyPI-blue" />
 </a>
-<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazard"><img alt="Pull Requests" src="https://img.shields.io/github/issues-pr/LabRAI/PyHazard" />
+<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards"><img alt="Issues" src="https://img.shields.io/github/issues/LabRAI/PyHazards" />
 </a>
-<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazard"><img alt="Stars" src="https://img.shields.io/github/stars/LabRAI/PyHazard" />
+<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards"><img alt="Pull Requests" src="https://img.shields.io/github/issues-pr/LabRAI/PyHazards" />
 </a>
-<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazard"><img alt="GitHub forks" src="https://img.shields.io/github/forks/LabRAI/PyHazard" />
+<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards"><img alt="Stars" src="https://img.shields.io/github/stars/LabRAI/PyHazards" />
+</a>
+<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards"><img alt="GitHub forks" src="https://img.shields.io/github/forks/LabRAI/PyHazards" />
 </a>
 <a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards"><img alt="GitHub" src="_images/github.svg" />
 </a>
 <hr class="docutils" />
-<p><strong>PyHazards</strong> is a comprehensive Python framework for AI-powered hazard prediction and risk assessment. Built on PyTorch with a hazard-first design, the library provides a modular and extensible architecture for building, training, and deploying machine learning models to predict and analyze natural hazards and environmental risks.</p>
-<p><strong>PyHazards is designed for:</strong></p>
+<section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
+<p>PyHazards is a Python framework for AI-powered hazard prediction and risk assessment. It provides a hazard-first API for loading data, building models, running end-to-end experiments, and extending with your own modules.</p>
+</section>
+<section id="core-components">
+<h1>Core Components<a class="headerlink" href="#core-components" title="Link to this heading">¶</a></h1>
+<p>PyHazards is organized around four core components that map to a full hazard ML workflow: data preparation, model construction, experiment execution, and evaluation.</p>
 <ul class="simple">
-<li><p><strong>Hazard-First Architecture</strong>: Unified dataset interface for tabular, temporal, and raster data</p></li>
-<li><p><strong>Simple, Extensible Models</strong>: Ready-to-use MLP/CNN/temporal encoders with task heads</p></li>
-<li><p><strong>Trainer API</strong>: Fit/evaluate/predict with optional mixed precision and multi-GPU (DDP) support</p></li>
-<li><p><strong>Metrics</strong>: Classification, regression, and segmentation metrics out of the box</p></li>
-<li><p><strong>Extensibility</strong>: Registries for datasets, models, transforms, and pipelines</p></li>
+<li><p><strong>Datasets</strong>: Standardized dataset interfaces expose tabular, temporal, raster, and graph-style hazard data through <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code> so data loading stays consistent across tasks.</p></li>
+<li><p><strong>Models</strong>: A registry-based model API provides built-in hazard architectures and reusable backbones/heads, making it straightforward to swap models or add your own.</p></li>
+<li><p><strong>Engine</strong>: <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> centralizes fit/evaluate/predict loops with optional mixed precision and distributed execution.</p></li>
+<li><p><strong>Metrics and Utilities</strong>: Task-specific metrics plus hardware/reproducibility helpers support reliable evaluation and repeatable experiments.</p></li>
 </ul>
-<p><strong>Quick Start Example:</strong></p>
-<p>Basic Usage Example (toy dataset):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataBundle</span><span class="p">,</span> <span class="n">DataSplit</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">FeatureSpec</span><span class="p">,</span> <span class="n">LabelSpec</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trainer</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClassificationMetrics</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">ToyHazard</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">500</span><span class="p">,))</span>
-        <span class="n">splits</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">350</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="mi">350</span><span class="p">]),</span>
-            <span class="s2">&quot;val&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">350</span><span class="p">:</span><span class="mi">425</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">350</span><span class="p">:</span><span class="mi">425</span><span class="p">]),</span>
-            <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">425</span><span class="p">:],</span> <span class="n">y</span><span class="p">[</span><span class="mi">425</span><span class="p">:]),</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">DataBundle</span><span class="p">(</span>
-            <span class="n">splits</span><span class="o">=</span><span class="n">splits</span><span class="p">,</span>
-            <span class="n">feature_spec</span><span class="o">=</span><span class="n">FeatureSpec</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;toy features&quot;</span><span class="p">),</span>
-            <span class="n">label_spec</span><span class="o">=</span><span class="n">LabelSpec</span><span class="p">(</span><span class="n">num_targets</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">),</span>
-        <span class="p">)</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">ToyHazard</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;mlp&quot;</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span> <span class="n">in_dim</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">out_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">ClassificationMetrics</span><span class="p">()],</span> <span class="n">mixed_precision</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
-<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
-
-<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_fn</span><span class="o">=</span><span class="n">loss_fn</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</section>
+<section id="install">
+<h1>Install<a class="headerlink" href="#install" title="Link to this heading">¶</a></h1>
+<p>Install from PyPI. If you plan to run on GPU, install a compatible PyTorch build first.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pyhazards
 </pre></div>
 </div>
-<section id="wildfire-mamba-spatio-temporal-toy">
-<h1>Wildfire Mamba (spatio-temporal toy)<a class="headerlink" href="#wildfire-mamba-spatio-temporal-toy" title="Link to this heading">¶</a></h1>
-<p>Mamba-style county/day wildfire model with a graph-aware Dataset and collate.</p>
+</section>
+<section id="load-data">
+<h1>Load Data<a class="headerlink" href="#load-data" title="Link to this heading">¶</a></h1>
+<p>Use the dataset module entrypoint for consistent dataset inspection/loading across datasets.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.era5.inspection<span class="w"> </span>--path<span class="w"> </span>pyhazards/data/era5_subset<span class="w"> </span>--max-vars<span class="w"> </span><span class="m">10</span>
+</pre></div>
+</div>
+</section>
+<section id="load-model">
+<h1>Load Model<a class="headerlink" href="#load-model" title="Link to this heading">¶</a></h1>
+<p>Build one implemented model from the registry (this example uses the wildfire model).</p>
+<p>Example using <code class="docutils literal notranslate"><span class="pre">wildfire_aspp</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Step 2/3] Building model...&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;wildfire_aspp&quot;</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;segmentation&quot;</span><span class="p">,</span>
+    <span class="n">in_channels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Step 2/3] Model built.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="full-test">
+<h1>Full Test<a class="headerlink" href="#full-test" title="Link to this heading">¶</a></h1>
+<p>Validation example: load the same ERA5-based hydrograph subset and run one epoch with <code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code>.
+This uses <code class="docutils literal notranslate"><span class="pre">load_hydrograph_data</span></code> as the model-specific adapter after dataset inspection.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataBundle</span><span class="p">,</span> <span class="n">DataSplit</span><span class="p">,</span> <span class="n">FeatureSpec</span><span class="p">,</span> <span class="n">LabelSpec</span><span class="p">,</span> <span class="n">GraphTemporalDataset</span><span class="p">,</span> <span class="n">graph_collate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.data.load_hydrograph_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hydrograph_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">graph_collate</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trainer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
 
-<span class="n">past_days</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="n">num_counties</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">num_features</span> <span class="o">=</span> <span class="mi">6</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="mi">32</span>
-
-<span class="c1"># Fake county/day ERA5-like tensor and binary fire labels</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">past_days</span><span class="p">,</span> <span class="n">num_counties</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">num_counties</span><span class="p">))</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
-<span class="n">adjacency</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">num_counties</span><span class="p">)</span>  <span class="c1"># replace with distance/correlation matrix</span>
-
-<span class="n">train_ds</span> <span class="o">=</span> <span class="n">GraphTemporalDataset</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">24</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="mi">24</span><span class="p">],</span> <span class="n">adjacency</span><span class="o">=</span><span class="n">adjacency</span><span class="p">)</span>
-<span class="n">val_ds</span> <span class="o">=</span> <span class="n">GraphTemporalDataset</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">24</span><span class="p">:],</span> <span class="n">y</span><span class="p">[</span><span class="mi">24</span><span class="p">:],</span> <span class="n">adjacency</span><span class="o">=</span><span class="n">adjacency</span><span class="p">)</span>
-
-<span class="n">bundle</span> <span class="o">=</span> <span class="n">DataBundle</span><span class="p">(</span>
-    <span class="n">splits</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">train_ds</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-        <span class="s2">&quot;val&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">val_ds</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-    <span class="p">},</span>
-    <span class="n">feature_spec</span><span class="o">=</span><span class="n">FeatureSpec</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;past_days&quot;</span><span class="p">:</span> <span class="n">past_days</span><span class="p">,</span> <span class="s2">&quot;counties&quot;</span><span class="p">:</span> <span class="n">num_counties</span><span class="p">}),</span>
-    <span class="n">label_spec</span><span class="o">=</span><span class="n">LabelSpec</span><span class="p">(</span><span class="n">num_targets</span><span class="o">=</span><span class="n">num_counties</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">),</span>
-<span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_hydrograph_data</span><span class="p">(</span><span class="s2">&quot;pyhazards/data/era5_subset&quot;</span><span class="p">,</span> <span class="n">max_nodes</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;wildfire_mamba&quot;</span><span class="p">,</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span>
-    <span class="n">in_dim</span><span class="o">=</span><span class="n">num_features</span><span class="p">,</span>
-    <span class="n">num_counties</span><span class="o">=</span><span class="n">num_counties</span><span class="p">,</span>
-    <span class="n">past_days</span><span class="o">=</span><span class="n">past_days</span><span class="p">,</span>
-    <span class="n">adjacency</span><span class="o">=</span><span class="n">adjacency</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hydrographnet&quot;</span><span class="p">,</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;regression&quot;</span><span class="p">,</span>
+    <span class="n">node_in_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">edge_in_dim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">out_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">mixed_precision</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
-<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">BCEWithLogitsLoss</span><span class="p">()</span>
+<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
 
-<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">bundle</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_fn</span><span class="o">=</span><span class="n">loss_fn</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">collate_fn</span><span class="o">=</span><span class="n">graph_collate</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Step 3/3] Running one training epoch...&quot;</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
+    <span class="n">loss_fn</span><span class="o">=</span><span class="n">loss_fn</span><span class="p">,</span>
+    <span class="n">max_epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">collate_fn</span><span class="o">=</span><span class="n">graph_collate</span><span class="p">,</span>
+<span class="p">)</span>
 
-<span class="c1"># Next-day fire probabilities for one window</span>
-<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
-    <span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">logits</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">probs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (1, num_counties)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Step 3/3] Evaluating on train split...&quot;</span><span class="p">)</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">collate_fn</span><span class="o">=</span><span class="n">graph_collate</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="core-components">
-<h1>Core Components<a class="headerlink" href="#core-components" title="Link to this heading">¶</a></h1>
-<dl class="simple">
-<dt><strong>Datasets</strong></dt><dd><p>PyHazards provides a unified dataset interface for tabular, temporal, and raster data, returning a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code> with splits and specs.</p>
-</dd>
-<dt><strong>Models</strong></dt><dd><p>Extensible model architecture with MLP/CNN/temporal backbones and task heads for classification, regression, and segmentation.
-Easy to implement and register custom models via the model registry.</p>
-</dd>
-<dt><strong>Utilities</strong></dt><dd><p>Helper functions for device management, seeding/logging, and metrics calculation.</p>
-</dd>
-</dl>
+<section id="quick-verification-test-py">
+<h1>Quick Verification (<code class="docutils literal notranslate"><span class="pre">test.py</span></code>)<a class="headerlink" href="#quick-verification-test-py" title="Link to this heading">¶</a></h1>
+<p>Run the built-in GPU smoke test:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>test.py
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">test.py</span></code> is a validation/smoke test only. It verifies pipeline correctness and integration, not final benchmark performance.</p>
+<p>It prints step-by-step status and ends with:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>PASS: end-to-end implementation is working.
+</pre></div>
+</div>
+</section>
+<section id="custom-module">
+<h1>Custom Module<a class="headerlink" href="#custom-module" title="Link to this heading">¶</a></h1>
+<p>Use this when you want to add your own dataset/model implementation into PyHazards.</p>
+<p>To upload and use your own data/model modules:</p>
+<ol class="arabic simple">
+<li><p>Upload your raw data files to your project path and write a dataset loader that returns a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>.</p></li>
+<li><p>Register your model with <code class="docutils literal notranslate"><span class="pre">register_model</span></code> and a builder function that returns an <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code>.</p></li>
+<li><p>Build with <code class="docutils literal notranslate"><span class="pre">build_model(...)</span></code> and train/evaluate through <code class="docutils literal notranslate"><span class="pre">Trainer</span></code>.</p></li>
+</ol>
+<p>For implementation details, see <a class="reference internal" href="implementation.html"><span class="doc">Implementation Guide</span></a>, <a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a>, and <a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a>.</p>
 </section>
 <section id="how-to-cite">
 <h1>How to Cite<a class="headerlink" href="#how-to-cite" title="Link to this heading">¶</a></h1>
 <p>If you use PyHazards in your research, please cite:</p>
-<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@software</span><span class="p">{</span><span class="nl">pyhazards2025</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{PyHazards: A Python Framework for AI-Powered Hazard Prediction}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Cheng, Xueqi}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{2025}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">url</span><span class="p">=</span><span class="s">{https://github.com/LabRAI/PyHazards}</span>
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pyhazards2025</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{PyHazards: An Open-Source Library for AI-Powered Hazard Prediction}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">author</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{Cheng, Xueqi and Xu, Yangshuang and Xu, Runyang and Schneier, Lex and Kodudula, Sharan Kumar Reddy and Hsu, Deyang and Shen, Dacheng and Dong, Yushun}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">year</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">{2025}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">howpublished</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{\url{https://github.com/LabRAI/PyHazards}}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">note</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">{GitHub repository}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -445,7 +473,7 @@ Easy to implement and register custom models via the model registry.</p>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=e7fff540"></script>
+</div><script src="_static/documentation_options.js?v=862d5a7d"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

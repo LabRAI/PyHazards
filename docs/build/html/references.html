@@ -5,9 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Core Team" href="team.html"><link rel="prev" title="How to Cite" href="cite.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/references.html">
+        <link rel="prefetch" href="_static/logo.png" as="image">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>References - PyHazards 1.0.1 documentation</title>
+    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>References - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -163,7 +164,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">PyHazards 1.0.1 documentation</div></a>
+      <a href="index.html"><div class="brand">PyHazards 1.0.4 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,8 +184,11 @@
     <div class="sidebar-container">
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/logo.png" alt="Logo"/>
+  </div>
   
-  <span class="sidebar-brand-text">PyHazards 1.0.1 documentation</span>
+  <span class="sidebar-brand-text">PyHazards 1.0.4 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -199,8 +203,27 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pyhazards_datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyhazards_models.html">Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="datasets/merra2.html">MERRA-2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/era5.html">ERA5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/firms.html">FIRMS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/mtbs.html">MTBS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/landfire.html">LANDFIRE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/wfigs.html">WFIGS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/fpa_fod_tabular.html">FPA-FOD Tabular</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/fpa_fod_weekly.html">FPA-FOD Weekly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/goesr.html">GOES-R</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_mamba.html">Wildfire Mamba</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_utils.html">Utils</a></li>
@@ -251,8 +274,31 @@
         <article role="main" id="furo-main-content">
           <section id="references">
 <h1>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h1>
-<section id="academic-publications">
-<h2>Academic Publications<a class="headerlink" href="#academic-publications" title="Link to this heading">¶</a></h2>
+<section id="acknowledgments">
+<h2>Acknowledgments<a class="headerlink" href="#acknowledgments" title="Link to this heading">¶</a></h2>
+<p>We thank the authors of the dataset and model publications cited below. Their work provides the scientific
+foundation used throughout this project.</p>
+</section>
+<section id="dataset-publications">
+<h2>Dataset Publications<a class="headerlink" href="#dataset-publications" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Gelaro, R., McCarty, W., Suárez, M. J., et al. (2017). <em>The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA-2)</em>. <a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">[link]</a>.</p></li>
+<li><p>Hersbach, H., Bell, B., Berrisford, P., et al. (2020). <em>The ERA5 global reanalysis</em>. <a class="reference external" href="https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803">[link]</a>.</p></li>
+<li><p>NOAA National Centers for Environmental Information (NCEI). <em>Storm Events Database Documentation</em>. <a class="reference external" href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648">[link]</a>.</p></li>
+<li><p>Schroeder, W., Oliva, P., Giglio, L., and Csiszar, I. (2014). <em>The New VIIRS 375 m active fire detection data product: Algorithm description and initial assessment</em>. <a class="reference external" href="https://doi.org/10.1016/j.rse.2013.08.008">[link]</a>.</p></li>
+<li><p>Eidenshink, J., Schwind, B., Brewer, K., Zhu, Z., Quayle, B., and Howard, S. (2007). <em>A project for monitoring trends in burn severity</em>. <a class="reference external" href="https://doi.org/10.4996/fireecology.0301003">[link]</a>.</p></li>
+<li><p>Rollins, M. G. (2009). <em>LANDFIRE: A nationally consistent vegetation, wildland fire, and fuel assessment</em>. <a class="reference external" href="https://doi.org/10.1071/WF08088">[link]</a>.</p></li>
+<li><p>National Interagency Fire Center (NIFC). <em>Wildland Fire Incident Geospatial Services (WFIGS)</em>. <a class="reference external" href="https://data-nifc.opendata.arcgis.com/">[link]</a>.</p></li>
+<li><p>Schmit, T. J., Griffith, P., Gunshor, M. M., et al. (2017). <em>A closer look at the ABI on the GOES-R series</em>. <a class="reference external" href="https://doi.org/10.1175/BAMS-D-15-00230.1">[link]</a>.</p></li>
+</ul>
+</section>
+<section id="model-publications">
+<h2>Model Publications<a class="headerlink" href="#model-publications" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Marjani et al. (2024). <em>Application of Explainable Artificial Intelligence in Predicting Wildfire Spread: An ASPP-Enabled CNN Approach</em>. <a class="reference external" href="https://ieeexplore.ieee.org/document/10568207">[link]</a>.</p></li>
+<li><p>Taghizadeh et al. (2025). <em>Interpretable physics-informed graph neural networks for flood forecasting</em>. <a class="reference external" href="https://onlinelibrary.wiley.com/doi/10.1111/mice.13484">[link]</a>.</p></li>
+<li><p>Lyu et al. (2025). <em>Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning</em>. <a class="reference external" href="https://doi.org/10.1038/s41467-025-65435-2">[link]</a>.</p></li>
+</ul>
 </section>
 </section>
 
@@ -312,7 +358,9 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">References</a><ul>
-<li><a class="reference internal" href="#academic-publications">Academic Publications</a></li>
+<li><a class="reference internal" href="#acknowledgments">Acknowledgments</a></li>
+<li><a class="reference internal" href="#dataset-publications">Dataset Publications</a></li>
+<li><a class="reference internal" href="#model-publications">Model Publications</a></li>
 </ul>
 </li>
 </ul>
@@ -324,7 +372,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=e7fff540"></script>
+</div><script src="_static/documentation_options.js?v=862d5a7d"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

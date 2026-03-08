@@ -4,10 +4,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/_modules/pyhazards/engine/trainer.html">
-        <link rel="prefetch" href="../../../_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="../../../_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>pyhazards.engine.trainer - PyHazards 1.0.4 documentation</title>
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>pyhazards.engine.trainer - PyHazards 1.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -163,7 +162,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">PyHazards 1.0.4 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">PyHazards 1.0.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -183,11 +182,8 @@
     <div class="sidebar-container">
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
-  <div class="sidebar-logo-container">
-    <img class="sidebar-logo" src="../../../_static/logo.png" alt="Logo"/>
-  </div>
   
-  <span class="sidebar-brand-text">PyHazards 1.0.4 documentation</span>
+  <span class="sidebar-brand-text">PyHazards 1.0.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -202,25 +198,8 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/merra2.html">MERRA-2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/era5.html">ERA5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/noaa_flood.html">NOAA Flood Events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/firms.html">FIRMS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/mtbs.html">MTBS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/landfire.html">LANDFIRE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/wfigs.html">WFIGS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/fpa_fod_tabular.html">FPA-FOD Tabular</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/fpa_fod_weekly.html">FPA-FOD Weekly</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/goesr.html">GOES-R</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_hydrographnet.html">HydroGraphNet</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_models.html">Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_utils.html">Utils</a></li>
@@ -324,13 +303,7 @@
 
         <span class="n">train_split_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_split</span><span class="p">(</span><span class="n">train_split</span><span class="p">)</span>
         <span class="n">train_loader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_loader</span><span class="p">(</span><span class="n">train_split_data</span><span class="o">.</span><span class="n">inputs</span><span class="p">,</span> <span class="n">train_split_data</span><span class="o">.</span><span class="n">targets</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="p">,</span> <span class="n">collate_fn</span><span class="p">)</span>
-        <span class="n">amp_enabled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mixed_precision</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;cuda&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">scaler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">amp</span><span class="o">.</span><span class="n">GradScaler</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="n">amp_enabled</span><span class="p">)</span>
-            <span class="n">use_new_amp</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
-            <span class="n">scaler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">amp</span><span class="o">.</span><span class="n">GradScaler</span><span class="p">(</span><span class="n">enabled</span><span class="o">=</span><span class="n">amp_enabled</span><span class="p">)</span>
-            <span class="n">use_new_amp</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">scaler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">amp</span><span class="o">.</span><span class="n">GradScaler</span><span class="p">(</span><span class="n">enabled</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mixed_precision</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_epochs</span><span class="p">):</span>
@@ -338,14 +311,9 @@
                 <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_device</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
                 <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_device</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
                 <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">use_new_amp</span><span class="p">:</span>
-                    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">amp</span><span class="o">.</span><span class="n">autocast</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="n">scaler</span><span class="o">.</span><span class="n">is_enabled</span><span class="p">()):</span>
-                        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-                        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">amp</span><span class="o">.</span><span class="n">autocast</span><span class="p">(</span><span class="n">enabled</span><span class="o">=</span><span class="n">scaler</span><span class="o">.</span><span class="n">is_enabled</span><span class="p">()):</span>
-                        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-                        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">amp</span><span class="o">.</span><span class="n">autocast</span><span class="p">(</span><span class="n">enabled</span><span class="o">=</span><span class="n">scaler</span><span class="o">.</span><span class="n">is_enabled</span><span class="p">()):</span>
+                    <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
                 <span class="n">scaler</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
                 <span class="n">scaler</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span>
                 <span class="n">scaler</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
@@ -477,7 +445,7 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=862d5a7d"></script>
+</div><script src="../../../_static/documentation_options.js?v=e7fff540"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>

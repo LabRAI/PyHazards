@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="HydroGraphNet" href="models_hydrographnet.html"><link rel="prev" title="CNN-ASPP" href="models_wildfire_aspp.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Wildfire Mamba" href="models_wildfire_mamba.html"><link rel="prev" title="CNN-ASPP" href="models_wildfire_aspp.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/modules/models_wildfire_fpa.html">
         <link rel="prefetch" href="../_static/logo.png" as="image">
 
@@ -217,9 +217,11 @@
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models_wildfire_mamba.html">Wildfire Mamba</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_engine.html">Engine</a></li>
@@ -274,24 +276,27 @@
 <h1>DNN-LSTM-AutoEncoder<a class="headerlink" href="#dnn-lstm-autoencoder" title="Link to this heading">¶</a></h1>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">wildfire_fpa</span></code> is the paper-facing PyHazards entrypoint for the two-stage wildfire risk assessment
-framework described in:
-<a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States - A deep learning approach to safety and sustainability</a>.</p>
-<p>The framework comprises two sequential model stages:</p>
-<ul class="simple">
-<li><p>a DNN stage for wildfire cause and size prediction from incident-level tabular features, and</p></li>
-<li><p>an LSTM + autoencoder stage for imminent wildfire forecasting from weekly sequences.</p></li>
-</ul>
-<p>PyHazards keeps those stages modular internally, but exposes them under one public model name.</p>
+<p><code class="docutils literal notranslate"><span class="pre">wildfire_fpa</span></code> is the paper-facing PyHazards entrypoint for the FPA-FOD wildfire framework described by Shen et al. (2023).</p>
+<p>PyHazards exposes the classification and forecasting stages through one public registry name while keeping the lower-level modules available internally.</p>
 </section>
-<section id="modular">
-<h2>Modular<a class="headerlink" href="#modular" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">wildfire_fpa</span></code></p>
+<section id="paper">
+<h2>Paper<a class="headerlink" href="#paper" title="Link to this heading">¶</a></h2>
+<p>See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p>
+</section>
+<section id="registry-name">
+<h2>Registry Name<a class="headerlink" href="#registry-name" title="Link to this heading">¶</a></h2>
+<p>Primary entrypoint: <code class="docutils literal notranslate"><span class="pre">wildfire_fpa</span></code></p>
+</section>
+<section id="supported-tasks">
+<h2>Supported Tasks<a class="headerlink" href="#supported-tasks" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">classification</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">forecasting</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">regression</span></code></p></li>
+</ul>
 </section>
 <section id="example-of-how-to-use-it">
 <h2>Example of how to use it<a class="headerlink" href="#example-of-how-to-use-it" title="Link to this heading">¶</a></h2>
-<section id="classification-stage">
-<h3>Classification stage<a class="headerlink" href="#classification-stage" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
 
@@ -306,39 +311,15 @@ framework described in:
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 <span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (4, 5)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="forecasting-stage">
-<h3>Forecasting stage<a class="headerlink" href="#forecasting-stage" title="Link to this heading">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;wildfire_fpa&quot;</span><span class="p">,</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;forecasting&quot;</span><span class="p">,</span>
-    <span class="n">input_dim</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
-    <span class="n">output_dim</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-    <span class="n">lookback</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
-    <span class="n">latent_dim</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
-<span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (2, 5)</span>
-</pre></div>
-</div>
-</section>
 </section>
 <section id="notes">
 <h2>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">task=&quot;classification&quot;</span></code> to build the DNN cause/size stage.</p></li>
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">task=&quot;forecasting&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">task=&quot;regression&quot;</span></code> to build the LSTM + autoencoder stage.</p></li>
-<li><p>Lower-level internal modules remain available in <code class="docutils literal notranslate"><span class="pre">pyhazards.models.wildfire_fpa_dnn</span></code>,
-<code class="docutils literal notranslate"><span class="pre">pyhazards.models.wildfire_fpa_forecast</span></code>, <code class="docutils literal notranslate"><span class="pre">pyhazards.models.wildfire_fpa_lstm</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">pyhazards.models.wildfire_fpa_autoencoder</span></code>.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">task=&quot;classification&quot;</span></code> for the DNN stage.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">task=&quot;forecasting&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">task=&quot;regression&quot;</span></code> for the sequence stage.</p></li>
 </ul>
 </section>
 </section>
@@ -348,12 +329,12 @@ framework described in:
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="models_hydrographnet.html">
+          <a class="next-page" href="models_wildfire_mamba.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">HydroGraphNet</div>
+                <div class="title">Wildfire Mamba</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -400,12 +381,10 @@ framework described in:
             <ul>
 <li><a class="reference internal" href="#">DNN-LSTM-AutoEncoder</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#modular">Modular</a></li>
-<li><a class="reference internal" href="#example-of-how-to-use-it">Example of how to use it</a><ul>
-<li><a class="reference internal" href="#classification-stage">Classification stage</a></li>
-<li><a class="reference internal" href="#forecasting-stage">Forecasting stage</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#paper">Paper</a></li>
+<li><a class="reference internal" href="#registry-name">Registry Name</a></li>
+<li><a class="reference internal" href="#supported-tasks">Supported Tasks</a></li>
+<li><a class="reference internal" href="#example-of-how-to-use-it">Example of how to use it</a></li>
 <li><a class="reference internal" href="#notes">Notes</a></li>
 </ul>
 </li>

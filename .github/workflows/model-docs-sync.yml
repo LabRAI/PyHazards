@@ -23,23 +23,28 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install dependencies (CPU Torch)
+      - name: Install dependencies (CPU Torch + docs)
         run: |
           python -m pip install --upgrade pip
           python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
           python -m pip install -e .
+          python -m pip install -r docs/requirements.txt
 
-      - name: Regenerate model docs
-        run: python scripts/render_model_docs.py
+      - name: Regenerate and publish model docs
+        run: |
+          python scripts/render_model_docs.py
+          cd docs
+          sphinx-build -b html source build/html
+          cp -r build/html/* .
 
       - name: Commit generated docs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- docs/source/pyhazards_models.rst docs/source/api/pyhazards.models.rst docs/source/modules; then
+          if git diff --quiet -- docs; then
             echo "Model docs already up to date."
             exit 0
           fi
-          git add docs/source/pyhazards_models.rst docs/source/api/pyhazards.models.rst docs/source/modules
-          git commit -m "docs(models): refresh generated catalog"
+          git add docs
+          git commit -m "docs(models): refresh published catalog"
           git push

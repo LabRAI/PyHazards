@@ -23,5 +23,3 @@ Usage
 
     metrics = [ClassificationMetrics()]
     # pass to Trainer or call directly
-
-*** End Patch ***!

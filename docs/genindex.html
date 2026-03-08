@@ -215,9 +215,11 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_mamba.html">Wildfire Mamba</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_engine.html">Engine</a></li>
@@ -295,6 +297,8 @@
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireMamba._get_adjacency">_get_adjacency() (pyhazards.models.WildfireMamba method)</a>
 </li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.WaveCastNet._init_states">_init_states() (pyhazards.models.WaveCastNet method)</a>
+</li>
         <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.base.Transform._is_protocol">_is_protocol (pyhazards.datasets.base.Transform attribute)</a>
 </li>
         <li><a href="api/pyhazards.html#pyhazards.Dataset._load">_load() (pyhazards.Dataset method)</a>
@@ -345,6 +349,8 @@
   <h2>A</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.WavefieldMetrics.accuracy">accuracy() (pyhazards.models.WavefieldMetrics static method)</a>
+</li>
         <li><a href="api/pyhazards.utils.html#pyhazards.utils.auto_device">auto_device() (in module pyhazards.utils)</a>
 
         <ul>
@@ -445,6 +451,10 @@
           <li><a href="api/pyhazards.html#pyhazards.SegmentationMetrics.compute">(pyhazards.SegmentationMetrics method)</a>
 </li>
         </ul></li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.WavefieldMetrics.compute_all">compute_all() (pyhazards.models.WavefieldMetrics static method)</a>
+</li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.ConvLEMCell">ConvLEMCell (class in pyhazards.models)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -586,6 +596,8 @@
 </li>
           <li><a href="api/pyhazards.models.html#pyhazards.models.CNNPatchEncoder.forward">(pyhazards.models.CNNPatchEncoder method)</a>
 </li>
+          <li><a href="api/pyhazards.models.html#pyhazards.models.ConvLEMCell.forward">(pyhazards.models.ConvLEMCell method)</a>
+</li>
           <li><a href="api/pyhazards.models.html#pyhazards.models.heads.ClassificationHead.forward">(pyhazards.models.heads.ClassificationHead method)</a>
 </li>
           <li><a href="api/pyhazards.models.html#pyhazards.models.heads.RegressionHead.forward">(pyhazards.models.heads.RegressionHead method)</a>
@@ -605,6 +617,10 @@
           <li><a href="api/pyhazards.models.html#pyhazards.models.TemporalEncoder.forward">(pyhazards.models.TemporalEncoder method)</a>
 </li>
           <li><a href="api/pyhazards.models.html#pyhazards.models.TverskyLoss.forward">(pyhazards.models.TverskyLoss method)</a>
+</li>
+          <li><a href="api/pyhazards.models.html#pyhazards.models.WaveCastNet.forward">(pyhazards.models.WaveCastNet method)</a>
+</li>
+          <li><a href="api/pyhazards.models.html#pyhazards.models.WaveCastNetLoss.forward">(pyhazards.models.WaveCastNetLoss method)</a>
 </li>
           <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireCNNASPP.forward">(pyhazards.models.WildfireCNNASPP method)</a>
 </li>
@@ -1071,6 +1087,10 @@
           <li><a href="api/pyhazards.html#pyhazards.SegmentationMetrics.reset">(pyhazards.SegmentationMetrics method)</a>
 </li>
         </ul></li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.ConvLEMCell.reset_parameters">reset_parameters() (pyhazards.models.ConvLEMCell method)</a>
+</li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.WavefieldMetrics.rfne">rfne() (pyhazards.models.WavefieldMetrics static method)</a>
+</li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.HydroGraphNet.rollout">rollout() (pyhazards.models.HydroGraphNet method)</a>
 </li>
     </ul></td>
@@ -1225,14 +1245,22 @@
   <h2>W</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.WaveCastNet">WaveCastNet (class in pyhazards.models)</a>
+</li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.wavecastnet_builder">wavecastnet_builder() (in module pyhazards.models)</a>
+</li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.WaveCastNetLoss">WaveCastNetLoss (class in pyhazards.models)</a>
+</li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.WavefieldMetrics">WavefieldMetrics (class in pyhazards.models)</a>
+</li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.wildfire_aspp_builder">wildfire_aspp_builder() (in module pyhazards.models)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyhazards.models.html#pyhazards.models.wildfire_fpa_builder">wildfire_fpa_builder() (in module pyhazards.models)</a>
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.wildfire_mamba_builder">wildfire_mamba_builder() (in module pyhazards.models)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireASPP">WildfireASPP (class in pyhazards.models)</a>
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireCNNASPP">WildfireCNNASPP (class in pyhazards.models)</a>
