@@ -11,8 +11,6 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 import h5py
-import matplotlib.pyplot as plt
-import requests
 
 
 # ---------------------------------------------------------------------
@@ -26,6 +24,27 @@ except Exception:
             print(x.to_string(index=False))
         else:
             print(x)
+
+
+def _require_requests():
+    try:
+        import requests  # type: ignore
+    except ModuleNotFoundError as exc:
+        raise ModuleNotFoundError(
+            "pyhazards.datasets.inspection requires the 'requests' package for "
+            "MERRA-2 download operations."
+        ) from exc
+    return requests
+
+
+def _require_matplotlib_pyplot():
+    try:
+        import matplotlib.pyplot as plt  # type: ignore
+    except ModuleNotFoundError as exc:
+        raise ModuleNotFoundError(
+            "pyhazards.datasets.inspection requires 'matplotlib' only when generating plots."
+        ) from exc
+    return plt
 
 
 # ---------------------------------------------------------------------
@@ -213,7 +232,7 @@ def build_file_url(product_code: str, d: date | None) -> tuple[str, str]:
     return url, filename
 
 
-def _looks_like_html_login(resp: requests.Response) -> bool:
+def _looks_like_html_login(resp) -> bool:
     ctype = (resp.headers.get("Content-Type") or "").lower()
     if "text/html" in ctype:
         return True
@@ -224,7 +243,7 @@ def _looks_like_html_login(resp: requests.Response) -> bool:
     return False
 
 
-def download_file(session: requests.Session, url: str, out_path: Path, *, force: bool = False):
+def download_file(session, url: str, out_path: Path, *, force: bool = False):
     out_path.parent.mkdir(parents=True, exist_ok=True)
     if out_path.exists() and not force:
         print(f"[SKIP] {out_path} exists")
@@ -257,6 +276,7 @@ _CMR_BASE = "https://cmr.earthdata.nasa.gov/search"
 
 
 def _cmr_get_collection_concept_id(short_name: str, version: str) -> str:
+    requests = _require_requests()
     r = requests.get(
         f"{_CMR_BASE}/collections.json",
         params={"short_name": short_name, "version": version},
@@ -270,6 +290,7 @@ def _cmr_get_collection_concept_id(short_name: str, version: str) -> str:
 
 
 def _cmr_pick_direct_data_href(collection_concept_id: str, temporal: str | None = None) -> str:
+    requests = _require_requests()
     params = {"collection_concept_id": collection_concept_id, "page_size": 200}
     if temporal:
         params["temporal"] = temporal
@@ -372,6 +393,7 @@ def download_raw_all(raw_base: Path, d: date, *, force: bool = False):
       raw_base/M2C0NXCTM/...
     """
     # Session setup: support env creds and/or ~/.netrc
+    requests = _require_requests()
     session = requests.Session()
     session.trust_env = True
     session.headers.update({"User-Agent": "pyhazards-merra2-inspection/1.0"})
@@ -904,6 +926,7 @@ def run_inspection(merged_dir: Path, outdir: Path, d: date, var: str = "T2M"):
     print(summarize_da(da))
 
     # plot one timestep
+    plt = _require_matplotlib_pyplot()
     t = 0
     Z = da.isel(time=t).compute()
     plt.figure()
