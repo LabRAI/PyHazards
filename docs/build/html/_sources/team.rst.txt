@@ -19,6 +19,7 @@ Principal Contributors & Maintainers
 
 - Yangshuang Xu, Florida State University
 - Runyang Xu, Florida State University
+- Hugh Long, Florida State University
 
 Core Contributors
 -----------------
