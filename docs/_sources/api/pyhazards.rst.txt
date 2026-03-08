@@ -13,6 +13,17 @@ Subpackages
    pyhazards.metrics
    pyhazards.utils
 
+Submodules
+----------
+
+pyhazards.interactive_map module
+--------------------------------
+
+.. automodule:: pyhazards.interactive_map
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

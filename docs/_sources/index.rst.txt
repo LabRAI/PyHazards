@@ -202,6 +202,7 @@ If you use PyHazards in your research, please cite:
 
    pyhazards_datasets
    pyhazards_models
+   interactive_map
    pyhazards_engine
    pyhazards_metrics
    pyhazards_utils

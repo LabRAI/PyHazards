@@ -32,6 +32,7 @@ from .models import (
 )
 from .metrics import ClassificationMetrics, MetricBase, RegressionMetrics, SegmentationMetrics
 from .engine import Trainer
+from .interactive_map import RAI_FIRE_URL, open_interactive_map
 
 __all__ = [
     "__version__",
@@ -61,4 +62,6 @@ __all__ = [
     "ClassificationMetrics",
     "RegressionMetrics",
     "SegmentationMetrics",
+    "RAI_FIRE_URL",
+    "open_interactive_map",
 ]
