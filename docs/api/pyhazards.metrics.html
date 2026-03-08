@@ -7,10 +7,10 @@
         <link rel="canonical" href="https://labrai.github.io/PyHazards/api/pyhazards.metrics.html">
         <link rel="prefetch" href="../_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>pyhazards.metrics package - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=aab0eeca" />
     
@@ -276,7 +276,7 @@
 <span id="pyhazards-metrics-package"></span><h1>pyhazards.metrics package<a class="headerlink" href="#module-pyhazards.metrics" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.metrics.ClassificationMetrics">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.metrics.</span></span><span class="sig-name descname"><span class="pre">ClassificationMetrics</span></span><a class="reference internal" href="../_modules/pyhazards/metrics.html#ClassificationMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.ClassificationMetrics" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.metrics.</span></span><span class="sig-name descname"><span class="pre">ClassificationMetrics</span></span><a class="reference internal" href="../_modules/pyhazards/metrics.html#ClassificationMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.ClassificationMetrics" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyhazards.metrics.MetricBase" title="pyhazards.metrics.MetricBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetricBase</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.metrics.ClassificationMetrics._abc_impl">
@@ -317,7 +317,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.metrics.MetricBase">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.metrics.</span></span><span class="sig-name descname"><span class="pre">MetricBase</span></span><a class="reference internal" href="../_modules/pyhazards/metrics.html#MetricBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.MetricBase" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.metrics.</span></span><span class="sig-name descname"><span class="pre">MetricBase</span></span><a class="reference internal" href="../_modules/pyhazards/metrics.html#MetricBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.MetricBase" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.metrics.MetricBase._abc_impl">
@@ -326,7 +326,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhazards.metrics.MetricBase.compute">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/metrics.html#MetricBase.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.MetricBase.compute" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/metrics.html#MetricBase.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.MetricBase.compute" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span></p>
@@ -336,7 +336,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhazards.metrics.MetricBase.reset">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/metrics.html#MetricBase.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.MetricBase.reset" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/metrics.html#MetricBase.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.MetricBase.reset" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
@@ -346,7 +346,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhazards.metrics.MetricBase.update">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/metrics.html#MetricBase.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.MetricBase.update" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/metrics.html#MetricBase.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.MetricBase.update" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
@@ -358,7 +358,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.metrics.RegressionMetrics">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.metrics.</span></span><span class="sig-name descname"><span class="pre">RegressionMetrics</span></span><a class="reference internal" href="../_modules/pyhazards/metrics.html#RegressionMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.RegressionMetrics" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.metrics.</span></span><span class="sig-name descname"><span class="pre">RegressionMetrics</span></span><a class="reference internal" href="../_modules/pyhazards/metrics.html#RegressionMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.RegressionMetrics" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyhazards.metrics.MetricBase" title="pyhazards.metrics.MetricBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetricBase</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.metrics.RegressionMetrics._abc_impl">
@@ -399,7 +399,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.metrics.SegmentationMetrics">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.metrics.</span></span><span class="sig-name descname"><span class="pre">SegmentationMetrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/metrics.html#SegmentationMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.SegmentationMetrics" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.metrics.</span></span><span class="sig-name descname"><span class="pre">SegmentationMetrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/metrics.html#SegmentationMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.metrics.SegmentationMetrics" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyhazards.metrics.MetricBase" title="pyhazards.metrics.MetricBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetricBase</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.metrics.SegmentationMetrics._abc_impl">

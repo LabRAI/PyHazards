@@ -25,6 +25,7 @@ Core Contributors
 
 - Lex Schneier, Florida State University
 - Sharan Kumar Reddy Kodudula, Florida State University
+- Cristian Victoria, Florida State University
 - Deyang Hsu, University of Southern California
 - Dacheng Shen, University of Southern California
 
