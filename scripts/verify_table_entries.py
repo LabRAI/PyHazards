@@ -4,7 +4,7 @@ import importlib.util
 import subprocess
 import sys
 
-import torch
+from pyhazards.model_catalog import load_model_cards, run_smoke_test
 
 
 DATASET_MODULES = [
@@ -58,31 +58,14 @@ def verify_datasets() -> bool:
 def verify_models() -> bool:
     ok = True
     print("\n=== Model Table Verification ===")
-    from pyhazards.models import build_model
-
-    wildfire = build_model(name="wildfire_aspp", task="segmentation", in_channels=12)
-    x = torch.randn(2, 12, 16, 16)
-    y = wildfire(x)
-    print(f"[model] wildfire_aspp forward shape={tuple(y.shape)}")
-    if tuple(y.shape) != (2, 1, 16, 16):
-        ok = False
-
-    hydrographnet = build_model(
-        name="hydrographnet",
-        task="regression",
-        node_in_dim=2,
-        edge_in_dim=3,
-        out_dim=1,
-    )
-    batch = {
-        "x": torch.randn(1, 3, 6, 2),
-        "adj": torch.eye(6).unsqueeze(0),
-        "coords": torch.randn(6, 2),
-    }
-    out = hydrographnet(batch)
-    print(f"[model] hydrographnet forward shape={tuple(out.shape)}")
-    if tuple(out.shape) != (1, 6, 1):
-        ok = False
+    for card in load_model_cards():
+        result = run_smoke_test(card)
+        print(
+            f"[model] {card.model_name}: expected={result['expected_shape']} "
+            f"actual={result['actual_shape']}"
+        )
+        if not result["ok"]:
+            ok = False
 
     return ok
 
@@ -97,4 +80,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

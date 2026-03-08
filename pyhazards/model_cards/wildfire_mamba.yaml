@@ -1,0 +1,56 @@
+model_name: wildfire_mamba
+display_name: Wildfire Mamba
+hazard: Wildfire
+source_file: pyhazards/models/wildfire_mamba.py
+builder_name: wildfire_mamba_builder
+summary: >
+  A Mamba-inspired spatio-temporal wildfire model that mixes county-level temporal
+  encoders with a lightweight graph convolution over spatial adjacency.
+description:
+  - >
+    ``wildfire_mamba`` models county-day ERA5 sequences by combining selective
+    state-space temporal blocks with a simple spatial graph layer.
+  - >
+    The PyHazards implementation targets binary next-day per-county wildfire
+    classification and supports an optional count head for multi-task extensions.
+paper:
+  title: "Mamba: Linear-Time Sequence Modeling with Selective State Spaces"
+  url: https://arxiv.org/abs/2312.00752
+tasks:
+  - classification
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(
+      name="wildfire_mamba",
+      task="classification",
+      in_dim=3,
+      num_counties=4,
+      past_days=5,
+  )
+
+  x = torch.randn(2, 5, 4, 3)
+  logits = model(x)
+  print(logits.shape)
+notes:
+  - "The CI smoke test validates the default binary-classification path on synthetic data."
+smoke_test:
+  task: classification
+  build_kwargs:
+    in_dim: 3
+    num_counties: 4
+    past_days: 5
+    hidden_dim: 32
+    gcn_hidden: 16
+    mamba_layers: 2
+    state_dim: 16
+    conv_kernel: 3
+    dropout: 0.0
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 5, 4, 3]
+  expected_output:
+    kind: tensor
+    shape: [2, 4]

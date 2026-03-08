@@ -1,0 +1,4 @@
+interface:
+  display_name: "PyHazards PR Maintainer"
+  short_description: "Review and process PyHazards PRs"
+  default_prompt: "Use $pyhazards-pr-maintainer to process this PyHazards model PR."

@@ -12,8 +12,8 @@ class WildfireASPP(WildfireCNNASPP):
     """
 
 
-def wildfire_aspp_builder(*args, **kwargs) -> nn.Module:
-    return cnn_aspp_builder(*args, **kwargs)
+def wildfire_aspp_builder(task: str, **kwargs) -> nn.Module:
+    return cnn_aspp_builder(task=task, **kwargs)
 
 
 class TverskyLoss(nn.Module):

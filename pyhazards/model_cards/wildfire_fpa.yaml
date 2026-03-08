@@ -1,0 +1,55 @@
+model_name: wildfire_fpa
+display_name: DNN-LSTM-AutoEncoder
+hazard: Wildfire
+source_file: pyhazards/models/wildfire_fpa.py
+builder_name: wildfire_fpa_builder
+summary: >
+  A two-stage wildfire framework with a DNN stage for incident-level cause and size
+  prediction plus an LSTM + autoencoder stage for weekly forecasting.
+description:
+  - >
+    ``wildfire_fpa`` is the paper-facing PyHazards entrypoint for the FPA-FOD wildfire
+    framework described by Shen et al. (2023).
+  - >
+    PyHazards exposes the classification and forecasting stages through one public
+    registry name while keeping the lower-level modules available internally.
+paper:
+  title: Developing risk assessment framework for wildfire in the United States
+  url: https://www.sciencedirect.com/science/article/pii/S2949926723000033
+tasks:
+  - classification
+  - forecasting
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(
+      name="wildfire_fpa",
+      task="classification",
+      in_dim=8,
+      out_dim=5,
+      hidden_dim=64,
+      depth=2,
+  )
+
+  x = torch.randn(4, 8)
+  logits = model(x)
+  print(logits.shape)
+notes:
+  - "Use ``task=\"classification\"`` for the DNN stage."
+  - "Use ``task=\"forecasting\"`` or ``task=\"regression\"`` for the sequence stage."
+smoke_test:
+  task: classification
+  build_kwargs:
+    in_dim: 8
+    out_dim: 5
+    hidden_dim: 32
+    depth: 2
+  input:
+    kind: tensor
+    tensor:
+      shape: [4, 8]
+  expected_output:
+    kind: tensor
+    shape: [4, 5]

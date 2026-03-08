@@ -1,0 +1,48 @@
+model_name: wildfire_aspp
+display_name: CNN-ASPP
+hazard: Wildfire
+source_file: pyhazards/models/wildfire_aspp.py
+builder_name: wildfire_aspp_builder
+summary: >
+  An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire
+  spread prediction.
+description:
+  - >
+    ``wildfire_aspp`` is the backward-compatible public PyHazards entrypoint for the
+    CNN + ASPP wildfire spread model.
+  - >
+    PyHazards keeps the alias for compatibility while the implementation delegates to
+    the native ``wildfire_cnn_aspp`` builder under the hood.
+paper:
+  title: Application of Explainable Artificial Intelligence in Predicting Wildfire Spread
+  url: https://ieeexplore.ieee.org/document/10568207
+tasks:
+  - segmentation
+aliases:
+  - wildfire_cnn_aspp
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(
+      name="wildfire_aspp",
+      task="segmentation",
+      in_channels=12,
+  )
+
+  x = torch.randn(2, 12, 64, 64)
+  logits = model(x)
+  print(logits.shape)
+notes:
+  - "``wildfire_cnn_aspp`` remains available as an alias for the same public model."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 12
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 12, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

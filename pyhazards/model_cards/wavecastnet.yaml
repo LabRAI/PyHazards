@@ -1,0 +1,62 @@
+model_name: wavecastnet
+display_name: WaveCastNet
+hazard: Earthquake
+source_file: pyhazards/models/wavecastnet.py
+builder_name: wavecastnet_builder
+summary: >
+  A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield
+  forecasting and early-warning style rollout experiments.
+description:
+  - >
+    ``wavecastnet`` is the PyHazards entrypoint for dense-grid earthquake wavefield
+    forecasting based on the ConvLEM encoder-decoder design described by Lyu et al. (2025).
+  - >
+    This implementation focuses on the core dense-grid forecasting path and keeps data
+    loading outside the model so users can adapt it to their own simulation or sensor pipelines.
+paper:
+  title: Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning
+  url: https://doi.org/10.1038/s41467-025-65435-2
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(
+      name="wavecastnet",
+      task="regression",
+      in_channels=3,
+      height=32,
+      width=24,
+      temporal_in=6,
+      temporal_out=4,
+      hidden_dim=32,
+      num_layers=1,
+      dropout=0.0,
+  )
+
+  x = torch.randn(2, 3, 6, 32, 24)
+  y = model(x)
+  print(y.shape)
+notes:
+  - "The PyHazards version currently targets dense-grid forecasting rather than the paper's sparse-sensor variants."
+  - "The smoke test uses reduced spatial and temporal sizes so it stays CPU-safe in CI."
+smoke_test:
+  task: regression
+  build_kwargs:
+    in_channels: 3
+    height: 12
+    width: 10
+    temporal_in: 5
+    temporal_out: 4
+    hidden_dim: 16
+    num_layers: 1
+    kernel_size: 3
+    dropout: 0.0
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 3, 5, 12, 10]
+  expected_output:
+    kind: tensor
+    shape: [2, 3, 4, 12, 10]

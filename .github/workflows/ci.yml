@@ -29,3 +29,6 @@ jobs:
           import pyhazards
           print("pyhazards version:", pyhazards.__version__)
           PY
+
+      - name: Catalog smoke test
+        run: python scripts/verify_table_entries.py

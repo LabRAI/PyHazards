@@ -1,0 +1,141 @@
+name: Model PR Bot
+
+on:
+  workflow_run:
+    workflows: ["Model PR Validation"]
+    types: [completed]
+
+permissions:
+  actions: read
+  contents: write
+  pull-requests: write
+
+jobs:
+  process:
+    if: ${{ github.event.workflow_run.event == 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve PR
+        id: pr
+        run: |
+          python - <<'PY'
+          import json
+          import os
+
+          event = json.loads(open(os.environ["GITHUB_EVENT_PATH"], "r", encoding="utf-8").read())
+          workflow_run = event["workflow_run"]
+          pull_requests = workflow_run.get("pull_requests", [])
+          output_path = os.environ["GITHUB_OUTPUT"]
+          with open(output_path, "a", encoding="utf-8") as handle:
+              if not pull_requests:
+                  handle.write("skip=true\n")
+              else:
+                  pr = pull_requests[0]
+                  handle.write("skip=false\n")
+                  handle.write(f"number={pr['number']}\n")
+                  handle.write(f"url={pr['url']}\n")
+          PY
+
+      - name: Download review artifact
+        id: artifact
+        if: steps.pr.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import subprocess
+          import sys
+
+          repo = os.environ["GITHUB_REPOSITORY"]
+          run_id = json.loads(open(os.environ["GITHUB_EVENT_PATH"], "r", encoding="utf-8").read())["workflow_run"]["id"]
+          result = subprocess.run(
+              ["gh", "api", f"repos/{repo}/actions/runs/{run_id}/artifacts"],
+              check=True,
+              capture_output=True,
+              text=True,
+          )
+          artifacts = json.loads(result.stdout)["artifacts"]
+          artifact = next((item for item in artifacts if item["name"] == "model-pr-review"), None)
+          if artifact is None:
+              raise SystemExit("model-pr-review artifact not found")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"artifact_id={artifact['id']}\n")
+          PY
+
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/${{ steps.artifact.outputs.artifact_id }}/zip" > /tmp/model-pr-review.zip
+          unzip -o /tmp/model-pr-review.zip -d /tmp/model-pr-review
+
+      - name: Read review report
+        id: report
+        if: steps.pr.outputs.skip != 'true'
+        run: |
+          python - <<'PY'
+          import json
+          import os
+
+          report = json.loads(open("/tmp/model-pr-review/model-pr-review.json", "r", encoding="utf-8").read())
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"status={report['status']}\n")
+              handle.write(f"is_model_pr={str(report['is_model_pr']).lower()}\n")
+              handle.write(f"draft={str(report.get('draft', False)).lower()}\n")
+              handle.write("models<<EOF\n")
+              handle.write(",".join(report.get("models", [])))
+              handle.write("\nEOF\n")
+              handle.write("summary<<EOF\n")
+              handle.write(report["summary"])
+              handle.write("\nEOF\n")
+          PY
+
+      - name: Upsert blocker comment
+        if: steps.report.outputs.status == 'block'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const prNumber = Number("${{ steps.pr.outputs.number }}");
+            const marker = "<!-- pyhazards:model-pr-review -->";
+            const body = fs.readFileSync("/tmp/model-pr-review/model-pr-review.md", "utf8");
+            const {owner, repo} = context.repo;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number: prNumber,
+              per_page: 100,
+            });
+            const existing = comments.find((comment) => comment.user.type === "Bot" && comment.body && comment.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: prNumber,
+                body,
+              });
+            }
+
+      - name: Merge passing PR
+        id: merge
+        if: steps.report.outputs.status == 'pass' && steps.report.outputs.draft != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set +e
+          gh pr merge "${{ steps.pr.outputs.number }}" --squash
+          exit_code=$?
+          echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+          if [ "$exit_code" -eq 0 ]; then
+            echo "result=merged" >> "$GITHUB_OUTPUT"
+          else
+            echo "result=merge_failed" >> "$GITHUB_OUTPUT"
+          fi
+          exit 0
