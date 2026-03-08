@@ -274,20 +274,23 @@
         <article role="main" id="furo-main-content">
           <section id="engine">
 <h1>Engine<a class="headerlink" href="#engine" title="Link to this heading">¶</a></h1>
-<section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
-<p>The engine wraps training/evaluation/prediction with sensible defaults and optional distributed support.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>Use the engine when you want a shared interface for training, evaluation, and
+prediction without rewriting the loop for every hazard task.</p>
 </section>
 <section id="core-modules">
 <h2>Core modules<a class="headerlink" href="#core-modules" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">pyhazards.engine.trainer</span></code> — <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> class with <code class="docutils literal notranslate"><span class="pre">fit</span></code>, <code class="docutils literal notranslate"><span class="pre">evaluate</span></code>, <code class="docutils literal notranslate"><span class="pre">predict</span></code>, checkpoint save.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pyhazards.engine.distributed</span></code> — strategy selection and config helpers.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pyhazards.engine.inference</span></code> — sliding-window inference placeholder for large rasters/grids.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyhazards.engine.trainer</span></code>: the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> class with <code class="docutils literal notranslate"><span class="pre">fit</span></code>,
+<code class="docutils literal notranslate"><span class="pre">evaluate</span></code>, and <code class="docutils literal notranslate"><span class="pre">predict</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyhazards.engine.distributed</span></code>: distributed-strategy helpers.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyhazards.engine.inference</span></code>: inference utilities for large grids or
+sliding-window style workflows.</p></li>
 </ul>
 </section>
 <section id="typical-usage">
-<h2>Typical usage<a class="headerlink" href="#typical-usage" title="Link to this heading">¶</a></h2>
+<h2>Typical Usage<a class="headerlink" href="#typical-usage" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trainer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClassificationMetrics</span>
@@ -305,13 +308,15 @@
 </pre></div>
 </div>
 </section>
-<section id="distributed-and-devices">
-<h2>Distributed and devices<a class="headerlink" href="#distributed-and-devices" title="Link to this heading">¶</a></h2>
+<section id="device-and-distributed-notes">
+<h2>Device and Distributed Notes<a class="headerlink" href="#device-and-distributed-notes" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Trainer(strategy=&quot;auto&quot;)</span></code> uses DDP when multiple GPUs are available; otherwise runs single-device.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">mixed_precision=True</span></code> enables AMP when on CUDA.</p></li>
 <li><p>Device selection is handled via <code class="docutils literal notranslate"><span class="pre">pyhazards.utils.hardware.auto_device</span></code> by default.</p></li>
 </ul>
+<p>Next step: pair this page with <a class="reference internal" href="pyhazards_metrics.html"><span class="doc">Metrics</span></a> and
+<a class="reference internal" href="pyhazards_utils.html"><span class="doc">Utils</span></a> when you want to customize evaluation or device behavior.</p>
 </section>
 </section>
 
@@ -371,10 +376,10 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Engine</a><ul>
-<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#core-modules">Core modules</a></li>
-<li><a class="reference internal" href="#typical-usage">Typical usage</a></li>
-<li><a class="reference internal" href="#distributed-and-devices">Distributed and devices</a></li>
+<li><a class="reference internal" href="#typical-usage">Typical Usage</a></li>
+<li><a class="reference internal" href="#device-and-distributed-notes">Device and Distributed Notes</a></li>
 </ul>
 </li>
 </ul>

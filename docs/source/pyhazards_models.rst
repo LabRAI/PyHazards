@@ -3,21 +3,18 @@
 Models
 ===================
 
-Summary
--------
+Overview
+--------
 
-PyHazards provides a lightweight, extensible model architecture with:
+Use this page to browse the public model catalog, jump to model-specific
+docs, and see the minimal registry pattern for building or registering a
+model in PyHazards.
 
-- Backbones for common data types: MLP (tabular), CNN patch encoder (raster), temporal encoder (time-series).
-- Task heads: classification, regression, segmentation.
-- A registry-driven builder so you can construct built-ins by name or register your own.
-- Hazard-focused implementations for wildfire, flood, earthquake, weather, and more.
+Model Catalog
+-------------
 
-Model
------
-
-The public model catalog is generated from ``pyhazards/model_cards/*.yaml``.
-Add or update a model card to refresh the model tables and detail pages automatically.
+The public catalog below is generated from ``pyhazards/model_cards/*.yaml``.
+Add or update a model card to refresh the tables and per-model pages.
 
 Earthquake
 ~~~~~~~~~~
@@ -60,11 +57,11 @@ Wildfire
    * - :doc:`DNN-LSTM-AutoEncoder <modules/models_wildfire_fpa>`
      - A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting. See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
 
-Build and register custom model
--------------------------------
+Using the Registry
+------------------
 
-Build a built-in model
-~~~~~~~~~~~~~~~~~~~~~~
+Build a Registered Model
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -79,11 +76,11 @@ Build a built-in model
         depth=3,
     )
 
-Register a custom model
+Register a Custom Model
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Create a builder function that returns an ``nn.Module`` and register it with a name.
-The registry handles defaults and discoverability.
+Register a builder function that returns an ``nn.Module`` so users can
+load the model by name through the shared registry.
 
 .. code-block:: python
 
@@ -103,12 +100,12 @@ The registry handles defaults and discoverability.
 
     model = build_model(name="my_mlp", task="regression", in_dim=16, out_dim=1)
 
-Design notes
-~~~~~~~~~~~~
+Notes
+~~~~~
 
-- Builders receive ``task`` plus any kwargs you pass; use this to switch heads internally if needed.
-- ``register_model`` stores optional defaults so you can keep CLI/configs minimal.
-- Models are plain PyTorch modules, so you can compose them with the ``Trainer`` or your own loops.
+- Builders receive ``task`` plus any kwargs you pass.
+- ``register_model`` stores optional defaults so configs can stay small.
+- Models are plain PyTorch modules and work with ``Trainer`` or custom loops.
 
 .. toctree::
    :maxdepth: 1

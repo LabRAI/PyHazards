@@ -274,16 +274,20 @@
         <article role="main" id="furo-main-content">
           <section id="datasets">
 <h1>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">¶</a></h1>
-<section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
-<p>PyHazards maintains a curated catalog of commonly used hazard datasets and provides
-dataset-specific utilities for <strong>download / preprocessing / inspection / visualization</strong>.</p>
-<p>Each dataset page describes: (1) what the dataset is, (2) how to obtain it, and (3) how to
-quickly validate local data files via an inspection entrypoint (when available).</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>Use this page to browse the built-in dataset references and the inspection
+commands that help you validate local files before training.</p>
+<p>Each dataset page answers three practical questions:</p>
+<ol class="arabic simple">
+<li><p>What is this dataset?</p></li>
+<li><p>How do I obtain or prepare it?</p></li>
+<li><p>What command should I run to check that my files are usable?</p></li>
+</ol>
 </section>
-<section id="id1">
-<h2>Datasets<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
-<p>Click a dataset name to open its unified dataset page (description + how to use in PyHazards).</p>
+<section id="dataset-catalog">
+<h2>Dataset Catalog<a class="headerlink" href="#dataset-catalog" title="Link to this heading">¶</a></h2>
+<p>Select a dataset name below to open its reference page.</p>
 <div class="table-wrapper colwidths-given dataset-list docutils container">
 <table class="dataset-list docutils align-default">
 <colgroup>
@@ -332,22 +336,22 @@ quickly validate local data files via an inspection entrypoint (when available).
 </section>
 <section id="dataset-inspection">
 <h2>Dataset inspection<a class="headerlink" href="#dataset-inspection" title="Link to this heading">¶</a></h2>
-<p>PyHazards provides dataset inspection entrypoints to quickly validate local files and produce
-basic summaries/plots.</p>
-<p>Currently implemented:</p>
+<p>PyHazards provides inspection entrypoints so you can validate local files and
+produce basic summaries before writing a training loop.</p>
+<p>Current end-to-end example:</p>
 <ul class="simple">
-<li><p><strong>MERRA-2 (merra2)</strong>: one-shot pipeline to <strong>download raw MERRA-2 → merge SFC+PRES → inspect → save plots/tables</strong>.</p></li>
+<li><p><strong>MERRA-2 (merra2)</strong>: download raw files if needed, merge the required
+products, inspect the result, and save outputs.</p></li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># One command: download (if needed) -&gt; merge -&gt; inspect -&gt; save outputs</span>
-python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspection<span class="w"> </span><span class="m">20260101</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspection<span class="w"> </span><span class="m">20260101</span>
 </pre></div>
 </div>
 <section id="notes-merra-2">
 <h3>Notes (MERRA-2)<a class="headerlink" href="#notes-merra-2" title="Link to this heading">¶</a></h3>
 <ul>
-<li><p>Download requires Earthdata credentials via environment variables:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">EARTHDATA_USERNAME</span><span class="o">=</span><span class="s2">&quot;YOUR_USERNAME&quot;</span>
-<span class="n">export</span> <span class="n">EARTHDATA_PASSWORD</span><span class="o">=</span><span class="s2">&quot;YOUR_PASSWORD&quot;</span>
+<li><p>Download requires Earthdata credentials:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">EARTHDATA_USERNAME</span><span class="o">=</span><span class="s2">&quot;YOUR_USERNAME&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">EARTHDATA_PASSWORD</span><span class="o">=</span><span class="s2">&quot;YOUR_PASSWORD&quot;</span>
 </pre></div>
 </div>
 </li>
@@ -360,8 +364,8 @@ python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspe
 </ul>
 </section>
 </section>
-<section id="dataloader">
-<h2>Dataloader<a class="headerlink" href="#dataloader" title="Link to this heading">¶</a></h2>
+<section id="simple-dataloader-helper">
+<h2>Simple Dataloader Helper<a class="headerlink" href="#simple-dataloader-helper" title="Link to this heading">¶</a></h2>
 <div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gh"># Dataloader V3</span>
 
 Minimal API with a structured request object.
@@ -415,60 +419,46 @@ Minimal API with a structured request object.
 </pre></div>
 </div>
 </section>
-<section id="example-skeleton">
-<h2>Example skeleton<a class="headerlink" href="#example-skeleton" title="Link to this heading">¶</a></h2>
-<p>A “nice” skeleton should make it explicit <strong>what data you load</strong> and how it flows into
-<strong>inspection/visualization</strong>.</p>
-<p>Below is the recommended pattern: set <code class="docutils literal notranslate"><span class="pre">data</span></code> to a dataset name (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;merra2&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;mtbs&quot;</span></code>)
-and run the dataset’s inspection entrypoint accordingly.</p>
+<section id="minimal-inspection-workflow">
+<h2>Minimal Inspection Workflow<a class="headerlink" href="#minimal-inspection-workflow" title="Link to this heading">¶</a></h2>
+<p>Use the following pattern when you want to script dataset inspection in a
+repeatable way.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
 
-<span class="c1"># 1) Choose what dataset you want to load/inspect</span>
-<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;merra2&quot;</span>   <span class="c1"># e.g., &quot;merra2&quot;, &quot;mtbs&quot;, &quot;era5&quot;, &quot;firms&quot;, &quot;landfire&quot;, &quot;wfigs&quot;, &quot;goesr&quot; (use accordingly)</span>
-
-<span class="c1"># 2) Choose the dataset key (identifier)</span>
-<span class="c1">#    - For MERRA-2, the key is a daily date: &quot;YYYYMMDD&quot; (e.g., &quot;20260101&quot;)</span>
-<span class="c1">#    - For other datasets (e.g., MTBS), the key could be an event/scene id (to be defined per dataset)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;merra2&quot;</span>
 <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;20260101&quot;</span>
 
-<span class="c1"># 3) Run the inspection pipeline (download/preprocess if needed -&gt; inspect -&gt; visualize -&gt; save outputs)</span>
 <span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="s2">&quot;merra2&quot;</span><span class="p">:</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pyhazards.datasets.inspection&quot;</span><span class="p">,</span>
         <span class="n">key</span><span class="p">,</span>
-        <span class="s2">&quot;--var&quot;</span><span class="p">,</span> <span class="s2">&quot;T2M&quot;</span><span class="p">,</span>           <span class="c1"># change variable to plot (e.g., QV2M)</span>
-        <span class="s2">&quot;--outdir&quot;</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span>    <span class="c1"># output folder under repo root by default</span>
+        <span class="s2">&quot;--var&quot;</span><span class="p">,</span> <span class="s2">&quot;T2M&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--outdir&quot;</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span>
     <span class="p">]</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="c1"># Convention for other datasets:</span>
-    <span class="c1"># provide a dataset-specific inspection entrypoint:</span>
-    <span class="c1">#   python -m pyhazards.datasets.&lt;dataset&gt;.inspection &lt;key&gt; ...</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;pyhazards.datasets.</span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">.inspection&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="s2">&quot;--outdir&quot;</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">]</span>
 
 <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># 4) After running, check outputs/ for saved artifacts (tables + plots).</span>
-<span class="c1">#    Example (MERRA-2): CSV tables for variable inventory + a PDF plot for the selected surface variable.</span>
 </pre></div>
 </div>
 </section>
-<section id="inspection-entrypoints-convention-for-all-datasets">
-<h2>Inspection entrypoints (convention for all datasets)<a class="headerlink" href="#inspection-entrypoints-convention-for-all-datasets" title="Link to this heading">¶</a></h2>
-<p>Each dataset should expose a minimal inspection entrypoint that supports the same user experience:</p>
+<section id="inspection-cli-convention">
+<h2>Inspection CLI Convention<a class="headerlink" href="#inspection-cli-convention" title="Link to this heading">¶</a></h2>
+<p>Inspection entrypoints should follow the same basic shape across datasets:</p>
 <ul class="simple">
-<li><p><strong>Input</strong>: a dataset identifier (<code class="docutils literal notranslate"><span class="pre">key</span></code>) such as a date/event id.</p></li>
-<li><p><strong>Work</strong>: download/prepare (if needed) → open files → summarize → visualize.</p></li>
-<li><p><strong>Output</strong>: saved artifacts under <code class="docutils literal notranslate"><span class="pre">outputs/</span></code> (tables + figures).</p></li>
+<li><p><strong>Input</strong>: a dataset identifier such as a date or event id.</p></li>
+<li><p><strong>Work</strong>: prepare local files if needed, inspect them, and save lightweight
+artifacts.</p></li>
+<li><p><strong>Output</strong>: figures or tables under <code class="docutils literal notranslate"><span class="pre">outputs/</span></code>.</p></li>
 </ul>
-<p>Recommended CLI shape (dataset-specific):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example convention (to be implemented per dataset):</span>
-python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.&lt;dataset&gt;.inspection<span class="w"> </span>&lt;key&gt;<span class="w"> </span>--outdir<span class="w"> </span>outputs
+<p>Recommended dataset-specific CLI:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.&lt;dataset&gt;.inspection<span class="w"> </span>&lt;key&gt;<span class="w"> </span>--outdir<span class="w"> </span>outputs
 </pre></div>
 </div>
 </section>
-<section id="developer-note">
-<h2>Developer note<a class="headerlink" href="#developer-note" title="Link to this heading">¶</a></h2>
-<p>If you plan to add inspection for a new dataset, mirror the MERRA-2 inspection pattern:</p>
+<section id="for-contributors">
+<h2>For Contributors<a class="headerlink" href="#for-contributors" title="Link to this heading">¶</a></h2>
+<p>If you add a new dataset inspection entrypoint, mirror the existing pattern:</p>
 <ol class="arabic simple">
 <li><p>parse CLI args (key + outdir + skip/force flags),</p></li>
 <li><p>materialize required local files (download/preprocess),</p></li>
@@ -536,16 +526,16 @@ python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.&lt;d
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Datasets</a><ul>
-<li><a class="reference internal" href="#summary">Summary</a></li>
-<li><a class="reference internal" href="#id1">Datasets</a></li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#dataset-catalog">Dataset Catalog</a></li>
 <li><a class="reference internal" href="#dataset-inspection">Dataset inspection</a><ul>
 <li><a class="reference internal" href="#notes-merra-2">Notes (MERRA-2)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#dataloader">Dataloader</a></li>
-<li><a class="reference internal" href="#example-skeleton">Example skeleton</a></li>
-<li><a class="reference internal" href="#inspection-entrypoints-convention-for-all-datasets">Inspection entrypoints (convention for all datasets)</a></li>
-<li><a class="reference internal" href="#developer-note">Developer note</a></li>
+<li><a class="reference internal" href="#simple-dataloader-helper">Simple Dataloader Helper</a></li>
+<li><a class="reference internal" href="#minimal-inspection-workflow">Minimal Inspection Workflow</a></li>
+<li><a class="reference internal" href="#inspection-cli-convention">Inspection CLI Convention</a></li>
+<li><a class="reference internal" href="#for-contributors">For Contributors</a></li>
 </ul>
 </li>
 </ul>

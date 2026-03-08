@@ -1,6 +1,12 @@
 How to Cite
 ===========
-If you use PyHazards in your research, please cite:
+
+Use the following citation for the PyHazards software package itself. If you are
+also relying on specific datasets or model papers, cite those sources from
+:doc:`references` as well.
+
+Library Citation
+----------------
 
 .. code-block:: bibtex
 

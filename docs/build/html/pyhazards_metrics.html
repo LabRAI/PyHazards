@@ -274,17 +274,18 @@
         <article role="main" id="furo-main-content">
           <section id="metrics">
 <h1>Metrics<a class="headerlink" href="#metrics" title="Link to this heading">¶</a></h1>
-<section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
-<p>Built-in metrics cover common tasks and are designed to aggregate predictions/targets over a full split.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>PyHazards includes small, task-oriented metric classes that accumulate
+predictions and targets across a full split.</p>
 </section>
 <section id="core-classes">
-<h2>Core classes<a class="headerlink" href="#core-classes" title="Link to this heading">¶</a></h2>
+<h2>Core Classes<a class="headerlink" href="#core-classes" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">MetricBase</span></code> — abstract interface with <code class="docutils literal notranslate"><span class="pre">update</span></code>, <code class="docutils literal notranslate"><span class="pre">compute</span></code>, <code class="docutils literal notranslate"><span class="pre">reset</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ClassificationMetrics</span></code> — accuracy.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">RegressionMetrics</span></code> — MAE, RMSE.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SegmentationMetrics</span></code> — pixel accuracy (extend to IoU/Dice as needed).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MetricBase</span></code>: shared interface with <code class="docutils literal notranslate"><span class="pre">update</span></code>, <code class="docutils literal notranslate"><span class="pre">compute</span></code>, and <code class="docutils literal notranslate"><span class="pre">reset</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ClassificationMetrics</span></code>: basic classification metrics such as accuracy.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RegressionMetrics</span></code>: MAE and RMSE style regression summaries.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SegmentationMetrics</span></code>: segmentation-oriented aggregation.</p></li>
 </ul>
 </section>
 <section id="usage">
@@ -292,9 +293,11 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClassificationMetrics</span>
 
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClassificationMetrics</span><span class="p">()]</span>
-<span class="c1"># pass to Trainer or call directly</span>
+<span class="c1"># pass to Trainer or update metrics directly</span>
 </pre></div>
 </div>
+<p>Use this page together with <a class="reference internal" href="pyhazards_engine.html"><span class="doc">Engine</span></a> if you want a consistent
+train/evaluate workflow.</p>
 </section>
 </section>
 
@@ -354,8 +357,8 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Metrics</a><ul>
-<li><a class="reference internal" href="#summary">Summary</a></li>
-<li><a class="reference internal" href="#core-classes">Core classes</a></li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#core-classes">Core Classes</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>
 </ul>
 </li>

@@ -293,62 +293,33 @@
 <a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards"><img alt="GitHub" src="_images/github.svg" />
 </a>
 <hr class="docutils" />
-<section id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
-<p>PyHazards is a Python framework for AI-powered hazard prediction and risk assessment. It provides a hazard-first API for loading data, building models, running end-to-end experiments, and extending with your own modules.</p>
+<section id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h1>
+<p>PyHazards is a Python library for hazard-focused machine learning. It provides a
+consistent interface for dataset inspection, model construction, experiment
+execution, and hazard-specific extensions.</p>
+<p>The documentation is organized around two common workflows:</p>
+<ol class="arabic simple">
+<li><p><strong>Use the library</strong>: install PyHazards, inspect data, build a model, and run a
+short experiment.</p></li>
+<li><p><strong>Extend the library</strong>: add a dataset, register a model, and keep the docs and
+smoke tests aligned with the existing project structure.</p></li>
+</ol>
 </section>
-<section id="core-components">
-<h1>Core Components<a class="headerlink" href="#core-components" title="Link to this heading">¶</a></h1>
-<p>PyHazards is organized around four core components that map to a full hazard ML workflow: data preparation, model construction, experiment execution, and evaluation.</p>
+<section id="what-you-can-do-with-pyhazards">
+<h1>What You Can Do with PyHazards<a class="headerlink" href="#what-you-can-do-with-pyhazards" title="Link to this heading">¶</a></h1>
 <ul class="simple">
-<li><p><strong>Datasets</strong>: Standardized dataset interfaces expose tabular, temporal, raster, and graph-style hazard data through <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code> so data loading stays consistent across tasks.</p></li>
-<li><p><strong>Models</strong>: A registry-based model API provides built-in hazard architectures and reusable backbones/heads, making it straightforward to swap models or add your own.</p></li>
-<li><p><strong>Engine</strong>: <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> centralizes fit/evaluate/predict loops with optional mixed precision and distributed execution.</p></li>
-<li><p><strong>Metrics and Utilities</strong>: Task-specific metrics plus hardware/reproducibility helpers support reliable evaluation and repeatable experiments.</p></li>
+<li><p>Inspect hazard datasets through consistent CLI entrypoints and dataset pages.</p></li>
+<li><p>Build registered models by name instead of wiring architectures manually.</p></li>
+<li><p>Train, evaluate, and predict with a shared <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> interface.</p></li>
+<li><p>Publish hazard-specific model docs and examples through the library’s catalog
+workflow.</p></li>
 </ul>
 </section>
-<section id="install">
-<h1>Install<a class="headerlink" href="#install" title="Link to this heading">¶</a></h1>
-<p>Install from PyPI. If you plan to run on GPU, install a compatible PyTorch build first.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pyhazards
-</pre></div>
-</div>
-</section>
-<section id="load-data">
-<h1>Load Data<a class="headerlink" href="#load-data" title="Link to this heading">¶</a></h1>
-<p>Use the dataset module entrypoint for consistent dataset inspection/loading across datasets.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.era5.inspection<span class="w"> </span>--path<span class="w"> </span>pyhazards/data/era5_subset<span class="w"> </span>--max-vars<span class="w"> </span><span class="m">10</span>
-</pre></div>
-</div>
-</section>
-<section id="load-model">
-<h1>Load Model<a class="headerlink" href="#load-model" title="Link to this heading">¶</a></h1>
-<p>Build one implemented model from the registry (this example uses the wildfire model).</p>
-<p>Example using <code class="docutils literal notranslate"><span class="pre">wildfire_aspp</span></code>:</p>
+<section id="minimal-example">
+<h1>Minimal Example<a class="headerlink" href="#minimal-example" title="Link to this heading">¶</a></h1>
+<p>Build a registered model in one step:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Step 2/3] Building model...&quot;</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;wildfire_aspp&quot;</span><span class="p">,</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;segmentation&quot;</span><span class="p">,</span>
-    <span class="n">in_channels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Step 2/3] Model built.&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="full-test">
-<h1>Full Test<a class="headerlink" href="#full-test" title="Link to this heading">¶</a></h1>
-<p>Validation example: load the same ERA5-based hydrograph subset and run one epoch with <code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code>.
-This uses <code class="docutils literal notranslate"><span class="pre">load_hydrograph_data</span></code> as the model-specific adapter after dataset inspection.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.data.load_hydrograph_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hydrograph_data</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">graph_collate</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Trainer</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">load_hydrograph_data</span><span class="p">(</span><span class="s2">&quot;pyhazards/data/era5_subset&quot;</span><span class="p">,</span> <span class="n">max_nodes</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hydrographnet&quot;</span><span class="p">,</span>
@@ -357,54 +328,37 @@ This uses <code class="docutils literal notranslate"><span class="pre">load_hydr
     <span class="n">edge_in_dim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="n">out_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">)</span>
-
-<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">mixed_precision</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
-<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Step 3/3] Running one training epoch...&quot;</span><span class="p">)</span>
-<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span>
-    <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
-    <span class="n">loss_fn</span><span class="o">=</span><span class="n">loss_fn</span><span class="p">,</span>
-    <span class="n">max_epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">collate_fn</span><span class="o">=</span><span class="n">graph_collate</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Step 3/3] Evaluating on train split...&quot;</span><span class="p">)</span>
-<span class="n">metrics</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span>
-    <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">collate_fn</span><span class="o">=</span><span class="n">graph_collate</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="quick-verification-test-py">
-<h1>Quick Verification (<code class="docutils literal notranslate"><span class="pre">test.py</span></code>)<a class="headerlink" href="#quick-verification-test-py" title="Link to this heading">¶</a></h1>
-<p>Run the built-in GPU smoke test:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>test.py
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">test.py</span></code> is a validation/smoke test only. It verifies pipeline correctness and integration, not final benchmark performance.</p>
-<p>It prints step-by-step status and ends with:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>PASS: end-to-end implementation is working.
-</pre></div>
-</div>
-</section>
-<section id="custom-module">
-<h1>Custom Module<a class="headerlink" href="#custom-module" title="Link to this heading">¶</a></h1>
-<p>Use this when you want to add your own dataset/model implementation into PyHazards.</p>
-<p>To upload and use your own data/model modules:</p>
+<section id="start-here">
+<h1>Start Here<a class="headerlink" href="#start-here" title="Link to this heading">¶</a></h1>
+<p>If you are new to PyHazards, use the docs in this order:</p>
 <ol class="arabic simple">
-<li><p>Upload your raw data files to your project path and write a dataset loader that returns a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>.</p></li>
-<li><p>Register your model with <code class="docutils literal notranslate"><span class="pre">register_model</span></code> and a builder function that returns an <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code>.</p></li>
-<li><p>Build with <code class="docutils literal notranslate"><span class="pre">build_model(...)</span></code> and train/evaluate through <code class="docutils literal notranslate"><span class="pre">Trainer</span></code>.</p></li>
+<li><p><a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> for environment setup and verification.</p></li>
+<li><p><a class="reference internal" href="quick_start.html"><span class="doc">Quick Start</span></a> for the first runnable workflow.</p></li>
+<li><p><a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a> and <a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a> to browse the built-in
+dataset and model references.</p></li>
 </ol>
-<p>For implementation details, see <a class="reference internal" href="implementation.html"><span class="doc">Implementation Guide</span></a>, <a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a>, and <a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a>.</p>
+</section>
+<section id="documentation-map">
+<h1>Documentation Map<a class="headerlink" href="#documentation-map" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="installation.html"><span class="doc">Installation</span></a>: install from PyPI or source and verify the package.</p></li>
+<li><p><a class="reference internal" href="quick_start.html"><span class="doc">Quick Start</span></a>: run one small end-to-end example.</p></li>
+<li><p><a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a>: browse datasets and inspection commands.</p></li>
+<li><p><a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a>: browse the public model catalog and registry usage.</p></li>
+<li><p><a class="reference internal" href="interactive_map.html"><span class="doc">Interactive Map</span></a>: open the companion wildfire map at
+<code class="docutils literal notranslate"><span class="pre">https://rai-fire.com/</span></code>.</p></li>
+<li><p><a class="reference internal" href="implementation.html"><span class="doc">Implementation Guide</span></a>: contributor-oriented guidance for adding datasets and
+models.</p></li>
+</ul>
+</section>
+<section id="for-contributors">
+<h1>For Contributors<a class="headerlink" href="#for-contributors" title="Link to this heading">¶</a></h1>
+<p>PyHazards is registry-driven. If you plan to contribute a new dataset or model,
+start with <a class="reference internal" href="implementation.html"><span class="doc">Implementation Guide</span></a> and then use the reference pages for the
+relevant subsystem.</p>
 </section>
 <section id="how-to-cite">
 <h1>How to Cite<a class="headerlink" href="#how-to-cite" title="Link to this heading">¶</a></h1>
@@ -424,14 +378,6 @@ This uses <code class="docutils literal notranslate"><span class="pre">load_hydr
 </div>
 <div class="toctree-wrapper compound">
 </div>
-<section id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-</section>
 </section>
 
         </article>

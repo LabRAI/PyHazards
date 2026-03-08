@@ -1,14 +1,11 @@
 References
 ==========
 
-Acknowledgments
----------------
+This page collects the main dataset and model references cited throughout the
+PyHazards docs. It is a project reference list, not an exhaustive bibliography.
 
-We thank the authors of the dataset and model publications cited below. Their work provides the scientific
-foundation used throughout this project.
-
-Dataset Publications
---------------------
+Dataset References
+------------------
 
 - Gelaro, R., McCarty, W., Suárez, M. J., et al. (2017). *The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA-2)*. `[link] <https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml>`__.
 - Hersbach, H., Bell, B., Berrisford, P., et al. (2020). *The ERA5 global reanalysis*. `[link] <https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803>`__.
@@ -19,8 +16,8 @@ Dataset Publications
 - National Interagency Fire Center (NIFC). *Wildland Fire Incident Geospatial Services (WFIGS)*. `[link] <https://data-nifc.opendata.arcgis.com/>`__.
 - Schmit, T. J., Griffith, P., Gunshor, M. M., et al. (2017). *A closer look at the ABI on the GOES-R series*. `[link] <https://doi.org/10.1175/BAMS-D-15-00230.1>`__.
 
-Model Publications
-------------------
+Model References
+----------------
 
 - Marjani et al. (2024). *Application of Explainable Artificial Intelligence in Predicting Wildfire Spread: An ASPP-Enabled CNN Approach*. `[link] <https://ieeexplore.ieee.org/document/10568207>`__.
 - Taghizadeh et al. (2025). *Interpretable physics-informed graph neural networks for flood forecasting*. `[link] <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`__.

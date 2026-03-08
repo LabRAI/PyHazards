@@ -1,24 +1,30 @@
 Quick Start
 =================
-This guide will help you get started with PyHazards quickly using the hazard-first API.
+This page is the shortest end-to-end path through PyHazards: verify the install,
+inspect one dataset, build one model, and run one short training loop.
 
-Basic Usage
------------
+Step 1: Verify the Package
+--------------------------
 
-Use the following minimal workflow to get started quickly: load one dataset, build one model, then run a short end-to-end test.
+Confirm that Python can import the package:
 
-Load Dataset (ERA5 example)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-This example uses the canonical ERA5 dataset module entrypoint to inspect/validate local ERA5 files.
-This keeps dataset usage aligned with other dataset modules in PyHazards.
+.. code-block:: bash
+
+    python -c "import pyhazards; print(pyhazards.__version__)"
+
+Step 2: Inspect Example Data
+----------------------------
+
+Use the ERA5 inspection entrypoint to validate the bundled sample data:
 
 .. code-block:: bash
 
     python -m pyhazards.datasets.era5.inspection --path pyhazards/data/era5_subset --max-vars 10
 
-Load Model (HydroGraphNet example)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-This example builds the implemented ``hydrographnet`` model for graph-based flood regression.
+Step 3: Build a Model
+---------------------
+
+Build ``hydrographnet`` from the model registry:
 
 .. code-block:: python
 
@@ -33,10 +39,11 @@ This example builds the implemented ``hydrographnet`` model for graph-based floo
     )
     print(type(model).__name__)
 
-Full Test (ERA5 + HydroGraphNet)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-This short script runs one training epoch and then evaluates on the available split to verify the end-to-end pipeline.
-It uses ``load_hydrograph_data`` as the model-specific ERA5-to-graph adapter for HydroGraphNet.
+Step 4: Run a Short Train/Evaluate Loop
+---------------------------------------
+
+This example uses the ERA5 subset plus ``hydrographnet`` to confirm that the
+dataset, model, and training engine work together.
 
 .. code-block:: python
 
@@ -77,34 +84,25 @@ It uses ``load_hydrograph_data`` as the model-specific ERA5-to-graph adapter for
     )
     print(metrics)
 
-GPU Support
------------
+Step 5: Choose What to Explore Next
+-----------------------------------
 
-PyHazards automatically detects CUDA availability. To explicitly set the device:
+- Go to :doc:`pyhazards_datasets` if you want to browse supported datasets.
+- Go to :doc:`pyhazards_models` if you want to compare built-in models.
+- Go to :doc:`implementation` if you want to add your own dataset or model.
 
-**Using Environment Variable:**
+Device Notes
+------------
+
+PyHazards uses CUDA automatically when available. To force a device:
 
 .. code-block:: bash
 
     export PYHAZARDS_DEVICE=cuda:0
 
-**Using Python API:**
-
 .. code-block:: python
 
     from pyhazards.utils import set_device
 
-    # Set to use CUDA device 0
     set_device("cuda:0")
-
-    # Or use CPU
     set_device("cpu")
-
-Next Steps
-----------
-
-For more detailed documentation, please refer to:
-
-- :doc:`pyhazards_datasets` - Dataset interface and registration
-- :doc:`pyhazards_utils` - Utility functions and helpers
-- :doc:`implementation` - Guide for implementing custom datasets and models

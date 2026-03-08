@@ -274,15 +274,25 @@
         <article role="main" id="furo-main-content">
           <section id="utils">
 <h1>Utils<a class="headerlink" href="#utils" title="Link to this heading">¶</a></h1>
-<section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
-<p>Utility modules for device management, seeding, logging, and other helpers.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>Utility helpers keep the rest of the library concise. Use these modules for
+device selection, reproducibility, and small shared helpers.</p>
 </section>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="api/pyhazards.utils.html#module-pyhazards.utils.hardware" title="pyhazards.utils.hardware"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyhazards.utils.hardware</span></code></a> — device helpers</p></li>
-<li><p><a class="reference internal" href="api/pyhazards.utils.html#module-pyhazards.utils.common" title="pyhazards.utils.common"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyhazards.utils.common</span></code></a> — seeding and logging helpers</p></li>
+<li><p><a class="reference internal" href="api/pyhazards.utils.html#module-pyhazards.utils.hardware" title="pyhazards.utils.hardware"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyhazards.utils.hardware</span></code></a>: device helpers and automatic device selection.</p></li>
+<li><p><a class="reference internal" href="api/pyhazards.utils.html#module-pyhazards.utils.common" title="pyhazards.utils.common"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyhazards.utils.common</span></code></a>: reproducibility, logging, and shared utility
+functions.</p></li>
+</ul>
+</section>
+<section id="typical-uses">
+<h2>Typical Uses<a class="headerlink" href="#typical-uses" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>choose CPU or GPU behavior explicitly,</p></li>
+<li><p>set deterministic seeds for experiments,</p></li>
+<li><p>reuse small helpers instead of copying project-specific boilerplate.</p></li>
 </ul>
 </section>
 </section>
@@ -343,8 +353,9 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Utils</a><ul>
-<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#typical-uses">Typical Uses</a></li>
 </ul>
 </li>
 </ul>

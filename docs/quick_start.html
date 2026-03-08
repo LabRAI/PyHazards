@@ -274,21 +274,25 @@
         <article role="main" id="furo-main-content">
           <section id="quick-start">
 <h1>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h1>
-<p>This guide will help you get started with PyHazards quickly using the hazard-first API.</p>
-<section id="basic-usage">
-<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading">¶</a></h2>
-<p>Use the following minimal workflow to get started quickly: load one dataset, build one model, then run a short end-to-end test.</p>
-<section id="load-dataset-era5-example">
-<h3>Load Dataset (ERA5 example)<a class="headerlink" href="#load-dataset-era5-example" title="Link to this heading">¶</a></h3>
-<p>This example uses the canonical ERA5 dataset module entrypoint to inspect/validate local ERA5 files.
-This keeps dataset usage aligned with other dataset modules in PyHazards.</p>
+<p>This page is the shortest end-to-end path through PyHazards: verify the install,
+inspect one dataset, build one model, and run one short training loop.</p>
+<section id="step-1-verify-the-package">
+<h2>Step 1: Verify the Package<a class="headerlink" href="#step-1-verify-the-package" title="Link to this heading">¶</a></h2>
+<p>Confirm that Python can import the package:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import pyhazards; print(pyhazards.__version__)&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="step-2-inspect-example-data">
+<h2>Step 2: Inspect Example Data<a class="headerlink" href="#step-2-inspect-example-data" title="Link to this heading">¶</a></h2>
+<p>Use the ERA5 inspection entrypoint to validate the bundled sample data:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.era5.inspection<span class="w"> </span>--path<span class="w"> </span>pyhazards/data/era5_subset<span class="w"> </span>--max-vars<span class="w"> </span><span class="m">10</span>
 </pre></div>
 </div>
 </section>
-<section id="load-model-hydrographnet-example">
-<h3>Load Model (HydroGraphNet example)<a class="headerlink" href="#load-model-hydrographnet-example" title="Link to this heading">¶</a></h3>
-<p>This example builds the implemented <code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code> model for graph-based flood regression.</p>
+<section id="step-3-build-a-model">
+<h2>Step 3: Build a Model<a class="headerlink" href="#step-3-build-a-model" title="Link to this heading">¶</a></h2>
+<p>Build <code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code> from the model registry:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
@@ -302,10 +306,10 @@ This keeps dataset usage aligned with other dataset modules in PyHazards.</p>
 </pre></div>
 </div>
 </section>
-<section id="full-test-era5-hydrographnet">
-<h3>Full Test (ERA5 + HydroGraphNet)<a class="headerlink" href="#full-test-era5-hydrographnet" title="Link to this heading">¶</a></h3>
-<p>This short script runs one training epoch and then evaluates on the available split to verify the end-to-end pipeline.
-It uses <code class="docutils literal notranslate"><span class="pre">load_hydrograph_data</span></code> as the model-specific ERA5-to-graph adapter for HydroGraphNet.</p>
+<section id="step-4-run-a-short-train-evaluate-loop">
+<h2>Step 4: Run a Short Train/Evaluate Loop<a class="headerlink" href="#step-4-run-a-short-train-evaluate-loop" title="Link to this heading">¶</a></h2>
+<p>This example uses the ERA5 subset plus <code class="docutils literal notranslate"><span class="pre">hydrographnet</span></code> to confirm that the
+dataset, model, and training engine work together.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.data.load_hydrograph_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_hydrograph_data</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">graph_collate</span>
@@ -345,33 +349,26 @@ It uses <code class="docutils literal notranslate"><span class="pre">load_hydrog
 </pre></div>
 </div>
 </section>
+<section id="step-5-choose-what-to-explore-next">
+<h2>Step 5: Choose What to Explore Next<a class="headerlink" href="#step-5-choose-what-to-explore-next" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Go to <a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a> if you want to browse supported datasets.</p></li>
+<li><p>Go to <a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a> if you want to compare built-in models.</p></li>
+<li><p>Go to <a class="reference internal" href="implementation.html"><span class="doc">Implementation Guide</span></a> if you want to add your own dataset or model.</p></li>
+</ul>
 </section>
-<section id="gpu-support">
-<h2>GPU Support<a class="headerlink" href="#gpu-support" title="Link to this heading">¶</a></h2>
-<p>PyHazards automatically detects CUDA availability. To explicitly set the device:</p>
-<p><strong>Using Environment Variable:</strong></p>
+<section id="device-notes">
+<h2>Device Notes<a class="headerlink" href="#device-notes" title="Link to this heading">¶</a></h2>
+<p>PyHazards uses CUDA automatically when available. To force a device:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PYHAZARDS_DEVICE</span><span class="o">=</span>cuda:0
 </pre></div>
 </div>
-<p><strong>Using Python API:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_device</span>
 
-<span class="c1"># Set to use CUDA device 0</span>
 <span class="n">set_device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">)</span>
-
-<span class="c1"># Or use CPU</span>
 <span class="n">set_device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="next-steps">
-<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">¶</a></h2>
-<p>For more detailed documentation, please refer to:</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a> - Dataset interface and registration</p></li>
-<li><p><a class="reference internal" href="pyhazards_utils.html"><span class="doc">Utils</span></a> - Utility functions and helpers</p></li>
-<li><p><a class="reference internal" href="implementation.html"><span class="doc">Implementation Guide</span></a> - Guide for implementing custom datasets and models</p></li>
-</ul>
 </section>
 </section>
 
@@ -431,14 +428,12 @@ It uses <code class="docutils literal notranslate"><span class="pre">load_hydrog
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Quick Start</a><ul>
-<li><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
-<li><a class="reference internal" href="#load-dataset-era5-example">Load Dataset (ERA5 example)</a></li>
-<li><a class="reference internal" href="#load-model-hydrographnet-example">Load Model (HydroGraphNet example)</a></li>
-<li><a class="reference internal" href="#full-test-era5-hydrographnet">Full Test (ERA5 + HydroGraphNet)</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#gpu-support">GPU Support</a></li>
-<li><a class="reference internal" href="#next-steps">Next Steps</a></li>
+<li><a class="reference internal" href="#step-1-verify-the-package">Step 1: Verify the Package</a></li>
+<li><a class="reference internal" href="#step-2-inspect-example-data">Step 2: Inspect Example Data</a></li>
+<li><a class="reference internal" href="#step-3-build-a-model">Step 3: Build a Model</a></li>
+<li><a class="reference internal" href="#step-4-run-a-short-train-evaluate-loop">Step 4: Run a Short Train/Evaluate Loop</a></li>
+<li><a class="reference internal" href="#step-5-choose-what-to-explore-next">Step 5: Choose What to Explore Next</a></li>
+<li><a class="reference internal" href="#device-notes">Device Notes</a></li>
 </ul>
 </li>
 </ul>

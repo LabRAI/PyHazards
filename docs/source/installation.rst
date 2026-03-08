@@ -1,31 +1,61 @@
 Installation
 ============
 
-PyHazards requires Python 3.8+ and can be installed using pip. We recommend using a conda environment for installation.
+PyHazards supports Python 3.8 through 3.12 and installs with ``pip``. This page
+covers the recommended install paths for users and contributors.
 
-Installing PyHazards
---------------------
+Requirements
+------------
 
-Base install:
+- Python ``>=3.8, <3.13``
+- PyTorch ``>=2.3, <3.0``
+
+Basic Install
+-------------
+
+Install from PyPI:
 
 .. code-block:: bash
 
     pip install pyhazards
 
-PyTorch notes (Python 3.8, CUDA 12.6 example):
+GPU Install
+-----------
 
-- Install the matching PyTorch wheel first, then install PyHazards.
-- Example (CUDA 12.6):
+If you plan to run on GPU, install a matching PyTorch build first and then
+install PyHazards.
 
-  .. code-block:: bash
+Example for CUDA 12.6:
 
-      pip install torch --index-url https://download.pytorch.org/whl/cu126
-      pip install pyhazards
+.. code-block:: bash
 
+    pip install torch --index-url https://download.pytorch.org/whl/cu126
+    pip install pyhazards
 
+Install from Source
+-------------------
 
-Requirements
-------------
+Use an editable install if you are contributing code or documentation:
 
-- Python >= 3.8
-- PyTorch == 2.3.0
+.. code-block:: bash
+
+    git clone https://github.com/LabRAI/PyHazards.git
+    cd PyHazards
+    python -m pip install -e .
+
+Verify the Installation
+-----------------------
+
+Run a small import check:
+
+.. code-block:: bash
+
+    python -c "import pyhazards; print(pyhazards.__version__)"
+
+You should see the installed package version printed to stdout.
+
+Next Steps
+----------
+
+- Continue to :doc:`quick_start` for a first runnable example.
+- See :doc:`implementation` if you are setting up a contributor workflow.

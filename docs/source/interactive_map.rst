@@ -1,8 +1,16 @@
 Interactive Map
 ===============
 
-PyHazards links to the external **RAI Fire** interactive wildfire map for browser-based
-exploration and public sharing.
+PyHazards includes a lightweight launcher for the external **RAI Fire**
+interactive wildfire map. Use it when you want a browser-based view of the map
+without leaving the broader PyHazards workflow.
+
+What This Page Covers
+---------------------
+
+- the live RAI Fire website,
+- the built-in launcher command,
+- the small Python helper exposed by the package.
 
 Live Website
 ------------
@@ -13,13 +21,13 @@ Live Website
 Command Line
 ------------
 
-Use the built-in launcher to open the website from the library:
+Open the website from the library with:
 
 .. code-block:: bash
 
     python -m pyhazards map
 
-The command always prints the website URL and attempts to open it in your default browser.
+The command prints the URL and, when possible, opens it in your default browser.
 
 Python API
 ----------
@@ -30,6 +38,13 @@ Python API
 
     url = open_interactive_map()
     print(url)
+
+Notes
+-----
+
+The interactive map is an external companion application. PyHazards links to it
+and provides a launcher, but it does not host the web application inside the
+Python package itself.
 
 Module Reference
 ----------------

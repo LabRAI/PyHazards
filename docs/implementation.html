@@ -274,14 +274,22 @@
         <article role="main" id="furo-main-content">
           <section id="implementation-guide">
 <h1>Implementation Guide<a class="headerlink" href="#implementation-guide" title="Link to this heading">¶</a></h1>
-<section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
-<p>PyHazards is modular and registry-driven. This guide shows how to add your own datasets and models in line
-with the hazard-first architecture.</p>
+<p>Use this guide when you want to extend PyHazards itself. It is written for
+contributors who are adding datasets, models, smoke tests, or generated docs.</p>
+<section id="contributor-workflow">
+<h2>Contributor Workflow<a class="headerlink" href="#contributor-workflow" title="Link to this heading">¶</a></h2>
+<p>Most contributions follow the same pattern:</p>
+<ol class="arabic simple">
+<li><p>add or update a dataset or model implementation,</p></li>
+<li><p>register it in the appropriate subsystem,</p></li>
+<li><p>validate the change with a targeted smoke test,</p></li>
+<li><p>update the relevant documentation page.</p></li>
+</ol>
 </section>
 <section id="datasets">
 <h2>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">¶</a></h2>
-<p>Implement a dataset by subclassing <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> and returning a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code> from <code class="docutils literal notranslate"><span class="pre">_load()</span></code>. Register it so users can load by name.</p>
+<p>Implement a dataset by subclassing <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> and returning a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>
+from <code class="docutils literal notranslate"><span class="pre">_load()</span></code>. Register it so users can load it by name.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">DataBundle</span><span class="p">,</span> <span class="n">DataSplit</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">FeatureSpec</span><span class="p">,</span> <span class="n">LabelSpec</span><span class="p">,</span> <span class="n">register_dataset</span>
@@ -310,7 +318,8 @@ with the hazard-first architecture.</p>
 </section>
 <section id="models">
 <h2>Models<a class="headerlink" href="#models" title="Link to this heading">¶</a></h2>
-<p>Use the provided backbones (MLP, CNN patch encoder, temporal encoder) and task heads (classification, regression, segmentation) via <code class="docutils literal notranslate"><span class="pre">build_model</span></code>. To add a custom model, register a builder:</p>
+<p>Use the model registry when adding a new architecture. The builder should accept
+<code class="docutils literal notranslate"><span class="pre">task</span></code> plus the required shape arguments and return an <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_model</span>
 
@@ -327,6 +336,41 @@ with the hazard-first architecture.</p>
 <span class="n">register_model</span><span class="p">(</span><span class="s2">&quot;my_mlp&quot;</span><span class="p">,</span> <span class="n">my_model_builder</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;hidden_dim&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">})</span>
 </pre></div>
 </div>
+</section>
+<section id="documenting-a-model-contribution">
+<h2>Documenting a Model Contribution<a class="headerlink" href="#documenting-a-model-contribution" title="Link to this heading">¶</a></h2>
+<p>Model contributions should stay aligned with the catalog-backed documentation
+workflow:</p>
+<ol class="arabic simple">
+<li><p>add or update <code class="docutils literal notranslate"><span class="pre">pyhazards/model_cards/&lt;model_name&gt;.yaml</span></code>,</p></li>
+<li><p>run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/render_model_docs.py</span></code>,</p></li>
+<li><p>verify the model with <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/smoke_test_models.py</span> <span class="pre">--models</span> <span class="pre">&lt;model_name&gt;</span></code>,</p></li>
+<li><p>keep any public-facing hazard/model descriptions concise and reproducible.</p></li>
+</ol>
+</section>
+<section id="validation-checklist">
+<h2>Validation Checklist<a class="headerlink" href="#validation-checklist" title="Link to this heading">¶</a></h2>
+<p>Before opening a pull request, run the smallest checks that match your change:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import pyhazards; print(pyhazards.__version__)&quot;</span>
+python<span class="w"> </span>scripts/render_model_docs.py<span class="w"> </span>--check
+python<span class="w"> </span>scripts/verify_table_entries.py
+</pre></div>
+</div>
+<p>If you changed a model implementation, also run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/smoke_test_models.py<span class="w"> </span>--models<span class="w"> </span>&lt;model_name&gt;
+python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_model_catalog.py
+</pre></div>
+</div>
+</section>
+<section id="contributor-notes">
+<h2>Contributor Notes<a class="headerlink" href="#contributor-notes" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Use the registry APIs instead of hard-coding new entrypoints.</p></li>
+<li><p>Keep examples minimal and runnable.</p></li>
+<li><p>Put user-facing discovery text in docs pages and model cards, not only in code
+comments.</p></li>
+<li><p>For repository-specific contributor rules, also see <code class="docutils literal notranslate"><span class="pre">.github/IMPLEMENTATION.md</span></code>.</p></li>
+</ul>
 </section>
 </section>
 
@@ -386,9 +430,12 @@ with the hazard-first architecture.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Implementation Guide</a><ul>
-<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#contributor-workflow">Contributor Workflow</a></li>
 <li><a class="reference internal" href="#datasets">Datasets</a></li>
 <li><a class="reference internal" href="#models">Models</a></li>
+<li><a class="reference internal" href="#documenting-a-model-contribution">Documenting a Model Contribution</a></li>
+<li><a class="reference internal" href="#validation-checklist">Validation Checklist</a></li>
+<li><a class="reference internal" href="#contributor-notes">Contributor Notes</a></li>
 </ul>
 </li>
 </ul>

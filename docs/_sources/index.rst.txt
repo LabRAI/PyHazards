@@ -41,74 +41,37 @@
 
 ----
 
-Introduction
-------------
+Overview
+--------
 
-PyHazards is a Python framework for AI-powered hazard prediction and risk assessment. It provides a hazard-first API for loading data, building models, running end-to-end experiments, and extending with your own modules.
+PyHazards is a Python library for hazard-focused machine learning. It provides a
+consistent interface for dataset inspection, model construction, experiment
+execution, and hazard-specific extensions.
 
-Core Components
+The documentation is organized around two common workflows:
+
+1. **Use the library**: install PyHazards, inspect data, build a model, and run a
+   short experiment.
+2. **Extend the library**: add a dataset, register a model, and keep the docs and
+   smoke tests aligned with the existing project structure.
+
+What You Can Do with PyHazards
+------------------------------
+
+- Inspect hazard datasets through consistent CLI entrypoints and dataset pages.
+- Build registered models by name instead of wiring architectures manually.
+- Train, evaluate, and predict with a shared ``Trainer`` interface.
+- Publish hazard-specific model docs and examples through the library's catalog
+  workflow.
+
+Minimal Example
 ---------------
 
-PyHazards is organized around four core components that map to a full hazard ML workflow: data preparation, model construction, experiment execution, and evaluation.
-
-- **Datasets**: Standardized dataset interfaces expose tabular, temporal, raster, and graph-style hazard data through ``DataBundle`` so data loading stays consistent across tasks.
-- **Models**: A registry-based model API provides built-in hazard architectures and reusable backbones/heads, making it straightforward to swap models or add your own.
-- **Engine**: ``Trainer`` centralizes fit/evaluate/predict loops with optional mixed precision and distributed execution.
-- **Metrics and Utilities**: Task-specific metrics plus hardware/reproducibility helpers support reliable evaluation and repeatable experiments.
-
-Install
--------
-
-Install from PyPI. If you plan to run on GPU, install a compatible PyTorch build first.
-
-.. code-block:: bash
-
-    pip install pyhazards
-
-Load Data
----------
-
-Use the dataset module entrypoint for consistent dataset inspection/loading across datasets.
-
-.. code-block:: bash
-
-    python -m pyhazards.datasets.era5.inspection --path pyhazards/data/era5_subset --max-vars 10
-
-Load Model
-----------
-
-Build one implemented model from the registry (this example uses the wildfire model).
-
-Example using ``wildfire_aspp``:
+Build a registered model in one step:
 
 .. code-block:: python
 
     from pyhazards.models import build_model
-
-    print("[Step 2/3] Building model...")
-    model = build_model(
-        name="wildfire_aspp",
-        task="segmentation",
-        in_channels=12,
-    )
-    print("[Step 2/3] Model built.")
-    print(type(model).__name__)
-
-Full Test
----------
-
-Validation example: load the same ERA5-based hydrograph subset and run one epoch with ``hydrographnet``.
-This uses ``load_hydrograph_data`` as the model-specific adapter after dataset inspection.
-
-.. code-block:: python
-
-    import torch
-    from pyhazards.data.load_hydrograph_data import load_hydrograph_data
-    from pyhazards.datasets import graph_collate
-    from pyhazards.engine import Trainer
-    from pyhazards.models import build_model
-
-    data = load_hydrograph_data("pyhazards/data/era5_subset", max_nodes=50)
 
     model = build_model(
         name="hydrographnet",
@@ -118,58 +81,34 @@ This uses ``load_hydrograph_data`` as the model-specific adapter after dataset i
         out_dim=1,
     )
 
-    trainer = Trainer(model=model, mixed_precision=False)
-    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-    loss_fn = torch.nn.MSELoss()
+Start Here
+----------
 
-    print("[Step 3/3] Running one training epoch...")
-    trainer.fit(
-        data,
-        optimizer=optimizer,
-        loss_fn=loss_fn,
-        max_epochs=1,
-        batch_size=1,
-        collate_fn=graph_collate,
-    )
+If you are new to PyHazards, use the docs in this order:
 
-    print("[Step 3/3] Evaluating on train split...")
-    metrics = trainer.evaluate(
-        data,
-        split="train",
-        batch_size=1,
-        collate_fn=graph_collate,
-    )
-    print(metrics)
+1. :doc:`installation` for environment setup and verification.
+2. :doc:`quick_start` for the first runnable workflow.
+3. :doc:`pyhazards_datasets` and :doc:`pyhazards_models` to browse the built-in
+   dataset and model references.
 
-Quick Verification (``test.py``)
---------------------------------
+Documentation Map
+-----------------
 
-Run the built-in GPU smoke test:
+- :doc:`installation`: install from PyPI or source and verify the package.
+- :doc:`quick_start`: run one small end-to-end example.
+- :doc:`pyhazards_datasets`: browse datasets and inspection commands.
+- :doc:`pyhazards_models`: browse the public model catalog and registry usage.
+- :doc:`interactive_map`: open the companion wildfire map at
+  ``https://rai-fire.com/``.
+- :doc:`implementation`: contributor-oriented guidance for adding datasets and
+  models.
 
-.. code-block:: bash
+For Contributors
+----------------
 
-    python test.py
-
-``test.py`` is a validation/smoke test only. It verifies pipeline correctness and integration, not final benchmark performance.
-
-It prints step-by-step status and ends with:
-
-.. code-block:: text
-
-    PASS: end-to-end implementation is working.
-
-Custom Module
--------------
-
-Use this when you want to add your own dataset/model implementation into PyHazards.
-
-To upload and use your own data/model modules:
-
-1. Upload your raw data files to your project path and write a dataset loader that returns a ``DataBundle``.
-2. Register your model with ``register_model`` and a builder function that returns an ``nn.Module``.
-3. Build with ``build_model(...)`` and train/evaluate through ``Trainer``.
-
-For implementation details, see :doc:`implementation`, :doc:`pyhazards_datasets`, and :doc:`pyhazards_models`.
+PyHazards is registry-driven. If you plan to contribute a new dataset or model,
+start with :doc:`implementation` and then use the reference pages for the
+relevant subsystem.
 
 How to Cite
 -----------
@@ -216,11 +155,3 @@ If you use PyHazards in your research, please cite:
    cite
    references
    team
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

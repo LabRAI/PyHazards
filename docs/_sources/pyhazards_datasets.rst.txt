@@ -1,20 +1,22 @@
 Datasets
 ===================
 
-Summary
--------
+Overview
+--------
 
-PyHazards maintains a curated catalog of commonly used hazard datasets and provides
-dataset-specific utilities for **download / preprocessing / inspection / visualization**.
+Use this page to browse the built-in dataset references and the inspection
+commands that help you validate local files before training.
 
-Each dataset page describes: (1) what the dataset is, (2) how to obtain it, and (3) how to
-quickly validate local data files via an inspection entrypoint (when available).
+Each dataset page answers three practical questions:
 
+1. What is this dataset?
+2. How do I obtain or prepare it?
+3. What command should I run to check that my files are usable?
 
-Datasets
---------------------
+Dataset Catalog
+---------------
 
-Click a dataset name to open its unified dataset page (description + how to use in PyHazards).
+Select a dataset name below to open its reference page.
 
 .. list-table::
    :widths: 30 70
@@ -58,26 +60,28 @@ Click a dataset name to open its unified dataset page (description + how to use 
 Dataset inspection
 ------------------
 
-PyHazards provides dataset inspection entrypoints to quickly validate local files and produce
-basic summaries/plots.
+PyHazards provides inspection entrypoints so you can validate local files and
+produce basic summaries before writing a training loop.
 
-Currently implemented:
+Current end-to-end example:
 
-- **MERRA-2 (merra2)**: one-shot pipeline to **download raw MERRA-2 → merge SFC+PRES → inspect → save plots/tables**.
+- **MERRA-2 (merra2)**: download raw files if needed, merge the required
+  products, inspect the result, and save outputs.
 
 .. code-block:: bash
 
-   # One command: download (if needed) -> merge -> inspect -> save outputs
    python -m pyhazards.datasets.inspection 20260101
 
 
 Notes (MERRA-2)
 ~~~~~~~~~~~~~~~
 
-- Download requires Earthdata credentials via environment variables::
+- Download requires Earthdata credentials:
 
-     export EARTHDATA_USERNAME="YOUR_USERNAME"
-     export EARTHDATA_PASSWORD="YOUR_PASSWORD"
+  .. code-block:: bash
+
+      export EARTHDATA_USERNAME="YOUR_USERNAME"
+      export EARTHDATA_PASSWORD="YOUR_PASSWORD"
 
 - Date formats accepted: ``YYYYMMDD`` (e.g., ``20260101``) or ISO ``YYYY-MM-DD``.
 - Optional flags commonly used:
@@ -87,75 +91,59 @@ Notes (MERRA-2)
   - ``--var T2M`` to choose the plotted surface variable (default: ``T2M``)
 
 
-Dataloader
----------------
+Simple Dataloader Helper
+------------------------
 
 .. literalinclude:: ../../pyhazards/datasets/dataloader/README.md
    :language: markdown
 
 
-Example skeleton
-----------------
+Minimal Inspection Workflow
+---------------------------
 
-A "nice" skeleton should make it explicit **what data you load** and how it flows into
-**inspection/visualization**.
-
-Below is the recommended pattern: set ``data`` to a dataset name (e.g., ``"merra2"`` or ``"mtbs"``)
-and run the dataset's inspection entrypoint accordingly.
+Use the following pattern when you want to script dataset inspection in a
+repeatable way.
 
 .. code-block:: python
 
    import subprocess
 
-   # 1) Choose what dataset you want to load/inspect
-   data = "merra2"   # e.g., "merra2", "mtbs", "era5", "firms", "landfire", "wfigs", "goesr" (use accordingly)
-
-   # 2) Choose the dataset key (identifier)
-   #    - For MERRA-2, the key is a daily date: "YYYYMMDD" (e.g., "20260101")
-   #    - For other datasets (e.g., MTBS), the key could be an event/scene id (to be defined per dataset)
+   data = "merra2"
    key = "20260101"
 
-   # 3) Run the inspection pipeline (download/preprocess if needed -> inspect -> visualize -> save outputs)
    if data == "merra2":
        cmd = [
            "python", "-m", "pyhazards.datasets.inspection",
            key,
-           "--var", "T2M",           # change variable to plot (e.g., QV2M)
-           "--outdir", "outputs",    # output folder under repo root by default
+           "--var", "T2M",
+           "--outdir", "outputs",
        ]
    else:
-       # Convention for other datasets:
-       # provide a dataset-specific inspection entrypoint:
-       #   python -m pyhazards.datasets.<dataset>.inspection <key> ...
        cmd = ["python", "-m", f"pyhazards.datasets.{data}.inspection", key, "--outdir", "outputs"]
 
    subprocess.run(cmd, check=True)
 
-   # 4) After running, check outputs/ for saved artifacts (tables + plots).
-   #    Example (MERRA-2): CSV tables for variable inventory + a PDF plot for the selected surface variable.
+Inspection CLI Convention
+-------------------------
 
+Inspection entrypoints should follow the same basic shape across datasets:
 
-Inspection entrypoints (convention for all datasets)
-----------------------------------------------------
+- **Input**: a dataset identifier such as a date or event id.
+- **Work**: prepare local files if needed, inspect them, and save lightweight
+  artifacts.
+- **Output**: figures or tables under ``outputs/``.
 
-Each dataset should expose a minimal inspection entrypoint that supports the same user experience:
-
-- **Input**: a dataset identifier (``key``) such as a date/event id.
-- **Work**: download/prepare (if needed) → open files → summarize → visualize.
-- **Output**: saved artifacts under ``outputs/`` (tables + figures).
-
-Recommended CLI shape (dataset-specific):
+Recommended dataset-specific CLI:
 
 .. code-block:: bash
 
-   # Example convention (to be implemented per dataset):
    python -m pyhazards.datasets.<dataset>.inspection <key> --outdir outputs
 
 
-Developer note
---------------
+For Contributors
+----------------
 
-If you plan to add inspection for a new dataset, mirror the MERRA-2 inspection pattern:
+If you add a new dataset inspection entrypoint, mirror the existing pattern:
 
 1) parse CLI args (key + outdir + skip/force flags),
 2) materialize required local files (download/preprocess),

@@ -274,20 +274,16 @@
         <article role="main" id="furo-main-content">
           <section id="models">
 <h1>Models<a class="headerlink" href="#models" title="Link to this heading">¶</a></h1>
-<section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
-<p>PyHazards provides a lightweight, extensible model architecture with:</p>
-<ul class="simple">
-<li><p>Backbones for common data types: MLP (tabular), CNN patch encoder (raster), temporal encoder (time-series).</p></li>
-<li><p>Task heads: classification, regression, segmentation.</p></li>
-<li><p>A registry-driven builder so you can construct built-ins by name or register your own.</p></li>
-<li><p>Hazard-focused implementations for wildfire, flood, earthquake, weather, and more.</p></li>
-</ul>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>Use this page to browse the public model catalog, jump to model-specific
+docs, and see the minimal registry pattern for building or registering a
+model in PyHazards.</p>
 </section>
-<section id="model">
-<h2>Model<a class="headerlink" href="#model" title="Link to this heading">¶</a></h2>
-<p>The public model catalog is generated from <code class="docutils literal notranslate"><span class="pre">pyhazards/model_cards/*.yaml</span></code>.
-Add or update a model card to refresh the model tables and detail pages automatically.</p>
+<section id="model-catalog">
+<h2>Model Catalog<a class="headerlink" href="#model-catalog" title="Link to this heading">¶</a></h2>
+<p>The public catalog below is generated from <code class="docutils literal notranslate"><span class="pre">pyhazards/model_cards/*.yaml</span></code>.
+Add or update a model card to refresh the tables and per-model pages.</p>
 <section id="earthquake">
 <h3>Earthquake<a class="headerlink" href="#earthquake" title="Link to this heading">¶</a></h3>
 <div class="table-wrapper colwidths-given dataset-list docutils container">
@@ -355,10 +351,10 @@ Add or update a model card to refresh the model tables and detail pages automati
 </div>
 </section>
 </section>
-<section id="build-and-register-custom-model">
-<h2>Build and register custom model<a class="headerlink" href="#build-and-register-custom-model" title="Link to this heading">¶</a></h2>
-<section id="build-a-built-in-model">
-<h3>Build a built-in model<a class="headerlink" href="#build-a-built-in-model" title="Link to this heading">¶</a></h3>
+<section id="using-the-registry">
+<h2>Using the Registry<a class="headerlink" href="#using-the-registry" title="Link to this heading">¶</a></h2>
+<section id="build-a-registered-model">
+<h3>Build a Registered Model<a class="headerlink" href="#build-a-registered-model" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
@@ -373,9 +369,9 @@ Add or update a model card to refresh the model tables and detail pages automati
 </div>
 </section>
 <section id="register-a-custom-model">
-<h3>Register a custom model<a class="headerlink" href="#register-a-custom-model" title="Link to this heading">¶</a></h3>
-<p>Create a builder function that returns an <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code> and register it with a name.
-The registry handles defaults and discoverability.</p>
+<h3>Register a Custom Model<a class="headerlink" href="#register-a-custom-model" title="Link to this heading">¶</a></h3>
+<p>Register a builder function that returns an <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code> so users can
+load the model by name through the shared registry.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_model</span><span class="p">,</span> <span class="n">build_model</span>
 
@@ -394,12 +390,12 @@ The registry handles defaults and discoverability.</p>
 </pre></div>
 </div>
 </section>
-<section id="design-notes">
-<h3>Design notes<a class="headerlink" href="#design-notes" title="Link to this heading">¶</a></h3>
+<section id="notes">
+<h3>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h3>
 <ul class="simple">
-<li><p>Builders receive <code class="docutils literal notranslate"><span class="pre">task</span></code> plus any kwargs you pass; use this to switch heads internally if needed.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">register_model</span></code> stores optional defaults so you can keep CLI/configs minimal.</p></li>
-<li><p>Models are plain PyTorch modules, so you can compose them with the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> or your own loops.</p></li>
+<li><p>Builders receive <code class="docutils literal notranslate"><span class="pre">task</span></code> plus any kwargs you pass.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">register_model</span></code> stores optional defaults so configs can stay small.</p></li>
+<li><p>Models are plain PyTorch modules and work with <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> or custom loops.</p></li>
 </ul>
 <div class="toctree-wrapper compound">
 </div>
@@ -463,17 +459,17 @@ The registry handles defaults and discoverability.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Models</a><ul>
-<li><a class="reference internal" href="#summary">Summary</a></li>
-<li><a class="reference internal" href="#model">Model</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#model-catalog">Model Catalog</a><ul>
 <li><a class="reference internal" href="#earthquake">Earthquake</a></li>
 <li><a class="reference internal" href="#flood">Flood</a></li>
 <li><a class="reference internal" href="#wildfire">Wildfire</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#build-and-register-custom-model">Build and register custom model</a><ul>
-<li><a class="reference internal" href="#build-a-built-in-model">Build a built-in model</a></li>
-<li><a class="reference internal" href="#register-a-custom-model">Register a custom model</a></li>
-<li><a class="reference internal" href="#design-notes">Design notes</a></li>
+<li><a class="reference internal" href="#using-the-registry">Using the Registry</a><ul>
+<li><a class="reference internal" href="#build-a-registered-model">Build a Registered Model</a></li>
+<li><a class="reference internal" href="#register-a-custom-model">Register a Custom Model</a></li>
+<li><a class="reference internal" href="#notes">Notes</a></li>
 </ul>
 </li>
 </ul>

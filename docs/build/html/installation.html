@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Quick Start" href="quick_start.html"><link rel="prev" title="Introduction" href="index.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Quick Start" href="quick_start.html"><link rel="prev" title="Overview" href="index.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/installation.html">
         <link rel="prefetch" href="_static/logo.png" as="image">
 
@@ -274,29 +274,54 @@
         <article role="main" id="furo-main-content">
           <section id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h1>
-<p>PyHazards requires Python 3.8+ and can be installed using pip. We recommend using a conda environment for installation.</p>
-<section id="installing-pyhazards">
-<h2>Installing PyHazards<a class="headerlink" href="#installing-pyhazards" title="Link to this heading">¶</a></h2>
-<p>Base install:</p>
+<p>PyHazards supports Python 3.8 through 3.12 and installs with <code class="docutils literal notranslate"><span class="pre">pip</span></code>. This page
+covers the recommended install paths for users and contributors.</p>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Python <code class="docutils literal notranslate"><span class="pre">&gt;=3.8,</span> <span class="pre">&lt;3.13</span></code></p></li>
+<li><p>PyTorch <code class="docutils literal notranslate"><span class="pre">&gt;=2.3,</span> <span class="pre">&lt;3.0</span></code></p></li>
+</ul>
+</section>
+<section id="basic-install">
+<h2>Basic Install<a class="headerlink" href="#basic-install" title="Link to this heading">¶</a></h2>
+<p>Install from PyPI:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pyhazards
 </pre></div>
 </div>
-<p>PyTorch notes (Python 3.8, CUDA 12.6 example):</p>
-<ul>
-<li><p>Install the matching PyTorch wheel first, then install PyHazards.</p></li>
-<li><p>Example (CUDA 12.6):</p>
+</section>
+<section id="gpu-install">
+<h2>GPU Install<a class="headerlink" href="#gpu-install" title="Link to this heading">¶</a></h2>
+<p>If you plan to run on GPU, install a matching PyTorch build first and then
+install PyHazards.</p>
+<p>Example for CUDA 12.6:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cu126
 pip<span class="w"> </span>install<span class="w"> </span>pyhazards
 </pre></div>
 </div>
-</li>
-</ul>
 </section>
-<section id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h2>
+<section id="install-from-source">
+<h2>Install from Source<a class="headerlink" href="#install-from-source" title="Link to this heading">¶</a></h2>
+<p>Use an editable install if you are contributing code or documentation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/LabRAI/PyHazards.git
+<span class="nb">cd</span><span class="w"> </span>PyHazards
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+<section id="verify-the-installation">
+<h2>Verify the Installation<a class="headerlink" href="#verify-the-installation" title="Link to this heading">¶</a></h2>
+<p>Run a small import check:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import pyhazards; print(pyhazards.__version__)&quot;</span>
+</pre></div>
+</div>
+<p>You should see the installed package version printed to stdout.</p>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Python &gt;= 3.8</p></li>
-<li><p>PyTorch == 2.3.0</p></li>
+<li><p>Continue to <a class="reference internal" href="quick_start.html"><span class="doc">Quick Start</span></a> for a first runnable example.</p></li>
+<li><p>See <a class="reference internal" href="implementation.html"><span class="doc">Implementation Guide</span></a> if you are setting up a contributor workflow.</p></li>
 </ul>
 </section>
 </section>
@@ -357,8 +382,12 @@ pip<span class="w"> </span>install<span class="w"> </span>pyhazards
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Installation</a><ul>
-<li><a class="reference internal" href="#installing-pyhazards">Installing PyHazards</a></li>
 <li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#basic-install">Basic Install</a></li>
+<li><a class="reference internal" href="#gpu-install">GPU Install</a></li>
+<li><a class="reference internal" href="#install-from-source">Install from Source</a></li>
+<li><a class="reference internal" href="#verify-the-installation">Verify the Installation</a></li>
+<li><a class="reference internal" href="#next-steps">Next Steps</a></li>
 </ul>
 </li>
 </ul>

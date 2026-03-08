@@ -274,8 +274,17 @@
         <article role="main" id="furo-main-content">
           <section id="interactive-map">
 <h1>Interactive Map<a class="headerlink" href="#interactive-map" title="Link to this heading">¶</a></h1>
-<p>PyHazards links to the external <strong>RAI Fire</strong> interactive wildfire map for browser-based
-exploration and public sharing.</p>
+<p>PyHazards includes a lightweight launcher for the external <strong>RAI Fire</strong>
+interactive wildfire map. Use it when you want a browser-based view of the map
+without leaving the broader PyHazards workflow.</p>
+<section id="what-this-page-covers">
+<h2>What This Page Covers<a class="headerlink" href="#what-this-page-covers" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>the live RAI Fire website,</p></li>
+<li><p>the built-in launcher command,</p></li>
+<li><p>the small Python helper exposed by the package.</p></li>
+</ul>
+</section>
 <section id="live-website">
 <h2>Live Website<a class="headerlink" href="#live-website" title="Link to this heading">¶</a></h2>
 <ul class="simple">
@@ -285,11 +294,11 @@ exploration and public sharing.</p>
 </section>
 <section id="command-line">
 <h2>Command Line<a class="headerlink" href="#command-line" title="Link to this heading">¶</a></h2>
-<p>Use the built-in launcher to open the website from the library:</p>
+<p>Open the website from the library with:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards<span class="w"> </span>map
 </pre></div>
 </div>
-<p>The command always prints the website URL and attempts to open it in your default browser.</p>
+<p>The command prints the URL and, when possible, opens it in your default browser.</p>
 </section>
 <section id="python-api">
 <h2>Python API<a class="headerlink" href="#python-api" title="Link to this heading">¶</a></h2>
@@ -299,6 +308,12 @@ exploration and public sharing.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h2>
+<p>The interactive map is an external companion application. PyHazards links to it
+and provides a launcher, but it does not host the web application inside the
+Python package itself.</p>
 </section>
 <section id="module-reference">
 <h2>Module Reference<a class="headerlink" href="#module-reference" title="Link to this heading">¶</a></h2>
@@ -385,9 +400,11 @@ exploration and public sharing.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Interactive Map</a><ul>
+<li><a class="reference internal" href="#what-this-page-covers">What This Page Covers</a></li>
 <li><a class="reference internal" href="#live-website">Live Website</a></li>
 <li><a class="reference internal" href="#command-line">Command Line</a></li>
 <li><a class="reference internal" href="#python-api">Python API</a></li>
+<li><a class="reference internal" href="#notes">Notes</a></li>
 <li><a class="reference internal" href="#module-reference">Module Reference</a></li>
 </ul>
 </li>

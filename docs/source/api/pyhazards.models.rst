@@ -6,8 +6,8 @@ pyhazards.models package
 Model Catalog
 -------------
 
-This summary is generated from ``pyhazards/model_cards/*.yaml`` so the API index
-and the main model page stay aligned.
+This page mirrors the public model catalog and then lists the package
+submodules for API lookup.
 
 Earthquake
 ~~~~~~~~~~
