@@ -275,101 +275,417 @@
           <section id="implementation-guide">
 <h1>Implementation Guide<a class="headerlink" href="#implementation-guide" title="Link to this heading">¶</a></h1>
 <p>Use this guide when you want to extend PyHazards itself. It is written for
-contributors who are adding datasets, models, smoke tests, or generated docs.</p>
-<section id="contributor-workflow">
-<h2>Contributor Workflow<a class="headerlink" href="#contributor-workflow" title="Link to this heading">¶</a></h2>
-<p>Most contributions follow the same pattern:</p>
+contributors who are adding new datasets, new models, smoke tests, model cards,
+or documentation updates for the public catalog.</p>
+<p>This page explains the public contributor workflow. For repository operations
+and maintainer automation details, also see <code class="docutils literal notranslate"><span class="pre">.github/IMPLEMENTATION.md</span></code>.</p>
+<section id="who-this-guide-is-for">
+<h2>Who This Guide Is For<a class="headerlink" href="#who-this-guide-is-for" title="Link to this heading">¶</a></h2>
+<p>This guide assumes you already know Python and PyTorch, but you have not yet
+worked inside the PyHazards codebase. It is most useful when you are doing one
+of the following:</p>
+<ul class="simple">
+<li><p>adding a new dataset loader or dataset inspection entrypoint,</p></li>
+<li><p>porting a paper or external implementation into <code class="docutils literal notranslate"><span class="pre">pyhazards.models</span></code>,</p></li>
+<li><p>updating the public model catalog and generated documentation,</p></li>
+<li><p>preparing a pull request that should be easy to review and merge.</p></li>
+</ul>
+<p>If you only want to install the library and run a first example, use
+<a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> and <a class="reference internal" href="quick_start.html"><span class="doc">Quick Start</span></a> instead.</p>
+</section>
+<section id="repository-mental-model">
+<h2>Repository Mental Model<a class="headerlink" href="#repository-mental-model" title="Link to this heading">¶</a></h2>
+<p>PyHazards is organized around a small set of extension points:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pyhazards.datasets</span></code> contains dataset abstractions, the dataset registry,
+and inspection entrypoints for supported data sources.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyhazards.models</span></code> contains model builders, reusable components, and the
+model registry used by <code class="docutils literal notranslate"><span class="pre">build_model(...)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyhazards.engine</span></code> contains the shared training and evaluation workflow.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyhazards/model_cards</span></code> contains YAML cards used to generate the public
+model tables and per-model documentation pages.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/source</span></code> contains handwritten Sphinx pages, while the committed
+<code class="docutils literal notranslate"><span class="pre">docs/</span></code> directory contains the rendered HTML published on GitHub Pages.</p></li>
+</ul>
+<p>There are three separate layers to keep in mind:</p>
 <ol class="arabic simple">
-<li><p>add or update a dataset or model implementation,</p></li>
-<li><p>register it in the appropriate subsystem,</p></li>
-<li><p>validate the change with a targeted smoke test,</p></li>
-<li><p>update the relevant documentation page.</p></li>
+<li><p>registry availability:
+a dataset or model can be constructed from Python once it is registered;</p></li>
+<li><p>catalog visibility:
+a public model only appears on the website when it also has a model card;</p></li>
+<li><p>published website output:
+GitHub Pages only changes after the rendered HTML in <code class="docutils literal notranslate"><span class="pre">docs/</span></code> is rebuilt.</p></li>
 </ol>
 </section>
-<section id="datasets">
-<h2>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">¶</a></h2>
-<p>Implement a dataset by subclassing <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> and returning a <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>
-from <code class="docutils literal notranslate"><span class="pre">_load()</span></code>. Register it so users can load it by name.</p>
+<section id="typical-contribution-workflow">
+<h2>Typical Contribution Workflow<a class="headerlink" href="#typical-contribution-workflow" title="Link to this heading">¶</a></h2>
+<p>Most changes should follow the same sequence:</p>
+<ol class="arabic simple">
+<li><p>decide whether you are extending a dataset, a model, or both;</p></li>
+<li><p>implement the code in <code class="docutils literal notranslate"><span class="pre">pyhazards/datasets</span></code> or <code class="docutils literal notranslate"><span class="pre">pyhazards/models</span></code>;</p></li>
+<li><p>register the new entrypoint so it is discoverable from the library API;</p></li>
+<li><p>add or update smoke-test coverage for the new behavior;</p></li>
+<li><p>update the relevant docs source and, for public models, the model card;</p></li>
+<li><p>run the smallest local validation commands that match the change;</p></li>
+<li><p>rebuild the published docs HTML if the website output changed;</p></li>
+<li><p>open a pull request with the required metadata and validation notes.</p></li>
+</ol>
+<p>Treat code, validation, generated docs, and published docs as one contribution.
+A model implementation is not complete if users cannot discover it or if the
+website catalog still describes the old state of the library.</p>
+</section>
+<section id="adding-a-dataset">
+<h2>Adding a Dataset<a class="headerlink" href="#adding-a-dataset" title="Link to this heading">¶</a></h2>
+<p>Datasets are built around <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> and <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code>. A dataset subclass
+implements <code class="docutils literal notranslate"><span class="pre">_load()</span></code> and returns train/validation/test splits plus feature and
+label metadata.</p>
+<p>The minimum pattern looks like this:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">DataBundle</span><span class="p">,</span> <span class="n">DataSplit</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">FeatureSpec</span><span class="p">,</span> <span class="n">LabelSpec</span><span class="p">,</span> <span class="n">register_dataset</span>
+    <span class="n">DataBundle</span><span class="p">,</span>
+    <span class="n">DataSplit</span><span class="p">,</span>
+    <span class="n">Dataset</span><span class="p">,</span>
+    <span class="n">FeatureSpec</span><span class="p">,</span>
+    <span class="n">LabelSpec</span><span class="p">,</span>
+    <span class="n">register_dataset</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">MyHazard</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyHazardDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;my_hazard&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataBundle</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,))</span>
+
         <span class="n">splits</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">800</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="mi">800</span><span class="p">]),</span>
             <span class="s2">&quot;val&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">800</span><span class="p">:</span><span class="mi">900</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">800</span><span class="p">:</span><span class="mi">900</span><span class="p">]),</span>
             <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="n">DataSplit</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">900</span><span class="p">:],</span> <span class="n">y</span><span class="p">[</span><span class="mi">900</span><span class="p">:]),</span>
         <span class="p">}</span>
+
         <span class="k">return</span> <span class="n">DataBundle</span><span class="p">(</span>
             <span class="n">splits</span><span class="o">=</span><span class="n">splits</span><span class="p">,</span>
-            <span class="n">feature_spec</span><span class="o">=</span><span class="n">FeatureSpec</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;example features&quot;</span><span class="p">),</span>
-            <span class="n">label_spec</span><span class="o">=</span><span class="n">LabelSpec</span><span class="p">(</span><span class="n">num_targets</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">),</span>
+            <span class="n">feature_spec</span><span class="o">=</span><span class="n">FeatureSpec</span><span class="p">(</span>
+                <span class="n">input_dim</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Example tabular hazard features.&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">label_spec</span><span class="o">=</span><span class="n">LabelSpec</span><span class="p">(</span>
+                <span class="n">num_targets</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Binary hazard label.&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">)</span>
 
-<span class="n">register_dataset</span><span class="p">(</span><span class="n">MyHazard</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">MyHazard</span><span class="p">)</span>
+<span class="n">register_dataset</span><span class="p">(</span><span class="n">MyHazardDataset</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">MyHazardDataset</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Keep the following expectations in mind when you add a dataset:</p>
+<ul class="simple">
+<li><p>use <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code> to make split names, feature dimensions, and target
+semantics explicit;</p></li>
+<li><p>keep the builder/import path lightweight so the dataset can be imported
+without triggering heavy side effects;</p></li>
+<li><p>register the dataset with <code class="docutils literal notranslate"><span class="pre">register_dataset(...)</span></code> so
+<code class="docutils literal notranslate"><span class="pre">load_dataset(name=...)</span></code> can construct it;</p></li>
+<li><p>prefer clear metadata over implicit conventions, especially when a model
+depends on shapes, channels, graph structure, or task type.</p></li>
+</ul>
 </section>
-<section id="models">
-<h2>Models<a class="headerlink" href="#models" title="Link to this heading">¶</a></h2>
-<p>Use the model registry when adding a new architecture. The builder should accept
-<code class="docutils literal notranslate"><span class="pre">task</span></code> plus the required shape arguments and return an <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<section id="dataset-inspection-entry-points">
+<h2>Dataset Inspection Entry Points<a class="headerlink" href="#dataset-inspection-entry-points" title="Link to this heading">¶</a></h2>
+<p>PyHazards also includes inspection modules under <code class="docutils literal notranslate"><span class="pre">pyhazards.datasets</span></code> for
+supported external data sources. If you add a new dataset family, keep the
+inspection module consistent with the existing ones:</p>
+<ul class="simple">
+<li><p>it should be importable as <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.&lt;name&gt;.inspection</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--help</span></code> should exit cleanly;</p></li>
+<li><p>argument parsing should work without requiring optional plotting or network
+dependencies at import time;</p></li>
+<li><p>if the dataset belongs in the public dataset table, its inspection workflow
+should be stable enough for <code class="docutils literal notranslate"><span class="pre">scripts/verify_table_entries.py</span></code>.</p></li>
+</ul>
+<p>The goal is simple: users should be able to discover the dataset from the docs,
+inspect it from the command line, and load it from Python through the registry.</p>
+</section>
+<section id="adding-a-model">
+<h2>Adding a Model<a class="headerlink" href="#adding-a-model" title="Link to this heading">¶</a></h2>
+<p>Models are registered builders that can be constructed through:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;&lt;model_name&gt;&quot;</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">&quot;&lt;task&gt;&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When you port a paper or external repository into PyHazards, define the library
+contract first. Your builder should:</p>
+<ul class="simple">
+<li><p>accept <code class="docutils literal notranslate"><span class="pre">task:</span> <span class="pre">str</span></code>,</p></li>
+<li><p>accept the shape and hyperparameter arguments needed to construct the model,</p></li>
+<li><p>return an <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code>,</p></li>
+<li><p>validate unsupported tasks early with a clear error,</p></li>
+<li><p>accept <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> so extra configuration keys do not break the call path.</p></li>
+</ul>
+<p>The minimum pattern looks like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_model</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">my_model_builder</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">in_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">out_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">:</span>
-    <span class="c1"># Simple example: a two-layer MLP for classification/regression</span>
-    <span class="n">hidden</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;hidden_dim&quot;</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
-    <span class="n">layers</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-        <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_dim</span><span class="p">,</span> <span class="n">hidden</span><span class="p">),</span>
-        <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
-        <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden</span><span class="p">,</span> <span class="n">out_dim</span><span class="p">),</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">layers</span>
 
-<span class="n">register_model</span><span class="p">(</span><span class="s2">&quot;my_mlp&quot;</span><span class="p">,</span> <span class="n">my_model_builder</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;hidden_dim&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">})</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">out_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">out_dim</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected input of shape (batch, features), got </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">my_model_builder</span><span class="p">(</span>
+    <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">in_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">out_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">hidden_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">:</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">kwargs</span>
+    <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span> <span class="s2">&quot;regression&quot;</span><span class="p">}:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MyModel does not support task=</span><span class="si">{</span><span class="n">task</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MyModel</span><span class="p">(</span><span class="n">in_dim</span><span class="o">=</span><span class="n">in_dim</span><span class="p">,</span> <span class="n">out_dim</span><span class="o">=</span><span class="n">out_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="o">=</span><span class="n">hidden_dim</span><span class="p">)</span>
+
+
+<span class="n">register_model</span><span class="p">(</span>
+    <span class="s2">&quot;my_model&quot;</span><span class="p">,</span>
+    <span class="n">my_model_builder</span><span class="p">,</span>
+    <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;hidden_dim&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>In practice, good model ports also include:</p>
+<ul class="simple">
+<li><p>a short paper-to-library mapping from the original repository into the new
+PyHazards module and builder kwargs;</p></li>
+<li><p>explicit input-shape validation in <code class="docutils literal notranslate"><span class="pre">forward()</span></code> so integration failures are
+easy to diagnose;</p></li>
+<li><p>clear task handling when the same architecture can be used for different
+objectives;</p></li>
+<li><p>minimal defaults in the registry so <code class="docutils literal notranslate"><span class="pre">build_model(...)</span></code> is predictable.</p></li>
+</ul>
+</section>
+<section id="match-the-forward-signature-to-the-data-path">
+<h2>Match the Forward Signature to the Data Path<a class="headerlink" href="#match-the-forward-signature-to-the-data-path" title="Link to this heading">¶</a></h2>
+<p>PyHazards supports more than one input style. Some models work with plain tensor
+pairs, while others expect mappings, graph batches, or custom dataset objects.
+Make that contract explicit.</p>
+<p>As a rule:</p>
+<ul class="simple">
+<li><p>if your model expects <code class="docutils literal notranslate"><span class="pre">Tensor</span> <span class="pre">-&gt;</span> <span class="pre">Tensor</span></code>, keep the shape assumptions simple
+and document them in the model card;</p></li>
+<li><p>if your model expects graph or structured inputs, prefer dataset and collate
+behavior that produces the mapping your <code class="docutils literal notranslate"><span class="pre">forward()</span></code> already consumes;</p></li>
+<li><p>use <code class="docutils literal notranslate"><span class="pre">FeatureSpec</span></code>, <code class="docutils literal notranslate"><span class="pre">LabelSpec</span></code>, and split metadata to record dimensions,
+channels, and task semantics instead of burying them in comments.</p></li>
+</ul>
+</section>
+<section id="porting-training-logic">
+<h2>Porting Training Logic<a class="headerlink" href="#porting-training-logic" title="Link to this heading">¶</a></h2>
+<p>Do not copy an upstream training loop into PyHazards unless the architecture
+truly depends on custom runtime behavior. In most cases you should:</p>
+<ul class="simple">
+<li><p>keep the architecture inside <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code>,</p></li>
+<li><p>keep custom losses or helper blocks close to the model implementation,</p></li>
+<li><p>use <code class="docutils literal notranslate"><span class="pre">pyhazards.engine.Trainer</span></code> for fit, evaluate, and predict workflows,</p></li>
+<li><p>document intentional differences from the paper repository in the pull request.</p></li>
+</ul>
+<p>If the PyHazards port changes preprocessing, outputs, or optimization behavior,
+state that clearly in the PR’s parity notes. Review is much faster when the
+intended differences are explicit.</p>
+</section>
+<section id="model-cards-and-generated-docs">
+<h2>Model Cards and Generated Docs<a class="headerlink" href="#model-cards-and-generated-docs" title="Link to this heading">¶</a></h2>
+<p>Public models are documented through cards in <code class="docutils literal notranslate"><span class="pre">pyhazards/model_cards</span></code>. A model
+card is not optional when you want a model to appear on the website.</p>
+<p>A typical card includes:</p>
+<ul class="simple">
+<li><p>the public model name and display name,</p></li>
+<li><p>the hazard family used for the model table,</p></li>
+<li><p>the source file and builder name,</p></li>
+<li><p>a short summary and description,</p></li>
+<li><p>the paper citation or technical reference,</p></li>
+<li><p>supported tasks,</p></li>
+<li><p>one runnable example,</p></li>
+<li><p>a synthetic smoke-test specification.</p></li>
+</ul>
+<p>For example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">model_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_model</span>
+<span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">My Model</span>
+<span class="nt">hazard</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Flood</span>
+<span class="nt">source_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pyhazards/models/my_model.py</span>
+<span class="nt">builder_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_model_builder</span>
+<span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+<span class="w">  </span><span class="no">Short description of the public model entrypoint.</span>
+<span class="nt">paper</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Example paper title</span>
+<span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://example.com/paper</span>
+<span class="nt">tasks</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">regression</span>
+<span class="nt">smoke_test</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">task</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">regression</span>
+<span class="w">  </span><span class="nt">build_kwargs</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">in_dim</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
+<span class="w">    </span><span class="nt">out_dim</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">input</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensor</span>
+<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">4</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">16</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">expected_output</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensor</span>
+<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">4</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>Model cards drive the generated pages in <a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a>. They also
+control public visibility:</p>
+<ul class="simple">
+<li><p>if a model is registered but has no card, it can still be used from Python but
+it will not appear in the public model tables;</p></li>
+<li><p>if a card sets <code class="docutils literal notranslate"><span class="pre">include_in_public_catalog:</span> <span class="pre">false</span></code>, the implementation stays
+in the library but is hidden from the public catalog;</p></li>
+<li><p>if the hazard name in the card is new, the generated model page creates a new
+hazard section automatically.</p></li>
+</ul>
+<p>After updating a card, refresh the generated docs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/render_model_docs.py
+</pre></div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">--check</span></code> mode when you want to confirm the generated files are
+already up to date:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/render_model_docs.py<span class="w"> </span>--check
 </pre></div>
 </div>
 </section>
-<section id="documenting-a-model-contribution">
-<h2>Documenting a Model Contribution<a class="headerlink" href="#documenting-a-model-contribution" title="Link to this heading">¶</a></h2>
-<p>Model contributions should stay aligned with the catalog-backed documentation
-workflow:</p>
-<ol class="arabic simple">
-<li><p>add or update <code class="docutils literal notranslate"><span class="pre">pyhazards/model_cards/&lt;model_name&gt;.yaml</span></code>,</p></li>
-<li><p>run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/render_model_docs.py</span></code>,</p></li>
-<li><p>verify the model with <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/smoke_test_models.py</span> <span class="pre">--models</span> <span class="pre">&lt;model_name&gt;</span></code>,</p></li>
-<li><p>keep any public-facing hazard/model descriptions concise and reproducible.</p></li>
-</ol>
-</section>
-<section id="validation-checklist">
-<h2>Validation Checklist<a class="headerlink" href="#validation-checklist" title="Link to this heading">¶</a></h2>
-<p>Before opening a pull request, run the smallest checks that match your change:</p>
+<section id="validation-workflow">
+<h2>Validation Workflow<a class="headerlink" href="#validation-workflow" title="Link to this heading">¶</a></h2>
+<p>Run the smallest set of checks that covers your change. The core validation
+commands in this repository are:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import pyhazards; print(pyhazards.__version__)&quot;</span>
 python<span class="w"> </span>scripts/render_model_docs.py<span class="w"> </span>--check
 python<span class="w"> </span>scripts/verify_table_entries.py
 </pre></div>
 </div>
-<p>If you changed a model implementation, also run:</p>
+<p>Use them for the following purposes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-c</span> <span class="pre">&quot;import</span> <span class="pre">pyhazards;</span> <span class="pre">print(pyhazards.__version__)&quot;</span></code>
+verifies that the package still imports cleanly;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/render_model_docs.py</span> <span class="pre">--check</span></code>
+verifies that generated model docs and catalog pages are in sync with the
+current model cards;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/verify_table_entries.py</span></code>
+exercises dataset inspection entrypoints and runs smoke tests for cataloged
+public models.</p></li>
+</ul>
+<p>When you changed a specific model, also run the model-scoped smoke test:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/smoke_test_models.py<span class="w"> </span>--models<span class="w"> </span>&lt;model_name&gt;
-python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_model_catalog.py
 </pre></div>
 </div>
+<p>This uses the model card’s smoke-test spec, so it is the fastest way to confirm
+that a new public model can build and run with synthetic inputs.</p>
+<p>If your change touched the model catalog or its generation logic, also run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/test_model_catalog.py
+</pre></div>
+</div>
+<p>If you changed runtime behavior in the training path and you have the required
+hardware available, run the broader smoke path described in <code class="docutils literal notranslate"><span class="pre">test.py</span></code> as well.</p>
 </section>
-<section id="contributor-notes">
-<h2>Contributor Notes<a class="headerlink" href="#contributor-notes" title="Link to this heading">¶</a></h2>
+<section id="preparing-a-model-pull-request">
+<h2>Preparing a Model Pull Request<a class="headerlink" href="#preparing-a-model-pull-request" title="Link to this heading">¶</a></h2>
+<p>Model PRs should make the implementation easy to review against the original
+paper or upstream repository. The PR template asks for a few specific fields for
+that reason:</p>
 <ul class="simple">
-<li><p>Use the registry APIs instead of hard-coding new entrypoints.</p></li>
-<li><p>Keep examples minimal and runnable.</p></li>
-<li><p>Put user-facing discovery text in docs pages and model cards, not only in code
-comments.</p></li>
-<li><p>For repository-specific contributor rules, also see <code class="docutils literal notranslate"><span class="pre">.github/IMPLEMENTATION.md</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Model</span> <span class="pre">Summary</span></code> should describe the architecture and public API you are
+adding, not just the file names you changed;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Hazard</span> <span class="pre">Scenario</span></code> should name the model table that owns the entry, and it
+should explicitly call out when the PR introduces a new hazard family;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Registry</span> <span class="pre">Name</span></code> should list the exact <code class="docutils literal notranslate"><span class="pre">build_model(name=...)</span></code> entrypoints
+added or changed in the PR;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Paper</span> <span class="pre">/</span> <span class="pre">Source</span></code> should link the scientific paper, source repository, or
+technical reference that the implementation follows;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Smoke</span> <span class="pre">Test</span></code> should list the commands you ran or point to the card’s
+smoke-test specification;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Parity</span> <span class="pre">Notes</span></code> should explain intentional differences from the upstream
+implementation, especially around preprocessing, outputs, or objectives.</p></li>
+</ul>
+<p>PR automation can only help when this metadata is present and accurate. A
+catalog-backed model PR is expected to include the implementation, the registry
+wiring, the model card, the smoke-test path, and refreshed generated docs.</p>
+</section>
+<section id="registration-catalog-and-published-html">
+<h2>Registration, Catalog, and Published HTML<a class="headerlink" href="#registration-catalog-and-published-html" title="Link to this heading">¶</a></h2>
+<p>It is easy to update one layer of the repo and forget the others. Keep this
+distinction in mind:</p>
+<ul class="simple">
+<li><p>code registration makes a dataset or model usable from Python;</p></li>
+<li><p>model cards make a public model discoverable in the generated docs;</p></li>
+<li><p>Sphinx source updates change the documentation source tree;</p></li>
+<li><p>rebuilding <code class="docutils literal notranslate"><span class="pre">docs/</span></code> updates the committed HTML published on GitHub Pages.</p></li>
+</ul>
+<p>If the website output changed, rebuild the site locally:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docs
+sphinx-build<span class="w"> </span>-b<span class="w"> </span>html<span class="w"> </span><span class="nb">source</span><span class="w"> </span>build/html
+cp<span class="w"> </span>-r<span class="w"> </span>build/html/*<span class="w"> </span>.
+</pre></div>
+</div>
+<p>That final copy step matters in this repository because the published website is
+served from the committed <code class="docutils literal notranslate"><span class="pre">docs/</span></code> directory, not from <code class="docutils literal notranslate"><span class="pre">docs/source</span></code>.</p>
+</section>
+<section id="common-mistakes">
+<h2>Common Mistakes<a class="headerlink" href="#common-mistakes" title="Link to this heading">¶</a></h2>
+<p>These are the issues that most often block review:</p>
+<ul class="simple">
+<li><p>the new dataset or model exists in code but was never registered;</p></li>
+<li><p>a public model was implemented without a matching card in
+<code class="docutils literal notranslate"><span class="pre">pyhazards/model_cards</span></code>;</p></li>
+<li><p>generated docs were not refreshed after the model card changed;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/source</span></code> was updated but the committed <code class="docutils literal notranslate"><span class="pre">docs/</span></code> HTML was not rebuilt;</p></li>
+<li><p>the builder does not validate unsupported tasks or accepts the wrong shape
+arguments for the intended use;</p></li>
+<li><p>a hidden or internal model was accidentally left visible in the public
+catalog;</p></li>
+<li><p>an inspection module imports optional heavy dependencies at module import time,
+which breaks <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">...</span> <span class="pre">--help</span></code> in clean environments.</p></li>
+</ul>
+</section>
+<section id="contributor-checklist">
+<h2>Contributor Checklist<a class="headerlink" href="#contributor-checklist" title="Link to this heading">¶</a></h2>
+<p>Before you open a pull request, confirm all of the following:</p>
+<ul class="simple">
+<li><p>the implementation lives in the correct dataset or model module;</p></li>
+<li><p>the new entrypoint is registered and can be constructed from the public API;</p></li>
+<li><p>task handling and input-shape validation are clear and actionable;</p></li>
+<li><p>public models have a complete card with a runnable smoke-test spec;</p></li>
+<li><p>generated model docs are refreshed and pass <code class="docutils literal notranslate"><span class="pre">render_model_docs.py</span> <span class="pre">--check</span></code>;</p></li>
+<li><p>dataset inspection entrypoints and public tables pass
+<code class="docutils literal notranslate"><span class="pre">scripts/verify_table_entries.py</span></code>;</p></li>
+<li><p>the published docs HTML in <code class="docutils literal notranslate"><span class="pre">docs/</span></code> was rebuilt if the visible website output
+changed;</p></li>
+<li><p>the pull request explains the source paper, registry name, hazard scenario,
+smoke-test commands, and parity notes.</p></li>
+</ul>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">¶</a></h2>
+<p>After you finish a contributor-oriented change:</p>
+<ul class="simple">
+<li><p>browse the public catalogs in <a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a> and
+<a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a> to confirm the new entry is discoverable;</p></li>
+<li><p>use <a class="reference internal" href="quick_start.html"><span class="doc">Quick Start</span></a> to check that the user path still feels coherent;</p></li>
+<li><p>keep <code class="docutils literal notranslate"><span class="pre">.github/IMPLEMENTATION.md</span></code> and this page aligned when the repository
+workflow changes.</p></li>
 </ul>
 </section>
 </section>
@@ -430,12 +746,21 @@ comments.</p></li>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Implementation Guide</a><ul>
-<li><a class="reference internal" href="#contributor-workflow">Contributor Workflow</a></li>
-<li><a class="reference internal" href="#datasets">Datasets</a></li>
-<li><a class="reference internal" href="#models">Models</a></li>
-<li><a class="reference internal" href="#documenting-a-model-contribution">Documenting a Model Contribution</a></li>
-<li><a class="reference internal" href="#validation-checklist">Validation Checklist</a></li>
-<li><a class="reference internal" href="#contributor-notes">Contributor Notes</a></li>
+<li><a class="reference internal" href="#who-this-guide-is-for">Who This Guide Is For</a></li>
+<li><a class="reference internal" href="#repository-mental-model">Repository Mental Model</a></li>
+<li><a class="reference internal" href="#typical-contribution-workflow">Typical Contribution Workflow</a></li>
+<li><a class="reference internal" href="#adding-a-dataset">Adding a Dataset</a></li>
+<li><a class="reference internal" href="#dataset-inspection-entry-points">Dataset Inspection Entry Points</a></li>
+<li><a class="reference internal" href="#adding-a-model">Adding a Model</a></li>
+<li><a class="reference internal" href="#match-the-forward-signature-to-the-data-path">Match the Forward Signature to the Data Path</a></li>
+<li><a class="reference internal" href="#porting-training-logic">Porting Training Logic</a></li>
+<li><a class="reference internal" href="#model-cards-and-generated-docs">Model Cards and Generated Docs</a></li>
+<li><a class="reference internal" href="#validation-workflow">Validation Workflow</a></li>
+<li><a class="reference internal" href="#preparing-a-model-pull-request">Preparing a Model Pull Request</a></li>
+<li><a class="reference internal" href="#registration-catalog-and-published-html">Registration, Catalog, and Published HTML</a></li>
+<li><a class="reference internal" href="#common-mistakes">Common Mistakes</a></li>
+<li><a class="reference internal" href="#contributor-checklist">Contributor Checklist</a></li>
+<li><a class="reference internal" href="#next-steps">Next Steps</a></li>
 </ul>
 </li>
 </ul>
