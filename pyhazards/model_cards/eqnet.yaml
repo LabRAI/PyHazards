@@ -1,0 +1,40 @@
+model_name: eqnet
+display_name: EQNet
+hazard: Earthquake
+source_file: pyhazards/models/eqnet.py
+builder_name: eqnet_builder
+summary: >
+  A transformer-style earthquake phase-picking baseline for modern sequence
+  modeling comparisons.
+description:
+  - >
+    ``eqnet`` extends the PyHazards earthquake benchmark stack with a
+    lightweight attention-based picking model.
+  - >
+    The implementation keeps the shared waveform input and two-pick output
+    contract so it can be evaluated alongside ``phasenet`` and ``eqtransformer``.
+paper:
+  title: EQNet repository
+  url: https://github.com/AI4EPS/EQNet
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="eqnet", task="regression", in_channels=3)
+  picks = model(torch.randn(4, 3, 256))
+  print(picks.shape)
+notes:
+  - "Outputs are P- and S-arrival sample indices."
+smoke_test:
+  task: regression
+  build_kwargs:
+    in_channels: 3
+  input:
+    kind: tensor
+    tensor:
+      shape: [4, 3, 256]
+  expected_output:
+    kind: tensor
+    shape: [4, 2]

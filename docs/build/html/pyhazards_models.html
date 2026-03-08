@@ -3,14 +3,14 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="HydroGraphNet" href="modules/models_hydrographnet.html"><link rel="prev" title="GOES-R" href="datasets/goesr.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="EQNet" href="modules/models_eqnet.html"><link rel="prev" title="GOES-R" href="datasets/goesr.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/pyhazards_models.html">
         <link rel="prefetch" href="_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>Models - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=aab0eeca" />
     
@@ -217,13 +217,35 @@
 </ul>
 </li>
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Models</a><input aria-label="Toggle navigation of Models" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_eqnet.html">EQNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_eqtransformer.html">EQTransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_floodcast.html">FloodCast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_fourcastnet_tc.html">FourCastNet TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_gpd.html">GPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_graphcast_tc.html">GraphCast TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_hurricast.html">Hurricast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_neuralhydrology_ealstm.html">EA-LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_neuralhydrology_lstm.html">NeuralHydrology LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_pangu_tc.html">Pangu TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_phasenet.html">PhaseNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_saf_net.html">SAF-Net</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_tcif_fusion.html">TCIF-fusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_tropicalcyclone_mlp.html">tropicalcyclone_MLP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_tropicyclonenet.html">TropiCycloneNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_urbanfloodcast.html">UrbanFloodCast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html">Wildfire FPA DNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html">Wildfire FPA Forecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_lstm.html">Wildfire FPA LSTM</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="interactive_map.html">Interactive Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interactive_map.html">Wildfire Interactive Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyhazards_benchmarks.html">Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyhazards_configs.html">Configs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyhazards_reports.html">Reports</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_utils.html">Utils</a></li>
@@ -299,6 +321,18 @@ Implementation Guide for contributor workflow details.</p>
 </tr>
 </thead>
 <tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_eqnet.html"><span class="doc">EQNet</span></a></p></td>
+<td><p>A transformer-style earthquake phase-picking baseline for modern sequence modeling comparisons. See <a class="reference external" href="https://github.com/AI4EPS/EQNet">EQNet repository</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_eqtransformer.html"><span class="doc">EQTransformer</span></a></p></td>
+<td><p>A bidirectional sequence encoder for joint earthquake phase picking with attention pooling over waveform windows. See <a class="reference external" href="https://github.com/smousavi05/EQTransformer">EQTransformer repository</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_gpd.html"><span class="doc">GPD</span></a></p></td>
+<td><p>A compact CNN baseline for generalized phase detection and historical earthquake picking comparisons. See <a class="reference external" href="https://github.com/interseismic/generalized-phase-detection">Generalized Phase Detection repository</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_phasenet.html"><span class="doc">PhaseNet</span></a></p></td>
+<td><p>A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows. See <a class="reference external" href="https://github.com/AI4EPS/PhaseNet">PhaseNet repository</a>.</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="modules/models_wavecastnet.html"><span class="doc">WaveCastNet</span></a></p></td>
 <td><p>A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield forecasting and early-warning style rollout experiments. See <a class="reference external" href="https://doi.org/10.1038/s41467-025-65435-2">Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning</a>.</p></td>
 </tr>
@@ -320,8 +354,80 @@ Implementation Guide for contributor workflow details.</p>
 </tr>
 </thead>
 <tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_neuralhydrology_ealstm.html"><span class="doc">EA-LSTM</span></a></p></td>
+<td><p>An entity-aware hydrology baseline with static-feature gating over streamflow histories. See <a class="reference external" href="https://github.com/neuralhydrology/neuralhydrology">NeuralHydrology repository</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_floodcast.html"><span class="doc">FloodCast</span></a></p></td>
+<td><p>A compact spatiotemporal flood-inundation baseline for raster forecast experiments. See <a class="reference external" href="https://github.com/HydroPML/FloodCast">FloodCast repository</a>.</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="modules/models_hydrographnet.html"><span class="doc">HydroGraphNet</span></a></p></td>
 <td><p>A physics-informed graph neural network for flood forecasting with interpretable KAN-style components, residual message passing, and delta-state decoding. See <a class="reference external" href="https://onlinelibrary.wiley.com/doi/10.1111/mice.13484">Interpretable physics-informed graph neural networks for flood forecasting</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_neuralhydrology_lstm.html"><span class="doc">NeuralHydrology LSTM</span></a></p></td>
+<td><p>An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs. See <a class="reference external" href="https://github.com/neuralhydrology/neuralhydrology">NeuralHydrology repository</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_urbanfloodcast.html"><span class="doc">UrbanFloodCast</span></a></p></td>
+<td><p>A U-Net style urban inundation baseline for dense-grid flood prediction. See <a class="reference external" href="https://github.com/HydroPML/UrbanFloodCast">UrbanFloodCast repository</a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="hurricane">
+<h3>Hurricane<a class="headerlink" href="#hurricane" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-given dataset-list docutils container">
+<table class="dataset-list docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_hurricast.html"><span class="doc">Hurricast</span></a></p></td>
+<td><p>A compact multimodal storm baseline for hurricane track and intensity forecasting. See <a class="reference external" href="https://github.com/leobix/hurricast">Hurricast repository</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_tropicalcyclone_mlp.html"><span class="doc">tropicalcyclone_MLP</span></a></p></td>
+<td><p>A compact MLP baseline for hurricane track and intensity forecasting. See <a class="reference external" href="https://github.com/wenweixu/tropicalcyclone_MLP">tropicalcyclone_MLP repository</a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="tropical-cyclone">
+<h3>Tropical Cyclone<a class="headerlink" href="#tropical-cyclone" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-given dataset-list docutils container">
+<table class="dataset-list docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_fourcastnet_tc.html"><span class="doc">FourCastNet TC Adapter</span></a></p></td>
+<td><p>An experimental wrapper-style storm adapter inspired by FourCastNet forecast fields. See <a class="reference external" href="https://github.com/NVlabs/FourCastNet">FourCastNet repository</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_graphcast_tc.html"><span class="doc">GraphCast TC Adapter</span></a></p></td>
+<td><p>An experimental wrapper-style storm adapter inspired by GraphCast/GenCast forecast fields. See <a class="reference external" href="https://github.com/google-deepmind/graphcast">GraphCast / GenCast repository</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_pangu_tc.html"><span class="doc">Pangu TC Adapter</span></a></p></td>
+<td><p>An experimental wrapper-style storm adapter inspired by Pangu-Weather forecast fields. See <a class="reference external" href="https://github.com/198808xc/Pangu-Weather">Pangu-Weather repository</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_saf_net.html"><span class="doc">SAF-Net</span></a></p></td>
+<td><p>A spatiotemporal tropical-cyclone baseline with an intensity-focused head and shared trajectory output. See <a class="reference external" href="https://github.com/xuguangning1218/TI_Prediction">TI_Prediction / SAF-Net repository</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_tcif_fusion.html"><span class="doc">TCIF-fusion</span></a></p></td>
+<td><p>A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting. See <a class="reference external" href="https://github.com/wangchong96/TCIF-fusion">TCIF-fusion repository</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_tropicyclonenet.html"><span class="doc">TropiCycloneNet</span></a></p></td>
+<td><p>A GRU plus attention baseline for all-basin tropical cyclone forecasting. See <a class="reference external" href="https://github.com/xiaochengfuhuo/TropiCycloneNet">TropiCycloneNet repository</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -346,6 +452,15 @@ Implementation Guide for contributor workflow details.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a></p></td>
 <td><p>A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html"><span class="doc">Wildfire FPA DNN</span></a></p></td>
+<td><p>A feed-forward wildfire danger classifier for incident-level FPA-FOD features. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html"><span class="doc">Wildfire FPA Forecast</span></a></p></td>
+<td><p>An LSTM plus autoencoder wildfire forecasting baseline for next-window count prediction. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_fpa_lstm.html"><span class="doc">Wildfire FPA LSTM</span></a></p></td>
+<td><p>A sequence-only wildfire forecasting baseline for next-window size-group counts. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -409,12 +524,12 @@ load the model by name through the shared registry.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="modules/models_hydrographnet.html">
+          <a class="next-page" href="modules/models_eqnet.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">HydroGraphNet</div>
+                <div class="title">EQNet</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -464,6 +579,8 @@ load the model by name through the shared registry.</p>
 <li><a class="reference internal" href="#model-catalog">Model Catalog</a><ul>
 <li><a class="reference internal" href="#earthquake">Earthquake</a></li>
 <li><a class="reference internal" href="#flood">Flood</a></li>
+<li><a class="reference internal" href="#hurricane">Hurricane</a></li>
+<li><a class="reference internal" href="#tropical-cyclone">Tropical Cyclone</a></li>
 <li><a class="reference internal" href="#wildfire">Wildfire</a></li>
 </ul>
 </li>

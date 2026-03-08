@@ -1,0 +1,23 @@
+benchmark:
+  name: flood
+  hazard_task: flood.streamflow
+  metrics:
+    - mae
+    - rmse
+  eval_split: test
+dataset:
+  name: flood_streamflow_synthetic
+  params:
+    micro: true
+model:
+  name: neuralhydrology_lstm
+  task: regression
+  params:
+    input_dim: 2
+    hidden_dim: 64
+    out_dim: 1
+report:
+  output_dir: reports/flood_neuralhydrology_lstm
+  formats:
+    - json
+seed: 7

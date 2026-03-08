@@ -96,6 +96,10 @@ Documentation Guide
 - :doc:`quick_start`: run the shortest end-to-end workflow in the library.
 - :doc:`pyhazards_datasets`: browse supported datasets and inspection commands.
 - :doc:`pyhazards_models`: browse the public model catalog and registry usage.
+- :doc:`pyhazards_benchmarks`: run hazard-specific benchmark evaluators through
+  the shared runner.
+- :doc:`pyhazards_configs`: load or author reproducible experiment YAML files.
+- :doc:`pyhazards_reports`: export JSON, Markdown, and CSV benchmark summaries.
 - :doc:`interactive_map`: open the wildfire-only companion map at
   ``https://rai-fire.com/``.
 - :doc:`implementation`: use the contributor guide for adding datasets, models,
@@ -142,6 +146,9 @@ If you use PyHazards in your research, please cite:
    pyhazards_datasets
    pyhazards_models
    interactive_map
+   pyhazards_benchmarks
+   pyhazards_configs
+   pyhazards_reports
    pyhazards_engine
    pyhazards_metrics
    pyhazards_utils

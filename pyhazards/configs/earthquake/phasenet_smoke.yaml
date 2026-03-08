@@ -1,0 +1,22 @@
+benchmark:
+  name: earthquake
+  hazard_task: earthquake.picking
+  metrics:
+    - p_pick_mae
+    - s_pick_mae
+  eval_split: test
+dataset:
+  name: earthquake_waveforms
+  params:
+    micro: true
+model:
+  name: phasenet
+  task: regression
+  params:
+    in_channels: 3
+    hidden_dim: 32
+report:
+  output_dir: reports/earthquake
+  formats:
+    - json
+seed: 7

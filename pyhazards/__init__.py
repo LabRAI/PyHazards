@@ -17,6 +17,26 @@ from .datasets import (
     load_dataset,
     register_dataset,
 )
+from .tasks import HazardTask, available_hazard_tasks, get_hazard_task, has_hazard_task
+from .configs import (
+    BenchmarkConfig,
+    DatasetRef,
+    ExperimentConfig,
+    ModelRef,
+    ReportConfig,
+    dump_experiment_config,
+    load_experiment_config,
+)
+from .benchmarks import (
+    Benchmark,
+    BenchmarkResult,
+    BenchmarkRunSummary,
+    available_benchmarks,
+    build_benchmark,
+    get_benchmark,
+    register_benchmark,
+    run_benchmark,
+)
 from .models import (
     CNNPatchEncoder,
     ClassificationHead,
@@ -31,7 +51,8 @@ from .models import (
     wildfire_mamba_builder,
 )
 from .metrics import ClassificationMetrics, MetricBase, RegressionMetrics, SegmentationMetrics
-from .engine import Trainer
+from .reports import BenchmarkReport, export_report_bundle
+from .engine import BenchmarkRunner, Trainer
 from .interactive_map import RAI_FIRE_URL, open_interactive_map
 
 __all__ = [
@@ -46,6 +67,25 @@ __all__ = [
     "available_datasets",
     "load_dataset",
     "register_dataset",
+    "HazardTask",
+    "available_hazard_tasks",
+    "get_hazard_task",
+    "has_hazard_task",
+    "BenchmarkConfig",
+    "DatasetRef",
+    "ExperimentConfig",
+    "ModelRef",
+    "ReportConfig",
+    "dump_experiment_config",
+    "load_experiment_config",
+    "Benchmark",
+    "BenchmarkResult",
+    "BenchmarkRunSummary",
+    "available_benchmarks",
+    "build_benchmark",
+    "get_benchmark",
+    "register_benchmark",
+    "run_benchmark",
     "CNNPatchEncoder",
     "ClassificationHead",
     "RegressionHead",
@@ -57,6 +97,9 @@ __all__ = [
     "register_model",
     "WildfireMamba",
     "wildfire_mamba_builder",
+    "BenchmarkReport",
+    "export_report_bundle",
+    "BenchmarkRunner",
     "Trainer",
     "MetricBase",
     "ClassificationMetrics",

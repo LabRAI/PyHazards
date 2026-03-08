@@ -1,0 +1,45 @@
+model_name: phasenet
+display_name: PhaseNet
+hazard: Earthquake
+source_file: pyhazards/models/phasenet.py
+builder_name: phasenet_builder
+summary: >
+  A lightweight phase-picking baseline that predicts P- and S-arrival indices from
+  multichannel waveform windows.
+description:
+  - >
+    ``phasenet`` is the first earthquake picking baseline in the staged PyHazards
+    roadmap and is paired with the synthetic waveform dataset for smoke validation.
+  - >
+    This initial adapter focuses on the shared waveform-to-pick interface and does not
+    claim exact reproduction of the original PhaseNet training stack.
+paper:
+  title: PhaseNet repository
+  url: https://github.com/AI4EPS/PhaseNet
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(
+      name="phasenet",
+      task="regression",
+      in_channels=3,
+  )
+
+  picks = model(torch.randn(4, 3, 256))
+  print(picks.shape)
+notes:
+  - "Outputs are P- and S-arrival sample indices in the current smoke-test adapter."
+smoke_test:
+  task: regression
+  build_kwargs:
+    in_channels: 3
+  input:
+    kind: tensor
+    tensor:
+      shape: [4, 3, 256]
+  expected_output:
+    kind: tensor
+    shape: [4, 2]

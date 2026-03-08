@@ -1,0 +1,24 @@
+benchmark:
+  name: flood
+  hazard_task: flood.inundation
+  metrics:
+    - pixel_mae
+    - iou
+    - f1
+  eval_split: test
+dataset:
+  name: flood_inundation_synthetic
+  params:
+    micro: true
+model:
+  name: urbanfloodcast
+  task: regression
+  params:
+    in_channels: 3
+    history: 4
+    base_channels: 32
+report:
+  output_dir: reports/flood_urbanfloodcast
+  formats:
+    - json
+seed: 7

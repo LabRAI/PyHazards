@@ -30,5 +30,11 @@ jobs:
           print("pyhazards version:", pyhazards.__version__)
           PY
 
+      - name: Full pytest suite
+        run: python -m pytest tests
+
+      - name: Generated model docs check
+        run: python scripts/render_model_docs.py --check
+
       - name: Catalog smoke test
         run: python scripts/verify_table_entries.py

@@ -1,0 +1,40 @@
+model_name: saf_net
+display_name: SAF-Net
+hazard: Tropical Cyclone
+source_file: pyhazards/models/saf_net.py
+builder_name: saf_net_builder
+summary: >
+  A spatiotemporal tropical-cyclone baseline with an intensity-focused head and shared trajectory output.
+description:
+  - >
+    ``saf_net`` adds an intensity-oriented storm baseline to the shared
+    ``tc.track_intensity`` evaluator.
+  - >
+    The adapter keeps full trajectory outputs so it can use the same report
+    format as the other PyHazards storm models.
+paper:
+  title: TI_Prediction / SAF-Net repository
+  url: https://github.com/xuguangning1218/TI_Prediction
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="saf_net", task="regression", input_dim=8, horizon=5)
+  preds = model(torch.randn(2, 6, 8))
+  print(preds.shape)
+notes:
+  - "Track channels are retained so the shared storm evaluator can score all baselines consistently."
+smoke_test:
+  task: regression
+  build_kwargs:
+    input_dim: 8
+    horizon: 5
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 6, 8]
+  expected_output:
+    kind: tensor
+    shape: [2, 5, 3]

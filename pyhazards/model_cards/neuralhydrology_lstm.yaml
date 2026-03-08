@@ -1,0 +1,41 @@
+model_name: neuralhydrology_lstm
+display_name: NeuralHydrology LSTM
+hazard: Flood
+source_file: pyhazards/models/neuralhydrology_lstm.py
+builder_name: neuralhydrology_lstm_builder
+summary: >
+  An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs.
+description:
+  - >
+    ``neuralhydrology_lstm`` is the first community-style hydrology baseline in
+    the PyHazards flood roadmap.
+  - >
+    The adapter consumes the shared graph-temporal streamflow batch format and
+    produces next-step nodewise discharge predictions.
+paper:
+  title: NeuralHydrology repository
+  url: https://github.com/neuralhydrology/neuralhydrology
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="neuralhydrology_lstm", task="regression", input_dim=2, out_dim=1)
+  preds = model({"x": torch.randn(1, 4, 6, 2)})
+  print(preds.shape)
+notes:
+  - "The smoke test uses the shared synthetic streamflow dataset shape."
+smoke_test:
+  task: regression
+  build_kwargs:
+    input_dim: 2
+    out_dim: 1
+  input:
+    kind: mapping
+    mapping:
+      x:
+        shape: [1, 4, 6, 2]
+  expected_output:
+    kind: tensor
+    shape: [1, 6, 1]

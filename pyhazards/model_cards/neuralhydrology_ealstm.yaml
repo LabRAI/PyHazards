@@ -1,0 +1,41 @@
+model_name: neuralhydrology_ealstm
+display_name: EA-LSTM
+hazard: Flood
+source_file: pyhazards/models/neuralhydrology_ealstm.py
+builder_name: neuralhydrology_ealstm_builder
+summary: >
+  An entity-aware hydrology baseline with static-feature gating over streamflow histories.
+description:
+  - >
+    ``neuralhydrology_ealstm`` complements the plain LSTM adapter with a
+    lightweight static gating path inspired by EA-LSTM style hydrology models.
+  - >
+    It keeps the same graph-temporal input contract as the rest of the flood
+    streamflow roadmap.
+paper:
+  title: NeuralHydrology repository
+  url: https://github.com/neuralhydrology/neuralhydrology
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="neuralhydrology_ealstm", task="regression", input_dim=2, out_dim=1)
+  preds = model({"x": torch.randn(1, 4, 6, 2)})
+  print(preds.shape)
+notes:
+  - "This adapter focuses on the entity-aware gating contract, not exact repo parity."
+smoke_test:
+  task: regression
+  build_kwargs:
+    input_dim: 2
+    out_dim: 1
+  input:
+    kind: mapping
+    mapping:
+      x:
+        shape: [1, 4, 6, 2]
+  expected_output:
+    kind: tensor
+    shape: [1, 6, 1]

@@ -1,0 +1,23 @@
+benchmark:
+  name: wildfire
+  hazard_task: wildfire.danger
+  metrics:
+    - accuracy
+    - macro_f1
+  eval_split: test
+dataset:
+  name: fpa_fod_tabular
+  params:
+    micro: true
+    task: cause
+model:
+  name: wildfire_fpa
+  task: classification
+  params:
+    in_dim: 8
+    out_dim: 5
+report:
+  output_dir: reports/wildfire_danger
+  formats:
+    - json
+seed: 7

@@ -1,0 +1,41 @@
+model_name: tcif_fusion
+display_name: TCIF-fusion
+hazard: Tropical Cyclone
+source_file: pyhazards/models/tcif_fusion.py
+builder_name: tcif_fusion_builder
+summary: >
+  A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting.
+description:
+  - >
+    ``tcif_fusion`` combines multiple feature streams behind the shared storm
+    forecasting interface used throughout the PyHazards cyclone roadmap.
+  - >
+    The adapter focuses on the fusion contract and evaluator compatibility
+    rather than full reproduction of the original training stack.
+paper:
+  title: TCIF-fusion repository
+  url: https://github.com/wangchong96/TCIF-fusion
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="tcif_fusion", task="regression", input_dim=8, horizon=5)
+  preds = model(torch.randn(2, 6, 8))
+  print(preds.shape)
+notes:
+  - "Outputs are shared storm forecast trajectories over the configured horizon."
+smoke_test:
+  task: regression
+  build_kwargs:
+    input_dim: 8
+    horizon: 5
+    output_dim: 3
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 6, 8]
+  expected_output:
+    kind: tensor
+    shape: [2, 5, 3]

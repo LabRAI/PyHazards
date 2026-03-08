@@ -22,3 +22,17 @@ Model References
 - Marjani et al. (2024). *Application of Explainable Artificial Intelligence in Predicting Wildfire Spread: An ASPP-Enabled CNN Approach*. `[link] <https://ieeexplore.ieee.org/document/10568207>`__.
 - Taghizadeh et al. (2025). *Interpretable physics-informed graph neural networks for flood forecasting*. `[link] <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`__.
 - Lyu et al. (2025). *Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning*. `[link] <https://doi.org/10.1038/s41467-025-65435-2>`__.
+- AI4EPS. *PhaseNet repository*. `[link] <https://github.com/AI4EPS/PhaseNet>`__.
+- Mousavi et al. *EQTransformer repository*. `[link] <https://github.com/smousavi05/EQTransformer>`__.
+- interseismic. *Generalized Phase Detection repository*. `[link] <https://github.com/interseismic/generalized-phase-detection>`__.
+- AI4EPS. *EQNet repository*. `[link] <https://github.com/AI4EPS/EQNet>`__.
+- NeuralHydrology contributors. *NeuralHydrology repository*. `[link] <https://github.com/neuralhydrology/neuralhydrology>`__.
+- HydroPML. *FloodCast repository*. `[link] <https://github.com/HydroPML/FloodCast>`__.
+- HydroPML. *UrbanFloodCast repository*. `[link] <https://github.com/HydroPML/UrbanFloodCast>`__.
+- Xu et al. *tropicalcyclone_MLP repository*. `[link] <https://github.com/wenweixu/tropicalcyclone_MLP>`__.
+- Fu et al. *TropiCycloneNet repository*. `[link] <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__.
+- Xuguangning et al. *TI_Prediction / SAF-Net repository*. `[link] <https://github.com/xuguangning1218/TI_Prediction>`__.
+- Wang et al. *TCIF-fusion repository*. `[link] <https://github.com/wangchong96/TCIF-fusion>`__.
+- DeepMind. *GraphCast / GenCast repository*. `[link] <https://github.com/google-deepmind/graphcast>`__.
+- Bi et al. *Pangu-Weather repository*. `[link] <https://github.com/198808xc/Pangu-Weather>`__.
+- NVLabs. *FourCastNet repository*. `[link] <https://github.com/NVlabs/FourCastNet>`__.

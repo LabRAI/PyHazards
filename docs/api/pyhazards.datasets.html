@@ -217,13 +217,35 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_eqnet.html">EQNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_eqtransformer.html">EQTransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_floodcast.html">FloodCast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_fourcastnet_tc.html">FourCastNet TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_gpd.html">GPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_graphcast_tc.html">GraphCast TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_hurricast.html">Hurricast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_neuralhydrology_ealstm.html">EA-LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_neuralhydrology_lstm.html">NeuralHydrology LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_pangu_tc.html">Pangu TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_phasenet.html">PhaseNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_saf_net.html">SAF-Net</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_tcif_fusion.html">TCIF-fusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_tropicalcyclone_mlp.html">tropicalcyclone_MLP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_tropicyclonenet.html">TropiCycloneNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_urbanfloodcast.html">UrbanFloodCast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_dnn.html">Wildfire FPA DNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_forecast.html">Wildfire FPA Forecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_lstm.html">Wildfire FPA LSTM</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../interactive_map.html">Wildfire Interactive Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pyhazards_benchmarks.html">Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pyhazards_configs.html">Configs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pyhazards_reports.html">Reports</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pyhazards_utils.html">Utils</a></li>
@@ -691,6 +713,148 @@ of shape (num_counties,).</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticEarthquakeForecastDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">SyntheticEarthquakeForecastDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temporal_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temporal_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">micro</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/earthquake.html#SyntheticEarthquakeForecastDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.SyntheticEarthquakeForecastDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyhazards.datasets.base.Dataset" title="pyhazards.datasets.base.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a></p>
+<p>Synthetic wavefield dataset for earthquake forecasting smoke runs.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticEarthquakeForecastDataset._load">
+<span class="sig-name descname"><span class="pre">_load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/earthquake.html#SyntheticEarthquakeForecastDataset._load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.SyntheticEarthquakeForecastDataset._load" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.datasets.base.DataBundle" title="pyhazards.datasets.base.DataBundle"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBundle</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticEarthquakeForecastDataset.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'earthquake_forecast_synthetic'</span></em><a class="headerlink" href="#pyhazards.datasets.SyntheticEarthquakeForecastDataset.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticEarthquakeWaveformDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">SyntheticEarthquakeWaveformDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">96</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">micro</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/earthquake.html#SyntheticEarthquakeWaveformDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.SyntheticEarthquakeWaveformDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyhazards.datasets.base.Dataset" title="pyhazards.datasets.base.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a></p>
+<p>Synthetic waveform dataset for earthquake phase-picking smoke runs.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticEarthquakeWaveformDataset._load">
+<span class="sig-name descname"><span class="pre">_load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/earthquake.html#SyntheticEarthquakeWaveformDataset._load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.SyntheticEarthquakeWaveformDataset._load" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.datasets.base.DataBundle" title="pyhazards.datasets.base.DataBundle"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBundle</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticEarthquakeWaveformDataset.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'earthquake_waveforms'</span></em><a class="headerlink" href="#pyhazards.datasets.SyntheticEarthquakeWaveformDataset.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticFloodInundationDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">SyntheticFloodInundationDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">micro</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/flood.html#SyntheticFloodInundationDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.SyntheticFloodInundationDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyhazards.datasets.base.Dataset" title="pyhazards.datasets.base.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a></p>
+<p>Synthetic raster dataset for flood inundation smoke runs.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticFloodInundationDataset._load">
+<span class="sig-name descname"><span class="pre">_load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/flood.html#SyntheticFloodInundationDataset._load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.SyntheticFloodInundationDataset._load" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.datasets.base.DataBundle" title="pyhazards.datasets.base.DataBundle"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBundle</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticFloodInundationDataset.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'flood_inundation_synthetic'</span></em><a class="headerlink" href="#pyhazards.datasets.SyntheticFloodInundationDataset.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticFloodStreamflowDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">SyntheticFloodStreamflowDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">micro</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/flood.html#SyntheticFloodStreamflowDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.SyntheticFloodStreamflowDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyhazards.datasets.base.Dataset" title="pyhazards.datasets.base.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a></p>
+<p>Synthetic graph-temporal flood dataset for streamflow smoke runs.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticFloodStreamflowDataset._load">
+<span class="sig-name descname"><span class="pre">_load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/flood.html#SyntheticFloodStreamflowDataset._load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.SyntheticFloodStreamflowDataset._load" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.datasets.base.DataBundle" title="pyhazards.datasets.base.DataBundle"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBundle</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticFloodStreamflowDataset._make_split">
+<span class="sig-name descname"><span class="pre">_make_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/flood.html#SyntheticFloodStreamflowDataset._make_split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.SyntheticFloodStreamflowDataset._make_split" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.datasets.base.DataSplit" title="pyhazards.datasets.base.DataSplit"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSplit</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticFloodStreamflowDataset.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'flood_streamflow_synthetic'</span></em><a class="headerlink" href="#pyhazards.datasets.SyntheticFloodStreamflowDataset.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticTropicalCycloneDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">SyntheticTropicalCycloneDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">micro</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/tc.html#SyntheticTropicalCycloneDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.SyntheticTropicalCycloneDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyhazards.datasets.base.Dataset" title="pyhazards.datasets.base.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a></p>
+<p>Synthetic storm-history dataset for track/intensity smoke runs.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticTropicalCycloneDataset._load">
+<span class="sig-name descname"><span class="pre">_load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/tc.html#SyntheticTropicalCycloneDataset._load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.SyntheticTropicalCycloneDataset._load" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.datasets.base.DataBundle" title="pyhazards.datasets.base.DataBundle"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBundle</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticTropicalCycloneDataset.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'tc_tracks_synthetic'</span></em><a class="headerlink" href="#pyhazards.datasets.SyntheticTropicalCycloneDataset.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticWildfireSpreadDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">SyntheticWildfireSpreadDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">micro</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/wildfire.html#SyntheticWildfireSpreadDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.SyntheticWildfireSpreadDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyhazards.datasets.base.Dataset" title="pyhazards.datasets.base.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a></p>
+<p>Synthetic raster dataset for wildfire spread smoke runs.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticWildfireSpreadDataset._load">
+<span class="sig-name descname"><span class="pre">_load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/wildfire.html#SyntheticWildfireSpreadDataset._load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.SyntheticWildfireSpreadDataset._load" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.datasets.base.DataBundle" title="pyhazards.datasets.base.DataBundle"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBundle</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhazards.datasets.SyntheticWildfireSpreadDataset.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wildfire_spread_synthetic'</span></em><a class="headerlink" href="#pyhazards.datasets.SyntheticWildfireSpreadDataset.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="pyhazards.datasets.available_datasets">
 <span class="sig-prename descclassname"><span class="pre">pyhazards.datasets.</span></span><span class="sig-name descname"><span class="pre">available_datasets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/datasets/registry.html#available_datasets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.datasets.available_datasets" title="Link to this definition">¶</a></dt>
@@ -859,6 +1023,37 @@ of shape (num_counties,).</p>
 <li><a class="reference internal" href="#pyhazards.datasets.LabelSpec.extra"><code class="docutils literal notranslate"><span class="pre">LabelSpec.extra</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.datasets.LabelSpec.num_targets"><code class="docutils literal notranslate"><span class="pre">LabelSpec.num_targets</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.datasets.LabelSpec.task_type"><code class="docutils literal notranslate"><span class="pre">LabelSpec.task_type</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticEarthquakeForecastDataset"><code class="docutils literal notranslate"><span class="pre">SyntheticEarthquakeForecastDataset</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticEarthquakeForecastDataset._load"><code class="docutils literal notranslate"><span class="pre">SyntheticEarthquakeForecastDataset._load()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticEarthquakeForecastDataset.name"><code class="docutils literal notranslate"><span class="pre">SyntheticEarthquakeForecastDataset.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticEarthquakeWaveformDataset"><code class="docutils literal notranslate"><span class="pre">SyntheticEarthquakeWaveformDataset</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticEarthquakeWaveformDataset._load"><code class="docutils literal notranslate"><span class="pre">SyntheticEarthquakeWaveformDataset._load()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticEarthquakeWaveformDataset.name"><code class="docutils literal notranslate"><span class="pre">SyntheticEarthquakeWaveformDataset.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticFloodInundationDataset"><code class="docutils literal notranslate"><span class="pre">SyntheticFloodInundationDataset</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticFloodInundationDataset._load"><code class="docutils literal notranslate"><span class="pre">SyntheticFloodInundationDataset._load()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticFloodInundationDataset.name"><code class="docutils literal notranslate"><span class="pre">SyntheticFloodInundationDataset.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticFloodStreamflowDataset"><code class="docutils literal notranslate"><span class="pre">SyntheticFloodStreamflowDataset</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticFloodStreamflowDataset._load"><code class="docutils literal notranslate"><span class="pre">SyntheticFloodStreamflowDataset._load()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticFloodStreamflowDataset._make_split"><code class="docutils literal notranslate"><span class="pre">SyntheticFloodStreamflowDataset._make_split()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticFloodStreamflowDataset.name"><code class="docutils literal notranslate"><span class="pre">SyntheticFloodStreamflowDataset.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticTropicalCycloneDataset"><code class="docutils literal notranslate"><span class="pre">SyntheticTropicalCycloneDataset</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticTropicalCycloneDataset._load"><code class="docutils literal notranslate"><span class="pre">SyntheticTropicalCycloneDataset._load()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticTropicalCycloneDataset.name"><code class="docutils literal notranslate"><span class="pre">SyntheticTropicalCycloneDataset.name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticWildfireSpreadDataset"><code class="docutils literal notranslate"><span class="pre">SyntheticWildfireSpreadDataset</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticWildfireSpreadDataset._load"><code class="docutils literal notranslate"><span class="pre">SyntheticWildfireSpreadDataset._load()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.datasets.SyntheticWildfireSpreadDataset.name"><code class="docutils literal notranslate"><span class="pre">SyntheticWildfireSpreadDataset.name</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#pyhazards.datasets.available_datasets"><code class="docutils literal notranslate"><span class="pre">available_datasets()</span></code></a></li>

@@ -217,7 +217,9 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_hurricast.html">Hurricast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_hydrographnet.html">HydroGraphNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_phasenet.html">PhaseNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
@@ -393,6 +395,43 @@ Implement windowing logic and stitching as needed.</p>
 <section id="module-pyhazards.engine">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhazards.engine" title="Link to this heading">¶</a></h2>
 <dl class="py class">
+<dt class="sig sig-object py" id="pyhazards.engine.BenchmarkRunner">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.engine.</span></span><span class="sig-name descname"><span class="pre">BenchmarkRunner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">benchmark</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/engine/runner.html#BenchmarkRunner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.engine.BenchmarkRunner" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>High-level runner that resolves datasets/models and executes a benchmark.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.engine.BenchmarkRunner._build_model">
+<span class="sig-name descname"><span class="pre">_build_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/engine/runner.html#BenchmarkRunner._build_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.engine.BenchmarkRunner._build_model" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.engine.BenchmarkRunner._load_data">
+<span class="sig-name descname"><span class="pre">_load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/engine/runner.html#BenchmarkRunner._load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.engine.BenchmarkRunner._load_data" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyhazards.datasets.html#pyhazards.datasets.base.DataBundle" title="pyhazards.datasets.base.DataBundle"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBundle</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.engine.BenchmarkRunner.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/engine/runner.html#BenchmarkRunner.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.engine.BenchmarkRunner.run" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyhazards.benchmarks.html#pyhazards.benchmarks.schemas.BenchmarkRunSummary" title="pyhazards.benchmarks.schemas.BenchmarkRunSummary"><code class="xref py py-class docutils literal notranslate"><span class="pre">BenchmarkRunSummary</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.engine.DistributedConfig">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.engine.</span></span><span class="sig-name descname"><span class="pre">DistributedConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">devices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/engine/distributed.html#DistributedConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.engine.DistributedConfig" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -564,6 +603,12 @@ Extend/replace with custom DataLoaders for complex data.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-pyhazards.engine">Module contents</a><ul>
+<li><a class="reference internal" href="#pyhazards.engine.BenchmarkRunner"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunner</span></code></a><ul>
+<li><a class="reference internal" href="#pyhazards.engine.BenchmarkRunner._build_model"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunner._build_model()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.engine.BenchmarkRunner._load_data"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunner._load_data()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.engine.BenchmarkRunner.run"><code class="docutils literal notranslate"><span class="pre">BenchmarkRunner.run()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#pyhazards.engine.DistributedConfig"><code class="docutils literal notranslate"><span class="pre">DistributedConfig</span></code></a><ul>
 <li><a class="reference internal" href="#pyhazards.engine.DistributedConfig.devices"><code class="docutils literal notranslate"><span class="pre">DistributedConfig.devices</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.engine.DistributedConfig.strategy"><code class="docutils literal notranslate"><span class="pre">DistributedConfig.strategy</span></code></a></li>

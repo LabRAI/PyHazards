@@ -7,10 +7,13 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
+   pyhazards.benchmarks
+   pyhazards.configs
    pyhazards.datasets
    pyhazards.models
    pyhazards.engine
    pyhazards.metrics
+   pyhazards.reports
    pyhazards.utils
 
 Submodules
@@ -31,4 +34,4 @@ Module contents
    :members:
    :undoc-members:
    :show-inheritance:
-   :exclude-members: GraphTemporalDataset, graph_collate, WildfireMamba, wildfire_mamba_builder
+   :exclude-members: BenchmarkRunner, GraphTemporalDataset, graph_collate, WildfireMamba, wildfire_mamba_builder

@@ -1,0 +1,21 @@
+benchmark:
+  name: wildfire
+  hazard_task: wildfire.spread
+  metrics:
+    - iou
+    - f1
+  eval_split: test
+dataset:
+  name: wildfire_spread_synthetic
+  params:
+    micro: true
+model:
+  name: wildfire_aspp
+  task: segmentation
+  params:
+    in_channels: 12
+report:
+  output_dir: reports/wildfire_spread
+  formats:
+    - json
+seed: 7

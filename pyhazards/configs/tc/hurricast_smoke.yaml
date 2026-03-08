@@ -1,0 +1,25 @@
+benchmark:
+  name: tc
+  hazard_task: tc.track_intensity
+  metrics:
+    - track_error
+    - intensity_mae
+  eval_split: test
+dataset:
+  name: tc_tracks_synthetic
+  params:
+    micro: true
+model:
+  name: hurricast
+  task: regression
+  params:
+    input_dim: 8
+    hidden_dim: 64
+    num_layers: 2
+    horizon: 5
+    output_dim: 3
+report:
+  output_dir: reports/tc
+  formats:
+    - json
+seed: 7

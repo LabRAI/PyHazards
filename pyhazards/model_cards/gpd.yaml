@@ -1,0 +1,40 @@
+model_name: gpd
+display_name: GPD
+hazard: Earthquake
+source_file: pyhazards/models/gpd.py
+builder_name: gpd_builder
+summary: >
+  A compact CNN baseline for generalized phase detection and historical
+  earthquake picking comparisons.
+description:
+  - >
+    ``gpd`` provides a lightweight earthquake picking adapter with the same
+    waveform-to-pick interface used across the PyHazards earthquake benchmarks.
+  - >
+    This adapter is intended as a reproducible low-cost baseline rather than an
+    exact port of every original training detail.
+paper:
+  title: Generalized Phase Detection repository
+  url: https://github.com/interseismic/generalized-phase-detection
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="gpd", task="regression", in_channels=3)
+  picks = model(torch.randn(4, 3, 256))
+  print(picks.shape)
+notes:
+  - "The adapter keeps a simple two-output pick interface for shared evaluation."
+smoke_test:
+  task: regression
+  build_kwargs:
+    in_channels: 3
+  input:
+    kind: tensor
+    tensor:
+      shape: [4, 3, 256]
+  expected_output:
+    kind: tensor
+    shape: [4, 2]

@@ -1,0 +1,42 @@
+model_name: fourcastnet_tc
+display_name: FourCastNet TC Adapter
+hazard: Tropical Cyclone
+source_file: pyhazards/models/fourcastnet_tc.py
+builder_name: fourcastnet_tc_builder
+summary: >
+  An experimental wrapper-style storm adapter inspired by FourCastNet forecast fields.
+description:
+  - >
+    ``fourcastnet_tc`` completes the first wave of experimental
+    foundation-weather storm adapters in the staged roadmap.
+  - >
+    The PyHazards version is intentionally lightweight and uses the same
+    trajectory output contract as the other storm baselines.
+paper:
+  title: FourCastNet repository
+  url: https://github.com/NVlabs/FourCastNet
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="fourcastnet_tc", task="regression", input_dim=8, history=6, horizon=5)
+  preds = model(torch.randn(2, 6, 8))
+  print(preds.shape)
+notes:
+  - "Experimental adapter: intended for shared-evaluator prototyping rather than exact weather-model parity."
+smoke_test:
+  task: regression
+  build_kwargs:
+    input_dim: 8
+    history: 6
+    horizon: 5
+    output_dim: 3
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 6, 8]
+  expected_output:
+    kind: tensor
+    shape: [2, 5, 3]

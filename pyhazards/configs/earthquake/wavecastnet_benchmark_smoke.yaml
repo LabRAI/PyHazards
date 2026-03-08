@@ -1,0 +1,28 @@
+benchmark:
+  name: earthquake
+  hazard_task: earthquake.forecasting
+  metrics:
+    - mae
+    - mse
+  eval_split: test
+dataset:
+  name: earthquake_forecast_synthetic
+  params:
+    micro: true
+model:
+  name: wavecastnet
+  task: regression
+  params:
+    in_channels: 3
+    height: 12
+    width: 10
+    temporal_in: 5
+    temporal_out: 4
+    hidden_dim: 16
+    num_layers: 1
+    dropout: 0.0
+report:
+  output_dir: reports/earthquake_forecasting
+  formats:
+    - json
+seed: 7

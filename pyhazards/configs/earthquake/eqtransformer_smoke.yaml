@@ -1,0 +1,23 @@
+benchmark:
+  name: earthquake
+  hazard_task: earthquake.picking
+  metrics:
+    - p_pick_mae
+    - s_pick_mae
+    - f1
+  eval_split: test
+dataset:
+  name: earthquake_waveforms
+  params:
+    micro: true
+model:
+  name: eqtransformer
+  task: regression
+  params:
+    in_channels: 3
+    hidden_dim: 48
+report:
+  output_dir: reports/earthquake_eqtransformer
+  formats:
+    - json
+seed: 7

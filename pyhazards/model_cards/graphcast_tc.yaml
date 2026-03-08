@@ -1,0 +1,41 @@
+model_name: graphcast_tc
+display_name: GraphCast TC Adapter
+hazard: Tropical Cyclone
+source_file: pyhazards/models/graphcast_tc.py
+builder_name: graphcast_tc_builder
+summary: >
+  An experimental wrapper-style storm adapter inspired by GraphCast/GenCast forecast fields.
+description:
+  - >
+    ``graphcast_tc`` is an experimental foundation-weather adapter that keeps
+    the shared storm trajectory interface while remaining lightweight enough for CI.
+  - >
+    The PyHazards version is intentionally wrapper-style and should be treated as
+    an adapter contract rather than a full reproduction of the original weather model.
+paper:
+  title: GraphCast / GenCast repository
+  url: https://github.com/google-deepmind/graphcast
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="graphcast_tc", task="regression", input_dim=8, horizon=5)
+  preds = model(torch.randn(2, 6, 8))
+  print(preds.shape)
+notes:
+  - "Experimental adapter: intended for shared-evaluator prototyping rather than exact weather-model parity."
+smoke_test:
+  task: regression
+  build_kwargs:
+    input_dim: 8
+    horizon: 5
+    output_dim: 3
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 6, 8]
+  expected_output:
+    kind: tensor
+    shape: [2, 5, 3]

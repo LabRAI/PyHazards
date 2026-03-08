@@ -1,0 +1,41 @@
+model_name: tropicyclonenet
+display_name: TropiCycloneNet
+hazard: Tropical Cyclone
+source_file: pyhazards/models/tropicyclonenet.py
+builder_name: tropicyclonenet_builder
+summary: >
+  A GRU plus attention baseline for all-basin tropical cyclone forecasting.
+description:
+  - >
+    ``tropicyclonenet`` extends the shared storm benchmark stack beyond the
+    hurricane-only presets.
+  - >
+    The PyHazards adapter keeps a single storm-history to forecast-trajectory
+    interface so it can share the same evaluator as ``hurricast``.
+paper:
+  title: TropiCycloneNet repository
+  url: https://github.com/xiaochengfuhuo/TropiCycloneNet
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="tropicyclonenet", task="regression", input_dim=8, horizon=5)
+  preds = model(torch.randn(2, 6, 8))
+  print(preds.shape)
+notes:
+  - "Outputs are lead-time sequences of latitude, longitude, and intensity targets."
+smoke_test:
+  task: regression
+  build_kwargs:
+    input_dim: 8
+    horizon: 5
+    output_dim: 3
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 6, 8]
+  expected_output:
+    kind: tensor
+    shape: [2, 5, 3]

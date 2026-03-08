@@ -1,0 +1,48 @@
+model_name: hurricast
+display_name: Hurricast
+hazard: Hurricane
+source_file: pyhazards/models/hurricast.py
+builder_name: hurricast_builder
+summary: >
+  A compact multimodal storm baseline for hurricane track and intensity forecasting.
+description:
+  - >
+    ``hurricast`` is the first basin-specific storm baseline in the staged PyHazards
+    roadmap and operates on storm-history sequences.
+  - >
+    This initial adapter focuses on the shared tropical-cyclone forecasting interface
+    and is intended as a reproducible starting point before broader storm-model breadth.
+paper:
+  title: Hurricast repository
+  url: https://github.com/leobix/hurricast
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(
+      name="hurricast",
+      task="regression",
+      input_dim=8,
+      horizon=5,
+      output_dim=3,
+  )
+
+  preds = model(torch.randn(2, 6, 8))
+  print(preds.shape)
+notes:
+  - "Outputs are lead-time sequences of latitude, longitude, and intensity targets."
+smoke_test:
+  task: regression
+  build_kwargs:
+    input_dim: 8
+    horizon: 5
+    output_dim: 3
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 6, 8]
+  expected_output:
+    kind: tensor
+    shape: [2, 5, 3]

@@ -1,0 +1,42 @@
+model_name: urbanfloodcast
+display_name: UrbanFloodCast
+hazard: Flood
+source_file: pyhazards/models/urbanfloodcast.py
+builder_name: urbanfloodcast_builder
+summary: >
+  A U-Net style urban inundation baseline for dense-grid flood prediction.
+description:
+  - >
+    ``urbanfloodcast`` adds an urban-focused raster baseline to the PyHazards
+    inundation benchmark stack.
+  - >
+    The implementation keeps the shared spatiotemporal tensor contract used by
+    the synthetic inundation smoke dataset.
+paper:
+  title: UrbanFloodCast repository
+  url: https://github.com/HydroPML/UrbanFloodCast
+tasks:
+  - regression
+  - segmentation
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="urbanfloodcast", task="regression", in_channels=3, history=4)
+  preds = model(torch.randn(2, 4, 3, 16, 16))
+  print(preds.shape)
+notes:
+  - "Outputs are next-horizon inundation depth rasters."
+smoke_test:
+  task: regression
+  build_kwargs:
+    in_channels: 3
+    history: 4
+    base_channels: 32
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 4, 3, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

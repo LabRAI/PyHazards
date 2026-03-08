@@ -1,0 +1,40 @@
+model_name: wildfire_fpa_dnn
+display_name: Wildfire FPA DNN
+hazard: Wildfire
+source_file: pyhazards/models/wildfire_fpa_dnn.py
+builder_name: wildfire_fpa_dnn_builder
+summary: >
+  A feed-forward wildfire danger classifier for incident-level FPA-FOD features.
+description:
+  - >
+    ``wildfire_fpa_dnn`` exposes the classification stage of the broader
+    ``wildfire_fpa`` pipeline as a standalone public baseline.
+  - >
+    It is useful when contributors want a simple wildfire danger benchmark
+    without the sequence-forecasting components.
+paper:
+  title: Developing risk assessment framework for wildfire in the United States
+  url: https://www.sciencedirect.com/science/article/pii/S2949926723000033
+tasks:
+  - classification
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="wildfire_fpa_dnn", task="classification", in_dim=8, out_dim=5)
+  logits = model(torch.randn(4, 8))
+  print(logits.shape)
+notes:
+  - "This is the standalone classification stage behind the paper-facing ``wildfire_fpa`` wrapper."
+smoke_test:
+  task: classification
+  build_kwargs:
+    in_dim: 8
+    out_dim: 5
+  input:
+    kind: tensor
+    tensor:
+      shape: [4, 8]
+  expected_output:
+    kind: tensor
+    shape: [4, 5]

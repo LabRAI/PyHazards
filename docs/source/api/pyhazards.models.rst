@@ -12,6 +12,22 @@ submodules for API lookup.
 Earthquake
 ~~~~~~~~~~
 
+:doc:`EQNet </modules/models_eqnet>`
+
+A transformer-style earthquake phase-picking baseline for modern sequence modeling comparisons.
+
+:doc:`EQTransformer </modules/models_eqtransformer>`
+
+A bidirectional sequence encoder for joint earthquake phase picking with attention pooling over waveform windows.
+
+:doc:`GPD </modules/models_gpd>`
+
+A compact CNN baseline for generalized phase detection and historical earthquake picking comparisons.
+
+:doc:`PhaseNet </modules/models_phasenet>`
+
+A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows.
+
 :doc:`WaveCastNet </modules/models_wavecastnet>`
 
 A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield forecasting and early-warning style rollout experiments.
@@ -19,9 +35,63 @@ A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield f
 Flood
 ~~~~~
 
+:doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`
+
+An entity-aware hydrology baseline with static-feature gating over streamflow histories.
+
+:doc:`FloodCast </modules/models_floodcast>`
+
+A compact spatiotemporal flood-inundation baseline for raster forecast experiments.
+
 :doc:`HydroGraphNet </modules/models_hydrographnet>`
 
 A physics-informed graph neural network for flood forecasting with interpretable KAN-style components, residual message passing, and delta-state decoding.
+
+:doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`
+
+An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs.
+
+:doc:`UrbanFloodCast </modules/models_urbanfloodcast>`
+
+A U-Net style urban inundation baseline for dense-grid flood prediction.
+
+Hurricane
+~~~~~~~~~
+
+:doc:`Hurricast </modules/models_hurricast>`
+
+A compact multimodal storm baseline for hurricane track and intensity forecasting.
+
+:doc:`tropicalcyclone_MLP </modules/models_tropicalcyclone_mlp>`
+
+A compact MLP baseline for hurricane track and intensity forecasting.
+
+Tropical Cyclone
+~~~~~~~~~~~~~~~~
+
+:doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`
+
+An experimental wrapper-style storm adapter inspired by FourCastNet forecast fields.
+
+:doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`
+
+An experimental wrapper-style storm adapter inspired by GraphCast/GenCast forecast fields.
+
+:doc:`Pangu TC Adapter </modules/models_pangu_tc>`
+
+An experimental wrapper-style storm adapter inspired by Pangu-Weather forecast fields.
+
+:doc:`SAF-Net </modules/models_saf_net>`
+
+A spatiotemporal tropical-cyclone baseline with an intensity-focused head and shared trajectory output.
+
+:doc:`TCIF-fusion </modules/models_tcif_fusion>`
+
+A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting.
+
+:doc:`TropiCycloneNet </modules/models_tropicyclonenet>`
+
+A GRU plus attention baseline for all-basin tropical cyclone forecasting.
 
 Wildfire
 ~~~~~~~~
@@ -33,6 +103,18 @@ An explainable CNN segmentation model with an ASPP mechanism for next-day wildfi
 :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`
 
 A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting.
+
+:doc:`Wildfire FPA DNN </modules/models_wildfire_fpa_dnn>`
+
+A feed-forward wildfire danger classifier for incident-level FPA-FOD features.
+
+:doc:`Wildfire FPA Forecast </modules/models_wildfire_fpa_forecast>`
+
+An LSTM plus autoencoder wildfire forecasting baseline for next-window count prediction.
+
+:doc:`Wildfire FPA LSTM </modules/models_wildfire_fpa_lstm>`
+
+A sequence-only wildfire forecasting baseline for next-window size-group counts.
 
 Submodules
 ----------

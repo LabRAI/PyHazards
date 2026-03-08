@@ -16,8 +16,11 @@ def test_model_page_lists_generated_hazard_sections() -> None:
     page = render_model_page(cards)
     assert "Earthquake" in page
     assert "Flood" in page
+    assert "Hurricane" in page
+    assert "Tropical Cyclone" in page
     assert "Wildfire" in page
     assert ":doc:`WaveCastNet <modules/models_wavecastnet>`" in page
+    assert ":doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`" in page
     assert ":doc:`Wildfire Mamba <modules/models_wildfire_mamba>`" not in page
 
 

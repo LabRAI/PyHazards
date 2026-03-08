@@ -1,0 +1,40 @@
+model_name: eqtransformer
+display_name: EQTransformer
+hazard: Earthquake
+source_file: pyhazards/models/eqtransformer.py
+builder_name: eqtransformer_builder
+summary: >
+  A bidirectional sequence encoder for joint earthquake phase picking with
+  attention pooling over waveform windows.
+description:
+  - >
+    ``eqtransformer`` is the second earthquake picking baseline in the staged
+    roadmap and shares the synthetic waveform contract used by ``phasenet``.
+  - >
+    The PyHazards adapter focuses on the shared picking interface rather than a
+    full reproduction of the original multitask training pipeline.
+paper:
+  title: EQTransformer repository
+  url: https://github.com/smousavi05/EQTransformer
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="eqtransformer", task="regression", in_channels=3)
+  picks = model(torch.randn(4, 3, 256))
+  print(picks.shape)
+notes:
+  - "Outputs are P- and S-arrival sample indices."
+smoke_test:
+  task: regression
+  build_kwargs:
+    in_channels: 3
+  input:
+    kind: tensor
+    tensor:
+      shape: [4, 3, 256]
+  expected_output:
+    kind: tensor
+    shape: [4, 2]

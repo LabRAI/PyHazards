@@ -1,0 +1,49 @@
+model_name: wildfire_fpa_lstm
+display_name: Wildfire FPA LSTM
+hazard: Wildfire
+source_file: pyhazards/models/wildfire_fpa_lstm.py
+builder_name: wildfire_fpa_lstm_builder
+summary: >
+  A sequence-only wildfire forecasting baseline for next-window size-group counts.
+description:
+  - >
+    ``wildfire_fpa_lstm`` is the lighter-weight temporal baseline in the
+    wildfire FPA family and complements the autoencoder-enhanced forecast model.
+  - >
+    It preserves the shared lookback-window regression contract used across the
+    PyHazards weekly wildfire smoke tests.
+paper:
+  title: Developing risk assessment framework for wildfire in the United States
+  url: https://www.sciencedirect.com/science/article/pii/S2949926723000033
+tasks:
+  - regression
+  - forecasting
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(
+      name="wildfire_fpa_lstm",
+      task="forecasting",
+      input_dim=5,
+      output_dim=5,
+      lookback=12,
+  )
+  preds = model(torch.randn(2, 12, 5))
+  print(preds.shape)
+notes:
+  - "This is the sequence-only forecasting baseline from the wildfire FPA family."
+smoke_test:
+  task: forecasting
+  build_kwargs:
+    input_dim: 5
+    output_dim: 5
+    hidden_dim: 32
+    lookback: 12
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 12, 5]
+  expected_output:
+    kind: tensor
+    shape: [2, 5]
