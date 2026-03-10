@@ -2,7 +2,7 @@
   <img src="docs/source/_static/logo.png" alt="PyHazards logo" width="220" />
 </p>
 
-<h1 align="center">PyHazards</h1>
+<h1 align="center">PyHazards: A Python framework for AI-powered hazard prediction</h1>
 
 <p align="center">
   Datasets · Models · Benchmarks · Training Pipelines · Evaluation
