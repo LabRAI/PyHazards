@@ -8,16 +8,12 @@
 
 .. raw:: html
 
-   <h1 class="landing-hero-title">PyHazards</h1>
-
-.. container:: landing-hero-tagline
-
-   Unified research framework for AI-based natural hazard forecasting and benchmarking.
+   <h2 class="landing-hero-title">PyHazards: A unified framework for AI-based hazard prediction</h2>
 
 .. raw:: html
 
    <div class="home-cta-row">
-     <a class="home-cta-button home-cta-primary" href="quick_start.html">Quick Start</a>
+     <a class="home-cta-button home-cta-secondary" href="quick_start.html">Quick Start</a>
      <a class="home-cta-button home-cta-secondary" href="pyhazards_models.html">Browse Models</a>
      <a class="home-cta-button home-cta-secondary" href="pyhazards_benchmarks.html">Browse Benchmarks</a>
    </div>

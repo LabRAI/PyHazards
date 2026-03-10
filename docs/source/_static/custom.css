@@ -194,24 +194,9 @@
 .landing-hero-title {
   margin: 0.15rem 0 0.35rem;
   text-align: center;
-  font-size: clamp(2.5rem, 4.8vw, 3.7rem);
-  line-height: 1.02;
+  font-size: clamp(2rem, 3.8vw, 2.95rem);
+  line-height: 1.12;
   letter-spacing: -0.04em;
-}
-
-.landing-hero-tagline {
-  max-width: 58rem;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-
-.landing-hero-tagline {
-  margin-bottom: 1rem;
-  font-size: 1.08rem;
-  line-height: 1.65;
-  font-weight: 600;
-  color: var(--color-foreground-secondary);
 }
 
 .home-cta-row {
