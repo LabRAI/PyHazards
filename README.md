@@ -39,27 +39,6 @@
   </a>
 </p>
 
-## Start Here
-
-| Install | Run a first example | Browse docs |
-| --- | --- | --- |
-| [Installation](#installation) | [Quick Start](#quick-start) | [Documentation](#documentation) |
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Why PyHazards](#why-pyhazards)
-- [Hazard Coverage](#hazard-coverage)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Project Structure](#project-structure)
-- [Supported Workflows](#supported-workflows)
-- [Documentation](#documentation)
-- [Contributing](#contributing)
-- [Community](#community)
-- [Citation](#citation)
-- [License](#license)
-
 ## Overview
 
 PyHazards is built for hazard-AI work that needs more than a single model or
