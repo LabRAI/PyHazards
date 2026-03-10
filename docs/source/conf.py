@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.abspath('../../'))
 project = 'PyHazards'
 copyright = '2025, RAILab'
 author = 'RAILab'
-release = '1.0.4'
+release = '1.0.5'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -50,7 +50,7 @@ html_static_path = ['_static']
 html_baseurl = "https://labrai.github.io/PyHazards/"
 html_logo = "_static/logo.png"
 html_favicon = "_static/logo.png"
-html_title = "PyHazards 1.0.4 documentation"
+html_title = "PyHazards 1.0.5 documentation"
 
 html_theme_options = {
     "navigation_with_keys": True,
