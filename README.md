@@ -5,11 +5,7 @@
 <h1 align="center">PyHazards</h1>
 
 <p align="center">
-  <strong>PyHazards is a unified research framework for AI-based natural hazard forecasting, benchmarking, and model development across wildfire, earthquake, flood, and tropical cyclone tasks.</strong>
-</p>
-
-<p align="center">
-  PyHazards exists to give hazard-ML workflows a shared software surface for public datasets, benchmark-aligned evaluation, registry-based models, and reproducible training and reporting pipelines.
+  <strong>PyHazards: A unified research framework for AI-based natural hazard forecasting, benchmarking, and model development across wildfire, earthquake, flood, and tropical cyclone tasks.</strong>
 </p>
 
 <p align="center">
