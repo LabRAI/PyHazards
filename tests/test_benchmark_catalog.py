@@ -76,6 +76,9 @@ def test_rendered_docs_include_detail_pages_with_absolute_cross_links() -> None:
 def test_api_reference_order_is_curated() -> None:
     repo_root = Path(__file__).resolve().parents[1]
     index_text = (repo_root / "docs" / "source" / "index.rst").read_text(encoding="utf-8")
+    api_toc_start = index_text.index(":caption: API Reference")
+    additional_info_start = index_text.index(":caption: Additional Information")
+    api_toc_text = index_text[api_toc_start:additional_info_start]
     api_order = [
         "pyhazards_datasets",
         "pyhazards_models",
@@ -87,7 +90,7 @@ def test_api_reference_order_is_curated() -> None:
         "pyhazards_utils",
         "interactive_map",
     ]
-    positions = [index_text.index(name) for name in api_order]
+    positions = [api_toc_text.index(name) for name in api_order]
     assert positions == sorted(positions)
 
     package_api_text = (

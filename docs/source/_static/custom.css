@@ -222,6 +222,59 @@
   color: var(--color-foreground-secondary);
 }
 
+.home-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+  margin: 0 0 1.35rem;
+}
+
+.home-cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 10.5rem;
+  padding: 0.78rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-background-border);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: transform 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
+}
+
+.home-cta-button:hover {
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.home-cta-primary {
+  background: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+  color: white;
+}
+
+.home-cta-primary:hover {
+  background: var(--color-brand-content);
+  border-color: var(--color-brand-content);
+  color: white;
+}
+
+.home-cta-secondary {
+  background: var(--color-card-background);
+  color: var(--color-foreground-primary);
+}
+
+.home-cta-secondary:hover {
+  border-color: var(--color-brand-primary);
+  color: var(--color-brand-primary);
+}
+
+.home-hero-stats {
+  margin-top: 0.15rem;
+}
+
 .home-section-note {
   margin: 0.1rem 0 1.05rem;
   font-size: 0.98rem;

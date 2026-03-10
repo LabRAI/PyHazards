@@ -16,14 +16,19 @@
 
 .. container:: landing-hero-subtitle
 
-   PyHazards brings together public dataset catalogs, registry-based models, benchmark families, experiment configs, and shared training or report workflows so researchers, practitioners, and contributors can work on one coherent software surface.
+   PyHazards gives hazard-ML work a single software surface for public datasets, registry-based models, benchmark families, experiment configs, and shared training or reporting workflows.
 
-At a Glance
------------
+.. raw:: html
+
+   <div class="home-cta-row">
+     <a class="home-cta-button home-cta-primary" href="quick_start.html">Quick Start</a>
+     <a class="home-cta-button home-cta-secondary" href="pyhazards_models.html">Browse Models</a>
+     <a class="home-cta-button home-cta-secondary" href="pyhazards_benchmarks.html">Browse Benchmarks</a>
+   </div>
 
 .. grid:: 1 2 4 4
    :gutter: 2
-   :class-container: catalog-grid home-kicker-grid
+   :class-container: catalog-grid home-kicker-grid home-hero-stats
 
    .. grid-item-card:: Hazard Families
       :class-card: catalog-stat-card
