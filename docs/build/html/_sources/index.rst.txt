@@ -15,6 +15,10 @@
    :target: https://github.com/LabRAI/PyHazards/blob/main/LICENSE
    :alt: License
 
+.. image:: https://img.shields.io/badge/Slack-RAI%20Lab%20Channel-4A154B?logo=slack&logoColor=white
+   :target: https://rai-lab-workspace.slack.com/archives/C0AKAJCTY4F
+   :alt: Slack Channel
+
 ----
 
 Overview
@@ -112,6 +116,16 @@ model, start with :doc:`implementation` and then use the dataset, model, and
 benchmark reference pages to keep registry wiring, smoke tests, and generated
 docs aligned with the library workflow. Use :doc:`appendix_a_coverage` when
 you need the audited gap list for the remaining roadmap work.
+
+Community and Activity
+----------------------
+
+Use the `RAI Lab Slack channel <https://rai-lab-workspace.slack.com/archives/C0AKAJCTY4F>`_
+for project discussion and coordination.
+
+.. image:: https://api.star-history.com/svg?repos=LabRAI/PyHazards&type=Date&from=2026-01-01
+   :target: https://www.star-history.com/#LabRAI/PyHazards&Date
+   :alt: PyHazards Star History
 
 Citation
 --------

@@ -3,6 +3,7 @@
 [![PyPI - Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpypi.org%2Fpypi%2Fpyhazards%2Fjson&query=%24.info.version&prefix=v&label=PyPI)](https://pypi.org/project/pyhazards)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/LabRAI/PyHazards/ci.yml?branch=main)](https://github.com/LabRAI/PyHazards/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/LabRAI/PyHazards/blob/main/LICENSE)
+[![Slack Channel](https://img.shields.io/badge/Slack-RAI%20Lab%20Channel-4A154B?logo=slack&logoColor=white)](https://rai-lab-workspace.slack.com/archives/C0AKAJCTY4F)
 
 PyHazards is an open-source Python library for AI-based natural hazard modeling. It provides unified interfaces for datasets, models, benchmarks, training pipelines, and evaluation across wildfire, earthquake, flood, and tropical-cyclone workflows.
 
@@ -84,6 +85,16 @@ PyHazards uses generated dataset, model, and benchmark catalogs. If you are exte
 - use the public contributor guide in [docs/source/implementation.rst](docs/source/implementation.rst)
 - use the maintainer workflow notes in [.github/IMPLEMENTATION.md](.github/IMPLEMENTATION.md)
 - follow the repository contribution process in [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)
+
+## Community and Activity
+
+Join the PyHazards discussion channel on Slack:
+
+- [RAI Lab Slack Channel](https://rai-lab-workspace.slack.com/archives/C0AKAJCTY4F)
+
+Project star history:
+
+[![Star History Chart](https://api.star-history.com/svg?repos=LabRAI/PyHazards&type=Date&from=2026-01-01)](https://www.star-history.com/#LabRAI/PyHazards&Date)
 
 ## Citation
 
