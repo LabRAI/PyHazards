@@ -3,6 +3,7 @@
 <h2 align="center">PyHazards: A unified research framework for AI-based natural hazard prediction
   <a href="https://pypi.org/project/pyhazards">
     <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpypi.org%2Fpypi%2Fpyhazards%2Fjson&query=%24.info.version&prefix=v&label=PyPI" alt="PyPI version" />
+    
   </a>
   <a href="https://github.com/LabRAI/PyHazards/actions/workflows/ci.yml">
     <img src="https://img.shields.io/github/actions/workflow/status/LabRAI/PyHazards/ci.yml?branch=main" alt="Build status" />
