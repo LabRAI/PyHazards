@@ -12,109 +12,156 @@ submodules for API lookup.
 Wildfire
 ~~~~~~~~
 
+Core Baselines
+++++++++++++++
+
+No core public methods are currently implemented for this hazard family.
+
+Variants and Additional Implementations
++++++++++++++++++++++++++++++++++++++++
+
 :doc:`CNN-ASPP </modules/models_wildfire_aspp>`
 
-An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction.
+An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction. See `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_.
 
-:doc:`DNN </modules/models_wildfire_fpa_dnn>`
+Shen et al. (2023) FPA-FOD family
 
-A feed-forward wildfire danger classifier for incident-level FPA-FOD features.
+Family variants: :doc:`DNN </modules/models_wildfire_fpa_dnn>`, :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`LSTM </modules/models_wildfire_fpa_lstm>`, :doc:`LSTM-AutoEncoder </modules/models_wildfire_fpa_forecast>`. These entries come from the same source paper and are grouped here so they do not count as separate core methods. See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
 
-:doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`
+Experimental Adapters
++++++++++++++++++++++
 
-A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting.
-
-:doc:`LSTM </modules/models_wildfire_fpa_lstm>`
-
-A sequence-only wildfire forecasting baseline for next-window size-group counts.
-
-:doc:`LSTM-AutoEncoder </modules/models_wildfire_fpa_forecast>`
-
-An LSTM plus autoencoder wildfire forecasting baseline for next-window count prediction.
+None.
 
 Earthquake
 ~~~~~~~~~~
 
+Core Baselines
+++++++++++++++
+
 :doc:`EQNet </modules/models_eqnet>`
 
-A transformer-style earthquake phase-picking baseline for modern sequence modeling comparisons.
+A transformer-style earthquake phase-picking baseline for modern sequence modeling comparisons. See `EQNet repository <https://github.com/AI4EPS/EQNet>`_.
 
 :doc:`EQTransformer </modules/models_eqtransformer>`
 
-A bidirectional sequence encoder for joint earthquake phase picking with attention pooling over waveform windows.
+A bidirectional sequence encoder for joint earthquake phase picking with attention pooling over waveform windows. See `EQTransformer repository <https://github.com/smousavi05/EQTransformer>`_.
 
 :doc:`GPD </modules/models_gpd>`
 
-A compact CNN baseline for generalized phase detection and historical earthquake picking comparisons.
+A compact CNN baseline for generalized phase detection and historical earthquake picking comparisons. See `Generalized Phase Detection repository <https://github.com/interseismic/generalized-phase-detection>`_.
 
 :doc:`PhaseNet </modules/models_phasenet>`
 
-A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows.
+A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows. See `PhaseNet repository <https://github.com/AI4EPS/PhaseNet>`_.
+
+Variants and Additional Implementations
++++++++++++++++++++++++++++++++++++++++
 
 :doc:`WaveCastNet </modules/models_wavecastnet>`
 
-A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield forecasting and early-warning style rollout experiments.
+A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield forecasting and early-warning style rollout experiments. See `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_.
+
+Experimental Adapters
++++++++++++++++++++++
+
+None.
 
 Flood
 ~~~~~
 
+Core Baselines
+++++++++++++++
+
 :doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`
 
-An entity-aware hydrology baseline with static-feature gating over streamflow histories.
+An entity-aware hydrology baseline with static-feature gating over streamflow histories. See `NeuralHydrology repository <https://github.com/neuralhydrology/neuralhydrology>`_.
 
 :doc:`FloodCast </modules/models_floodcast>`
 
-A compact spatiotemporal flood-inundation baseline for raster forecast experiments.
-
-:doc:`HydroGraphNet </modules/models_hydrographnet>`
-
-A physics-informed graph neural network for flood forecasting with interpretable KAN-style components, residual message passing, and delta-state decoding.
+A compact spatiotemporal flood-inundation baseline for raster forecast experiments. See `FloodCast repository <https://github.com/HydroPML/FloodCast>`_.
 
 :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`
 
-An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs.
+An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs. See `NeuralHydrology repository <https://github.com/neuralhydrology/neuralhydrology>`_.
 
 :doc:`UrbanFloodCast </modules/models_urbanfloodcast>`
 
-A U-Net style urban inundation baseline for dense-grid flood prediction.
+A U-Net style urban inundation baseline for dense-grid flood prediction. See `UrbanFloodCast repository <https://github.com/HydroPML/UrbanFloodCast>`_.
+
+Variants and Additional Implementations
++++++++++++++++++++++++++++++++++++++++
+
+:doc:`HydroGraphNet </modules/models_hydrographnet>`
+
+A physics-informed graph neural network for flood forecasting with interpretable KAN-style components, residual message passing, and delta-state decoding. See `Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_.
+
+Experimental Adapters
++++++++++++++++++++++
+
+None.
 
 Hurricane
 ~~~~~~~~~
 
+Core Baselines
+++++++++++++++
+
 :doc:`Hurricast </modules/models_hurricast>`
 
-A compact multimodal storm baseline for hurricane track and intensity forecasting.
+A compact multimodal storm baseline for hurricane track and intensity forecasting. See `Hurricast repository <https://github.com/leobix/hurricast>`_.
 
 :doc:`tropicalcyclone_MLP </modules/models_tropicalcyclone_mlp>`
 
-A compact MLP baseline for hurricane track and intensity forecasting.
+A compact MLP baseline for hurricane track and intensity forecasting. See `tropicalcyclone_MLP repository <https://github.com/wenweixu/tropicalcyclone_MLP>`_.
+
+Variants and Additional Implementations
++++++++++++++++++++++++++++++++++++++++
+
+None.
+
+Experimental Adapters
++++++++++++++++++++++
+
+None.
 
 Tropical Cyclone
 ~~~~~~~~~~~~~~~~
 
-:doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`
-
-An experimental wrapper-style storm adapter inspired by FourCastNet forecast fields.
-
-:doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`
-
-An experimental wrapper-style storm adapter inspired by GraphCast/GenCast forecast fields.
-
-:doc:`Pangu TC Adapter </modules/models_pangu_tc>`
-
-An experimental wrapper-style storm adapter inspired by Pangu-Weather forecast fields.
+Core Baselines
+++++++++++++++
 
 :doc:`SAF-Net </modules/models_saf_net>`
 
-A spatiotemporal tropical-cyclone baseline with an intensity-focused head and shared trajectory output.
+A spatiotemporal tropical-cyclone baseline with an intensity-focused head and shared trajectory output. See `TI_Prediction / SAF-Net repository <https://github.com/xuguangning1218/TI_Prediction>`_.
 
 :doc:`TCIF-fusion </modules/models_tcif_fusion>`
 
-A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting.
+A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting. See `TCIF-fusion repository <https://github.com/wangchong96/TCIF-fusion>`_.
 
 :doc:`TropiCycloneNet </modules/models_tropicyclonenet>`
 
-A GRU plus attention baseline for all-basin tropical cyclone forecasting.
+A GRU plus attention baseline for all-basin tropical cyclone forecasting. See `TropiCycloneNet repository <https://github.com/xiaochengfuhuo/TropiCycloneNet>`_.
+
+Variants and Additional Implementations
++++++++++++++++++++++++++++++++++++++++
+
+None.
+
+Experimental Adapters
++++++++++++++++++++++
+
+:doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`
+
+An experimental wrapper-style storm adapter inspired by FourCastNet forecast fields. See `FourCastNet repository <https://github.com/NVlabs/FourCastNet>`_.
+
+:doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`
+
+An experimental wrapper-style storm adapter inspired by GraphCast/GenCast forecast fields. See `GraphCast / GenCast repository <https://github.com/google-deepmind/graphcast>`_.
+
+:doc:`Pangu TC Adapter </modules/models_pangu_tc>`
+
+An experimental wrapper-style storm adapter inspired by Pangu-Weather forecast fields. See `Pangu-Weather repository <https://github.com/198808xc/Pangu-Weather>`_.
 
 Submodules
 ----------

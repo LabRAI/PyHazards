@@ -1,6 +1,7 @@
 model_name: fourcastnet_tc
 display_name: FourCastNet TC Adapter
 hazard: Tropical Cyclone
+catalog_status: experimental
 source_file: pyhazards/models/fourcastnet_tc.py
 builder_name: fourcastnet_tc_builder
 summary: >

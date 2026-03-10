@@ -19,6 +19,11 @@ Paper
 
 See `Mamba: Linear-Time Sequence Modeling with Selective State Spaces <https://arxiv.org/abs/2312.00752>`_.
 
+Catalog Status
+--------------
+
+Status: ``hidden``
+
 Registry Name
 -------------
 

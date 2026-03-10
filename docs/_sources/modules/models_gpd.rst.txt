@@ -17,6 +17,11 @@ Paper
 
 See `Generalized Phase Detection repository <https://github.com/interseismic/generalized-phase-detection>`_.
 
+Catalog Status
+--------------
+
+Status: ``core``
+
 Registry Name
 -------------
 

@@ -17,6 +17,11 @@ Paper
 
 See `TropiCycloneNet repository <https://github.com/xiaochengfuhuo/TropiCycloneNet>`_.
 
+Catalog Status
+--------------
+
+Status: ``core``
+
 Registry Name
 -------------
 

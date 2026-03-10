@@ -17,6 +17,11 @@ Paper
 
 See `FloodCast repository <https://github.com/HydroPML/FloodCast>`_.
 
+Catalog Status
+--------------
+
+Status: ``core``
+
 Registry Name
 -------------
 

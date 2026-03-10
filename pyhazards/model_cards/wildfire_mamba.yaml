@@ -2,6 +2,7 @@ model_name: wildfire_mamba
 display_name: Wildfire Mamba
 hazard: Wildfire
 include_in_public_catalog: false
+catalog_status: hidden
 source_file: pyhazards/models/wildfire_mamba.py
 builder_name: wildfire_mamba_builder
 summary: >

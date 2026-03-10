@@ -17,6 +17,11 @@ Paper
 
 See `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_.
 
+Catalog Status
+--------------
+
+Status: ``variant``
+
 Registry Name
 -------------
 

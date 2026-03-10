@@ -17,6 +17,11 @@ Paper
 
 See `PhaseNet repository <https://github.com/AI4EPS/PhaseNet>`_.
 
+Catalog Status
+--------------
+
+Status: ``core``
+
 Registry Name
 -------------
 

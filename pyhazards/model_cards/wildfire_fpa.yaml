@@ -1,6 +1,9 @@
 model_name: wildfire_fpa
 display_name: DNN-LSTM-AutoEncoder
 hazard: Wildfire
+catalog_status: variant
+family_key: wildfire-fpa-2023
+family_label: Shen et al. (2023) FPA-FOD family
 source_file: pyhazards/models/wildfire_fpa.py
 builder_name: wildfire_fpa_builder
 summary: >

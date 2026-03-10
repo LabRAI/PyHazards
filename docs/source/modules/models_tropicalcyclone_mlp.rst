@@ -17,6 +17,11 @@ Paper
 
 See `tropicalcyclone_MLP repository <https://github.com/wenweixu/tropicalcyclone_MLP>`_.
 
+Catalog Status
+--------------
+
+Status: ``core``
+
 Registry Name
 -------------
 

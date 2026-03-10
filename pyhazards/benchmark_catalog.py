@@ -24,6 +24,7 @@ class BenchmarkCatalogEntry:
     benchmark_key: str
     hazard_family: str
     smoke_configs: Sequence[str]
+    current_backing: str
 
 
 BENCHMARK_CATALOG_ENTRIES = [
@@ -34,6 +35,7 @@ BENCHMARK_CATALOG_ENTRIES = [
             "pyhazards/configs/wildfire/wildfire_danger_smoke.yaml",
             "pyhazards/configs/wildfire/wildfire_spread_smoke.yaml",
         ),
+        current_backing="Smoke-only synthetic fixtures; planned wildfire_forecasting / WildfireSpreadTS / ASUFM adapters are still missing.",
     ),
     BenchmarkCatalogEntry(
         benchmark_key="earthquake",
@@ -45,6 +47,7 @@ BENCHMARK_CATALOG_ENTRIES = [
             "pyhazards/configs/earthquake/eqnet_smoke.yaml",
             "pyhazards/configs/earthquake/wavecastnet_benchmark_smoke.yaml",
         ),
+        current_backing="Synthetic waveform and wavefield fixtures; SeisBench, pick-benchmark, pyCSEP, and AEFA integration remain missing.",
     ),
     BenchmarkCatalogEntry(
         benchmark_key="flood",
@@ -56,6 +59,7 @@ BENCHMARK_CATALOG_ENTRIES = [
             "pyhazards/configs/flood/floodcast_smoke.yaml",
             "pyhazards/configs/flood/urbanfloodcast_smoke.yaml",
         ),
+        current_backing="Synthetic graph and raster fixtures; Caravan, WaterBench, FloodCastBench, and HydroBench are not integrated yet.",
     ),
     BenchmarkCatalogEntry(
         benchmark_key="tc",
@@ -70,6 +74,7 @@ BENCHMARK_CATALOG_ENTRIES = [
             "pyhazards/configs/tc/pangu_tc_smoke.yaml",
             "pyhazards/configs/tc/fourcastnet_tc_smoke.yaml",
         ),
+        current_backing="Synthetic storm-history fixtures; TCBench, IBTrACS, and TropiCycloneNet-Dataset are still missing.",
     ),
 ]
 
@@ -158,7 +163,9 @@ def render_benchmark_page() -> str:
         "",
         "Use this page to browse the implemented benchmark families, see which",
         "hazard tasks are covered today, and find the smoke configs that exercise",
-        "each evaluation path.",
+        "each evaluation path. These rows describe current runnable coverage, not",
+        "full roadmap parity. Use :doc:`appendix_a_coverage` for the audited",
+        "method, benchmark, and dataset gap list.",
         "",
         "Implemented Benchmarks",
         "----------------------",
@@ -168,7 +175,7 @@ def render_benchmark_page() -> str:
         "``pyhazards/configs/*/*_smoke.yaml``.",
         "",
         ".. list-table::",
-        "   :widths: 18 24 24 24 30",
+        "   :widths: 16 20 18 20 22 34",
         "   :header-rows: 1",
         "   :class: dataset-list",
         "",
@@ -177,6 +184,7 @@ def render_benchmark_page() -> str:
         "     - Implemented Tasks",
         "     - Key Metrics",
         "     - Smoke Configs",
+        "     - Current Backing",
     ]
 
     for entry in BENCHMARK_CATALOG_ENTRIES:
@@ -204,6 +212,7 @@ def render_benchmark_page() -> str:
                 "     - {configs}".format(
                     configs=", ".join("``{name}``".format(name=name) for name in config_names)
                 ),
+                "     - {backing}".format(backing=entry.current_backing),
             ]
         )
 

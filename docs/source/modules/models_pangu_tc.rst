@@ -17,6 +17,11 @@ Paper
 
 See `Pangu-Weather repository <https://github.com/198808xc/Pangu-Weather>`_.
 
+Catalog Status
+--------------
+
+Status: ``experimental``
+
 Registry Name
 -------------
 

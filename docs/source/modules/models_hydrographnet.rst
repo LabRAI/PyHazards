@@ -17,6 +17,11 @@ Paper
 
 See `Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_.
 
+Catalog Status
+--------------
+
+Status: ``variant``
+
 Registry Name
 -------------
 

@@ -1,6 +1,7 @@
 model_name: wavecastnet
 display_name: WaveCastNet
 hazard: Earthquake
+catalog_status: variant
 source_file: pyhazards/models/wavecastnet.py
 builder_name: wavecastnet_builder
 summary: >

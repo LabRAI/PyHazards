@@ -17,6 +17,11 @@ Paper
 
 See `TI_Prediction / SAF-Net repository <https://github.com/xuguangning1218/TI_Prediction>`_.
 
+Catalog Status
+--------------
+
+Status: ``core``
+
 Registry Name
 -------------
 

@@ -26,9 +26,48 @@ Apply these adjustments before execution:
    `pyhazards/model_catalog.py`.
 6. Keep top-level docs and published `docs/` artifacts owned by the integrator.
 
+## Current audited baseline
+
+Use `docs/source/appendix_a_coverage.rst` as the checked-in audit of the
+current repo against Appendix A in `pyhazard_plan.pdf`.
+
+Key corrections from the audit:
+
+- Wildfire is the largest gap. None of the Appendix A wildfire baselines are
+  implemented yet. The current FPA-FOD family and `CNN-ASPP` stay public, but
+  they are non-core variants and must not be counted as finished Appendix A
+  coverage.
+- Earthquake has the main model adapters (`PhaseNet`, `EQTransformer`, `GPD`,
+  `EQNet`), but the SeisBench / pick-benchmark / pyCSEP / AEFA benchmark-data
+  stack is still missing.
+- Flood has the main model adapters (`NeuralHydrology`, `FloodCast`,
+  `UrbanFloodCast`), but the Caravan / WaterBench / FloodCastBench /
+  HydroBench benchmark-data stack is still missing.
+- Storm has the main model adapters, but `TCBench`, `IBTrACS`, and
+  `TropiCycloneNet-Dataset` are still missing. `GraphCast`, `Pangu`, and
+  `FourCastNet` remain experimental wrappers and must not be counted as
+  completed core baselines.
+- Synthetic datasets remain smoke fixtures only. They are not evidence that the
+  Appendix A benchmark adapters are finished.
+
 ## Staged delivery plan
 
-Run the roadmap as five waves:
+Run the corrective roadmap as six waves:
+
+### Wave 0: Truthful portfolio and audit enforcement
+
+Goal:
+- keep the public catalog, benchmark page, and roadmap docs aligned with the
+  Appendix A audit,
+- separate `core`, `variant`, and `experimental` entries,
+- prevent future merges from over-counting same-paper variants or lightweight
+  wrappers as finished coverage.
+
+Exit criteria:
+- generated docs show truthful status sections,
+- Appendix A coverage page is in sync,
+- CI checks the generated Appendix A page,
+- worker agents use the audited gap list as their task queue.
 
 ### Wave 1: Shared contracts
 

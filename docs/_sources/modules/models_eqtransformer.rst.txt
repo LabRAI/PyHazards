@@ -17,6 +17,11 @@ Paper
 
 See `EQTransformer repository <https://github.com/smousavi05/EQTransformer>`_.
 
+Catalog Status
+--------------
+
+Status: ``core``
+
 Registry Name
 -------------
 

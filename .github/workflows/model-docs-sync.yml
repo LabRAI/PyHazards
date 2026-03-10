@@ -7,7 +7,11 @@ on:
       - "pyhazards/model_cards/**"
       - "pyhazards/models/**"
       - "pyhazards/model_catalog.py"
+      - "pyhazards/benchmark_catalog.py"
+      - "pyhazards/appendix_a_catalog.py"
       - "scripts/render_model_docs.py"
+      - "scripts/render_benchmark_docs.py"
+      - "scripts/render_appendix_a_docs.py"
 
 permissions:
   contents: write
@@ -30,9 +34,11 @@ jobs:
           python -m pip install -e .
           python -m pip install -r docs/requirements.txt
 
-      - name: Regenerate and publish model docs
+      - name: Regenerate and publish generated docs
         run: |
           python scripts/render_model_docs.py
+          python scripts/render_benchmark_docs.py
+          python scripts/render_appendix_a_docs.py
           cd docs
           sphinx-build -b html source build/html
           cp -r build/html/* .

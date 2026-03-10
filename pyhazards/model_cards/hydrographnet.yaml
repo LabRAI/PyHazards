@@ -1,6 +1,7 @@
 model_name: hydrographnet
 display_name: HydroGraphNet
 hazard: Flood
+catalog_status: variant
 source_file: pyhazards/models/hydrographnet.py
 builder_name: hydrographnet_builder
 summary: >

@@ -17,6 +17,11 @@ Paper
 
 See `GraphCast / GenCast repository <https://github.com/google-deepmind/graphcast>`_.
 
+Catalog Status
+--------------
+
+Status: ``experimental``
+
 Registry Name
 -------------
 

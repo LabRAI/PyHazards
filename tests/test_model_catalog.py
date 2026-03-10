@@ -20,6 +20,8 @@ def test_model_page_lists_generated_hazard_sections() -> None:
     assert "Hurricane" in page
     assert "Tropical Cyclone" in page
     assert "Wildfire" in page
+    assert "No core public methods are currently implemented for this" in page
+    assert "Shen et al. (2023) FPA-FOD family" in page
     assert ":doc:`DNN <modules/models_wildfire_fpa_dnn>`" in page
     assert ":doc:`LSTM-AutoEncoder <modules/models_wildfire_fpa_forecast>`" in page
     assert ":doc:`LSTM <modules/models_wildfire_fpa_lstm>`" in page
@@ -32,3 +34,4 @@ def test_hidden_models_are_omitted_from_public_catalog_pages() -> None:
     cards = load_model_cards()
     api_page = render_api_page(cards)
     assert ":doc:`Wildfire Mamba </modules/models_wildfire_mamba>`" not in api_page
+    assert "Experimental Adapters" in api_page

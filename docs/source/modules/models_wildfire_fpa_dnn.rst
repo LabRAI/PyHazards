@@ -17,10 +17,17 @@ Paper
 
 See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
 
+Catalog Status
+--------------
+
+Status: ``variant``
+
 Registry Name
 -------------
 
 Primary entrypoint: ``wildfire_fpa_dnn``
+
+Family: ``Shen et al. (2023) FPA-FOD family``
 
 Supported Tasks
 ---------------

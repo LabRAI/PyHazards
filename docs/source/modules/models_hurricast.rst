@@ -17,6 +17,11 @@ Paper
 
 See `Hurricast repository <https://github.com/leobix/hurricast>`_.
 
+Catalog Status
+--------------
+
+Status: ``core``
+
 Registry Name
 -------------
 

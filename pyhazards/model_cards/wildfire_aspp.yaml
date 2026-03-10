@@ -1,6 +1,7 @@
 model_name: wildfire_aspp
 display_name: CNN-ASPP
 hazard: Wildfire
+catalog_status: variant
 source_file: pyhazards/models/wildfire_aspp.py
 builder_name: wildfire_aspp_builder
 summary: >

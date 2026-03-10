@@ -17,6 +17,11 @@ Paper
 
 See `TCIF-fusion repository <https://github.com/wangchong96/TCIF-fusion>`_.
 
+Catalog Status
+--------------
+
+Status: ``core``
+
 Registry Name
 -------------
 

@@ -1,6 +1,7 @@
 model_name: graphcast_tc
 display_name: GraphCast TC Adapter
 hazard: Tropical Cyclone
+catalog_status: experimental
 source_file: pyhazards/models/graphcast_tc.py
 builder_name: graphcast_tc_builder
 summary: >

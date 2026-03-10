@@ -23,6 +23,9 @@ def test_benchmark_page_lists_summary_table_rows() -> None:
     assert "``fourcastnet_tc_smoke.yaml``" in page
     assert "``precision``" in page
     assert "``recall``" in page
+    assert "Current Backing" in page
+    assert "full roadmap parity" in page
+    assert "SeisBench, pick-benchmark, pyCSEP, and AEFA integration remain missing." in page
 
 
 def test_api_reference_order_is_curated() -> None:

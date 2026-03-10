@@ -1,6 +1,7 @@
 model_name: pangu_tc
 display_name: Pangu TC Adapter
 hazard: Tropical Cyclone
+catalog_status: experimental
 source_file: pyhazards/models/pangu_tc.py
 builder_name: pangu_tc_builder
 summary: >

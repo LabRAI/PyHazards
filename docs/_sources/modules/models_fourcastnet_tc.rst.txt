@@ -17,6 +17,11 @@ Paper
 
 See `FourCastNet repository <https://github.com/NVlabs/FourCastNet>`_.
 
+Catalog Status
+--------------
+
+Status: ``experimental``
+
 Registry Name
 -------------
 

@@ -17,6 +17,11 @@ Paper
 
 See `NeuralHydrology repository <https://github.com/neuralhydrology/neuralhydrology>`_.
 
+Catalog Status
+--------------
+
+Status: ``core``
+
 Registry Name
 -------------
 

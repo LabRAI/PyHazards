@@ -17,6 +17,11 @@ Paper
 
 See `EQNet repository <https://github.com/AI4EPS/EQNet>`_.
 
+Catalog Status
+--------------
+
+Status: ``core``
+
 Registry Name
 -------------
 

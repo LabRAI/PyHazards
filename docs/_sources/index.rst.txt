@@ -100,6 +100,8 @@ Documentation Guide
   ``https://rai-fire.com/``.
 - :doc:`pyhazards_benchmarks`: run hazard-specific benchmark evaluators through
   the shared runner.
+- :doc:`appendix_a_coverage`: audit which planned methods, benchmarks, and
+  datasets are actually implemented today.
 - :doc:`pyhazards_configs`: load or author reproducible experiment YAML files.
 - :doc:`pyhazards_reports`: export JSON, Markdown, and CSV benchmark summaries.
 - :doc:`implementation`: use the contributor guide for adding datasets, models,
@@ -112,7 +114,8 @@ PyHazards is registry-driven and uses model cards to generate the public model
 catalog. If you plan to contribute a dataset or model, start with
 :doc:`implementation` and then use the dataset and model reference pages to
 keep registry wiring, smoke tests, and generated docs aligned with the library
-workflow.
+workflow. Use :doc:`appendix_a_coverage` when you need the audited gap list
+for the remaining roadmap work.
 
 Citation
 --------
@@ -159,6 +162,7 @@ If you use PyHazards in your research, please cite:
    :hidden:
 
    implementation
+   appendix_a_coverage
    cite
    references
    team

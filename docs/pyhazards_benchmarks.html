@@ -7,10 +7,10 @@
         <link rel="canonical" href="https://labrai.github.io/PyHazards/pyhazards_benchmarks.html">
         <link rel="prefetch" href="_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>Benchmarks - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=aab0eeca" />
     
@@ -253,6 +253,7 @@
 <p class="caption" role="heading"><span class="caption-text">Additional Information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="implementation.html">Implementation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix_a_coverage.html">Coverage Audit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cite.html">How to Cite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="team.html">Core Team</a></li>
@@ -300,7 +301,9 @@
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
 <p>Use this page to browse the implemented benchmark families, see which
 hazard tasks are covered today, and find the smoke configs that exercise
-each evaluation path.</p>
+each evaluation path. These rows describe current runnable coverage, not
+full roadmap parity. Use <a class="reference internal" href="appendix_a_coverage.html"><span class="doc">Coverage Audit</span></a> for the audited
+method, benchmark, and dataset gap list.</p>
 </section>
 <section id="implemented-benchmarks">
 <h2>Implemented Benchmarks<a class="headerlink" href="#implemented-benchmarks" title="Link to this heading">¶</a></h2>
@@ -310,11 +313,12 @@ canonical hazard tasks, and the smoke configs under
 <div class="table-wrapper colwidths-given dataset-list docutils container">
 <table class="dataset-list docutils align-default">
 <colgroup>
-<col style="width: 15.0%" />
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 25.0%" />
+<col style="width: 12.3%" />
+<col style="width: 15.4%" />
+<col style="width: 13.8%" />
+<col style="width: 15.4%" />
+<col style="width: 16.9%" />
+<col style="width: 26.2%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Hazard Family</p></th>
@@ -322,6 +326,7 @@ canonical hazard tasks, and the smoke configs under
 <th class="head"><p>Implemented Tasks</p></th>
 <th class="head"><p>Key Metrics</p></th>
 <th class="head"><p>Smoke Configs</p></th>
+<th class="head"><p>Current Backing</p></th>
 </tr>
 </thead>
 <tbody>
@@ -330,24 +335,28 @@ canonical hazard tasks, and the smoke configs under
 <td><p><code class="docutils literal notranslate"><span class="pre">wildfire.danger</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfire.spread</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">accuracy</span></code>, <code class="docutils literal notranslate"><span class="pre">macro_f1</span></code>, <code class="docutils literal notranslate"><span class="pre">iou</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">wildfire_danger_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfire_spread_smoke.yaml</span></code></p></td>
+<td><p>Smoke-only synthetic fixtures; planned wildfire_forecasting / WildfireSpreadTS / ASUFM adapters are still missing.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Earthquake</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark</span></code> (<code class="docutils literal notranslate"><span class="pre">earthquake</span></code>)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">earthquake.picking</span></code>, <code class="docutils literal notranslate"><span class="pre">earthquake.forecasting</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">p_pick_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">s_pick_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">precision</span></code>, <code class="docutils literal notranslate"><span class="pre">recall</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code>, <code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">mse</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">phasenet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">eqtransformer_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">gpd_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">eqnet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wavecastnet_benchmark_smoke.yaml</span></code></p></td>
+<td><p>Synthetic waveform and wavefield fixtures; SeisBench, pick-benchmark, pyCSEP, and AEFA integration remain missing.</p></td>
 </tr>
 <tr class="row-even"><td><p>Flood</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">FloodBenchmark</span></code> (<code class="docutils literal notranslate"><span class="pre">flood</span></code>)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">flood.streamflow</span></code>, <code class="docutils literal notranslate"><span class="pre">flood.inundation</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">rmse</span></code>, <code class="docutils literal notranslate"><span class="pre">pixel_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">iou</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">hydrographnet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">neuralhydrology_lstm_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">neuralhydrology_ealstm_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">floodcast_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">urbanfloodcast_smoke.yaml</span></code></p></td>
+<td><p>Synthetic graph and raster fixtures; Caravan, WaterBench, FloodCastBench, and HydroBench are not integrated yet.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Tropical Cyclone / Hurricane</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark</span></code> (<code class="docutils literal notranslate"><span class="pre">tc</span></code>)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">tc.track_intensity</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">track_error</span></code>, <code class="docutils literal notranslate"><span class="pre">intensity_mae</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">hurricast_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">tropicalcyclone_mlp_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">tropicyclonenet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">saf_net_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">tcif_fusion_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">graphcast_tc_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">pangu_tc_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">fourcastnet_tc_smoke.yaml</span></code></p></td>
+<td><p>Synthetic storm-history fixtures; TCBench, IBTrACS, and TropiCycloneNet-Dataset are still missing.</p></td>
 </tr>
 </tbody>
 </table>

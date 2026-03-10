@@ -17,6 +17,11 @@ Paper
 
 See `UrbanFloodCast repository <https://github.com/HydroPML/UrbanFloodCast>`_.
 
+Catalog Status
+--------------
+
+Status: ``core``
+
 Registry Name
 -------------
 

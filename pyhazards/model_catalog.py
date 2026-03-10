@@ -3,7 +3,7 @@ from __future__ import annotations
 import inspect
 from collections import defaultdict
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Set
+from typing import Any, Dict, Iterable, List, Literal, Mapping, Optional, Sequence, Set
 
 import torch
 import yaml
@@ -36,6 +36,24 @@ HAZARD_DISPLAY_ORDER = [
     "Hurricane",
     "Tropical Cyclone",
 ]
+
+CATALOG_STATUS_ORDER = [
+    "core",
+    "variant",
+    "experimental",
+]
+
+CATALOG_STATUS_TITLES = {
+    "core": "Core Baselines",
+    "variant": "Variants and Additional Implementations",
+    "experimental": "Experimental Adapters",
+}
+
+CATALOG_STATUS_SUMMARIES = {
+    "core": "These entries count toward the current core public method set.",
+    "variant": "These entries stay public, but they are grouped outside the core method count because they are same-paper variants or additional off-plan implementations.",
+    "experimental": "These entries remain public as lightweight wrapper or prototype integrations and should not be counted as stable core methods.",
+}
 
 
 class PaperReference(BaseModel):
@@ -97,6 +115,9 @@ class ModelCard(BaseModel):
     display_name: str
     hazard: str
     include_in_public_catalog: bool = True
+    catalog_status: Literal["core", "variant", "experimental", "hidden"] = "core"
+    family_key: Optional[str] = None
+    family_label: Optional[str] = None
     source_file: str
     builder_name: str
     summary: str
@@ -108,6 +129,16 @@ class ModelCard(BaseModel):
     aliases: List[str] = Field(default_factory=list)
     doc_slug: Optional[str] = None
     smoke_test: SmokeTestSpec
+
+    @model_validator(mode="after")
+    def validate_catalog_metadata(self) -> "ModelCard":
+        if self.catalog_status == "hidden" and self.include_in_public_catalog:
+            raise ValueError("hidden catalog_status requires include_in_public_catalog: false")
+        if self.family_key and not self.family_label:
+            raise ValueError("family_key requires family_label")
+        if self.family_label and not self.family_key:
+            raise ValueError("family_label requires family_key")
+        return self
 
     @property
     def registry_names(self) -> List[str]:
@@ -177,6 +208,36 @@ def public_catalog_cards(cards: Sequence[ModelCard]) -> List[ModelCard]:
     return [card for card in cards if card.include_in_public_catalog]
 
 
+def _cards_by_status(cards: Sequence[ModelCard]) -> Dict[str, List[ModelCard]]:
+    grouped: Dict[str, List[ModelCard]] = {status: [] for status in CATALOG_STATUS_ORDER}
+    for card in cards:
+        if card.catalog_status in grouped:
+            grouped[card.catalog_status].append(card)
+    for status in grouped:
+        grouped[status] = sorted(grouped[status], key=lambda item: item.display_name.lower())
+    return grouped
+
+
+def _grouped_catalog_entries(cards: Sequence[ModelCard]) -> List[List[ModelCard]]:
+    entries: List[List[ModelCard]] = []
+    family_seen: Set[str] = set()
+    ordered_cards = sorted(cards, key=lambda item: item.display_name.lower())
+    for card in ordered_cards:
+        if card.family_key:
+            if card.family_key in family_seen:
+                continue
+            family_seen.add(card.family_key)
+            family_cards = [
+                member
+                for member in ordered_cards
+                if member.family_key == card.family_key
+            ]
+            entries.append(family_cards)
+            continue
+        entries.append([card])
+    return entries
+
+
 def _paper_sentence(card: ModelCard) -> str:
     return "See `{title} <{url}>`_.".format(
         title=card.paper.title,
@@ -191,6 +252,54 @@ def _single_line(text: str) -> str:
 def _indent_block(text: str, prefix: str = "   ") -> str:
     lines = text.rstrip().splitlines()
     return "\n".join(prefix + line if line else prefix.rstrip() for line in lines)
+
+
+def _doc_link(card: ModelCard, absolute: bool = False) -> str:
+    target = "/modules/{slug}".format(slug=card.module_doc_name) if absolute else "modules/{slug}".format(slug=card.module_doc_name)
+    return ":doc:`{name} <{target}>`".format(
+        name=card.display_name,
+        target=target,
+    )
+
+
+def _family_row_name(cards: Sequence[ModelCard]) -> str:
+    label = cards[0].family_label or cards[0].display_name
+    return label
+
+
+def _family_row_summary(cards: Sequence[ModelCard], status: str, absolute_links: bool = False) -> str:
+    members = ", ".join(
+        _doc_link(card, absolute=absolute_links)
+        for card in cards
+    )
+    if status == "variant":
+        prefix = (
+            "Family variants: {members}. These entries come from the same source "
+            "paper and are grouped here so they do not count as separate core "
+            "methods."
+        )
+    else:
+        prefix = "Family members: {members}."
+    return "{prefix} {paper}".format(
+        prefix=prefix.format(members=members),
+        paper=_paper_sentence(cards[0]),
+    )
+
+
+def _row_name(cards: Sequence[ModelCard]) -> str:
+    if len(cards) == 1:
+        return _doc_link(cards[0])
+    return _family_row_name(cards)
+
+
+def _row_summary(cards: Sequence[ModelCard], status: str, absolute_links: bool = False) -> str:
+    if len(cards) == 1:
+        card = cards[0]
+        return "{summary} {paper}".format(
+            summary=_single_line(card.summary).rstrip(".") + ".",
+            paper=_paper_sentence(card),
+        )
+    return _family_row_summary(cards, status, absolute_links=absolute_links)
 
 
 def render_model_page(cards: Sequence[ModelCard]) -> str:
@@ -212,41 +321,56 @@ def render_model_page(cards: Sequence[ModelCard]) -> str:
         "-------------",
         "",
         "The public catalog below is generated from ``pyhazards/model_cards/*.yaml``.",
-        "Use this page for model discovery and quick registry lookup. Use the",
-        ":doc:`pyhazards_benchmarks` page to see which hazard tasks and smoke",
-        "configs are currently implemented, and use the Implementation Guide",
-        "for contributor workflow details.",
+        "Use this page for model discovery and quick registry lookup. Core baselines,",
+        "variants, and experimental adapters are listed separately so the public",
+        "catalog does not over-count same-paper variants as independent methods.",
+        "Use :doc:`appendix_a_coverage` for the audited roadmap gap list,",
+        ":doc:`pyhazards_benchmarks` for current runnable evaluator coverage, and",
+        "the Implementation Guide for contributor workflow details.",
         "",
     ]
 
     for hazard, hazard_cards in grouped.items():
-        lines.extend(
-            [
-                hazard,
-                "~" * len(hazard),
-                "",
-                ".. list-table::",
-                "   :widths: 30 70",
-                "   :header-rows: 1",
-                "   :class: dataset-list",
-                "",
-                "   * - Model",
-                "     - Description",
-            ]
-        )
-        for card in hazard_cards:
+        lines.extend([hazard, "~" * len(hazard), ""])
+        cards_by_status = _cards_by_status(hazard_cards)
+        for status in CATALOG_STATUS_ORDER:
+            title = CATALOG_STATUS_TITLES[status]
+            lines.extend([title, "+" * len(title), "", CATALOG_STATUS_SUMMARIES[status], ""])
+            status_cards = cards_by_status[status]
+            if not status_cards:
+                if status == "core":
+                    lines.extend(
+                        [
+                            "No core public methods are currently implemented for this",
+                            "hazard family. See :doc:`appendix_a_coverage` for the audited",
+                            "missing baseline and benchmark adapters.",
+                            "",
+                        ]
+                    )
+                else:
+                    lines.append("None.")
+                    lines.append("")
+                continue
+
             lines.extend(
                 [
-                    "   * - :doc:`{name} <modules/{slug}>`".format(
-                        name=card.display_name,
-                        slug=card.module_doc_name,
-                    ),
-                    "     - {summary} {paper}".format(
-                        summary=_single_line(card.summary).rstrip(".") + ".",
-                        paper=_paper_sentence(card),
-                    ),
+                    ".. list-table::",
+                    "   :widths: 30 70",
+                    "   :header-rows: 1",
+                    "   :class: dataset-list",
+                    "",
+                    "   * - Model",
+                    "     - Description",
                 ]
             )
+            for entry in _grouped_catalog_entries(status_cards):
+                lines.extend(
+                    [
+                        "   * - {name}".format(name=_row_name(entry)),
+                        "     - {summary}".format(summary=_row_summary(entry, status)),
+                    ]
+                )
+            lines.append("")
         lines.append("")
 
     lines.extend(
@@ -331,18 +455,37 @@ def render_api_page(cards: Sequence[ModelCard]) -> str:
     ]
     for hazard, hazard_cards in grouped.items():
         lines.extend([hazard, "~" * len(hazard), ""])
-        for card in hazard_cards:
-            lines.extend(
-                [
-                    ":doc:`{name} </modules/{slug}>`".format(
-                        name=card.display_name,
-                        slug=card.module_doc_name,
-                    ),
-                    "",
-                    "{summary}".format(summary=_single_line(card.summary).rstrip(".") + "."),
-                    "",
-                ]
-            )
+        cards_by_status = _cards_by_status(hazard_cards)
+        for status in CATALOG_STATUS_ORDER:
+            title = CATALOG_STATUS_TITLES[status]
+            lines.extend([title, "+" * len(title), ""])
+            status_cards = cards_by_status[status]
+            if not status_cards:
+                if status == "core":
+                    lines.extend(
+                        [
+                            "No core public methods are currently implemented for this hazard family.",
+                            "",
+                        ]
+                    )
+                else:
+                    lines.extend(["None.", ""])
+                continue
+            for entry in _grouped_catalog_entries(status_cards):
+                lines.extend(
+                    [
+                        "{name}".format(
+                            name=(
+                                _doc_link(entry[0], absolute=True)
+                                if len(entry) == 1
+                                else _family_row_name(entry)
+                            )
+                        ),
+                        "",
+                        "{summary}".format(summary=_row_summary(entry, status, absolute_links=True)),
+                        "",
+                    ]
+                )
 
     lines.extend(
         [
@@ -424,6 +567,11 @@ def render_module_page(card: ModelCard) -> str:
             "",
             _paper_sentence(card),
             "",
+            "Catalog Status",
+            "--------------",
+            "",
+            "Status: ``{status}``".format(status=card.catalog_status),
+            "",
             "Registry Name",
             "-------------",
             "",
@@ -431,6 +579,10 @@ def render_module_page(card: ModelCard) -> str:
             "",
         ]
     )
+
+    if card.family_label:
+        lines.append("Family: ``{family}``".format(family=card.family_label))
+        lines.append("")
 
     if card.aliases:
         lines.append("Aliases: {aliases}".format(

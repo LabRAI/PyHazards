@@ -17,6 +17,11 @@ Paper
 
 See `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_.
 
+Catalog Status
+--------------
+
+Status: ``variant``
+
 Registry Name
 -------------
 

@@ -40,5 +40,8 @@ jobs:
       - name: Generated benchmark docs check
         run: python scripts/render_benchmark_docs.py --check
 
+      - name: Generated coverage audit docs check
+        run: python scripts/render_appendix_a_docs.py --check
+
       - name: Catalog smoke test
         run: python scripts/verify_table_entries.py
