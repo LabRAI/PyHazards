@@ -2,8 +2,6 @@
   <img src="docs/source/_static/logo.png" alt="PyHazards logo" width="170" />
 </p>
 
-<h1 align="center">PyHazards</h1>
-
 <p align="center">
   <strong>PyHazards: A unified research framework for AI-based natural hazard forecasting, benchmarking, and model development across wildfire, earthquake, flood, and tropical cyclone tasks.</strong>
 </p>
