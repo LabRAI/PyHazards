@@ -8,7 +8,7 @@
 
 .. raw:: html
 
-   <h2 class="landing-hero-title">PyHazards: A unified framework for AI-based hazard prediction</h2>
+   <h2 class="landing-hero-title">PyHazards</h2>
 
 .. raw:: html
 
