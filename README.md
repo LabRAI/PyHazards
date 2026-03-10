@@ -2,9 +2,7 @@
   <img src="docs/source/_static/logo.png" alt="PyHazards logo" width="200" />
 </p>
 
-<p align="center">
-  <strong>PyHazards: A unified research framework for AI-based natural hazard prediction</strong>
-</p>
+<h2 align="center">PyHazards: A unified research framework for AI-based natural hazard prediction</h2>
 
 <p align="center">
   <a href="https://pypi.org/project/pyhazards">
