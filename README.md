@@ -1,7 +1,7 @@
 <p align="center">
   <img src="docs/source/_static/logo.png" alt="PyHazards logo" width="200" />
 <h2 align="center">PyHazards: A unified research framework for AI-based natural hazard prediction</h2>
-<p align="center">
+<h2 align="center">
   <a href="https://pypi.org/project/pyhazards">
     <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpypi.org%2Fpypi%2Fpyhazards%2Fjson&query=%24.info.version&prefix=v&label=PyPI" alt="PyPI version" />
   </a>
@@ -23,7 +23,7 @@
   <a href="https://github.com/LabRAI/PyHazards">
     <img src="docs/source/_static/github.svg" alt="GitHub" width="26" />
   </a>
-</p>
+</h2>
 </p>
 
 ## Overview
