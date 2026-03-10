@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="docs/source/_static/logo.png" alt="PyHazards logo" width="220" />
+  <img src="pyhazards_logo.png" alt="PyHazards logo" width="220" />
 </p>
 
-<h1 align="center">PyHazards: A unified framework for AI-based hazard prediction</h1>
+<h1 align="center">PyHazards</h1>
 
 <p align="center">
   Datasets · Models · Benchmarks · Training Pipelines · Evaluation

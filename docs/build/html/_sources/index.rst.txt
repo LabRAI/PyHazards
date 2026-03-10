@@ -1,14 +1,10 @@
 .. title:: PyHazards
 
-.. image:: _static/logo.png
+.. image:: _static/pyhazards_logo.png
    :alt: PyHazards Icon
    :width: 220px
    :align: center
    :class: landing-hero-logo
-
-.. raw:: html
-
-   <h2 class="landing-hero-title">PyHazards</h2>
 
 .. raw:: html
 
