@@ -7,24 +7,6 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/LabRAI/PyHazards">
-    <img src="docs/source/_static/github.svg" alt="GitHub" width="26" />
-  </a>
-  <a href="https://github.com/LabRAI/PyHazards/stargazers">
-    <img src="https://img.shields.io/github/stars/LabRAI/PyHazards?label=stars" alt="GitHub stars" />
-  </a>
-  <a href="https://github.com/LabRAI/PyHazards/network/members">
-    <img src="https://img.shields.io/github/forks/LabRAI/PyHazards?label=forks" alt="GitHub forks" />
-  </a>
-  <a href="https://pypi.org/project/pyhazards">
-    <img src="https://img.shields.io/badge/PyPI-library-3775A9?logo=pypi&logoColor=white" alt="PyPI library" />
-  </a>
-  <a href="https://pypi.org/project/pyhazards">
-    <img src="https://img.shields.io/badge/downloads-check%20PyPI-blue" alt="PyPI downloads" />
-  </a>
-</p>
-
-<p align="center">
   <a href="https://pypi.org/project/pyhazards">
     <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpypi.org%2Fpypi%2Fpyhazards%2Fjson&query=%24.info.version&prefix=v&label=PyPI" alt="PyPI version" />
   </a>
@@ -36,6 +18,15 @@
   </a>
   <a href="https://rai-lab-workspace.slack.com/archives/C0AKAJCTY4F">
     <img src="https://img.shields.io/badge/Slack-RAI%20Lab%20Channel-4A154B?logo=slack&logoColor=white" alt="Slack channel" />
+  </a>
+  <a href="https://github.com/LabRAI/PyHazards/stargazers">
+    <img src="https://img.shields.io/github/stars/LabRAI/PyHazards?label=stars" alt="GitHub stars" />
+  </a>
+  <a href="https://github.com/LabRAI/PyHazards/network/members">
+    <img src="https://img.shields.io/github/forks/LabRAI/PyHazards?label=forks" alt="GitHub forks" />
+  </a>
+  <a href="https://github.com/LabRAI/PyHazards">
+    <img src="docs/source/_static/github.svg" alt="GitHub" width="26" />
   </a>
 </p>
 
