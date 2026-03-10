@@ -12,11 +12,7 @@
 
 .. container:: landing-hero-tagline
 
-   PyHazards is a unified research framework for AI-based natural hazard forecasting, benchmarking, and model development across wildfire, earthquake, flood, and tropical cyclone tasks.
-
-.. container:: landing-hero-subtitle
-
-   PyHazards gives hazard-ML work a single software surface for public datasets, registry-based models, benchmark families, experiment configs, and shared training or reporting workflows.
+   Unified research framework for AI-based natural hazard forecasting and benchmarking.
 
 .. raw:: html
 
@@ -25,6 +21,17 @@
      <a class="home-cta-button home-cta-secondary" href="pyhazards_models.html">Browse Models</a>
      <a class="home-cta-button home-cta-secondary" href="pyhazards_benchmarks.html">Browse Benchmarks</a>
    </div>
+
+Overview
+--------
+
+PyHazards brings together public dataset catalogs, registry-based models,
+benchmark families, experiment configs, and shared training or reporting
+workflows across wildfire, earthquake, flood, and tropical cyclone tasks.
+
+It is designed for researchers and practitioners who need one coherent library
+for reproducing baselines, comparing methods, and extending hazard-ML
+workflows without rebuilding the software stack for each hazard family.
 
 .. grid:: 1 2 4 4
    :gutter: 2

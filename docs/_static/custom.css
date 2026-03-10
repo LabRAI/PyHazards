@@ -188,19 +188,18 @@
 }
 
 .landing-hero-logo {
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.35rem;
 }
 
 .landing-hero-title {
-  margin: 0.25rem 0 0.5rem;
+  margin: 0.15rem 0 0.35rem;
   text-align: center;
-  font-size: clamp(2.6rem, 5vw, 4rem);
+  font-size: clamp(2.5rem, 4.8vw, 3.7rem);
   line-height: 1.02;
   letter-spacing: -0.04em;
 }
 
-.landing-hero-tagline,
-.landing-hero-subtitle {
+.landing-hero-tagline {
   max-width: 58rem;
   margin-left: auto;
   margin-right: auto;
@@ -208,17 +207,10 @@
 }
 
 .landing-hero-tagline {
-  margin-bottom: 0.8rem;
-  font-size: 1.3rem;
-  line-height: 1.5;
-  font-weight: 700;
-  color: var(--color-foreground-primary);
-}
-
-.landing-hero-subtitle {
-  margin-bottom: 1.5rem;
-  font-size: 1rem;
-  line-height: 1.75;
+  margin-bottom: 1rem;
+  font-size: 1.08rem;
+  line-height: 1.65;
+  font-weight: 600;
   color: var(--color-foreground-secondary);
 }
 
@@ -227,7 +219,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.85rem;
-  margin: 0 0 1.35rem;
+  margin: 0 0 1.15rem;
 }
 
 .home-cta-button {
@@ -239,9 +231,9 @@
   border-radius: 999px;
   border: 1px solid var(--color-background-border);
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 650;
   letter-spacing: 0.01em;
-  transition: transform 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
+  transition: transform 0.12s ease, border-color 0.12s ease, background-color 0.12s ease, color 0.12s ease;
 }
 
 .home-cta-button:hover {
@@ -250,24 +242,26 @@
 }
 
 .home-cta-primary {
-  background: var(--color-brand-primary);
-  border-color: var(--color-brand-primary);
-  color: white;
+  background: color-mix(in srgb, var(--color-card-background) 84%, var(--color-brand-primary) 16%);
+  border-color: color-mix(in srgb, var(--color-background-border) 68%, var(--color-brand-primary) 32%);
+  color: var(--color-brand-primary);
 }
 
 .home-cta-primary:hover {
-  background: var(--color-brand-content);
-  border-color: var(--color-brand-content);
-  color: white;
+  background: color-mix(in srgb, var(--color-card-background) 76%, var(--color-brand-primary) 24%);
+  border-color: color-mix(in srgb, var(--color-background-border) 55%, var(--color-brand-primary) 45%);
+  color: var(--color-brand-primary);
 }
 
 .home-cta-secondary {
-  background: var(--color-card-background);
+  background: color-mix(in srgb, var(--color-card-background) 92%, var(--color-brand-primary) 8%);
+  border-color: color-mix(in srgb, var(--color-background-border) 82%, var(--color-brand-primary) 18%);
   color: var(--color-foreground-primary);
 }
 
 .home-cta-secondary:hover {
-  border-color: var(--color-brand-primary);
+  background: color-mix(in srgb, var(--color-card-background) 86%, var(--color-brand-primary) 14%);
+  border-color: color-mix(in srgb, var(--color-background-border) 68%, var(--color-brand-primary) 32%);
   color: var(--color-brand-primary);
 }
 
