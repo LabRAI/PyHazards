@@ -1,0 +1,56 @@
+slug: aefa_forecast
+display_name: AEFA Forecast
+hazard_family: Earthquake
+source_role: Forecast Benchmark
+summary: Synthetic-backed dense-grid forecasting adapter aligned to the AEFA earthquake forecasting workflow.
+provider: AEFA forecasting ecosystem surfaced through a PyHazards adapter
+geometry: Dense-grid wavefield tensors
+spatial_resolution: Benchmark-defined dense sensor grid
+temporal_resolution: Short history and forecast windows
+update_cadence: Generated locally for smoke and benchmark-alignment runs
+period_of_record: Synthetic-backed benchmark adapter
+coverage: Benchmark-aligned earthquake forecasting samples
+formats: PyTorch tensors via the dataset registry
+overview:
+  - AEFA Forecast is the public forecasting adapter used by the earthquake benchmark when exercising dense-grid wavefield forecasting models.
+  - The current implementation is synthetic-backed, but it preserves the task shape, tensor layout, and reporting surface used by the shared earthquake evaluator.
+data_characteristics:
+  - Multichannel dense-grid history tensors paired with future dense-grid targets.
+  - Registry-backed benchmark adapter rather than a raw external archive loader.
+  - Intended for forecasting-path validation and report generation.
+typical_use_cases:
+  - Smoke tests for WaveCastNet-style earthquake forecasting.
+  - Shared forecasting benchmark runs under the earthquake evaluator.
+  - Validation of report exports aligned to the forecasting path.
+access_links:
+  - label: AEFA repository
+    url: https://github.com/chenyk1990/aefa
+inspection: null
+registry:
+  name: aefa_forecast
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset(
+        "aefa_forecast",
+        micro=True,
+        temporal_in=5,
+        temporal_out=4,
+    ).load()
+
+    train = data.get_split("train")
+    print(train.inputs.shape, train.targets.shape)
+  notes:
+    - micro=True keeps the synthetic-backed forecasting path lightweight for validation.
+primary_references:
+  - citation: AEFA
+    url: https://github.com/chenyk1990/aefa
+pyhazards_usage:
+  - Use this adapter when you want the public earthquake forecasting benchmark surface rather than the private synthetic dataset name.
+related_models:
+  - wavecastnet
+related_benchmarks:
+  - earthquake_benchmark
+  - aefa
+notes:
+  - This is a benchmark adapter, not a full external AEFA ingestion pipeline.

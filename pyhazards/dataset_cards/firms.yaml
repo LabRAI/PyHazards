@@ -1,0 +1,40 @@
+slug: firms
+display_name: FIRMS
+hazard_family: Wildfire
+source_role: Active Fire Detections
+summary: NASA's near-real-time active fire detections used for operational wildfire monitoring and event labeling.
+provider: NASA LANCE / FIRMS
+geometry: Event-based point detections
+spatial_resolution: "~375 m for VIIRS, ~1 km for MODIS"
+temporal_resolution: Event-based detections with multiple updates per day
+update_cadence: Fire maps refresh about every 5 minutes and downloadable files refresh about hourly
+period_of_record: Near-real-time archive with later standard-science replacements
+coverage: Global
+formats: CSV, Shapefile, GeoJSON, KML
+overview:
+  - FIRMS distributes active fire and thermal anomaly detections derived from MODIS and VIIRS satellite sensors, with each record corresponding to a time-stamped hotspot observation.
+  - PyHazards uses FIRMS as a wildfire occurrence signal for operational monitoring and label construction when combined with weather and land-surface context.
+data_characteristics:
+  - Global event-based point detections rather than gridded tensors.
+  - Latency is typically under 3 hours globally and faster for some U.S. and Canada products.
+  - Common attributes include location, detection time, fire radiative power, and confidence indicators.
+  - Near-real-time detections are later replaced by standard or science-quality products.
+typical_use_cases:
+  - Operational wildfire monitoring and early detection.
+  - Event labeling for wildfire prediction pipelines.
+  - Spatiotemporal analysis of fire occurrence and activity patterns.
+access_links:
+  - label: FIRMS portal
+    url: https://firms.modaps.eosdis.nasa.gov/
+  - label: NASA Earthdata
+    url: https://earthdata.nasa.gov/
+inspection:
+  command: python -m pyhazards.datasets.firms.inspection --path /path/to/firms_data --max-items 10
+  notes:
+    - Some archive and bulk-download routes require Earthdata login credentials.
+primary_references:
+  - citation: Schroeder et al. (2014). The New VIIRS 375 m active fire detection data product.
+    url: https://doi.org/10.1016/j.rse.2013.08.008
+related_models: []
+related_benchmarks:
+  - wildfire_benchmark

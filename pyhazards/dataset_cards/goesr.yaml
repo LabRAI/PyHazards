@@ -1,0 +1,37 @@
+slug: goesr
+display_name: GOES-R
+hazard_family: Shared Forcing
+source_role: Geostationary Imagery
+summary: Rapid-refresh GOES-R satellite imagery used for smoke, fire, and weather monitoring workflows.
+provider: NOAA GOES-R Program
+geometry: Raster imagery time series on the ABI fixed grid
+spatial_resolution: "~0.5-2 km depending on spectral band"
+temporal_resolution: 1-10 minute refresh depending on sector and mode
+update_cadence: Continuous ingest as new files become available
+period_of_record: Ongoing operational satellite archive
+coverage: Western Hemisphere / Americas geostationary view
+formats: NetCDF
+overview:
+  - GOES-R provides high-frequency geostationary observations from the Advanced Baseline Imager, enabling continuous monitoring of atmospheric and surface processes across the Americas.
+  - PyHazards uses it as rapid-refresh imagery for smoke, fire evolution, ignition monitoring, and operational situational awareness workflows.
+data_characteristics:
+  - Raster time series rather than event records.
+  - Typical Mode 6 scan cadence is 10 minutes for Full Disk, 5 minutes for CONUS, and 1 minute for mesoscale sectors.
+  - Common products include visible and infrared imagery, brightness temperature, and fire-related thermal context.
+  - Distribution latency depends on the access route even when observations are near real time.
+typical_use_cases:
+  - Early detection and monitoring of wildfire ignition and growth.
+  - Smoke and fire evolution analysis at high temporal resolution.
+  - Real-time situational awareness workflows.
+access_links:
+  - label: GOES-R Program
+    url: https://www.goes-r.gov/
+  - label: NOAA Open Data Dissemination
+    url: https://www.noaa.gov/information-technology/open-data-dissemination
+inspection:
+  command: python -m pyhazards.datasets.goesr.inspection --path /path/to/goesr_data --max-items 10
+primary_references:
+  - citation: Schmit et al. (2017). A closer look at the ABI on the GOES-R series.
+    url: https://doi.org/10.1175/BAMS-D-15-00230.1
+related_models: []
+related_benchmarks: []

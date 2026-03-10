@@ -3,14 +3,14 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="GOES-R" href="goesr.html"><link rel="prev" title="FPA-FOD Tabular" href="fpa_fod_tabular.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="LANDFIRE" href="landfire.html"><link rel="prev" title="FPA-FOD Tabular" href="fpa_fod_tabular.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/datasets/fpa_fod_weekly.html">
         <link rel="prefetch" href="../_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>FPA-FOD Weekly - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=b547f940" />
@@ -205,16 +205,26 @@
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="merra2.html">MERRA-2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="era5.html">ERA5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="goesr.html">GOES-R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="merra2.html">MERRA-2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="firms.html">FIRMS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mtbs.html">MTBS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="landfire.html">LANDFIRE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wfigs.html">WFIGS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fpa_fod_tabular.html">FPA-FOD Tabular</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">FPA-FOD Weekly</a></li>
-<li class="toctree-l2"><a class="reference internal" href="goesr.html">GOES-R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="landfire.html">LANDFIRE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mtbs.html">MTBS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wfigs.html">WFIGS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caravan_streamflow.html">Caravan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="floodcastbench_inundation.html">FloodCastBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hydrobench_streamflow.html">HydroBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waterbench_streamflow.html">WaterBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aefa_forecast.html">AEFA Forecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pick_benchmark_waveforms.html">pick-benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seisbench_waveforms.html">SeisBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ibtracs_tracks.html">IBTrACS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tcbench_alpha.html">TCBench Alpha</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tropicyclonenet_dataset.html">TropiCycloneNet-Dataset</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -320,22 +330,91 @@
         <article role="main" id="furo-main-content">
           <section id="fpa-fod-weekly">
 <h1>FPA-FOD Weekly<a class="headerlink" href="#fpa-fod-weekly" title="Link to this heading">¶</a></h1>
-<p>Weekly wildfire forecasting dataset derived from FPA-FOD incident records, aggregated into next-week
-count targets by size group.</p>
-<section id="modular">
-<h2>Modular<a class="headerlink" href="#modular" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">fpa_fod_weekly</span></code></p>
-</section>
+<p>Weekly FPA-FOD aggregates packaged for next-week wildfire count forecasting by size group.</p>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">fpa_fod_weekly</span></code> builds rolling lookback windows from weekly incident counts and predicts the next
-week’s counts for the five grouped size classes <code class="docutils literal notranslate"><span class="pre">A/B/C/D/EFG</span></code>.</p>
-<p>The implementation supports user-provided <code class="docutils literal notranslate"><span class="pre">.sqlite</span></code> / <code class="docutils literal notranslate"><span class="pre">.db</span></code> / <code class="docutils literal notranslate"><span class="pre">.csv</span></code> / <code class="docutils literal notranslate"><span class="pre">.parquet</span></code> inputs and
-includes a deterministic <code class="docutils literal notranslate"><span class="pre">micro=True</span></code> mode for smoke tests.</p>
+<p>FPA-FOD Weekly builds rolling lookback windows from weekly wildfire incident counts and predicts next-week counts for grouped size classes.</p>
+<p>PyHazards exposes it as a loadable forecasting dataset with a micro mode so sequence models can be validated without the full source archive.</p>
+</section>
+<section id="at-a-glance">
+<h2>At a Glance<a class="headerlink" href="#at-a-glance" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><th class="stub"><p>Provider</p></th>
+<td><p>Fire Program Analysis Fire-Occurrence Database (FPA-FOD) adaptation in PyHazards</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Hazard Family</p></th>
+<td><p>Wildfire</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Source Role</p></th>
+<td><p>Weekly Forecasting</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Coverage</p></th>
+<td><p>User-provided FPA-FOD coverage</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Geometry</p></th>
+<td><p>Temporal tabular sequences</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Spatial Resolution</p></th>
+<td><p>Weekly aggregate windows</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Temporal Resolution</p></th>
+<td><p>Weekly</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Update Cadence</p></th>
+<td><p>User-managed local inputs or deterministic micro mode</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Period of Record</p></th>
+<td><p>Depends on the supplied FPA-FOD source files</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Formats</p></th>
+<td><p>SQLite, DB, CSV, and Parquet inputs</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Inspection CLI</p></th>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.fpa_fod_weekly.inspection</span> <span class="pre">--micro</span> <span class="pre">--lookback-weeks</span> <span class="pre">12</span></code></p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Registry Entry</p></th>
+<td><p><code class="docutils literal notranslate"><span class="pre">fpa_fod_weekly</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="data-characteristics">
+<h2>Data Characteristics<a class="headerlink" href="#data-characteristics" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Predicts next-week counts for grouped size classes A/B/C/D/EFG.</p></li>
+<li><p>Supports feature modes with counts only or counts plus seasonal time features.</p></li>
+<li><p>Uses chronological splits to preserve the forecasting setting.</p></li>
+<li><p>Returned splits follow the DataBundle contract with sequence inputs and floating-point targets.</p></li>
+</ul>
+<section id="typical-use-cases">
+<h3>Typical Use Cases<a class="headerlink" href="#typical-use-cases" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Weekly wildfire forecasting experiments.</p></li>
+<li><p>Sequence-model smoke tests for wildfire activity prediction.</p></li>
+<li><p>Lightweight benchmarking of tabular temporal wildfire baselines.</p></li>
+</ul>
+</section>
+</section>
+<section id="access">
+<h2>Access<a class="headerlink" href="#access" title="Link to this heading">¶</a></h2>
+<p>Use the links below to access the upstream source or its public documentation.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="/pyhazards_datasets.html">PyHazards public dataset catalog</a></p></li>
+</ul>
 </section>
 <section id="pyhazards-usage">
 <h2>PyHazards Usage<a class="headerlink" href="#pyhazards-usage" title="Link to this heading">¶</a></h2>
-<p>Load through the dataset registry:</p>
+<p>Use this dataset through the public inspection or registry surface documented below.</p>
+<section id="registry-workflow">
+<h3>Registry Workflow<a class="headerlink" href="#registry-workflow" title="Link to this heading">¶</a></h3>
+<p>Primary dataset name: <code class="docutils literal notranslate"><span class="pre">fpa_fod_weekly</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
@@ -349,19 +428,28 @@ includes a deterministic <code class="docutils literal notranslate"><span class=
 <span class="nb">print</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">train</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Inspection entrypoint:</p>
+<ul class="simple">
+<li><p>features=’counts’ uses only the five weekly count channels.</p></li>
+<li><p>features=’counts+time’ adds sinusoidal week-of-year features for seasonality.</p></li>
+</ul>
+</section>
+<section id="related-coverage">
+<h3>Related Coverage<a class="headerlink" href="#related-coverage" title="Link to this heading">¶</a></h3>
+<p><strong>Benchmarks:</strong> <a class="reference internal" href="../benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+<p><strong>Representative Models:</strong> <a class="reference internal" href="../modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a>, <a class="reference internal" href="../modules/models_wildfire_forecasting.html"><span class="doc">Wildfire Forecasting</span></a>, <a class="reference internal" href="../modules/models_asufm.html"><span class="doc">ASUFM</span></a></p>
+</section>
+</section>
+<section id="inspection-workflow">
+<h2>Inspection Workflow<a class="headerlink" href="#inspection-workflow" title="Link to this heading">¶</a></h2>
+<p>Use the documented inspection path below to validate local files before training or analysis.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.fpa_fod_weekly.inspection<span class="w"> </span>--micro<span class="w"> </span>--lookback-weeks<span class="w"> </span><span class="m">12</span>
 </pre></div>
 </div>
 </section>
-<section id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h2>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">features=&quot;counts&quot;</span></code> uses only the five weekly count channels.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">features=&quot;counts+time&quot;</span></code> adds sinusoidal week-of-year features for seasonality.</p></li>
-<li><p>Splits are chronological rather than stratified to preserve the forecasting setting.</p></li>
-<li><p>Returned split tensors follow the standard <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code> contract:
-<code class="docutils literal notranslate"><span class="pre">inputs</span></code> shape <code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">T,</span> <span class="pre">D)</span></code> and float <code class="docutils literal notranslate"><span class="pre">targets</span></code> shape <code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">5)</span></code>.</p></li>
+<li><p><a class="reference external" href="https://github.com/LabRAI/PyHazards">PyHazards FPA-FOD weekly adaptation for the wildfire forecasting path.</a>.</p></li>
 </ul>
 </section>
 </section>
@@ -371,12 +459,12 @@ includes a deterministic <code class="docutils literal notranslate"><span class=
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="goesr.html">
+          <a class="next-page" href="landfire.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">GOES-R</div>
+                <div class="title">LANDFIRE</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -422,10 +510,20 @@ includes a deterministic <code class="docutils literal notranslate"><span class=
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">FPA-FOD Weekly</a><ul>
-<li><a class="reference internal" href="#modular">Modular</a></li>
 <li><a class="reference internal" href="#overview">Overview</a></li>
-<li><a class="reference internal" href="#pyhazards-usage">PyHazards Usage</a></li>
-<li><a class="reference internal" href="#notes">Notes</a></li>
+<li><a class="reference internal" href="#at-a-glance">At a Glance</a></li>
+<li><a class="reference internal" href="#data-characteristics">Data Characteristics</a><ul>
+<li><a class="reference internal" href="#typical-use-cases">Typical Use Cases</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#access">Access</a></li>
+<li><a class="reference internal" href="#pyhazards-usage">PyHazards Usage</a><ul>
+<li><a class="reference internal" href="#registry-workflow">Registry Workflow</a></li>
+<li><a class="reference internal" href="#related-coverage">Related Coverage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#inspection-workflow">Inspection Workflow</a></li>
+<li><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
 </ul>

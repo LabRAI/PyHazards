@@ -1,0 +1,58 @@
+slug: caravan_streamflow
+display_name: Caravan
+hazard_family: Flood
+source_role: Streamflow Benchmark
+summary: Synthetic-backed streamflow benchmark adapter aligned to the Caravan large-sample hydrology ecosystem.
+provider: Caravan community dataset surfaced through a PyHazards adapter
+geometry: Graph-temporal basin or node sequences
+spatial_resolution: Basin or gauge nodes represented as graph elements
+temporal_resolution: Rolling history windows for streamflow prediction
+update_cadence: Generated locally for smoke and benchmark-alignment runs
+period_of_record: Synthetic-backed benchmark adapter
+coverage: Benchmark-aligned streamflow forecasting samples
+formats: PyTorch graph-temporal dataset objects via the dataset registry
+overview:
+  - Caravan is the public flood streamflow adapter used to align PyHazards with a large-sample hydrology benchmark surface.
+  - The current implementation is synthetic-backed, but it preserves the streamflow forecasting contract used by the shared flood benchmark.
+data_characteristics:
+  - Graph-temporal sequences with node-level targets for next-step streamflow prediction.
+  - Registry-backed benchmark adapter instead of a raw Caravan ingestion pipeline.
+  - Supports the public streamflow smoke path for NeuralHydrology LSTM and Google Flood Forecasting.
+typical_use_cases:
+  - Streamflow smoke tests for benchmark-linked flood models.
+  - Shared flood benchmark runs with streamflow metrics such as NSE and KGE.
+  - Regression checks for graph-temporal basin workflows.
+access_links:
+  - label: Caravan paper
+    url: https://www.nature.com/articles/s41597-023-01975-w
+  - label: Caravan repository
+    url: https://github.com/kratzert/Caravan
+inspection: null
+registry:
+  name: caravan_streamflow
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset(
+        "caravan_streamflow",
+        micro=True,
+        history=4,
+        nodes=6,
+    ).load()
+
+    train = data.get_split("train")
+    print(len(train.inputs), train.inputs[0].x.shape)
+primary_references:
+  - citation: Caravan - A global community dataset for large-sample hydrology
+    url: https://www.nature.com/articles/s41597-023-01975-w
+    repo_url: https://github.com/kratzert/Caravan
+pyhazards_usage:
+  - Use this adapter when you want the public Caravan-aligned streamflow surface exposed by the flood benchmark.
+related_models:
+  - neuralhydrology_lstm
+  - google_flood_forecasting
+related_benchmarks:
+  - flood_benchmark
+  - caravan
+notes:
+  - This is a synthetic-backed benchmark adapter rather than a full Caravan downloader.

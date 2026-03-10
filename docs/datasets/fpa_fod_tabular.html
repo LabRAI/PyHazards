@@ -3,14 +3,14 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="FPA-FOD Weekly" href="fpa_fod_weekly.html"><link rel="prev" title="WFIGS" href="wfigs.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="FPA-FOD Weekly" href="fpa_fod_weekly.html"><link rel="prev" title="FIRMS" href="firms.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/datasets/fpa_fod_tabular.html">
         <link rel="prefetch" href="../_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>FPA-FOD Tabular - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=b547f940" />
@@ -205,16 +205,26 @@
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="merra2.html">MERRA-2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="era5.html">ERA5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="goesr.html">GOES-R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="merra2.html">MERRA-2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="firms.html">FIRMS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mtbs.html">MTBS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="landfire.html">LANDFIRE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wfigs.html">WFIGS</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">FPA-FOD Tabular</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fpa_fod_weekly.html">FPA-FOD Weekly</a></li>
-<li class="toctree-l2"><a class="reference internal" href="goesr.html">GOES-R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="landfire.html">LANDFIRE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mtbs.html">MTBS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wfigs.html">WFIGS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caravan_streamflow.html">Caravan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="floodcastbench_inundation.html">FloodCastBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hydrobench_streamflow.html">HydroBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="waterbench_streamflow.html">WaterBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aefa_forecast.html">AEFA Forecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pick_benchmark_waveforms.html">pick-benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seisbench_waveforms.html">SeisBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ibtracs_tracks.html">IBTrACS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tcbench_alpha.html">TCBench Alpha</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tropicyclonenet_dataset.html">TropiCycloneNet-Dataset</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -320,26 +330,91 @@
         <article role="main" id="furo-main-content">
           <section id="fpa-fod-tabular">
 <h1>FPA-FOD Tabular<a class="headerlink" href="#fpa-fod-tabular" title="Link to this heading">¶</a></h1>
-<p>Incident-level tabular dataset derived from the Fire Program Analysis Fire-Occurrence Database (FPA-FOD),
-packaged for wildfire cause or size classification in PyHazards.</p>
-<section id="modular">
-<h2>Modular<a class="headerlink" href="#modular" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">fpa_fod_tabular</span></code></p>
-</section>
+<p>Incident-level FPA-FOD features packaged for wildfire cause and size classification.</p>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">fpa_fod_tabular</span></code> converts one wildfire incident record into one feature vector and supports two
-classification targets:</p>
+<p>FPA-FOD Tabular converts one wildfire incident record into one feature vector for classification tasks such as incident cause prediction and grouped size prediction.</p>
+<p>PyHazards exposes it as a loadable dataset with a deterministic micro mode so the full source database is not required for smoke tests or quick experimentation.</p>
+</section>
+<section id="at-a-glance">
+<h2>At a Glance<a class="headerlink" href="#at-a-glance" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><th class="stub"><p>Provider</p></th>
+<td><p>Fire Program Analysis Fire-Occurrence Database (FPA-FOD) adaptation in PyHazards</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Hazard Family</p></th>
+<td><p>Wildfire</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Source Role</p></th>
+<td><p>Incident Tabular</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Coverage</p></th>
+<td><p>User-provided FPA-FOD coverage</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Geometry</p></th>
+<td><p>Tabular feature vectors</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Spatial Resolution</p></th>
+<td><p>Incident-level records</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Temporal Resolution</p></th>
+<td><p>Event-based</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Update Cadence</p></th>
+<td><p>User-managed local inputs or deterministic micro mode</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Period of Record</p></th>
+<td><p>Depends on the supplied FPA-FOD source files</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Formats</p></th>
+<td><p>SQLite, DB, CSV, and Parquet inputs</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Inspection CLI</p></th>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.fpa_fod_tabular.inspection</span> <span class="pre">--task</span> <span class="pre">cause</span> <span class="pre">--micro</span></code></p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Registry Entry</p></th>
+<td><p><code class="docutils literal notranslate"><span class="pre">fpa_fod_tabular</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="data-characteristics">
+<h2>Data Characteristics<a class="headerlink" href="#data-characteristics" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">task=&quot;cause&quot;</span></code> for incident cause prediction.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">task=&quot;size&quot;</span></code> for size-class prediction.</p></li>
+<li><p>Supports task=’cause’ and task=’size’ classification targets.</p></li>
+<li><p>Accepts SQLite, DB, CSV, and Parquet sources.</p></li>
+<li><p>Micro mode keeps the path deterministic and lightweight for validation.</p></li>
+<li><p>Returned splits follow the standard DataBundle contract with tabular inputs and integer targets.</p></li>
 </ul>
-<p>The implementation supports user-provided <code class="docutils literal notranslate"><span class="pre">.sqlite</span></code> / <code class="docutils literal notranslate"><span class="pre">.db</span></code> / <code class="docutils literal notranslate"><span class="pre">.csv</span></code> / <code class="docutils literal notranslate"><span class="pre">.parquet</span></code> inputs and
-ships a deterministic <code class="docutils literal notranslate"><span class="pre">micro=True</span></code> mode so CI and local smoke tests do not require the full dataset.</p>
+<section id="typical-use-cases">
+<h3>Typical Use Cases<a class="headerlink" href="#typical-use-cases" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Wildfire cause classification experiments.</p></li>
+<li><p>Grouped fire size classification from incident records.</p></li>
+<li><p>Lightweight smoke and regression tests for the wildfire tabular path.</p></li>
+</ul>
+</section>
+</section>
+<section id="access">
+<h2>Access<a class="headerlink" href="#access" title="Link to this heading">¶</a></h2>
+<p>Use the links below to access the upstream source or its public documentation.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="/pyhazards_datasets.html">PyHazards public dataset catalog</a></p></li>
+</ul>
 </section>
 <section id="pyhazards-usage">
 <h2>PyHazards Usage<a class="headerlink" href="#pyhazards-usage" title="Link to this heading">¶</a></h2>
-<p>Load through the dataset registry:</p>
+<p>Use this dataset through the public inspection or registry surface documented below.</p>
+<section id="registry-workflow">
+<h3>Registry Workflow<a class="headerlink" href="#registry-workflow" title="Link to this heading">¶</a></h3>
+<p>Primary dataset name: <code class="docutils literal notranslate"><span class="pre">fpa_fod_tabular</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
@@ -353,19 +428,28 @@ ships a deterministic <code class="docutils literal notranslate"><span class="pr
 <span class="nb">print</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">train</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Inspection entrypoint:</p>
+<ul class="simple">
+<li><p>region=’US’ uses all available states, while region=’CA’ restricts to California incidents.</p></li>
+<li><p>cause_mode=’paper5’ preserves the five consolidated cause groups used by the public wildfire tabular path.</p></li>
+</ul>
+</section>
+<section id="related-coverage">
+<h3>Related Coverage<a class="headerlink" href="#related-coverage" title="Link to this heading">¶</a></h3>
+<p><strong>Benchmarks:</strong> <a class="reference internal" href="../benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+<p><strong>Representative Models:</strong> <a class="reference internal" href="../modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a></p>
+</section>
+</section>
+<section id="inspection-workflow">
+<h2>Inspection Workflow<a class="headerlink" href="#inspection-workflow" title="Link to this heading">¶</a></h2>
+<p>Use the documented inspection path below to validate local files before training or analysis.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.fpa_fod_tabular.inspection<span class="w"> </span>--task<span class="w"> </span>cause<span class="w"> </span>--micro
 </pre></div>
 </div>
 </section>
-<section id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h2>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">region=&quot;US&quot;</span></code> uses all states present in the source table.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">region=&quot;CA&quot;</span></code> restricts to California incidents only.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cause_mode=&quot;paper5&quot;</span></code> keeps the five consolidated cause groups used by the FPA-FOD tabular model path.</p></li>
-<li><p>Returned split tensors follow the standard <code class="docutils literal notranslate"><span class="pre">DataBundle</span></code> contract:
-<code class="docutils literal notranslate"><span class="pre">inputs</span></code> shape <code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">D)</span></code> and integer <code class="docutils literal notranslate"><span class="pre">targets</span></code> shape <code class="docutils literal notranslate"><span class="pre">(N,)</span></code>.</p></li>
+<li><p><a class="reference external" href="https://github.com/LabRAI/PyHazards">PyHazards FPA-FOD tabular adaptation for the wildfire incident classification path.</a>.</p></li>
 </ul>
 </section>
 </section>
@@ -384,14 +468,14 @@ ships a deterministic <code class="docutils literal notranslate"><span class="pr
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="wfigs.html">
+          <a class="prev-page" href="firms.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">WFIGS</div>
+                <div class="title">FIRMS</div>
                 
               </div>
             </a>
@@ -426,10 +510,20 @@ ships a deterministic <code class="docutils literal notranslate"><span class="pr
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">FPA-FOD Tabular</a><ul>
-<li><a class="reference internal" href="#modular">Modular</a></li>
 <li><a class="reference internal" href="#overview">Overview</a></li>
-<li><a class="reference internal" href="#pyhazards-usage">PyHazards Usage</a></li>
-<li><a class="reference internal" href="#notes">Notes</a></li>
+<li><a class="reference internal" href="#at-a-glance">At a Glance</a></li>
+<li><a class="reference internal" href="#data-characteristics">Data Characteristics</a><ul>
+<li><a class="reference internal" href="#typical-use-cases">Typical Use Cases</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#access">Access</a></li>
+<li><a class="reference internal" href="#pyhazards-usage">PyHazards Usage</a><ul>
+<li><a class="reference internal" href="#registry-workflow">Registry Workflow</a></li>
+<li><a class="reference internal" href="#related-coverage">Related Coverage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#inspection-workflow">Inspection Workflow</a></li>
+<li><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
 </ul>

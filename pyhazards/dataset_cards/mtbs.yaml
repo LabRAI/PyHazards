@@ -1,0 +1,38 @@
+slug: mtbs
+display_name: MTBS
+hazard_family: Wildfire
+source_role: Burn Severity
+summary: U.S. burn severity and fire perimeter products used for post-fire analysis and wildfire evaluation.
+provider: U.S. Geological Survey and USDA Forest Service MTBS program
+geometry: Per-fire rasters with associated vector perimeters
+spatial_resolution: 30 m
+temporal_resolution: Fire-event and fire-year products
+update_cadence: Continuous mapping with quarterly releases
+period_of_record: 1984-near present
+coverage: United States
+formats: GeoTIFF, Shapefile, File Geodatabase
+overview:
+  - MTBS maps wildfire perimeters and burn severity across the United States using Landsat imagery and standardized spectral change products such as dNBR and RdNBR.
+  - In PyHazards it acts as a post-fire assessment source for burn extent, severity, and long-term wildfire regime studies.
+data_characteristics:
+  - Event-based raster layers with vector perimeters for individual fires.
+  - Historical archive from 1984 onward, expanded through quarterly releases.
+  - Includes burn severity classes and supporting spectral severity products.
+  - Product availability depends on Landsat imagery timing and production workflow rather than near-real-time ingest.
+typical_use_cases:
+  - Post-fire burn severity and impact assessment.
+  - Long-term wildfire regime and trend analysis.
+  - Model evaluation for fire extent and severity prediction.
+access_links:
+  - label: MTBS data portal
+    url: https://burnseverity.cr.usgs.gov/
+  - label: USGS MTBS overview
+    url: https://www.usgs.gov/programs/mtbs
+inspection:
+  command: python -m pyhazards.datasets.mtbs.inspection --path /path/to/mtbs_data --max-items 10
+primary_references:
+  - citation: Eidenshink et al. (2007). A project for monitoring trends in burn severity.
+    url: https://doi.org/10.4996/fireecology.0301003
+related_models: []
+related_benchmarks:
+  - wildfire_benchmark

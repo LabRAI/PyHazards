@@ -1,0 +1,55 @@
+slug: floodcastbench_inundation
+display_name: FloodCastBench
+hazard_family: Flood
+source_role: Inundation Benchmark
+summary: Synthetic-backed inundation benchmark adapter aligned to the FloodCastBench evaluation ecosystem.
+provider: FloodCastBench ecosystem surfaced through a PyHazards adapter
+geometry: Raster inundation sequences
+spatial_resolution: Benchmark-defined raster tiles
+temporal_resolution: Short history windows with next-horizon inundation targets
+update_cadence: Generated locally for smoke and benchmark-alignment runs
+period_of_record: Synthetic-backed benchmark adapter
+coverage: Benchmark-aligned flood inundation samples
+formats: PyTorch tensors via the dataset registry
+overview:
+  - FloodCastBench is the public inundation adapter used by PyHazards for raster flood prediction benchmarks.
+  - The current implementation is synthetic-backed, but it preserves the raster task and metric surface used by the shared flood evaluator.
+data_characteristics:
+  - Multi-step raster inputs paired with next-horizon inundation targets.
+  - Registry-backed benchmark adapter rather than a raw external dataset ingestion path.
+  - Intended for pixel-level evaluation such as IoU and pixel MAE.
+typical_use_cases:
+  - Smoke tests for FloodCast and UrbanFloodCast.
+  - Shared flood benchmark runs on inundation tasks.
+  - Regression checks for raster flood prediction outputs.
+access_links:
+  - label: FloodCastBench repository
+    url: https://github.com/HydroPML/FloodCastBench
+inspection: null
+registry:
+  name: floodcastbench_inundation
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset(
+        "floodcastbench_inundation",
+        micro=True,
+        history=4,
+        channels=3,
+    ).load()
+
+    train = data.get_split("train")
+    print(train.inputs.shape, train.targets.shape)
+primary_references:
+  - citation: FloodCastBench
+    url: https://github.com/HydroPML/FloodCastBench
+pyhazards_usage:
+  - Use this adapter when you want the public FloodCastBench-aligned inundation surface exposed by the flood benchmark.
+related_models:
+  - floodcast
+  - urbanfloodcast
+related_benchmarks:
+  - flood_benchmark
+  - floodcastbench
+notes:
+  - This is a synthetic-backed benchmark adapter rather than a full FloodCastBench ingestion pipeline.

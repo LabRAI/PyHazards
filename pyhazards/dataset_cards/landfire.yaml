@@ -1,0 +1,38 @@
+slug: landfire
+display_name: LANDFIRE
+hazard_family: Wildfire
+source_role: Fuels and Vegetation
+summary: Nationwide fuels, vegetation, and canopy layers used as static wildfire covariates.
+provider: U.S. Forest Service LANDFIRE Program
+geometry: Gridded raster layers
+spatial_resolution: "~30 m"
+temporal_resolution: Static or slowly varying versioned releases
+update_cadence: Annual versioned update suites
+period_of_record: Versioned annual releases
+coverage: United States
+formats: GeoTIFF and related GIS packages
+overview:
+  - LANDFIRE provides nationwide maps of vegetation, fuels, canopy structure, and fire regime information derived from remote sensing, field observations, and ecological modeling.
+  - PyHazards uses it as static landscape context for wildfire spread, behavior, and risk-oriented workflows.
+data_characteristics:
+  - Raster covariates rather than event records.
+  - Versioned annual releases intended to stay current to the previous year.
+  - Common layers include fuel models, vegetation type, canopy metrics, and fire regime products.
+  - Distributed in projected coordinate systems with product-specific metadata.
+typical_use_cases:
+  - Fuel characterization for wildfire behavior and spread modeling.
+  - Landscape-scale wildfire risk assessment.
+  - Static feature layers for machine-learning wildfire models.
+access_links:
+  - label: LANDFIRE data access
+    url: https://landfire.gov/getdata.php
+  - label: LANDFIRE program overview
+    url: https://www.landfire.gov/
+inspection:
+  command: python -m pyhazards.datasets.landfire.inspection --path /path/to/landfire_data --max-items 10
+primary_references:
+  - citation: "Rollins (2009). LANDFIRE: A nationally consistent vegetation, wildland fire, and fuel assessment."
+    url: https://doi.org/10.1071/WF08088
+related_models: []
+related_benchmarks:
+  - wildfire_benchmark

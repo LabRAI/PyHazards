@@ -1,0 +1,57 @@
+slug: waterbench_streamflow
+display_name: WaterBench
+hazard_family: Flood
+source_role: Streamflow Benchmark
+summary: Synthetic-backed streamflow benchmark adapter aligned to the WaterBench ecosystem.
+provider: WaterBench ecosystem surfaced through a PyHazards adapter
+geometry: Graph-temporal basin or node sequences
+spatial_resolution: Basin or gauge nodes represented as graph elements
+temporal_resolution: Rolling history windows for streamflow prediction
+update_cadence: Generated locally for smoke and benchmark-alignment runs
+period_of_record: Synthetic-backed benchmark adapter
+coverage: Benchmark-aligned streamflow forecasting samples
+formats: PyTorch graph-temporal dataset objects via the dataset registry
+overview:
+  - WaterBench is the public flood streamflow adapter used by the EA-LSTM path on the shared flood benchmark.
+  - The current implementation is synthetic-backed, but it preserves the streamflow forecasting contract expected by the shared evaluator.
+data_characteristics:
+  - Graph-temporal sequences with node-level targets for next-step streamflow prediction.
+  - Registry-backed benchmark adapter rather than a raw WaterBench ingestion pipeline.
+  - Intended for benchmark-linked streamflow smoke runs.
+typical_use_cases:
+  - EA-LSTM smoke tests.
+  - Shared flood benchmark runs with streamflow metrics.
+  - Regression checks for basin-scale forecasting experiments.
+access_links:
+  - label: WaterBench abstract
+    url: https://neurips.cc/virtual/2023/80632
+  - label: WaterBench repository
+    url: https://github.com/uihilab/WaterBench
+inspection: null
+registry:
+  name: waterbench_streamflow
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset(
+        "waterbench_streamflow",
+        micro=True,
+        history=4,
+        nodes=6,
+    ).load()
+
+    train = data.get_split("train")
+    print(len(train.inputs), train.inputs[0].x.shape)
+primary_references:
+  - citation: "WaterBench: A Large-scale Benchmark Dataset for Data-driven Streamflow Forecasting"
+    url: https://neurips.cc/virtual/2023/80632
+    repo_url: https://github.com/uihilab/WaterBench
+pyhazards_usage:
+  - Use this adapter when you want the public WaterBench-aligned streamflow surface exposed by the flood benchmark.
+related_models:
+  - neuralhydrology_ealstm
+related_benchmarks:
+  - flood_benchmark
+  - waterbench
+notes:
+  - This is a synthetic-backed benchmark adapter rather than a full WaterBench downloader.

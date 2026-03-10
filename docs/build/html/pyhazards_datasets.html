@@ -3,14 +3,14 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="MERRA-2" href="datasets/merra2.html"><link rel="prev" title="Quick Start" href="quick_start.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="ERA5" href="datasets/era5.html"><link rel="prev" title="Quick Start" href="quick_start.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/pyhazards_datasets.html">
         <link rel="prefetch" href="_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>Datasets - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=b547f940" />
@@ -205,16 +205,26 @@
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Datasets</a><input aria-label="Toggle navigation of Datasets" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="datasets/merra2.html">MERRA-2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="datasets/era5.html">ERA5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/goesr.html">GOES-R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/merra2.html">MERRA-2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="datasets/firms.html">FIRMS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/mtbs.html">MTBS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/landfire.html">LANDFIRE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/wfigs.html">WFIGS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="datasets/fpa_fod_tabular.html">FPA-FOD Tabular</a></li>
 <li class="toctree-l2"><a class="reference internal" href="datasets/fpa_fod_weekly.html">FPA-FOD Weekly</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/goesr.html">GOES-R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/landfire.html">LANDFIRE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/mtbs.html">MTBS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/wfigs.html">WFIGS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/caravan_streamflow.html">Caravan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/floodcastbench_inundation.html">FloodCastBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/hydrobench_streamflow.html">HydroBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/waterbench_streamflow.html">WaterBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/aefa_forecast.html">AEFA Forecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/pick_benchmark_waveforms.html">pick-benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/seisbench_waveforms.html">SeisBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/ibtracs_tracks.html">IBTrACS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/tcbench_alpha.html">TCBench Alpha</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/tropicyclonenet_dataset.html">TropiCycloneNet-Dataset</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -320,199 +330,855 @@
         <article role="main" id="furo-main-content">
           <section id="datasets">
 <h1>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">¶</a></h1>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
-<p>Use this page to survey the supported PyHazards datasets, understand what each
-data source provides, and find the inspection workflows used to validate local
-files before training.</p>
-<p>Each dataset page is organized around three practical questions:</p>
-<ol class="arabic simple">
-<li><p>What is this dataset?</p></li>
-<li><p>How do I obtain or prepare it?</p></li>
-<li><p>What command should I run to check that my files are usable?</p></li>
-</ol>
-</section>
-<section id="dataset-catalog">
-<h2>Dataset Catalog<a class="headerlink" href="#dataset-catalog" title="Link to this heading">¶</a></h2>
-<p>Select a dataset name below to open its reference page.</p>
-<div class="table-wrapper colwidths-given dataset-list docutils container">
-<table class="dataset-list docutils align-default">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Dataset</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="datasets/merra2.html"><span class="doc">MERRA-2</span></a></p></td>
-<td><p>Global atmospheric reanalysis from NASA GMAO MERRA-2 (<a class="reference external" href="https://gmao.gsfc.nasa.gov/gmao-products/merra-2/">overview</a>), widely used as hourly gridded meteorological drivers for hazard modeling; see <a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">Gelaro et al. (2017)</a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="datasets/era5.html"><span class="doc">ERA5</span></a></p></td>
-<td><p>ECMWF ERA5 reanalysis served via the <a class="reference external" href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview">Copernicus CDS</a>, providing hourly single-/pressure-level variables for benchmarks and hazard covariates; see <a class="reference external" href="https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803">Hersbach et al. (2020)</a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="datasets/noaa_flood.html"><span class="doc">NOAA Flood Events</span></a></p></td>
-<td><p>Flood-related event reports from the <a class="reference external" href="https://www.ncei.noaa.gov/products/storm-events-database">NOAA Storm Events Database</a> (time, location, impacts), commonly used for event-level labeling and impact analysis.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="datasets/firms.html"><span class="doc">FIRMS</span></a></p></td>
-<td><p>Near-real-time active fire detections from <a class="reference external" href="https://firms.modaps.eosdis.nasa.gov/">NASA FIRMS</a> (MODIS/VIIRS), used for operational monitoring and as wildfire occurrence labels; see <a class="reference external" href="https://doi.org/10.1016/j.rse.2013.08.008">Schroeder et al. (2014)</a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="datasets/mtbs.html"><span class="doc">MTBS</span></a></p></td>
-<td><p>US wildfire perimeters and burn severity layers from <a class="reference external" href="https://burnseverity.cr.usgs.gov/">MTBS</a> (Landsat-derived), used for post-fire assessment and long-term regime studies; see <a class="reference external" href="https://doi.org/10.4996/fireecology.0301003">Eidenshink et al. (2007)</a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="datasets/landfire.html"><span class="doc">LANDFIRE</span></a></p></td>
-<td><p>Nationwide fuels and vegetation layers from the <a class="reference external" href="https://landfire.gov/">USFS LANDFIRE</a> program, often used as static landscape covariates for wildfire behavior and risk modeling; see <a class="reference external" href="https://research.fs.usda.gov/firelab/products/dataandtools/landfire-landscape-fire-and-resource-management-planning">the program overview</a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="datasets/wfigs.html"><span class="doc">WFIGS</span></a></p></td>
-<td><p>Authoritative incident-level wildfire records from the <a class="reference external" href="https://data-nifc.opendata.arcgis.com/">U.S. interagency WFIGS</a> ecosystem (ignition, location, status, extent), commonly used as ground-truth labels for wildfire occurrence.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="datasets/fpa_fod_tabular.html"><span class="doc">FPA-FOD Tabular</span></a></p></td>
-<td><p>Incident-level tabular dataset derived from FPA-FOD wildfire records for cause or grouped size-class classification, with support for user-provided sqlite/CSV/Parquet inputs and a deterministic micro mode.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="datasets/fpa_fod_weekly.html"><span class="doc">FPA-FOD Weekly</span></a></p></td>
-<td><p>Weekly aggregated FPA-FOD sequences for next-week wildfire count forecasting by size group, with chronological splits and optional seasonal time features.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="datasets/goesr.html"><span class="doc">GOES-R</span></a></p></td>
-<td><p>High-frequency geostationary multispectral imagery from the <a class="reference external" href="https://www.goes-r.gov/">NOAA GOES-R series</a>, supporting continuous monitoring (e.g., smoke/thermal context) and early detection workflows when paired with fire and meteorology datasets.</p></td>
-</tr>
-</tbody>
-</table>
+<p>Browse PyHazards datasets across hazard families, compare source roles,
+inspection paths, and registry surfaces, and navigate to dataset-specific
+detail pages.</p>
+<section id="at-a-glance">
+<h2>At a Glance<a class="headerlink" href="#at-a-glance" title="Link to this heading">¶</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-4 sd-row-cols-lg-4 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Hazard Groups</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">5</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Public dataset tabs grouped by the curated hazard-first taxonomy.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Public Datasets</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">20</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Curated datasets surfaced on the public site.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Inspection Entry Points</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">10</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Datasets with an explicit inspection command documented on the site.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Registry-loadable Datasets</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">12</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Datasets with a documented public <code class="docutils literal notranslate"><span class="pre">load_dataset(...)</span></code> path.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section>
-<section id="inspection-workflows">
-<h2>Inspection Workflows<a class="headerlink" href="#inspection-workflows" title="Link to this heading">¶</a></h2>
-<p>PyHazards provides inspection entrypoints so you can validate local files and
-produce basic summaries before writing a training loop.</p>
-<p>Current end-to-end example:</p>
-<ul class="simple">
-<li><p><strong>MERRA-2 (merra2)</strong>: download raw files if needed, merge the required
-products, inspect the result, and save outputs.</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.inspection<span class="w"> </span><span class="m">20260101</span>
+<section id="catalog-by-hazard">
+<h2>Catalog by Hazard<a class="headerlink" href="#catalog-by-hazard" title="Link to this heading">¶</a></h2>
+<p>Use the hazard tabs below to browse the public dataset catalog. Each
+card keeps the summary short, then links into the detail page, the
+primary source, and the most relevant inspection or registry surface.</p>
+<div class="sd-tab-set catalog-tabs docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Shared Forcing</label><div class="sd-tab-content docutils">
+<div class="catalog-section-note docutils container">
+<p>Cross-hazard meteorology and imagery sources that support multiple PyHazards workflows, inspections, and forcing pipelines.</p>
+</div>
+<p class="rubric">Implemented Datasets</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+ERA5</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">ECMWF’s global reanalysis used as a high-resolution meteorological baseline for hazard experiments.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Reanalysis</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Regular latitude-longitude grid</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Global</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Daily ERA5T updates with about 5-day latency, followed by final validated releases after 2-3 months</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Inspection:</strong> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.era5.inspection</span> <span class="pre">--path</span> <span class="pre">pyhazards/data/era5_subset</span> <span class="pre">--max-vars</span> <span class="pre">10</span></code></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/era5.html"><span class="doc">ERA5</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803">Hersbach et al. (2020). The ERA5 global reanalysis.</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+GOES-R</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Rapid-refresh GOES-R satellite imagery used for smoke, fire, and weather monitoring workflows.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Geostationary Imagery</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Raster imagery time series on the ABI fixed grid</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Western Hemisphere / Americas geostationary view</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Continuous ingest as new files become available</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Inspection:</strong> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.goesr.inspection</span> <span class="pre">--path</span> <span class="pre">/path/to/goesr_data</span> <span class="pre">--max-items</span> <span class="pre">10</span></code></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/goesr.html"><span class="doc">GOES-R</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://doi.org/10.1175/BAMS-D-15-00230.1">Schmit et al. (2017). A closer look at the ABI on the GOES-R series.</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+MERRA-2</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Global atmospheric reanalysis from NASA GMAO used as a shared meteorological backbone for hazard modeling.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Reanalysis</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Regular latitude-longitude grid</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Global</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Published monthly with typical 2-3 week latency after month end</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Inspection:</strong> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.merra2.inspection</span> <span class="pre">20260101</span></code></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/merra2.html"><span class="doc">MERRA-2</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml">Gelaro et al. (2017). The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA-2).</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+Wildfire</label><div class="sd-tab-content docutils">
+<div class="catalog-section-note docutils container">
+<p>Wildfire datasets span authoritative incident records, active-fire detections, fuels, burn severity, and forecast-ready benchmark adapters.</p>
+</div>
+<p class="rubric">Implemented Datasets</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+FIRMS</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">NASA’s near-real-time active fire detections used for operational wildfire monitoring and event labeling.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Active Fire Detections</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Event-based point detections</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Global</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Fire maps refresh about every 5 minutes and downloadable files refresh about hourly</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Inspection:</strong> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.firms.inspection</span> <span class="pre">--path</span> <span class="pre">/path/to/firms_data</span> <span class="pre">--max-items</span> <span class="pre">10</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/firms.html"><span class="doc">FIRMS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://doi.org/10.1016/j.rse.2013.08.008">Schroeder et al. (2014). The New VIIRS 375 m active fire detection data product.</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+FPA-FOD Tabular</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Incident-level FPA-FOD features packaged for wildfire cause and size classification.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Incident Tabular</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Tabular feature vectors</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> User-provided FPA-FOD coverage</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> User-managed local inputs or deterministic micro mode</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Inspection:</strong> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.fpa_fod_tabular.inspection</span> <span class="pre">--task</span> <span class="pre">cause</span> <span class="pre">--micro</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/fpa_fod_tabular.html"><span class="doc">FPA-FOD Tabular</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://github.com/LabRAI/PyHazards">PyHazards FPA-FOD tabular adaptation for the wildfire incident classification path.</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+FPA-FOD Weekly</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Weekly FPA-FOD aggregates packaged for next-week wildfire count forecasting by size group.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Weekly Forecasting</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Temporal tabular sequences</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> User-provided FPA-FOD coverage</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> User-managed local inputs or deterministic micro mode</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Inspection:</strong> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.fpa_fod_weekly.inspection</span> <span class="pre">--micro</span> <span class="pre">--lookback-weeks</span> <span class="pre">12</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/fpa_fod_weekly.html"><span class="doc">FPA-FOD Weekly</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://github.com/LabRAI/PyHazards">PyHazards FPA-FOD weekly adaptation for the wildfire forecasting path.</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+LANDFIRE</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Nationwide fuels, vegetation, and canopy layers used as static wildfire covariates.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Fuels and Vegetation</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Gridded raster layers</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> United States</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Annual versioned update suites</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Inspection:</strong> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.landfire.inspection</span> <span class="pre">--path</span> <span class="pre">/path/to/landfire_data</span> <span class="pre">--max-items</span> <span class="pre">10</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/landfire.html"><span class="doc">LANDFIRE</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://doi.org/10.1071/WF08088">Rollins (2009). LANDFIRE: A nationally consistent vegetation, wildland fire, and fuel assessment.</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+MTBS</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">U.S. burn severity and fire perimeter products used for post-fire analysis and wildfire evaluation.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Burn Severity</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Per-fire rasters with associated vector perimeters</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> United States</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Continuous mapping with quarterly releases</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Inspection:</strong> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.mtbs.inspection</span> <span class="pre">--path</span> <span class="pre">/path/to/mtbs_data</span> <span class="pre">--max-items</span> <span class="pre">10</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/mtbs.html"><span class="doc">MTBS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://doi.org/10.4996/fireecology.0301003">Eidenshink et al. (2007). A project for monitoring trends in burn severity.</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+WFIGS</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Interagency wildfire incident records used as authoritative wildfire ground truth across the United States.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Incident Records</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Incident points and perimeters</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> United States</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Refreshed from IRWIN roughly every 5 minutes, with perimeter changes often appearing within 15 minutes</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Inspection:</strong> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.wfigs.inspection</span> <span class="pre">--path</span> <span class="pre">/path/to/wfigs_data</span> <span class="pre">--max-items</span> <span class="pre">10</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/wfigs.html"><span class="doc">WFIGS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://data-nifc.opendata.arcgis.com/">National Interagency Fire Center. Wildland Fire Incident Geospatial Services (WFIGS).</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Flood</label><div class="sd-tab-content docutils">
+<div class="catalog-section-note docutils container">
+<p>Flood datasets combine event records with streamflow and inundation benchmark adapters used by the public flood models.</p>
+</div>
+<p class="rubric">Implemented Datasets</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Caravan</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Synthetic-backed streamflow benchmark adapter aligned to the Caravan large-sample hydrology ecosystem.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Streamflow Benchmark</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Graph-temporal basin or node sequences</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Benchmark-aligned streamflow forecasting samples</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Generated locally for smoke and benchmark-alignment runs</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Registry:</strong> <code class="docutils literal notranslate"><span class="pre">load_dataset('caravan_streamflow',</span> <span class="pre">...)</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a>, <a class="reference internal" href="benchmarks/caravan.html"><span class="doc">Caravan</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/caravan_streamflow.html"><span class="doc">Caravan</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://www.nature.com/articles/s41597-023-01975-w">Caravan - A global community dataset for large-sample hydrology</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+FloodCastBench</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Synthetic-backed inundation benchmark adapter aligned to the FloodCastBench evaluation ecosystem.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Inundation Benchmark</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Raster inundation sequences</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Benchmark-aligned flood inundation samples</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Generated locally for smoke and benchmark-alignment runs</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Registry:</strong> <code class="docutils literal notranslate"><span class="pre">load_dataset('floodcastbench_inundation',</span> <span class="pre">...)</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a>, <a class="reference internal" href="benchmarks/floodcastbench.html"><span class="doc">FloodCastBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/floodcastbench_inundation.html"><span class="doc">FloodCastBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://github.com/HydroPML/FloodCastBench">FloodCastBench</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+HydroBench</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Synthetic-backed streamflow diagnostics adapter aligned to the HydroBench ecosystem.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Streamflow Benchmark</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Graph-temporal basin or node sequences</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Benchmark-aligned streamflow forecasting samples</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Generated locally for smoke and benchmark-alignment runs</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Registry:</strong> <code class="docutils literal notranslate"><span class="pre">load_dataset('hydrobench_streamflow',</span> <span class="pre">...)</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a>, <a class="reference internal" href="benchmarks/hydrobench.html"><span class="doc">HydroBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/hydrobench_streamflow.html"><span class="doc">HydroBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://github.com/EMscience/HydroBench">HydroBench</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+NOAA Flood Events</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Historical NOAA storm-event flood records used as event labels and impact targets for flood studies.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Event Records</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Tabular event records with administrative regions and optional point coordinates</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> United States</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Updated monthly, typically 75-90 days after the end of a data month</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Inspection:</strong> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.noaa_flood.inspection</span> <span class="pre">--path</span> <span class="pre">/path/to/noaa_flood_data</span> <span class="pre">--max-items</span> <span class="pre">10</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/noaa_flood.html"><span class="doc">NOAA Flood Events</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648">NOAA National Centers for Environmental Information. Storm Events Database Documentation.</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+WaterBench</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Synthetic-backed streamflow benchmark adapter aligned to the WaterBench ecosystem.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Streamflow Benchmark</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Graph-temporal basin or node sequences</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Benchmark-aligned streamflow forecasting samples</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Generated locally for smoke and benchmark-alignment runs</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Registry:</strong> <code class="docutils literal notranslate"><span class="pre">load_dataset('waterbench_streamflow',</span> <span class="pre">...)</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a>, <a class="reference internal" href="benchmarks/waterbench.html"><span class="doc">WaterBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/waterbench_streamflow.html"><span class="doc">WaterBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://neurips.cc/virtual/2023/80632">WaterBench: A Large-scale Benchmark Dataset for Data-driven Streamflow Forecasting</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+Earthquake</label><div class="sd-tab-content docutils">
+<div class="catalog-section-note docutils container">
+<p>Earthquake datasets cover waveform-picking and forecasting adapters that align the public models with the shared earthquake benchmark.</p>
+</div>
+<p class="rubric">Implemented Datasets</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+AEFA Forecast</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Synthetic-backed dense-grid forecasting adapter aligned to the AEFA earthquake forecasting workflow.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Forecast Benchmark</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Dense-grid wavefield tensors</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Benchmark-aligned earthquake forecasting samples</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Generated locally for smoke and benchmark-alignment runs</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Registry:</strong> <code class="docutils literal notranslate"><span class="pre">load_dataset('aefa_forecast',</span> <span class="pre">...)</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a>, <a class="reference internal" href="benchmarks/aefa.html"><span class="doc">AEFA</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/aefa_forecast.html"><span class="doc">AEFA Forecast</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://github.com/chenyk1990/aefa">AEFA</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+pick-benchmark</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Synthetic-backed waveform picking adapter aligned to the pick-benchmark evaluation ecosystem.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Waveform Benchmark</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Multichannel waveform windows</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Benchmark-aligned earthquake phase-picking samples</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Generated locally for smoke and benchmark-alignment runs</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Registry:</strong> <code class="docutils literal notranslate"><span class="pre">load_dataset('pick_benchmark_waveforms',</span> <span class="pre">...)</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a>, <a class="reference internal" href="benchmarks/pick_benchmark.html"><span class="doc">pick-benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/pick_benchmark_waveforms.html"><span class="doc">pick-benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://github.com/seisbench/pick-benchmark">pick-benchmark</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+SeisBench</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Synthetic-backed waveform picking adapter aligned to the SeisBench ecosystem.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Waveform Benchmark</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Multichannel waveform windows</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Benchmark-aligned earthquake phase-picking samples</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Generated locally for smoke and benchmark-alignment runs</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Registry:</strong> <code class="docutils literal notranslate"><span class="pre">load_dataset('seisbench_waveforms',</span> <span class="pre">...)</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a>, <a class="reference internal" href="benchmarks/seisbench.html"><span class="doc">SeisBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/seisbench_waveforms.html"><span class="doc">SeisBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://joss.theoj.org/papers/10.21105/joss.04418">SeisBench - A Toolbox for Machine Learning in Seismology</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<input id="sd-tab-item-4" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-4">
+Tropical Cyclone</label><div class="sd-tab-content docutils">
+<div class="catalog-section-note docutils container">
+<p>Storm datasets cover best-track archives and benchmark adapters used by the shared tropical cyclone track-intensity workflow.</p>
+</div>
+<p class="rubric">Implemented Datasets</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+IBTrACS</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Synthetic-backed storm-track adapter aligned to the IBTrACS tropical cyclone archive.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Track Archive</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Storm-track history sequences</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Benchmark-aligned tropical cyclone track and intensity samples</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Generated locally for smoke and benchmark-alignment runs</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Registry:</strong> <code class="docutils literal notranslate"><span class="pre">load_dataset('ibtracs_tracks',</span> <span class="pre">...)</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a>, <a class="reference internal" href="benchmarks/ibtracs.html"><span class="doc">IBTrACS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/ibtracs_tracks.html"><span class="doc">IBTrACS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://www.ncei.noaa.gov/products/international-best-track-archive">IBTrACS</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+TCBench Alpha</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Synthetic-backed storm-track benchmark adapter aligned to the TCBench Alpha ecosystem.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Track Benchmark</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Storm-track history sequences</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Benchmark-aligned tropical cyclone track and intensity samples</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Generated locally for smoke and benchmark-alignment runs</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Registry:</strong> <code class="docutils literal notranslate"><span class="pre">load_dataset('tcbench_alpha',</span> <span class="pre">...)</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a>, <a class="reference internal" href="benchmarks/tcbench_alpha.html"><span class="doc">TCBench Alpha</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/tcbench_alpha.html"><span class="doc">TCBench Alpha</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://github.com/msgomez06/TCBench_Alpha">TCBench Alpha</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+TropiCycloneNet-Dataset</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">Synthetic-backed storm-track benchmark adapter aligned to the TropiCycloneNet-Dataset ecosystem.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Track Benchmark</span> <span class="sd-sphinx-override sd-badge sd-bg-info sd-bg-text-info">Storm-track history sequences</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Coverage:</strong> Benchmark-aligned tropical cyclone track and intensity samples</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Update Cadence:</strong> Generated locally for smoke and benchmark-alignment runs</p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Registry:</strong> <code class="docutils literal notranslate"><span class="pre">load_dataset('tropicyclonenet_dataset',</span> <span class="pre">...)</span></code></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Related Benchmarks:</strong> <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a>, <a class="reference internal" href="benchmarks/tropicyclonenet_dataset.html"><span class="doc">TropiCycloneNet-Dataset</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="datasets/tropicyclonenet_dataset.html"><span class="doc">TropiCycloneNet-Dataset</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Primary Source:</strong> <a class="reference external" href="https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset">TropiCycloneNet-Dataset</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recommended-entry-points">
+<h2>Recommended Entry Points<a class="headerlink" href="#recommended-entry-points" title="Link to this heading">¶</a></h2>
+<p>If you are new to PyHazards, start with one high-signal dataset per
+hazard group before branching into the full catalog.</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-recommend-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-4 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Shared Forcing</div>
+<p class="sd-card-text"><strong>Start with:</strong> <a class="reference internal" href="datasets/era5.html"><span class="doc">ERA5</span></a></p>
+<p class="sd-card-text">ECMWF’s global reanalysis used as a high-resolution meteorological baseline for hazard experiments.</p>
+<p class="sd-card-text"><strong>Primary Surface:</strong> Inspection: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.era5.inspection</span> <span class="pre">--path</span> <span class="pre">pyhazards/data/era5_subset</span> <span class="pre">--max-vars</span> <span class="pre">10</span></code></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Wildfire</div>
+<p class="sd-card-text"><strong>Start with:</strong> <a class="reference internal" href="datasets/fpa_fod_weekly.html"><span class="doc">FPA-FOD Weekly</span></a></p>
+<p class="sd-card-text">Weekly FPA-FOD aggregates packaged for next-week wildfire count forecasting by size group.</p>
+<p class="sd-card-text"><strong>Primary Surface:</strong> Inspection: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pyhazards.datasets.fpa_fod_weekly.inspection</span> <span class="pre">--micro</span> <span class="pre">--lookback-weeks</span> <span class="pre">12</span></code></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Flood</div>
+<p class="sd-card-text"><strong>Start with:</strong> <a class="reference internal" href="datasets/caravan_streamflow.html"><span class="doc">Caravan</span></a></p>
+<p class="sd-card-text">Synthetic-backed streamflow benchmark adapter aligned to the Caravan large-sample hydrology ecosystem.</p>
+<p class="sd-card-text"><strong>Primary Surface:</strong> Registry: <code class="docutils literal notranslate"><span class="pre">load_dataset('caravan_streamflow',</span> <span class="pre">...)</span></code></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Earthquake</div>
+<p class="sd-card-text"><strong>Start with:</strong> <a class="reference internal" href="datasets/seisbench_waveforms.html"><span class="doc">SeisBench</span></a></p>
+<p class="sd-card-text">Synthetic-backed waveform picking adapter aligned to the SeisBench ecosystem.</p>
+<p class="sd-card-text"><strong>Primary Surface:</strong> Registry: <code class="docutils literal notranslate"><span class="pre">load_dataset('seisbench_waveforms',</span> <span class="pre">...)</span></code></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Tropical Cyclone</div>
+<p class="sd-card-text"><strong>Start with:</strong> <a class="reference internal" href="datasets/ibtracs_tracks.html"><span class="doc">IBTrACS</span></a></p>
+<p class="sd-card-text">Synthetic-backed storm-track adapter aligned to the IBTrACS tropical cyclone archive.</p>
+<p class="sd-card-text"><strong>Primary Surface:</strong> Registry: <code class="docutils literal notranslate"><span class="pre">load_dataset('ibtracs_tracks',</span> <span class="pre">...)</span></code></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="programmatic-use">
+<h2>Programmatic Use<a class="headerlink" href="#programmatic-use" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.era5.inspection<span class="w"> </span>--path<span class="w"> </span>pyhazards/data/era5_subset<span class="w"> </span>--max-vars<span class="w"> </span><span class="m">10</span>
 </pre></div>
 </div>
-<section id="notes-merra-2">
-<h3>Notes (MERRA-2)<a class="headerlink" href="#notes-merra-2" title="Link to this heading">¶</a></h3>
-<ul>
-<li><p>Download requires Earthdata credentials:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">EARTHDATA_USERNAME</span><span class="o">=</span><span class="s2">&quot;YOUR_USERNAME&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">EARTHDATA_PASSWORD</span><span class="o">=</span><span class="s2">&quot;YOUR_PASSWORD&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
+    <span class="s2">&quot;fpa_fod_weekly&quot;</span><span class="p">,</span>
+    <span class="n">micro</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">lookback_weeks</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">features</span><span class="o">=</span><span class="s2">&quot;counts+time&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">splits</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
 </pre></div>
 </div>
-</li>
-<li><p>Date formats accepted: <code class="docutils literal notranslate"><span class="pre">YYYYMMDD</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">20260101</span></code>) or ISO <code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD</span></code>.</p></li>
-<li><p>Optional flags commonly used:
-- <code class="docutils literal notranslate"><span class="pre">--outdir</span> <span class="pre">outputs</span></code> (default: <code class="docutils literal notranslate"><span class="pre">outputs</span></code> under repo root)
-- <code class="docutils literal notranslate"><span class="pre">--skip-download</span></code> / <code class="docutils literal notranslate"><span class="pre">--skip-merge</span></code> for re-running on existing files
-- <code class="docutils literal notranslate"><span class="pre">--force-download</span></code> to re-fetch raw files
-- <code class="docutils literal notranslate"><span class="pre">--var</span> <span class="pre">T2M</span></code> to choose the plotted surface variable (default: <code class="docutils literal notranslate"><span class="pre">T2M</span></code>)</p></li>
-</ul>
-</section>
-</section>
-<section id="simple-dataloader-helper">
-<h2>Simple Dataloader Helper<a class="headerlink" href="#simple-dataloader-helper" title="Link to this heading">¶</a></h2>
-<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gh"># Dataloader V3</span>
-
-Minimal API with a structured request object.
-
-<span class="gu">## API</span>
-<span class="sb">```python</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataloader_v3</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">GeoLoadInput</span><span class="p">,</span>
-    <span class="n">load_data</span><span class="p">,</span>
-    <span class="n">save_sample_h5</span><span class="p">,</span>
-    <span class="n">load_sample_h5</span><span class="p">,</span>
-    <span class="n">to_torch_batch</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="sb">```</span>
-
-<span class="gu">## `GeoLoadInput` (required format)</span>
-<span class="k">-</span><span class="w"> </span><span class="sb">`data_sources: list[str]`</span>  
-  Example: <span class="sb">`[&quot;FIRMS&quot;, &quot;ERA5&quot;]`</span>
-<span class="k">-</span><span class="w"> </span><span class="sb">`temporal_window: tuple[str, str]`</span>  
-  Format: <span class="sb">`(&quot;YYYY-MM-DD&quot;, &quot;YYYY-MM-DD&quot;)`</span> or <span class="sb">`(&quot;YYYY-MM-DD HH:MM:SS&quot;, &quot;...&quot;)`</span>
-<span class="k">-</span><span class="w"> </span><span class="sb">`area_of_interest_bbox: tuple[float, float, float, float]`</span>  
-  Order: <span class="sb">`(min_lon, min_lat, max_lon, max_lat)`</span>
-
-<span class="gu">## Optional</span>
-<span class="k">-</span><span class="w"> </span><span class="sb">`spatial_resolution_deg: float = 0.1`</span>
-<span class="k">-</span><span class="w"> </span><span class="sb">`root_dir: str = &quot;/home/yangshuang&quot;`</span>
-<span class="k">-</span><span class="w"> </span><span class="sb">`synthetic_time: bool = False`</span>
-<span class="k">-</span><span class="w"> </span><span class="sb">`temporal_cadence: str = &quot;D&quot;`</span> (<span class="sb">`&quot;D&quot;`</span>, <span class="sb">`&quot;H&quot;`</span>, <span class="sb">`&quot;15min&quot;`</span>, ...)
-<span class="k">-</span><span class="w"> </span><span class="sb">`target_hazards: list[str] | None = None`</span> (if set and no mapping, default code is <span class="sb">`1`</span>)
-<span class="k">-</span><span class="w"> </span><span class="sb">`label_source: str | None = None`</span> (<span class="sb">`&quot;firms&quot; | &quot;noaa&quot; | &quot;mtbs&quot;`</span>, else auto-infer)
-<span class="k">-</span><span class="w"> </span><span class="sb">`label_mapping: dict[str, int] | None = None`</span>
-
-<span class="gu">## Example</span>
-<span class="sb">```python</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataloader_v3</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeoLoadInput</span><span class="p">,</span> <span class="n">load_data</span><span class="p">,</span> <span class="n">save_sample_h5</span>
-
-<span class="n">req</span> <span class="o">=</span> <span class="n">GeoLoadInput</span><span class="p">(</span>
-    <span class="n">data_sources</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;FIRMS&quot;</span><span class="p">],</span>
-    <span class="n">temporal_window</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;2023-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2023-01-02&quot;</span><span class="p">),</span>
-    <span class="n">area_of_interest_bbox</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">87.8</span><span class="p">,</span> <span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">79.8</span><span class="p">,</span> <span class="mf">31.5</span><span class="p">),</span>
-    <span class="n">spatial_resolution_deg</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
-    <span class="n">synthetic_time</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">temporal_cadence</span><span class="o">=</span><span class="s2">&quot;D&quot;</span><span class="p">,</span>
-    <span class="n">target_hazards</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;wildfire&quot;</span><span class="p">],</span>
-<span class="p">)</span>
-<span class="n">sample</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
-<span class="n">save_sample_h5</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="s2">&quot;/home/yangshuang/output/sample_v3.h5&quot;</span><span class="p">)</span>
-<span class="n">sample2</span> <span class="o">=</span> <span class="n">load_sample_h5</span><span class="p">(</span><span class="s2">&quot;/home/yangshuang/output/sample_v3.h5&quot;</span><span class="p">)</span>
-<span class="n">x_t</span><span class="p">,</span> <span class="n">y_t</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">to_torch_batch</span><span class="p">(</span><span class="n">sample2</span><span class="p">)</span>
-<span class="sb">```</span>
-</pre></div>
-</div>
-</section>
-<section id="scripted-inspection-pattern">
-<h2>Scripted Inspection Pattern<a class="headerlink" href="#scripted-inspection-pattern" title="Link to this heading">¶</a></h2>
-<p>Use the following pattern when you want a repeatable inspection step inside a
-scripted workflow.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;merra2&quot;</span>
-<span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;20260101&quot;</span>
-
-<span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="s2">&quot;merra2&quot;</span><span class="p">:</span>
-    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pyhazards.datasets.inspection&quot;</span><span class="p">,</span>
-        <span class="n">key</span><span class="p">,</span>
-        <span class="s2">&quot;--var&quot;</span><span class="p">,</span> <span class="s2">&quot;T2M&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;--outdir&quot;</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">,</span>
-    <span class="p">]</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;pyhazards.datasets.</span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">.inspection&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="s2">&quot;--outdir&quot;</span><span class="p">,</span> <span class="s2">&quot;outputs&quot;</span><span class="p">]</span>
-
-<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="inspection-cli-convention">
-<h2>Inspection CLI Convention<a class="headerlink" href="#inspection-cli-convention" title="Link to this heading">¶</a></h2>
-<p>Inspection entrypoints should follow the same basic shape across datasets:</p>
-<ul class="simple">
-<li><p><strong>Input</strong>: a dataset identifier such as a date or event id.</p></li>
-<li><p><strong>Work</strong>: prepare local files if needed, inspect them, and save lightweight
-artifacts.</p></li>
-<li><p><strong>Output</strong>: figures or tables under <code class="docutils literal notranslate"><span class="pre">outputs/</span></code>.</p></li>
-</ul>
-<p>Recommended dataset-specific CLI:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pyhazards.datasets.&lt;dataset&gt;.inspection<span class="w"> </span>&lt;key&gt;<span class="w"> </span>--outdir<span class="w"> </span>outputs
-</pre></div>
-</div>
-</section>
-<section id="for-contributors">
-<h2>For Contributors<a class="headerlink" href="#for-contributors" title="Link to this heading">¶</a></h2>
-<p>If you add a new dataset inspection entrypoint, keep it consistent with the
-existing inspection workflow:</p>
-<ol class="arabic simple">
-<li><p>parse CLI args (key + outdir + skip/force flags),</p></li>
-<li><p>materialize required local files (download/preprocess),</p></li>
-<li><p>open files and print structure/statistics,</p></li>
-<li><p>generate at least one saved visualization to <code class="docutils literal notranslate"><span class="pre">outputs/</span></code>.</p></li>
-</ol>
+<p>Use <a class="reference internal" href="api/pyhazards.datasets.html"><span class="doc">pyhazards.datasets package</span></a> for the developer dataset workflow
+and package-level API lookup. Pair this page with <a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a>
+and <a class="reference internal" href="pyhazards_benchmarks.html"><span class="doc">Benchmarks</span></a> when you need to trace datasets into
+model and evaluation coverage.</p>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -523,12 +1189,12 @@ existing inspection workflow:</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="datasets/merra2.html">
+          <a class="next-page" href="datasets/era5.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">MERRA-2</div>
+                <div class="title">ERA5</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -574,16 +1240,10 @@ existing inspection workflow:</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Datasets</a><ul>
-<li><a class="reference internal" href="#overview">Overview</a></li>
-<li><a class="reference internal" href="#dataset-catalog">Dataset Catalog</a></li>
-<li><a class="reference internal" href="#inspection-workflows">Inspection Workflows</a><ul>
-<li><a class="reference internal" href="#notes-merra-2">Notes (MERRA-2)</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#simple-dataloader-helper">Simple Dataloader Helper</a></li>
-<li><a class="reference internal" href="#scripted-inspection-pattern">Scripted Inspection Pattern</a></li>
-<li><a class="reference internal" href="#inspection-cli-convention">Inspection CLI Convention</a></li>
-<li><a class="reference internal" href="#for-contributors">For Contributors</a></li>
+<li><a class="reference internal" href="#at-a-glance">At a Glance</a></li>
+<li><a class="reference internal" href="#catalog-by-hazard">Catalog by Hazard</a></li>
+<li><a class="reference internal" href="#recommended-entry-points">Recommended Entry Points</a></li>
+<li><a class="reference internal" href="#programmatic-use">Programmatic Use</a></li>
 </ul>
 </li>
 </ul>

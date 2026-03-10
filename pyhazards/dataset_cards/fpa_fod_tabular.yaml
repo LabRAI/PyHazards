@@ -1,0 +1,54 @@
+slug: fpa_fod_tabular
+display_name: FPA-FOD Tabular
+hazard_family: Wildfire
+source_role: Incident Tabular
+summary: Incident-level FPA-FOD features packaged for wildfire cause and size classification.
+provider: Fire Program Analysis Fire-Occurrence Database (FPA-FOD) adaptation in PyHazards
+geometry: Tabular feature vectors
+spatial_resolution: Incident-level records
+temporal_resolution: Event-based
+update_cadence: User-managed local inputs or deterministic micro mode
+period_of_record: Depends on the supplied FPA-FOD source files
+coverage: User-provided FPA-FOD coverage
+formats: SQLite, DB, CSV, and Parquet inputs
+overview:
+  - FPA-FOD Tabular converts one wildfire incident record into one feature vector for classification tasks such as incident cause prediction and grouped size prediction.
+  - PyHazards exposes it as a loadable dataset with a deterministic micro mode so the full source database is not required for smoke tests or quick experimentation.
+data_characteristics:
+  - Supports task='cause' and task='size' classification targets.
+  - Accepts SQLite, DB, CSV, and Parquet sources.
+  - Micro mode keeps the path deterministic and lightweight for validation.
+  - Returned splits follow the standard DataBundle contract with tabular inputs and integer targets.
+typical_use_cases:
+  - Wildfire cause classification experiments.
+  - Grouped fire size classification from incident records.
+  - Lightweight smoke and regression tests for the wildfire tabular path.
+access_links:
+  - label: PyHazards public dataset catalog
+    url: /pyhazards_datasets.html
+inspection:
+  command: python -m pyhazards.datasets.fpa_fod_tabular.inspection --task cause --micro
+registry:
+  name: fpa_fod_tabular
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset(
+        "fpa_fod_tabular",
+        task="cause",
+        micro=True,
+        normalize=True,
+    ).load()
+
+    train = data.get_split("train")
+    print(train.inputs.shape, train.targets.shape)
+  notes:
+    - region='US' uses all available states, while region='CA' restricts to California incidents.
+    - cause_mode='paper5' preserves the five consolidated cause groups used by the public wildfire tabular path.
+primary_references:
+  - citation: PyHazards FPA-FOD tabular adaptation for the wildfire incident classification path.
+    url: https://github.com/LabRAI/PyHazards
+related_models:
+  - wildfire_fpa
+related_benchmarks:
+  - wildfire_benchmark

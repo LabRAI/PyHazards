@@ -94,7 +94,8 @@ Documentation Guide
 - :doc:`installation`: set up PyHazards from PyPI or source and verify the
   environment.
 - :doc:`quick_start`: run the shortest end-to-end workflow in the library.
-- :doc:`pyhazards_datasets`: browse supported datasets and inspection commands.
+- :doc:`pyhazards_datasets`: browse the hazard-grouped dataset catalog, linked
+  sources, and inspection or registry entry points.
 - :doc:`pyhazards_models`: browse the public model catalog and registry usage.
 - :doc:`interactive_map`: open the wildfire-only companion map at
   ``https://rai-fire.com/``.
@@ -110,12 +111,12 @@ Documentation Guide
 For Contributors
 ----------------
 
-PyHazards is registry-driven and uses model cards to generate the public model
-catalog. If you plan to contribute a dataset or model, start with
-:doc:`implementation` and then use the dataset and model reference pages to
-keep registry wiring, smoke tests, and generated docs aligned with the library
-workflow. Use :doc:`appendix_a_coverage` when you need the audited gap list
-for the remaining roadmap work.
+PyHazards is registry-driven and uses dataset cards, model cards, and benchmark
+cards to generate the public catalogs. If you plan to contribute a dataset or
+model, start with :doc:`implementation` and then use the dataset, model, and
+benchmark reference pages to keep registry wiring, smoke tests, and generated
+docs aligned with the library workflow. Use :doc:`appendix_a_coverage` when
+you need the audited gap list for the remaining roadmap work.
 
 Citation
 --------

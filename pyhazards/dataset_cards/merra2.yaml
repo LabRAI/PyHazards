@@ -1,0 +1,39 @@
+slug: merra2
+display_name: MERRA-2
+hazard_family: Shared Forcing
+source_role: Reanalysis
+summary: Global atmospheric reanalysis from NASA GMAO used as a shared meteorological backbone for hazard modeling.
+provider: NASA Global Modeling and Assimilation Office (GMAO)
+geometry: Regular latitude-longitude grid
+spatial_resolution: "~0.5 deg x 0.625 deg"
+temporal_resolution: Hourly
+update_cadence: Published monthly with typical 2-3 week latency after month end
+period_of_record: 1980-present
+coverage: Global
+formats: NetCDF4
+overview:
+  - MERRA-2 is a global atmospheric reanalysis that assimilates satellite and conventional observations into a numerical weather prediction system to produce gridded, time-continuous estimates of the atmospheric state.
+  - In PyHazards it serves as a shared forcing and covariate source for weather-aware hazard workflows, especially when a project needs a stable long historical archive.
+data_characteristics:
+  - Global coverage on a regular latitude-longitude grid.
+  - Hourly meteorology with derived 3-hourly, daily, and monthly products.
+  - Surface fields plus multi-level atmospheric profiles.
+  - Common variables include near-surface temperature, humidity, wind, precipitation, and surface fluxes.
+typical_use_cases:
+  - Meteorological forcing for wildfire and multi-hazard prediction models.
+  - Climate diagnostics and long-horizon environmental covariates.
+  - Shared weather backbone for weather-climate benchmark pipelines.
+access_links:
+  - label: MERRA-2 overview
+    url: https://gmao.gsfc.nasa.gov/gmao-products/merra-2/
+  - label: NASA Earthdata
+    url: https://earthdata.nasa.gov/
+inspection:
+  command: python -m pyhazards.datasets.merra2.inspection 20260101
+  notes:
+    - Earthdata credentials are required when raw files are not already available locally.
+primary_references:
+  - citation: Gelaro et al. (2017). The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA-2).
+    url: https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml
+related_models: []
+related_benchmarks: []

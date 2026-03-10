@@ -7,10 +7,10 @@
         <link rel="canonical" href="https://labrai.github.io/PyHazards/implementation.html">
         <link rel="prefetch" href="_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>Implementation Guide - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=b547f940" />
@@ -205,16 +205,26 @@
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="datasets/merra2.html">MERRA-2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="datasets/era5.html">ERA5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/goesr.html">GOES-R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/merra2.html">MERRA-2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="datasets/firms.html">FIRMS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/mtbs.html">MTBS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/landfire.html">LANDFIRE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/wfigs.html">WFIGS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="datasets/fpa_fod_tabular.html">FPA-FOD Tabular</a></li>
 <li class="toctree-l2"><a class="reference internal" href="datasets/fpa_fod_weekly.html">FPA-FOD Weekly</a></li>
-<li class="toctree-l2"><a class="reference internal" href="datasets/goesr.html">GOES-R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/landfire.html">LANDFIRE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/mtbs.html">MTBS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/wfigs.html">WFIGS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/caravan_streamflow.html">Caravan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/floodcastbench_inundation.html">FloodCastBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/hydrobench_streamflow.html">HydroBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/waterbench_streamflow.html">WaterBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/aefa_forecast.html">AEFA Forecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/pick_benchmark_waveforms.html">pick-benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/seisbench_waveforms.html">SeisBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/ibtracs_tracks.html">IBTrACS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/tcbench_alpha.html">TCBench Alpha</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/tropicyclonenet_dataset.html">TropiCycloneNet-Dataset</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -321,8 +331,8 @@
           <section id="implementation-guide">
 <h1>Implementation Guide<a class="headerlink" href="#implementation-guide" title="Link to this heading">¶</a></h1>
 <p>Use this guide when you want to extend PyHazards itself. It is written for
-contributors who are adding new datasets, new models, smoke tests, model cards,
-or documentation updates for the public catalog.</p>
+contributors who are adding new datasets, new models, smoke tests, catalog
+cards, or documentation updates for the public site.</p>
 <p>This page explains the public contributor workflow. For repository operations
 and maintainer automation details, also see <code class="docutils literal notranslate"><span class="pre">.github/IMPLEMENTATION.md</span></code>.</p>
 <section id="who-this-guide-is-for">
@@ -333,7 +343,7 @@ of the following:</p>
 <ul class="simple">
 <li><p>adding a new dataset loader or dataset inspection entrypoint,</p></li>
 <li><p>porting a paper or external implementation into <code class="docutils literal notranslate"><span class="pre">pyhazards.models</span></code>,</p></li>
-<li><p>updating the public model catalog and generated documentation,</p></li>
+<li><p>updating the public dataset or model catalogs and generated documentation,</p></li>
 <li><p>preparing a pull request that should be easy to review and merge.</p></li>
 </ul>
 <p>If you only want to install the library and run a first example, use
@@ -348,6 +358,8 @@ and inspection entrypoints for supported data sources.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">pyhazards.models</span></code> contains model builders, reusable components, and the
 model registry used by <code class="docutils literal notranslate"><span class="pre">build_model(...)</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">pyhazards.engine</span></code> contains the shared training and evaluation workflow.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyhazards/dataset_cards</span></code> contains YAML cards used to generate the public
+dataset catalog and per-dataset documentation pages.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">pyhazards/model_cards</span></code> contains YAML cards used to generate the public
 model tables and per-model documentation pages.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">docs/source</span></code> contains handwritten Sphinx pages, while the committed
@@ -358,7 +370,8 @@ model tables and per-model documentation pages.</p></li>
 <li><p>registry availability:
 a dataset or model can be constructed from Python once it is registered;</p></li>
 <li><p>catalog visibility:
-a public model only appears on the website when it also has a model card;</p></li>
+a public dataset or model only appears on the website when it also has a
+matching catalog card;</p></li>
 <li><p>published website output:
 GitHub Pages only changes after the rendered HTML in <code class="docutils literal notranslate"><span class="pre">docs/</span></code> is rebuilt.</p></li>
 </ol>
@@ -371,14 +384,16 @@ GitHub Pages only changes after the rendered HTML in <code class="docutils liter
 <li><p>implement the code in <code class="docutils literal notranslate"><span class="pre">pyhazards/datasets</span></code> or <code class="docutils literal notranslate"><span class="pre">pyhazards/models</span></code>;</p></li>
 <li><p>register the new entrypoint so it is discoverable from the library API;</p></li>
 <li><p>add or update smoke-test coverage for the new behavior;</p></li>
-<li><p>update the relevant docs source and, for public models, the model card;</p></li>
+<li><p>update the relevant docs source and, for public datasets or models, the
+matching catalog cards;</p></li>
 <li><p>run the smallest local validation commands that match the change;</p></li>
 <li><p>rebuild the published docs HTML if the website output changed;</p></li>
 <li><p>open a pull request with the required metadata and validation notes.</p></li>
 </ol>
 <p>Treat code, validation, generated docs, and published docs as one contribution.
-A model implementation is not complete if users cannot discover it or if the
-website catalog still describes the old state of the library.</p>
+A public dataset or model implementation is not complete if users cannot
+discover it or if the website catalog still describes the old state of the
+library.</p>
 </section>
 <section id="adding-a-dataset">
 <h2>Adding a Dataset<a class="headerlink" href="#adding-a-dataset" title="Link to this heading">¶</a></h2>
@@ -433,6 +448,8 @@ semantics explicit;</p></li>
 without triggering heavy side effects;</p></li>
 <li><p>register the dataset with <code class="docutils literal notranslate"><span class="pre">register_dataset(...)</span></code> so
 <code class="docutils literal notranslate"><span class="pre">load_dataset(name=...)</span></code> can construct it;</p></li>
+<li><p>if the dataset belongs in the public catalog, add or update a card in
+<code class="docutils literal notranslate"><span class="pre">pyhazards/dataset_cards</span></code> and regenerate the dataset docs;</p></li>
 <li><p>prefer clear metadata over implicit conventions, especially when a model
 depends on shapes, channels, graph structure, or task type.</p></li>
 </ul>
@@ -452,6 +469,33 @@ should be stable enough for <code class="docutils literal notranslate"><span cla
 </ul>
 <p>The goal is simple: users should be able to discover the dataset from the docs,
 inspect it from the command line, and load it from Python through the registry.</p>
+</section>
+<section id="dataset-cards-and-generated-docs">
+<h2>Dataset Cards and Generated Docs<a class="headerlink" href="#dataset-cards-and-generated-docs" title="Link to this heading">¶</a></h2>
+<p>Public datasets are documented through cards in <code class="docutils literal notranslate"><span class="pre">pyhazards/dataset_cards</span></code>.
+These cards are the source of truth for the public dataset catalog and the
+generated per-dataset detail pages.</p>
+<p>A typical dataset card includes:</p>
+<ul class="simple">
+<li><p>the public display name and hazard family,</p></li>
+<li><p>a one-sentence summary and source role,</p></li>
+<li><p>provider, geometry, cadence, and period-of-record metadata,</p></li>
+<li><p>the primary source or product reference,</p></li>
+<li><p>the inspection command when the dataset is inspection-first,</p></li>
+<li><p>the registry name and example when it is public through
+<code class="docutils literal notranslate"><span class="pre">load_dataset(...)</span></code>,</p></li>
+<li><p>related model and benchmark links when those cross-links help users navigate
+the library.</p></li>
+</ul>
+<p>After updating dataset cards, refresh the generated docs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/render_dataset_docs.py
+</pre></div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">--check</span></code> mode when you want to confirm the generated files are
+already up to date:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/render_dataset_docs.py<span class="w"> </span>--check
+</pre></div>
+</div>
 </section>
 <section id="adding-a-model">
 <h2>Adding a Model<a class="headerlink" href="#adding-a-model" title="Link to this heading">¶</a></h2>
@@ -619,6 +663,7 @@ already up to date:</p>
 <p>Run the smallest set of checks that covers your change. The core validation
 commands in this repository are:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import pyhazards; print(pyhazards.__version__)&quot;</span>
+python<span class="w"> </span>scripts/render_dataset_docs.py<span class="w"> </span>--check
 python<span class="w"> </span>scripts/render_model_docs.py<span class="w"> </span>--check
 python<span class="w"> </span>scripts/verify_table_entries.py
 </pre></div>
@@ -627,6 +672,9 @@ python<span class="w"> </span>scripts/verify_table_entries.py
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-c</span> <span class="pre">&quot;import</span> <span class="pre">pyhazards;</span> <span class="pre">print(pyhazards.__version__)&quot;</span></code>
 verifies that the package still imports cleanly;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/render_dataset_docs.py</span> <span class="pre">--check</span></code>
+verifies that generated dataset docs and catalog pages are in sync with the
+current dataset cards;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/render_model_docs.py</span> <span class="pre">--check</span></code>
 verifies that generated model docs and catalog pages are in sync with the
 current model cards;</p></li>
@@ -676,6 +724,7 @@ wiring, the model card, the smoke-test path, and refreshed generated docs.</p>
 distinction in mind:</p>
 <ul class="simple">
 <li><p>code registration makes a dataset or model usable from Python;</p></li>
+<li><p>dataset cards make a public dataset discoverable in the generated docs;</p></li>
 <li><p>model cards make a public model discoverable in the generated docs;</p></li>
 <li><p>Sphinx source updates change the documentation source tree;</p></li>
 <li><p>rebuilding <code class="docutils literal notranslate"><span class="pre">docs/</span></code> updates the committed HTML published on GitHub Pages.</p></li>
@@ -694,6 +743,8 @@ served from the committed <code class="docutils literal notranslate"><span class
 <p>These are the issues that most often block review:</p>
 <ul class="simple">
 <li><p>the new dataset or model exists in code but was never registered;</p></li>
+<li><p>a public dataset changed, but <code class="docutils literal notranslate"><span class="pre">pyhazards/dataset_cards</span></code> or the generated
+dataset docs were not updated;</p></li>
 <li><p>a public model was implemented without a matching card in
 <code class="docutils literal notranslate"><span class="pre">pyhazards/model_cards</span></code>;</p></li>
 <li><p>generated docs were not refreshed after the model card changed;</p></li>
@@ -713,6 +764,8 @@ which breaks <code class="docutils literal notranslate"><span class="pre">python
 <li><p>the implementation lives in the correct dataset or model module;</p></li>
 <li><p>the new entrypoint is registered and can be constructed from the public API;</p></li>
 <li><p>task handling and input-shape validation are clear and actionable;</p></li>
+<li><p>public datasets have a complete card when they belong in the public catalog;</p></li>
+<li><p>generated dataset docs are refreshed and pass <code class="docutils literal notranslate"><span class="pre">render_dataset_docs.py</span> <span class="pre">--check</span></code>;</p></li>
 <li><p>public models have a complete card with a runnable smoke-test spec;</p></li>
 <li><p>generated model docs are refreshed and pass <code class="docutils literal notranslate"><span class="pre">render_model_docs.py</span> <span class="pre">--check</span></code>;</p></li>
 <li><p>dataset inspection entrypoints and public tables pass
@@ -797,6 +850,7 @@ workflow changes.</p></li>
 <li><a class="reference internal" href="#typical-contribution-workflow">Typical Contribution Workflow</a></li>
 <li><a class="reference internal" href="#adding-a-dataset">Adding a Dataset</a></li>
 <li><a class="reference internal" href="#dataset-inspection-entry-points">Dataset Inspection Entry Points</a></li>
+<li><a class="reference internal" href="#dataset-cards-and-generated-docs">Dataset Cards and Generated Docs</a></li>
 <li><a class="reference internal" href="#adding-a-model">Adding a Model</a></li>
 <li><a class="reference internal" href="#match-the-forward-signature-to-the-data-path">Match the Forward Signature to the Data Path</a></li>
 <li><a class="reference internal" href="#porting-training-logic">Porting Training Logic</a></li>

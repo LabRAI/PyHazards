@@ -1,0 +1,38 @@
+slug: wfigs
+display_name: WFIGS
+hazard_family: Wildfire
+source_role: Incident Records
+summary: Interagency wildfire incident records used as authoritative wildfire ground truth across the United States.
+provider: National Interagency Fire Center (NIFC) / interagency WFIGS
+geometry: Incident points and perimeters
+spatial_resolution: Event-level vector geometries
+temporal_resolution: Event-based with live operational updates
+update_cadence: Refreshed from IRWIN roughly every 5 minutes, with perimeter changes often appearing within 15 minutes
+period_of_record: Historical archive plus ongoing incidents
+coverage: United States
+formats: ArcGIS REST services, GeoJSON, and Shapefile downloads
+overview:
+  - WFIGS aggregates geospatial information on active and historical wildland fire incidents, representing officially reported incidents rather than satellite-detected hotspots.
+  - In PyHazards it acts as an authoritative wildfire ground-truth source for validation, labeling, and comparison against remote-sensing detections.
+data_characteristics:
+  - Event-based incident records with point and polygon geometries.
+  - Operational data that can change as incidents evolve and records are reconciled.
+  - Common fields include incident identifiers, timing, status, location, and fire size.
+  - Current and year-to-date layers follow different retention rules.
+typical_use_cases:
+  - Ground-truth labeling of wildfire occurrence.
+  - Validation of satellite-based fire detection products.
+  - Analysis of ignition timing and incident geography.
+access_links:
+  - label: NIFC Open Data WFIGS layers
+    url: https://data-nifc.opendata.arcgis.com/
+  - label: National Interagency Fire Center
+    url: https://www.nifc.gov/
+inspection:
+  command: python -m pyhazards.datasets.wfigs.inspection --path /path/to/wfigs_data --max-items 10
+primary_references:
+  - citation: National Interagency Fire Center. Wildland Fire Incident Geospatial Services (WFIGS).
+    url: https://data-nifc.opendata.arcgis.com/
+related_models: []
+related_benchmarks:
+  - wildfire_benchmark

@@ -1,0 +1,40 @@
+slug: noaa_flood
+display_name: NOAA Flood Events
+hazard_family: Flood
+source_role: Event Records
+summary: Historical NOAA storm-event flood records used as event labels and impact targets for flood studies.
+provider: NOAA National Centers for Environmental Information (NCEI)
+geometry: Tabular event records with administrative regions and optional point coordinates
+spatial_resolution: County or zone level reporting, with points when available
+temporal_resolution: Event-based
+update_cadence: Updated monthly, typically 75-90 days after the end of a data month
+period_of_record: 1950-present
+coverage: United States
+formats: Web query, bulk CSV, and database extracts
+overview:
+  - NOAA Flood Events are derived from the NOAA Storm Events Database and document the timing, location, and impacts of severe flood-related events across the United States.
+  - In PyHazards they function as event-level labels or targets for flood occurrence and impact analysis, especially when paired with meteorological drivers.
+data_characteristics:
+  - Event-based tabular records rather than gridded tensors.
+  - Historical archive appended as new months are processed and validated.
+  - Typical attributes include event timing, location, narratives, and reported damages.
+  - Very recent months may be unavailable because of reporting and validation lag.
+typical_use_cases:
+  - Flood occurrence and frequency analysis.
+  - Impact and damage assessment studies.
+  - Supervised learning with event records as flood targets.
+access_links:
+  - label: Storm Events Database
+    url: https://www.ncei.noaa.gov/products/storm-events-database
+  - label: Storm Events bulk download
+    url: https://www.ncei.noaa.gov/stormevents/ftp.jsp
+  - label: NOAA NCEI
+    url: https://www.ncei.noaa.gov/
+inspection:
+  command: python -m pyhazards.datasets.noaa_flood.inspection --path /path/to/noaa_flood_data --max-items 10
+primary_references:
+  - citation: NOAA National Centers for Environmental Information. Storm Events Database Documentation.
+    url: https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648
+related_models: []
+related_benchmarks:
+  - flood_benchmark

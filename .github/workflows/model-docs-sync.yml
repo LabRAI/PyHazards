@@ -1,16 +1,19 @@
-name: Sync Model Docs
+name: Sync Generated Docs
 
 on:
   push:
     branches: [main, master]
     paths:
       - "pyhazards/model_cards/**"
+      - "pyhazards/dataset_cards/**"
       - "pyhazards/benchmark_cards/**"
       - "pyhazards/models/**"
       - "pyhazards/model_catalog.py"
+      - "pyhazards/dataset_catalog.py"
       - "pyhazards/benchmark_catalog.py"
       - "pyhazards/appendix_a_catalog.py"
       - "scripts/render_model_docs.py"
+      - "scripts/render_dataset_docs.py"
       - "scripts/render_benchmark_docs.py"
       - "scripts/render_appendix_a_docs.py"
 
@@ -37,6 +40,7 @@ jobs:
 
       - name: Regenerate and publish generated docs
         run: |
+          python scripts/render_dataset_docs.py
           python scripts/render_model_docs.py
           python scripts/render_benchmark_docs.py
           python scripts/render_appendix_a_docs.py

@@ -2,8 +2,8 @@ Implementation Guide
 ====================
 
 Use this guide when you want to extend PyHazards itself. It is written for
-contributors who are adding new datasets, new models, smoke tests, model cards,
-or documentation updates for the public catalog.
+contributors who are adding new datasets, new models, smoke tests, catalog
+cards, or documentation updates for the public site.
 
 This page explains the public contributor workflow. For repository operations
 and maintainer automation details, also see ``.github/IMPLEMENTATION.md``.
@@ -17,7 +17,7 @@ of the following:
 
 - adding a new dataset loader or dataset inspection entrypoint,
 - porting a paper or external implementation into ``pyhazards.models``,
-- updating the public model catalog and generated documentation,
+- updating the public dataset or model catalogs and generated documentation,
 - preparing a pull request that should be easy to review and merge.
 
 If you only want to install the library and run a first example, use
@@ -33,6 +33,8 @@ PyHazards is organized around a small set of extension points:
 - ``pyhazards.models`` contains model builders, reusable components, and the
   model registry used by ``build_model(...)``.
 - ``pyhazards.engine`` contains the shared training and evaluation workflow.
+- ``pyhazards/dataset_cards`` contains YAML cards used to generate the public
+  dataset catalog and per-dataset documentation pages.
 - ``pyhazards/model_cards`` contains YAML cards used to generate the public
   model tables and per-model documentation pages.
 - ``docs/source`` contains handwritten Sphinx pages, while the committed
@@ -43,7 +45,8 @@ There are three separate layers to keep in mind:
 1. registry availability:
    a dataset or model can be constructed from Python once it is registered;
 2. catalog visibility:
-   a public model only appears on the website when it also has a model card;
+   a public dataset or model only appears on the website when it also has a
+   matching catalog card;
 3. published website output:
    GitHub Pages only changes after the rendered HTML in ``docs/`` is rebuilt.
 
@@ -56,14 +59,16 @@ Most changes should follow the same sequence:
 2. implement the code in ``pyhazards/datasets`` or ``pyhazards/models``;
 3. register the new entrypoint so it is discoverable from the library API;
 4. add or update smoke-test coverage for the new behavior;
-5. update the relevant docs source and, for public models, the model card;
+5. update the relevant docs source and, for public datasets or models, the
+   matching catalog cards;
 6. run the smallest local validation commands that match the change;
 7. rebuild the published docs HTML if the website output changed;
 8. open a pull request with the required metadata and validation notes.
 
 Treat code, validation, generated docs, and published docs as one contribution.
-A model implementation is not complete if users cannot discover it or if the
-website catalog still describes the old state of the library.
+A public dataset or model implementation is not complete if users cannot
+discover it or if the website catalog still describes the old state of the
+library.
 
 Adding a Dataset
 ----------------
@@ -122,6 +127,8 @@ Keep the following expectations in mind when you add a dataset:
   without triggering heavy side effects;
 - register the dataset with ``register_dataset(...)`` so
   ``load_dataset(name=...)`` can construct it;
+- if the dataset belongs in the public catalog, add or update a card in
+  ``pyhazards/dataset_cards`` and regenerate the dataset docs;
 - prefer clear metadata over implicit conventions, especially when a model
   depends on shapes, channels, graph structure, or task type.
 
@@ -141,6 +148,38 @@ inspection module consistent with the existing ones:
 
 The goal is simple: users should be able to discover the dataset from the docs,
 inspect it from the command line, and load it from Python through the registry.
+
+Dataset Cards and Generated Docs
+--------------------------------
+
+Public datasets are documented through cards in ``pyhazards/dataset_cards``.
+These cards are the source of truth for the public dataset catalog and the
+generated per-dataset detail pages.
+
+A typical dataset card includes:
+
+- the public display name and hazard family,
+- a one-sentence summary and source role,
+- provider, geometry, cadence, and period-of-record metadata,
+- the primary source or product reference,
+- the inspection command when the dataset is inspection-first,
+- the registry name and example when it is public through
+  ``load_dataset(...)``,
+- related model and benchmark links when those cross-links help users navigate
+  the library.
+
+After updating dataset cards, refresh the generated docs:
+
+.. code-block:: bash
+
+    python scripts/render_dataset_docs.py
+
+Use the ``--check`` mode when you want to confirm the generated files are
+already up to date:
+
+.. code-block:: bash
+
+    python scripts/render_dataset_docs.py --check
 
 Adding a Model
 --------------
@@ -325,6 +364,7 @@ commands in this repository are:
 .. code-block:: bash
 
     python -c "import pyhazards; print(pyhazards.__version__)"
+    python scripts/render_dataset_docs.py --check
     python scripts/render_model_docs.py --check
     python scripts/verify_table_entries.py
 
@@ -332,6 +372,9 @@ Use them for the following purposes:
 
 - ``python -c "import pyhazards; print(pyhazards.__version__)"``
   verifies that the package still imports cleanly;
+- ``python scripts/render_dataset_docs.py --check``
+  verifies that generated dataset docs and catalog pages are in sync with the
+  current dataset cards;
 - ``python scripts/render_model_docs.py --check``
   verifies that generated model docs and catalog pages are in sync with the
   current model cards;
@@ -388,6 +431,7 @@ It is easy to update one layer of the repo and forget the others. Keep this
 distinction in mind:
 
 - code registration makes a dataset or model usable from Python;
+- dataset cards make a public dataset discoverable in the generated docs;
 - model cards make a public model discoverable in the generated docs;
 - Sphinx source updates change the documentation source tree;
 - rebuilding ``docs/`` updates the committed HTML published on GitHub Pages.
@@ -409,6 +453,8 @@ Common Mistakes
 These are the issues that most often block review:
 
 - the new dataset or model exists in code but was never registered;
+- a public dataset changed, but ``pyhazards/dataset_cards`` or the generated
+  dataset docs were not updated;
 - a public model was implemented without a matching card in
   ``pyhazards/model_cards``;
 - generated docs were not refreshed after the model card changed;
@@ -428,6 +474,8 @@ Before you open a pull request, confirm all of the following:
 - the implementation lives in the correct dataset or model module;
 - the new entrypoint is registered and can be constructed from the public API;
 - task handling and input-shape validation are clear and actionable;
+- public datasets have a complete card when they belong in the public catalog;
+- generated dataset docs are refreshed and pass ``render_dataset_docs.py --check``;
 - public models have a complete card with a runnable smoke-test spec;
 - generated model docs are refreshed and pass ``render_model_docs.py --check``;
 - dataset inspection entrypoints and public tables pass

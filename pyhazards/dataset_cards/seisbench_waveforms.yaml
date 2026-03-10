@@ -1,0 +1,58 @@
+slug: seisbench_waveforms
+display_name: SeisBench
+hazard_family: Earthquake
+source_role: Waveform Benchmark
+summary: Synthetic-backed waveform picking adapter aligned to the SeisBench ecosystem.
+provider: SeisBench ecosystem surfaced through a PyHazards adapter
+geometry: Multichannel waveform windows
+spatial_resolution: Benchmark-defined waveform channels and sample windows
+temporal_resolution: Short waveform windows with phase-pick targets
+update_cadence: Generated locally for smoke and benchmark-alignment runs
+period_of_record: Synthetic-backed benchmark adapter
+coverage: Benchmark-aligned earthquake phase-picking samples
+formats: PyTorch tensors via the dataset registry
+overview:
+  - SeisBench is the public waveform adapter used by PyHazards for the earthquake picking path.
+  - The current implementation is synthetic-backed, but it preserves the picking task shape, labels, and metrics expected by the shared earthquake evaluator.
+data_characteristics:
+  - Multichannel waveform windows paired with P- and S-arrival sample targets.
+  - Registry-backed benchmark adapter rather than a raw external waveform ingestion path.
+  - Intended for phase-picking validation and smoke tests.
+typical_use_cases:
+  - PhaseNet and EQNet smoke tests.
+  - Shared earthquake benchmark runs on picking tasks.
+  - Regression checks for waveform-based seismic models.
+access_links:
+  - label: SeisBench paper
+    url: https://joss.theoj.org/papers/10.21105/joss.04418
+  - label: SeisBench repository
+    url: https://github.com/seisbench/seisbench
+inspection: null
+registry:
+  name: seisbench_waveforms
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset(
+        "seisbench_waveforms",
+        micro=True,
+        channels=3,
+        length=256,
+    ).load()
+
+    train = data.get_split("train")
+    print(train.inputs.shape, train.targets.shape)
+primary_references:
+  - citation: SeisBench - A Toolbox for Machine Learning in Seismology
+    url: https://joss.theoj.org/papers/10.21105/joss.04418
+    repo_url: https://github.com/seisbench/seisbench
+pyhazards_usage:
+  - Use this adapter when you want the public SeisBench-aligned waveform surface exposed by the earthquake benchmark.
+related_models:
+  - phasenet
+  - eqnet
+related_benchmarks:
+  - earthquake_benchmark
+  - seisbench
+notes:
+  - This is a synthetic-backed benchmark adapter rather than a full SeisBench ingestion pipeline.

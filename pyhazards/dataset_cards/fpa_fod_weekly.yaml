@@ -1,0 +1,56 @@
+slug: fpa_fod_weekly
+display_name: FPA-FOD Weekly
+hazard_family: Wildfire
+source_role: Weekly Forecasting
+summary: Weekly FPA-FOD aggregates packaged for next-week wildfire count forecasting by size group.
+provider: Fire Program Analysis Fire-Occurrence Database (FPA-FOD) adaptation in PyHazards
+geometry: Temporal tabular sequences
+spatial_resolution: Weekly aggregate windows
+temporal_resolution: Weekly
+update_cadence: User-managed local inputs or deterministic micro mode
+period_of_record: Depends on the supplied FPA-FOD source files
+coverage: User-provided FPA-FOD coverage
+formats: SQLite, DB, CSV, and Parquet inputs
+overview:
+  - FPA-FOD Weekly builds rolling lookback windows from weekly wildfire incident counts and predicts next-week counts for grouped size classes.
+  - PyHazards exposes it as a loadable forecasting dataset with a micro mode so sequence models can be validated without the full source archive.
+data_characteristics:
+  - Predicts next-week counts for grouped size classes A/B/C/D/EFG.
+  - Supports feature modes with counts only or counts plus seasonal time features.
+  - Uses chronological splits to preserve the forecasting setting.
+  - Returned splits follow the DataBundle contract with sequence inputs and floating-point targets.
+typical_use_cases:
+  - Weekly wildfire forecasting experiments.
+  - Sequence-model smoke tests for wildfire activity prediction.
+  - Lightweight benchmarking of tabular temporal wildfire baselines.
+access_links:
+  - label: PyHazards public dataset catalog
+    url: /pyhazards_datasets.html
+inspection:
+  command: python -m pyhazards.datasets.fpa_fod_weekly.inspection --micro --lookback-weeks 12
+registry:
+  name: fpa_fod_weekly
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset(
+        "fpa_fod_weekly",
+        micro=True,
+        features="counts+time",
+        lookback_weeks=12,
+    ).load()
+
+    train = data.get_split("train")
+    print(train.inputs.shape, train.targets.shape)
+  notes:
+    - features='counts' uses only the five weekly count channels.
+    - features='counts+time' adds sinusoidal week-of-year features for seasonality.
+primary_references:
+  - citation: PyHazards FPA-FOD weekly adaptation for the wildfire forecasting path.
+    url: https://github.com/LabRAI/PyHazards
+related_models:
+  - wildfire_fpa
+  - wildfire_forecasting
+  - asufm
+related_benchmarks:
+  - wildfire_benchmark

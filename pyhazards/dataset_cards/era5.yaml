@@ -1,0 +1,42 @@
+slug: era5
+display_name: ERA5
+hazard_family: Shared Forcing
+source_role: Reanalysis
+summary: ECMWF's global reanalysis used as a high-resolution meteorological baseline for hazard experiments.
+provider: ECMWF / Copernicus Climate Change Service (C3S)
+geometry: Regular latitude-longitude grid
+spatial_resolution: "~0.25 deg x 0.25 deg"
+temporal_resolution: Hourly
+update_cadence: Daily ERA5T updates with about 5-day latency, followed by final validated releases after 2-3 months
+period_of_record: 1940-present
+coverage: Global
+formats: GRIB and NetCDF
+overview:
+  - ERA5 is ECMWF's fifth-generation global reanalysis, combining historical observations with a modern data assimilation system to produce temporally consistent atmospheric fields.
+  - PyHazards uses ERA5 as a shared meteorological baseline for flood, wildfire, and weather-aware graph workflows, including the HydroGraphNet example path.
+data_characteristics:
+  - Global hourly fields on a regular latitude-longitude grid.
+  - Single-level products with optional pressure-level and model-level variables.
+  - Common variables include near-surface meteorology, precipitation, radiation, and atmospheric state variables.
+  - Recent dates may mix validated ERA5 with preliminary ERA5T data.
+typical_use_cases:
+  - Meteorological forcing for flood, wildfire, and extreme-weather prediction models.
+  - Climate variability analysis and environmental feature engineering.
+  - Shared reanalysis input for graph and spatiotemporal benchmark pipelines.
+access_links:
+  - label: ERA5 single levels
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview
+  - label: Copernicus Climate Data Store
+    url: https://cds.climate.copernicus.eu/
+inspection:
+  command: python -m pyhazards.datasets.era5.inspection --path pyhazards/data/era5_subset --max-vars 10
+primary_references:
+  - citation: Hersbach et al. (2020). The ERA5 global reanalysis.
+    url: https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803
+pyhazards_usage:
+  - Use the inspection command for direct file validation, then feed local ERA5 files into HydroGraphNet-style helper loaders when you need graph-temporal training inputs.
+notes:
+  - ERA5 is inspection-first in the public catalog; the downstream HydroGraphNet helper is documented here for convenience but is not a ``load_dataset(...)`` registry entry.
+related_models:
+  - hydrographnet
+related_benchmarks: []

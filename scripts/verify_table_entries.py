@@ -4,25 +4,30 @@ import importlib.util
 import subprocess
 import sys
 
+from pyhazards.dataset_catalog import (
+    dataset_catalog_alignment_issues,
+    load_dataset_cards,
+)
 from pyhazards.model_catalog import load_model_cards, run_smoke_test
-
-
-DATASET_MODULES = [
-    "pyhazards.datasets.merra2.inspection",
-    "pyhazards.datasets.era5.inspection",
-    "pyhazards.datasets.noaa_flood.inspection",
-    "pyhazards.datasets.firms.inspection",
-    "pyhazards.datasets.mtbs.inspection",
-    "pyhazards.datasets.landfire.inspection",
-    "pyhazards.datasets.wfigs.inspection",
-    "pyhazards.datasets.goesr.inspection",
-]
 
 
 def verify_datasets() -> bool:
     ok = True
     print("=== Dataset Table Verification ===")
-    for mod in DATASET_MODULES:
+    cards = load_dataset_cards()
+    issues = dataset_catalog_alignment_issues(cards)
+    for issue in issues:
+        print(f"[catalog] {issue}")
+        ok = False
+
+    dataset_modules = sorted(
+        {
+            card.inspection.module
+            for card in cards
+            if card.inspection is not None and card.inspection.module
+        }
+    )
+    for mod in dataset_modules:
         spec = importlib.util.find_spec(mod)
         print(f"[import] {mod}: {'OK' if spec else 'MISSING'}")
         if spec is None:
