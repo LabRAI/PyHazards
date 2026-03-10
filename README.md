@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="docs/source/_static/logo.png" alt="PyHazards logo" width="170" />
+  <img src="docs/source/_static/logo.png" alt="PyHazards logo" width="200" />
 </p>
 
 <p align="center">
-  <strong>**PyHazards: A unified research framework for AI-based natural hazard prediction**</strong>
+  <strong>PyHazards: A unified research framework for AI-based natural hazard prediction</strong>
 </p>
 
 <p align="center">
