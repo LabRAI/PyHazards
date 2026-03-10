@@ -3,11 +3,13 @@
 pyhazards.models package
 ========================
 
-Model Catalog
--------------
+Catalog Summary
+---------------
 
-This page mirrors the public model catalog and then lists the package
-submodules for API lookup.
+This page links the public model catalog, the developer registry
+workflow, and the package submodules used to implement model builders.
+
+For the curated browsing experience, use :doc:`/pyhazards_models`.
 
 Wildfire
 ~~~~~~~~
@@ -15,37 +17,7 @@ Wildfire
 Implemented Models
 ++++++++++++++++++
 
-:doc:`ASUFM </modules/models_asufm>`
-
-A temporal convolution baseline for weekly wildfire activity forecasting. `Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer <https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278>`_ (`repo <https://github.com/bronteee/fire-asufm>`__).
-
-:doc:`CNN-ASPP </modules/models_wildfire_aspp>`
-
-An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction. `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_.
-
-:doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`
-
-A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting. `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
-
-:doc:`FireCastNet </modules/models_firecastnet>`
-
-A compact encoder-decoder baseline for wildfire spread mask prediction. `FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction <https://doi.org/10.1038/s41598-025-30645-7>`_ (`repo <https://github.com/SeasFire/firecastnet>`__).
-
-:doc:`ForeFire Adapter </modules/models_forefire>`
-
-A lightweight simulator-style wildfire spread adapter inspired by front-propagation systems. `ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread <https://doi.org/10.21105/joss.08680>`_ (`repo <https://github.com/forefireAPI/forefire>`__).
-
-:doc:`wildfire_forecasting </modules/models_wildfire_forecasting>`
-
-A sequence forecasting baseline for next-window wildfire activity across weekly count features. `Wildfire Danger Prediction and Understanding with Deep Learning <https://doi.org/10.1029/2022GL099368>`_ (`repo <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__).
-
-:doc:`WildfireSpreadTS </modules/models_wildfirespreadts>`
-
-A temporal convolution wildfire spread baseline over short raster history windows. `WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ (`repo <https://github.com/SebastianGer/WildfireSpreadTS>`__).
-
-:doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`
-
-A lightweight raster wildfire spread adapter inspired by WRF-SFIRE style transport. `Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011 <https://doi.org/10.5194/gmd-4-591-2011>`_ (`repo <https://github.com/openwfm/WRF-SFIRE>`__).
+:doc:`ASUFM </modules/models_asufm>`, :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`FireCastNet </modules/models_firecastnet>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`WildfireSpreadTS </modules/models_wildfirespreadts>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`.
 
 Earthquake
 ~~~~~~~~~~
@@ -53,25 +25,7 @@ Earthquake
 Implemented Models
 ++++++++++++++++++
 
-:doc:`EQNet </modules/models_eqnet>`
-
-A transformer-style earthquake phase-picking baseline for modern sequence modeling comparisons. `An End-To-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning <https://www.osti.gov/biblio/1978539>`_ (`repo <https://github.com/AI4EPS/EQNet>`__).
-
-:doc:`EQTransformer </modules/models_eqtransformer>`
-
-A bidirectional sequence encoder for joint earthquake phase picking with attention pooling over waveform windows. `Earthquake Transformer-An attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ (`repo <https://github.com/smousavi05/EQTransformer>`__).
-
-:doc:`GPD </modules/models_gpd>`
-
-A compact CNN baseline for generalized phase detection and historical earthquake picking comparisons. `Generalized Seismic Phase Detection with Deep Learning <https://doi.org/10.1785/0120180080>`_ (`repo <https://github.com/interseismic/generalized-phase-detection>`__).
-
-:doc:`PhaseNet </modules/models_phasenet>`
-
-A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows. `PhaseNet: A Deep-Neural-Network-Based Seismic Arrival Time Picking Method <https://arxiv.org/abs/1803.03211>`_ (`repo <https://github.com/AI4EPS/PhaseNet>`__).
-
-:doc:`WaveCastNet </modules/models_wavecastnet>`
-
-A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield forecasting and early-warning style rollout experiments. `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_.
+:doc:`EQNet </modules/models_eqnet>`, :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`, :doc:`PhaseNet </modules/models_phasenet>`, :doc:`WaveCastNet </modules/models_wavecastnet>`.
 
 Flood
 ~~~~~
@@ -79,43 +33,7 @@ Flood
 Implemented Models
 ++++++++++++++++++
 
-:doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`
-
-An entity-aware hydrology baseline with static-feature gating over streamflow histories. `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ (`repo <https://github.com/neuralhydrology/neuralhydrology>`__).
-
-:doc:`FloodCast </modules/models_floodcast>`
-
-A compact spatiotemporal flood-inundation baseline for raster forecast experiments. `Large-scale flood modeling and forecasting with FloodCast <https://doi.org/10.1038/s41586-024-08028-8>`_ (`repo <https://github.com/HydroPML/FloodCast>`__).
-
-:doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`
-
-A transformer-style sequence baseline for nodewise streamflow forecasting. `Global Flood Forecasting at a Fine Catchment Resolution using Machine Learning <https://research.google/pubs/global-flood-forecasting-at-a-fine-catchment-resolution-using-machine-learning/>`_ (`repo <https://github.com/google-research/flood-forecasting>`__).
-
-:doc:`HydroGraphNet </modules/models_hydrographnet>`
-
-A physics-informed graph neural network for flood forecasting with interpretable KAN-style components, residual message passing, and delta-state decoding. `Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_.
-
-:doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`
-
-An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs. `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ (`repo <https://github.com/neuralhydrology/neuralhydrology>`__).
-
-:doc:`UrbanFloodCast </modules/models_urbanfloodcast>`
-
-A U-Net style urban inundation baseline for dense-grid flood prediction. `UrbanFloodCast: WMO Urban Flooding Forecasting Challenge <https://arxiv.org/abs/2405.21179>`_ (`repo <https://github.com/HydroPML/UrbanFloodCast>`__).
-
-Hurricane
-~~~~~~~~~
-
-Implemented Models
-++++++++++++++++++
-
-:doc:`Hurricast </modules/models_hurricast>`
-
-A compact multimodal storm baseline for hurricane track and intensity forecasting. `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://arxiv.org/abs/2102.01204>`_ (`repo <https://github.com/leobix/hurricast>`__).
-
-:doc:`tropicalcyclone_MLP </modules/models_tropicalcyclone_mlp>`
-
-A compact MLP baseline for hurricane track and intensity forecasting. `Deep Learning Experiments for Tropical Cyclone Intensity Forecasts <https://doi.org/10.1145/3447548.3467351>`_ (`repo <https://github.com/wenweixu/tropicalcyclone_MLP>`__).
+:doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`, :doc:`FloodCast </modules/models_floodcast>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`, :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`UrbanFloodCast </modules/models_urbanfloodcast>`, :doc:`HydroGraphNet </modules/models_hydrographnet>`.
 
 Tropical Cyclone
 ~~~~~~~~~~~~~~~~
@@ -123,32 +41,57 @@ Tropical Cyclone
 Implemented Models
 ++++++++++++++++++
 
-:doc:`SAF-Net </modules/models_saf_net>`
-
-A spatiotemporal tropical-cyclone baseline with an intensity-focused head and shared trajectory output. `SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction <https://www.sciencedirect.com/science/article/pii/S1568494623003152>`_ (`repo <https://github.com/xuguangning1218/TI_Prediction>`__).
-
-:doc:`TCIF-fusion </modules/models_tcif_fusion>`
-
-A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting. `Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.5194/egusphere-2024-250>`_ (`repo <https://github.com/wangchong96/TCIF-fusion>`__).
-
-:doc:`TropiCycloneNet </modules/models_tropicyclonenet>`
-
-A GRU plus attention baseline for all-basin tropical cyclone forecasting. `Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://www.nature.com/articles/s41597-023-02721-x>`_ (`repo <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__).
+:doc:`Hurricast </modules/models_hurricast>`, :doc:`SAF-Net </modules/models_saf_net>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`, :doc:`Tropical Cyclone MLP </modules/models_tropicalcyclone_mlp>`, :doc:`TropiCycloneNet </modules/models_tropicyclonenet>`.
 
 Experimental Adapters
 +++++++++++++++++++++
 
-:doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`
+:doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`.
 
-An experimental wrapper-style storm adapter inspired by FourCastNet forecast fields. `FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators <https://arxiv.org/abs/2202.11214>`_ (`repo <https://github.com/NVlabs/FourCastNet>`__).
+Developer Registry Workflow
+---------------------------
 
-:doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`
+Use this section when you need the package-level builder and registry
+interface rather than the public catalog presentation.
 
-An experimental wrapper-style storm adapter inspired by GraphCast/GenCast forecast fields. `GraphCast: Learning skillful medium-range global weather forecasting <https://www.science.org/doi/10.1126/science.adi2336>`_ (`repo <https://github.com/google-deepmind/graphcast>`__).
+Build a Registered Model
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-:doc:`Pangu TC Adapter </modules/models_pangu_tc>`
+.. code-block:: python
 
-An experimental wrapper-style storm adapter inspired by Pangu-Weather forecast fields. `Accurate medium-range global weather forecasting with 3D neural networks <https://www.nature.com/articles/s41586-023-06185-3>`_ (`repo <https://github.com/198808xc/Pangu-Weather>`__).
+    from pyhazards.models import build_model
+
+    model = build_model(
+        name="phasenet",
+        task="regression",
+        in_channels=3,
+    )
+
+Register a Custom Model
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    import torch.nn as nn
+    from pyhazards.models import build_model, register_model
+
+    def my_custom_builder(task: str, in_dim: int, out_dim: int, **kwargs) -> nn.Module:
+        hidden = kwargs.get("hidden_dim", 128)
+        return nn.Sequential(
+            nn.Linear(in_dim, hidden),
+            nn.ReLU(),
+            nn.Linear(hidden, out_dim),
+        )
+
+    register_model("my_mlp", my_custom_builder, defaults={"hidden_dim": 128})
+    model = build_model(name="my_mlp", task="regression", in_dim=16, out_dim=1)
+
+Notes
+~~~~~
+
+- Builders receive ``task`` plus any kwargs you pass.
+- ``register_model`` stores optional defaults so configs can stay small.
+- Use :doc:`/implementation` for the full contributor workflow.
 
 Submodules
 ----------

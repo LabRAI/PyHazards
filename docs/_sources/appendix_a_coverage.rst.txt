@@ -112,7 +112,7 @@ Method and Resource Matrix
      - `wildfire_forecasting <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_
      - Baseline
      - ``Implemented``
-     - :doc:`wildfire_forecasting <modules/models_wildfire_forecasting>`
+     - :doc:`Wildfire Forecasting <modules/models_wildfire_forecasting>`
      -  
    * - Wildfire
      - `WildfireSpreadTS <https://github.com/SebastianGer/WildfireSpreadTS>`_
@@ -202,7 +202,7 @@ Method and Resource Matrix
      - `tropicalcyclone_MLP <https://github.com/wenweixu/tropicalcyclone_MLP>`_
      - Baseline
      - ``Implemented``
-     - :doc:`tropicalcyclone_MLP <modules/models_tropicalcyclone_mlp>`
+     - :doc:`Tropical Cyclone MLP <modules/models_tropicalcyclone_mlp>`
      - The model adapter is implemented as a basin-filtered storm baseline.
    * - Hurricane / Tropical Cyclone
      - `TCIF-fusion <https://github.com/wangchong96/TCIF-fusion>`_
