@@ -2,11 +2,7 @@
   <img src="docs/source/_static/logo.png" alt="PyHazards logo" width="220" />
 </p>
 
-<h1 align="center">PyHazards</h1>
-
-<p align="center">
-  <strong>A unified research framework for AI-based natural hazard prediction</strong>
-</p>
+<h1 align="center">PyHazards: A unified research framework for AI-based natural hazard prediction</h1>
 
 <p align="center">
   Datasets · Models · Benchmarks · Training Pipelines · Evaluation
