@@ -257,7 +257,6 @@
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wrf_sfire.html">WRF-SFIRE Adapter</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="interactive_map.html">Wildfire Interactive Map</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_benchmarks.html">Benchmarks</a><input aria-label="Toggle navigation of Benchmarks" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="benchmarks/aefa.html">AEFA</a></li>
 <li class="toctree-l2"><a class="reference internal" href="benchmarks/caravan.html">Caravan</a></li>
@@ -282,6 +281,7 @@
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interactive_map.html">Wildfire Interactive Map</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Additional Information</span></p>
 <ul>
@@ -336,36 +336,39 @@
 </a>
 <a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-green" />
 </a>
-<a class="reference external image-reference" href="https://pypi.org/project/pyhazards"><img alt="PyPI Downloads" src="https://img.shields.io/badge/downloads-check%20PyPI-blue" />
-</a>
-<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards"><img alt="Issues" src="https://img.shields.io/github/issues/LabRAI/PyHazards" />
-</a>
-<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards"><img alt="Pull Requests" src="https://img.shields.io/github/issues-pr/LabRAI/PyHazards" />
-</a>
-<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards"><img alt="Stars" src="https://img.shields.io/github/stars/LabRAI/PyHazards" />
-</a>
-<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards"><img alt="GitHub forks" src="https://img.shields.io/github/forks/LabRAI/PyHazards" />
-</a>
-<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards"><img alt="GitHub" src="_images/github.svg" />
-</a>
 <hr class="docutils" />
 <section id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h1>
 <p>PyHazards is an open-source Python library for AI-based natural hazard
 modeling, providing unified interfaces for datasets, models, training
-pipelines, and evaluation. It is designed for researchers, practitioners, and
-contributors who need a consistent way to inspect data, build hazard models,
-run experiments, and extend the library.</p>
+pipelines, benchmarks, and evaluation. It is designed for researchers,
+practitioners, and contributors who need a consistent way to inspect hazard
+data, build models, run benchmark-aligned experiments, and extend the library.</p>
 </section>
 <section id="core-capabilities">
 <h1>Core Capabilities<a class="headerlink" href="#core-capabilities" title="Link to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>Inspect hazard datasets through consistent command-line inspection workflows,
-dataset reference pages, and lightweight validation steps before training.</p></li>
+dataset reference pages, and linked benchmark adapters before training.</p></li>
 <li><p>Build registered models through a unified model registry with stable builder
 interfaces across hazard scenarios.</p></li>
-<li><p>Train, evaluate, and predict with shared engine interfaces so experiments,
-smoke tests, and model comparisons follow a consistent workflow.</p></li>
+<li><p>Run benchmark-aligned smoke tests and experiment configs through shared
+benchmark, config, and report layers.</p></li>
+<li><p>Train, evaluate, and predict with shared engine interfaces so experiments and
+model comparisons follow a consistent workflow.</p></li>
+</ul>
+</section>
+<section id="hazard-coverage">
+<h1>Hazard Coverage<a class="headerlink" href="#hazard-coverage" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>Wildfire workflows cover incident records, active-fire detections, fuels,
+burn products, danger forecasting, weekly forecasting, and spread baselines.</p></li>
+<li><p>Earthquake workflows cover waveform picking, dense-grid forecasting, and
+linked benchmark ecosystems for picking and forecasting.</p></li>
+<li><p>Flood workflows cover streamflow and inundation tasks with public benchmark
+adapters and model implementations.</p></li>
+<li><p>Tropical Cyclone workflows cover track-and-intensity forecasting with shared
+storm benchmark coverage and linked ecosystem pages.</p></li>
 </ul>
 </section>
 <section id="getting-started">
@@ -402,15 +405,20 @@ environment.</p></li>
 <li><p><a class="reference internal" href="quick_start.html"><span class="doc">Quick Start</span></a>: run the shortest end-to-end workflow in the library.</p></li>
 <li><p><a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a>: browse the hazard-grouped dataset catalog, linked
 sources, and inspection or registry entry points.</p></li>
-<li><p><a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a>: browse the public model catalog and registry usage.</p></li>
-<li><p><a class="reference internal" href="interactive_map.html"><span class="doc">Wildfire Interactive Map</span></a>: open the wildfire-only companion map at
-<code class="docutils literal notranslate"><span class="pre">https://rai-fire.com/</span></code>.</p></li>
+<li><p><a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a>: browse the public model catalog and benchmark-linked
+model coverage.</p></li>
 <li><p><a class="reference internal" href="pyhazards_benchmarks.html"><span class="doc">Benchmarks</span></a>: run hazard-specific benchmark evaluators through
 the shared runner.</p></li>
-<li><p><a class="reference internal" href="appendix_a_coverage.html"><span class="doc">Coverage Audit</span></a>: audit which planned methods, benchmarks, and
-datasets are actually implemented today.</p></li>
 <li><p><a class="reference internal" href="pyhazards_configs.html"><span class="doc">Configs</span></a>: load or author reproducible experiment YAML files.</p></li>
 <li><p><a class="reference internal" href="pyhazards_reports.html"><span class="doc">Reports</span></a>: export JSON, Markdown, and CSV benchmark summaries.</p></li>
+<li><p><a class="reference internal" href="pyhazards_engine.html"><span class="doc">Engine</span></a>: use the shared training and inference runtime.</p></li>
+<li><p><a class="reference internal" href="pyhazards_metrics.html"><span class="doc">Metrics</span></a>: review metrics used across benchmark and training
+paths.</p></li>
+<li><p><a class="reference internal" href="pyhazards_utils.html"><span class="doc">Utils</span></a>: access lower-level utility modules.</p></li>
+<li><p><a class="reference internal" href="interactive_map.html"><span class="doc">Wildfire Interactive Map</span></a>: open the wildfire-only companion map at
+<code class="docutils literal notranslate"><span class="pre">https://rai-fire.com/</span></code>.</p></li>
+<li><p><a class="reference internal" href="appendix_a_coverage.html"><span class="doc">Coverage Audit</span></a>: audit which planned methods, benchmarks, and
+datasets are actually implemented today.</p></li>
 <li><p><a class="reference internal" href="implementation.html"><span class="doc">Implementation Guide</span></a>: use the contributor guide for adding datasets, models,
 and public catalog updates.</p></li>
 </ul>

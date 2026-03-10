@@ -15,30 +15,6 @@
    :target: https://github.com/LabRAI/PyHazards/blob/main/LICENSE
    :alt: License
 
-.. image:: https://img.shields.io/badge/downloads-check%20PyPI-blue
-   :target: https://pypi.org/project/pyhazards
-   :alt: PyPI Downloads
-
-.. image:: https://img.shields.io/github/issues/LabRAI/PyHazards
-   :target: https://github.com/LabRAI/PyHazards
-   :alt: Issues
-
-.. image:: https://img.shields.io/github/issues-pr/LabRAI/PyHazards
-   :target: https://github.com/LabRAI/PyHazards
-   :alt: Pull Requests
-
-.. image:: https://img.shields.io/github/stars/LabRAI/PyHazards
-   :target: https://github.com/LabRAI/PyHazards
-   :alt: Stars
-
-.. image:: https://img.shields.io/github/forks/LabRAI/PyHazards
-   :target: https://github.com/LabRAI/PyHazards
-   :alt: GitHub forks
-
-.. image:: _static/github.svg
-   :target: https://github.com/LabRAI/PyHazards
-   :alt: GitHub
-
 ----
 
 Overview
@@ -46,19 +22,33 @@ Overview
 
 PyHazards is an open-source Python library for AI-based natural hazard
 modeling, providing unified interfaces for datasets, models, training
-pipelines, and evaluation. It is designed for researchers, practitioners, and
-contributors who need a consistent way to inspect data, build hazard models,
-run experiments, and extend the library.
+pipelines, benchmarks, and evaluation. It is designed for researchers,
+practitioners, and contributors who need a consistent way to inspect hazard
+data, build models, run benchmark-aligned experiments, and extend the library.
 
 Core Capabilities
 -----------------
 
 - Inspect hazard datasets through consistent command-line inspection workflows,
-  dataset reference pages, and lightweight validation steps before training.
+  dataset reference pages, and linked benchmark adapters before training.
 - Build registered models through a unified model registry with stable builder
   interfaces across hazard scenarios.
-- Train, evaluate, and predict with shared engine interfaces so experiments,
-  smoke tests, and model comparisons follow a consistent workflow.
+- Run benchmark-aligned smoke tests and experiment configs through shared
+  benchmark, config, and report layers.
+- Train, evaluate, and predict with shared engine interfaces so experiments and
+  model comparisons follow a consistent workflow.
+
+Hazard Coverage
+---------------
+
+- Wildfire workflows cover incident records, active-fire detections, fuels,
+  burn products, danger forecasting, weekly forecasting, and spread baselines.
+- Earthquake workflows cover waveform picking, dense-grid forecasting, and
+  linked benchmark ecosystems for picking and forecasting.
+- Flood workflows cover streamflow and inundation tasks with public benchmark
+  adapters and model implementations.
+- Tropical Cyclone workflows cover track-and-intensity forecasting with shared
+  storm benchmark coverage and linked ecosystem pages.
 
 Getting Started
 ---------------
@@ -96,15 +86,20 @@ Documentation Guide
 - :doc:`quick_start`: run the shortest end-to-end workflow in the library.
 - :doc:`pyhazards_datasets`: browse the hazard-grouped dataset catalog, linked
   sources, and inspection or registry entry points.
-- :doc:`pyhazards_models`: browse the public model catalog and registry usage.
-- :doc:`interactive_map`: open the wildfire-only companion map at
-  ``https://rai-fire.com/``.
+- :doc:`pyhazards_models`: browse the public model catalog and benchmark-linked
+  model coverage.
 - :doc:`pyhazards_benchmarks`: run hazard-specific benchmark evaluators through
   the shared runner.
-- :doc:`appendix_a_coverage`: audit which planned methods, benchmarks, and
-  datasets are actually implemented today.
 - :doc:`pyhazards_configs`: load or author reproducible experiment YAML files.
 - :doc:`pyhazards_reports`: export JSON, Markdown, and CSV benchmark summaries.
+- :doc:`pyhazards_engine`: use the shared training and inference runtime.
+- :doc:`pyhazards_metrics`: review metrics used across benchmark and training
+  paths.
+- :doc:`pyhazards_utils`: access lower-level utility modules.
+- :doc:`interactive_map`: open the wildfire-only companion map at
+  ``https://rai-fire.com/``.
+- :doc:`appendix_a_coverage`: audit which planned methods, benchmarks, and
+  datasets are actually implemented today.
 - :doc:`implementation`: use the contributor guide for adding datasets, models,
   and public catalog updates.
 
@@ -149,13 +144,13 @@ If you use PyHazards in your research, please cite:
 
    pyhazards_datasets
    pyhazards_models
-   interactive_map
    pyhazards_benchmarks
    pyhazards_configs
    pyhazards_reports
    pyhazards_engine
    pyhazards_metrics
    pyhazards_utils
+   interactive_map
 
 .. toctree::
    :maxdepth: 2

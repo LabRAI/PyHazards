@@ -79,13 +79,13 @@ def test_api_reference_order_is_curated() -> None:
     api_order = [
         "pyhazards_datasets",
         "pyhazards_models",
-        "interactive_map",
         "pyhazards_benchmarks",
         "pyhazards_configs",
         "pyhazards_reports",
         "pyhazards_engine",
         "pyhazards_metrics",
         "pyhazards_utils",
+        "interactive_map",
     ]
     positions = [index_text.index(name) for name in api_order]
     assert positions == sorted(positions)

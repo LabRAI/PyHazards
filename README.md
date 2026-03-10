@@ -3,79 +3,51 @@
 [![PyPI - Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpypi.org%2Fpypi%2Fpyhazards%2Fjson&query=%24.info.version&prefix=v&label=PyPI)](https://pypi.org/project/pyhazards)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/LabRAI/PyHazards/ci.yml?branch=main)](https://github.com/LabRAI/PyHazards/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT-green)](https://github.com/LabRAI/PyHazards/blob/main/LICENSE)
-[![PyPI - Downloads](https://img.shields.io/badge/downloads-check%20PyPI-blue)](https://pypi.org/project/pyhazards)
-[![Issues](https://img.shields.io/github/issues/LabRAI/PyHazards)](https://github.com/LabRAI/PyHazards/issues)
-[![Pull Requests](https://img.shields.io/github/issues-pr/LabRAI/PyHazards)](https://github.com/LabRAI/PyHazards/pulls)
-[![Stars](https://img.shields.io/github/stars/LabRAI/PyHazards)](https://github.com/LabRAI/PyHazards)
-[![GitHub forks](https://img.shields.io/github/forks/LabRAI/PyHazards)](https://github.com/LabRAI/PyHazards)
 
-## Introduction
+PyHazards is an open-source Python library for AI-based natural hazard modeling. It provides unified interfaces for datasets, models, benchmarks, training pipelines, and evaluation across wildfire, earthquake, flood, and tropical-cyclone workflows.
 
-PyHazards is a Python framework for AI-powered hazard prediction and risk assessment. It provides a hazard-first API for loading data, building models, running end-to-end experiments, and extending with your own modules.
+It is designed for researchers, practitioners, and contributors who need a consistent way to inspect hazard data, run benchmark-aligned experiments, and extend the library with new datasets or model implementations.
 
-## Core Components
+## What PyHazards Provides
 
-PyHazards is organized around four core components that map to a full hazard ML workflow: data preparation, model construction, experiment execution, and evaluation.
+- **Dataset catalog and inspection workflows** for public hazard datasets, benchmark adapters, and shared forcing sources.
+- **Registry-driven model implementations** spanning wildfire, earthquake, flood, and tropical-cyclone tasks.
+- **Shared benchmark, config, and report layers** for reproducible smoke tests and evaluation workflows.
+- **Reusable training and inference utilities** through a common engine API.
 
-- **Datasets**: Standardized dataset interfaces expose tabular, temporal, raster, and graph-style hazard data through `DataBundle` so data loading stays consistent across tasks.
-- **Models**: A registry-based model API provides built-in hazard architectures and reusable backbones/heads, making it straightforward to swap models or add your own.
-- **Engine**: `Trainer` centralizes fit/evaluate/predict loops with optional mixed precision and distributed execution.
-- **Metrics and Utilities**: Task-specific metrics plus hardware/reproducibility helpers support reliable evaluation and repeatable experiments.
+## Hazard Coverage
 
-## Install
+- **Wildfire**: incident records, active-fire detections, fuels and burn products, danger forecasting, weekly forecasting, and spread baselines.
+- **Earthquake**: waveform-picking baselines, forecasting adapters, and shared picking/forecasting benchmark paths.
+- **Flood**: streamflow and inundation models with benchmark-aligned adapter datasets and evaluation coverage.
+- **Tropical Cyclone**: track-and-intensity forecasting baselines plus linked benchmark ecosystems.
 
-Install from PyPI. If you plan to run on GPU, install a compatible PyTorch build first.
+## Installation
+
+Install PyHazards from PyPI. If you need GPU execution, install a compatible PyTorch build first.
 
 ```bash
 pip install pyhazards
 ```
 
-Optional CUDA setup:
+Optional device selection:
 
 ```bash
 export PYHAZARDS_DEVICE=cuda:0
 ```
 
-## Load Data
+## Quick Start
 
-Use the dataset module entrypoint for consistent dataset inspection/loading across datasets.
+Inspect one dataset source:
 
 ```bash
 python -m pyhazards.datasets.era5.inspection --path pyhazards/data/era5_subset --max-vars 10
 ```
 
-## Load Model
-
-Build one implemented model from the registry (this example uses the wildfire model).
-
-Example using `wildfire_aspp`:
+Build one registered model:
 
 ```python
 from pyhazards.models import build_model
-
-print("[Step 2/3] Building model...")
-model = build_model(
-    name="wildfire_aspp",
-    task="segmentation",
-    in_channels=12,
-)
-print("[Step 2/3] Model built.")
-print(type(model).__name__)
-```
-
-## Full Test
-
-Validation example: load the same ERA5-based hydrograph subset and run one epoch with `hydrographnet`.
-This uses `load_hydrograph_data` as the model-specific adapter after dataset inspection.
-
-```python
-import torch
-from pyhazards.data.load_hydrograph_data import load_hydrograph_data
-from pyhazards.datasets import graph_collate
-from pyhazards.engine import Trainer
-from pyhazards.models import build_model
-
-data = load_hydrograph_data("pyhazards/data/era5_subset", max_nodes=50)
 
 model = build_model(
     name="hydrographnet",
@@ -84,87 +56,49 @@ model = build_model(
     edge_in_dim=3,
     out_dim=1,
 )
-
-trainer = Trainer(model=model, mixed_precision=False)
-optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-loss_fn = torch.nn.MSELoss()
-
-print("[Step 3/3] Running one training epoch...")
-trainer.fit(
-    data,
-    optimizer=optimizer,
-    loss_fn=loss_fn,
-    max_epochs=1,
-    batch_size=1,
-    collate_fn=graph_collate,
-)
-
-print("[Step 3/3] Evaluating on train split...")
-metrics = trainer.evaluate(
-    data,
-    split="train",
-    batch_size=1,
-    collate_fn=graph_collate,
-)
-print(metrics)
+print(type(model).__name__)
 ```
 
-## Quick Verification (`test.py`)
-
-Run the built-in GPU smoke test:
+Run the GPU smoke path when CUDA is available:
 
 ```bash
 python test.py
 ```
 
-`test.py` is a validation/smoke test only. It verifies pipeline correctness and integration, not final benchmark performance.
+## Documentation
 
-It prints step-by-step status (dataset load, model build, forward pass, train/eval) and ends with:
+Full documentation: [https://labrai.github.io/PyHazards](https://labrai.github.io/PyHazards)
 
-```text
-PASS: end-to-end implementation is working.
-```
+Recommended path:
 
-## Custom Module
+1. [Installation](https://labrai.github.io/PyHazards/installation.html)
+2. [Quick Start](https://labrai.github.io/PyHazards/quick_start.html)
+3. [Datasets](https://labrai.github.io/PyHazards/pyhazards_datasets.html)
+4. [Models](https://labrai.github.io/PyHazards/pyhazards_models.html)
+5. [Benchmarks](https://labrai.github.io/PyHazards/pyhazards_benchmarks.html)
 
-Use this when you want to add your own dataset/model implementation into PyHazards.
+## Contributing
 
-To upload and use your own data/model modules:
+PyHazards uses generated dataset, model, and benchmark catalogs. If you are extending the library:
 
-1. Upload your raw data files to your project path and write a dataset loader that returns a `DataBundle`.
-2. Register your model with `register_model` and a builder function that returns an `nn.Module`.
-3. Build with `build_model(...)` and train/evaluate through `Trainer`.
+- use the public contributor guide in [docs/source/implementation.rst](docs/source/implementation.rst)
+- use the maintainer workflow notes in [.github/IMPLEMENTATION.md](.github/IMPLEMENTATION.md)
+- follow the repository contribution process in [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)
 
-Implementation details:
-
-- [Implementation Guideline](.github/IMPLEMENTATION.md)
-- [Contributors Guideline](.github/CONTRIBUTING.md)
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=LabRAI/PyHazards&type=Date&from=2026-01-01)](https://www.star-history.com/#LabRAI/PyHazards&Date)
-
-## How to Cite
+## Citation
 
 If you use PyHazards in your research, please cite:
 
 ```bibtex
-@software{pyhazards2025,
-  title={PyHazards: A Python Framework for AI-Powered Hazard Prediction},
-  author={Cheng, Xueqi},
-  year={2025},
-  url={https://github.com/LabRAI/PyHazards}
+@misc{pyhazards2025,
+  title        = {PyHazards: An Open-Source Library for AI-Powered Hazard Prediction},
+  author       = {Cheng et al.},
+  year         = {2025},
+  howpublished = {\url{https://github.com/LabRAI/PyHazards}},
+  note         = {GitHub repository}
 }
 ```
-
-## Documentation
-
-Full documentation is available at: [https://labrai.github.io/PyHazards](https://labrai.github.io/PyHazards)
 
 ## License
 
 [MIT License](LICENSE)
-
-## Contact
-
-For questions or contributions, please contact xc25@fsu.edu.
