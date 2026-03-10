@@ -1,6 +1,6 @@
 .. title:: PyHazards
 
-.. image:: _static/pyhazards_logo.png
+.. image:: _static/logo.png
    :alt: PyHazards Icon
    :width: 220px
    :align: center

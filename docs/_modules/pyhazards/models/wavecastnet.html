@@ -7,11 +7,12 @@
         <link rel="prefetch" href="../../../_static/logo.png" as="image">
 
     <link rel="shortcut icon" href="../../../_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>pyhazards.models.wavecastnet - PyHazards 1.0.4 documentation</title>
+        <title>pyhazards.models.wavecastnet - PyHazards 1.0.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=aab0eeca" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=160b8019" />
     
     
 
@@ -163,7 +164,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">PyHazards 1.0.4 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">PyHazards 1.0.5 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -187,7 +188,7 @@
     <img class="sidebar-logo" src="../../../_static/logo.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">PyHazards 1.0.4 documentation</span>
+  <span class="sidebar-brand-text">PyHazards 1.0.5 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -203,16 +204,26 @@
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../pyhazards_datasets.html">Datasets</a><input aria-label="Toggle navigation of Datasets" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/merra2.html">MERRA-2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../datasets/era5.html">ERA5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/goesr.html">GOES-R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/merra2.html">MERRA-2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../datasets/firms.html">FIRMS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/mtbs.html">MTBS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/landfire.html">LANDFIRE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/wfigs.html">WFIGS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../datasets/fpa_fod_tabular.html">FPA-FOD Tabular</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../datasets/fpa_fod_weekly.html">FPA-FOD Weekly</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../datasets/goesr.html">GOES-R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/landfire.html">LANDFIRE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/mtbs.html">MTBS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/wfigs.html">WFIGS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/caravan_streamflow.html">Caravan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/floodcastbench_inundation.html">FloodCastBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/hydrobench_streamflow.html">HydroBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/noaa_flood.html">NOAA Flood Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/waterbench_streamflow.html">WaterBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/aefa_forecast.html">AEFA Forecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/pick_benchmark_waveforms.html">pick-benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/seisbench_waveforms.html">SeisBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/ibtracs_tracks.html">IBTrACS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/tcbench_alpha.html">TCBench Alpha</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../datasets/tropicyclonenet_dataset.html">TropiCycloneNet-Dataset</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -234,24 +245,42 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_phasenet.html">PhaseNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_saf_net.html">SAF-Net</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_tcif_fusion.html">TCIF-fusion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_tropicalcyclone_mlp.html">tropicalcyclone_MLP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_tropicalcyclone_mlp.html">Tropical Cyclone MLP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_tropicyclonenet.html">TropiCycloneNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_urbanfloodcast.html">UrbanFloodCast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_forecasting.html">wildfire_forecasting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_forecasting.html">Wildfire Forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfirespreadts.html">WildfireSpreadTS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wrf_sfire.html">WRF-SFIRE Adapter</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../interactive_map.html">Wildfire Interactive Map</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_benchmarks.html">Benchmarks</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pyhazards_benchmarks.html">Benchmarks</a><input aria-label="Toggle navigation of Benchmarks" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/aefa.html">AEFA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/caravan.html">Caravan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/earthquake_benchmark.html">Earthquake Benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/flood_benchmark.html">Flood Benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/floodcastbench.html">FloodCastBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/hydrobench.html">HydroBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/ibtracs.html">IBTrACS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/pick_benchmark.html">pick-benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/pycsep.html">pyCSEP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/seisbench.html">SeisBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/tcbench_alpha.html">TCBench Alpha</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/tropical_cyclone_benchmark.html">Tropical Cyclone Benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/tropicyclonenet_dataset.html">TropiCycloneNet-Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/waterbench.html">WaterBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/wildfire_benchmark.html">Wildfire Benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../benchmarks/wildfirespreadts_ecosystem.html">WildfireSpreadTS</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_configs.html">Configs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_reports.html">Reports</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pyhazards_utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interactive_map.html">Wildfire Interactive Map</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Additional Information</span></p>
 <ul>
@@ -716,9 +745,10 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=862d5a7d"></script>
+</div><script src="../../../_static/documentation_options.js?v=2f6d2e1b"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="pyhazards_logo.png" alt="PyHazards logo" width="220" />
+  <img src="docs/source/_static/logo.png" alt="PyHazards logo" width="220" />
 </p>
 
 <h1 align="center">PyHazards</h1>
