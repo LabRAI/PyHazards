@@ -1,131 +1,250 @@
+.. title:: PyHazards
+
 .. image:: _static/logo.png
    :alt: PyHazards Icon
-   :width: 260px
+   :width: 220px
    :align: center
+   :class: landing-hero-logo
 
-.. image:: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpypi.org%2Fpypi%2Fpyhazards%2Fjson&query=%24.info.version&prefix=v&label=PyPI
-   :target: https://pypi.org/project/pyhazards
-   :alt: PyPI Version
+.. raw:: html
 
-.. image:: https://img.shields.io/github/actions/workflow/status/LabRAI/PyHazards/ci.yml?branch=main
-   :target: https://github.com/LabRAI/PyHazards/actions/workflows/ci.yml
-   :alt: Build Status
+   <h1 class="landing-hero-title">PyHazards</h1>
 
-.. image:: https://img.shields.io/badge/license-MIT-green
-   :target: https://github.com/LabRAI/PyHazards/blob/main/LICENSE
-   :alt: License
+.. container:: landing-hero-tagline
 
-.. image:: https://img.shields.io/badge/Slack-RAI%20Lab%20Channel-4A154B?logo=slack&logoColor=white
-   :target: https://rai-lab-workspace.slack.com/archives/C0AKAJCTY4F
-   :alt: Slack Channel
+   PyHazards is a unified research framework for AI-based natural hazard forecasting, benchmarking, and model development across wildfire, earthquake, flood, and tropical cyclone tasks.
 
-----
+.. container:: landing-hero-subtitle
 
-Overview
---------
+   PyHazards brings together public dataset catalogs, registry-based models, benchmark families, experiment configs, and shared training or report workflows so researchers, practitioners, and contributors can work on one coherent software surface.
 
-PyHazards is an open-source Python library for AI-based natural hazard
-modeling, providing unified interfaces for datasets, models, training
-pipelines, benchmarks, and evaluation. It is designed for researchers,
-practitioners, and contributors who need a consistent way to inspect hazard
-data, build models, run benchmark-aligned experiments, and extend the library.
+At a Glance
+-----------
 
-Core Capabilities
------------------
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid home-kicker-grid
 
-- Inspect hazard datasets through consistent command-line inspection workflows,
-  dataset reference pages, and linked benchmark adapters before training.
-- Build registered models through a unified model registry with stable builder
-  interfaces across hazard scenarios.
-- Run benchmark-aligned smoke tests and experiment configs through shared
-  benchmark, config, and report layers.
-- Train, evaluate, and predict with shared engine interfaces so experiments and
-  model comparisons follow a consistent workflow.
+   .. grid-item-card:: Hazard Families
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         4
+
+      .. container:: catalog-stat-note
+
+         Wildfire, earthquake, flood, and tropical cyclone workflows under one library.
+
+   .. grid-item-card:: Public Datasets
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         20
+
+      .. container:: catalog-stat-note
+
+         Curated dataset pages covering forcing sources and hazard-specific benchmark adapters.
+
+   .. grid-item-card:: Implemented Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         24
+
+      .. container:: catalog-stat-note
+
+         Public implemented baselines and variants surfaced through the model catalog.
+
+   .. grid-item-card:: Benchmark Families
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         4
+
+      .. container:: catalog-stat-note
+
+         Shared evaluator families with linked ecosystems, smoke configs, and reports.
+
+Start Here
+----------
+
+.. container:: home-section-note
+
+   Use one of these four paths to move from overview to action quickly.
+
+.. grid:: 1 1 2 4
+   :gutter: 2
+   :class-container: catalog-recommend-grid home-link-grid
+
+   .. grid-item-card:: Quick Start
+      :class-card: catalog-detail-card
+
+      Run the first benchmark-aware workflow and verify the package.
+
+      **Open:** :doc:`Quick Start <quick_start>`
+
+   .. grid-item-card:: Browse Datasets
+      :class-card: catalog-detail-card
+
+      Explore forcing sources, benchmark adapters, and inspection entrypoints.
+
+      **Open:** :doc:`Datasets <pyhazards_datasets>`
+
+   .. grid-item-card:: Browse Models
+      :class-card: catalog-detail-card
+
+      Compare implemented baselines, variants, and benchmark-linked model detail pages.
+
+      **Open:** :doc:`Models <pyhazards_models>`
+
+   .. grid-item-card:: Browse Benchmarks
+      :class-card: catalog-detail-card
+
+      Compare hazard benchmark families, ecosystem mappings, and smoke coverage.
+
+      **Open:** :doc:`Benchmarks <pyhazards_benchmarks>`
+
+Why PyHazards
+-------------
+
+.. grid:: 1 1 2 4
+   :gutter: 2
+   :class-container: catalog-grid home-pillar-grid
+
+   .. grid-item-card:: Unified Datasets
+      :class-card: catalog-detail-card
+
+      Public datasets, forcing sources, and inspection surfaces are documented through one hazard-first catalog.
+
+   .. grid-item-card:: Benchmark-aligned Evaluation
+      :class-card: catalog-detail-card
+
+      Shared benchmark families, smoke configs, and report exports make model comparisons more reproducible.
+
+   .. grid-item-card:: Registry-based Models
+      :class-card: catalog-detail-card
+
+      Baselines and adapters are exposed through a consistent build surface instead of one-off scripts.
+
+   .. grid-item-card:: Shared Training and Inference
+      :class-card: catalog-detail-card
+
+      One engine layer supports training, evaluation, prediction, and benchmark execution across hazard tasks.
 
 Hazard Coverage
 ---------------
 
-- Wildfire workflows cover incident records, active-fire detections, fuels,
-  burn products, danger forecasting, weekly forecasting, and spread baselines.
-- Earthquake workflows cover waveform picking, dense-grid forecasting, and
-  linked benchmark ecosystems for picking and forecasting.
-- Flood workflows cover streamflow and inundation tasks with public benchmark
-  adapters and model implementations.
-- Tropical Cyclone workflows cover track-and-intensity forecasting with shared
-  storm benchmark coverage and linked ecosystem pages.
+.. container:: home-section-note
 
-Getting Started
----------------
+   PyHazards spans four hazard families with public datasets, models, and benchmark pages designed to work together.
 
-If you are new to PyHazards, use the documentation in this order:
+.. grid:: 1 1 2 4
+   :gutter: 2
+   :class-container: catalog-recommend-grid home-hazard-grid
 
-1. :doc:`installation` - set up the environment and verify the package.
-2. :doc:`quick_start` - run a first end-to-end workflow.
-3. :doc:`pyhazards_datasets` and :doc:`pyhazards_models` - explore supported
-   data sources and model implementations.
+   .. grid-item-card:: Wildfire
+      :class-card: catalog-detail-card
 
-Illustrative Example
-~~~~~~~~~~~~~~~~~~~~
+      Danger forecasting, weekly forecasting, spread baselines, fuels, burn products, and active-fire sources.
 
-The example below shows how to instantiate a registered model through the
-unified model registry.
+      **Explore:** :doc:`Datasets <pyhazards_datasets>` | :doc:`Models <pyhazards_models>`
 
-.. code-block:: python
+   .. grid-item-card:: Earthquake
+      :class-card: catalog-detail-card
 
-    from pyhazards.models import build_model
+      Waveform picking, dense-grid forecasting adapters, and linked benchmark ecosystems for phase-picking workflows.
 
-    model = build_model(
-        name="hydrographnet",
-        task="regression",
-        node_in_dim=2,
-        edge_in_dim=3,
-        out_dim=1,
-    )
+      **Explore:** :doc:`Models <pyhazards_models>` | :doc:`Benchmarks <pyhazards_benchmarks>`
 
-Documentation Guide
--------------------
+   .. grid-item-card:: Flood
+      :class-card: catalog-detail-card
 
-- :doc:`installation`: set up PyHazards from PyPI or source and verify the
-  environment.
-- :doc:`quick_start`: run the shortest end-to-end workflow in the library.
-- :doc:`pyhazards_datasets`: browse the hazard-grouped dataset catalog, linked
-  sources, and inspection or registry entry points.
-- :doc:`pyhazards_models`: browse the public model catalog and benchmark-linked
-  model coverage.
-- :doc:`pyhazards_benchmarks`: run hazard-specific benchmark evaluators through
-  the shared runner.
-- :doc:`pyhazards_configs`: load or author reproducible experiment YAML files.
-- :doc:`pyhazards_reports`: export JSON, Markdown, and CSV benchmark summaries.
-- :doc:`pyhazards_engine`: use the shared training and inference runtime.
-- :doc:`pyhazards_metrics`: review metrics used across benchmark and training
-  paths.
-- :doc:`pyhazards_utils`: access lower-level utility modules.
-- :doc:`interactive_map`: open the wildfire-only companion map at
-  ``https://rai-fire.com/``.
-- :doc:`appendix_a_coverage`: audit which planned methods, benchmarks, and
-  datasets are actually implemented today.
-- :doc:`implementation`: use the contributor guide for adding datasets, models,
-  and public catalog updates.
+      Streamflow and inundation baselines with benchmark-backed datasets, configs, and evaluation coverage.
+
+      **Explore:** :doc:`Datasets <pyhazards_datasets>` | :doc:`Benchmarks <pyhazards_benchmarks>`
+
+   .. grid-item-card:: Tropical Cyclone
+      :class-card: catalog-detail-card
+
+      Track-and-intensity forecasting baselines plus shared benchmark ecosystems and experimental weather-model adapters.
+
+      **Explore:** :doc:`Models <pyhazards_models>` | :doc:`Benchmarks <pyhazards_benchmarks>`
+
+Featured Example
+----------------
+
+.. container:: home-section-note
+
+   Run a benchmark-aligned smoke configuration with one command, then move into the full Quick Start for model building and training workflows.
+
+.. code-block:: bash
+
+   python scripts/run_benchmark.py --config pyhazards/configs/flood/hydrographnet_smoke.yaml
+
+.. container:: catalog-link-row
+
+   **Next step:** :doc:`Quick Start <quick_start>` for the first full workflow, or :doc:`Models <pyhazards_models>` to browse benchmark-linked baselines.
+
+Explore the Docs
+----------------
+
+.. grid:: 1 1 2 3
+   :gutter: 2
+   :class-container: catalog-recommend-grid home-link-grid
+
+   .. grid-item-card:: Installation
+      :class-card: catalog-detail-card
+
+      Set up PyHazards from PyPI or source and verify the environment.
+
+      **Open:** :doc:`installation`
+
+   .. grid-item-card:: Quick Start
+      :class-card: catalog-detail-card
+
+      Run the shortest end-to-end workflow in the library.
+
+      **Open:** :doc:`quick_start`
+
+   .. grid-item-card:: Datasets
+      :class-card: catalog-detail-card
+
+      Browse hazard-grouped dataset cards, detail pages, and inspection entrypoints.
+
+      **Open:** :doc:`pyhazards_datasets`
+
+   .. grid-item-card:: Models
+      :class-card: catalog-detail-card
+
+      Compare implemented models, variants, and benchmark-linked detail pages.
+
+      **Open:** :doc:`pyhazards_models`
+
+   .. grid-item-card:: Benchmarks
+      :class-card: catalog-detail-card
+
+      Review benchmark families, ecosystem mappings, and smoke-config coverage.
+
+      **Open:** :doc:`pyhazards_benchmarks`
+
+   .. grid-item-card:: Reports and Configs
+      :class-card: catalog-detail-card
+
+      Load reproducible experiment YAML files and export benchmark summaries.
+
+      **Open:** :doc:`pyhazards_configs` | :doc:`pyhazards_reports`
 
 For Contributors
 ----------------
 
 PyHazards is registry-driven and uses dataset cards, model cards, and benchmark
-cards to generate the public catalogs. If you plan to contribute a dataset or
-model, start with :doc:`implementation` and then use the dataset, model, and
-benchmark reference pages to keep registry wiring, smoke tests, and generated
-docs aligned with the library workflow. Use :doc:`appendix_a_coverage` when
-you need the audited gap list for the remaining roadmap work.
-
-Community and Activity
-----------------------
-
-Use the `RAI Lab Slack channel <https://rai-lab-workspace.slack.com/archives/C0AKAJCTY4F>`_
-for project discussion and coordination.
-
-.. image:: https://api.star-history.com/svg?repos=LabRAI/PyHazards&type=Date&from=2026-01-01
-   :target: https://www.star-history.com/#LabRAI/PyHazards&Date
-   :alt: PyHazards Star History
+cards to generate the public catalogs. If you plan to extend the library, use
+:doc:`implementation` for the contributor workflow and :doc:`appendix_a_coverage`
+for the audited gap list behind the current roadmap work.
 
 Citation
 --------
@@ -141,6 +260,12 @@ If you use PyHazards in your research, please cite:
      howpublished = {\url{https://github.com/LabRAI/PyHazards}},
      note         = {GitHub repository}
    }
+
+Community
+---------
+
+Use the `RAI Lab Slack channel <https://rai-lab-workspace.slack.com/archives/C0AKAJCTY4F>`_
+for project discussion and coordination.
 
 
 .. toctree::

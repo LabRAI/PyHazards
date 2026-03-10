@@ -186,3 +186,62 @@
   font-size: 0.94rem;
   color: var(--color-foreground-secondary);
 }
+
+.landing-hero-logo {
+  margin-bottom: 0.45rem;
+}
+
+.landing-hero-title {
+  margin: 0.25rem 0 0.5rem;
+  text-align: center;
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.landing-hero-tagline,
+.landing-hero-subtitle {
+  max-width: 58rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.landing-hero-tagline {
+  margin-bottom: 0.8rem;
+  font-size: 1.3rem;
+  line-height: 1.5;
+  font-weight: 700;
+  color: var(--color-foreground-primary);
+}
+
+.landing-hero-subtitle {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-foreground-secondary);
+}
+
+.home-section-note {
+  margin: 0.1rem 0 1.05rem;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--color-foreground-secondary);
+}
+
+.home-link-grid .sd-card-title,
+.home-pillar-grid .sd-card-title,
+.home-hazard-grid .sd-card-title,
+.home-kicker-grid .sd-card-title {
+  font-size: 0.95rem;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.home-link-grid .sd-card-body,
+.home-pillar-grid .sd-card-body,
+.home-hazard-grid .sd-card-body {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--color-foreground-secondary);
+}

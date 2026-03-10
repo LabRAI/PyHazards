@@ -5,7 +5,11 @@
 <h1 align="center">PyHazards</h1>
 
 <p align="center">
-  Open-source Python library for AI-based natural hazard modeling
+  <strong>PyHazards is a unified research framework for AI-based natural hazard forecasting, benchmarking, and model development across wildfire, earthquake, flood, and tropical cyclone tasks.</strong>
+</p>
+
+<p align="center">
+  PyHazards exists to give hazard-ML workflows a shared software surface for public datasets, benchmark-aligned evaluation, registry-based models, and reproducible training and reporting pipelines.
 </p>
 
 <p align="center">
@@ -41,33 +45,64 @@
   </a>
 </p>
 
-PyHazards is an open-source Python library for AI-based natural hazard modeling. It provides unified interfaces for datasets, models, benchmarks, training pipelines, and evaluation across wildfire, earthquake, flood, and tropical-cyclone workflows.
+## Start Here
 
-It is designed for researchers, practitioners, and contributors who need a consistent way to inspect hazard data, run benchmark-aligned experiments, and extend the library with new datasets or model implementations.
+| Install | Run a first example | Browse docs |
+| --- | --- | --- |
+| [Installation](#installation) | [Quick Start](#quick-start) | [Documentation](#documentation) |
 
-## What PyHazards Provides
+## Table of Contents
 
-- **Dataset catalog and inspection workflows** for public hazard datasets, benchmark adapters, and shared forcing sources.
-- **Registry-driven model implementations** spanning wildfire, earthquake, flood, and tropical-cyclone tasks.
-- **Shared benchmark, config, and report layers** for reproducible smoke tests and evaluation workflows.
-- **Reusable training and inference utilities** through a common engine API.
+- [Overview](#overview)
+- [Why PyHazards](#why-pyhazards)
+- [Hazard Coverage](#hazard-coverage)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Project Structure](#project-structure)
+- [Supported Workflows](#supported-workflows)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [Community](#community)
+- [Citation](#citation)
+- [License](#license)
+
+## Overview
+
+PyHazards is built for hazard-AI work that needs more than a single model or
+paper reproduction. It unifies dataset discovery, model construction,
+benchmark-aligned evaluation, and experiment plumbing so the same library can
+support first-run baselines, comparative studies, and contributor extensions.
+
+Intended users:
+
+- **Researchers**: run benchmark-aligned experiments and compare baselines across hazard tasks.
+- **Practitioners**: reuse hazard-specific workflows for data inspection, model building, and evaluation.
+- **Contributors**: extend datasets, models, and benchmarks through registry and catalog patterns already used in the repo.
+
+## Why PyHazards
+
+- **Unified datasets**: public hazard datasets, forcing sources, and inspection entrypoints live in one curated catalog.
+- **Benchmark-aligned evaluation**: shared benchmark families, smoke configs, and reports keep experiments comparable.
+- **Registry-based models**: published baselines and adapters are built through a consistent model-registry surface.
+- **Shared training and inference pipelines**: one engine layer supports fit, evaluate, predict, and benchmark execution workflows.
 
 ## Hazard Coverage
 
-- **Wildfire**: incident records, active-fire detections, fuels and burn products, danger forecasting, weekly forecasting, and spread baselines.
-- **Earthquake**: waveform-picking baselines, forecasting adapters, and shared picking/forecasting benchmark paths.
-- **Flood**: streamflow and inundation models with benchmark-aligned adapter datasets and evaluation coverage.
-- **Tropical Cyclone**: track-and-intensity forecasting baselines plus linked benchmark ecosystems.
+- **Wildfire**: danger forecasting, weekly forecasting, spread baselines, fuels, burn products, and active-fire sources.
+- **Earthquake**: waveform picking, dense-grid forecasting adapters, and linked benchmark ecosystems for picking and forecasting.
+- **Flood**: streamflow and inundation baselines with benchmark-backed evaluation paths.
+- **Tropical Cyclone**: track-and-intensity forecasting baselines plus shared benchmark ecosystems and adapters.
 
 ## Installation
 
-Install PyHazards from PyPI. If you need GPU execution, install a compatible PyTorch build first.
+Install PyHazards from PyPI:
 
 ```bash
 pip install pyhazards
 ```
 
-Optional device selection:
+If you need GPU execution, install a compatible PyTorch build first and then
+select the device as needed:
 
 ```bash
 export PYHAZARDS_DEVICE=cuda:0
@@ -75,13 +110,16 @@ export PYHAZARDS_DEVICE=cuda:0
 
 ## Quick Start
 
-Inspect one dataset source:
+Use this as the shortest benchmark-aware starter path: verify the package,
+build one registered model, and run one smoke benchmark config.
+
+1. Verify the installation:
 
 ```bash
-python -m pyhazards.datasets.era5.inspection --path pyhazards/data/era5_subset --max-vars 10
+python -c "import pyhazards; print(pyhazards.__version__)"
 ```
 
-Build one registered model:
+2. Build a registered model:
 
 ```python
 from pyhazards.models import build_model
@@ -96,39 +134,65 @@ model = build_model(
 print(type(model).__name__)
 ```
 
-Run the GPU smoke path when CUDA is available:
+3. Run a benchmark-aligned smoke configuration:
 
 ```bash
-python test.py
+python scripts/run_benchmark.py --config pyhazards/configs/flood/hydrographnet_smoke.yaml
 ```
+
+4. Continue with the full docs for dataset inspection, benchmark pages, and
+training workflows.
+
+## Project Structure
+
+- `pyhazards.datasets` - dataset catalog, registry surfaces, and inspection entrypoints.
+- `pyhazards.models` - model registry, builders, and reusable baseline implementations.
+- `pyhazards.benchmarks` - benchmark families, ecosystem mappings, and evaluation contracts.
+- `pyhazards.engine` - shared training, inference, runner, and experiment utilities.
+- `pyhazards.configs` - smoke and example benchmark configurations.
+- `docs/` and `docs/source/` - published documentation, generated catalogs, and contributor guides.
+
+## Supported Workflows
+
+- inspect hazard datasets and forcing sources before training,
+- build baseline and adapter models through the unified registry,
+- run smoke tests and benchmark configs for hazard-specific tasks,
+- export benchmark reports and compare metrics across models,
+- extend the library with new datasets, models, benchmarks, and catalog entries.
 
 ## Documentation
 
 Full documentation: [https://labrai.github.io/PyHazards](https://labrai.github.io/PyHazards)
 
-Recommended path:
+Recommended reading order:
 
 1. [Installation](https://labrai.github.io/PyHazards/installation.html)
 2. [Quick Start](https://labrai.github.io/PyHazards/quick_start.html)
 3. [Datasets](https://labrai.github.io/PyHazards/pyhazards_datasets.html)
 4. [Models](https://labrai.github.io/PyHazards/pyhazards_models.html)
 5. [Benchmarks](https://labrai.github.io/PyHazards/pyhazards_benchmarks.html)
+6. [Implementation Guide](https://labrai.github.io/PyHazards/implementation.html)
 
 ## Contributing
 
-PyHazards uses generated dataset, model, and benchmark catalogs. If you are extending the library:
+If you want to extend PyHazards:
 
-- use the public contributor guide in [docs/source/implementation.rst](docs/source/implementation.rst)
-- use the maintainer workflow notes in [.github/IMPLEMENTATION.md](.github/IMPLEMENTATION.md)
-- follow the repository contribution process in [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)
+- **Contributing guide**: [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)
+- **Developer implementation guide**: [docs/source/implementation.rst](docs/source/implementation.rst)
+- **Maintainer notes**: [.github/IMPLEMENTATION.md](.github/IMPLEMENTATION.md)
 
-## Community and Activity
+Roadmap themes:
 
-Join the PyHazards discussion channel on Slack:
+- more benchmark ecosystems and external data adapters,
+- more hazard-specific baselines and evaluation coverage,
+- expanded reproducibility, report tooling, and smoke-test coverage,
+- stronger examples, tutorials, and contributor automation.
 
-- [RAI Lab Slack Channel](https://rai-lab-workspace.slack.com/archives/C0AKAJCTY4F)
+## Community
 
-Project star history:
+- **Slack**: [RAI Lab Slack Channel](https://rai-lab-workspace.slack.com/archives/C0AKAJCTY4F)
+
+Project activity:
 
 [![Star History Chart](https://api.star-history.com/svg?repos=LabRAI/PyHazards&type=Date&from=2026-01-01)](https://www.star-history.com/#LabRAI/PyHazards&Date)
 

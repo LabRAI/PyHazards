@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=b547f940" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=07018a68" />
     
     
 
@@ -328,118 +328,305 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <a class="reference internal image-reference" href="_images/logo.png"><img alt="PyHazards Icon" class="align-center" src="_images/logo.png" style="width: 260px;" />
+          <a class="landing-hero-logo reference internal image-reference" href="_images/logo.png"><img alt="PyHazards Icon" class="landing-hero-logo align-center" src="_images/logo.png" style="width: 220px;" />
 </a>
-<a class="reference external image-reference" href="https://pypi.org/project/pyhazards"><img alt="PyPI Version" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpypi.org%2Fpypi%2Fpyhazards%2Fjson&amp;query=%24.info.version&amp;prefix=v&amp;label=PyPI" />
-</a>
-<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards/actions/workflows/ci.yml"><img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/LabRAI/PyHazards/ci.yml?branch=main" />
-</a>
-<a class="reference external image-reference" href="https://github.com/LabRAI/PyHazards/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-green" />
-</a>
-<a class="reference external image-reference" href="https://rai-lab-workspace.slack.com/archives/C0AKAJCTY4F"><img alt="Slack Channel" src="https://img.shields.io/badge/Slack-RAI%20Lab%20Channel-4A154B?logo=slack&amp;logoColor=white" />
-</a>
-<hr class="docutils" />
-<section id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h1>
-<p>PyHazards is an open-source Python library for AI-based natural hazard
-modeling, providing unified interfaces for datasets, models, training
-pipelines, benchmarks, and evaluation. It is designed for researchers,
-practitioners, and contributors who need a consistent way to inspect hazard
-data, build models, run benchmark-aligned experiments, and extend the library.</p>
+<h1 class="landing-hero-title">PyHazards</h1><div class="landing-hero-tagline docutils container">
+<p>PyHazards is a unified research framework for AI-based natural hazard forecasting, benchmarking, and model development across wildfire, earthquake, flood, and tropical cyclone tasks.</p>
+</div>
+<div class="landing-hero-subtitle docutils container">
+<p>PyHazards brings together public dataset catalogs, registry-based models, benchmark families, experiment configs, and shared training or report workflows so researchers, practitioners, and contributors can work on one coherent software surface.</p>
+</div>
+<section id="at-a-glance">
+<h1>At a Glance<a class="headerlink" href="#at-a-glance" title="Link to this heading">¶</a></h1>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid home-kicker-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-4 sd-row-cols-lg-4 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Hazard Families</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">4</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Wildfire, earthquake, flood, and tropical cyclone workflows under one library.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Public Datasets</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">20</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Curated dataset pages covering forcing sources and hazard-specific benchmark adapters.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Implemented Models</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">24</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Public implemented baselines and variants surfaced through the model catalog.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Benchmark Families</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">4</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Shared evaluator families with linked ecosystems, smoke configs, and reports.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="core-capabilities">
-<h1>Core Capabilities<a class="headerlink" href="#core-capabilities" title="Link to this heading">¶</a></h1>
-<ul class="simple">
-<li><p>Inspect hazard datasets through consistent command-line inspection workflows,
-dataset reference pages, and linked benchmark adapters before training.</p></li>
-<li><p>Build registered models through a unified model registry with stable builder
-interfaces across hazard scenarios.</p></li>
-<li><p>Run benchmark-aligned smoke tests and experiment configs through shared
-benchmark, config, and report layers.</p></li>
-<li><p>Train, evaluate, and predict with shared engine interfaces so experiments and
-model comparisons follow a consistent workflow.</p></li>
-</ul>
+<section id="start-here">
+<h1>Start Here<a class="headerlink" href="#start-here" title="Link to this heading">¶</a></h1>
+<div class="home-section-note docutils container">
+<p>Use one of these four paths to move from overview to action quickly.</p>
+</div>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-recommend-grid home-link-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-4 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Quick Start</div>
+<p class="sd-card-text">Run the first benchmark-aware workflow and verify the package.</p>
+<p class="sd-card-text"><strong>Open:</strong> <a class="reference internal" href="quick_start.html"><span class="doc">Quick Start</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Browse Datasets</div>
+<p class="sd-card-text">Explore forcing sources, benchmark adapters, and inspection entrypoints.</p>
+<p class="sd-card-text"><strong>Open:</strong> <a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Browse Models</div>
+<p class="sd-card-text">Compare implemented baselines, variants, and benchmark-linked model detail pages.</p>
+<p class="sd-card-text"><strong>Open:</strong> <a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Browse Benchmarks</div>
+<p class="sd-card-text">Compare hazard benchmark families, ecosystem mappings, and smoke coverage.</p>
+<p class="sd-card-text"><strong>Open:</strong> <a class="reference internal" href="pyhazards_benchmarks.html"><span class="doc">Benchmarks</span></a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="why-pyhazards">
+<h1>Why PyHazards<a class="headerlink" href="#why-pyhazards" title="Link to this heading">¶</a></h1>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid home-pillar-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-4 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Unified Datasets</div>
+<p class="sd-card-text">Public datasets, forcing sources, and inspection surfaces are documented through one hazard-first catalog.</p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Benchmark-aligned Evaluation</div>
+<p class="sd-card-text">Shared benchmark families, smoke configs, and report exports make model comparisons more reproducible.</p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Registry-based Models</div>
+<p class="sd-card-text">Baselines and adapters are exposed through a consistent build surface instead of one-off scripts.</p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Shared Training and Inference</div>
+<p class="sd-card-text">One engine layer supports training, evaluation, prediction, and benchmark execution across hazard tasks.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="hazard-coverage">
 <h1>Hazard Coverage<a class="headerlink" href="#hazard-coverage" title="Link to this heading">¶</a></h1>
-<ul class="simple">
-<li><p>Wildfire workflows cover incident records, active-fire detections, fuels,
-burn products, danger forecasting, weekly forecasting, and spread baselines.</p></li>
-<li><p>Earthquake workflows cover waveform picking, dense-grid forecasting, and
-linked benchmark ecosystems for picking and forecasting.</p></li>
-<li><p>Flood workflows cover streamflow and inundation tasks with public benchmark
-adapters and model implementations.</p></li>
-<li><p>Tropical Cyclone workflows cover track-and-intensity forecasting with shared
-storm benchmark coverage and linked ecosystem pages.</p></li>
-</ul>
-</section>
-<section id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h1>
-<p>If you are new to PyHazards, use the documentation in this order:</p>
-<ol class="arabic simple">
-<li><p><a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> - set up the environment and verify the package.</p></li>
-<li><p><a class="reference internal" href="quick_start.html"><span class="doc">Quick Start</span></a> - run a first end-to-end workflow.</p></li>
-<li><p><a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a> and <a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a> - explore supported
-data sources and model implementations.</p></li>
-</ol>
-<section id="illustrative-example">
-<h2>Illustrative Example<a class="headerlink" href="#illustrative-example" title="Link to this heading">¶</a></h2>
-<p>The example below shows how to instantiate a registered model through the
-unified model registry.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hydrographnet&quot;</span><span class="p">,</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;regression&quot;</span><span class="p">,</span>
-    <span class="n">node_in_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">edge_in_dim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">out_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
+<div class="home-section-note docutils container">
+<p>PyHazards spans four hazard families with public datasets, models, and benchmark pages designed to work together.</p>
+</div>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-recommend-grid home-hazard-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-4 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Wildfire</div>
+<p class="sd-card-text">Danger forecasting, weekly forecasting, spread baselines, fuels, burn products, and active-fire sources.</p>
+<p class="sd-card-text"><strong>Explore:</strong> <a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a> | <a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Earthquake</div>
+<p class="sd-card-text">Waveform picking, dense-grid forecasting adapters, and linked benchmark ecosystems for phase-picking workflows.</p>
+<p class="sd-card-text"><strong>Explore:</strong> <a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a> | <a class="reference internal" href="pyhazards_benchmarks.html"><span class="doc">Benchmarks</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Flood</div>
+<p class="sd-card-text">Streamflow and inundation baselines with benchmark-backed datasets, configs, and evaluation coverage.</p>
+<p class="sd-card-text"><strong>Explore:</strong> <a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a> | <a class="reference internal" href="pyhazards_benchmarks.html"><span class="doc">Benchmarks</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Tropical Cyclone</div>
+<p class="sd-card-text">Track-and-intensity forecasting baselines plus shared benchmark ecosystems and experimental weather-model adapters.</p>
+<p class="sd-card-text"><strong>Explore:</strong> <a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a> | <a class="reference internal" href="pyhazards_benchmarks.html"><span class="doc">Benchmarks</span></a></p>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section>
+<section id="featured-example">
+<h1>Featured Example<a class="headerlink" href="#featured-example" title="Link to this heading">¶</a></h1>
+<div class="home-section-note docutils container">
+<p>Run a benchmark-aligned smoke configuration with one command, then move into the full Quick Start for model building and training workflows.</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/run_benchmark.py<span class="w"> </span>--config<span class="w"> </span>pyhazards/configs/flood/hydrographnet_smoke.yaml
+</pre></div>
+</div>
+<div class="catalog-link-row docutils container">
+<p><strong>Next step:</strong> <a class="reference internal" href="quick_start.html"><span class="doc">Quick Start</span></a> for the first full workflow, or <a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a> to browse benchmark-linked baselines.</p>
+</div>
 </section>
-<section id="documentation-guide">
-<h1>Documentation Guide<a class="headerlink" href="#documentation-guide" title="Link to this heading">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="installation.html"><span class="doc">Installation</span></a>: set up PyHazards from PyPI or source and verify the
-environment.</p></li>
-<li><p><a class="reference internal" href="quick_start.html"><span class="doc">Quick Start</span></a>: run the shortest end-to-end workflow in the library.</p></li>
-<li><p><a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a>: browse the hazard-grouped dataset catalog, linked
-sources, and inspection or registry entry points.</p></li>
-<li><p><a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a>: browse the public model catalog and benchmark-linked
-model coverage.</p></li>
-<li><p><a class="reference internal" href="pyhazards_benchmarks.html"><span class="doc">Benchmarks</span></a>: run hazard-specific benchmark evaluators through
-the shared runner.</p></li>
-<li><p><a class="reference internal" href="pyhazards_configs.html"><span class="doc">Configs</span></a>: load or author reproducible experiment YAML files.</p></li>
-<li><p><a class="reference internal" href="pyhazards_reports.html"><span class="doc">Reports</span></a>: export JSON, Markdown, and CSV benchmark summaries.</p></li>
-<li><p><a class="reference internal" href="pyhazards_engine.html"><span class="doc">Engine</span></a>: use the shared training and inference runtime.</p></li>
-<li><p><a class="reference internal" href="pyhazards_metrics.html"><span class="doc">Metrics</span></a>: review metrics used across benchmark and training
-paths.</p></li>
-<li><p><a class="reference internal" href="pyhazards_utils.html"><span class="doc">Utils</span></a>: access lower-level utility modules.</p></li>
-<li><p><a class="reference internal" href="interactive_map.html"><span class="doc">Wildfire Interactive Map</span></a>: open the wildfire-only companion map at
-<code class="docutils literal notranslate"><span class="pre">https://rai-fire.com/</span></code>.</p></li>
-<li><p><a class="reference internal" href="appendix_a_coverage.html"><span class="doc">Coverage Audit</span></a>: audit which planned methods, benchmarks, and
-datasets are actually implemented today.</p></li>
-<li><p><a class="reference internal" href="implementation.html"><span class="doc">Implementation Guide</span></a>: use the contributor guide for adding datasets, models,
-and public catalog updates.</p></li>
-</ul>
+<section id="explore-the-docs">
+<h1>Explore the Docs<a class="headerlink" href="#explore-the-docs" title="Link to this heading">¶</a></h1>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-recommend-grid home-link-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-3 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Installation</div>
+<p class="sd-card-text">Set up PyHazards from PyPI or source and verify the environment.</p>
+<p class="sd-card-text"><strong>Open:</strong> <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Quick Start</div>
+<p class="sd-card-text">Run the shortest end-to-end workflow in the library.</p>
+<p class="sd-card-text"><strong>Open:</strong> <a class="reference internal" href="quick_start.html"><span class="doc">Quick Start</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Datasets</div>
+<p class="sd-card-text">Browse hazard-grouped dataset cards, detail pages, and inspection entrypoints.</p>
+<p class="sd-card-text"><strong>Open:</strong> <a class="reference internal" href="pyhazards_datasets.html"><span class="doc">Datasets</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Models</div>
+<p class="sd-card-text">Compare implemented models, variants, and benchmark-linked detail pages.</p>
+<p class="sd-card-text"><strong>Open:</strong> <a class="reference internal" href="pyhazards_models.html"><span class="doc">Models</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Benchmarks</div>
+<p class="sd-card-text">Review benchmark families, ecosystem mappings, and smoke-config coverage.</p>
+<p class="sd-card-text"><strong>Open:</strong> <a class="reference internal" href="pyhazards_benchmarks.html"><span class="doc">Benchmarks</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Reports and Configs</div>
+<p class="sd-card-text">Load reproducible experiment YAML files and export benchmark summaries.</p>
+<p class="sd-card-text"><strong>Open:</strong> <a class="reference internal" href="pyhazards_configs.html"><span class="doc">Configs</span></a> | <a class="reference internal" href="pyhazards_reports.html"><span class="doc">Reports</span></a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="for-contributors">
 <h1>For Contributors<a class="headerlink" href="#for-contributors" title="Link to this heading">¶</a></h1>
 <p>PyHazards is registry-driven and uses dataset cards, model cards, and benchmark
-cards to generate the public catalogs. If you plan to contribute a dataset or
-model, start with <a class="reference internal" href="implementation.html"><span class="doc">Implementation Guide</span></a> and then use the dataset, model, and
-benchmark reference pages to keep registry wiring, smoke tests, and generated
-docs aligned with the library workflow. Use <a class="reference internal" href="appendix_a_coverage.html"><span class="doc">Coverage Audit</span></a> when
-you need the audited gap list for the remaining roadmap work.</p>
-</section>
-<section id="community-and-activity">
-<h1>Community and Activity<a class="headerlink" href="#community-and-activity" title="Link to this heading">¶</a></h1>
-<p>Use the <a class="reference external" href="https://rai-lab-workspace.slack.com/archives/C0AKAJCTY4F">RAI Lab Slack channel</a>
-for project discussion and coordination.</p>
-<a class="reference external image-reference" href="https://www.star-history.com/#LabRAI/PyHazards&amp;Date"><img alt="PyHazards Star History" src="https://api.star-history.com/svg?repos=LabRAI/PyHazards&amp;type=Date&amp;from=2026-01-01" />
-</a>
+cards to generate the public catalogs. If you plan to extend the library, use
+<a class="reference internal" href="implementation.html"><span class="doc">Implementation Guide</span></a> for the contributor workflow and <a class="reference internal" href="appendix_a_coverage.html"><span class="doc">Coverage Audit</span></a>
+for the audited gap list behind the current roadmap work.</p>
 </section>
 <section id="citation">
 <h1>Citation<a class="headerlink" href="#citation" title="Link to this heading">¶</a></h1>
@@ -453,6 +640,11 @@ for project discussion and coordination.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
+<section id="community">
+<h1>Community<a class="headerlink" href="#community" title="Link to this heading">¶</a></h1>
+<p>Use the <a class="reference external" href="https://rai-lab-workspace.slack.com/archives/C0AKAJCTY4F">RAI Lab Slack channel</a>
+for project discussion and coordination.</p>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
