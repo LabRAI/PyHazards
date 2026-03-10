@@ -5,6 +5,7 @@ on:
     branches: [main, master]
     paths:
       - "pyhazards/model_cards/**"
+      - "pyhazards/benchmark_cards/**"
       - "pyhazards/models/**"
       - "pyhazards/model_catalog.py"
       - "pyhazards/benchmark_catalog.py"
@@ -48,9 +49,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if git diff --quiet -- docs; then
-            echo "Model docs already up to date."
+            echo "Published docs already up to date."
             exit 0
           fi
           git add docs
-          git commit -m "docs(models): refresh published catalog"
+          git commit -m "docs(catalog): refresh published docs"
           git push

@@ -1,0 +1,30 @@
+slug: tcbench_alpha
+display_name: TCBench Alpha
+kind: ecosystem
+hazard_family: Tropical Cyclone / Hurricane
+benchmark_key: tc
+support_status: synthetic-backed
+summary: >
+  TCBench Alpha-style storm benchmark coverage for the shared tropical cyclone evaluator.
+description:
+  - >
+    The current TCBench Alpha alignment uses a metadata-backed storm-history adapter over
+    the shared synthetic tropical-cyclone dataset.
+  - >
+    It currently drives the tropicalcyclone_MLP, SAF-Net, and TCIF-fusion smoke configs.
+source:
+  title: TCBench Alpha
+  url: https://github.com/msgomez06/TCBench_Alpha
+tasks:
+  - tc.track_intensity
+metrics:
+  - track_error
+  - intensity_mae
+smoke_configs:
+  - pyhazards/configs/tc/tropicalcyclone_mlp_smoke.yaml
+  - pyhazards/configs/tc/saf_net_smoke.yaml
+  - pyhazards/configs/tc/tcif_fusion_smoke.yaml
+linked_models:
+  - tropicalcyclone_mlp
+  - saf_net
+  - tcif_fusion

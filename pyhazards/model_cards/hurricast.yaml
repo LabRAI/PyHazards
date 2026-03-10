@@ -13,8 +13,9 @@ description:
     This initial adapter focuses on the shared tropical-cyclone forecasting interface
     and is intended as a reproducible starting point before broader storm-model breadth.
 paper:
-  title: Hurricast repository
-  url: https://github.com/leobix/hurricast
+  title: "Hurricane Forecasting: A Novel Multimodal Machine Learning Framework"
+  url: https://arxiv.org/abs/2102.01204
+  repo_url: https://github.com/leobix/hurricast
 tasks:
   - regression
 example: |

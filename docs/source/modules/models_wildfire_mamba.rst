@@ -14,10 +14,10 @@ Description
 The PyHazards implementation targets binary next-day per-county wildfire classification and supports an optional count head for multi-task extensions.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `Mamba: Linear-Time Sequence Modeling with Selective State Spaces <https://arxiv.org/abs/2312.00752>`_.
+`Mamba: Linear-Time Sequence Modeling with Selective State Spaces <https://arxiv.org/abs/2312.00752>`_.
 
 Catalog Status
 --------------

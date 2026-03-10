@@ -1,0 +1,31 @@
+slug: pick_benchmark
+display_name: pick-benchmark
+kind: ecosystem
+hazard_family: Earthquake
+benchmark_key: earthquake
+support_status: synthetic-backed
+summary: >
+  pick-benchmark-compatible waveform picking support routed through the shared earthquake evaluator.
+description:
+  - >
+    The current pick-benchmark path reuses the synthetic waveform picking bundle and tags
+    it as a pick-benchmark-style benchmark adapter.
+  - >
+    It supports the earthquake picking smoke path for the transformer and CNN picking baselines.
+source:
+  title: pick-benchmark
+  url: https://github.com/seisbench/pick-benchmark
+tasks:
+  - earthquake.picking
+metrics:
+  - p_pick_mae
+  - s_pick_mae
+  - precision
+  - recall
+  - f1
+smoke_configs:
+  - pyhazards/configs/earthquake/eqtransformer_smoke.yaml
+  - pyhazards/configs/earthquake/gpd_smoke.yaml
+linked_models:
+  - eqtransformer
+  - gpd

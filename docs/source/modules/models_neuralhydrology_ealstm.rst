@@ -12,10 +12,10 @@ Description
 It keeps the same graph-temporal input contract as the rest of the flood streamflow roadmap.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `NeuralHydrology repository <https://github.com/neuralhydrology/neuralhydrology>`_.
+`Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ (`repo <https://github.com/neuralhydrology/neuralhydrology>`__).
 
 Catalog Status
 --------------

@@ -12,10 +12,10 @@ Description
 The PyHazards implementation is optimized for the shared smoke benchmark rather than the full upstream training stack.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `FireCastNet repository <https://github.com/SeasFire/firecastnet>`_.
+`FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction <https://doi.org/10.1038/s41598-025-30645-7>`_ (`repo <https://github.com/SeasFire/firecastnet>`__).
 
 Catalog Status
 --------------

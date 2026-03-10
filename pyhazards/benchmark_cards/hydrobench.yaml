@@ -1,0 +1,28 @@
+slug: hydrobench
+display_name: HydroBench
+kind: ecosystem
+hazard_family: Flood
+benchmark_key: flood
+support_status: synthetic-backed
+summary: >
+  HydroBench-style streamflow diagnostics coverage for the shared flood streamflow evaluator.
+description:
+  - >
+    The current HydroBench alignment uses a metadata-backed streamflow adapter over the
+    shared synthetic flood streamflow dataset.
+  - >
+    It is currently exercised through the HydroGraphNet smoke benchmark path.
+source:
+  title: HydroBench
+  url: https://github.com/EMscience/HydroBench
+tasks:
+  - flood.streamflow
+metrics:
+  - mae
+  - rmse
+  - nse
+  - kge
+smoke_configs:
+  - pyhazards/configs/flood/hydrographnet_smoke.yaml
+linked_models:
+  - hydrographnet

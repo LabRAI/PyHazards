@@ -1,0 +1,40 @@
+slug: flood_benchmark
+display_name: Flood Benchmark
+kind: family
+hazard_family: Flood
+benchmark_key: flood
+support_status: synthetic-backed
+summary: >
+  Shared PyHazards evaluator family for streamflow forecasting and inundation prediction.
+description:
+  - >
+    The flood benchmark family keeps streamflow and inundation scoring under one shared
+    evaluator contract while preserving hazard-task-specific metrics.
+  - >
+    Current public coverage is synthetic-backed, but the same family already drives the
+    streamflow and inundation smoke configs used across the flood models.
+tasks:
+  - flood.streamflow
+  - flood.inundation
+metrics:
+  - mae
+  - rmse
+  - nse
+  - kge
+  - pixel_mae
+  - iou
+  - f1
+smoke_configs:
+  - pyhazards/configs/flood/hydrographnet_smoke.yaml
+  - pyhazards/configs/flood/neuralhydrology_lstm_smoke.yaml
+  - pyhazards/configs/flood/neuralhydrology_ealstm_smoke.yaml
+  - pyhazards/configs/flood/google_flood_forecasting_smoke.yaml
+  - pyhazards/configs/flood/floodcast_smoke.yaml
+  - pyhazards/configs/flood/urbanfloodcast_smoke.yaml
+linked_models:
+  - hydrographnet
+  - neuralhydrology_lstm
+  - neuralhydrology_ealstm
+  - google_flood_forecasting
+  - floodcast
+  - urbanfloodcast

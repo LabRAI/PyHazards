@@ -1,0 +1,40 @@
+slug: tropical_cyclone_benchmark
+display_name: Tropical Cyclone Benchmark
+kind: family
+hazard_family: Tropical Cyclone / Hurricane
+benchmark_key: tc
+support_status: synthetic-backed
+summary: >
+  Shared PyHazards evaluator family for tropical cyclone and hurricane track-intensity forecasting.
+description:
+  - >
+    The tropical cyclone benchmark family is the single storm evaluator used by the
+    hurricane-specific and all-basin tropical-cyclone smoke configs.
+  - >
+    Current coverage is synthetic-backed, but the same evaluator contract already scores
+    core storm baselines and experimental weather-model adapters.
+tasks:
+  - tc.track_intensity
+metrics:
+  - track_error
+  - intensity_mae
+smoke_configs:
+  - pyhazards/configs/tc/hurricast_smoke.yaml
+  - pyhazards/configs/tc/tropicalcyclone_mlp_smoke.yaml
+  - pyhazards/configs/tc/tropicyclonenet_smoke.yaml
+  - pyhazards/configs/tc/saf_net_smoke.yaml
+  - pyhazards/configs/tc/tcif_fusion_smoke.yaml
+  - pyhazards/configs/tc/graphcast_tc_smoke.yaml
+  - pyhazards/configs/tc/pangu_tc_smoke.yaml
+  - pyhazards/configs/tc/fourcastnet_tc_smoke.yaml
+linked_models:
+  - hurricast
+  - tropicalcyclone_mlp
+  - tropicyclonenet
+  - saf_net
+  - tcif_fusion
+  - graphcast_tc
+  - pangu_tc
+  - fourcastnet_tc
+notes:
+  - "IBTrACS, TCBench Alpha, and TropiCycloneNet-Dataset are surfaced as the public storm benchmark ecosystems."

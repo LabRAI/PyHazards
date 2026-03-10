@@ -1,0 +1,48 @@
+slug: wildfire_benchmark
+display_name: Wildfire Benchmark
+kind: family
+hazard_family: Wildfire
+benchmark_key: wildfire
+support_status: synthetic-backed
+summary: >
+  Shared PyHazards evaluator family for wildfire danger and wildfire spread experiments.
+description:
+  - >
+    The wildfire benchmark family is the single scoring layer for tabular danger tasks,
+    weekly forecasting tasks, and raster spread tasks.
+  - >
+    Current coverage is synthetic-backed, but it already exposes a single hazard-level
+    evaluator contract across wildfire danger and wildfire spread smoke configs.
+tasks:
+  - wildfire.danger
+  - wildfire.spread
+metrics:
+  - accuracy
+  - macro_f1
+  - auc
+  - pr_auc
+  - mae
+  - rmse
+  - iou
+  - f1
+  - burned_area_mae
+smoke_configs:
+  - pyhazards/configs/wildfire/wildfire_danger_smoke.yaml
+  - pyhazards/configs/wildfire/wildfire_forecasting_smoke.yaml
+  - pyhazards/configs/wildfire/asufm_smoke.yaml
+  - pyhazards/configs/wildfire/wildfire_spread_smoke.yaml
+  - pyhazards/configs/wildfire/wildfirespreadts_smoke.yaml
+  - pyhazards/configs/wildfire/forefire_smoke.yaml
+  - pyhazards/configs/wildfire/wrf_sfire_smoke.yaml
+  - pyhazards/configs/wildfire/firecastnet_smoke.yaml
+linked_models:
+  - wildfire_fpa
+  - wildfire_forecasting
+  - asufm
+  - wildfire_aspp
+  - wildfirespreadts
+  - forefire
+  - wrf_sfire
+  - firecastnet
+notes:
+  - "WildfireSpreadTS is the public Appendix-A benchmark ecosystem surfaced on this page."

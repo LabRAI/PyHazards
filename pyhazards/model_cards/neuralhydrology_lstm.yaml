@@ -13,8 +13,9 @@ description:
     The adapter consumes the shared graph-temporal streamflow batch format and
     produces next-step nodewise discharge predictions.
 paper:
-  title: NeuralHydrology repository
-  url: https://github.com/neuralhydrology/neuralhydrology
+  title: Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets
+  url: https://doi.org/10.5194/hess-23-5089-2019
+  repo_url: https://github.com/neuralhydrology/neuralhydrology
 tasks:
   - regression
 example: |

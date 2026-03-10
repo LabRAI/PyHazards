@@ -12,10 +12,10 @@ Description
 PyHazards exposes it through the shared wildfire benchmark and config workflow.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `ASUFM repository <https://github.com/bronteee/fire-asufm>`_.
+`Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer <https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278>`_ (`repo <https://github.com/bronteee/fire-asufm>`__).
 
 Catalog Status
 --------------

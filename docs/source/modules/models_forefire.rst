@@ -12,10 +12,10 @@ Description
 PyHazards exposes it as a benchmarkable baseline through the standard model registry.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `ForeFire repository <https://github.com/forefireAPI/forefire>`_.
+`ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread <https://doi.org/10.21105/joss.08680>`_ (`repo <https://github.com/forefireAPI/forefire>`__).
 
 Catalog Status
 --------------

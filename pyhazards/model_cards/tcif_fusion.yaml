@@ -13,8 +13,9 @@ description:
     The adapter focuses on the fusion contract and evaluator compatibility
     rather than full reproduction of the original training stack.
 paper:
-  title: TCIF-fusion repository
-  url: https://github.com/wangchong96/TCIF-fusion
+  title: Tropical cyclone intensity forecasting using model knowledge guided deep learning model
+  url: https://doi.org/10.5194/egusphere-2024-250
+  repo_url: https://github.com/wangchong96/TCIF-fusion
 tasks:
   - regression
 example: |

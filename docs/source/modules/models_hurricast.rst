@@ -12,10 +12,10 @@ Description
 This initial adapter focuses on the shared tropical-cyclone forecasting interface and is intended as a reproducible starting point before broader storm-model breadth.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `Hurricast repository <https://github.com/leobix/hurricast>`_.
+`Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://arxiv.org/abs/2102.01204>`_ (`repo <https://github.com/leobix/hurricast>`__).
 
 Catalog Status
 --------------

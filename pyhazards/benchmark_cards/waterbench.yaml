@@ -1,0 +1,29 @@
+slug: waterbench
+display_name: WaterBench
+kind: ecosystem
+hazard_family: Flood
+benchmark_key: flood
+support_status: synthetic-backed
+summary: >
+  WaterBench-style streamflow benchmark coverage for the shared flood evaluator.
+description:
+  - >
+    The current WaterBench alignment uses a metadata-only adapter over the shared
+    synthetic streamflow bundle and preserves the streamflow task contract.
+  - >
+    It is currently exercised by the EA-LSTM smoke benchmark path.
+source:
+  title: "WaterBench: A Large-scale Benchmark Dataset for Data-driven Streamflow Forecasting"
+  url: https://neurips.cc/virtual/2023/80632
+  repo_url: https://github.com/uihilab/WaterBench
+tasks:
+  - flood.streamflow
+metrics:
+  - mae
+  - rmse
+  - nse
+  - kge
+smoke_configs:
+  - pyhazards/configs/flood/neuralhydrology_ealstm_smoke.yaml
+linked_models:
+  - neuralhydrology_ealstm

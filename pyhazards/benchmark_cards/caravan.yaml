@@ -1,0 +1,31 @@
+slug: caravan
+display_name: Caravan
+kind: ecosystem
+hazard_family: Flood
+benchmark_key: flood
+support_status: synthetic-backed
+summary: >
+  Caravan-style streamflow benchmark coverage for the shared flood streamflow evaluator.
+description:
+  - >
+    The current Caravan alignment is a metadata-backed streamflow adapter layered on top
+    of the shared synthetic graph-temporal flood dataset.
+  - >
+    It currently drives the public smoke runs for NeuralHydrology LSTM and Google Flood Forecasting.
+source:
+  title: Caravan - A global community dataset for large-sample hydrology
+  url: https://www.nature.com/articles/s41597-023-01975-w
+  repo_url: https://github.com/kratzert/Caravan
+tasks:
+  - flood.streamflow
+metrics:
+  - mae
+  - rmse
+  - nse
+  - kge
+smoke_configs:
+  - pyhazards/configs/flood/neuralhydrology_lstm_smoke.yaml
+  - pyhazards/configs/flood/google_flood_forecasting_smoke.yaml
+linked_models:
+  - neuralhydrology_lstm
+  - google_flood_forecasting

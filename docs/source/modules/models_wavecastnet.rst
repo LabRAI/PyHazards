@@ -12,10 +12,10 @@ Description
 This implementation focuses on the core dense-grid forecasting path and keeps data loading outside the model so users can adapt it to their own simulation or sensor pipelines.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_.
+`Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_.
 
 Catalog Status
 --------------

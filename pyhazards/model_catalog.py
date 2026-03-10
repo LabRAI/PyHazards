@@ -43,22 +43,22 @@ CATALOG_STATUS_ORDER = [
     "experimental",
 ]
 
-CATALOG_STATUS_TITLES = {
-    "core": "Core Baselines",
-    "variant": "Variants and Additional Implementations",
-    "experimental": "Experimental Adapters",
-}
-
-CATALOG_STATUS_SUMMARIES = {
-    "core": "These entries count toward the current core public method set.",
-    "variant": "These entries stay public, but they are grouped outside the core method count because they are same-paper variants or additional off-plan implementations.",
-    "experimental": "These entries remain public as lightweight wrapper or prototype integrations and should not be counted as stable core methods.",
-}
+IMPLEMENTED_SECTION_TITLE = "Implemented Models"
+IMPLEMENTED_SECTION_SUMMARY = (
+    "This table includes both core baselines and public variants or additional "
+    "implementations for the hazard family."
+)
+EXPERIMENTAL_SECTION_TITLE = "Experimental Adapters"
+EXPERIMENTAL_SECTION_SUMMARY = (
+    "These entries remain public as lightweight wrapper or prototype integrations "
+    "and should not be counted as stable implemented methods."
+)
 
 
 class PaperReference(BaseModel):
     title: str
     url: str
+    repo_url: Optional[str] = None
 
 
 class SmokeTensorSpec(BaseModel):
@@ -239,10 +239,13 @@ def _grouped_catalog_entries(cards: Sequence[ModelCard]) -> List[List[ModelCard]
 
 
 def _paper_sentence(card: ModelCard) -> str:
-    return "See `{title} <{url}>`_.".format(
+    sentence = "`{title} <{url}>`_".format(
         title=card.paper.title,
         url=card.paper.url,
     )
+    if card.paper.repo_url:
+        sentence += " (`repo <{url}>`__)".format(url=card.paper.repo_url)
+    return sentence + "."
 
 
 def _single_line(text: str) -> str:
@@ -321,9 +324,9 @@ def render_model_page(cards: Sequence[ModelCard]) -> str:
         "-------------",
         "",
         "The public catalog below is generated from ``pyhazards/model_cards/*.yaml``.",
-        "Use this page for model discovery and quick registry lookup. Core baselines,",
-        "variants, and experimental adapters are listed separately so the public",
-        "catalog does not over-count same-paper variants as independent methods.",
+        "Use this page for model discovery and quick registry lookup. Implemented",
+        "models combine the core baselines plus public variants and additional",
+        "implementations in one hazard-level table without duplicate entries.",
         "Use :doc:`appendix_a_coverage` for the audited roadmap gap list,",
         ":doc:`pyhazards_benchmarks` for current runnable evaluator coverage, and",
         "the Implementation Guide for contributor workflow details.",
@@ -333,25 +336,27 @@ def render_model_page(cards: Sequence[ModelCard]) -> str:
     for hazard, hazard_cards in grouped.items():
         lines.extend([hazard, "~" * len(hazard), ""])
         cards_by_status = _cards_by_status(hazard_cards)
-        for status in CATALOG_STATUS_ORDER:
-            title = CATALOG_STATUS_TITLES[status]
-            lines.extend([title, "+" * len(title), "", CATALOG_STATUS_SUMMARIES[status], ""])
-            status_cards = cards_by_status[status]
-            if not status_cards:
-                if status == "core":
-                    lines.extend(
-                        [
-                            "No core public methods are currently implemented for this",
-                            "hazard family. See :doc:`appendix_a_coverage` for the audited",
-                            "missing baseline and benchmark adapters.",
-                            "",
-                        ]
-                    )
-                else:
-                    lines.append("None.")
-                    lines.append("")
-                continue
+        implemented_cards = cards_by_status["core"] + cards_by_status["variant"]
+        experimental_cards = cards_by_status["experimental"]
 
+        lines.extend(
+            [
+                IMPLEMENTED_SECTION_TITLE,
+                "+" * len(IMPLEMENTED_SECTION_TITLE),
+                "",
+                IMPLEMENTED_SECTION_SUMMARY,
+                "",
+            ]
+        )
+        if not implemented_cards:
+            lines.extend(
+                [
+                    "No public implemented methods are currently available for this hazard",
+                    "family. See :doc:`appendix_a_coverage` for the audited roadmap gaps.",
+                    "",
+                ]
+            )
+        else:
             lines.extend(
                 [
                     ".. list-table::",
@@ -363,11 +368,37 @@ def render_model_page(cards: Sequence[ModelCard]) -> str:
                     "     - Description",
                 ]
             )
-            for entry in _grouped_catalog_entries(status_cards):
+            for entry in _grouped_catalog_entries(implemented_cards):
                 lines.extend(
                     [
                         "   * - {name}".format(name=_row_name(entry)),
-                        "     - {summary}".format(summary=_row_summary(entry, status)),
+                        "     - {summary}".format(summary=_row_summary(entry, "implemented")),
+                    ]
+                )
+            lines.append("")
+
+        if experimental_cards:
+            lines.extend(
+                [
+                    EXPERIMENTAL_SECTION_TITLE,
+                    "+" * len(EXPERIMENTAL_SECTION_TITLE),
+                    "",
+                    EXPERIMENTAL_SECTION_SUMMARY,
+                    "",
+                    ".. list-table::",
+                    "   :widths: 30 70",
+                    "   :header-rows: 1",
+                    "   :class: dataset-list",
+                    "",
+                    "   * - Model",
+                    "     - Description",
+                ]
+            )
+            for entry in _grouped_catalog_entries(experimental_cards):
+                lines.extend(
+                    [
+                        "   * - {name}".format(name=_row_name(entry)),
+                        "     - {summary}".format(summary=_row_summary(entry, "experimental")),
                     ]
                 )
             lines.append("")
@@ -456,22 +487,18 @@ def render_api_page(cards: Sequence[ModelCard]) -> str:
     for hazard, hazard_cards in grouped.items():
         lines.extend([hazard, "~" * len(hazard), ""])
         cards_by_status = _cards_by_status(hazard_cards)
-        for status in CATALOG_STATUS_ORDER:
-            title = CATALOG_STATUS_TITLES[status]
-            lines.extend([title, "+" * len(title), ""])
-            status_cards = cards_by_status[status]
-            if not status_cards:
-                if status == "core":
-                    lines.extend(
-                        [
-                            "No core public methods are currently implemented for this hazard family.",
-                            "",
-                        ]
-                    )
-                else:
-                    lines.extend(["None.", ""])
-                continue
-            for entry in _grouped_catalog_entries(status_cards):
+        implemented_cards = cards_by_status["core"] + cards_by_status["variant"]
+        experimental_cards = cards_by_status["experimental"]
+        lines.extend([IMPLEMENTED_SECTION_TITLE, "+" * len(IMPLEMENTED_SECTION_TITLE), ""])
+        if not implemented_cards:
+            lines.extend(
+                [
+                    "No public implemented methods are currently available for this hazard family.",
+                    "",
+                ]
+            )
+        else:
+            for entry in _grouped_catalog_entries(implemented_cards):
                 lines.extend(
                     [
                         "{name}".format(
@@ -482,7 +509,29 @@ def render_api_page(cards: Sequence[ModelCard]) -> str:
                             )
                         ),
                         "",
-                        "{summary}".format(summary=_row_summary(entry, status, absolute_links=True)),
+                        "{summary}".format(
+                            summary=_row_summary(entry, "implemented", absolute_links=True)
+                        ),
+                        "",
+                    ]
+                )
+
+        if experimental_cards:
+            lines.extend([EXPERIMENTAL_SECTION_TITLE, "+" * len(EXPERIMENTAL_SECTION_TITLE), ""])
+            for entry in _grouped_catalog_entries(experimental_cards):
+                lines.extend(
+                    [
+                        "{name}".format(
+                            name=(
+                                _doc_link(entry[0], absolute=True)
+                                if len(entry) == 1
+                                else _family_row_name(entry)
+                            )
+                        ),
+                        "",
+                        "{summary}".format(
+                            summary=_row_summary(entry, "experimental", absolute_links=True)
+                        ),
                         "",
                     ]
                 )
@@ -562,8 +611,8 @@ def render_module_page(card: ModelCard) -> str:
 
     lines.extend(
         [
-            "Paper",
-            "-----",
+            "Paper and Code",
+            "--------------",
             "",
             _paper_sentence(card),
             "",

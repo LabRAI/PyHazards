@@ -12,10 +12,10 @@ Description
 The PyHazards implementation uses a transformer encoder over per-node history windows and returns one forecast value per node.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `google-research/flood-forecasting repository <https://github.com/google-research/flood-forecasting>`_.
+`Global Flood Forecasting at a Fine Catchment Resolution using Machine Learning <https://research.google/pubs/global-flood-forecasting-at-a-fine-catchment-resolution-using-machine-learning/>`_ (`repo <https://github.com/google-research/flood-forecasting>`__).
 
 Catalog Status
 --------------

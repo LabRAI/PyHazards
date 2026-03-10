@@ -12,10 +12,10 @@ Description
 The implementation keeps the shared spatiotemporal tensor contract used by the synthetic inundation smoke dataset.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `UrbanFloodCast repository <https://github.com/HydroPML/UrbanFloodCast>`_.
+`UrbanFloodCast: WMO Urban Flooding Forecasting Challenge <https://arxiv.org/abs/2405.21179>`_ (`repo <https://github.com/HydroPML/UrbanFloodCast>`__).
 
 Catalog Status
 --------------

@@ -1,0 +1,28 @@
+slug: pycsep
+display_name: pyCSEP
+kind: ecosystem
+hazard_family: Earthquake
+benchmark_key: earthquake
+support_status: synthetic-backed
+summary: >
+  pyCSEP-style forecasting report export for the earthquake forecasting smoke path.
+description:
+  - >
+    The current pyCSEP alignment is implemented as a report export contract inside the
+    shared earthquake benchmark rather than as a standalone benchmark family.
+  - >
+    It documents the forecasting artifact shape used by the WaveCastNet smoke config.
+source:
+  title: pyCSEP
+  url: https://github.com/SCECCode/pycsep
+tasks:
+  - earthquake.forecasting
+metrics:
+  - mae
+  - mse
+smoke_configs:
+  - pyhazards/configs/earthquake/wavecastnet_benchmark_smoke.yaml
+linked_models:
+  - wavecastnet
+notes:
+  - "Current repo support is report-export alignment, not a separate pyCSEP benchmark runner."

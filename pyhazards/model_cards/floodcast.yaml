@@ -13,8 +13,9 @@ description:
     The adapter uses shared raster tensors so it can be benchmarked through the
     ``flood.inundation`` evaluator without dataset-specific glue code.
 paper:
-  title: FloodCast repository
-  url: https://github.com/HydroPML/FloodCast
+  title: Large-scale flood modeling and forecasting with FloodCast
+  url: https://doi.org/10.1038/s41586-024-08028-8
+  repo_url: https://github.com/HydroPML/FloodCast
 tasks:
   - regression
   - segmentation

@@ -13,8 +13,9 @@ description:
     The PyHazards adapter keeps a single storm-history to forecast-trajectory
     interface so it can share the same evaluator as ``hurricast``.
 paper:
-  title: TropiCycloneNet repository
-  url: https://github.com/xiaochengfuhuo/TropiCycloneNet
+  title: Benchmark dataset and deep learning method for global tropical cyclone forecasting
+  url: https://www.nature.com/articles/s41597-023-02721-x
+  repo_url: https://github.com/xiaochengfuhuo/TropiCycloneNet
 tasks:
   - regression
 example: |

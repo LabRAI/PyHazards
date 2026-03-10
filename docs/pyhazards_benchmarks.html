@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Configs" href="pyhazards_configs.html"><link rel="prev" title="Wildfire Interactive Map" href="interactive_map.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="AEFA" href="benchmarks/aefa.html"><link rel="prev" title="Wildfire Interactive Map" href="interactive_map.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/pyhazards_benchmarks.html">
         <link rel="prefetch" href="_static/logo.png" as="image">
 
@@ -247,7 +247,25 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interactive_map.html">Wildfire Interactive Map</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Benchmarks</a></li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Benchmarks</a><input aria-label="Toggle navigation of Benchmarks" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/aefa.html">AEFA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/caravan.html">Caravan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/earthquake_benchmark.html">Earthquake Benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/flood_benchmark.html">Flood Benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/floodcastbench.html">FloodCastBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/hydrobench.html">HydroBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/ibtracs.html">IBTrACS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/pick_benchmark.html">pick-benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/pycsep.html">pyCSEP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/seisbench.html">SeisBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/tcbench_alpha.html">TCBench Alpha</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html">Tropical Cyclone Benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/tropicyclonenet_dataset.html">TropiCycloneNet-Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/waterbench.html">WaterBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/wildfire_benchmark.html">Wildfire Benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmarks/wildfirespreadts_ecosystem.html">WildfireSpreadTS</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_configs.html">Configs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_reports.html">Reports</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyhazards_engine.html">Engine</a></li>
@@ -303,70 +321,120 @@
 <h1>Benchmarks<a class="headerlink" href="#benchmarks" title="Link to this heading">¶</a></h1>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
-<p>Use this page to browse the implemented benchmark families, see which
-hazard tasks are covered today, and find the smoke configs that exercise
-each evaluation path. These rows describe current runnable coverage, not
-full roadmap parity. Use <a class="reference internal" href="appendix_a_coverage.html"><span class="doc">Coverage Audit</span></a> for the audited
-method, benchmark, and dataset gap list.</p>
+<p>Use this page to browse the benchmark families implemented in PyHazards
+and the Appendix-A benchmark ecosystems they currently align to. Each
+linked benchmark entry leads to a detail page with support status, smoke
+configs, metrics, and linked models.</p>
 </section>
-<section id="implemented-benchmarks">
-<h2>Implemented Benchmarks<a class="headerlink" href="#implemented-benchmarks" title="Link to this heading">¶</a></h2>
-<p>The summary below is generated from registered benchmark families,
-canonical hazard tasks, and the smoke configs under
-<code class="docutils literal notranslate"><span class="pre">pyhazards/configs/*/*_smoke.yaml</span></code>.</p>
+<section id="benchmark-families">
+<h2>Benchmark Families<a class="headerlink" href="#benchmark-families" title="Link to this heading">¶</a></h2>
+<p>These are the shared evaluator families exposed through the benchmark
+runner. Each row links to a detail page describing the family contract,
+tasks, metrics, smoke configs, and mapped external benchmark ecosystems.</p>
 <div class="table-wrapper colwidths-given dataset-list docutils container">
 <table class="dataset-list docutils align-default">
 <colgroup>
-<col style="width: 12.3%" />
-<col style="width: 15.4%" />
-<col style="width: 13.8%" />
-<col style="width: 15.4%" />
-<col style="width: 16.9%" />
-<col style="width: 26.2%" />
+<col style="width: 18.0%" />
+<col style="width: 26.0%" />
+<col style="width: 56.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Hazard Family</p></th>
 <th class="head"><p>Benchmark</p></th>
-<th class="head"><p>Implemented Tasks</p></th>
-<th class="head"><p>Key Metrics</p></th>
-<th class="head"><p>Smoke Configs</p></th>
-<th class="head"><p>Current Backing</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Wildfire</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">WildfireBenchmark</span></code> (<code class="docutils literal notranslate"><span class="pre">wildfire</span></code>)</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">wildfire.danger</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfire.spread</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">accuracy</span></code>, <code class="docutils literal notranslate"><span class="pre">macro_f1</span></code>, <code class="docutils literal notranslate"><span class="pre">auc</span></code>, <code class="docutils literal notranslate"><span class="pre">pr_auc</span></code>, <code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">rmse</span></code>, <code class="docutils literal notranslate"><span class="pre">iou</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code>, <code class="docutils literal notranslate"><span class="pre">burned_area_mae</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">wildfire_danger_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfire_forecasting_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">asufm_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfire_spread_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfirespreadts_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">forefire_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wrf_sfire_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">firecastnet_smoke.yaml</span></code></p></td>
-<td><p>Synthetic-backed wildfire danger and spread adapters now cover wildfire_forecasting, WildfireSpreadTS, ASUFM, ForeFire, WRF-SFIRE, and FireCastNet.</p></td>
+<td><p><a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p></td>
+<td><p>Shared PyHazards evaluator family for wildfire danger and wildfire spread experiments. Covers <code class="docutils literal notranslate"><span class="pre">wildfire.danger</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfire.spread</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">accuracy</span></code>, <code class="docutils literal notranslate"><span class="pre">macro_f1</span></code>, <code class="docutils literal notranslate"><span class="pre">auc</span></code>, <code class="docutils literal notranslate"><span class="pre">pr_auc</span></code>, <code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">rmse</span></code>, <code class="docutils literal notranslate"><span class="pre">iou</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code>, <code class="docutils literal notranslate"><span class="pre">burned_area_mae</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">wildfire_danger_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfire_forecasting_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">asufm_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfire_spread_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfirespreadts_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">forefire_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wrf_sfire_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">firecastnet_smoke.yaml</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Earthquake</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark</span></code> (<code class="docutils literal notranslate"><span class="pre">earthquake</span></code>)</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">earthquake.picking</span></code>, <code class="docutils literal notranslate"><span class="pre">earthquake.forecasting</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">p_pick_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">s_pick_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">precision</span></code>, <code class="docutils literal notranslate"><span class="pre">recall</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code>, <code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">mse</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">phasenet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">eqtransformer_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">gpd_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">eqnet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wavecastnet_benchmark_smoke.yaml</span></code></p></td>
-<td><p>Synthetic-backed SeisBench, pick-benchmark, AEFA, and pyCSEP-style integrations are wired through the smoke benchmark path.</p></td>
+<td><p><a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a></p></td>
+<td><p>Shared PyHazards evaluator family for earthquake phase-picking and wavefield-forecasting runs. Covers <code class="docutils literal notranslate"><span class="pre">earthquake.picking</span></code>, <code class="docutils literal notranslate"><span class="pre">earthquake.forecasting</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">p_pick_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">s_pick_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">precision</span></code>, <code class="docutils literal notranslate"><span class="pre">recall</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code>, <code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">mse</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">phasenet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">eqtransformer_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">gpd_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">eqnet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wavecastnet_benchmark_smoke.yaml</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p>Flood</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">FloodBenchmark</span></code> (<code class="docutils literal notranslate"><span class="pre">flood</span></code>)</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">flood.streamflow</span></code>, <code class="docutils literal notranslate"><span class="pre">flood.inundation</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">rmse</span></code>, <code class="docutils literal notranslate"><span class="pre">nse</span></code>, <code class="docutils literal notranslate"><span class="pre">kge</span></code>, <code class="docutils literal notranslate"><span class="pre">pixel_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">iou</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">hydrographnet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">neuralhydrology_lstm_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">neuralhydrology_ealstm_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">google_flood_forecasting_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">floodcast_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">urbanfloodcast_smoke.yaml</span></code></p></td>
-<td><p>Synthetic-backed Caravan, WaterBench, FloodCastBench, and HydroBench adapters are wired through the smoke benchmark path.</p></td>
+<td><p><a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a></p></td>
+<td><p>Shared PyHazards evaluator family for streamflow forecasting and inundation prediction. Covers <code class="docutils literal notranslate"><span class="pre">flood.streamflow</span></code>, <code class="docutils literal notranslate"><span class="pre">flood.inundation</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">rmse</span></code>, <code class="docutils literal notranslate"><span class="pre">nse</span></code>, <code class="docutils literal notranslate"><span class="pre">kge</span></code>, <code class="docutils literal notranslate"><span class="pre">pixel_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">iou</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">hydrographnet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">neuralhydrology_lstm_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">neuralhydrology_ealstm_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">google_flood_forecasting_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">floodcast_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">urbanfloodcast_smoke.yaml</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Tropical Cyclone / Hurricane</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">TropicalCycloneBenchmark</span></code> (<code class="docutils literal notranslate"><span class="pre">tc</span></code>)</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">tc.track_intensity</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">track_error</span></code>, <code class="docutils literal notranslate"><span class="pre">intensity_mae</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">hurricast_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">tropicalcyclone_mlp_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">tropicyclonenet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">saf_net_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">tcif_fusion_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">graphcast_tc_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">pangu_tc_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">fourcastnet_tc_smoke.yaml</span></code></p></td>
-<td><p>Synthetic-backed IBTrACS, TCBench Alpha, and TropiCycloneNet-Dataset adapters are wired through the smoke benchmark path.</p></td>
+<td><p><a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a></p></td>
+<td><p>Shared PyHazards evaluator family for tropical cyclone and hurricane track-intensity forecasting. Covers <code class="docutils literal notranslate"><span class="pre">tc.track_intensity</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">track_error</span></code>, <code class="docutils literal notranslate"><span class="pre">intensity_mae</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">hurricast_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">tropicalcyclone_mlp_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">tropicyclonenet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">saf_net_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">tcif_fusion_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">graphcast_tc_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">pangu_tc_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">fourcastnet_tc_smoke.yaml</span></code>.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Hurricane baselines use the shared tropical-cyclone benchmark family
-and are exercised through the <code class="docutils literal notranslate"><span class="pre">tc.track_intensity</span></code> smoke configs.</p>
+</section>
+<section id="benchmark-ecosystems">
+<h2>Benchmark Ecosystems<a class="headerlink" href="#benchmark-ecosystems" title="Link to this heading">¶</a></h2>
+<p>These rows cover the Appendix-A benchmark or evaluation ecosystems that
+shape the current PyHazards benchmark workflow. They stay separate from
+model baselines and link back to the shared benchmark families.</p>
+<div class="table-wrapper colwidths-given dataset-list docutils container">
+<table class="dataset-list docutils align-default">
+<colgroup>
+<col style="width: 18.0%" />
+<col style="width: 26.0%" />
+<col style="width: 56.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Hazard Family</p></th>
+<th class="head"><p>Benchmark Ecosystem</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Wildfire</p></td>
+<td><p><a class="reference internal" href="benchmarks/wildfirespreadts_ecosystem.html"><span class="doc">WildfireSpreadTS</span></a></p></td>
+<td><p>Temporal wildfire spread benchmark coverage for the shared wildfire spread evaluator. Runs through <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a> with <code class="docutils literal notranslate"><span class="pre">wildfire.spread</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">iou</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code>, <code class="docutils literal notranslate"><span class="pre">burned_area_mae</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">wildfire_spread_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wildfirespreadts_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">forefire_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">wrf_sfire_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">firecastnet_smoke.yaml</span></code>. Linked models: <a class="reference internal" href="modules/models_wildfire_aspp.html"><span class="doc">CNN-ASPP</span></a>, <a class="reference internal" href="modules/models_wildfirespreadts.html"><span class="doc">WildfireSpreadTS</span></a>, <a class="reference internal" href="modules/models_forefire.html"><span class="doc">ForeFire Adapter</span></a>, <a class="reference internal" href="modules/models_wrf_sfire.html"><span class="doc">WRF-SFIRE Adapter</span></a>, <a class="reference internal" href="modules/models_firecastnet.html"><span class="doc">FireCastNet</span></a>. <a class="reference external" href="https://openreview.net/forum?id=RgdGkPRQ03">WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction</a> (<a class="reference external" href="https://github.com/SebastianGer/WildfireSpreadTS">repo</a>).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Earthquake</p></td>
+<td><p><a class="reference internal" href="benchmarks/aefa.html"><span class="doc">AEFA</span></a></p></td>
+<td><p>AEFA-style forecasting dataset support for the shared earthquake forecasting path. Runs through <a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a> with <code class="docutils literal notranslate"><span class="pre">earthquake.forecasting</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">mse</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">wavecastnet_benchmark_smoke.yaml</span></code>. Linked models: <a class="reference internal" href="modules/models_wavecastnet.html"><span class="doc">WaveCastNet</span></a>. <a class="reference external" href="https://github.com/chenyk1990/aefa">AEFA</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Earthquake</p></td>
+<td><p><a class="reference internal" href="benchmarks/pick_benchmark.html"><span class="doc">pick-benchmark</span></a></p></td>
+<td><p>pick-benchmark-compatible waveform picking support routed through the shared earthquake evaluator. Runs through <a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a> with <code class="docutils literal notranslate"><span class="pre">earthquake.picking</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">p_pick_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">s_pick_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">precision</span></code>, <code class="docutils literal notranslate"><span class="pre">recall</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">eqtransformer_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">gpd_smoke.yaml</span></code>. Linked models: <a class="reference internal" href="modules/models_eqtransformer.html"><span class="doc">EQTransformer</span></a>, <a class="reference internal" href="modules/models_gpd.html"><span class="doc">GPD</span></a>. <a class="reference external" href="https://github.com/seisbench/pick-benchmark">pick-benchmark</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Earthquake</p></td>
+<td><p><a class="reference internal" href="benchmarks/pycsep.html"><span class="doc">pyCSEP</span></a></p></td>
+<td><p>pyCSEP-style forecasting report export for the earthquake forecasting smoke path. Runs through <a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a> with <code class="docutils literal notranslate"><span class="pre">earthquake.forecasting</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">mse</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">wavecastnet_benchmark_smoke.yaml</span></code>. Linked models: <a class="reference internal" href="modules/models_wavecastnet.html"><span class="doc">WaveCastNet</span></a>. <a class="reference external" href="https://github.com/SCECCode/pycsep">pyCSEP</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Earthquake</p></td>
+<td><p><a class="reference internal" href="benchmarks/seisbench.html"><span class="doc">SeisBench</span></a></p></td>
+<td><p>SeisBench-shaped waveform picking support for the shared earthquake benchmark family. Runs through <a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a> with <code class="docutils literal notranslate"><span class="pre">earthquake.picking</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">p_pick_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">s_pick_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">precision</span></code>, <code class="docutils literal notranslate"><span class="pre">recall</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">phasenet_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">eqnet_smoke.yaml</span></code>. Linked models: <a class="reference internal" href="modules/models_phasenet.html"><span class="doc">PhaseNet</span></a>, <a class="reference internal" href="modules/models_eqnet.html"><span class="doc">EQNet</span></a>. <a class="reference external" href="https://joss.theoj.org/papers/10.21105/joss.04418">SeisBench - A Toolbox for Machine Learning in Seismology</a> (<a class="reference external" href="https://github.com/seisbench/seisbench">repo</a>).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Flood</p></td>
+<td><p><a class="reference internal" href="benchmarks/caravan.html"><span class="doc">Caravan</span></a></p></td>
+<td><p>Caravan-style streamflow benchmark coverage for the shared flood streamflow evaluator. Runs through <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a> with <code class="docutils literal notranslate"><span class="pre">flood.streamflow</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">rmse</span></code>, <code class="docutils literal notranslate"><span class="pre">nse</span></code>, <code class="docutils literal notranslate"><span class="pre">kge</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">neuralhydrology_lstm_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">google_flood_forecasting_smoke.yaml</span></code>. Linked models: <a class="reference internal" href="modules/models_neuralhydrology_lstm.html"><span class="doc">NeuralHydrology LSTM</span></a>, <a class="reference internal" href="modules/models_google_flood_forecasting.html"><span class="doc">Google Flood Forecasting</span></a>. <a class="reference external" href="https://www.nature.com/articles/s41597-023-01975-w">Caravan - A global community dataset for large-sample hydrology</a> (<a class="reference external" href="https://github.com/kratzert/Caravan">repo</a>).</p></td>
+</tr>
+<tr class="row-even"><td><p>Flood</p></td>
+<td><p><a class="reference internal" href="benchmarks/floodcastbench.html"><span class="doc">FloodCastBench</span></a></p></td>
+<td><p>FloodCastBench-style inundation benchmark coverage for the shared flood inundation evaluator. Runs through <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a> with <code class="docutils literal notranslate"><span class="pre">flood.inundation</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">pixel_mae</span></code>, <code class="docutils literal notranslate"><span class="pre">iou</span></code>, <code class="docutils literal notranslate"><span class="pre">f1</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">floodcast_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">urbanfloodcast_smoke.yaml</span></code>. Linked models: <a class="reference internal" href="modules/models_floodcast.html"><span class="doc">FloodCast</span></a>, <a class="reference internal" href="modules/models_urbanfloodcast.html"><span class="doc">UrbanFloodCast</span></a>. <a class="reference external" href="https://github.com/HydroPML/FloodCastBench">FloodCastBench</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Flood</p></td>
+<td><p><a class="reference internal" href="benchmarks/hydrobench.html"><span class="doc">HydroBench</span></a></p></td>
+<td><p>HydroBench-style streamflow diagnostics coverage for the shared flood streamflow evaluator. Runs through <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a> with <code class="docutils literal notranslate"><span class="pre">flood.streamflow</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">rmse</span></code>, <code class="docutils literal notranslate"><span class="pre">nse</span></code>, <code class="docutils literal notranslate"><span class="pre">kge</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">hydrographnet_smoke.yaml</span></code>. Linked models: <a class="reference internal" href="modules/models_hydrographnet.html"><span class="doc">HydroGraphNet</span></a>. <a class="reference external" href="https://github.com/EMscience/HydroBench">HydroBench</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Flood</p></td>
+<td><p><a class="reference internal" href="benchmarks/waterbench.html"><span class="doc">WaterBench</span></a></p></td>
+<td><p>WaterBench-style streamflow benchmark coverage for the shared flood evaluator. Runs through <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a> with <code class="docutils literal notranslate"><span class="pre">flood.streamflow</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">mae</span></code>, <code class="docutils literal notranslate"><span class="pre">rmse</span></code>, <code class="docutils literal notranslate"><span class="pre">nse</span></code>, <code class="docutils literal notranslate"><span class="pre">kge</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">neuralhydrology_ealstm_smoke.yaml</span></code>. Linked models: <a class="reference internal" href="modules/models_neuralhydrology_ealstm.html"><span class="doc">EA-LSTM</span></a>. <a class="reference external" href="https://neurips.cc/virtual/2023/80632">WaterBench: A Large-scale Benchmark Dataset for Data-driven Streamflow Forecasting</a> (<a class="reference external" href="https://github.com/uihilab/WaterBench">repo</a>).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tropical Cyclone / Hurricane</p></td>
+<td><p><a class="reference internal" href="benchmarks/ibtracs.html"><span class="doc">IBTrACS</span></a></p></td>
+<td><p>IBTrACS-backed storm benchmark coverage for the shared tropical cyclone evaluator. Runs through <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a> with <code class="docutils literal notranslate"><span class="pre">tc.track_intensity</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">track_error</span></code>, <code class="docutils literal notranslate"><span class="pre">intensity_mae</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">hurricast_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">graphcast_tc_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">pangu_tc_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">fourcastnet_tc_smoke.yaml</span></code>. Linked models: <a class="reference internal" href="modules/models_hurricast.html"><span class="doc">Hurricast</span></a>, <a class="reference internal" href="modules/models_graphcast_tc.html"><span class="doc">GraphCast TC Adapter</span></a>, <a class="reference internal" href="modules/models_pangu_tc.html"><span class="doc">Pangu TC Adapter</span></a>, <a class="reference internal" href="modules/models_fourcastnet_tc.html"><span class="doc">FourCastNet TC Adapter</span></a>. <a class="reference external" href="https://www.ncei.noaa.gov/products/international-best-track-archive">IBTrACS</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Tropical Cyclone / Hurricane</p></td>
+<td><p><a class="reference internal" href="benchmarks/tcbench_alpha.html"><span class="doc">TCBench Alpha</span></a></p></td>
+<td><p>TCBench Alpha-style storm benchmark coverage for the shared tropical cyclone evaluator. Runs through <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a> with <code class="docutils literal notranslate"><span class="pre">tc.track_intensity</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">track_error</span></code>, <code class="docutils literal notranslate"><span class="pre">intensity_mae</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">tropicalcyclone_mlp_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">saf_net_smoke.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">tcif_fusion_smoke.yaml</span></code>. Linked models: <a class="reference internal" href="modules/models_tropicalcyclone_mlp.html"><span class="doc">tropicalcyclone_MLP</span></a>, <a class="reference internal" href="modules/models_saf_net.html"><span class="doc">SAF-Net</span></a>, <a class="reference internal" href="modules/models_tcif_fusion.html"><span class="doc">TCIF-fusion</span></a>. <a class="reference external" href="https://github.com/msgomez06/TCBench_Alpha">TCBench Alpha</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tropical Cyclone / Hurricane</p></td>
+<td><p><a class="reference internal" href="benchmarks/tropicyclonenet_dataset.html"><span class="doc">TropiCycloneNet-Dataset</span></a></p></td>
+<td><p>TropiCycloneNet-Dataset-backed storm benchmark coverage for the shared tropical cyclone evaluator. Runs through <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a> with <code class="docutils literal notranslate"><span class="pre">tc.track_intensity</span></code>. Key metrics: <code class="docutils literal notranslate"><span class="pre">track_error</span></code>, <code class="docutils literal notranslate"><span class="pre">intensity_mae</span></code>. Support: Synthetic-backed. Smoke configs: <code class="docutils literal notranslate"><span class="pre">tropicyclonenet_smoke.yaml</span></code>. Linked models: <a class="reference internal" href="modules/models_tropicyclonenet.html"><span class="doc">TropiCycloneNet</span></a>. <a class="reference external" href="https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset">TropiCycloneNet-Dataset</a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 <section id="typical-usage">
 <h2>Typical Usage<a class="headerlink" href="#typical-usage" title="Link to this heading">¶</a></h2>
@@ -382,10 +450,13 @@ and are exercised through the <code class="docutils literal notranslate"><span c
 <section id="command-line-entry-point">
 <h2>Command-Line Entry Point<a class="headerlink" href="#command-line-entry-point" title="Link to this heading">¶</a></h2>
 <p>Use <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/run_benchmark.py</span> <span class="pre">--help</span></code> to inspect the shared
-benchmark runner CLI and list available hazard tasks.</p>
+benchmark runner CLI and list available hazard tasks or registered
+benchmark families.</p>
 <p>Next step: pair this page with <a class="reference internal" href="pyhazards_configs.html"><span class="doc">Configs</span></a> when you want
 to author experiment YAML files and <a class="reference internal" href="pyhazards_reports.html"><span class="doc">Reports</span></a> when you
 want to export comparable benchmark summaries.</p>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 </section>
 
@@ -394,12 +465,12 @@ want to export comparable benchmark summaries.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="pyhazards_configs.html">
+          <a class="next-page" href="benchmarks/aefa.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Configs</div>
+                <div class="title">AEFA</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -446,7 +517,8 @@ want to export comparable benchmark summaries.</p>
             <ul>
 <li><a class="reference internal" href="#">Benchmarks</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
-<li><a class="reference internal" href="#implemented-benchmarks">Implemented Benchmarks</a></li>
+<li><a class="reference internal" href="#benchmark-families">Benchmark Families</a></li>
+<li><a class="reference internal" href="#benchmark-ecosystems">Benchmark Ecosystems</a></li>
 <li><a class="reference internal" href="#typical-usage">Typical Usage</a></li>
 <li><a class="reference internal" href="#command-line-entry-point">Command-Line Entry Point</a></li>
 </ul>

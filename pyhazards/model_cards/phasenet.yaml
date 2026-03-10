@@ -14,8 +14,9 @@ description:
     This initial adapter focuses on the shared waveform-to-pick interface and does not
     claim exact reproduction of the original PhaseNet training stack.
 paper:
-  title: PhaseNet repository
-  url: https://github.com/AI4EPS/PhaseNet
+  title: "PhaseNet: A Deep-Neural-Network-Based Seismic Arrival Time Picking Method"
+  url: https://arxiv.org/abs/1803.03211
+  repo_url: https://github.com/AI4EPS/PhaseNet
 tasks:
   - regression
 example: |

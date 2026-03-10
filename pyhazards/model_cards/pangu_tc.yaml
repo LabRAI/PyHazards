@@ -14,8 +14,9 @@ description:
     The implementation is intentionally lightweight and should be interpreted as
     an adapter contract for forecast-field driven storm evaluation.
 paper:
-  title: Pangu-Weather repository
-  url: https://github.com/198808xc/Pangu-Weather
+  title: Accurate medium-range global weather forecasting with 3D neural networks
+  url: https://www.nature.com/articles/s41586-023-06185-3
+  repo_url: https://github.com/198808xc/Pangu-Weather
 tasks:
   - regression
 example: |

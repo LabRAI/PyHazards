@@ -1,0 +1,40 @@
+slug: earthquake_benchmark
+display_name: Earthquake Benchmark
+kind: family
+hazard_family: Earthquake
+benchmark_key: earthquake
+support_status: synthetic-backed
+summary: >
+  Shared PyHazards evaluator family for earthquake phase-picking and wavefield-forecasting runs.
+description:
+  - >
+    The earthquake benchmark family groups the picking and forecasting paths under one
+    registered evaluator and benchmark runner entrypoint.
+  - >
+    Current public coverage is synthetic-backed but already exposes the same task and
+    report shape used across the earthquake smoke configs.
+tasks:
+  - earthquake.picking
+  - earthquake.forecasting
+metrics:
+  - p_pick_mae
+  - s_pick_mae
+  - precision
+  - recall
+  - f1
+  - mae
+  - mse
+smoke_configs:
+  - pyhazards/configs/earthquake/phasenet_smoke.yaml
+  - pyhazards/configs/earthquake/eqtransformer_smoke.yaml
+  - pyhazards/configs/earthquake/gpd_smoke.yaml
+  - pyhazards/configs/earthquake/eqnet_smoke.yaml
+  - pyhazards/configs/earthquake/wavecastnet_benchmark_smoke.yaml
+linked_models:
+  - phasenet
+  - eqtransformer
+  - gpd
+  - eqnet
+  - wavecastnet
+notes:
+  - "Forecasting runs export a pyCSEP-style report artifact through the shared earthquake benchmark."

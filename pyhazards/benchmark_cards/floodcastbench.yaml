@@ -1,0 +1,29 @@
+slug: floodcastbench
+display_name: FloodCastBench
+kind: ecosystem
+hazard_family: Flood
+benchmark_key: flood
+support_status: synthetic-backed
+summary: >
+  FloodCastBench-style inundation benchmark coverage for the shared flood inundation evaluator.
+description:
+  - >
+    The current FloodCastBench alignment is implemented as a synthetic raster inundation
+    adapter used by the public inundation smoke configs.
+  - >
+    It documents the benchmark/data protocol behind the FloodCast and UrbanFloodCast smoke paths.
+source:
+  title: FloodCastBench
+  url: https://github.com/HydroPML/FloodCastBench
+tasks:
+  - flood.inundation
+metrics:
+  - pixel_mae
+  - iou
+  - f1
+smoke_configs:
+  - pyhazards/configs/flood/floodcast_smoke.yaml
+  - pyhazards/configs/flood/urbanfloodcast_smoke.yaml
+linked_models:
+  - floodcast
+  - urbanfloodcast

@@ -12,10 +12,10 @@ Description
 The PyHazards version is intentionally lightweight and uses the same trajectory output contract as the other storm baselines.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `FourCastNet repository <https://github.com/NVlabs/FourCastNet>`_.
+`FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators <https://arxiv.org/abs/2202.11214>`_ (`repo <https://github.com/NVlabs/FourCastNet>`__).
 
 Catalog Status
 --------------

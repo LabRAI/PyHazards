@@ -12,10 +12,10 @@ Description
 In PyHazards, this model is typically paired with the ERA5-based hydrograph adapter ``load_hydrograph_data`` for end-to-end smoke validation.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_.
+`Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_.
 
 Catalog Status
 --------------

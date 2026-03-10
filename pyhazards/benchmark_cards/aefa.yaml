@@ -1,0 +1,26 @@
+slug: aefa
+display_name: AEFA
+kind: ecosystem
+hazard_family: Earthquake
+benchmark_key: earthquake
+support_status: synthetic-backed
+summary: >
+  AEFA-style forecasting dataset support for the shared earthquake forecasting path.
+description:
+  - >
+    The AEFA alignment is implemented as a synthetic-backed dense-grid forecasting adapter
+    used by the WaveCastNet benchmark config.
+  - >
+    It keeps the forecasting task and metric shape aligned without claiming a full AEFA data pipeline.
+source:
+  title: AEFA
+  url: https://github.com/chenyk1990/aefa
+tasks:
+  - earthquake.forecasting
+metrics:
+  - mae
+  - mse
+smoke_configs:
+  - pyhazards/configs/earthquake/wavecastnet_benchmark_smoke.yaml
+linked_models:
+  - wavecastnet

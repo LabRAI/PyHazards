@@ -13,8 +13,9 @@ description:
     The PyHazards adapter uses a compact 3D convolution stack that consumes short
     raster history windows and predicts the next spread mask.
 paper:
-  title: WildfireSpreadTS repository
-  url: https://github.com/SebastianGer/WildfireSpreadTS
+  title: "WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction"
+  url: https://openreview.net/forum?id=RgdGkPRQ03
+  repo_url: https://github.com/SebastianGer/WildfireSpreadTS
 tasks:
   - segmentation
   - regression

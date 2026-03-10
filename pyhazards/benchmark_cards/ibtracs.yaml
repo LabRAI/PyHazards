@@ -1,0 +1,33 @@
+slug: ibtracs
+display_name: IBTrACS
+kind: ecosystem
+hazard_family: Tropical Cyclone / Hurricane
+benchmark_key: tc
+support_status: synthetic-backed
+summary: >
+  IBTrACS-backed storm benchmark coverage for the shared tropical cyclone evaluator.
+description:
+  - >
+    The current IBTrACS alignment uses a metadata-backed storm-history adapter over the
+    shared synthetic tropical-cyclone dataset.
+  - >
+    It is the benchmark ecosystem currently used by Hurricast and the experimental
+    weather-model adapter smoke configs.
+source:
+  title: IBTrACS
+  url: https://www.ncei.noaa.gov/products/international-best-track-archive
+tasks:
+  - tc.track_intensity
+metrics:
+  - track_error
+  - intensity_mae
+smoke_configs:
+  - pyhazards/configs/tc/hurricast_smoke.yaml
+  - pyhazards/configs/tc/graphcast_tc_smoke.yaml
+  - pyhazards/configs/tc/pangu_tc_smoke.yaml
+  - pyhazards/configs/tc/fourcastnet_tc_smoke.yaml
+linked_models:
+  - hurricast
+  - graphcast_tc
+  - pangu_tc
+  - fourcastnet_tc

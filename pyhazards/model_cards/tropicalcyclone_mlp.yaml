@@ -13,8 +13,9 @@ description:
     The adapter is useful for practical low-cost intensity and trajectory
     experiments in basin-filtered settings.
 paper:
-  title: tropicalcyclone_MLP repository
-  url: https://github.com/wenweixu/tropicalcyclone_MLP
+  title: Deep Learning Experiments for Tropical Cyclone Intensity Forecasts
+  url: https://doi.org/10.1145/3447548.3467351
+  repo_url: https://github.com/wenweixu/tropicalcyclone_MLP
 tasks:
   - regression
 example: |

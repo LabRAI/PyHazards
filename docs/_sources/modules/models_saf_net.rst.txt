@@ -12,10 +12,10 @@ Description
 The adapter keeps full trajectory outputs so it can use the same report format as the other PyHazards storm models.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `TI_Prediction / SAF-Net repository <https://github.com/xuguangning1218/TI_Prediction>`_.
+`SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction <https://www.sciencedirect.com/science/article/pii/S1568494623003152>`_ (`repo <https://github.com/xuguangning1218/TI_Prediction>`__).
 
 Catalog Status
 --------------

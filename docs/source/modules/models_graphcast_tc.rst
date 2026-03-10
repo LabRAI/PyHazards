@@ -12,10 +12,10 @@ Description
 The PyHazards version is intentionally wrapper-style and should be treated as an adapter contract rather than a full reproduction of the original weather model.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `GraphCast / GenCast repository <https://github.com/google-deepmind/graphcast>`_.
+`GraphCast: Learning skillful medium-range global weather forecasting <https://www.science.org/doi/10.1126/science.adi2336>`_ (`repo <https://github.com/google-deepmind/graphcast>`__).
 
 Catalog Status
 --------------

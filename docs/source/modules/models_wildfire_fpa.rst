@@ -12,10 +12,10 @@ Description
 PyHazards exposes the combined DNN-LSTM-AutoEncoder workflow through one public registry name while keeping the lower-level components internal.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
+`Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
 
 Catalog Status
 --------------

@@ -12,10 +12,10 @@ Description
 The implementation keeps the shared waveform input and two-pick output contract so it can be evaluated alongside ``phasenet`` and ``eqtransformer``.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `EQNet repository <https://github.com/AI4EPS/EQNet>`_.
+`An End-To-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning <https://www.osti.gov/biblio/1978539>`_ (`repo <https://github.com/AI4EPS/EQNet>`__).
 
 Catalog Status
 --------------

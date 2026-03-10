@@ -12,10 +12,10 @@ Description
 The PyHazards implementation targets smoke-testable next-window size-group prediction through the shared wildfire benchmark flow.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `wildfire_forecasting repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_.
+`Wildfire Danger Prediction and Understanding with Deep Learning <https://doi.org/10.1029/2022GL099368>`_ (`repo <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__).
 
 Catalog Status
 --------------

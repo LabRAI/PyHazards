@@ -12,10 +12,10 @@ Description
 The implementation is intentionally lightweight and should be interpreted as an adapter contract for forecast-field driven storm evaluation.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `Pangu-Weather repository <https://github.com/198808xc/Pangu-Weather>`_.
+`Accurate medium-range global weather forecasting with 3D neural networks <https://www.nature.com/articles/s41586-023-06185-3>`_ (`repo <https://github.com/198808xc/Pangu-Weather>`__).
 
 Catalog Status
 --------------

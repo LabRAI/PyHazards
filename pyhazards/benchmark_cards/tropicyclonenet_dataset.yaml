@@ -1,0 +1,26 @@
+slug: tropicyclonenet_dataset
+display_name: TropiCycloneNet-Dataset
+kind: ecosystem
+hazard_family: Tropical Cyclone / Hurricane
+benchmark_key: tc
+support_status: synthetic-backed
+summary: >
+  TropiCycloneNet-Dataset-backed storm benchmark coverage for the shared tropical cyclone evaluator.
+description:
+  - >
+    The current TropiCycloneNet-Dataset alignment uses a metadata-backed storm-history adapter
+    over the shared synthetic tropical-cyclone dataset.
+  - >
+    It exists today to support the public TropiCycloneNet smoke benchmark path.
+source:
+  title: TropiCycloneNet-Dataset
+  url: https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset
+tasks:
+  - tc.track_intensity
+metrics:
+  - track_error
+  - intensity_mae
+smoke_configs:
+  - pyhazards/configs/tc/tropicyclonenet_smoke.yaml
+linked_models:
+  - tropicyclonenet

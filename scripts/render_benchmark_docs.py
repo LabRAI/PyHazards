@@ -8,7 +8,10 @@ from pyhazards.benchmark_catalog import sync_generated_benchmark_docs
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Render generated benchmark summary docs from registered benchmarks and smoke configs."
+        description=(
+            "Render generated benchmark catalog docs, including family and ecosystem "
+            "tables plus per-benchmark detail pages."
+        )
     )
     parser.add_argument(
         "--check",

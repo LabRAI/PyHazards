@@ -1,0 +1,36 @@
+slug: wildfirespreadts_ecosystem
+display_name: WildfireSpreadTS
+kind: ecosystem
+hazard_family: Wildfire
+benchmark_key: wildfire
+support_status: synthetic-backed
+summary: >
+  Temporal wildfire spread benchmark coverage for the shared wildfire spread evaluator.
+description:
+  - >
+    WildfireSpreadTS is the public wildfire benchmark ecosystem surfaced from Appendix A.
+  - >
+    The current repo uses a synthetic temporal spread dataset to exercise the same
+    spread-task contract for WildfireSpreadTS-style evaluation.
+source:
+  title: "WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction"
+  url: https://openreview.net/forum?id=RgdGkPRQ03
+  repo_url: https://github.com/SebastianGer/WildfireSpreadTS
+tasks:
+  - wildfire.spread
+metrics:
+  - iou
+  - f1
+  - burned_area_mae
+smoke_configs:
+  - pyhazards/configs/wildfire/wildfire_spread_smoke.yaml
+  - pyhazards/configs/wildfire/wildfirespreadts_smoke.yaml
+  - pyhazards/configs/wildfire/forefire_smoke.yaml
+  - pyhazards/configs/wildfire/wrf_sfire_smoke.yaml
+  - pyhazards/configs/wildfire/firecastnet_smoke.yaml
+linked_models:
+  - wildfire_aspp
+  - wildfirespreadts
+  - forefire
+  - wrf_sfire
+  - firecastnet

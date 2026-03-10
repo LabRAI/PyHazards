@@ -6,57 +6,90 @@ Benchmarks
 Overview
 --------
 
-Use this page to browse the implemented benchmark families, see which
-hazard tasks are covered today, and find the smoke configs that exercise
-each evaluation path. These rows describe current runnable coverage, not
-full roadmap parity. Use :doc:`appendix_a_coverage` for the audited
-method, benchmark, and dataset gap list.
+Use this page to browse the benchmark families implemented in PyHazards
+and the Appendix-A benchmark ecosystems they currently align to. Each
+linked benchmark entry leads to a detail page with support status, smoke
+configs, metrics, and linked models.
 
-Implemented Benchmarks
-----------------------
+Benchmark Families
+------------------
 
-The summary below is generated from registered benchmark families,
-canonical hazard tasks, and the smoke configs under
-``pyhazards/configs/*/*_smoke.yaml``.
+These are the shared evaluator families exposed through the benchmark
+runner. Each row links to a detail page describing the family contract,
+tasks, metrics, smoke configs, and mapped external benchmark ecosystems.
 
 .. list-table::
-   :widths: 16 20 18 20 22 34
+   :widths: 18 26 56
    :header-rows: 1
    :class: dataset-list
 
    * - Hazard Family
      - Benchmark
-     - Implemented Tasks
-     - Key Metrics
-     - Smoke Configs
-     - Current Backing
+     - Description
    * - Wildfire
-     - ``WildfireBenchmark`` (``wildfire``)
-     - ``wildfire.danger``, ``wildfire.spread``
-     - ``accuracy``, ``macro_f1``, ``auc``, ``pr_auc``, ``mae``, ``rmse``, ``iou``, ``f1``, ``burned_area_mae``
-     - ``wildfire_danger_smoke.yaml``, ``wildfire_forecasting_smoke.yaml``, ``asufm_smoke.yaml``, ``wildfire_spread_smoke.yaml``, ``wildfirespreadts_smoke.yaml``, ``forefire_smoke.yaml``, ``wrf_sfire_smoke.yaml``, ``firecastnet_smoke.yaml``
-     - Synthetic-backed wildfire danger and spread adapters now cover wildfire_forecasting, WildfireSpreadTS, ASUFM, ForeFire, WRF-SFIRE, and FireCastNet.
+     - :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+     - Shared PyHazards evaluator family for wildfire danger and wildfire spread experiments. Covers ``wildfire.danger``, ``wildfire.spread``. Key metrics: ``accuracy``, ``macro_f1``, ``auc``, ``pr_auc``, ``mae``, ``rmse``, ``iou``, ``f1``, ``burned_area_mae``. Support: Synthetic-backed. Smoke configs: ``wildfire_danger_smoke.yaml``, ``wildfire_forecasting_smoke.yaml``, ``asufm_smoke.yaml``, ``wildfire_spread_smoke.yaml``, ``wildfirespreadts_smoke.yaml``, ``forefire_smoke.yaml``, ``wrf_sfire_smoke.yaml``, ``firecastnet_smoke.yaml``.
    * - Earthquake
-     - ``EarthquakeBenchmark`` (``earthquake``)
-     - ``earthquake.picking``, ``earthquake.forecasting``
-     - ``p_pick_mae``, ``s_pick_mae``, ``precision``, ``recall``, ``f1``, ``mae``, ``mse``
-     - ``phasenet_smoke.yaml``, ``eqtransformer_smoke.yaml``, ``gpd_smoke.yaml``, ``eqnet_smoke.yaml``, ``wavecastnet_benchmark_smoke.yaml``
-     - Synthetic-backed SeisBench, pick-benchmark, AEFA, and pyCSEP-style integrations are wired through the smoke benchmark path.
+     - :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
+     - Shared PyHazards evaluator family for earthquake phase-picking and wavefield-forecasting runs. Covers ``earthquake.picking``, ``earthquake.forecasting``. Key metrics: ``p_pick_mae``, ``s_pick_mae``, ``precision``, ``recall``, ``f1``, ``mae``, ``mse``. Support: Synthetic-backed. Smoke configs: ``phasenet_smoke.yaml``, ``eqtransformer_smoke.yaml``, ``gpd_smoke.yaml``, ``eqnet_smoke.yaml``, ``wavecastnet_benchmark_smoke.yaml``.
    * - Flood
-     - ``FloodBenchmark`` (``flood``)
-     - ``flood.streamflow``, ``flood.inundation``
-     - ``mae``, ``rmse``, ``nse``, ``kge``, ``pixel_mae``, ``iou``, ``f1``
-     - ``hydrographnet_smoke.yaml``, ``neuralhydrology_lstm_smoke.yaml``, ``neuralhydrology_ealstm_smoke.yaml``, ``google_flood_forecasting_smoke.yaml``, ``floodcast_smoke.yaml``, ``urbanfloodcast_smoke.yaml``
-     - Synthetic-backed Caravan, WaterBench, FloodCastBench, and HydroBench adapters are wired through the smoke benchmark path.
+     - :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+     - Shared PyHazards evaluator family for streamflow forecasting and inundation prediction. Covers ``flood.streamflow``, ``flood.inundation``. Key metrics: ``mae``, ``rmse``, ``nse``, ``kge``, ``pixel_mae``, ``iou``, ``f1``. Support: Synthetic-backed. Smoke configs: ``hydrographnet_smoke.yaml``, ``neuralhydrology_lstm_smoke.yaml``, ``neuralhydrology_ealstm_smoke.yaml``, ``google_flood_forecasting_smoke.yaml``, ``floodcast_smoke.yaml``, ``urbanfloodcast_smoke.yaml``.
    * - Tropical Cyclone / Hurricane
-     - ``TropicalCycloneBenchmark`` (``tc``)
-     - ``tc.track_intensity``
-     - ``track_error``, ``intensity_mae``
-     - ``hurricast_smoke.yaml``, ``tropicalcyclone_mlp_smoke.yaml``, ``tropicyclonenet_smoke.yaml``, ``saf_net_smoke.yaml``, ``tcif_fusion_smoke.yaml``, ``graphcast_tc_smoke.yaml``, ``pangu_tc_smoke.yaml``, ``fourcastnet_tc_smoke.yaml``
-     - Synthetic-backed IBTrACS, TCBench Alpha, and TropiCycloneNet-Dataset adapters are wired through the smoke benchmark path.
+     - :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+     - Shared PyHazards evaluator family for tropical cyclone and hurricane track-intensity forecasting. Covers ``tc.track_intensity``. Key metrics: ``track_error``, ``intensity_mae``. Support: Synthetic-backed. Smoke configs: ``hurricast_smoke.yaml``, ``tropicalcyclone_mlp_smoke.yaml``, ``tropicyclonenet_smoke.yaml``, ``saf_net_smoke.yaml``, ``tcif_fusion_smoke.yaml``, ``graphcast_tc_smoke.yaml``, ``pangu_tc_smoke.yaml``, ``fourcastnet_tc_smoke.yaml``.
 
-Hurricane baselines use the shared tropical-cyclone benchmark family
-and are exercised through the ``tc.track_intensity`` smoke configs.
+Benchmark Ecosystems
+--------------------
+
+These rows cover the Appendix-A benchmark or evaluation ecosystems that
+shape the current PyHazards benchmark workflow. They stay separate from
+model baselines and link back to the shared benchmark families.
+
+.. list-table::
+   :widths: 18 26 56
+   :header-rows: 1
+   :class: dataset-list
+
+   * - Hazard Family
+     - Benchmark Ecosystem
+     - Description
+   * - Wildfire
+     - :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+     - Temporal wildfire spread benchmark coverage for the shared wildfire spread evaluator. Runs through :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>` with ``wildfire.spread``. Key metrics: ``iou``, ``f1``, ``burned_area_mae``. Support: Synthetic-backed. Smoke configs: ``wildfire_spread_smoke.yaml``, ``wildfirespreadts_smoke.yaml``, ``forefire_smoke.yaml``, ``wrf_sfire_smoke.yaml``, ``firecastnet_smoke.yaml``. Linked models: :doc:`CNN-ASPP <modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS <modules/models_wildfirespreadts>`, :doc:`ForeFire Adapter <modules/models_forefire>`, :doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`, :doc:`FireCastNet <modules/models_firecastnet>`. `WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ (`repo <https://github.com/SebastianGer/WildfireSpreadTS>`__).
+   * - Earthquake
+     - :doc:`AEFA <benchmarks/aefa>`
+     - AEFA-style forecasting dataset support for the shared earthquake forecasting path. Runs through :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>` with ``earthquake.forecasting``. Key metrics: ``mae``, ``mse``. Support: Synthetic-backed. Smoke configs: ``wavecastnet_benchmark_smoke.yaml``. Linked models: :doc:`WaveCastNet <modules/models_wavecastnet>`. `AEFA <https://github.com/chenyk1990/aefa>`_.
+   * - Earthquake
+     - :doc:`pick-benchmark <benchmarks/pick_benchmark>`
+     - pick-benchmark-compatible waveform picking support routed through the shared earthquake evaluator. Runs through :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>` with ``earthquake.picking``. Key metrics: ``p_pick_mae``, ``s_pick_mae``, ``precision``, ``recall``, ``f1``. Support: Synthetic-backed. Smoke configs: ``eqtransformer_smoke.yaml``, ``gpd_smoke.yaml``. Linked models: :doc:`EQTransformer <modules/models_eqtransformer>`, :doc:`GPD <modules/models_gpd>`. `pick-benchmark <https://github.com/seisbench/pick-benchmark>`_.
+   * - Earthquake
+     - :doc:`pyCSEP <benchmarks/pycsep>`
+     - pyCSEP-style forecasting report export for the earthquake forecasting smoke path. Runs through :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>` with ``earthquake.forecasting``. Key metrics: ``mae``, ``mse``. Support: Synthetic-backed. Smoke configs: ``wavecastnet_benchmark_smoke.yaml``. Linked models: :doc:`WaveCastNet <modules/models_wavecastnet>`. `pyCSEP <https://github.com/SCECCode/pycsep>`_.
+   * - Earthquake
+     - :doc:`SeisBench <benchmarks/seisbench>`
+     - SeisBench-shaped waveform picking support for the shared earthquake benchmark family. Runs through :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>` with ``earthquake.picking``. Key metrics: ``p_pick_mae``, ``s_pick_mae``, ``precision``, ``recall``, ``f1``. Support: Synthetic-backed. Smoke configs: ``phasenet_smoke.yaml``, ``eqnet_smoke.yaml``. Linked models: :doc:`PhaseNet <modules/models_phasenet>`, :doc:`EQNet <modules/models_eqnet>`. `SeisBench - A Toolbox for Machine Learning in Seismology <https://joss.theoj.org/papers/10.21105/joss.04418>`_ (`repo <https://github.com/seisbench/seisbench>`__).
+   * - Flood
+     - :doc:`Caravan <benchmarks/caravan>`
+     - Caravan-style streamflow benchmark coverage for the shared flood streamflow evaluator. Runs through :doc:`Flood Benchmark <benchmarks/flood_benchmark>` with ``flood.streamflow``. Key metrics: ``mae``, ``rmse``, ``nse``, ``kge``. Support: Synthetic-backed. Smoke configs: ``neuralhydrology_lstm_smoke.yaml``, ``google_flood_forecasting_smoke.yaml``. Linked models: :doc:`NeuralHydrology LSTM <modules/models_neuralhydrology_lstm>`, :doc:`Google Flood Forecasting <modules/models_google_flood_forecasting>`. `Caravan - A global community dataset for large-sample hydrology <https://www.nature.com/articles/s41597-023-01975-w>`_ (`repo <https://github.com/kratzert/Caravan>`__).
+   * - Flood
+     - :doc:`FloodCastBench <benchmarks/floodcastbench>`
+     - FloodCastBench-style inundation benchmark coverage for the shared flood inundation evaluator. Runs through :doc:`Flood Benchmark <benchmarks/flood_benchmark>` with ``flood.inundation``. Key metrics: ``pixel_mae``, ``iou``, ``f1``. Support: Synthetic-backed. Smoke configs: ``floodcast_smoke.yaml``, ``urbanfloodcast_smoke.yaml``. Linked models: :doc:`FloodCast <modules/models_floodcast>`, :doc:`UrbanFloodCast <modules/models_urbanfloodcast>`. `FloodCastBench <https://github.com/HydroPML/FloodCastBench>`_.
+   * - Flood
+     - :doc:`HydroBench <benchmarks/hydrobench>`
+     - HydroBench-style streamflow diagnostics coverage for the shared flood streamflow evaluator. Runs through :doc:`Flood Benchmark <benchmarks/flood_benchmark>` with ``flood.streamflow``. Key metrics: ``mae``, ``rmse``, ``nse``, ``kge``. Support: Synthetic-backed. Smoke configs: ``hydrographnet_smoke.yaml``. Linked models: :doc:`HydroGraphNet <modules/models_hydrographnet>`. `HydroBench <https://github.com/EMscience/HydroBench>`_.
+   * - Flood
+     - :doc:`WaterBench <benchmarks/waterbench>`
+     - WaterBench-style streamflow benchmark coverage for the shared flood evaluator. Runs through :doc:`Flood Benchmark <benchmarks/flood_benchmark>` with ``flood.streamflow``. Key metrics: ``mae``, ``rmse``, ``nse``, ``kge``. Support: Synthetic-backed. Smoke configs: ``neuralhydrology_ealstm_smoke.yaml``. Linked models: :doc:`EA-LSTM <modules/models_neuralhydrology_ealstm>`. `WaterBench: A Large-scale Benchmark Dataset for Data-driven Streamflow Forecasting <https://neurips.cc/virtual/2023/80632>`_ (`repo <https://github.com/uihilab/WaterBench>`__).
+   * - Tropical Cyclone / Hurricane
+     - :doc:`IBTrACS <benchmarks/ibtracs>`
+     - IBTrACS-backed storm benchmark coverage for the shared tropical cyclone evaluator. Runs through :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>` with ``tc.track_intensity``. Key metrics: ``track_error``, ``intensity_mae``. Support: Synthetic-backed. Smoke configs: ``hurricast_smoke.yaml``, ``graphcast_tc_smoke.yaml``, ``pangu_tc_smoke.yaml``, ``fourcastnet_tc_smoke.yaml``. Linked models: :doc:`Hurricast <modules/models_hurricast>`, :doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter <modules/models_pangu_tc>`, :doc:`FourCastNet TC Adapter <modules/models_fourcastnet_tc>`. `IBTrACS <https://www.ncei.noaa.gov/products/international-best-track-archive>`_.
+   * - Tropical Cyclone / Hurricane
+     - :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
+     - TCBench Alpha-style storm benchmark coverage for the shared tropical cyclone evaluator. Runs through :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>` with ``tc.track_intensity``. Key metrics: ``track_error``, ``intensity_mae``. Support: Synthetic-backed. Smoke configs: ``tropicalcyclone_mlp_smoke.yaml``, ``saf_net_smoke.yaml``, ``tcif_fusion_smoke.yaml``. Linked models: :doc:`tropicalcyclone_MLP <modules/models_tropicalcyclone_mlp>`, :doc:`SAF-Net <modules/models_saf_net>`, :doc:`TCIF-fusion <modules/models_tcif_fusion>`. `TCBench Alpha <https://github.com/msgomez06/TCBench_Alpha>`_.
+   * - Tropical Cyclone / Hurricane
+     - :doc:`TropiCycloneNet-Dataset <benchmarks/tropicyclonenet_dataset>`
+     - TropiCycloneNet-Dataset-backed storm benchmark coverage for the shared tropical cyclone evaluator. Runs through :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>` with ``tc.track_intensity``. Key metrics: ``track_error``, ``intensity_mae``. Support: Synthetic-backed. Smoke configs: ``tropicyclonenet_smoke.yaml``. Linked models: :doc:`TropiCycloneNet <modules/models_tropicyclonenet>`. `TropiCycloneNet-Dataset <https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset>`_.
 
 Typical Usage
 -------------
@@ -74,8 +107,30 @@ Command-Line Entry Point
 ------------------------
 
 Use ``python scripts/run_benchmark.py --help`` to inspect the shared
-benchmark runner CLI and list available hazard tasks.
+benchmark runner CLI and list available hazard tasks or registered
+benchmark families.
 
 Next step: pair this page with :doc:`pyhazards_configs` when you want
 to author experiment YAML files and :doc:`pyhazards_reports` when you
 want to export comparable benchmark summaries.
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   benchmarks/aefa
+   benchmarks/caravan
+   benchmarks/earthquake_benchmark
+   benchmarks/flood_benchmark
+   benchmarks/floodcastbench
+   benchmarks/hydrobench
+   benchmarks/ibtracs
+   benchmarks/pick_benchmark
+   benchmarks/pycsep
+   benchmarks/seisbench
+   benchmarks/tcbench_alpha
+   benchmarks/tropical_cyclone_benchmark
+   benchmarks/tropicyclonenet_dataset
+   benchmarks/waterbench
+   benchmarks/wildfire_benchmark
+   benchmarks/wildfirespreadts_ecosystem

@@ -12,10 +12,10 @@ Description
 PyHazards keeps the alias for compatibility while the implementation delegates to the native ``wildfire_cnn_aspp`` builder under the hood.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_.
+`Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_.
 
 Catalog Status
 --------------

@@ -14,8 +14,9 @@ description:
     The PyHazards adapter is designed for consistent smoke benchmarking rather than
     full physical simulation.
 paper:
-  title: WRF-SFIRE repository
-  url: https://github.com/openwfm/WRF-SFIRE
+  title: Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011
+  url: https://doi.org/10.5194/gmd-4-591-2011
+  repo_url: https://github.com/openwfm/WRF-SFIRE
 tasks:
   - segmentation
   - regression

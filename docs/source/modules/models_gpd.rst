@@ -12,10 +12,10 @@ Description
 This adapter is intended as a reproducible low-cost baseline rather than an exact port of every original training detail.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `Generalized Phase Detection repository <https://github.com/interseismic/generalized-phase-detection>`_.
+`Generalized Seismic Phase Detection with Deep Learning <https://doi.org/10.1785/0120180080>`_ (`repo <https://github.com/interseismic/generalized-phase-detection>`__).
 
 Catalog Status
 --------------

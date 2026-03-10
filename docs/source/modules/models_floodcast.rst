@@ -12,10 +12,10 @@ Description
 The adapter uses shared raster tensors so it can be benchmarked through the ``flood.inundation`` evaluator without dataset-specific glue code.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `FloodCast repository <https://github.com/HydroPML/FloodCast>`_.
+`Large-scale flood modeling and forecasting with FloodCast <https://doi.org/10.1038/s41586-024-08028-8>`_ (`repo <https://github.com/HydroPML/FloodCast>`__).
 
 Catalog Status
 --------------

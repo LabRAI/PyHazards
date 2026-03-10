@@ -12,10 +12,10 @@ Description
 The PyHazards adapter focuses on the shared picking interface rather than a full reproduction of the original multitask training pipeline.
 
 
-Paper
------
+Paper and Code
+--------------
 
-See `EQTransformer repository <https://github.com/smousavi05/EQTransformer>`_.
+`Earthquake Transformer-An attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ (`repo <https://github.com/smousavi05/EQTransformer>`__).
 
 Catalog Status
 --------------
