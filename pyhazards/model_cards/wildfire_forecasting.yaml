@@ -1,5 +1,5 @@
 model_name: wildfire_forecasting
-display_name: wildfire_forecasting
+display_name: Wildfire Forecasting
 hazard: Wildfire
 catalog_status: core
 source_file: pyhazards/models/wildfire_forecasting.py

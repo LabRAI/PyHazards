@@ -3,24 +3,81 @@
 TCIF-fusion
 ===========
 
+Overview
+--------
+
+``tcif_fusion`` combines multiple feature streams behind the shared storm forecasting interface used throughout the PyHazards cyclone roadmap.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Tropical Cyclone
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Track + Intensity
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``tcif_fusion`` combines multiple feature streams behind the shared storm forecasting interface used throughout the PyHazards cyclone roadmap.
 
-
 The adapter focuses on the fusion contract and evaluator compatibility rather than full reproduction of the original training stack.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-`Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.5194/egusphere-2024-250>`_ (`repo <https://github.com/wangchong96/TCIF-fusion>`__).
+**Mapped benchmark ecosystems:** :doc:`TCBench Alpha </benchmarks/tcbench_alpha>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``core``
+**Paper:** `Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.5194/egusphere-2024-250>`_ | **Repo:** `Repository <https://github.com/wangchong96/TCIF-fusion>`__
 
 Registry Name
 -------------
@@ -30,10 +87,10 @@ Primary entrypoint: ``tcif_fusion``
 Supported Tasks
 ---------------
 
-- ``regression``
+- Track + Intensity
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

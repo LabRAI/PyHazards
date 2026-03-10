@@ -10,56 +10,102 @@ The earthquake benchmark family groups the picking and forecasting paths under o
 
 Current public coverage is synthetic-backed but already exposes the same task and report shape used across the earthquake smoke configs.
 
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Kind
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Family
+
+      .. container:: catalog-stat-note
+
+         Family benchmark or external ecosystem view.
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Earthquake
+
+      .. container:: catalog-stat-note
+
+         Public hazard grouping used on the benchmark index page.
+
+   .. grid-item-card:: Support Status
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :bdg-info:`Synthetic-backed`
+
+      .. container:: catalog-stat-note
+
+         Current maturity of the adapter or evaluator path.
+
+   .. grid-item-card:: Linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         5
+
+      .. container:: catalog-stat-note
+
+         5 models
+
+
 Benchmark Mapping
 -----------------
 
-Kind: ``family``
+**Shared benchmark key:** ``earthquake``
 
-Hazard family: ``Earthquake``
-
-Shared benchmark key: ``earthquake``
-
-Registered class: ``EarthquakeBenchmark``
-
-Support status: ``Synthetic-backed``
+**Registered class:** ``EarthquakeBenchmark``
 
 Mapped benchmark ecosystems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :doc:`AEFA </benchmarks/aefa>`, :doc:`pick-benchmark </benchmarks/pick_benchmark>`, :doc:`pyCSEP </benchmarks/pycsep>`, :doc:`SeisBench </benchmarks/seisbench>`.
 
-Supported Tasks
----------------
+.. dropdown:: Supported Tasks
+   :class-container: catalog-dropdown
 
-- ``earthquake.picking``
-- ``earthquake.forecasting``
+   - Phase Picking
+   - Wavefield Forecasting
 
-Key Metrics
------------
+.. dropdown:: Key Metrics
+   :class-container: catalog-dropdown
 
-- ``p_pick_mae``
-- ``s_pick_mae``
-- ``precision``
-- ``recall``
-- ``f1``
-- ``mae``
-- ``mse``
+   - ``p_pick_mae``
+   - ``s_pick_mae``
+   - ``precision``
+   - ``recall``
+   - ``f1``
+   - ``mae``
+   - ``mse``
 
-Smoke Configs
--------------
+.. dropdown:: Smoke Configs
+   :class-container: catalog-dropdown
 
-- ``phasenet_smoke.yaml``
-- ``eqtransformer_smoke.yaml``
-- ``gpd_smoke.yaml``
-- ``eqnet_smoke.yaml``
-- ``wavecastnet_benchmark_smoke.yaml``
+   - ``phasenet_smoke.yaml``
+   - ``eqtransformer_smoke.yaml``
+   - ``gpd_smoke.yaml``
+   - ``eqnet_smoke.yaml``
+   - ``wavecastnet_benchmark_smoke.yaml``
 
-Linked Models
--------------
+.. dropdown:: Linked Models
+   :class-container: catalog-dropdown
 
-:doc:`PhaseNet </modules/models_phasenet>`, :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`, :doc:`EQNet </modules/models_eqnet>`, :doc:`WaveCastNet </modules/models_wavecastnet>`.
+   :doc:`PhaseNet </modules/models_phasenet>`, :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`, :doc:`EQNet </modules/models_eqnet>`, :doc:`WaveCastNet </modules/models_wavecastnet>`.
 
-Notes
------
+.. dropdown:: Notes
+   :class-container: catalog-dropdown
 
-- Forecasting runs export a pyCSEP-style report artifact through the shared earthquake benchmark.
+   - Forecasting runs export a pyCSEP-style report artifact through the shared earthquake benchmark.

@@ -1,14 +1,18 @@
-.dataset-list.table-wrapper {
+.dataset-list.table-wrapper,
+.catalog-matrix.table-wrapper {
   font-size: 0.95rem;
   letter-spacing: 0.01em;
 }
 
-.dataset-list.table-wrapper table {
+.dataset-list.table-wrapper table,
+.catalog-matrix.table-wrapper table {
   width: 100%;
 }
 
-.dataset-list.table-wrapper td {
-  padding: 0.75rem 1rem;
+.dataset-list.table-wrapper td,
+.catalog-matrix.table-wrapper td,
+.catalog-matrix.table-wrapper th {
+  padding: 0.8rem 1rem;
   vertical-align: top;
 }
 
@@ -20,9 +24,165 @@
   white-space: nowrap;
 }
 
-.dataset-list.table-wrapper td:last-child {
+.dataset-list.table-wrapper td:last-child,
+.catalog-matrix.table-wrapper td {
   font-family: var(--font-stack);
   font-size: 0.95rem;
   line-height: 1.6;
+  color: var(--color-foreground-secondary);
+}
+
+.catalog-matrix.table-wrapper th {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.catalog-stat-card.sd-card,
+.catalog-entry-card.sd-card,
+.catalog-detail-card.sd-card {
+  border: 1px solid var(--color-background-border);
+  border-radius: 0.9rem;
+  box-shadow: none;
+}
+
+.catalog-stat-card.sd-card {
+  background: linear-gradient(180deg, var(--color-card-background), color-mix(in srgb, var(--color-card-background) 92%, var(--color-brand-primary) 8%));
+}
+
+.catalog-stat-card .sd-card-header,
+.catalog-entry-card .sd-card-header,
+.catalog-detail-card .sd-card-header {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.catalog-stat-card .sd-card-title,
+.catalog-entry-card .sd-card-title,
+.catalog-detail-card .sd-card-title {
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.catalog-stat-value {
+  margin: 0.35rem 0 0.2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-brand-primary);
+}
+
+.catalog-stat-note {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--color-foreground-secondary);
+}
+
+.catalog-section-note {
+  margin: 0.15rem 0 1.15rem;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--color-foreground-secondary);
+}
+
+.catalog-entry-card .sd-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.catalog-entry-name {
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.catalog-entry-summary {
+  margin: 0;
+  font-size: 0.97rem;
+  line-height: 1.65;
+  color: var(--color-foreground-secondary);
+}
+
+.catalog-chip-row,
+.catalog-meta-row,
+.catalog-link-row {
+  margin: 0;
+  line-height: 1.65;
+}
+
+.catalog-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.catalog-chip-row .sd-badge {
+  border-radius: 999px;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+}
+
+.catalog-meta-row,
+.catalog-link-row {
+  font-size: 0.9rem;
+  color: var(--color-foreground-secondary);
+}
+
+.catalog-link-row a {
+  font-weight: 600;
+}
+
+.catalog-grid {
+  margin-bottom: 1.3rem;
+}
+
+.catalog-tabs {
+  margin-top: 1rem;
+}
+
+.catalog-tabs .sd-tab-set > label {
+  font-weight: 600;
+}
+
+.catalog-tabs .sd-tab-content {
+  padding-top: 1rem;
+}
+
+.catalog-dropdown {
+  margin: 0.85rem 0;
+}
+
+.catalog-dropdown .sd-summary-title {
+  font-weight: 600;
+}
+
+.catalog-dropdown .sd-summary-content {
+  color: var(--color-foreground-secondary);
+}
+
+.catalog-dropdown ul {
+  margin: 0.35rem 0 0.35rem 1.2rem;
+}
+
+.catalog-detail-links {
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.catalog-detail-links strong {
+  color: var(--color-foreground-primary);
+}
+
+.catalog-recommend-grid .sd-card-title {
+  font-size: 0.95rem;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.catalog-recommend-grid .sd-card-body {
+  font-size: 0.94rem;
   color: var(--color-foreground-secondary);
 }

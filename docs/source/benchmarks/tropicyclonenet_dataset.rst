@@ -10,18 +10,64 @@ The current TropiCycloneNet-Dataset alignment uses a metadata-backed storm-histo
 
 It exists today to support the public TropiCycloneNet smoke benchmark path.
 
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Kind
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Ecosystem
+
+      .. container:: catalog-stat-note
+
+         Family benchmark or external ecosystem view.
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Tropical Cyclone
+
+      .. container:: catalog-stat-note
+
+         Public hazard grouping used on the benchmark index page.
+
+   .. grid-item-card:: Support Status
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :bdg-info:`Synthetic-backed`
+
+      .. container:: catalog-stat-note
+
+         Current maturity of the adapter or evaluator path.
+
+   .. grid-item-card:: Linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         1 model
+
+
 Benchmark Mapping
 -----------------
 
-Kind: ``ecosystem``
+**Shared benchmark key:** ``tc``
 
-Hazard family: ``Tropical Cyclone / Hurricane``
-
-Shared benchmark key: ``tc``
-
-Registered class: ``TropicalCycloneBenchmark``
-
-Support status: ``Synthetic-backed``
+**Registered class:** ``TropicalCycloneBenchmark``
 
 Mapped benchmark family
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,23 +79,23 @@ Primary Source
 
 `TropiCycloneNet-Dataset <https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset>`_.
 
-Supported Tasks
----------------
+.. dropdown:: Supported Tasks
+   :class-container: catalog-dropdown
 
-- ``tc.track_intensity``
+   - Track + Intensity
 
-Key Metrics
------------
+.. dropdown:: Key Metrics
+   :class-container: catalog-dropdown
 
-- ``track_error``
-- ``intensity_mae``
+   - ``track_error``
+   - ``intensity_mae``
 
-Smoke Configs
--------------
+.. dropdown:: Smoke Configs
+   :class-container: catalog-dropdown
 
-- ``tropicyclonenet_smoke.yaml``
+   - ``tropicyclonenet_smoke.yaml``
 
-Linked Models
--------------
+.. dropdown:: Linked Models
+   :class-container: catalog-dropdown
 
-:doc:`TropiCycloneNet </modules/models_tropicyclonenet>`.
+   :doc:`TropiCycloneNet </modules/models_tropicyclonenet>`.

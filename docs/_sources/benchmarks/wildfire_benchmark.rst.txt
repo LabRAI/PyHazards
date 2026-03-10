@@ -10,61 +10,107 @@ The wildfire benchmark family is the single scoring layer for tabular danger tas
 
 Current coverage is synthetic-backed, but it already exposes a single hazard-level evaluator contract across wildfire danger and wildfire spread smoke configs.
 
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Kind
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Family
+
+      .. container:: catalog-stat-note
+
+         Family benchmark or external ecosystem view.
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Wildfire
+
+      .. container:: catalog-stat-note
+
+         Public hazard grouping used on the benchmark index page.
+
+   .. grid-item-card:: Support Status
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :bdg-info:`Synthetic-backed`
+
+      .. container:: catalog-stat-note
+
+         Current maturity of the adapter or evaluator path.
+
+   .. grid-item-card:: Linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         8
+
+      .. container:: catalog-stat-note
+
+         8 models
+
+
 Benchmark Mapping
 -----------------
 
-Kind: ``family``
+**Shared benchmark key:** ``wildfire``
 
-Hazard family: ``Wildfire``
-
-Shared benchmark key: ``wildfire``
-
-Registered class: ``WildfireBenchmark``
-
-Support status: ``Synthetic-backed``
+**Registered class:** ``WildfireBenchmark``
 
 Mapped benchmark ecosystems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :doc:`WildfireSpreadTS </benchmarks/wildfirespreadts_ecosystem>`.
 
-Supported Tasks
----------------
+.. dropdown:: Supported Tasks
+   :class-container: catalog-dropdown
 
-- ``wildfire.danger``
-- ``wildfire.spread``
+   - Danger
+   - Spread
 
-Key Metrics
------------
+.. dropdown:: Key Metrics
+   :class-container: catalog-dropdown
 
-- ``accuracy``
-- ``macro_f1``
-- ``auc``
-- ``pr_auc``
-- ``mae``
-- ``rmse``
-- ``iou``
-- ``f1``
-- ``burned_area_mae``
+   - ``accuracy``
+   - ``macro_f1``
+   - ``auc``
+   - ``pr_auc``
+   - ``mae``
+   - ``rmse``
+   - ``iou``
+   - ``f1``
+   - ``burned_area_mae``
 
-Smoke Configs
--------------
+.. dropdown:: Smoke Configs
+   :class-container: catalog-dropdown
 
-- ``wildfire_danger_smoke.yaml``
-- ``wildfire_forecasting_smoke.yaml``
-- ``asufm_smoke.yaml``
-- ``wildfire_spread_smoke.yaml``
-- ``wildfirespreadts_smoke.yaml``
-- ``forefire_smoke.yaml``
-- ``wrf_sfire_smoke.yaml``
-- ``firecastnet_smoke.yaml``
+   - ``wildfire_danger_smoke.yaml``
+   - ``wildfire_forecasting_smoke.yaml``
+   - ``asufm_smoke.yaml``
+   - ``wildfire_spread_smoke.yaml``
+   - ``wildfirespreadts_smoke.yaml``
+   - ``forefire_smoke.yaml``
+   - ``wrf_sfire_smoke.yaml``
+   - ``firecastnet_smoke.yaml``
 
-Linked Models
--------------
+.. dropdown:: Linked Models
+   :class-container: catalog-dropdown
 
-:doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`wildfire_forecasting </modules/models_wildfire_forecasting>`, :doc:`ASUFM </modules/models_asufm>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS </modules/models_wildfirespreadts>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`FireCastNet </modules/models_firecastnet>`.
+   :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`ASUFM </modules/models_asufm>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS </modules/models_wildfirespreadts>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`FireCastNet </modules/models_firecastnet>`.
 
-Notes
------
+.. dropdown:: Notes
+   :class-container: catalog-dropdown
 
-- WildfireSpreadTS is the public Appendix-A benchmark ecosystem surfaced on this page.
+   - WildfireSpreadTS is the public Appendix-A benchmark ecosystem surfaced on this page.

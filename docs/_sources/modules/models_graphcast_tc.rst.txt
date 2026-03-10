@@ -3,24 +3,81 @@
 GraphCast TC Adapter
 ====================
 
+Overview
+--------
+
+``graphcast_tc`` is an experimental foundation-weather adapter that keeps the shared storm trajectory interface while remaining lightweight enough for CI.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Tropical Cyclone
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Experimental Adapter
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Track + Intensity
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``graphcast_tc`` is an experimental foundation-weather adapter that keeps the shared storm trajectory interface while remaining lightweight enough for CI.
 
-
 The PyHazards version is intentionally wrapper-style and should be treated as an adapter contract rather than a full reproduction of the original weather model.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-`GraphCast: Learning skillful medium-range global weather forecasting <https://www.science.org/doi/10.1126/science.adi2336>`_ (`repo <https://github.com/google-deepmind/graphcast>`__).
+**Mapped benchmark ecosystems:** :doc:`IBTrACS </benchmarks/ibtracs>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``experimental``
+**Paper:** `GraphCast: Learning skillful medium-range global weather forecasting <https://www.science.org/doi/10.1126/science.adi2336>`_ | **Repo:** `Repository <https://github.com/google-deepmind/graphcast>`__
 
 Registry Name
 -------------
@@ -30,10 +87,10 @@ Primary entrypoint: ``graphcast_tc``
 Supported Tasks
 ---------------
 
-- ``regression``
+- Track + Intensity
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

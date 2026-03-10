@@ -1,7 +1,7 @@
 slug: tropical_cyclone_benchmark
 display_name: Tropical Cyclone Benchmark
 kind: family
-hazard_family: Tropical Cyclone / Hurricane
+hazard_family: Tropical Cyclone
 benchmark_key: tc
 support_status: synthetic-backed
 summary: >

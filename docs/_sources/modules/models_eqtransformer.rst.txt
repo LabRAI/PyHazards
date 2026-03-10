@@ -3,24 +3,81 @@
 EQTransformer
 =============
 
+Overview
+--------
+
+``eqtransformer`` is the second earthquake picking baseline in the staged roadmap and shares the synthetic waveform contract used by ``phasenet``.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Earthquake
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Phase Picking
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``eqtransformer`` is the second earthquake picking baseline in the staged roadmap and shares the synthetic waveform contract used by ``phasenet``.
 
-
 The PyHazards adapter focuses on the shared picking interface rather than a full reproduction of the original multitask training pipeline.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
 
-`Earthquake Transformer-An attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ (`repo <https://github.com/smousavi05/EQTransformer>`__).
+**Mapped benchmark ecosystems:** :doc:`pick-benchmark </benchmarks/pick_benchmark>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``core``
+**Paper:** `Earthquake Transformer-An attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ | **Repo:** `Repository <https://github.com/smousavi05/EQTransformer>`__
 
 Registry Name
 -------------
@@ -30,10 +87,10 @@ Primary entrypoint: ``eqtransformer``
 Supported Tasks
 ---------------
 
-- ``regression``
+- Phase Picking
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

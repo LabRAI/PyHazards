@@ -3,24 +3,81 @@
 HydroGraphNet
 =============
 
+Overview
+--------
+
+``hydrographnet`` is the PyHazards entrypoint for flood forecasting on irregular meshes with graph-structured hydrologic state updates.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Flood
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Streamflow
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Flood Benchmark </benchmarks/flood_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``hydrographnet`` is the PyHazards entrypoint for flood forecasting on irregular meshes with graph-structured hydrologic state updates.
 
-
 In PyHazards, this model is typically paired with the ERA5-based hydrograph adapter ``load_hydrograph_data`` for end-to-end smoke validation.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Flood Benchmark </benchmarks/flood_benchmark>`
 
-`Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_.
+**Mapped benchmark ecosystems:** :doc:`HydroBench </benchmarks/hydrobench>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``variant``
+**Paper:** `Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_
 
 Registry Name
 -------------
@@ -30,10 +87,10 @@ Primary entrypoint: ``hydrographnet``
 Supported Tasks
 ---------------
 
-- ``regression``
+- Streamflow
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

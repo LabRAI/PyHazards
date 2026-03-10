@@ -10,18 +10,64 @@ The current Caravan alignment is a metadata-backed streamflow adapter layered on
 
 It currently drives the public smoke runs for NeuralHydrology LSTM and Google Flood Forecasting.
 
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Kind
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Ecosystem
+
+      .. container:: catalog-stat-note
+
+         Family benchmark or external ecosystem view.
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Flood
+
+      .. container:: catalog-stat-note
+
+         Public hazard grouping used on the benchmark index page.
+
+   .. grid-item-card:: Support Status
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :bdg-info:`Synthetic-backed`
+
+      .. container:: catalog-stat-note
+
+         Current maturity of the adapter or evaluator path.
+
+   .. grid-item-card:: Linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         2
+
+      .. container:: catalog-stat-note
+
+         2 models
+
+
 Benchmark Mapping
 -----------------
 
-Kind: ``ecosystem``
+**Shared benchmark key:** ``flood``
 
-Hazard family: ``Flood``
-
-Shared benchmark key: ``flood``
-
-Registered class: ``FloodBenchmark``
-
-Support status: ``Synthetic-backed``
+**Registered class:** ``FloodBenchmark``
 
 Mapped benchmark family
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,26 +79,26 @@ Primary Source
 
 `Caravan - A global community dataset for large-sample hydrology <https://www.nature.com/articles/s41597-023-01975-w>`_ (`repo <https://github.com/kratzert/Caravan>`__).
 
-Supported Tasks
----------------
+.. dropdown:: Supported Tasks
+   :class-container: catalog-dropdown
 
-- ``flood.streamflow``
+   - Streamflow
 
-Key Metrics
------------
+.. dropdown:: Key Metrics
+   :class-container: catalog-dropdown
 
-- ``mae``
-- ``rmse``
-- ``nse``
-- ``kge``
+   - ``mae``
+   - ``rmse``
+   - ``nse``
+   - ``kge``
 
-Smoke Configs
--------------
+.. dropdown:: Smoke Configs
+   :class-container: catalog-dropdown
 
-- ``neuralhydrology_lstm_smoke.yaml``
-- ``google_flood_forecasting_smoke.yaml``
+   - ``neuralhydrology_lstm_smoke.yaml``
+   - ``google_flood_forecasting_smoke.yaml``
 
-Linked Models
--------------
+.. dropdown:: Linked Models
+   :class-container: catalog-dropdown
 
-:doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`.
+   :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`.

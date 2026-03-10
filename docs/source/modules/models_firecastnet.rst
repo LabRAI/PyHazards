@@ -3,24 +3,81 @@
 FireCastNet
 ===========
 
+Overview
+--------
+
+``firecastnet`` is a raster wildfire spread baseline that uses a shallow encoder-decoder architecture.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Wildfire
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Spread
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Wildfire Benchmark </benchmarks/wildfire_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``firecastnet`` is a raster wildfire spread baseline that uses a shallow encoder-decoder architecture.
 
-
 The PyHazards implementation is optimized for the shared smoke benchmark rather than the full upstream training stack.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Wildfire Benchmark </benchmarks/wildfire_benchmark>`
 
-`FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction <https://doi.org/10.1038/s41598-025-30645-7>`_ (`repo <https://github.com/SeasFire/firecastnet>`__).
+**Mapped benchmark ecosystems:** :doc:`WildfireSpreadTS </benchmarks/wildfirespreadts_ecosystem>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``core``
+**Paper:** `FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction <https://doi.org/10.1038/s41598-025-30645-7>`_ | **Repo:** `Repository <https://github.com/SeasFire/firecastnet>`__
 
 Registry Name
 -------------
@@ -30,11 +87,10 @@ Primary entrypoint: ``firecastnet``
 Supported Tasks
 ---------------
 
-- ``segmentation``
-- ``regression``
+- Spread
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

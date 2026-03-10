@@ -3,24 +3,81 @@
 EQNet
 =====
 
+Overview
+--------
+
+``eqnet`` extends the PyHazards earthquake benchmark stack with a lightweight attention-based picking model.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Earthquake
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Phase Picking
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``eqnet`` extends the PyHazards earthquake benchmark stack with a lightweight attention-based picking model.
 
-
 The implementation keeps the shared waveform input and two-pick output contract so it can be evaluated alongside ``phasenet`` and ``eqtransformer``.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
 
-`An End-To-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning <https://www.osti.gov/biblio/1978539>`_ (`repo <https://github.com/AI4EPS/EQNet>`__).
+**Mapped benchmark ecosystems:** :doc:`SeisBench </benchmarks/seisbench>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``core``
+**Paper:** `An End-To-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning <https://www.osti.gov/biblio/1978539>`_ | **Repo:** `Repository <https://github.com/AI4EPS/EQNet>`__
 
 Registry Name
 -------------
@@ -30,10 +87,10 @@ Primary entrypoint: ``eqnet``
 Supported Tasks
 ---------------
 
-- ``regression``
+- Phase Picking
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

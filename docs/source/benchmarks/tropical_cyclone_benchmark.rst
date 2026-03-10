@@ -10,53 +10,99 @@ The tropical cyclone benchmark family is the single storm evaluator used by the 
 
 Current coverage is synthetic-backed, but the same evaluator contract already scores core storm baselines and experimental weather-model adapters.
 
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Kind
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Family
+
+      .. container:: catalog-stat-note
+
+         Family benchmark or external ecosystem view.
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Tropical Cyclone
+
+      .. container:: catalog-stat-note
+
+         Public hazard grouping used on the benchmark index page.
+
+   .. grid-item-card:: Support Status
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :bdg-info:`Synthetic-backed`
+
+      .. container:: catalog-stat-note
+
+         Current maturity of the adapter or evaluator path.
+
+   .. grid-item-card:: Linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         8
+
+      .. container:: catalog-stat-note
+
+         8 models
+
+
 Benchmark Mapping
 -----------------
 
-Kind: ``family``
+**Shared benchmark key:** ``tc``
 
-Hazard family: ``Tropical Cyclone / Hurricane``
-
-Shared benchmark key: ``tc``
-
-Registered class: ``TropicalCycloneBenchmark``
-
-Support status: ``Synthetic-backed``
+**Registered class:** ``TropicalCycloneBenchmark``
 
 Mapped benchmark ecosystems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :doc:`IBTrACS </benchmarks/ibtracs>`, :doc:`TCBench Alpha </benchmarks/tcbench_alpha>`, :doc:`TropiCycloneNet-Dataset </benchmarks/tropicyclonenet_dataset>`.
 
-Supported Tasks
----------------
+.. dropdown:: Supported Tasks
+   :class-container: catalog-dropdown
 
-- ``tc.track_intensity``
+   - Track + Intensity
 
-Key Metrics
------------
+.. dropdown:: Key Metrics
+   :class-container: catalog-dropdown
 
-- ``track_error``
-- ``intensity_mae``
+   - ``track_error``
+   - ``intensity_mae``
 
-Smoke Configs
--------------
+.. dropdown:: Smoke Configs
+   :class-container: catalog-dropdown
 
-- ``hurricast_smoke.yaml``
-- ``tropicalcyclone_mlp_smoke.yaml``
-- ``tropicyclonenet_smoke.yaml``
-- ``saf_net_smoke.yaml``
-- ``tcif_fusion_smoke.yaml``
-- ``graphcast_tc_smoke.yaml``
-- ``pangu_tc_smoke.yaml``
-- ``fourcastnet_tc_smoke.yaml``
+   - ``hurricast_smoke.yaml``
+   - ``tropicalcyclone_mlp_smoke.yaml``
+   - ``tropicyclonenet_smoke.yaml``
+   - ``saf_net_smoke.yaml``
+   - ``tcif_fusion_smoke.yaml``
+   - ``graphcast_tc_smoke.yaml``
+   - ``pangu_tc_smoke.yaml``
+   - ``fourcastnet_tc_smoke.yaml``
 
-Linked Models
--------------
+.. dropdown:: Linked Models
+   :class-container: catalog-dropdown
 
-:doc:`Hurricast </modules/models_hurricast>`, :doc:`tropicalcyclone_MLP </modules/models_tropicalcyclone_mlp>`, :doc:`TropiCycloneNet </modules/models_tropicyclonenet>`, :doc:`SAF-Net </modules/models_saf_net>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`, :doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`.
+   :doc:`Hurricast </modules/models_hurricast>`, :doc:`Tropical Cyclone MLP </modules/models_tropicalcyclone_mlp>`, :doc:`TropiCycloneNet </modules/models_tropicyclonenet>`, :doc:`SAF-Net </modules/models_saf_net>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`, :doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`.
 
-Notes
------
+.. dropdown:: Notes
+   :class-container: catalog-dropdown
 
-- IBTrACS, TCBench Alpha, and TropiCycloneNet-Dataset are surfaced as the public storm benchmark ecosystems.
+   - IBTrACS, TCBench Alpha, and TropiCycloneNet-Dataset are surfaced as the public storm benchmark ecosystems.

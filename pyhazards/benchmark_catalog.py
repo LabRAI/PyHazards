@@ -27,8 +27,6 @@ HAZARD_DISPLAY_ORDER = [
     "Wildfire",
     "Earthquake",
     "Flood",
-    "Hurricane",
-    "Tropical Cyclone / Hurricane",
     "Tropical Cyclone",
 ]
 
@@ -36,6 +34,44 @@ SUPPORT_STATUS_LABELS = {
     "synthetic-backed": "Synthetic-backed",
     "real-backed": "Real-backed",
     "experimental": "Experimental",
+}
+
+TASK_DISPLAY_LABELS = {
+    "wildfire.danger": "Danger",
+    "wildfire.spread": "Spread",
+    "earthquake.picking": "Phase Picking",
+    "earthquake.forecasting": "Wavefield Forecasting",
+    "flood.streamflow": "Streamflow",
+    "flood.inundation": "Inundation",
+    "tc.track_intensity": "Track + Intensity",
+}
+
+SUPPORT_STATUS_BADGE_ROLES = {
+    "synthetic-backed": "info",
+    "real-backed": "success",
+    "experimental": "warning",
+}
+
+METRIC_DISPLAY_LABELS = {
+    "accuracy": "Accuracy",
+    "macro_f1": "Macro F1",
+    "auc": "AUC",
+    "pr_auc": "PR-AUC",
+    "mae": "MAE",
+    "rmse": "RMSE",
+    "mse": "MSE",
+    "iou": "IoU",
+    "f1": "F1",
+    "precision": "Precision",
+    "recall": "Recall",
+    "nse": "NSE",
+    "kge": "KGE",
+    "p_pick_mae": "P-pick MAE",
+    "s_pick_mae": "S-pick MAE",
+    "pixel_mae": "Pixel MAE",
+    "burned_area_mae": "Burned-area MAE",
+    "track_error": "Track Error",
+    "intensity_mae": "Intensity MAE",
 }
 
 
@@ -106,6 +142,23 @@ def _ordered_unique(items: Iterable[str]) -> List[str]:
 
 def _single_line(text: str) -> str:
     return " ".join(text.split())
+
+
+def _indent_lines(lines: Sequence[str], prefix: str = "   ") -> List[str]:
+    return [prefix + line if line else "" for line in lines]
+
+
+def _badge(role: str, text: str) -> str:
+    return f":bdg-{role}:`{text}`"
+
+
+def _task_labels(tasks: Sequence[str]) -> List[str]:
+    return _ordered_unique(TASK_DISPLAY_LABELS.get(task, task) for task in tasks)
+
+
+def _count_phrase(count: int, noun: str) -> str:
+    suffix = "" if count == 1 else "s"
+    return f"{count} {noun}{suffix}"
 
 
 def _benchmark_metrics(benchmark_key: str) -> Dict[str, Sequence[str]]:
@@ -290,12 +343,175 @@ def benchmark_catalog_alignment_issues(cards: Optional[Sequence[BenchmarkCard]] 
     return issues
 
 
+def _stat_card(title: str, value: str, note: str) -> List[str]:
+    return [
+        ".. grid-item-card:: {title}".format(title=title),
+        "   :class-card: catalog-stat-card",
+        "",
+        "   .. container:: catalog-stat-value",
+        "",
+        "      {value}".format(value=value),
+        "",
+        "   .. container:: catalog-stat-note",
+        "",
+        "      {note}".format(note=note),
+        "",
+    ]
+
+
+def _model_count_label(card: BenchmarkCard) -> str:
+    count = len(card.linked_models)
+    return "{count} model{suffix}".format(count=count, suffix="" if count == 1 else "s")
+
+
+def _ecosystem_count(cards: Sequence[BenchmarkCard], benchmark_key: str) -> int:
+    return len(
+        [
+            card
+            for card in cards
+            if card.kind == "ecosystem" and card.benchmark_key == benchmark_key
+        ]
+    )
+
+
+def _summary_metrics(metrics: Sequence[str], limit: int = 4) -> str:
+    labels = [METRIC_DISPLAY_LABELS.get(metric, metric.replace("_", " ").title()) for metric in metrics[:limit]]
+    if len(metrics) > limit:
+        labels.append("+{count} more".format(count=len(metrics) - limit))
+    return ", ".join(labels)
+
+
+def _summary_tasks(tasks: Sequence[str]) -> str:
+    return ", ".join(_task_labels(tasks))
+
+
+def _render_family_card(card: BenchmarkCard, cards: Sequence[BenchmarkCard]) -> List[str]:
+    badge_line = " ".join(
+        [
+            _badge("primary", card.hazard_family),
+            *[_badge("secondary", label) for label in _task_labels(card.tasks)],
+            _badge(
+                SUPPORT_STATUS_BADGE_ROLES[card.support_status],
+                _status_label(card),
+            ),
+        ]
+    )
+    return [
+        ".. grid-item-card:: {title}".format(title=card.display_name),
+        "   :class-card: catalog-entry-card",
+        "",
+        "   .. container:: catalog-entry-summary",
+        "",
+        "      {summary}".format(summary=_single_line(card.summary).rstrip(".") + "."),
+        "",
+        "   .. container:: catalog-chip-row",
+        "",
+        "      {badges}".format(badges=badge_line),
+        "",
+        "   .. container:: catalog-meta-row",
+        "",
+        "      **Tasks:** {tasks}".format(tasks=_summary_tasks(card.tasks)),
+        "",
+        "   .. container:: catalog-meta-row",
+        "",
+        "      **Key Metrics:** {metrics}".format(metrics=_summary_metrics(card.metrics)),
+        "",
+        "   .. container:: catalog-meta-row",
+        "",
+        "      **Coverage:** {configs} | {models} | {ecosystems}".format(
+            configs=_count_phrase(len(card.smoke_configs), "smoke config"),
+            models=_model_count_label(card),
+            ecosystems=_count_phrase(_ecosystem_count(cards, card.benchmark_key), "ecosystem"),
+        ),
+        "",
+        "   .. container:: catalog-link-row",
+        "",
+        "      **View Details:** {details}".format(
+            details=_benchmark_doc_link(card),
+        ),
+        "",
+    ]
+
+
+def _render_ecosystem_card(card: BenchmarkCard, family_lookup: Dict[str, BenchmarkCard]) -> List[str]:
+    family = family_lookup[card.benchmark_key]
+    badge_line = " ".join(
+        [
+            _badge("primary", card.hazard_family),
+            *[_badge("secondary", label) for label in _task_labels(card.tasks)],
+            _badge(
+                SUPPORT_STATUS_BADGE_ROLES[card.support_status],
+                _status_label(card),
+            ),
+        ]
+    )
+    source_links = [f"**Paper:** `{card.source.title} <{card.source.url}>`_"] if card.source else []
+    if card.source and card.source.repo_url:
+        source_links.append(f"**Repo:** `Repository <{card.source.repo_url}>`__")
+    return [
+        ".. grid-item-card:: {title}".format(title=card.display_name),
+        "   :class-card: catalog-entry-card",
+        "",
+        "   .. container:: catalog-entry-summary",
+        "",
+        "      {summary}".format(summary=_single_line(card.summary).rstrip(".") + "."),
+        "",
+        "   .. container:: catalog-chip-row",
+        "",
+        "      {badges}".format(badges=badge_line),
+        "",
+        "   .. container:: catalog-meta-row",
+        "",
+        "      **Benchmark Family:** {family}".format(
+            family=_benchmark_doc_link(family),
+        ),
+        "",
+        "   .. container:: catalog-meta-row",
+        "",
+        "      **Key Metrics:** {metrics}".format(metrics=_summary_metrics(card.metrics)),
+        "",
+        "   .. container:: catalog-meta-row",
+        "",
+        "      **Coverage:** {configs} | {models}".format(
+            configs=_count_phrase(len(card.smoke_configs), "smoke config"),
+            models=_model_count_label(card),
+        ),
+        "",
+        "   .. container:: catalog-link-row",
+        "",
+        "      **View Details:** {details}".format(details=_benchmark_doc_link(card)),
+        "",
+        "   .. container:: catalog-link-row",
+        "",
+        "      {links}".format(links=" | ".join(source_links)),
+        "",
+    ]
+
+
+def _render_card_grid(entries: Sequence[List[str]]) -> List[str]:
+    lines: List[str] = [
+        ".. grid:: 1 1 2 2",
+        "   :gutter: 2",
+        "   :class-container: catalog-grid",
+        "",
+    ]
+    for entry in entries:
+        lines.extend(_indent_lines(entry))
+    return lines
+
+
 def render_benchmark_page(cards: Optional[Sequence[BenchmarkCard]] = None) -> str:
     if cards is None:
         cards = load_benchmark_cards()
     family_lookup = _family_lookup(cards)
     families = _group_cards(cards, "family")
     ecosystems = _group_cards(cards, "ecosystem")
+    family_cards = [card for card in cards if card.kind == "family"]
+    ecosystem_cards = [card for card in cards if card.kind == "ecosystem"]
+    unique_tasks = _ordered_unique(task for card in family_cards for task in card.tasks)
+    unique_smoke_configs = _ordered_unique(
+        config for card in family_cards for config in card.smoke_configs
+    )
 
     lines: List[str] = [
         GENERATED_MARKER,
@@ -303,38 +519,105 @@ def render_benchmark_page(cards: Optional[Sequence[BenchmarkCard]] = None) -> st
         "Benchmarks",
         "===================",
         "",
-        "Overview",
-        "--------",
+        "Explore shared benchmark families, aligned external ecosystems, supported",
+        "tasks, and model compatibility across PyHazards.",
         "",
-        "Use this page to browse the benchmark families implemented in PyHazards",
-        "and the Appendix-A benchmark ecosystems they currently align to. Each",
-        "linked benchmark entry leads to a detail page with support status, smoke",
-        "configs, metrics, and linked models.",
+        "At a Glance",
+        "-----------",
         "",
-        "Benchmark Families",
-        "------------------",
+        ".. grid:: 1 2 4 4",
+        "   :gutter: 2",
+        "   :class-container: catalog-grid",
         "",
-        "These are the shared evaluator families exposed through the benchmark",
-        "runner. Each row links to a detail page describing the family contract,",
-        "tasks, metrics, smoke configs, and mapped external benchmark ecosystems.",
-        "",
-        ".. list-table::",
-        "   :widths: 18 26 56",
-        "   :header-rows: 1",
-        "   :class: dataset-list",
-        "",
-        "   * - Hazard Family",
-        "     - Benchmark",
-        "     - Description",
     ]
+    lines.extend(
+        _indent_lines(
+            _stat_card(
+                "Benchmark Families",
+                str(len(family_cards)),
+                "Shared evaluator families available through the benchmark runner.",
+            )
+        )
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card(
+                "Ecosystem Mappings",
+                str(len(ecosystem_cards)),
+                "External benchmark or data ecosystems linked from the public docs.",
+            )
+        )
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card(
+                "Supported Task Families",
+                str(len(unique_tasks)),
+                "Hazard tasks covered across the family-level benchmark contracts.",
+            )
+        )
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card(
+                "Smoke Configurations",
+                str(len(unique_smoke_configs)),
+                "Unique smoke configs referenced by the benchmark family cards.",
+            )
+        )
+    )
 
-    for hazard, hazard_cards in families.items():
-        for card in hazard_cards:
+    lines.extend(
+        [
+            "",
+            "Benchmark Families",
+            "------------------",
+            "",
+            "These four cards summarize the benchmark families exposed through the",
+            "shared runner and compress the core tasks, metrics, support level, and",
+            "coverage counts into a scan-friendly catalog.",
+            "",
+        ]
+    )
+    family_grid_cards: List[List[str]] = []
+    for hazard in HAZARD_DISPLAY_ORDER:
+        for card in families.get(hazard, []):
+            family_grid_cards.append(_render_family_card(card, cards))
+    lines.extend(_render_card_grid(family_grid_cards))
+
+    lines.extend(
+        [
+            "",
+            "Coverage Matrix",
+            "---------------",
+            "",
+            "Use the matrix below for side-by-side comparison of hazard coverage,",
+            "family-level tasks, primary metrics, linked-model counts, and support",
+            "status without opening the detail pages first.",
+            "",
+            ".. list-table::",
+            "   :widths: 14 22 18 20 14 12",
+            "   :header-rows: 1",
+            "   :class: catalog-matrix",
+            "",
+            "   * - Hazard",
+            "     - Benchmark Family",
+            "     - Tasks",
+            "     - Primary Metrics",
+            "     - Linked Models",
+            "     - Support Status",
+        ]
+    )
+    for hazard in HAZARD_DISPLAY_ORDER:
+        for card in families.get(hazard, []):
             lines.extend(
                 [
-                    f"   * - {hazard}",
-                    f"     - {_benchmark_doc_link(card)}",
-                    f"     - {_row_summary(card, family_lookup)}",
+                    "   * - {hazard}".format(hazard=hazard),
+                    "     - {family}".format(family=_benchmark_doc_link(card)),
+                    "     - {tasks}".format(tasks=_summary_tasks(card.tasks)),
+                    "     - {metrics}".format(metrics=_summary_metrics(card.metrics)),
+                    "     - {models}".format(models=_model_count_label(card)),
+                    "     - {status}".format(status=_status_label(card)),
                 ]
             )
 
@@ -344,36 +627,45 @@ def render_benchmark_page(cards: Optional[Sequence[BenchmarkCard]] = None) -> st
             "Benchmark Ecosystems",
             "--------------------",
             "",
-            "These rows cover the Appendix-A benchmark or evaluation ecosystems that",
-            "shape the current PyHazards benchmark workflow. They stay separate from",
-            "model baselines and link back to the shared benchmark families.",
+            "Browse the aligned benchmark ecosystems by hazard family. Each card",
+            "links to a detail page with the routed benchmark family, source links,",
+            "and the models currently mapped to that ecosystem.",
             "",
-            ".. list-table::",
-            "   :widths: 18 26 56",
-            "   :header-rows: 1",
-            "   :class: dataset-list",
+            ".. tab-set::",
+            "   :class: catalog-tabs",
             "",
-            "   * - Hazard Family",
-            "     - Benchmark Ecosystem",
-            "     - Description",
         ]
     )
 
-    for hazard, hazard_cards in ecosystems.items():
-        for card in hazard_cards:
-            lines.extend(
-                [
-                    f"   * - {hazard}",
-                    f"     - {_benchmark_doc_link(card)}",
-                    f"     - {_row_summary(card, family_lookup)}",
-                ]
+    for hazard in HAZARD_DISPLAY_ORDER:
+        hazard_cards = ecosystems.get(hazard, [])
+        if not hazard_cards:
+            continue
+        tab_lines: List[str] = [
+            ".. tab-item:: {hazard}".format(hazard=hazard),
+            "",
+            "   .. container:: catalog-section-note",
+            "",
+            "      Ecosystem cards describe the external benchmark or data protocol",
+            "      surfaced on this page and show how it maps back to the shared",
+            "      PyHazards benchmark family.",
+            "",
+        ]
+        tab_lines.extend(
+            _indent_lines(
+                _render_card_grid(
+                    [_render_ecosystem_card(card, family_lookup) for card in hazard_cards]
+                )
             )
+        )
+        tab_lines.append("")
+        lines.extend(_indent_lines(tab_lines))
 
     lines.extend(
         [
             "",
-            "Typical Usage",
-            "-------------",
+            "Programmatic Use",
+            "----------------",
             "",
             ".. code-block:: python",
             "",
@@ -384,16 +676,9 @@ def render_benchmark_page(cards: Optional[Sequence[BenchmarkCard]] = None) -> st
             "    summary = BenchmarkRunner().run(config)",
             "    print(summary.metrics)",
             "",
-            "Command-Line Entry Point",
-            "------------------------",
-            "",
-            "Use ``python scripts/run_benchmark.py --help`` to inspect the shared",
-            "benchmark runner CLI and list available hazard tasks or registered",
-            "benchmark families.",
-            "",
-            "Next step: pair this page with :doc:`pyhazards_configs` when you want",
-            "to author experiment YAML files and :doc:`pyhazards_reports` when you",
-            "want to export comparable benchmark summaries.",
+            "Use ``python scripts/run_benchmark.py --help`` for the CLI entry point,",
+            "then pair this page with :doc:`pyhazards_configs` for experiment YAMLs",
+            "and :doc:`pyhazards_reports` for comparable benchmark exports.",
             "",
             ".. toctree::",
             "   :maxdepth: 1",
@@ -415,6 +700,11 @@ def render_benchmark_detail_page(
 ) -> str:
     family_lookup = _family_lookup(cards)
     benchmark = build_benchmark(card.benchmark_key)
+    support_badge = _badge(
+        SUPPORT_STATUS_BADGE_ROLES[card.support_status],
+        _status_label(card),
+    )
+    linked_models = _linked_models(card, absolute=True)
 
     lines: List[str] = [
         GENERATED_MARKER,
@@ -432,18 +722,45 @@ def render_benchmark_detail_page(
 
     lines.extend(
         [
+            "At a Glance",
+            "-----------",
+            "",
+            ".. grid:: 1 2 4 4",
+            "   :gutter: 2",
+            "   :class-container: catalog-grid",
+            "",
+        ]
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card("Kind", card.kind.title(), "Family benchmark or external ecosystem view.")
+        )
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card("Hazard Family", card.hazard_family, "Public hazard grouping used on the benchmark index page.")
+        )
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card("Support Status", support_badge, "Current maturity of the adapter or evaluator path.")
+        )
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card("Linked Models", str(len(card.linked_models)), _model_count_label(card))
+        )
+    )
+
+    lines.extend(
+        [
+            "",
             "Benchmark Mapping",
             "-----------------",
             "",
-            f"Kind: ``{card.kind}``",
+            "**Shared benchmark key:** ``{key}``".format(key=card.benchmark_key),
             "",
-            f"Hazard family: ``{card.hazard_family}``",
-            "",
-            f"Shared benchmark key: ``{card.benchmark_key}``",
-            "",
-            f"Registered class: ``{benchmark.__class__.__name__}``",
-            "",
-            f"Support status: ``{_status_label(card)}``",
+            "**Registered class:** ``{name}``".format(name=benchmark.__class__.__name__),
             "",
         ]
     )
@@ -468,8 +785,8 @@ def render_benchmark_detail_page(
                     "",
                     source,
                     "",
-                ]
-            )
+            ]
+        )
     else:
         lines.extend(
             [
@@ -483,51 +800,51 @@ def render_benchmark_detail_page(
 
     lines.extend(
         [
-            "Supported Tasks",
-            "---------------",
+            ".. dropdown:: Supported Tasks",
+            "   :class-container: catalog-dropdown",
             "",
         ]
     )
     for task in card.tasks:
-        lines.append(f"- ``{task}``")
+        lines.append("   - {task}".format(task=TASK_DISPLAY_LABELS.get(task, task)))
     lines.append("")
 
     lines.extend(
         [
-            "Key Metrics",
-            "-----------",
+            ".. dropdown:: Key Metrics",
+            "   :class-container: catalog-dropdown",
             "",
         ]
     )
     for metric in card.metrics:
-        lines.append(f"- ``{metric}``")
+        lines.append("   - ``{metric}``".format(metric=metric))
     lines.append("")
 
     lines.extend(
         [
-            "Smoke Configs",
-            "-------------",
+            ".. dropdown:: Smoke Configs",
+            "   :class-container: catalog-dropdown",
             "",
         ]
     )
     for config_path in card.smoke_configs:
-        lines.append(f"- ``{Path(config_path).name}``")
+        lines.append("   - ``{name}``".format(name=Path(config_path).name))
     lines.append("")
 
     lines.extend(
         [
-            "Linked Models",
-            "-------------",
+            ".. dropdown:: Linked Models",
+            "   :class-container: catalog-dropdown",
             "",
-            _linked_models(card, absolute=True),
+            "   {models}".format(models=linked_models),
             "",
         ]
     )
 
     if card.notes:
-        lines.extend(["Notes", "-----", ""])
+        lines.extend([".. dropdown:: Notes", "   :class-container: catalog-dropdown", ""])
         for note in card.notes:
-            lines.append(f"- {_single_line(note)}")
+            lines.append("   - {note}".format(note=_single_line(note)))
         lines.append("")
 
     return "\n".join(lines)

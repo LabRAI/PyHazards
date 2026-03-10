@@ -10,18 +10,64 @@ WildfireSpreadTS is the public wildfire benchmark ecosystem surfaced from Append
 
 The current repo uses a synthetic temporal spread dataset to exercise the same spread-task contract for WildfireSpreadTS-style evaluation.
 
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Kind
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Ecosystem
+
+      .. container:: catalog-stat-note
+
+         Family benchmark or external ecosystem view.
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Wildfire
+
+      .. container:: catalog-stat-note
+
+         Public hazard grouping used on the benchmark index page.
+
+   .. grid-item-card:: Support Status
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :bdg-info:`Synthetic-backed`
+
+      .. container:: catalog-stat-note
+
+         Current maturity of the adapter or evaluator path.
+
+   .. grid-item-card:: Linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         5
+
+      .. container:: catalog-stat-note
+
+         5 models
+
+
 Benchmark Mapping
 -----------------
 
-Kind: ``ecosystem``
+**Shared benchmark key:** ``wildfire``
 
-Hazard family: ``Wildfire``
-
-Shared benchmark key: ``wildfire``
-
-Registered class: ``WildfireBenchmark``
-
-Support status: ``Synthetic-backed``
+**Registered class:** ``WildfireBenchmark``
 
 Mapped benchmark family
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,28 +79,28 @@ Primary Source
 
 `WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ (`repo <https://github.com/SebastianGer/WildfireSpreadTS>`__).
 
-Supported Tasks
----------------
+.. dropdown:: Supported Tasks
+   :class-container: catalog-dropdown
 
-- ``wildfire.spread``
+   - Spread
 
-Key Metrics
------------
+.. dropdown:: Key Metrics
+   :class-container: catalog-dropdown
 
-- ``iou``
-- ``f1``
-- ``burned_area_mae``
+   - ``iou``
+   - ``f1``
+   - ``burned_area_mae``
 
-Smoke Configs
--------------
+.. dropdown:: Smoke Configs
+   :class-container: catalog-dropdown
 
-- ``wildfire_spread_smoke.yaml``
-- ``wildfirespreadts_smoke.yaml``
-- ``forefire_smoke.yaml``
-- ``wrf_sfire_smoke.yaml``
-- ``firecastnet_smoke.yaml``
+   - ``wildfire_spread_smoke.yaml``
+   - ``wildfirespreadts_smoke.yaml``
+   - ``forefire_smoke.yaml``
+   - ``wrf_sfire_smoke.yaml``
+   - ``firecastnet_smoke.yaml``
 
-Linked Models
--------------
+.. dropdown:: Linked Models
+   :class-container: catalog-dropdown
 
-:doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS </modules/models_wildfirespreadts>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`FireCastNet </modules/models_firecastnet>`.
+   :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS </modules/models_wildfirespreadts>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`FireCastNet </modules/models_firecastnet>`.

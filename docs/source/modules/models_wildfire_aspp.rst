@@ -3,24 +3,81 @@
 CNN-ASPP
 ========
 
+Overview
+--------
+
+``wildfire_aspp`` is the backward-compatible public PyHazards entrypoint for the CNN + ASPP wildfire spread model.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Wildfire
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Spread
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Wildfire Benchmark </benchmarks/wildfire_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``wildfire_aspp`` is the backward-compatible public PyHazards entrypoint for the CNN + ASPP wildfire spread model.
 
-
 PyHazards keeps the alias for compatibility while the implementation delegates to the native ``wildfire_cnn_aspp`` builder under the hood.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Wildfire Benchmark </benchmarks/wildfire_benchmark>`
 
-`Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_.
+**Mapped benchmark ecosystems:** :doc:`WildfireSpreadTS </benchmarks/wildfirespreadts_ecosystem>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``variant``
+**Paper:** `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_
 
 Registry Name
 -------------
@@ -32,10 +89,10 @@ Aliases: ``wildfire_cnn_aspp``
 Supported Tasks
 ---------------
 
-- ``segmentation``
+- Spread
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

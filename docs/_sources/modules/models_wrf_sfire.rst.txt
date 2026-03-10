@@ -3,24 +3,81 @@
 WRF-SFIRE Adapter
 =================
 
+Overview
+--------
+
+``wrf_sfire`` approximates simulator-style spread transport with a fixed diffusion and terrain-moisture modulation layer.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Wildfire
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Spread
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Wildfire Benchmark </benchmarks/wildfire_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``wrf_sfire`` approximates simulator-style spread transport with a fixed diffusion and terrain-moisture modulation layer.
 
-
 The PyHazards adapter is designed for consistent smoke benchmarking rather than full physical simulation.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Wildfire Benchmark </benchmarks/wildfire_benchmark>`
 
-`Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011 <https://doi.org/10.5194/gmd-4-591-2011>`_ (`repo <https://github.com/openwfm/WRF-SFIRE>`__).
+**Mapped benchmark ecosystems:** :doc:`WildfireSpreadTS </benchmarks/wildfirespreadts_ecosystem>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``core``
+**Paper:** `Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011 <https://doi.org/10.5194/gmd-4-591-2011>`_ | **Repo:** `Repository <https://github.com/openwfm/WRF-SFIRE>`__
 
 Registry Name
 -------------
@@ -30,11 +87,10 @@ Primary entrypoint: ``wrf_sfire``
 Supported Tasks
 ---------------
 
-- ``segmentation``
-- ``regression``
+- Spread
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

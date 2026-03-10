@@ -3,24 +3,81 @@
 WaveCastNet
 ===========
 
+Overview
+--------
+
+``wavecastnet`` is the PyHazards entrypoint for dense-grid earthquake wavefield forecasting based on the ConvLEM encoder-decoder design described by Lyu et al. (2025).
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Earthquake
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Wavefield Forecasting
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``wavecastnet`` is the PyHazards entrypoint for dense-grid earthquake wavefield forecasting based on the ConvLEM encoder-decoder design described by Lyu et al. (2025).
 
-
 This implementation focuses on the core dense-grid forecasting path and keeps data loading outside the model so users can adapt it to their own simulation or sensor pipelines.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
 
-`Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_.
+**Mapped benchmark ecosystems:** :doc:`AEFA </benchmarks/aefa>`, :doc:`pyCSEP </benchmarks/pycsep>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``variant``
+**Paper:** `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_
 
 Registry Name
 -------------
@@ -30,10 +87,10 @@ Primary entrypoint: ``wavecastnet``
 Supported Tasks
 ---------------
 
-- ``regression``
+- Wavefield Forecasting
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

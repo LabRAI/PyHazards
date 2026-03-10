@@ -10,18 +10,64 @@ The current SeisBench path uses a synthetic waveform adapter that preserves the 
 
 It exists today as a benchmark-compatible smoke path rather than a full external SeisBench ingestion pipeline.
 
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Kind
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Ecosystem
+
+      .. container:: catalog-stat-note
+
+         Family benchmark or external ecosystem view.
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Earthquake
+
+      .. container:: catalog-stat-note
+
+         Public hazard grouping used on the benchmark index page.
+
+   .. grid-item-card:: Support Status
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :bdg-info:`Synthetic-backed`
+
+      .. container:: catalog-stat-note
+
+         Current maturity of the adapter or evaluator path.
+
+   .. grid-item-card:: Linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         2
+
+      .. container:: catalog-stat-note
+
+         2 models
+
+
 Benchmark Mapping
 -----------------
 
-Kind: ``ecosystem``
+**Shared benchmark key:** ``earthquake``
 
-Hazard family: ``Earthquake``
-
-Shared benchmark key: ``earthquake``
-
-Registered class: ``EarthquakeBenchmark``
-
-Support status: ``Synthetic-backed``
+**Registered class:** ``EarthquakeBenchmark``
 
 Mapped benchmark family
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,27 +79,27 @@ Primary Source
 
 `SeisBench - A Toolbox for Machine Learning in Seismology <https://joss.theoj.org/papers/10.21105/joss.04418>`_ (`repo <https://github.com/seisbench/seisbench>`__).
 
-Supported Tasks
----------------
+.. dropdown:: Supported Tasks
+   :class-container: catalog-dropdown
 
-- ``earthquake.picking``
+   - Phase Picking
 
-Key Metrics
------------
+.. dropdown:: Key Metrics
+   :class-container: catalog-dropdown
 
-- ``p_pick_mae``
-- ``s_pick_mae``
-- ``precision``
-- ``recall``
-- ``f1``
+   - ``p_pick_mae``
+   - ``s_pick_mae``
+   - ``precision``
+   - ``recall``
+   - ``f1``
 
-Smoke Configs
--------------
+.. dropdown:: Smoke Configs
+   :class-container: catalog-dropdown
 
-- ``phasenet_smoke.yaml``
-- ``eqnet_smoke.yaml``
+   - ``phasenet_smoke.yaml``
+   - ``eqnet_smoke.yaml``
 
-Linked Models
--------------
+.. dropdown:: Linked Models
+   :class-container: catalog-dropdown
 
-:doc:`PhaseNet </modules/models_phasenet>`, :doc:`EQNet </modules/models_eqnet>`.
+   :doc:`PhaseNet </modules/models_phasenet>`, :doc:`EQNet </modules/models_eqnet>`.

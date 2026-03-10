@@ -10,18 +10,64 @@ The AEFA alignment is implemented as a synthetic-backed dense-grid forecasting a
 
 It keeps the forecasting task and metric shape aligned without claiming a full AEFA data pipeline.
 
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Kind
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Ecosystem
+
+      .. container:: catalog-stat-note
+
+         Family benchmark or external ecosystem view.
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Earthquake
+
+      .. container:: catalog-stat-note
+
+         Public hazard grouping used on the benchmark index page.
+
+   .. grid-item-card:: Support Status
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :bdg-info:`Synthetic-backed`
+
+      .. container:: catalog-stat-note
+
+         Current maturity of the adapter or evaluator path.
+
+   .. grid-item-card:: Linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         1 model
+
+
 Benchmark Mapping
 -----------------
 
-Kind: ``ecosystem``
+**Shared benchmark key:** ``earthquake``
 
-Hazard family: ``Earthquake``
-
-Shared benchmark key: ``earthquake``
-
-Registered class: ``EarthquakeBenchmark``
-
-Support status: ``Synthetic-backed``
+**Registered class:** ``EarthquakeBenchmark``
 
 Mapped benchmark family
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,23 +79,23 @@ Primary Source
 
 `AEFA <https://github.com/chenyk1990/aefa>`_.
 
-Supported Tasks
----------------
+.. dropdown:: Supported Tasks
+   :class-container: catalog-dropdown
 
-- ``earthquake.forecasting``
+   - Wavefield Forecasting
 
-Key Metrics
------------
+.. dropdown:: Key Metrics
+   :class-container: catalog-dropdown
 
-- ``mae``
-- ``mse``
+   - ``mae``
+   - ``mse``
 
-Smoke Configs
--------------
+.. dropdown:: Smoke Configs
+   :class-container: catalog-dropdown
 
-- ``wavecastnet_benchmark_smoke.yaml``
+   - ``wavecastnet_benchmark_smoke.yaml``
 
-Linked Models
--------------
+.. dropdown:: Linked Models
+   :class-container: catalog-dropdown
 
-:doc:`WaveCastNet </modules/models_wavecastnet>`.
+   :doc:`WaveCastNet </modules/models_wavecastnet>`.

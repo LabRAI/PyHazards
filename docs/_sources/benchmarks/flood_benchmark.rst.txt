@@ -10,52 +10,98 @@ The flood benchmark family keeps streamflow and inundation scoring under one sha
 
 Current public coverage is synthetic-backed, but the same family already drives the streamflow and inundation smoke configs used across the flood models.
 
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Kind
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Family
+
+      .. container:: catalog-stat-note
+
+         Family benchmark or external ecosystem view.
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Flood
+
+      .. container:: catalog-stat-note
+
+         Public hazard grouping used on the benchmark index page.
+
+   .. grid-item-card:: Support Status
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :bdg-info:`Synthetic-backed`
+
+      .. container:: catalog-stat-note
+
+         Current maturity of the adapter or evaluator path.
+
+   .. grid-item-card:: Linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         6
+
+      .. container:: catalog-stat-note
+
+         6 models
+
+
 Benchmark Mapping
 -----------------
 
-Kind: ``family``
+**Shared benchmark key:** ``flood``
 
-Hazard family: ``Flood``
-
-Shared benchmark key: ``flood``
-
-Registered class: ``FloodBenchmark``
-
-Support status: ``Synthetic-backed``
+**Registered class:** ``FloodBenchmark``
 
 Mapped benchmark ecosystems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :doc:`Caravan </benchmarks/caravan>`, :doc:`FloodCastBench </benchmarks/floodcastbench>`, :doc:`HydroBench </benchmarks/hydrobench>`, :doc:`WaterBench </benchmarks/waterbench>`.
 
-Supported Tasks
----------------
+.. dropdown:: Supported Tasks
+   :class-container: catalog-dropdown
 
-- ``flood.streamflow``
-- ``flood.inundation``
+   - Streamflow
+   - Inundation
 
-Key Metrics
------------
+.. dropdown:: Key Metrics
+   :class-container: catalog-dropdown
 
-- ``mae``
-- ``rmse``
-- ``nse``
-- ``kge``
-- ``pixel_mae``
-- ``iou``
-- ``f1``
+   - ``mae``
+   - ``rmse``
+   - ``nse``
+   - ``kge``
+   - ``pixel_mae``
+   - ``iou``
+   - ``f1``
 
-Smoke Configs
--------------
+.. dropdown:: Smoke Configs
+   :class-container: catalog-dropdown
 
-- ``hydrographnet_smoke.yaml``
-- ``neuralhydrology_lstm_smoke.yaml``
-- ``neuralhydrology_ealstm_smoke.yaml``
-- ``google_flood_forecasting_smoke.yaml``
-- ``floodcast_smoke.yaml``
-- ``urbanfloodcast_smoke.yaml``
+   - ``hydrographnet_smoke.yaml``
+   - ``neuralhydrology_lstm_smoke.yaml``
+   - ``neuralhydrology_ealstm_smoke.yaml``
+   - ``google_flood_forecasting_smoke.yaml``
+   - ``floodcast_smoke.yaml``
+   - ``urbanfloodcast_smoke.yaml``
 
-Linked Models
--------------
+.. dropdown:: Linked Models
+   :class-container: catalog-dropdown
 
-:doc:`HydroGraphNet </modules/models_hydrographnet>`, :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`, :doc:`FloodCast </modules/models_floodcast>`, :doc:`UrbanFloodCast </modules/models_urbanfloodcast>`.
+   :doc:`HydroGraphNet </modules/models_hydrographnet>`, :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`, :doc:`FloodCast </modules/models_floodcast>`, :doc:`UrbanFloodCast </modules/models_urbanfloodcast>`.

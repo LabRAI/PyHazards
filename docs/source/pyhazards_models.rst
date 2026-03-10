@@ -3,225 +3,921 @@
 Models
 ===================
 
-Overview
---------
+Browse PyHazards model implementations across hazard families, compare
+scope and maturity, and navigate to model-specific detail pages.
 
-Use this page to browse the public model catalog, compare supported
-model implementations, and see how registered models are constructed
-through the shared PyHazards registry.
+At a Glance
+-----------
 
-Model Catalog
--------------
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
 
-The public catalog below is generated from ``pyhazards/model_cards/*.yaml``.
-Use this page for model discovery and quick registry lookup. Implemented
-models combine the core baselines plus public variants and additional
-implementations in one hazard-level table without duplicate entries.
-Use :doc:`appendix_a_coverage` for the audited roadmap gap list,
-:doc:`pyhazards_benchmarks` for current runnable evaluator coverage, and
-the Implementation Guide for contributor workflow details.
+   .. grid-item-card:: Hazard Families
+      :class-card: catalog-stat-card
 
-Wildfire
-~~~~~~~~
+      .. container:: catalog-stat-value
 
-Implemented Models
-++++++++++++++++++
+         4
 
-This table includes both core baselines and public variants or additional implementations for the hazard family.
+      .. container:: catalog-stat-note
 
-.. list-table::
-   :widths: 30 70
-   :header-rows: 1
-   :class: dataset-list
+         Catalog tabs grouped by the normalized public hazard taxonomy.
 
-   * - Model
-     - Description
-   * - :doc:`ASUFM <modules/models_asufm>`
-     - A temporal convolution baseline for weekly wildfire activity forecasting. `Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer <https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278>`_ (`repo <https://github.com/bronteee/fire-asufm>`__).
-   * - :doc:`CNN-ASPP <modules/models_wildfire_aspp>`
-     - An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction. `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_.
-   * - :doc:`DNN-LSTM-AutoEncoder <modules/models_wildfire_fpa>`
-     - A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting. `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
-   * - :doc:`FireCastNet <modules/models_firecastnet>`
-     - A compact encoder-decoder baseline for wildfire spread mask prediction. `FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction <https://doi.org/10.1038/s41598-025-30645-7>`_ (`repo <https://github.com/SeasFire/firecastnet>`__).
-   * - :doc:`ForeFire Adapter <modules/models_forefire>`
-     - A lightweight simulator-style wildfire spread adapter inspired by front-propagation systems. `ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread <https://doi.org/10.21105/joss.08680>`_ (`repo <https://github.com/forefireAPI/forefire>`__).
-   * - :doc:`wildfire_forecasting <modules/models_wildfire_forecasting>`
-     - A sequence forecasting baseline for next-window wildfire activity across weekly count features. `Wildfire Danger Prediction and Understanding with Deep Learning <https://doi.org/10.1029/2022GL099368>`_ (`repo <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__).
-   * - :doc:`WildfireSpreadTS <modules/models_wildfirespreadts>`
-     - A temporal convolution wildfire spread baseline over short raster history windows. `WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ (`repo <https://github.com/SebastianGer/WildfireSpreadTS>`__).
-   * - :doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`
-     - A lightweight raster wildfire spread adapter inspired by WRF-SFIRE style transport. `Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011 <https://doi.org/10.5194/gmd-4-591-2011>`_ (`repo <https://github.com/openwfm/WRF-SFIRE>`__).
+   .. grid-item-card:: Implemented Models
+      :class-card: catalog-stat-card
 
+      .. container:: catalog-stat-value
 
-Earthquake
-~~~~~~~~~~
+         24
 
-Implemented Models
-++++++++++++++++++
+      .. container:: catalog-stat-note
 
-This table includes both core baselines and public variants or additional implementations for the hazard family.
+         Public core baselines plus additional implemented variants.
 
-.. list-table::
-   :widths: 30 70
-   :header-rows: 1
-   :class: dataset-list
+   .. grid-item-card:: Experimental Adapters
+      :class-card: catalog-stat-card
 
-   * - Model
-     - Description
-   * - :doc:`EQNet <modules/models_eqnet>`
-     - A transformer-style earthquake phase-picking baseline for modern sequence modeling comparisons. `An End-To-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning <https://www.osti.gov/biblio/1978539>`_ (`repo <https://github.com/AI4EPS/EQNet>`__).
-   * - :doc:`EQTransformer <modules/models_eqtransformer>`
-     - A bidirectional sequence encoder for joint earthquake phase picking with attention pooling over waveform windows. `Earthquake Transformer-An attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ (`repo <https://github.com/smousavi05/EQTransformer>`__).
-   * - :doc:`GPD <modules/models_gpd>`
-     - A compact CNN baseline for generalized phase detection and historical earthquake picking comparisons. `Generalized Seismic Phase Detection with Deep Learning <https://doi.org/10.1785/0120180080>`_ (`repo <https://github.com/interseismic/generalized-phase-detection>`__).
-   * - :doc:`PhaseNet <modules/models_phasenet>`
-     - A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows. `PhaseNet: A Deep-Neural-Network-Based Seismic Arrival Time Picking Method <https://arxiv.org/abs/1803.03211>`_ (`repo <https://github.com/AI4EPS/PhaseNet>`__).
-   * - :doc:`WaveCastNet <modules/models_wavecastnet>`
-     - A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield forecasting and early-warning style rollout experiments. `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_.
+      .. container:: catalog-stat-value
+
+         3
+
+      .. container:: catalog-stat-note
+
+         Prototype weather-model integrations kept separate from the stable catalog.
+
+   .. grid-item-card:: Benchmark-linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         27
+
+      .. container:: catalog-stat-note
+
+         Models with explicit benchmark-family or ecosystem links on this page.
 
 
-Flood
-~~~~~
+Catalog by Hazard
+-----------------
 
-Implemented Models
-++++++++++++++++++
+Use the hazard tabs below to browse the public catalog. Each card keeps
+the index-page summary short, then links into model-specific detail
+pages and compatible benchmark coverage.
 
-This table includes both core baselines and public variants or additional implementations for the hazard family.
+.. tab-set::
+   :class: catalog-tabs
 
-.. list-table::
-   :widths: 30 70
-   :header-rows: 1
-   :class: dataset-list
+   .. tab-item:: Wildfire
 
-   * - Model
-     - Description
-   * - :doc:`EA-LSTM <modules/models_neuralhydrology_ealstm>`
-     - An entity-aware hydrology baseline with static-feature gating over streamflow histories. `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ (`repo <https://github.com/neuralhydrology/neuralhydrology>`__).
-   * - :doc:`FloodCast <modules/models_floodcast>`
-     - A compact spatiotemporal flood-inundation baseline for raster forecast experiments. `Large-scale flood modeling and forecasting with FloodCast <https://doi.org/10.1038/s41586-024-08028-8>`_ (`repo <https://github.com/HydroPML/FloodCast>`__).
-   * - :doc:`Google Flood Forecasting <modules/models_google_flood_forecasting>`
-     - A transformer-style sequence baseline for nodewise streamflow forecasting. `Global Flood Forecasting at a Fine Catchment Resolution using Machine Learning <https://research.google/pubs/global-flood-forecasting-at-a-fine-catchment-resolution-using-machine-learning/>`_ (`repo <https://github.com/google-research/flood-forecasting>`__).
-   * - :doc:`HydroGraphNet <modules/models_hydrographnet>`
-     - A physics-informed graph neural network for flood forecasting with interpretable KAN-style components, residual message passing, and delta-state decoding. `Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_.
-   * - :doc:`NeuralHydrology LSTM <modules/models_neuralhydrology_lstm>`
-     - An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs. `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ (`repo <https://github.com/neuralhydrology/neuralhydrology>`__).
-   * - :doc:`UrbanFloodCast <modules/models_urbanfloodcast>`
-     - A U-Net style urban inundation baseline for dense-grid flood prediction. `UrbanFloodCast: WMO Urban Flooding Forecasting Challenge <https://arxiv.org/abs/2405.21179>`_ (`repo <https://github.com/HydroPML/UrbanFloodCast>`__).
+      .. container:: catalog-section-note
+
+         Wildfire models cover danger forecasting, weekly activity forecasting, and spread prediction under the shared wildfire benchmark family.
+
+      .. rubric:: Implemented Models
+
+      .. container:: catalog-section-note
+
+         This table includes both core baselines and public variants or additional implementations for the hazard family.
+
+      .. grid:: 1 1 2 2
+         :gutter: 2
+         :class-container: catalog-grid
+
+         .. grid-item-card:: ASUFM
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A temporal convolution baseline for weekly wildfire activity forecasting.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`ASUFM <modules/models_asufm>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer <https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278>`_ | **Repo:** `Repository <https://github.com/bronteee/fire-asufm>`__
+
+         .. grid-item-card:: DNN-LSTM-AutoEncoder
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`DNN-LSTM-AutoEncoder <modules/models_wildfire_fpa>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_
+
+         .. grid-item-card:: FireCastNet
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact encoder-decoder baseline for wildfire spread mask prediction.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`FireCastNet <modules/models_firecastnet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction <https://doi.org/10.1038/s41598-025-30645-7>`_ | **Repo:** `Repository <https://github.com/SeasFire/firecastnet>`__
+
+         .. grid-item-card:: ForeFire Adapter
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A lightweight simulator-style wildfire spread adapter inspired by front-propagation systems.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`ForeFire Adapter <modules/models_forefire>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread <https://doi.org/10.21105/joss.08680>`_ | **Repo:** `Repository <https://github.com/forefireAPI/forefire>`__
+
+         .. grid-item-card:: Wildfire Forecasting
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A sequence forecasting baseline for next-window wildfire activity across weekly count features.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Wildfire Forecasting <modules/models_wildfire_forecasting>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Wildfire Danger Prediction and Understanding with Deep Learning <https://doi.org/10.1029/2022GL099368>`_ | **Repo:** `Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__
+
+         .. grid-item-card:: WildfireSpreadTS
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A temporal convolution wildfire spread baseline over short raster history windows.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`WildfireSpreadTS <modules/models_wildfirespreadts>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ | **Repo:** `Repository <https://github.com/SebastianGer/WildfireSpreadTS>`__
+
+         .. grid-item-card:: WRF-SFIRE Adapter
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A lightweight raster wildfire spread adapter inspired by WRF-SFIRE style transport.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011 <https://doi.org/10.5194/gmd-4-591-2011>`_ | **Repo:** `Repository <https://github.com/openwfm/WRF-SFIRE>`__
+
+         .. grid-item-card:: CNN-ASPP
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`CNN-ASPP <modules/models_wildfire_aspp>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_
 
 
-Hurricane
-~~~~~~~~~
+   .. tab-item:: Earthquake
 
-Implemented Models
-++++++++++++++++++
+      .. container:: catalog-section-note
 
-This table includes both core baselines and public variants or additional implementations for the hazard family.
+         Earthquake models span phase picking and dense-grid forecasting, with detail pages linked to the shared earthquake benchmark coverage.
 
-.. list-table::
-   :widths: 30 70
-   :header-rows: 1
-   :class: dataset-list
+      .. rubric:: Implemented Models
 
-   * - Model
-     - Description
-   * - :doc:`Hurricast <modules/models_hurricast>`
-     - A compact multimodal storm baseline for hurricane track and intensity forecasting. `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://arxiv.org/abs/2102.01204>`_ (`repo <https://github.com/leobix/hurricast>`__).
-   * - :doc:`tropicalcyclone_MLP <modules/models_tropicalcyclone_mlp>`
-     - A compact MLP baseline for hurricane track and intensity forecasting. `Deep Learning Experiments for Tropical Cyclone Intensity Forecasts <https://doi.org/10.1145/3447548.3467351>`_ (`repo <https://github.com/wenweixu/tropicalcyclone_MLP>`__).
+      .. container:: catalog-section-note
+
+         This table includes both core baselines and public variants or additional implementations for the hazard family.
+
+      .. grid:: 1 1 2 2
+         :gutter: 2
+         :class-container: catalog-grid
+
+         .. grid-item-card:: EQNet
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A transformer-style earthquake phase-picking baseline for modern sequence modeling comparisons.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`EQNet <modules/models_eqnet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`SeisBench <benchmarks/seisbench>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `An End-To-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning <https://www.osti.gov/biblio/1978539>`_ | **Repo:** `Repository <https://github.com/AI4EPS/EQNet>`__
+
+         .. grid-item-card:: EQTransformer
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A bidirectional sequence encoder for joint earthquake phase picking with attention pooling over waveform windows.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`EQTransformer <modules/models_eqtransformer>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`pick-benchmark <benchmarks/pick_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Earthquake Transformer-An attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ | **Repo:** `Repository <https://github.com/smousavi05/EQTransformer>`__
+
+         .. grid-item-card:: GPD
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact CNN baseline for generalized phase detection and historical earthquake picking comparisons.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`GPD <modules/models_gpd>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`pick-benchmark <benchmarks/pick_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Generalized Seismic Phase Detection with Deep Learning <https://doi.org/10.1785/0120180080>`_ | **Repo:** `Repository <https://github.com/interseismic/generalized-phase-detection>`__
+
+         .. grid-item-card:: PhaseNet
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`PhaseNet <modules/models_phasenet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`SeisBench <benchmarks/seisbench>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `PhaseNet: A Deep-Neural-Network-Based Seismic Arrival Time Picking Method <https://arxiv.org/abs/1803.03211>`_ | **Repo:** `Repository <https://github.com/AI4EPS/PhaseNet>`__
+
+         .. grid-item-card:: WaveCastNet
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield forecasting and early-warning style rollout experiments.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Earthquake` :bdg-secondary:`Wavefield Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`WaveCastNet <modules/models_wavecastnet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`AEFA <benchmarks/aefa>`, :doc:`pyCSEP <benchmarks/pycsep>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_
 
 
-Tropical Cyclone
-~~~~~~~~~~~~~~~~
+   .. tab-item:: Flood
 
-Implemented Models
-++++++++++++++++++
+      .. container:: catalog-section-note
 
-This table includes both core baselines and public variants or additional implementations for the hazard family.
+         Flood models cover streamflow and inundation forecasting, ranging from sequence baselines to dense-grid flood-mapping architectures.
 
-.. list-table::
-   :widths: 30 70
-   :header-rows: 1
-   :class: dataset-list
+      .. rubric:: Implemented Models
 
-   * - Model
-     - Description
-   * - :doc:`SAF-Net <modules/models_saf_net>`
-     - A spatiotemporal tropical-cyclone baseline with an intensity-focused head and shared trajectory output. `SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction <https://www.sciencedirect.com/science/article/pii/S1568494623003152>`_ (`repo <https://github.com/xuguangning1218/TI_Prediction>`__).
-   * - :doc:`TCIF-fusion <modules/models_tcif_fusion>`
-     - A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting. `Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.5194/egusphere-2024-250>`_ (`repo <https://github.com/wangchong96/TCIF-fusion>`__).
-   * - :doc:`TropiCycloneNet <modules/models_tropicyclonenet>`
-     - A GRU plus attention baseline for all-basin tropical cyclone forecasting. `Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://www.nature.com/articles/s41597-023-02721-x>`_ (`repo <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__).
+      .. container:: catalog-section-note
 
-Experimental Adapters
-+++++++++++++++++++++
+         This table includes both core baselines and public variants or additional implementations for the hazard family.
 
-These entries remain public as lightweight wrapper or prototype integrations and should not be counted as stable implemented methods.
+      .. grid:: 1 1 2 2
+         :gutter: 2
+         :class-container: catalog-grid
 
-.. list-table::
-   :widths: 30 70
-   :header-rows: 1
-   :class: dataset-list
+         .. grid-item-card:: EA-LSTM
+            :class-card: catalog-entry-card
 
-   * - Model
-     - Description
-   * - :doc:`FourCastNet TC Adapter <modules/models_fourcastnet_tc>`
-     - An experimental wrapper-style storm adapter inspired by FourCastNet forecast fields. `FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators <https://arxiv.org/abs/2202.11214>`_ (`repo <https://github.com/NVlabs/FourCastNet>`__).
-   * - :doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`
-     - An experimental wrapper-style storm adapter inspired by GraphCast/GenCast forecast fields. `GraphCast: Learning skillful medium-range global weather forecasting <https://www.science.org/doi/10.1126/science.adi2336>`_ (`repo <https://github.com/google-deepmind/graphcast>`__).
-   * - :doc:`Pangu TC Adapter <modules/models_pangu_tc>`
-     - An experimental wrapper-style storm adapter inspired by Pangu-Weather forecast fields. `Accurate medium-range global weather forecasting with 3D neural networks <https://www.nature.com/articles/s41586-023-06185-3>`_ (`repo <https://github.com/198808xc/Pangu-Weather>`__).
+            .. container:: catalog-entry-summary
+
+               An entity-aware hydrology baseline with static-feature gating over streamflow histories.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`EA-LSTM <modules/models_neuralhydrology_ealstm>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WaterBench <benchmarks/waterbench>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ | **Repo:** `Repository <https://github.com/neuralhydrology/neuralhydrology>`__
+
+         .. grid-item-card:: FloodCast
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact spatiotemporal flood-inundation baseline for raster forecast experiments.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Flood` :bdg-secondary:`Inundation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`FloodCast <modules/models_floodcast>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`FloodCastBench <benchmarks/floodcastbench>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Large-scale flood modeling and forecasting with FloodCast <https://doi.org/10.1038/s41586-024-08028-8>`_ | **Repo:** `Repository <https://github.com/HydroPML/FloodCast>`__
+
+         .. grid-item-card:: Google Flood Forecasting
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A transformer-style sequence baseline for nodewise streamflow forecasting.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Google Flood Forecasting <modules/models_google_flood_forecasting>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`Caravan <benchmarks/caravan>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Global Flood Forecasting at a Fine Catchment Resolution using Machine Learning <https://research.google/pubs/global-flood-forecasting-at-a-fine-catchment-resolution-using-machine-learning/>`_ | **Repo:** `Repository <https://github.com/google-research/flood-forecasting>`__
+
+         .. grid-item-card:: NeuralHydrology LSTM
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`NeuralHydrology LSTM <modules/models_neuralhydrology_lstm>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`Caravan <benchmarks/caravan>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ | **Repo:** `Repository <https://github.com/neuralhydrology/neuralhydrology>`__
+
+         .. grid-item-card:: UrbanFloodCast
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A U-Net style urban inundation baseline for dense-grid flood prediction.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Flood` :bdg-secondary:`Inundation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`UrbanFloodCast <modules/models_urbanfloodcast>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`FloodCastBench <benchmarks/floodcastbench>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `UrbanFloodCast: WMO Urban Flooding Forecasting Challenge <https://arxiv.org/abs/2405.21179>`_ | **Repo:** `Repository <https://github.com/HydroPML/UrbanFloodCast>`__
+
+         .. grid-item-card:: HydroGraphNet
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A physics-informed graph neural network for flood forecasting with interpretable KAN-style components, residual message passing, and delta-state decoding.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`HydroGraphNet <modules/models_hydrographnet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`HydroBench <benchmarks/hydrobench>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_
 
 
-Using the Registry
-------------------
+   .. tab-item:: Tropical Cyclone
 
-Build a Registered Model
-~~~~~~~~~~~~~~~~~~~~~~~~
+      .. container:: catalog-section-note
 
-.. code-block:: python
+         Storm models are organized under one tropical-cyclone family, including basin-specific hurricane baselines and shared all-basin forecasting models.
 
-    from pyhazards.models import build_model
+      .. rubric:: Implemented Models
 
-    model = build_model(
-        name="mlp",
-        task="classification",
-        in_dim=32,
-        out_dim=5,
-        hidden_dim=256,
-        depth=3,
-    )
+      .. container:: catalog-section-note
 
-Register a Custom Model
-~~~~~~~~~~~~~~~~~~~~~~~
+         This table includes both core baselines and public variants or additional implementations for the hazard family.
 
-Register a builder function that returns an ``nn.Module`` so users can
-load the model by name through the shared registry.
+      .. grid:: 1 1 2 2
+         :gutter: 2
+         :class-container: catalog-grid
 
-.. code-block:: python
+         .. grid-item-card:: Hurricast
+            :class-card: catalog-entry-card
 
-    import torch.nn as nn
-    from pyhazards.models import register_model, build_model
+            .. container:: catalog-entry-summary
 
-    def my_custom_builder(task: str, in_dim: int, out_dim: int, **kwargs) -> nn.Module:
-        hidden = kwargs.get("hidden_dim", 128)
-        layers = nn.Sequential(
-            nn.Linear(in_dim, hidden),
-            nn.ReLU(),
-            nn.Linear(hidden, out_dim),
-        )
-        return layers
+               A compact multimodal storm baseline for hurricane track and intensity forecasting.
 
-    register_model("my_mlp", my_custom_builder, defaults={"hidden_dim": 128})
+            .. container:: catalog-chip-row
 
-    model = build_model(name="my_mlp", task="regression", in_dim=16, out_dim=1)
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Implemented`
 
-Notes
-~~~~~
+            .. container:: catalog-meta-row
 
-- Builders receive ``task`` plus any kwargs you pass.
-- ``register_model`` stores optional defaults so configs can stay small.
-- Models are plain PyTorch modules and work with ``Trainer`` or custom loops.
+               **Details:** :doc:`Hurricast <modules/models_hurricast>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`IBTrACS <benchmarks/ibtracs>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://arxiv.org/abs/2102.01204>`_ | **Repo:** `Repository <https://github.com/leobix/hurricast>`__
+
+         .. grid-item-card:: SAF-Net
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A spatiotemporal tropical-cyclone baseline with an intensity-focused head and shared trajectory output.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`SAF-Net <modules/models_saf_net>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction <https://www.sciencedirect.com/science/article/pii/S1568494623003152>`_ | **Repo:** `Repository <https://github.com/xuguangning1218/TI_Prediction>`__
+
+         .. grid-item-card:: TCIF-fusion
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`TCIF-fusion <modules/models_tcif_fusion>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.5194/egusphere-2024-250>`_ | **Repo:** `Repository <https://github.com/wangchong96/TCIF-fusion>`__
+
+         .. grid-item-card:: Tropical Cyclone MLP
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact MLP baseline for hurricane track and intensity forecasting.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Tropical Cyclone MLP <modules/models_tropicalcyclone_mlp>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Deep Learning Experiments for Tropical Cyclone Intensity Forecasts <https://doi.org/10.1145/3447548.3467351>`_ | **Repo:** `Repository <https://github.com/wenweixu/tropicalcyclone_MLP>`__
+
+         .. grid-item-card:: TropiCycloneNet
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A GRU plus attention baseline for all-basin tropical cyclone forecasting.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`TropiCycloneNet <modules/models_tropicyclonenet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`TropiCycloneNet-Dataset <benchmarks/tropicyclonenet_dataset>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://www.nature.com/articles/s41597-023-02721-x>`_ | **Repo:** `Repository <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__
+
+      .. rubric:: Experimental Adapters
+
+      .. container:: catalog-section-note
+
+         These entries remain public as lightweight wrapper or prototype integrations and should not be counted as stable implemented methods.
+
+      .. grid:: 1 1 2 2
+         :gutter: 2
+         :class-container: catalog-grid
+
+         .. grid-item-card:: FourCastNet TC Adapter
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               An experimental wrapper-style storm adapter inspired by FourCastNet forecast fields.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-warning:`Experimental Adapter`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`FourCastNet TC Adapter <modules/models_fourcastnet_tc>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`IBTrACS <benchmarks/ibtracs>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators <https://arxiv.org/abs/2202.11214>`_ | **Repo:** `Repository <https://github.com/NVlabs/FourCastNet>`__
+
+         .. grid-item-card:: GraphCast TC Adapter
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               An experimental wrapper-style storm adapter inspired by GraphCast/GenCast forecast fields.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-warning:`Experimental Adapter`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`IBTrACS <benchmarks/ibtracs>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `GraphCast: Learning skillful medium-range global weather forecasting <https://www.science.org/doi/10.1126/science.adi2336>`_ | **Repo:** `Repository <https://github.com/google-deepmind/graphcast>`__
+
+         .. grid-item-card:: Pangu TC Adapter
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               An experimental wrapper-style storm adapter inspired by Pangu-Weather forecast fields.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-warning:`Experimental Adapter`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Pangu TC Adapter <modules/models_pangu_tc>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`IBTrACS <benchmarks/ibtracs>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Accurate medium-range global weather forecasting with 3D neural networks <https://www.nature.com/articles/s41586-023-06185-3>`_ | **Repo:** `Repository <https://github.com/198808xc/Pangu-Weather>`__
+
+
+
+Recommended Entry Points
+------------------------
+
+If you are new to PyHazards, these four models provide the clearest
+starting point for each hazard family.
+
+.. grid:: 1 1 2 4
+   :gutter: 2
+   :class-container: catalog-recommend-grid
+
+   .. grid-item-card:: Wildfire
+      :class-card: catalog-detail-card
+
+      **Start with:** :doc:`FireCastNet <modules/models_firecastnet>`
+
+      A compact encoder-decoder baseline for wildfire spread mask prediction.
+
+      **Benchmark:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. grid-item-card:: Earthquake
+      :class-card: catalog-detail-card
+
+      **Start with:** :doc:`PhaseNet <modules/models_phasenet>`
+
+      A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows.
+
+      **Benchmark:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
+
+   .. grid-item-card:: Flood
+      :class-card: catalog-detail-card
+
+      **Start with:** :doc:`FloodCast <modules/models_floodcast>`
+
+      A compact spatiotemporal flood-inundation baseline for raster forecast experiments.
+
+      **Benchmark:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+   .. grid-item-card:: Tropical Cyclone
+      :class-card: catalog-detail-card
+
+      **Start with:** :doc:`Hurricast <modules/models_hurricast>`
+
+      A compact multimodal storm baseline for hurricane track and intensity forecasting.
+
+      **Benchmark:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+
+Programmatic Use
+----------------
+
+Use :doc:`api/pyhazards.models` for the developer registry workflow,
+builder examples, and package-level API lookup. Use
+:doc:`pyhazards_benchmarks` to compare compatible benchmark families
+before selecting a model for evaluation.
 
 .. toctree::
    :maxdepth: 1

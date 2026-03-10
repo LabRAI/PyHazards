@@ -3,24 +3,81 @@
 TropiCycloneNet
 ===============
 
+Overview
+--------
+
+``tropicyclonenet`` extends the shared storm benchmark stack beyond the hurricane-only presets.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Tropical Cyclone
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Track + Intensity
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``tropicyclonenet`` extends the shared storm benchmark stack beyond the hurricane-only presets.
 
-
 The PyHazards adapter keeps a single storm-history to forecast-trajectory interface so it can share the same evaluator as ``hurricast``.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-`Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://www.nature.com/articles/s41597-023-02721-x>`_ (`repo <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__).
+**Mapped benchmark ecosystems:** :doc:`TropiCycloneNet-Dataset </benchmarks/tropicyclonenet_dataset>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``core``
+**Paper:** `Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://www.nature.com/articles/s41597-023-02721-x>`_ | **Repo:** `Repository <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__
 
 Registry Name
 -------------
@@ -30,10 +87,10 @@ Primary entrypoint: ``tropicyclonenet``
 Supported Tasks
 ---------------
 
-- ``regression``
+- Track + Intensity
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

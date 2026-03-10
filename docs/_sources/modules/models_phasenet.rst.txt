@@ -3,24 +3,81 @@
 PhaseNet
 ========
 
+Overview
+--------
+
+``phasenet`` is the first earthquake picking baseline in the staged PyHazards roadmap and is paired with the synthetic waveform dataset for smoke validation.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Earthquake
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Phase Picking
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``phasenet`` is the first earthquake picking baseline in the staged PyHazards roadmap and is paired with the synthetic waveform dataset for smoke validation.
 
-
 This initial adapter focuses on the shared waveform-to-pick interface and does not claim exact reproduction of the original PhaseNet training stack.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
 
-`PhaseNet: A Deep-Neural-Network-Based Seismic Arrival Time Picking Method <https://arxiv.org/abs/1803.03211>`_ (`repo <https://github.com/AI4EPS/PhaseNet>`__).
+**Mapped benchmark ecosystems:** :doc:`SeisBench </benchmarks/seisbench>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``core``
+**Paper:** `PhaseNet: A Deep-Neural-Network-Based Seismic Arrival Time Picking Method <https://arxiv.org/abs/1803.03211>`_ | **Repo:** `Repository <https://github.com/AI4EPS/PhaseNet>`__
 
 Registry Name
 -------------
@@ -30,10 +87,10 @@ Primary entrypoint: ``phasenet``
 Supported Tasks
 ---------------
 
-- ``regression``
+- Phase Picking
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

@@ -3,24 +3,81 @@
 Hurricast
 =========
 
+Overview
+--------
+
+``hurricast`` is the first basin-specific storm baseline in the staged PyHazards roadmap and operates on storm-history sequences.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Tropical Cyclone
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Track + Intensity
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``hurricast`` is the first basin-specific storm baseline in the staged PyHazards roadmap and operates on storm-history sequences.
 
-
 This initial adapter focuses on the shared tropical-cyclone forecasting interface and is intended as a reproducible starting point before broader storm-model breadth.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-`Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://arxiv.org/abs/2102.01204>`_ (`repo <https://github.com/leobix/hurricast>`__).
+**Mapped benchmark ecosystems:** :doc:`IBTrACS </benchmarks/ibtracs>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``core``
+**Paper:** `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://arxiv.org/abs/2102.01204>`_ | **Repo:** `Repository <https://github.com/leobix/hurricast>`__
 
 Registry Name
 -------------
@@ -30,10 +87,10 @@ Primary entrypoint: ``hurricast``
 Supported Tasks
 ---------------
 
-- ``regression``
+- Track + Intensity
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

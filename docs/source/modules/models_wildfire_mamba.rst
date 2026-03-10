@@ -5,24 +5,79 @@
 Wildfire Mamba
 ==============
 
+Overview
+--------
+
+``wildfire_mamba`` models county-day ERA5 sequences by combining selective state-space temporal blocks with a simple spatial graph layer.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Wildfire
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Hidden
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Classification
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Unmapped
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``wildfire_mamba`` models county-day ERA5 sequences by combining selective state-space temporal blocks with a simple spatial graph layer.
 
-
 The PyHazards implementation targets binary next-day per-county wildfire classification and supports an optional count head for multi-task extensions.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** Not yet mapped.
 
-`Mamba: Linear-Time Sequence Modeling with Selective State Spaces <https://arxiv.org/abs/2312.00752>`_.
+External References
+-------------------
 
-Catalog Status
---------------
-
-Status: ``hidden``
+**Paper:** `Mamba: Linear-Time Sequence Modeling with Selective State Spaces <https://arxiv.org/abs/2312.00752>`_
 
 Registry Name
 -------------
@@ -32,10 +87,10 @@ Primary entrypoint: ``wildfire_mamba``
 Supported Tasks
 ---------------
 
-- ``classification``
+- Classification
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

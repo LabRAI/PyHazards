@@ -3,24 +3,81 @@
 Pangu TC Adapter
 ================
 
+Overview
+--------
+
+``pangu_tc`` adds a second foundation-weather reference path behind the shared tropical-cyclone evaluator.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Tropical Cyclone
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Experimental Adapter
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Track + Intensity
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``pangu_tc`` adds a second foundation-weather reference path behind the shared tropical-cyclone evaluator.
 
-
 The implementation is intentionally lightweight and should be interpreted as an adapter contract for forecast-field driven storm evaluation.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-`Accurate medium-range global weather forecasting with 3D neural networks <https://www.nature.com/articles/s41586-023-06185-3>`_ (`repo <https://github.com/198808xc/Pangu-Weather>`__).
+**Mapped benchmark ecosystems:** :doc:`IBTrACS </benchmarks/ibtracs>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``experimental``
+**Paper:** `Accurate medium-range global weather forecasting with 3D neural networks <https://www.nature.com/articles/s41586-023-06185-3>`_ | **Repo:** `Repository <https://github.com/198808xc/Pangu-Weather>`__
 
 Registry Name
 -------------
@@ -30,10 +87,10 @@ Primary entrypoint: ``pangu_tc``
 Supported Tasks
 ---------------
 
-- ``regression``
+- Track + Intensity
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

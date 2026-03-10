@@ -1,6 +1,6 @@
 model_name: hurricast
 display_name: Hurricast
-hazard: Hurricane
+hazard: Tropical Cyclone
 source_file: pyhazards/models/hurricast.py
 builder_name: hurricast_builder
 summary: >

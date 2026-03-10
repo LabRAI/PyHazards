@@ -3,24 +3,81 @@
 FourCastNet TC Adapter
 ======================
 
+Overview
+--------
+
+``fourcastnet_tc`` completes the first wave of experimental foundation-weather storm adapters in the staged roadmap.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Tropical Cyclone
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Experimental Adapter
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Track + Intensity
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``fourcastnet_tc`` completes the first wave of experimental foundation-weather storm adapters in the staged roadmap.
 
-
 The PyHazards version is intentionally lightweight and uses the same trajectory output contract as the other storm baselines.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-`FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators <https://arxiv.org/abs/2202.11214>`_ (`repo <https://github.com/NVlabs/FourCastNet>`__).
+**Mapped benchmark ecosystems:** :doc:`IBTrACS </benchmarks/ibtracs>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``experimental``
+**Paper:** `FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators <https://arxiv.org/abs/2202.11214>`_ | **Repo:** `Repository <https://github.com/NVlabs/FourCastNet>`__
 
 Registry Name
 -------------
@@ -30,10 +87,10 @@ Primary entrypoint: ``fourcastnet_tc``
 Supported Tasks
 ---------------
 
-- ``regression``
+- Track + Intensity
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

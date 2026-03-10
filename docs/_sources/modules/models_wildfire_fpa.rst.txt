@@ -3,24 +3,79 @@
 DNN-LSTM-AutoEncoder
 ====================
 
+Overview
+--------
+
+``wildfire_fpa`` is the paper-facing PyHazards entrypoint for the FPA-FOD wildfire framework described by Shen et al. (2023).
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Wildfire
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         2
+
+      .. container:: catalog-stat-note
+
+         Classification, Forecasting
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Wildfire Benchmark </benchmarks/wildfire_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``wildfire_fpa`` is the paper-facing PyHazards entrypoint for the FPA-FOD wildfire framework described by Shen et al. (2023).
 
-
 PyHazards exposes the combined DNN-LSTM-AutoEncoder workflow through one public registry name while keeping the lower-level components internal.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Wildfire Benchmark </benchmarks/wildfire_benchmark>`
 
-`Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
+External References
+-------------------
 
-Catalog Status
---------------
-
-Status: ``core``
+**Paper:** `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_
 
 Registry Name
 -------------
@@ -30,12 +85,11 @@ Primary entrypoint: ``wildfire_fpa``
 Supported Tasks
 ---------------
 
-- ``classification``
-- ``forecasting``
-- ``regression``
+- Classification
+- Forecasting
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

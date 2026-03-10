@@ -1,6 +1,6 @@
 model_name: tropicalcyclone_mlp
-display_name: tropicalcyclone_MLP
-hazard: Hurricane
+display_name: Tropical Cyclone MLP
+hazard: Tropical Cyclone
 source_file: pyhazards/models/tropicalcyclone_mlp.py
 builder_name: tropicalcyclone_mlp_builder
 summary: >

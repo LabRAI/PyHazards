@@ -3,24 +3,81 @@
 Google Flood Forecasting
 ========================
 
+Overview
+--------
+
+``google_flood_forecasting`` is a compact sequence-to-node forecasting baseline for flood streamflow prediction.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Flood
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Streamflow
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Flood Benchmark </benchmarks/flood_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``google_flood_forecasting`` is a compact sequence-to-node forecasting baseline for flood streamflow prediction.
 
-
 The PyHazards implementation uses a transformer encoder over per-node history windows and returns one forecast value per node.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Flood Benchmark </benchmarks/flood_benchmark>`
 
-`Global Flood Forecasting at a Fine Catchment Resolution using Machine Learning <https://research.google/pubs/global-flood-forecasting-at-a-fine-catchment-resolution-using-machine-learning/>`_ (`repo <https://github.com/google-research/flood-forecasting>`__).
+**Mapped benchmark ecosystems:** :doc:`Caravan </benchmarks/caravan>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``core``
+**Paper:** `Global Flood Forecasting at a Fine Catchment Resolution using Machine Learning <https://research.google/pubs/global-flood-forecasting-at-a-fine-catchment-resolution-using-machine-learning/>`_ | **Repo:** `Repository <https://github.com/google-research/flood-forecasting>`__
 
 Registry Name
 -------------
@@ -30,10 +87,10 @@ Primary entrypoint: ``google_flood_forecasting``
 Supported Tasks
 ---------------
 
-- ``regression``
+- Streamflow
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 

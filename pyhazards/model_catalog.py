@@ -33,9 +33,12 @@ HAZARD_DISPLAY_ORDER = [
     "Wildfire",
     "Earthquake",
     "Flood",
-    "Hurricane",
     "Tropical Cyclone",
 ]
+
+NORMALIZED_HAZARD_LABELS = {
+    "Hurricane": "Tropical Cyclone",
+}
 
 CATALOG_STATUS_ORDER = [
     "core",
@@ -53,6 +56,59 @@ EXPERIMENTAL_SECTION_SUMMARY = (
     "These entries remain public as lightweight wrapper or prototype integrations "
     "and should not be counted as stable implemented methods."
 )
+
+HAZARD_SECTION_SUMMARIES = {
+    "Wildfire": (
+        "Wildfire models cover danger forecasting, weekly activity forecasting, "
+        "and spread prediction under the shared wildfire benchmark family."
+    ),
+    "Earthquake": (
+        "Earthquake models span phase picking and dense-grid forecasting, with "
+        "detail pages linked to the shared earthquake benchmark coverage."
+    ),
+    "Flood": (
+        "Flood models cover streamflow and inundation forecasting, ranging from "
+        "sequence baselines to dense-grid flood-mapping architectures."
+    ),
+    "Tropical Cyclone": (
+        "Storm models are organized under one tropical-cyclone family, including "
+        "basin-specific hurricane baselines and shared all-basin forecasting models."
+    ),
+}
+
+TASK_DISPLAY_LABELS = {
+    "wildfire.danger": "Danger",
+    "wildfire.spread": "Spread",
+    "earthquake.picking": "Phase Picking",
+    "earthquake.forecasting": "Wavefield Forecasting",
+    "flood.streamflow": "Streamflow",
+    "flood.inundation": "Inundation",
+    "tc.track_intensity": "Track + Intensity",
+    "classification": "Classification",
+    "regression": "Forecasting",
+    "segmentation": "Segmentation",
+}
+
+MATURITY_LABELS = {
+    "core": "Implemented",
+    "variant": "Implemented",
+    "experimental": "Experimental Adapter",
+    "hidden": "Hidden",
+}
+
+MATURITY_BADGE_ROLES = {
+    "core": "success",
+    "variant": "success",
+    "experimental": "warning",
+    "hidden": "secondary",
+}
+
+STARTER_MODELS = {
+    "Wildfire": "firecastnet",
+    "Earthquake": "phasenet",
+    "Flood": "floodcast",
+    "Tropical Cyclone": "hurricast",
+}
 
 
 class PaperReference(BaseModel):
@@ -191,7 +247,7 @@ def card_by_registry_name(cards: Sequence[ModelCard]) -> Dict[str, ModelCard]:
 def group_cards_by_hazard(cards: Sequence[ModelCard]) -> Dict[str, List[ModelCard]]:
     grouped: Dict[str, List[ModelCard]] = defaultdict(list)
     for card in cards:
-        grouped[card.hazard].append(card)
+        grouped[_display_hazard_label(card.hazard)].append(card)
 
     def order_key(hazard: str) -> tuple[int, str]:
         if hazard in HAZARD_DISPLAY_ORDER:
@@ -257,12 +313,87 @@ def _indent_block(text: str, prefix: str = "   ") -> str:
     return "\n".join(prefix + line if line else prefix.rstrip() for line in lines)
 
 
+def _indent_lines(lines: Sequence[str], prefix: str = "   ") -> List[str]:
+    return [prefix + line if line else "" for line in lines]
+
+
+def _display_hazard_label(hazard: str) -> str:
+    return NORMALIZED_HAZARD_LABELS.get(hazard, hazard)
+
+
+def _badge(role: str, text: str) -> str:
+    return f":bdg-{role}:`{text}`"
+
+
+def _task_display_labels(tasks: Sequence[str]) -> List[str]:
+    labels = []
+    seen: Set[str] = set()
+    for task in tasks:
+        label = TASK_DISPLAY_LABELS.get(task, task.replace("_", " ").title())
+        if label not in seen:
+            labels.append(label)
+            seen.add(label)
+    return labels
+
+
+def _ordered_unique(items: Iterable[str]) -> List[str]:
+    seen: Set[str] = set()
+    ordered: List[str] = []
+    for item in items:
+        if item in seen:
+            continue
+        seen.add(item)
+        ordered.append(item)
+    return ordered
+
+
 def _doc_link(card: ModelCard, absolute: bool = False) -> str:
     target = "/modules/{slug}".format(slug=card.module_doc_name) if absolute else "modules/{slug}".format(slug=card.module_doc_name)
     return ":doc:`{name} <{target}>`".format(
         name=card.display_name,
         target=target,
     )
+
+
+def _benchmark_link(slug: str, display_name: str, absolute: bool = False) -> str:
+    target = f"/benchmarks/{slug}" if absolute else f"benchmarks/{slug}"
+    return f":doc:`{display_name} <{target}>`"
+
+
+def _paper_links(card: ModelCard) -> str:
+    links = [f"**Paper:** `{card.paper.title} <{card.paper.url}>`_"]
+    if card.paper.repo_url:
+        links.append(f"**Repo:** `Repository <{card.paper.repo_url}>`__")
+    return " | ".join(links)
+
+
+def _benchmark_links_by_model() -> Dict[str, Dict[str, Any]]:
+    from .benchmark_catalog import load_benchmark_cards
+
+    mapping: Dict[str, Dict[str, Any]] = {}
+    for benchmark_card in load_benchmark_cards():
+        for model_name in benchmark_card.linked_models:
+            entry = mapping.setdefault(
+                model_name,
+                {
+                    "family": None,
+                    "ecosystems": [],
+                    "tasks": [],
+                },
+            )
+            if benchmark_card.kind == "family":
+                entry["family"] = benchmark_card
+            else:
+                entry["ecosystems"].append(benchmark_card)
+            entry["tasks"].extend(benchmark_card.tasks)
+
+    for entry in mapping.values():
+        entry["tasks"] = _ordered_unique(entry["tasks"])
+        entry["ecosystems"] = sorted(
+            entry["ecosystems"],
+            key=lambda item: item.display_name.lower(),
+        )
+    return mapping
 
 
 def _family_row_name(cards: Sequence[ModelCard]) -> str:
@@ -305,156 +436,318 @@ def _row_summary(cards: Sequence[ModelCard], status: str, absolute_links: bool =
     return _family_row_summary(cards, status, absolute_links=absolute_links)
 
 
+def _stat_card(title: str, value: str, note: str) -> List[str]:
+    return [
+        ".. grid-item-card:: {title}".format(title=title),
+        "   :class-card: catalog-stat-card",
+        "",
+        "   .. container:: catalog-stat-value",
+        "",
+        "      {value}".format(value=value),
+        "",
+        "   .. container:: catalog-stat-note",
+        "",
+        "      {note}".format(note=note),
+        "",
+    ]
+
+
+def _entry_task_labels(card: ModelCard, benchmark_links: Dict[str, Dict[str, Any]]) -> List[str]:
+    entry = benchmark_links.get(card.model_name)
+    ecosystems = entry.get("ecosystems") if entry else []
+    ecosystem_tasks = [
+        task
+        for ecosystem in ecosystems
+        for task in ecosystem.tasks
+    ]
+    if ecosystem_tasks:
+        return _task_display_labels(_ordered_unique(ecosystem_tasks))
+    return _task_display_labels(card.tasks)
+
+
+def _entry_benchmark_family(card: ModelCard, benchmark_links: Dict[str, Dict[str, Any]], absolute: bool = False) -> Optional[str]:
+    entry = benchmark_links.get(card.model_name)
+    family = entry.get("family") if entry else None
+    if family is None:
+        return None
+    return _benchmark_link(family.slug, family.display_name, absolute=absolute)
+
+
+def _entry_ecosystem_links(card: ModelCard, benchmark_links: Dict[str, Dict[str, Any]], absolute: bool = False) -> List[str]:
+    entry = benchmark_links.get(card.model_name)
+    ecosystems = entry.get("ecosystems") if entry else []
+    return [
+        _benchmark_link(ecosystem.slug, ecosystem.display_name, absolute=absolute)
+        for ecosystem in ecosystems
+    ]
+
+
+def _render_model_card(card: ModelCard, benchmark_links: Dict[str, Dict[str, Any]], absolute: bool = False) -> List[str]:
+    maturity_label = MATURITY_LABELS[card.catalog_status]
+    maturity_role = MATURITY_BADGE_ROLES[card.catalog_status]
+    task_badges = " ".join(
+        _badge("secondary", label)
+        for label in _entry_task_labels(card, benchmark_links)
+    )
+    hazard_badge = _badge("primary", _display_hazard_label(card.hazard))
+    maturity_badge = _badge(maturity_role, maturity_label)
+    benchmark_family = _entry_benchmark_family(card, benchmark_links, absolute=absolute)
+    ecosystems = _entry_ecosystem_links(card, benchmark_links, absolute=absolute)
+    detail_link = _doc_link(card, absolute=absolute)
+
+    lines = [
+        ".. grid-item-card:: {title}".format(title=card.display_name),
+        "   :class-card: catalog-entry-card",
+        "",
+        "   .. container:: catalog-entry-summary",
+        "",
+        "      {summary}".format(summary=_single_line(card.summary).rstrip(".") + "."),
+        "",
+        "   .. container:: catalog-chip-row",
+        "",
+        "      {chips}".format(
+            chips=" ".join(
+                chip for chip in [hazard_badge, task_badges, maturity_badge] if chip
+            )
+        ),
+        "",
+        "   .. container:: catalog-meta-row",
+        "",
+        "      **Details:** {detail}".format(detail=detail_link),
+        "",
+    ]
+
+    if benchmark_family:
+        lines.extend(
+            [
+                "   .. container:: catalog-meta-row",
+                "",
+                "      **Benchmark Family:** {link}".format(link=benchmark_family),
+                "",
+            ]
+        )
+    if ecosystems:
+        lines.extend(
+            [
+                "   .. container:: catalog-meta-row",
+                "",
+                "      **Benchmark Ecosystems:** {links}".format(
+                    links=", ".join(ecosystems),
+                ),
+                "",
+            ]
+        )
+
+    lines.extend(
+        [
+            "   .. container:: catalog-link-row",
+            "",
+            "      {links}".format(links=_paper_links(card)),
+            "",
+        ]
+    )
+    return lines
+
+
+def _render_model_grid(cards: Sequence[ModelCard], benchmark_links: Dict[str, Dict[str, Any]], absolute: bool = False) -> List[str]:
+    lines: List[str] = [
+        ".. grid:: 1 1 2 2",
+        "   :gutter: 2",
+        "   :class-container: catalog-grid",
+        "",
+    ]
+    for card in cards:
+        lines.extend(_indent_lines(_render_model_card(card, benchmark_links, absolute=absolute)))
+    return lines
+
+
+def _render_recommended_grid(cards: Sequence[ModelCard], benchmark_links: Dict[str, Dict[str, Any]]) -> List[str]:
+    by_name = {card.model_name: card for card in cards}
+    lines: List[str] = [
+        ".. grid:: 1 1 2 4",
+        "   :gutter: 2",
+        "   :class-container: catalog-recommend-grid",
+        "",
+    ]
+    for hazard in HAZARD_DISPLAY_ORDER:
+        model_name = STARTER_MODELS.get(hazard)
+        card = by_name.get(model_name) if model_name else None
+        if card is None:
+            continue
+        benchmark_family = _entry_benchmark_family(card, benchmark_links)
+        note = _single_line(card.summary).rstrip(".") + "."
+        lines.extend(
+            _indent_lines(
+                [
+                    ".. grid-item-card:: {hazard}".format(hazard=hazard),
+                    "   :class-card: catalog-detail-card",
+                    "",
+                    "   **Start with:** {detail}".format(detail=_doc_link(card)),
+                    "",
+                    "   {note}".format(note=note),
+                    "",
+                    (
+                        "   **Benchmark:** {benchmark}".format(benchmark=benchmark_family)
+                        if benchmark_family
+                        else "   **Benchmark:** See the model detail page for compatible benchmark coverage."
+                    ),
+                    "",
+                ]
+            )
+        )
+    return lines
+
+
 def render_model_page(cards: Sequence[ModelCard]) -> str:
-    grouped = group_cards_by_hazard(public_catalog_cards(cards))
+    public_cards = public_catalog_cards(cards)
+    grouped = group_cards_by_hazard(public_cards)
+    benchmark_links = _benchmark_links_by_model()
+    implemented_cards = [
+        card for card in public_cards if card.catalog_status in {"core", "variant"}
+    ]
+    experimental_cards = [
+        card for card in public_cards if card.catalog_status == "experimental"
+    ]
+    benchmark_linked_count = len(
+        [card for card in public_cards if card.model_name in benchmark_links]
+    )
+
     lines: List[str] = [
         GENERATED_MARKER,
         "",
         "Models",
         "===================",
         "",
-        "Overview",
-        "--------",
+        "Browse PyHazards model implementations across hazard families, compare",
+        "scope and maturity, and navigate to model-specific detail pages.",
         "",
-        "Use this page to browse the public model catalog, compare supported",
-        "model implementations, and see how registered models are constructed",
-        "through the shared PyHazards registry.",
+        "At a Glance",
+        "-----------",
         "",
-        "Model Catalog",
-        "-------------",
-        "",
-        "The public catalog below is generated from ``pyhazards/model_cards/*.yaml``.",
-        "Use this page for model discovery and quick registry lookup. Implemented",
-        "models combine the core baselines plus public variants and additional",
-        "implementations in one hazard-level table without duplicate entries.",
-        "Use :doc:`appendix_a_coverage` for the audited roadmap gap list,",
-        ":doc:`pyhazards_benchmarks` for current runnable evaluator coverage, and",
-        "the Implementation Guide for contributor workflow details.",
+        ".. grid:: 1 2 4 4",
+        "   :gutter: 2",
+        "   :class-container: catalog-grid",
         "",
     ]
-
-    for hazard, hazard_cards in grouped.items():
-        lines.extend([hazard, "~" * len(hazard), ""])
-        cards_by_status = _cards_by_status(hazard_cards)
-        implemented_cards = cards_by_status["core"] + cards_by_status["variant"]
-        experimental_cards = cards_by_status["experimental"]
-
-        lines.extend(
-            [
-                IMPLEMENTED_SECTION_TITLE,
-                "+" * len(IMPLEMENTED_SECTION_TITLE),
-                "",
-                IMPLEMENTED_SECTION_SUMMARY,
-                "",
-            ]
+    lines.extend(
+        _indent_lines(
+            _stat_card(
+                "Hazard Families",
+                str(len(grouped)),
+                "Catalog tabs grouped by the normalized public hazard taxonomy.",
+            )
         )
-        if not implemented_cards:
-            lines.extend(
-                [
-                    "No public implemented methods are currently available for this hazard",
-                    "family. See :doc:`appendix_a_coverage` for the audited roadmap gaps.",
-                    "",
-                ]
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card(
+                "Implemented Models",
+                str(len(implemented_cards)),
+                "Public core baselines plus additional implemented variants.",
             )
-        else:
-            lines.extend(
-                [
-                    ".. list-table::",
-                    "   :widths: 30 70",
-                    "   :header-rows: 1",
-                    "   :class: dataset-list",
-                    "",
-                    "   * - Model",
-                    "     - Description",
-                ]
+        )
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card(
+                "Experimental Adapters",
+                str(len(experimental_cards)),
+                "Prototype weather-model integrations kept separate from the stable catalog.",
             )
-            for entry in _grouped_catalog_entries(implemented_cards):
-                lines.extend(
-                    [
-                        "   * - {name}".format(name=_row_name(entry)),
-                        "     - {summary}".format(summary=_row_summary(entry, "implemented")),
-                    ]
-                )
-            lines.append("")
-
-        if experimental_cards:
-            lines.extend(
-                [
-                    EXPERIMENTAL_SECTION_TITLE,
-                    "+" * len(EXPERIMENTAL_SECTION_TITLE),
-                    "",
-                    EXPERIMENTAL_SECTION_SUMMARY,
-                    "",
-                    ".. list-table::",
-                    "   :widths: 30 70",
-                    "   :header-rows: 1",
-                    "   :class: dataset-list",
-                    "",
-                    "   * - Model",
-                    "     - Description",
-                ]
+        )
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card(
+                "Benchmark-linked Models",
+                str(benchmark_linked_count),
+                "Models with explicit benchmark-family or ecosystem links on this page.",
             )
-            for entry in _grouped_catalog_entries(experimental_cards):
-                lines.extend(
-                    [
-                        "   * - {name}".format(name=_row_name(entry)),
-                        "     - {summary}".format(summary=_row_summary(entry, "experimental")),
-                    ]
-                )
-            lines.append("")
-        lines.append("")
+        )
+    )
 
     lines.extend(
         [
-            "Using the Registry",
-            "------------------",
             "",
-            "Build a Registered Model",
-            "~~~~~~~~~~~~~~~~~~~~~~~~",
+            "Catalog by Hazard",
+            "-----------------",
             "",
-            ".. code-block:: python",
+            "Use the hazard tabs below to browse the public catalog. Each card keeps",
+            "the index-page summary short, then links into model-specific detail",
+            "pages and compatible benchmark coverage.",
             "",
-            "    from pyhazards.models import build_model",
+            ".. tab-set::",
+            "   :class: catalog-tabs",
             "",
-            "    model = build_model(",
-            '        name="mlp",',
-            '        task="classification",',
-            "        in_dim=32,",
-            "        out_dim=5,",
-            "        hidden_dim=256,",
-            "        depth=3,",
-            "    )",
+        ]
+    )
+
+    for hazard, hazard_cards in grouped.items():
+        cards_by_status = _cards_by_status(hazard_cards)
+        implemented = cards_by_status["core"] + cards_by_status["variant"]
+        experimental = cards_by_status["experimental"]
+        tab_lines: List[str] = [
+            ".. tab-item:: {hazard}".format(hazard=hazard),
             "",
-            "Register a Custom Model",
-            "~~~~~~~~~~~~~~~~~~~~~~~",
+            "   .. container:: catalog-section-note",
             "",
-            "Register a builder function that returns an ``nn.Module`` so users can",
-            "load the model by name through the shared registry.",
+            "      {summary}".format(summary=HAZARD_SECTION_SUMMARIES[hazard]),
             "",
-            ".. code-block:: python",
+            "   .. rubric:: {title}".format(title=IMPLEMENTED_SECTION_TITLE),
             "",
-            "    import torch.nn as nn",
-            "    from pyhazards.models import register_model, build_model",
+            "   .. container:: catalog-section-note",
             "",
-            "    def my_custom_builder(task: str, in_dim: int, out_dim: int, **kwargs) -> nn.Module:",
-            '        hidden = kwargs.get("hidden_dim", 128)',
-            "        layers = nn.Sequential(",
-            "            nn.Linear(in_dim, hidden),",
-            "            nn.ReLU(),",
-            "            nn.Linear(hidden, out_dim),",
-            "        )",
-            "        return layers",
+            "      {summary}".format(summary=IMPLEMENTED_SECTION_SUMMARY),
             "",
-            '    register_model("my_mlp", my_custom_builder, defaults={"hidden_dim": 128})',
+        ]
+        if implemented:
+            tab_lines.extend(_indent_lines(_render_model_grid(implemented, benchmark_links)))
+        else:
+            tab_lines.extend(
+                [
+                    "   No public implemented methods are currently available for this hazard family.",
+                    "",
+                ]
+            )
+
+        if experimental:
+            tab_lines.extend(
+                [
+                    "   .. rubric:: {title}".format(title=EXPERIMENTAL_SECTION_TITLE),
+                    "",
+                    "   .. container:: catalog-section-note",
+                    "",
+                    "      {summary}".format(summary=EXPERIMENTAL_SECTION_SUMMARY),
+                    "",
+                ]
+            )
+            tab_lines.extend(_indent_lines(_render_model_grid(experimental, benchmark_links)))
+        tab_lines.append("")
+        lines.extend(_indent_lines(tab_lines))
+
+    lines.extend(
+        [
             "",
-            '    model = build_model(name="my_mlp", task="regression", in_dim=16, out_dim=1)',
+            "Recommended Entry Points",
+            "------------------------",
             "",
-            "Notes",
-            "~~~~~",
+            "If you are new to PyHazards, these four models provide the clearest",
+            "starting point for each hazard family.",
             "",
-            "- Builders receive ``task`` plus any kwargs you pass.",
-            "- ``register_model`` stores optional defaults so configs can stay small.",
-            "- Models are plain PyTorch modules and work with ``Trainer`` or custom loops.",
+        ]
+    )
+    lines.extend(_render_recommended_grid(public_cards, benchmark_links))
+
+    lines.extend(
+        [
+            "",
+            "Programmatic Use",
+            "----------------",
+            "",
+            "Use :doc:`api/pyhazards.models` for the developer registry workflow,",
+            "builder examples, and package-level API lookup. Use",
+            ":doc:`pyhazards_benchmarks` to compare compatible benchmark families",
+            "before selecting a model for evaluation.",
             "",
             ".. toctree::",
             "   :maxdepth: 1",
@@ -462,7 +755,7 @@ def render_model_page(cards: Sequence[ModelCard]) -> str:
             "",
         ]
     )
-    for card in public_catalog_cards(cards):
+    for card in public_cards:
         lines.append("   modules/{slug}".format(slug=card.module_doc_name))
 
     lines.append("")
@@ -477,11 +770,13 @@ def render_api_page(cards: Sequence[ModelCard]) -> str:
         "pyhazards.models package",
         "========================",
         "",
-        "Model Catalog",
-        "-------------",
+        "Catalog Summary",
+        "---------------",
         "",
-        "This page mirrors the public model catalog and then lists the package",
-        "submodules for API lookup.",
+        "This page links the public model catalog, the developer registry",
+        "workflow, and the package submodules used to implement model builders.",
+        "",
+        "For the curated browsing experience, use :doc:`/pyhazards_models`.",
         "",
     ]
     for hazard, hazard_cards in grouped.items():
@@ -498,46 +793,61 @@ def render_api_page(cards: Sequence[ModelCard]) -> str:
                 ]
             )
         else:
-            for entry in _grouped_catalog_entries(implemented_cards):
-                lines.extend(
-                    [
-                        "{name}".format(
-                            name=(
-                                _doc_link(entry[0], absolute=True)
-                                if len(entry) == 1
-                                else _family_row_name(entry)
-                            )
-                        ),
-                        "",
-                        "{summary}".format(
-                            summary=_row_summary(entry, "implemented", absolute_links=True)
-                        ),
-                        "",
-                    ]
-                )
+            links = ", ".join(_doc_link(card, absolute=True) for card in implemented_cards)
+            lines.extend([links + ".", ""])
 
         if experimental_cards:
             lines.extend([EXPERIMENTAL_SECTION_TITLE, "+" * len(EXPERIMENTAL_SECTION_TITLE), ""])
-            for entry in _grouped_catalog_entries(experimental_cards):
-                lines.extend(
-                    [
-                        "{name}".format(
-                            name=(
-                                _doc_link(entry[0], absolute=True)
-                                if len(entry) == 1
-                                else _family_row_name(entry)
-                            )
-                        ),
-                        "",
-                        "{summary}".format(
-                            summary=_row_summary(entry, "experimental", absolute_links=True)
-                        ),
-                        "",
-                    ]
-                )
+            links = ", ".join(_doc_link(card, absolute=True) for card in experimental_cards)
+            lines.extend([links + ".", ""])
 
     lines.extend(
         [
+            "Developer Registry Workflow",
+            "---------------------------",
+            "",
+            "Use this section when you need the package-level builder and registry",
+            "interface rather than the public catalog presentation.",
+            "",
+            "Build a Registered Model",
+            "~~~~~~~~~~~~~~~~~~~~~~~~",
+            "",
+            ".. code-block:: python",
+            "",
+            "    from pyhazards.models import build_model",
+            "",
+            "    model = build_model(",
+            '        name="phasenet",',
+            '        task="regression",',
+            "        in_channels=3,",
+            "    )",
+            "",
+            "Register a Custom Model",
+            "~~~~~~~~~~~~~~~~~~~~~~~",
+            "",
+            ".. code-block:: python",
+            "",
+            "    import torch.nn as nn",
+            "    from pyhazards.models import build_model, register_model",
+            "",
+            "    def my_custom_builder(task: str, in_dim: int, out_dim: int, **kwargs) -> nn.Module:",
+            '        hidden = kwargs.get("hidden_dim", 128)',
+            "        return nn.Sequential(",
+            "            nn.Linear(in_dim, hidden),",
+            "            nn.ReLU(),",
+            "            nn.Linear(hidden, out_dim),",
+            "        )",
+            "",
+            '    register_model("my_mlp", my_custom_builder, defaults={"hidden_dim": 128})',
+            '    model = build_model(name="my_mlp", task="regression", in_dim=16, out_dim=1)',
+            "",
+            "Notes",
+            "~~~~~",
+            "",
+            "- Builders receive ``task`` plus any kwargs you pass.",
+            "- ``register_model`` stores optional defaults so configs can stay small.",
+            "- Use :doc:`/implementation` for the full contributor workflow.",
+            "",
             "Submodules",
             "----------",
             "",
@@ -588,6 +898,10 @@ def render_api_page(cards: Sequence[ModelCard]) -> str:
 
 def render_module_page(card: ModelCard) -> str:
     title = card.display_name
+    benchmark_links = _benchmark_links_by_model()
+    task_labels = _entry_task_labels(card, benchmark_links)
+    benchmark_family = _entry_benchmark_family(card, benchmark_links, absolute=True)
+    ecosystems = _entry_ecosystem_links(card, benchmark_links, absolute=True)
     lines: List[str] = [
         GENERATED_MARKER,
         "",
@@ -600,26 +914,82 @@ def render_module_page(card: ModelCard) -> str:
             title,
             "=" * len(title),
             "",
+            "Overview",
+            "--------",
+            "",
+            _single_line(card.description[0]),
+            "",
+            "At a Glance",
+            "-----------",
+            "",
+            ".. grid:: 1 2 4 4",
+            "   :gutter: 2",
+            "   :class-container: catalog-grid",
+            "",
+        ]
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card("Hazard Family", _display_hazard_label(card.hazard), "Public catalog grouping used for this model.")
+        )
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card("Maturity", MATURITY_LABELS[card.catalog_status], "Catalog maturity label used on the index page.")
+        )
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card("Tasks", str(len(task_labels)), ", ".join(task_labels))
+        )
+    )
+    lines.extend(
+        _indent_lines(
+            _stat_card(
+                "Benchmark Family",
+                benchmark_family or "Unmapped",
+                "Primary benchmark-family link used for compatible evaluation coverage.",
+            )
+        )
+    )
+    lines.extend(
+        [
+            "",
             "Description",
             "-----------",
             "",
         ]
     )
     for paragraph in card.description:
-        lines.append(paragraph)
+        lines.append(_single_line(paragraph))
         lines.append("")
 
     lines.extend(
         [
-            "Paper and Code",
-            "--------------",
+            "Benchmark Compatibility",
+            "-----------------------",
             "",
-            _paper_sentence(card),
+            "**Primary benchmark family:** {family}".format(
+                family=benchmark_family or "Not yet mapped."
+            ),
             "",
-            "Catalog Status",
-            "--------------",
+        ]
+    )
+    if ecosystems:
+        lines.extend(
+            [
+                "**Mapped benchmark ecosystems:** {ecosystems}".format(
+                    ecosystems=", ".join(ecosystems)
+                ),
+                "",
+            ]
+        )
+    lines.extend(
+        [
+            "External References",
+            "-------------------",
             "",
-            "Status: ``{status}``".format(status=card.catalog_status),
+            _paper_links(card),
             "",
             "Registry Name",
             "-------------",
@@ -630,7 +1000,7 @@ def render_module_page(card: ModelCard) -> str:
     )
 
     if card.family_label:
-        lines.append("Family: ``{family}``".format(family=card.family_label))
+        lines.append("Family grouping: ``{family}``".format(family=card.family_label))
         lines.append("")
 
     if card.aliases:
@@ -646,13 +1016,13 @@ def render_module_page(card: ModelCard) -> str:
             "",
         ]
     )
-    for task in card.tasks:
-        lines.append("- ``{task}``".format(task=task))
+    for task in task_labels:
+        lines.append("- {task}".format(task=task))
     lines.append("")
     lines.extend(
         [
-            "Example of how to use it",
-            "------------------------",
+            "Programmatic Use",
+            "----------------",
             "",
             ".. code-block:: python",
             "",

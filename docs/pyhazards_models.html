@@ -7,12 +7,13 @@
         <link rel="canonical" href="https://labrai.github.io/PyHazards/pyhazards_models.html">
         <link rel="prefetch" href="_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>Models - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=aab0eeca" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=b547f940" />
     
     
 
@@ -235,12 +236,12 @@
 <li class="toctree-l2"><a class="reference internal" href="modules/models_phasenet.html">PhaseNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_saf_net.html">SAF-Net</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_tcif_fusion.html">TCIF-fusion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_tropicalcyclone_mlp.html">tropicalcyclone_MLP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_tropicalcyclone_mlp.html">Tropical Cyclone MLP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_tropicyclonenet.html">TropiCycloneNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_urbanfloodcast.html">UrbanFloodCast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_forecasting.html">wildfire_forecasting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_forecasting.html">Wildfire Forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfirespreadts.html">WildfireSpreadTS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wrf_sfire.html">WRF-SFIRE Adapter</a></li>
@@ -319,281 +320,901 @@
         <article role="main" id="furo-main-content">
           <section id="models">
 <h1>Models<a class="headerlink" href="#models" title="Link to this heading">¶</a></h1>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
-<p>Use this page to browse the public model catalog, compare supported
-model implementations, and see how registered models are constructed
-through the shared PyHazards registry.</p>
-</section>
-<section id="model-catalog">
-<h2>Model Catalog<a class="headerlink" href="#model-catalog" title="Link to this heading">¶</a></h2>
-<p>The public catalog below is generated from <code class="docutils literal notranslate"><span class="pre">pyhazards/model_cards/*.yaml</span></code>.
-Use this page for model discovery and quick registry lookup. Implemented
-models combine the core baselines plus public variants and additional
-implementations in one hazard-level table without duplicate entries.
-Use <a class="reference internal" href="appendix_a_coverage.html"><span class="doc">Coverage Audit</span></a> for the audited roadmap gap list,
-<a class="reference internal" href="pyhazards_benchmarks.html"><span class="doc">Benchmarks</span></a> for current runnable evaluator coverage, and
-the Implementation Guide for contributor workflow details.</p>
-<section id="wildfire">
-<h3>Wildfire<a class="headerlink" href="#wildfire" title="Link to this heading">¶</a></h3>
-<section id="implemented-models">
-<h4>Implemented Models<a class="headerlink" href="#implemented-models" title="Link to this heading">¶</a></h4>
-<p>This table includes both core baselines and public variants or additional implementations for the hazard family.</p>
-<div class="table-wrapper colwidths-given dataset-list docutils container">
-<table class="dataset-list docutils align-default">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Model</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_asufm.html"><span class="doc">ASUFM</span></a></p></td>
-<td><p>A temporal convolution baseline for weekly wildfire activity forecasting. <a class="reference external" href="https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278">Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer</a> (<a class="reference external" href="https://github.com/bronteee/fire-asufm">repo</a>).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wildfire_aspp.html"><span class="doc">CNN-ASPP</span></a></p></td>
-<td><p>An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction. <a class="reference external" href="https://ieeexplore.ieee.org/document/10568207">Application of Explainable Artificial Intelligence in Predicting Wildfire Spread</a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a></p></td>
-<td><p>A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting. <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_firecastnet.html"><span class="doc">FireCastNet</span></a></p></td>
-<td><p>A compact encoder-decoder baseline for wildfire spread mask prediction. <a class="reference external" href="https://doi.org/10.1038/s41598-025-30645-7">FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction</a> (<a class="reference external" href="https://github.com/SeasFire/firecastnet">repo</a>).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_forefire.html"><span class="doc">ForeFire Adapter</span></a></p></td>
-<td><p>A lightweight simulator-style wildfire spread adapter inspired by front-propagation systems. <a class="reference external" href="https://doi.org/10.21105/joss.08680">ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread</a> (<a class="reference external" href="https://github.com/forefireAPI/forefire">repo</a>).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wildfire_forecasting.html"><span class="doc">wildfire_forecasting</span></a></p></td>
-<td><p>A sequence forecasting baseline for next-window wildfire activity across weekly count features. <a class="reference external" href="https://doi.org/10.1029/2022GL099368">Wildfire Danger Prediction and Understanding with Deep Learning</a> (<a class="reference external" href="https://github.com/Orion-AI-Lab/wildfire_forecasting">repo</a>).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfirespreadts.html"><span class="doc">WildfireSpreadTS</span></a></p></td>
-<td><p>A temporal convolution wildfire spread baseline over short raster history windows. <a class="reference external" href="https://openreview.net/forum?id=RgdGkPRQ03">WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction</a> (<a class="reference external" href="https://github.com/SebastianGer/WildfireSpreadTS">repo</a>).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wrf_sfire.html"><span class="doc">WRF-SFIRE Adapter</span></a></p></td>
-<td><p>A lightweight raster wildfire spread adapter inspired by WRF-SFIRE style transport. <a class="reference external" href="https://doi.org/10.5194/gmd-4-591-2011">Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011</a> (<a class="reference external" href="https://github.com/openwfm/WRF-SFIRE">repo</a>).</p></td>
-</tr>
-</tbody>
-</table>
+<p>Browse PyHazards model implementations across hazard families, compare
+scope and maturity, and navigate to model-specific detail pages.</p>
+<section id="at-a-glance">
+<h2>At a Glance<a class="headerlink" href="#at-a-glance" title="Link to this heading">¶</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-4 sd-row-cols-lg-4 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Hazard Families</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">4</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Catalog tabs grouped by the normalized public hazard taxonomy.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Implemented Models</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">24</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Public core baselines plus additional implemented variants.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Experimental Adapters</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">3</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Prototype weather-model integrations kept separate from the stable catalog.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Benchmark-linked Models</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">27</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Models with explicit benchmark-family or ecosystem links on this page.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section>
-</section>
-<section id="earthquake">
-<h3>Earthquake<a class="headerlink" href="#earthquake" title="Link to this heading">¶</a></h3>
-<section id="id1">
-<h4>Implemented Models<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
-<p>This table includes both core baselines and public variants or additional implementations for the hazard family.</p>
-<div class="table-wrapper colwidths-given dataset-list docutils container">
-<table class="dataset-list docutils align-default">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Model</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_eqnet.html"><span class="doc">EQNet</span></a></p></td>
-<td><p>A transformer-style earthquake phase-picking baseline for modern sequence modeling comparisons. <a class="reference external" href="https://www.osti.gov/biblio/1978539">An End-To-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning</a> (<a class="reference external" href="https://github.com/AI4EPS/EQNet">repo</a>).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_eqtransformer.html"><span class="doc">EQTransformer</span></a></p></td>
-<td><p>A bidirectional sequence encoder for joint earthquake phase picking with attention pooling over waveform windows. <a class="reference external" href="https://doi.org/10.1038/s41467-020-17591-w">Earthquake Transformer-An attentive deep-learning model for simultaneous earthquake detection and phase picking</a> (<a class="reference external" href="https://github.com/smousavi05/EQTransformer">repo</a>).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_gpd.html"><span class="doc">GPD</span></a></p></td>
-<td><p>A compact CNN baseline for generalized phase detection and historical earthquake picking comparisons. <a class="reference external" href="https://doi.org/10.1785/0120180080">Generalized Seismic Phase Detection with Deep Learning</a> (<a class="reference external" href="https://github.com/interseismic/generalized-phase-detection">repo</a>).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_phasenet.html"><span class="doc">PhaseNet</span></a></p></td>
-<td><p>A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows. <a class="reference external" href="https://arxiv.org/abs/1803.03211">PhaseNet: A Deep-Neural-Network-Based Seismic Arrival Time Picking Method</a> (<a class="reference external" href="https://github.com/AI4EPS/PhaseNet">repo</a>).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wavecastnet.html"><span class="doc">WaveCastNet</span></a></p></td>
-<td><p>A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield forecasting and early-warning style rollout experiments. <a class="reference external" href="https://doi.org/10.1038/s41467-025-65435-2">Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning</a>.</p></td>
-</tr>
-</tbody>
-</table>
+<section id="catalog-by-hazard">
+<h2>Catalog by Hazard<a class="headerlink" href="#catalog-by-hazard" title="Link to this heading">¶</a></h2>
+<p>Use the hazard tabs below to browse the public catalog. Each card keeps
+the index-page summary short, then links into model-specific detail
+pages and compatible benchmark coverage.</p>
+<div class="sd-tab-set catalog-tabs docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Wildfire</label><div class="sd-tab-content docutils">
+<div class="catalog-section-note docutils container">
+<p>Wildfire models cover danger forecasting, weekly activity forecasting, and spread prediction under the shared wildfire benchmark family.</p>
 </div>
-</section>
-</section>
-<section id="flood">
-<h3>Flood<a class="headerlink" href="#flood" title="Link to this heading">¶</a></h3>
-<section id="id2">
-<h4>Implemented Models<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
+<p class="rubric">Implemented Models</p>
+<div class="catalog-section-note docutils container">
 <p>This table includes both core baselines and public variants or additional implementations for the hazard family.</p>
-<div class="table-wrapper colwidths-given dataset-list docutils container">
-<table class="dataset-list docutils align-default">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Model</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_neuralhydrology_ealstm.html"><span class="doc">EA-LSTM</span></a></p></td>
-<td><p>An entity-aware hydrology baseline with static-feature gating over streamflow histories. <a class="reference external" href="https://doi.org/10.5194/hess-23-5089-2019">Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets</a> (<a class="reference external" href="https://github.com/neuralhydrology/neuralhydrology">repo</a>).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_floodcast.html"><span class="doc">FloodCast</span></a></p></td>
-<td><p>A compact spatiotemporal flood-inundation baseline for raster forecast experiments. <a class="reference external" href="https://doi.org/10.1038/s41586-024-08028-8">Large-scale flood modeling and forecasting with FloodCast</a> (<a class="reference external" href="https://github.com/HydroPML/FloodCast">repo</a>).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_google_flood_forecasting.html"><span class="doc">Google Flood Forecasting</span></a></p></td>
-<td><p>A transformer-style sequence baseline for nodewise streamflow forecasting. <a class="reference external" href="https://research.google/pubs/global-flood-forecasting-at-a-fine-catchment-resolution-using-machine-learning/">Global Flood Forecasting at a Fine Catchment Resolution using Machine Learning</a> (<a class="reference external" href="https://github.com/google-research/flood-forecasting">repo</a>).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_hydrographnet.html"><span class="doc">HydroGraphNet</span></a></p></td>
-<td><p>A physics-informed graph neural network for flood forecasting with interpretable KAN-style components, residual message passing, and delta-state decoding. <a class="reference external" href="https://onlinelibrary.wiley.com/doi/10.1111/mice.13484">Interpretable physics-informed graph neural networks for flood forecasting</a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_neuralhydrology_lstm.html"><span class="doc">NeuralHydrology LSTM</span></a></p></td>
-<td><p>An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs. <a class="reference external" href="https://doi.org/10.5194/hess-23-5089-2019">Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets</a> (<a class="reference external" href="https://github.com/neuralhydrology/neuralhydrology">repo</a>).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_urbanfloodcast.html"><span class="doc">UrbanFloodCast</span></a></p></td>
-<td><p>A U-Net style urban inundation baseline for dense-grid flood prediction. <a class="reference external" href="https://arxiv.org/abs/2405.21179">UrbanFloodCast: WMO Urban Flooding Forecasting Challenge</a> (<a class="reference external" href="https://github.com/HydroPML/UrbanFloodCast">repo</a>).</p></td>
-</tr>
-</tbody>
-</table>
 </div>
-</section>
-</section>
-<section id="hurricane">
-<h3>Hurricane<a class="headerlink" href="#hurricane" title="Link to this heading">¶</a></h3>
-<section id="id4">
-<h4>Implemented Models<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h4>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+ASUFM</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A temporal convolution baseline for weekly wildfire activity forecasting.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Wildfire</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Forecasting</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_asufm.html"><span class="doc">ASUFM</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278">Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/bronteee/fire-asufm">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+DNN-LSTM-AutoEncoder</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Wildfire</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Classification</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Forecasting</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+FireCastNet</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A compact encoder-decoder baseline for wildfire spread mask prediction.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Wildfire</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Spread</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_firecastnet.html"><span class="doc">FireCastNet</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/wildfirespreadts_ecosystem.html"><span class="doc">WildfireSpreadTS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://doi.org/10.1038/s41598-025-30645-7">FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/SeasFire/firecastnet">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+ForeFire Adapter</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A lightweight simulator-style wildfire spread adapter inspired by front-propagation systems.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Wildfire</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Spread</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_forefire.html"><span class="doc">ForeFire Adapter</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/wildfirespreadts_ecosystem.html"><span class="doc">WildfireSpreadTS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://doi.org/10.21105/joss.08680">ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/forefireAPI/forefire">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Wildfire Forecasting</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A sequence forecasting baseline for next-window wildfire activity across weekly count features.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Wildfire</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Forecasting</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_wildfire_forecasting.html"><span class="doc">Wildfire Forecasting</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://doi.org/10.1029/2022GL099368">Wildfire Danger Prediction and Understanding with Deep Learning</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/Orion-AI-Lab/wildfire_forecasting">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+WildfireSpreadTS</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A temporal convolution wildfire spread baseline over short raster history windows.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Wildfire</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Spread</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_wildfirespreadts.html"><span class="doc">WildfireSpreadTS</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/wildfirespreadts_ecosystem.html"><span class="doc">WildfireSpreadTS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://openreview.net/forum?id=RgdGkPRQ03">WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/SebastianGer/WildfireSpreadTS">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+WRF-SFIRE Adapter</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A lightweight raster wildfire spread adapter inspired by WRF-SFIRE style transport.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Wildfire</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Spread</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_wrf_sfire.html"><span class="doc">WRF-SFIRE Adapter</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/wildfirespreadts_ecosystem.html"><span class="doc">WildfireSpreadTS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://doi.org/10.5194/gmd-4-591-2011">Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/openwfm/WRF-SFIRE">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+CNN-ASPP</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Wildfire</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Spread</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_wildfire_aspp.html"><span class="doc">CNN-ASPP</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/wildfirespreadts_ecosystem.html"><span class="doc">WildfireSpreadTS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://ieeexplore.ieee.org/document/10568207">Application of Explainable Artificial Intelligence in Predicting Wildfire Spread</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+Earthquake</label><div class="sd-tab-content docutils">
+<div class="catalog-section-note docutils container">
+<p>Earthquake models span phase picking and dense-grid forecasting, with detail pages linked to the shared earthquake benchmark coverage.</p>
+</div>
+<p class="rubric">Implemented Models</p>
+<div class="catalog-section-note docutils container">
 <p>This table includes both core baselines and public variants or additional implementations for the hazard family.</p>
-<div class="table-wrapper colwidths-given dataset-list docutils container">
-<table class="dataset-list docutils align-default">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Model</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_hurricast.html"><span class="doc">Hurricast</span></a></p></td>
-<td><p>A compact multimodal storm baseline for hurricane track and intensity forecasting. <a class="reference external" href="https://arxiv.org/abs/2102.01204">Hurricane Forecasting: A Novel Multimodal Machine Learning Framework</a> (<a class="reference external" href="https://github.com/leobix/hurricast">repo</a>).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_tropicalcyclone_mlp.html"><span class="doc">tropicalcyclone_MLP</span></a></p></td>
-<td><p>A compact MLP baseline for hurricane track and intensity forecasting. <a class="reference external" href="https://doi.org/10.1145/3447548.3467351">Deep Learning Experiments for Tropical Cyclone Intensity Forecasts</a> (<a class="reference external" href="https://github.com/wenweixu/tropicalcyclone_MLP">repo</a>).</p></td>
-</tr>
-</tbody>
-</table>
 </div>
-</section>
-</section>
-<section id="tropical-cyclone">
-<h3>Tropical Cyclone<a class="headerlink" href="#tropical-cyclone" title="Link to this heading">¶</a></h3>
-<section id="id5">
-<h4>Implemented Models<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h4>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+EQNet</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A transformer-style earthquake phase-picking baseline for modern sequence modeling comparisons.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Earthquake</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Phase Picking</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_eqnet.html"><span class="doc">EQNet</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/seisbench.html"><span class="doc">SeisBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://www.osti.gov/biblio/1978539">An End-To-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/AI4EPS/EQNet">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+EQTransformer</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A bidirectional sequence encoder for joint earthquake phase picking with attention pooling over waveform windows.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Earthquake</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Phase Picking</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_eqtransformer.html"><span class="doc">EQTransformer</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/pick_benchmark.html"><span class="doc">pick-benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://doi.org/10.1038/s41467-020-17591-w">Earthquake Transformer-An attentive deep-learning model for simultaneous earthquake detection and phase picking</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/smousavi05/EQTransformer">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+GPD</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A compact CNN baseline for generalized phase detection and historical earthquake picking comparisons.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Earthquake</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Phase Picking</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_gpd.html"><span class="doc">GPD</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/pick_benchmark.html"><span class="doc">pick-benchmark</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://doi.org/10.1785/0120180080">Generalized Seismic Phase Detection with Deep Learning</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/interseismic/generalized-phase-detection">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+PhaseNet</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Earthquake</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Phase Picking</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_phasenet.html"><span class="doc">PhaseNet</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/seisbench.html"><span class="doc">SeisBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://arxiv.org/abs/1803.03211">PhaseNet: A Deep-Neural-Network-Based Seismic Arrival Time Picking Method</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/AI4EPS/PhaseNet">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+WaveCastNet</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield forecasting and early-warning style rollout experiments.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Earthquake</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Wavefield Forecasting</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_wavecastnet.html"><span class="doc">WaveCastNet</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/aefa.html"><span class="doc">AEFA</span></a>, <a class="reference internal" href="benchmarks/pycsep.html"><span class="doc">pyCSEP</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://doi.org/10.1038/s41467-025-65435-2">Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Flood</label><div class="sd-tab-content docutils">
+<div class="catalog-section-note docutils container">
+<p>Flood models cover streamflow and inundation forecasting, ranging from sequence baselines to dense-grid flood-mapping architectures.</p>
+</div>
+<p class="rubric">Implemented Models</p>
+<div class="catalog-section-note docutils container">
 <p>This table includes both core baselines and public variants or additional implementations for the hazard family.</p>
-<div class="table-wrapper colwidths-given dataset-list docutils container">
-<table class="dataset-list docutils align-default">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Model</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_saf_net.html"><span class="doc">SAF-Net</span></a></p></td>
-<td><p>A spatiotemporal tropical-cyclone baseline with an intensity-focused head and shared trajectory output. <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1568494623003152">SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction</a> (<a class="reference external" href="https://github.com/xuguangning1218/TI_Prediction">repo</a>).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_tcif_fusion.html"><span class="doc">TCIF-fusion</span></a></p></td>
-<td><p>A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting. <a class="reference external" href="https://doi.org/10.5194/egusphere-2024-250">Tropical cyclone intensity forecasting using model knowledge guided deep learning model</a> (<a class="reference external" href="https://github.com/wangchong96/TCIF-fusion">repo</a>).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_tropicyclonenet.html"><span class="doc">TropiCycloneNet</span></a></p></td>
-<td><p>A GRU plus attention baseline for all-basin tropical cyclone forecasting. <a class="reference external" href="https://www.nature.com/articles/s41597-023-02721-x">Benchmark dataset and deep learning method for global tropical cyclone forecasting</a> (<a class="reference external" href="https://github.com/xiaochengfuhuo/TropiCycloneNet">repo</a>).</p></td>
-</tr>
-</tbody>
-</table>
 </div>
-</section>
-<section id="experimental-adapters">
-<h4>Experimental Adapters<a class="headerlink" href="#experimental-adapters" title="Link to this heading">¶</a></h4>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+EA-LSTM</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">An entity-aware hydrology baseline with static-feature gating over streamflow histories.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Flood</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Streamflow</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_neuralhydrology_ealstm.html"><span class="doc">EA-LSTM</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/waterbench.html"><span class="doc">WaterBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://doi.org/10.5194/hess-23-5089-2019">Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/neuralhydrology/neuralhydrology">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+FloodCast</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A compact spatiotemporal flood-inundation baseline for raster forecast experiments.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Flood</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Inundation</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_floodcast.html"><span class="doc">FloodCast</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/floodcastbench.html"><span class="doc">FloodCastBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://doi.org/10.1038/s41586-024-08028-8">Large-scale flood modeling and forecasting with FloodCast</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/HydroPML/FloodCast">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Google Flood Forecasting</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A transformer-style sequence baseline for nodewise streamflow forecasting.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Flood</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Streamflow</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_google_flood_forecasting.html"><span class="doc">Google Flood Forecasting</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/caravan.html"><span class="doc">Caravan</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://research.google/pubs/global-flood-forecasting-at-a-fine-catchment-resolution-using-machine-learning/">Global Flood Forecasting at a Fine Catchment Resolution using Machine Learning</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/google-research/flood-forecasting">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+NeuralHydrology LSTM</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Flood</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Streamflow</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_neuralhydrology_lstm.html"><span class="doc">NeuralHydrology LSTM</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/caravan.html"><span class="doc">Caravan</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://doi.org/10.5194/hess-23-5089-2019">Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/neuralhydrology/neuralhydrology">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+UrbanFloodCast</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A U-Net style urban inundation baseline for dense-grid flood prediction.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Flood</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Inundation</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_urbanfloodcast.html"><span class="doc">UrbanFloodCast</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/floodcastbench.html"><span class="doc">FloodCastBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://arxiv.org/abs/2405.21179">UrbanFloodCast: WMO Urban Flooding Forecasting Challenge</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/HydroPML/UrbanFloodCast">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+HydroGraphNet</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A physics-informed graph neural network for flood forecasting with interpretable KAN-style components, residual message passing, and delta-state decoding.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Flood</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Streamflow</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_hydrographnet.html"><span class="doc">HydroGraphNet</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/hydrobench.html"><span class="doc">HydroBench</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://onlinelibrary.wiley.com/doi/10.1111/mice.13484">Interpretable physics-informed graph neural networks for flood forecasting</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+Tropical Cyclone</label><div class="sd-tab-content docutils">
+<div class="catalog-section-note docutils container">
+<p>Storm models are organized under one tropical-cyclone family, including basin-specific hurricane baselines and shared all-basin forecasting models.</p>
+</div>
+<p class="rubric">Implemented Models</p>
+<div class="catalog-section-note docutils container">
+<p>This table includes both core baselines and public variants or additional implementations for the hazard family.</p>
+</div>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Hurricast</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A compact multimodal storm baseline for hurricane track and intensity forecasting.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Tropical Cyclone</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Track + Intensity</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_hurricast.html"><span class="doc">Hurricast</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/ibtracs.html"><span class="doc">IBTrACS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://arxiv.org/abs/2102.01204">Hurricane Forecasting: A Novel Multimodal Machine Learning Framework</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/leobix/hurricast">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+SAF-Net</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A spatiotemporal tropical-cyclone baseline with an intensity-focused head and shared trajectory output.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Tropical Cyclone</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Track + Intensity</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_saf_net.html"><span class="doc">SAF-Net</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/tcbench_alpha.html"><span class="doc">TCBench Alpha</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1568494623003152">SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/xuguangning1218/TI_Prediction">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+TCIF-fusion</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Tropical Cyclone</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Track + Intensity</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_tcif_fusion.html"><span class="doc">TCIF-fusion</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/tcbench_alpha.html"><span class="doc">TCBench Alpha</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://doi.org/10.5194/egusphere-2024-250">Tropical cyclone intensity forecasting using model knowledge guided deep learning model</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/wangchong96/TCIF-fusion">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Tropical Cyclone MLP</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A compact MLP baseline for hurricane track and intensity forecasting.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Tropical Cyclone</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Track + Intensity</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_tropicalcyclone_mlp.html"><span class="doc">Tropical Cyclone MLP</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/tcbench_alpha.html"><span class="doc">TCBench Alpha</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://doi.org/10.1145/3447548.3467351">Deep Learning Experiments for Tropical Cyclone Intensity Forecasts</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/wenweixu/tropicalcyclone_MLP">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+TropiCycloneNet</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">A GRU plus attention baseline for all-basin tropical cyclone forecasting.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Tropical Cyclone</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Track + Intensity</span> <span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">Implemented</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_tropicyclonenet.html"><span class="doc">TropiCycloneNet</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/tropicyclonenet_dataset.html"><span class="doc">TropiCycloneNet-Dataset</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://www.nature.com/articles/s41597-023-02721-x">Benchmark dataset and deep learning method for global tropical cyclone forecasting</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/xiaochengfuhuo/TropiCycloneNet">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p class="rubric">Experimental Adapters</p>
+<div class="catalog-section-note docutils container">
 <p>These entries remain public as lightweight wrapper or prototype integrations and should not be counted as stable implemented methods.</p>
-<div class="table-wrapper colwidths-given dataset-list docutils container">
-<table class="dataset-list docutils align-default">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Model</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_fourcastnet_tc.html"><span class="doc">FourCastNet TC Adapter</span></a></p></td>
-<td><p>An experimental wrapper-style storm adapter inspired by FourCastNet forecast fields. <a class="reference external" href="https://arxiv.org/abs/2202.11214">FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators</a> (<a class="reference external" href="https://github.com/NVlabs/FourCastNet">repo</a>).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_graphcast_tc.html"><span class="doc">GraphCast TC Adapter</span></a></p></td>
-<td><p>An experimental wrapper-style storm adapter inspired by GraphCast/GenCast forecast fields. <a class="reference external" href="https://www.science.org/doi/10.1126/science.adi2336">GraphCast: Learning skillful medium-range global weather forecasting</a> (<a class="reference external" href="https://github.com/google-deepmind/graphcast">repo</a>).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_pangu_tc.html"><span class="doc">Pangu TC Adapter</span></a></p></td>
-<td><p>An experimental wrapper-style storm adapter inspired by Pangu-Weather forecast fields. <a class="reference external" href="https://www.nature.com/articles/s41586-023-06185-3">Accurate medium-range global weather forecasting with 3D neural networks</a> (<a class="reference external" href="https://github.com/198808xc/Pangu-Weather">repo</a>).</p></td>
-</tr>
-</tbody>
-</table>
+</div>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+FourCastNet TC Adapter</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">An experimental wrapper-style storm adapter inspired by FourCastNet forecast fields.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Tropical Cyclone</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Track + Intensity</span> <span class="sd-sphinx-override sd-badge sd-bg-warning sd-bg-text-warning">Experimental Adapter</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_fourcastnet_tc.html"><span class="doc">FourCastNet TC Adapter</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/ibtracs.html"><span class="doc">IBTrACS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://arxiv.org/abs/2202.11214">FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/NVlabs/FourCastNet">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+GraphCast TC Adapter</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">An experimental wrapper-style storm adapter inspired by GraphCast/GenCast forecast fields.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Tropical Cyclone</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Track + Intensity</span> <span class="sd-sphinx-override sd-badge sd-bg-warning sd-bg-text-warning">Experimental Adapter</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_graphcast_tc.html"><span class="doc">GraphCast TC Adapter</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/ibtracs.html"><span class="doc">IBTrACS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://www.science.org/doi/10.1126/science.adi2336">GraphCast: Learning skillful medium-range global weather forecasting</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/google-deepmind/graphcast">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-entry-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Pangu TC Adapter</div>
+<div class="catalog-entry-summary docutils container">
+<p class="sd-card-text">An experimental wrapper-style storm adapter inspired by Pangu-Weather forecast fields.</p>
+</div>
+<div class="catalog-chip-row docutils container">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">Tropical Cyclone</span> <span class="sd-sphinx-override sd-badge sd-bg-secondary sd-bg-text-secondary">Track + Intensity</span> <span class="sd-sphinx-override sd-badge sd-bg-warning sd-bg-text-warning">Experimental Adapter</span></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Details:</strong> <a class="reference internal" href="modules/models_pangu_tc.html"><span class="doc">Pangu TC Adapter</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Family:</strong> <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a></p>
+</div>
+<div class="catalog-meta-row docutils container">
+<p class="sd-card-text"><strong>Benchmark Ecosystems:</strong> <a class="reference internal" href="benchmarks/ibtracs.html"><span class="doc">IBTrACS</span></a></p>
+</div>
+<div class="catalog-link-row docutils container">
+<p class="sd-card-text"><strong>Paper:</strong> <a class="reference external" href="https://www.nature.com/articles/s41586-023-06185-3">Accurate medium-range global weather forecasting with 3D neural networks</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/198808xc/Pangu-Weather">Repository</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section>
-</section>
-</section>
-<section id="using-the-registry">
-<h2>Using the Registry<a class="headerlink" href="#using-the-registry" title="Link to this heading">¶</a></h2>
-<section id="build-a-registered-model">
-<h3>Build a Registered Model<a class="headerlink" href="#build-a-registered-model" title="Link to this heading">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mlp&quot;</span><span class="p">,</span>
-    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span>
-    <span class="n">in_dim</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-    <span class="n">out_dim</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-    <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
-    <span class="n">depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
+<section id="recommended-entry-points">
+<h2>Recommended Entry Points<a class="headerlink" href="#recommended-entry-points" title="Link to this heading">¶</a></h2>
+<p>If you are new to PyHazards, these four models provide the clearest
+starting point for each hazard family.</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-recommend-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-4 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Wildfire</div>
+<p class="sd-card-text"><strong>Start with:</strong> <a class="reference internal" href="modules/models_firecastnet.html"><span class="doc">FireCastNet</span></a></p>
+<p class="sd-card-text">A compact encoder-decoder baseline for wildfire spread mask prediction.</p>
+<p class="sd-card-text"><strong>Benchmark:</strong> <a class="reference internal" href="benchmarks/wildfire_benchmark.html"><span class="doc">Wildfire Benchmark</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Earthquake</div>
+<p class="sd-card-text"><strong>Start with:</strong> <a class="reference internal" href="modules/models_phasenet.html"><span class="doc">PhaseNet</span></a></p>
+<p class="sd-card-text">A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows.</p>
+<p class="sd-card-text"><strong>Benchmark:</strong> <a class="reference internal" href="benchmarks/earthquake_benchmark.html"><span class="doc">Earthquake Benchmark</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Flood</div>
+<p class="sd-card-text"><strong>Start with:</strong> <a class="reference internal" href="modules/models_floodcast.html"><span class="doc">FloodCast</span></a></p>
+<p class="sd-card-text">A compact spatiotemporal flood-inundation baseline for raster forecast experiments.</p>
+<p class="sd-card-text"><strong>Benchmark:</strong> <a class="reference internal" href="benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-detail-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Tropical Cyclone</div>
+<p class="sd-card-text"><strong>Start with:</strong> <a class="reference internal" href="modules/models_hurricast.html"><span class="doc">Hurricast</span></a></p>
+<p class="sd-card-text">A compact multimodal storm baseline for hurricane track and intensity forecasting.</p>
+<p class="sd-card-text"><strong>Benchmark:</strong> <a class="reference internal" href="benchmarks/tropical_cyclone_benchmark.html"><span class="doc">Tropical Cyclone Benchmark</span></a></p>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section>
-<section id="register-a-custom-model">
-<h3>Register a Custom Model<a class="headerlink" href="#register-a-custom-model" title="Link to this heading">¶</a></h3>
-<p>Register a builder function that returns an <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code> so users can
-load the model by name through the shared registry.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_model</span><span class="p">,</span> <span class="n">build_model</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">my_custom_builder</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">in_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">out_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">:</span>
-    <span class="n">hidden</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;hidden_dim&quot;</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
-    <span class="n">layers</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-        <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_dim</span><span class="p">,</span> <span class="n">hidden</span><span class="p">),</span>
-        <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
-        <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden</span><span class="p">,</span> <span class="n">out_dim</span><span class="p">),</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">layers</span>
-
-<span class="n">register_model</span><span class="p">(</span><span class="s2">&quot;my_mlp&quot;</span><span class="p">,</span> <span class="n">my_custom_builder</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;hidden_dim&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">})</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;my_mlp&quot;</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">&quot;regression&quot;</span><span class="p">,</span> <span class="n">in_dim</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">out_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="notes">
-<h3>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h3>
-<ul class="simple">
-<li><p>Builders receive <code class="docutils literal notranslate"><span class="pre">task</span></code> plus any kwargs you pass.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">register_model</span></code> stores optional defaults so configs can stay small.</p></li>
-<li><p>Models are plain PyTorch modules and work with <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> or custom loops.</p></li>
-</ul>
+<section id="programmatic-use">
+<h2>Programmatic Use<a class="headerlink" href="#programmatic-use" title="Link to this heading">¶</a></h2>
+<p>Use <a class="reference internal" href="api/pyhazards.models.html"><span class="doc">pyhazards.models package</span></a> for the developer registry workflow,
+builder examples, and package-level API lookup. Use
+<a class="reference internal" href="pyhazards_benchmarks.html"><span class="doc">Benchmarks</span></a> to compare compatible benchmark families
+before selecting a model for evaluation.</p>
 <div class="toctree-wrapper compound">
 </div>
-</section>
 </section>
 </section>
 
@@ -653,37 +1274,10 @@ load the model by name through the shared registry.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Models</a><ul>
-<li><a class="reference internal" href="#overview">Overview</a></li>
-<li><a class="reference internal" href="#model-catalog">Model Catalog</a><ul>
-<li><a class="reference internal" href="#wildfire">Wildfire</a><ul>
-<li><a class="reference internal" href="#implemented-models">Implemented Models</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#earthquake">Earthquake</a><ul>
-<li><a class="reference internal" href="#id1">Implemented Models</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#flood">Flood</a><ul>
-<li><a class="reference internal" href="#id2">Implemented Models</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#hurricane">Hurricane</a><ul>
-<li><a class="reference internal" href="#id4">Implemented Models</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#tropical-cyclone">Tropical Cyclone</a><ul>
-<li><a class="reference internal" href="#id5">Implemented Models</a></li>
-<li><a class="reference internal" href="#experimental-adapters">Experimental Adapters</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#using-the-registry">Using the Registry</a><ul>
-<li><a class="reference internal" href="#build-a-registered-model">Build a Registered Model</a></li>
-<li><a class="reference internal" href="#register-a-custom-model">Register a Custom Model</a></li>
-<li><a class="reference internal" href="#notes">Notes</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#at-a-glance">At a Glance</a></li>
+<li><a class="reference internal" href="#catalog-by-hazard">Catalog by Hazard</a></li>
+<li><a class="reference internal" href="#recommended-entry-points">Recommended Entry Points</a></li>
+<li><a class="reference internal" href="#programmatic-use">Programmatic Use</a></li>
 </ul>
 </li>
 </ul>
@@ -699,5 +1293,6 @@ load the model by name through the shared registry.</p>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>

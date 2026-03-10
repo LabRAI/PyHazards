@@ -10,18 +10,64 @@ The current FloodCastBench alignment is implemented as a synthetic raster inunda
 
 It documents the benchmark/data protocol behind the FloodCast and UrbanFloodCast smoke paths.
 
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Kind
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Ecosystem
+
+      .. container:: catalog-stat-note
+
+         Family benchmark or external ecosystem view.
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Flood
+
+      .. container:: catalog-stat-note
+
+         Public hazard grouping used on the benchmark index page.
+
+   .. grid-item-card:: Support Status
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :bdg-info:`Synthetic-backed`
+
+      .. container:: catalog-stat-note
+
+         Current maturity of the adapter or evaluator path.
+
+   .. grid-item-card:: Linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         2
+
+      .. container:: catalog-stat-note
+
+         2 models
+
+
 Benchmark Mapping
 -----------------
 
-Kind: ``ecosystem``
+**Shared benchmark key:** ``flood``
 
-Hazard family: ``Flood``
-
-Shared benchmark key: ``flood``
-
-Registered class: ``FloodBenchmark``
-
-Support status: ``Synthetic-backed``
+**Registered class:** ``FloodBenchmark``
 
 Mapped benchmark family
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,25 +79,25 @@ Primary Source
 
 `FloodCastBench <https://github.com/HydroPML/FloodCastBench>`_.
 
-Supported Tasks
----------------
+.. dropdown:: Supported Tasks
+   :class-container: catalog-dropdown
 
-- ``flood.inundation``
+   - Inundation
 
-Key Metrics
------------
+.. dropdown:: Key Metrics
+   :class-container: catalog-dropdown
 
-- ``pixel_mae``
-- ``iou``
-- ``f1``
+   - ``pixel_mae``
+   - ``iou``
+   - ``f1``
 
-Smoke Configs
--------------
+.. dropdown:: Smoke Configs
+   :class-container: catalog-dropdown
 
-- ``floodcast_smoke.yaml``
-- ``urbanfloodcast_smoke.yaml``
+   - ``floodcast_smoke.yaml``
+   - ``urbanfloodcast_smoke.yaml``
 
-Linked Models
--------------
+.. dropdown:: Linked Models
+   :class-container: catalog-dropdown
 
-:doc:`FloodCast </modules/models_floodcast>`, :doc:`UrbanFloodCast </modules/models_urbanfloodcast>`.
+   :doc:`FloodCast </modules/models_floodcast>`, :doc:`UrbanFloodCast </modules/models_urbanfloodcast>`.

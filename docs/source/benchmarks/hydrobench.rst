@@ -10,18 +10,64 @@ The current HydroBench alignment uses a metadata-backed streamflow adapter over 
 
 It is currently exercised through the HydroGraphNet smoke benchmark path.
 
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Kind
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Ecosystem
+
+      .. container:: catalog-stat-note
+
+         Family benchmark or external ecosystem view.
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Flood
+
+      .. container:: catalog-stat-note
+
+         Public hazard grouping used on the benchmark index page.
+
+   .. grid-item-card:: Support Status
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :bdg-info:`Synthetic-backed`
+
+      .. container:: catalog-stat-note
+
+         Current maturity of the adapter or evaluator path.
+
+   .. grid-item-card:: Linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         1 model
+
+
 Benchmark Mapping
 -----------------
 
-Kind: ``ecosystem``
+**Shared benchmark key:** ``flood``
 
-Hazard family: ``Flood``
-
-Shared benchmark key: ``flood``
-
-Registered class: ``FloodBenchmark``
-
-Support status: ``Synthetic-backed``
+**Registered class:** ``FloodBenchmark``
 
 Mapped benchmark family
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,25 +79,25 @@ Primary Source
 
 `HydroBench <https://github.com/EMscience/HydroBench>`_.
 
-Supported Tasks
----------------
+.. dropdown:: Supported Tasks
+   :class-container: catalog-dropdown
 
-- ``flood.streamflow``
+   - Streamflow
 
-Key Metrics
------------
+.. dropdown:: Key Metrics
+   :class-container: catalog-dropdown
 
-- ``mae``
-- ``rmse``
-- ``nse``
-- ``kge``
+   - ``mae``
+   - ``rmse``
+   - ``nse``
+   - ``kge``
 
-Smoke Configs
--------------
+.. dropdown:: Smoke Configs
+   :class-container: catalog-dropdown
 
-- ``hydrographnet_smoke.yaml``
+   - ``hydrographnet_smoke.yaml``
 
-Linked Models
--------------
+.. dropdown:: Linked Models
+   :class-container: catalog-dropdown
 
-:doc:`HydroGraphNet </modules/models_hydrographnet>`.
+   :doc:`HydroGraphNet </modules/models_hydrographnet>`.

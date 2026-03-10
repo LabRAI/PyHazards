@@ -10,18 +10,64 @@ The current TCBench Alpha alignment uses a metadata-backed storm-history adapter
 
 It currently drives the tropicalcyclone_MLP, SAF-Net, and TCIF-fusion smoke configs.
 
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Kind
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Ecosystem
+
+      .. container:: catalog-stat-note
+
+         Family benchmark or external ecosystem view.
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Tropical Cyclone
+
+      .. container:: catalog-stat-note
+
+         Public hazard grouping used on the benchmark index page.
+
+   .. grid-item-card:: Support Status
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :bdg-info:`Synthetic-backed`
+
+      .. container:: catalog-stat-note
+
+         Current maturity of the adapter or evaluator path.
+
+   .. grid-item-card:: Linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         3
+
+      .. container:: catalog-stat-note
+
+         3 models
+
+
 Benchmark Mapping
 -----------------
 
-Kind: ``ecosystem``
+**Shared benchmark key:** ``tc``
 
-Hazard family: ``Tropical Cyclone / Hurricane``
-
-Shared benchmark key: ``tc``
-
-Registered class: ``TropicalCycloneBenchmark``
-
-Support status: ``Synthetic-backed``
+**Registered class:** ``TropicalCycloneBenchmark``
 
 Mapped benchmark family
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,25 +79,25 @@ Primary Source
 
 `TCBench Alpha <https://github.com/msgomez06/TCBench_Alpha>`_.
 
-Supported Tasks
----------------
+.. dropdown:: Supported Tasks
+   :class-container: catalog-dropdown
 
-- ``tc.track_intensity``
+   - Track + Intensity
 
-Key Metrics
------------
+.. dropdown:: Key Metrics
+   :class-container: catalog-dropdown
 
-- ``track_error``
-- ``intensity_mae``
+   - ``track_error``
+   - ``intensity_mae``
 
-Smoke Configs
--------------
+.. dropdown:: Smoke Configs
+   :class-container: catalog-dropdown
 
-- ``tropicalcyclone_mlp_smoke.yaml``
-- ``saf_net_smoke.yaml``
-- ``tcif_fusion_smoke.yaml``
+   - ``tropicalcyclone_mlp_smoke.yaml``
+   - ``saf_net_smoke.yaml``
+   - ``tcif_fusion_smoke.yaml``
 
-Linked Models
--------------
+.. dropdown:: Linked Models
+   :class-container: catalog-dropdown
 
-:doc:`tropicalcyclone_MLP </modules/models_tropicalcyclone_mlp>`, :doc:`SAF-Net </modules/models_saf_net>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`.
+   :doc:`Tropical Cyclone MLP </modules/models_tropicalcyclone_mlp>`, :doc:`SAF-Net </modules/models_saf_net>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`.

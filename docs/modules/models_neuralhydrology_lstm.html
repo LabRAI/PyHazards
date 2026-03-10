@@ -7,12 +7,13 @@
         <link rel="canonical" href="https://labrai.github.io/PyHazards/modules/models_neuralhydrology_lstm.html">
         <link rel="prefetch" href="../_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>NeuralHydrology LSTM - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=aab0eeca" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=b547f940" />
     
     
 
@@ -235,12 +236,12 @@
 <li class="toctree-l2"><a class="reference internal" href="models_phasenet.html">PhaseNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_saf_net.html">SAF-Net</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_tcif_fusion.html">TCIF-fusion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models_tropicalcyclone_mlp.html">tropicalcyclone_MLP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models_tropicalcyclone_mlp.html">Tropical Cyclone MLP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_tropicyclonenet.html">TropiCycloneNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_urbanfloodcast.html">UrbanFloodCast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_wildfire_aspp.html">CNN-ASPP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models_wildfire_forecasting.html">wildfire_forecasting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models_wildfire_forecasting.html">Wildfire Forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_wildfirespreadts.html">WildfireSpreadTS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_wrf_sfire.html">WRF-SFIRE Adapter</a></li>
@@ -319,18 +320,86 @@
         <article role="main" id="furo-main-content">
           <section id="neuralhydrology-lstm">
 <h1>NeuralHydrology LSTM<a class="headerlink" href="#neuralhydrology-lstm" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">neuralhydrology_lstm</span></code> is the first community-style hydrology baseline in the PyHazards flood roadmap.</p>
+</section>
+<section id="at-a-glance">
+<h2>At a Glance<a class="headerlink" href="#at-a-glance" title="Link to this heading">¶</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 catalog-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-4 sd-row-cols-lg-4 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Hazard Family</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">Flood</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Public catalog grouping used for this model.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Maturity</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">Implemented</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Catalog maturity label used on the index page.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Tasks</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text">1</p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Streamflow</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm catalog-stat-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Benchmark Family</div>
+<div class="catalog-stat-value docutils container">
+<p class="sd-card-text"><a class="reference internal" href="../benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a></p>
+</div>
+<div class="catalog-stat-note docutils container">
+<p class="sd-card-text">Primary benchmark-family link used for compatible evaluation coverage.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">neuralhydrology_lstm</span></code> is the first community-style hydrology baseline in the PyHazards flood roadmap.</p>
 <p>The adapter consumes the shared graph-temporal streamflow batch format and produces next-step nodewise discharge predictions.</p>
 </section>
-<section id="paper-and-code">
-<h2>Paper and Code<a class="headerlink" href="#paper-and-code" title="Link to this heading">¶</a></h2>
-<p><a class="reference external" href="https://doi.org/10.5194/hess-23-5089-2019">Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets</a> (<a class="reference external" href="https://github.com/neuralhydrology/neuralhydrology">repo</a>).</p>
+<section id="benchmark-compatibility">
+<h2>Benchmark Compatibility<a class="headerlink" href="#benchmark-compatibility" title="Link to this heading">¶</a></h2>
+<p><strong>Primary benchmark family:</strong> <a class="reference internal" href="../benchmarks/flood_benchmark.html"><span class="doc">Flood Benchmark</span></a></p>
+<p><strong>Mapped benchmark ecosystems:</strong> <a class="reference internal" href="../benchmarks/caravan.html"><span class="doc">Caravan</span></a></p>
 </section>
-<section id="catalog-status">
-<h2>Catalog Status<a class="headerlink" href="#catalog-status" title="Link to this heading">¶</a></h2>
-<p>Status: <code class="docutils literal notranslate"><span class="pre">core</span></code></p>
+<section id="external-references">
+<h2>External References<a class="headerlink" href="#external-references" title="Link to this heading">¶</a></h2>
+<p><strong>Paper:</strong> <a class="reference external" href="https://doi.org/10.5194/hess-23-5089-2019">Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets</a> | <strong>Repo:</strong> <a class="reference external" href="https://github.com/neuralhydrology/neuralhydrology">Repository</a></p>
 </section>
 <section id="registry-name">
 <h2>Registry Name<a class="headerlink" href="#registry-name" title="Link to this heading">¶</a></h2>
@@ -339,11 +408,11 @@
 <section id="supported-tasks">
 <h2>Supported Tasks<a class="headerlink" href="#supported-tasks" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">regression</span></code></p></li>
+<li><p>Streamflow</p></li>
 </ul>
 </section>
-<section id="example-of-how-to-use-it">
-<h2>Example of how to use it<a class="headerlink" href="#example-of-how-to-use-it" title="Link to this heading">¶</a></h2>
+<section id="programmatic-use">
+<h2>Programmatic Use<a class="headerlink" href="#programmatic-use" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyhazards.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_model</span>
 
@@ -417,12 +486,14 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">NeuralHydrology LSTM</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#at-a-glance">At a Glance</a></li>
 <li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#paper-and-code">Paper and Code</a></li>
-<li><a class="reference internal" href="#catalog-status">Catalog Status</a></li>
+<li><a class="reference internal" href="#benchmark-compatibility">Benchmark Compatibility</a></li>
+<li><a class="reference internal" href="#external-references">External References</a></li>
 <li><a class="reference internal" href="#registry-name">Registry Name</a></li>
 <li><a class="reference internal" href="#supported-tasks">Supported Tasks</a></li>
-<li><a class="reference internal" href="#example-of-how-to-use-it">Example of how to use it</a></li>
+<li><a class="reference internal" href="#programmatic-use">Programmatic Use</a></li>
 <li><a class="reference internal" href="#notes">Notes</a></li>
 </ul>
 </li>
@@ -439,5 +510,6 @@
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>

@@ -1,5 +1,6 @@
 sphinx
 furo
 myst-parser
+sphinx-design
 sphinx-autodoc-typehints
 sphinx-copybutton

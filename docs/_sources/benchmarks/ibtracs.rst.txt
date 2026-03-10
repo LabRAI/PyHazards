@@ -10,18 +10,64 @@ The current IBTrACS alignment uses a metadata-backed storm-history adapter over 
 
 It is the benchmark ecosystem currently used by Hurricast and the experimental weather-model adapter smoke configs.
 
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Kind
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Ecosystem
+
+      .. container:: catalog-stat-note
+
+         Family benchmark or external ecosystem view.
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Tropical Cyclone
+
+      .. container:: catalog-stat-note
+
+         Public hazard grouping used on the benchmark index page.
+
+   .. grid-item-card:: Support Status
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :bdg-info:`Synthetic-backed`
+
+      .. container:: catalog-stat-note
+
+         Current maturity of the adapter or evaluator path.
+
+   .. grid-item-card:: Linked Models
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         4
+
+      .. container:: catalog-stat-note
+
+         4 models
+
+
 Benchmark Mapping
 -----------------
 
-Kind: ``ecosystem``
+**Shared benchmark key:** ``tc``
 
-Hazard family: ``Tropical Cyclone / Hurricane``
-
-Shared benchmark key: ``tc``
-
-Registered class: ``TropicalCycloneBenchmark``
-
-Support status: ``Synthetic-backed``
+**Registered class:** ``TropicalCycloneBenchmark``
 
 Mapped benchmark family
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,26 +79,26 @@ Primary Source
 
 `IBTrACS <https://www.ncei.noaa.gov/products/international-best-track-archive>`_.
 
-Supported Tasks
----------------
+.. dropdown:: Supported Tasks
+   :class-container: catalog-dropdown
 
-- ``tc.track_intensity``
+   - Track + Intensity
 
-Key Metrics
------------
+.. dropdown:: Key Metrics
+   :class-container: catalog-dropdown
 
-- ``track_error``
-- ``intensity_mae``
+   - ``track_error``
+   - ``intensity_mae``
 
-Smoke Configs
--------------
+.. dropdown:: Smoke Configs
+   :class-container: catalog-dropdown
 
-- ``hurricast_smoke.yaml``
-- ``graphcast_tc_smoke.yaml``
-- ``pangu_tc_smoke.yaml``
-- ``fourcastnet_tc_smoke.yaml``
+   - ``hurricast_smoke.yaml``
+   - ``graphcast_tc_smoke.yaml``
+   - ``pangu_tc_smoke.yaml``
+   - ``fourcastnet_tc_smoke.yaml``
 
-Linked Models
--------------
+.. dropdown:: Linked Models
+   :class-container: catalog-dropdown
 
-:doc:`Hurricast </modules/models_hurricast>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`, :doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`.
+   :doc:`Hurricast </modules/models_hurricast>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`, :doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`.

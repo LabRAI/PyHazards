@@ -3,24 +3,81 @@
 GPD
 ===
 
+Overview
+--------
+
+``gpd`` provides a lightweight earthquake picking adapter with the same waveform-to-pick interface used across the PyHazards earthquake benchmarks.
+
+At a Glance
+-----------
+
+.. grid:: 1 2 4 4
+   :gutter: 2
+   :class-container: catalog-grid
+
+   .. grid-item-card:: Hazard Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Earthquake
+
+      .. container:: catalog-stat-note
+
+         Public catalog grouping used for this model.
+
+   .. grid-item-card:: Maturity
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         Implemented
+
+      .. container:: catalog-stat-note
+
+         Catalog maturity label used on the index page.
+
+   .. grid-item-card:: Tasks
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         1
+
+      .. container:: catalog-stat-note
+
+         Phase Picking
+
+   .. grid-item-card:: Benchmark Family
+      :class-card: catalog-stat-card
+
+      .. container:: catalog-stat-value
+
+         :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
+
+      .. container:: catalog-stat-note
+
+         Primary benchmark-family link used for compatible evaluation coverage.
+
+
 Description
 -----------
 
 ``gpd`` provides a lightweight earthquake picking adapter with the same waveform-to-pick interface used across the PyHazards earthquake benchmarks.
 
-
 This adapter is intended as a reproducible low-cost baseline rather than an exact port of every original training detail.
 
+Benchmark Compatibility
+-----------------------
 
-Paper and Code
---------------
+**Primary benchmark family:** :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
 
-`Generalized Seismic Phase Detection with Deep Learning <https://doi.org/10.1785/0120180080>`_ (`repo <https://github.com/interseismic/generalized-phase-detection>`__).
+**Mapped benchmark ecosystems:** :doc:`pick-benchmark </benchmarks/pick_benchmark>`
 
-Catalog Status
---------------
+External References
+-------------------
 
-Status: ``core``
+**Paper:** `Generalized Seismic Phase Detection with Deep Learning <https://doi.org/10.1785/0120180080>`_ | **Repo:** `Repository <https://github.com/interseismic/generalized-phase-detection>`__
 
 Registry Name
 -------------
@@ -30,10 +87,10 @@ Primary entrypoint: ``gpd``
 Supported Tasks
 ---------------
 
-- ``regression``
+- Phase Picking
 
-Example of how to use it
-------------------------
+Programmatic Use
+----------------
 
 .. code-block:: python
 
