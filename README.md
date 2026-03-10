@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <strong>PyHazards: A unified research framework for AI-based natural hazard forecasting, benchmarking, and model development.</strong>
+  <strong>PyHazards: A unified research framework for AI-based natural hazard prediction.</strong>
 </p>
 
 <p align="center">
