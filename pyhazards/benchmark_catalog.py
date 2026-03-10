@@ -33,9 +33,15 @@ BENCHMARK_CATALOG_ENTRIES = [
         hazard_family="Wildfire",
         smoke_configs=(
             "pyhazards/configs/wildfire/wildfire_danger_smoke.yaml",
+            "pyhazards/configs/wildfire/wildfire_forecasting_smoke.yaml",
+            "pyhazards/configs/wildfire/asufm_smoke.yaml",
             "pyhazards/configs/wildfire/wildfire_spread_smoke.yaml",
+            "pyhazards/configs/wildfire/wildfirespreadts_smoke.yaml",
+            "pyhazards/configs/wildfire/forefire_smoke.yaml",
+            "pyhazards/configs/wildfire/wrf_sfire_smoke.yaml",
+            "pyhazards/configs/wildfire/firecastnet_smoke.yaml",
         ),
-        current_backing="Smoke-only synthetic fixtures; planned wildfire_forecasting / WildfireSpreadTS / ASUFM adapters are still missing.",
+        current_backing="Synthetic-backed wildfire danger and spread adapters now cover wildfire_forecasting, WildfireSpreadTS, ASUFM, ForeFire, WRF-SFIRE, and FireCastNet.",
     ),
     BenchmarkCatalogEntry(
         benchmark_key="earthquake",
@@ -47,7 +53,7 @@ BENCHMARK_CATALOG_ENTRIES = [
             "pyhazards/configs/earthquake/eqnet_smoke.yaml",
             "pyhazards/configs/earthquake/wavecastnet_benchmark_smoke.yaml",
         ),
-        current_backing="Synthetic waveform and wavefield fixtures; SeisBench, pick-benchmark, pyCSEP, and AEFA integration remain missing.",
+        current_backing="Synthetic-backed SeisBench, pick-benchmark, AEFA, and pyCSEP-style integrations are wired through the smoke benchmark path.",
     ),
     BenchmarkCatalogEntry(
         benchmark_key="flood",
@@ -56,10 +62,11 @@ BENCHMARK_CATALOG_ENTRIES = [
             "pyhazards/configs/flood/hydrographnet_smoke.yaml",
             "pyhazards/configs/flood/neuralhydrology_lstm_smoke.yaml",
             "pyhazards/configs/flood/neuralhydrology_ealstm_smoke.yaml",
+            "pyhazards/configs/flood/google_flood_forecasting_smoke.yaml",
             "pyhazards/configs/flood/floodcast_smoke.yaml",
             "pyhazards/configs/flood/urbanfloodcast_smoke.yaml",
         ),
-        current_backing="Synthetic graph and raster fixtures; Caravan, WaterBench, FloodCastBench, and HydroBench are not integrated yet.",
+        current_backing="Synthetic-backed Caravan, WaterBench, FloodCastBench, and HydroBench adapters are wired through the smoke benchmark path.",
     ),
     BenchmarkCatalogEntry(
         benchmark_key="tc",
@@ -74,7 +81,7 @@ BENCHMARK_CATALOG_ENTRIES = [
             "pyhazards/configs/tc/pangu_tc_smoke.yaml",
             "pyhazards/configs/tc/fourcastnet_tc_smoke.yaml",
         ),
-        current_backing="Synthetic storm-history fixtures; TCBench, IBTrACS, and TropiCycloneNet-Dataset are still missing.",
+        current_backing="Synthetic-backed IBTrACS, TCBench Alpha, and TropiCycloneNet-Dataset adapters are wired through the smoke benchmark path.",
     ),
 ]
 

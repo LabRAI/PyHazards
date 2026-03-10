@@ -10,3 +10,4 @@ def test_tc_vertical_slice(tmp_path):
     assert summary.hazard_task == "tc.track_intensity"
     assert "track_error" in summary.metrics
     assert "intensity_mae" in summary.metrics
+    assert summary.metadata["source_dataset"] == "ibtracs_tracks"

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
 from typing import Dict
 
 import torch
@@ -62,8 +64,32 @@ class EarthquakeBenchmark(Benchmark):
             metadata={
                 "split": config.benchmark.eval_split,
                 "threshold_curve": threshold_curve,
+                "dataset_name": data.metadata.get("dataset"),
+                "source_dataset": data.metadata.get("source_dataset", data.metadata.get("dataset")),
             },
         )
+
+    def export_report(
+        self,
+        result: BenchmarkResult,
+        output_dir: str,
+        formats,
+    ) -> Dict[str, str]:
+        paths = super().export_report(result, output_dir=output_dir, formats=formats)
+        if result.hazard_task == "earthquake.forecasting":
+            target = Path(output_dir)
+            target.mkdir(parents=True, exist_ok=True)
+            pycsep_path = target / "earthquake_pycsep.json"
+            payload = {
+                "adapter": "pyCSEP-style",
+                "benchmark_name": result.benchmark_name,
+                "hazard_task": result.hazard_task,
+                "metrics": result.metrics,
+                "metadata": result.metadata,
+            }
+            pycsep_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+            paths["pycsep"] = str(pycsep_path)
+        return paths
 
 
 register_benchmark(EarthquakeBenchmark.name, EarthquakeBenchmark)

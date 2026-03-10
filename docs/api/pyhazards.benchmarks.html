@@ -7,10 +7,10 @@
         <link rel="canonical" href="https://labrai.github.io/PyHazards/api/pyhazards.benchmarks.html">
         <link rel="prefetch" href="../_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>pyhazards.benchmarks package - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=aab0eeca" />
     
@@ -217,10 +217,14 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_asufm.html">ASUFM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_eqnet.html">EQNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_eqtransformer.html">EQTransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_firecastnet.html">FireCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_floodcast.html">FloodCast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_forefire.html">ForeFire Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_fourcastnet_tc.html">FourCastNet TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_google_flood_forecasting.html">Google Flood Forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_gpd.html">GPD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_graphcast_tc.html">GraphCast TC Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_hurricast.html">Hurricast</a></li>
@@ -236,10 +240,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_urbanfloodcast.html">UrbanFloodCast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_forecasting.html">wildfire_forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_dnn.html">DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wildfirespreadts.html">WildfireSpreadTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/models_wrf_sfire.html">WRF-SFIRE Adapter</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../interactive_map.html">Wildfire Interactive Map</a></li>
@@ -304,7 +308,7 @@
 <span id="pyhazards-benchmarks-base-module"></span><h2>pyhazards.benchmarks.base module<a class="headerlink" href="#module-pyhazards.benchmarks.base" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.base.Benchmark">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.base.</span></span><span class="sig-name descname"><span class="pre">Benchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/base.html#Benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.base.Benchmark" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.base.</span></span><span class="sig-name descname"><span class="pre">Benchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/base.html#Benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.base.Benchmark" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>Shared benchmark contract for hazard evaluators.</p>
 <dl class="py attribute">
@@ -324,7 +328,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.base.Benchmark.evaluate">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/base.html#Benchmark.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.base.Benchmark.evaluate" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/base.html#Benchmark.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.base.Benchmark.evaluate" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.benchmarks.schemas.BenchmarkResult" title="pyhazards.benchmarks.schemas.BenchmarkResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">BenchmarkResult</span></code></a></span></p>
@@ -415,7 +419,7 @@
 <span id="pyhazards-benchmarks-schemas-module"></span><h2>pyhazards.benchmarks.schemas module<a class="headerlink" href="#module-pyhazards.benchmarks.schemas" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.schemas.BenchmarkResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.schemas.</span></span><span class="sig-name descname"><span class="pre">BenchmarkResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">benchmark_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hazard_task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifacts=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/schemas.html#BenchmarkResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.schemas.BenchmarkResult" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.schemas.</span></span><span class="sig-name descname"><span class="pre">BenchmarkResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">benchmark_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hazard_task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifacts=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/schemas.html#BenchmarkResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.schemas.BenchmarkResult" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.schemas.BenchmarkResult.artifacts">
@@ -451,7 +455,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.schemas.BenchmarkRunSummary">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.schemas.</span></span><span class="sig-name descname"><span class="pre">BenchmarkRunSummary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">benchmark_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hazard_task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">report_paths=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/schemas.html#BenchmarkRunSummary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.schemas.BenchmarkRunSummary" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.schemas.</span></span><span class="sig-name descname"><span class="pre">BenchmarkRunSummary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">benchmark_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hazard_task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">report_paths=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/schemas.html#BenchmarkRunSummary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.schemas.BenchmarkRunSummary" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.schemas.BenchmarkRunSummary.benchmark_name">
@@ -485,7 +489,7 @@
 <span id="pyhazards-benchmarks-earthquake-module"></span><h2>pyhazards.benchmarks.earthquake module<a class="headerlink" href="#module-pyhazards.benchmarks.earthquake" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.earthquake.EarthquakeBenchmark">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.earthquake.</span></span><span class="sig-name descname"><span class="pre">EarthquakeBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/earthquake.html#EarthquakeBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.earthquake.</span></span><span class="sig-name descname"><span class="pre">EarthquakeBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/earthquake.html#EarthquakeBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyhazards.benchmarks.base.Benchmark" title="pyhazards.benchmarks.base.Benchmark"><code class="xref py py-class docutils literal notranslate"><span class="pre">Benchmark</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.earthquake.EarthquakeBenchmark._abc_impl">
@@ -498,6 +502,16 @@
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.benchmarks.schemas.BenchmarkResult" title="pyhazards.benchmarks.schemas.BenchmarkResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">BenchmarkResult</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.benchmarks.earthquake.EarthquakeBenchmark.export_report">
+<span class="sig-name descname"><span class="pre">export_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formats</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/earthquake.html#EarthquakeBenchmark.export_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.export_report" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -524,7 +538,7 @@
 <span id="pyhazards-benchmarks-wildfire-module"></span><h2>pyhazards.benchmarks.wildfire module<a class="headerlink" href="#module-pyhazards.benchmarks.wildfire" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.wildfire.WildfireBenchmark">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.wildfire.</span></span><span class="sig-name descname"><span class="pre">WildfireBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/wildfire.html#WildfireBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.wildfire.WildfireBenchmark" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.wildfire.</span></span><span class="sig-name descname"><span class="pre">WildfireBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/wildfire.html#WildfireBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.wildfire.WildfireBenchmark" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyhazards.benchmarks.base.Benchmark" title="pyhazards.benchmarks.base.Benchmark"><code class="xref py py-class docutils literal notranslate"><span class="pre">Benchmark</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.wildfire.WildfireBenchmark._abc_impl">
@@ -548,7 +562,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.wildfire.WildfireBenchmark.metric_names_by_task">
-<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'wildfire.danger':</span> <span class="pre">['accuracy',</span> <span class="pre">'macro_f1'],</span> <span class="pre">'wildfire.spread':</span> <span class="pre">['iou',</span> <span class="pre">'f1']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.wildfire.WildfireBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'wildfire.danger':</span> <span class="pre">['accuracy',</span> <span class="pre">'macro_f1',</span> <span class="pre">'auc',</span> <span class="pre">'pr_auc',</span> <span class="pre">'mae',</span> <span class="pre">'rmse'],</span> <span class="pre">'wildfire.spread':</span> <span class="pre">['iou',</span> <span class="pre">'f1',</span> <span class="pre">'burned_area_mae']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.wildfire.WildfireBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -563,7 +577,7 @@
 <span id="pyhazards-benchmarks-flood-module"></span><h2>pyhazards.benchmarks.flood module<a class="headerlink" href="#module-pyhazards.benchmarks.flood" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.flood.FloodBenchmark">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.flood.</span></span><span class="sig-name descname"><span class="pre">FloodBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/flood.html#FloodBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.flood.FloodBenchmark" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.flood.</span></span><span class="sig-name descname"><span class="pre">FloodBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/flood.html#FloodBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.flood.FloodBenchmark" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyhazards.benchmarks.base.Benchmark" title="pyhazards.benchmarks.base.Benchmark"><code class="xref py py-class docutils literal notranslate"><span class="pre">Benchmark</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.flood.FloodBenchmark._abc_impl">
@@ -587,7 +601,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.flood.FloodBenchmark.metric_names_by_task">
-<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'flood.inundation':</span> <span class="pre">['pixel_mae',</span> <span class="pre">'iou',</span> <span class="pre">'f1'],</span> <span class="pre">'flood.streamflow':</span> <span class="pre">['mae',</span> <span class="pre">'rmse']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.flood.FloodBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'flood.inundation':</span> <span class="pre">['pixel_mae',</span> <span class="pre">'iou',</span> <span class="pre">'f1'],</span> <span class="pre">'flood.streamflow':</span> <span class="pre">['mae',</span> <span class="pre">'rmse',</span> <span class="pre">'nse',</span> <span class="pre">'kge']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.flood.FloodBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -602,7 +616,7 @@
 <span id="pyhazards-benchmarks-tc-module"></span><h2>pyhazards.benchmarks.tc module<a class="headerlink" href="#module-pyhazards.benchmarks.tc" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.tc.TropicalCycloneBenchmark">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.tc.</span></span><span class="sig-name descname"><span class="pre">TropicalCycloneBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/tc.html#TropicalCycloneBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.tc.TropicalCycloneBenchmark" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.tc.</span></span><span class="sig-name descname"><span class="pre">TropicalCycloneBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/tc.html#TropicalCycloneBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.tc.TropicalCycloneBenchmark" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyhazards.benchmarks.base.Benchmark" title="pyhazards.benchmarks.base.Benchmark"><code class="xref py py-class docutils literal notranslate"><span class="pre">Benchmark</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.tc.TropicalCycloneBenchmark._abc_impl">
@@ -641,7 +655,7 @@
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhazards.benchmarks" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.Benchmark">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">Benchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/base.html#Benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.Benchmark" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">Benchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/base.html#Benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.Benchmark" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>Shared benchmark contract for hazard evaluators.</p>
 <dl class="py attribute">
@@ -661,7 +675,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.Benchmark.evaluate">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/base.html#Benchmark.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.Benchmark.evaluate" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/base.html#Benchmark.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.Benchmark.evaluate" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.benchmarks.schemas.BenchmarkResult" title="pyhazards.benchmarks.schemas.BenchmarkResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">BenchmarkResult</span></code></a></span></p>
@@ -693,7 +707,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.BenchmarkResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">BenchmarkResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">benchmark_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hazard_task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifacts=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/schemas.html#BenchmarkResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.BenchmarkResult" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">BenchmarkResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">benchmark_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hazard_task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifacts=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/schemas.html#BenchmarkResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.BenchmarkResult" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.BenchmarkResult.artifacts">
@@ -729,7 +743,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.BenchmarkRunSummary">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">BenchmarkRunSummary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">benchmark_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hazard_task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">report_paths=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/schemas.html#BenchmarkRunSummary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.BenchmarkRunSummary" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">BenchmarkRunSummary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">benchmark_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hazard_task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">report_paths=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/schemas.html#BenchmarkRunSummary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.BenchmarkRunSummary" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.BenchmarkRunSummary.benchmark_name">
@@ -760,7 +774,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.EarthquakeBenchmark">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">EarthquakeBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/earthquake.html#EarthquakeBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.EarthquakeBenchmark" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">EarthquakeBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/earthquake.html#EarthquakeBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.EarthquakeBenchmark" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyhazards.benchmarks.base.Benchmark" title="pyhazards.benchmarks.base.Benchmark"><code class="xref py py-class docutils literal notranslate"><span class="pre">Benchmark</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.EarthquakeBenchmark._abc_impl">
@@ -773,6 +787,16 @@
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#pyhazards.benchmarks.schemas.BenchmarkResult" title="pyhazards.benchmarks.schemas.BenchmarkResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">BenchmarkResult</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhazards.benchmarks.EarthquakeBenchmark.export_report">
+<span class="sig-name descname"><span class="pre">export_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formats</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyhazards/benchmarks/earthquake.html#EarthquakeBenchmark.export_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.EarthquakeBenchmark.export_report" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -796,7 +820,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.FloodBenchmark">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">FloodBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/flood.html#FloodBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.FloodBenchmark" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">FloodBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/flood.html#FloodBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.FloodBenchmark" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyhazards.benchmarks.base.Benchmark" title="pyhazards.benchmarks.base.Benchmark"><code class="xref py py-class docutils literal notranslate"><span class="pre">Benchmark</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.FloodBenchmark._abc_impl">
@@ -820,7 +844,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.FloodBenchmark.metric_names_by_task">
-<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'flood.inundation':</span> <span class="pre">['pixel_mae',</span> <span class="pre">'iou',</span> <span class="pre">'f1'],</span> <span class="pre">'flood.streamflow':</span> <span class="pre">['mae',</span> <span class="pre">'rmse']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.FloodBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'flood.inundation':</span> <span class="pre">['pixel_mae',</span> <span class="pre">'iou',</span> <span class="pre">'f1'],</span> <span class="pre">'flood.streamflow':</span> <span class="pre">['mae',</span> <span class="pre">'rmse',</span> <span class="pre">'nse',</span> <span class="pre">'kge']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.FloodBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -832,7 +856,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.TropicalCycloneBenchmark">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">TropicalCycloneBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/tc.html#TropicalCycloneBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.TropicalCycloneBenchmark" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">TropicalCycloneBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/tc.html#TropicalCycloneBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.TropicalCycloneBenchmark" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyhazards.benchmarks.base.Benchmark" title="pyhazards.benchmarks.base.Benchmark"><code class="xref py py-class docutils literal notranslate"><span class="pre">Benchmark</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.TropicalCycloneBenchmark._abc_impl">
@@ -868,7 +892,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.WildfireBenchmark">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">WildfireBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/wildfire.html#WildfireBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.WildfireBenchmark" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhazards.benchmarks.</span></span><span class="sig-name descname"><span class="pre">WildfireBenchmark</span></span><a class="reference internal" href="../_modules/pyhazards/benchmarks/wildfire.html#WildfireBenchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyhazards.benchmarks.WildfireBenchmark" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyhazards.benchmarks.base.Benchmark" title="pyhazards.benchmarks.base.Benchmark"><code class="xref py py-class docutils literal notranslate"><span class="pre">Benchmark</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.WildfireBenchmark._abc_impl">
@@ -892,7 +916,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyhazards.benchmarks.WildfireBenchmark.metric_names_by_task">
-<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'wildfire.danger':</span> <span class="pre">['accuracy',</span> <span class="pre">'macro_f1'],</span> <span class="pre">'wildfire.spread':</span> <span class="pre">['iou',</span> <span class="pre">'f1']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.WildfireBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">metric_names_by_task</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'wildfire.danger':</span> <span class="pre">['accuracy',</span> <span class="pre">'macro_f1',</span> <span class="pre">'auc',</span> <span class="pre">'pr_auc',</span> <span class="pre">'mae',</span> <span class="pre">'rmse'],</span> <span class="pre">'wildfire.spread':</span> <span class="pre">['iou',</span> <span class="pre">'f1',</span> <span class="pre">'burned_area_mae']}</span></em><a class="headerlink" href="#pyhazards.benchmarks.WildfireBenchmark.metric_names_by_task" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1032,6 +1056,7 @@
 <li><a class="reference internal" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark</span></code></a><ul>
 <li><a class="reference internal" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark._abc_impl</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.evaluate()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.export_report"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.export_report()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.hazard_task</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.metric_names_by_task</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.name"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.name</span></code></a></li>
@@ -1102,6 +1127,7 @@
 <li><a class="reference internal" href="#pyhazards.benchmarks.EarthquakeBenchmark"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark</span></code></a><ul>
 <li><a class="reference internal" href="#pyhazards.benchmarks.EarthquakeBenchmark._abc_impl"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark._abc_impl</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.EarthquakeBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.evaluate()</span></code></a></li>
+<li><a class="reference internal" href="#pyhazards.benchmarks.EarthquakeBenchmark.export_report"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.export_report()</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.EarthquakeBenchmark.hazard_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.hazard_task</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.EarthquakeBenchmark.metric_names_by_task"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.metric_names_by_task</span></code></a></li>
 <li><a class="reference internal" href="#pyhazards.benchmarks.EarthquakeBenchmark.name"><code class="docutils literal notranslate"><span class="pre">EarthquakeBenchmark.name</span></code></a></li>

@@ -1,0 +1,50 @@
+model_name: asufm
+display_name: ASUFM
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/asufm.py
+builder_name: asufm_builder
+summary: >
+  A temporal convolution baseline for weekly wildfire activity forecasting.
+description:
+  - >
+    ``asufm`` is a compact temporal convolution baseline for next-window wildfire
+    activity prediction.
+  - >
+    PyHazards exposes it through the shared wildfire benchmark and config workflow.
+paper:
+  title: ASUFM repository
+  url: https://github.com/bronteee/fire-asufm
+tasks:
+  - forecasting
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(
+      name="asufm",
+      task="forecasting",
+      input_dim=7,
+      output_dim=5,
+      lookback=12,
+  )
+  preds = model(torch.randn(2, 12, 7))
+  print(preds.shape)
+notes:
+  - "The smoke path uses weekly wildfire count windows with seasonal time features."
+smoke_test:
+  task: forecasting
+  build_kwargs:
+    input_dim: 7
+    hidden_dim: 32
+    output_dim: 5
+    lookback: 12
+    dropout: 0.0
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 12, 7]
+  expected_output:
+    kind: tensor
+    shape: [2, 5]

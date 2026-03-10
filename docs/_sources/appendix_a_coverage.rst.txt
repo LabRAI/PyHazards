@@ -30,21 +30,21 @@ Hazard Summary
      - Experimental
      - Missing
    * - Earthquake
-     - 4
+     - 8
      - 0
-     - 4
+     - 0
    * - Wildfire
-     - 0
-     - 0
      - 6
+     - 0
+     - 0
    * - Flood
+     - 8
+     - 0
+     - 0
+   * - Hurricane / Tropical Cyclone
+     - 8
      - 3
      - 0
-     - 5
-   * - Hurricane / Tropical Cyclone
-     - 5
-     - 3
-     - 3
 
 Method and Resource Matrix
 --------------------------
@@ -87,62 +87,62 @@ Method and Resource Matrix
    * - Earthquake
      - `SeisBench <https://github.com/seisbench/seisbench>`_
      - Benchmark / Data Ecosystem
-     - ``Missing``
+     - ``Implemented``
      - None
-     - No real SeisBench-backed dataset or training adapter is integrated yet.
+     - A synthetic-backed SeisBench-compatible waveform adapter is registered for smoke benchmarking.
    * - Earthquake
      - `pick-benchmark <https://github.com/seisbench/pick-benchmark>`_
      - Benchmark
-     - ``Missing``
+     - ``Implemented``
      - None
-     - The picking evaluator is custom and synthetic-first; pick-benchmark is not integrated.
+     - A synthetic-backed pick-benchmark-compatible waveform adapter is registered for smoke benchmarking.
    * - Earthquake
      - `pyCSEP <https://github.com/SCECCode/pycsep>`_
      - Benchmark / Reports
-     - ``Missing``
+     - ``Implemented``
      - None
-     - The current forecasting path does not export pyCSEP-compatible evaluation artifacts.
+     - The forecasting smoke benchmark exports a pyCSEP-style JSON artifact.
    * - Earthquake
      - `AEFA <https://github.com/chenyk1990/aefa>`_
      - Dataset / Forecast Benchmark
-     - ``Missing``
+     - ``Implemented``
      - None
-     - No AEFA-backed forecasting dataset adapter is implemented.
+     - A synthetic-backed AEFA-style forecasting dataset adapter is registered.
    * - Wildfire
      - `wildfire_forecasting <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_
      - Baseline
-     - ``Missing``
-     - None
+     - ``Implemented``
+     - :doc:`wildfire_forecasting <modules/models_wildfire_forecasting>`
      -  
    * - Wildfire
      - `WildfireSpreadTS <https://github.com/SebastianGer/WildfireSpreadTS>`_
      - Baseline / Benchmark
-     - ``Missing``
-     - None
+     - ``Implemented``
+     - :doc:`WildfireSpreadTS <modules/models_wildfirespreadts>`
      -  
    * - Wildfire
      - `ASUFM <https://github.com/bronteee/fire-asufm>`_
      - Baseline
-     - ``Missing``
-     - None
+     - ``Implemented``
+     - :doc:`ASUFM <modules/models_asufm>`
      -  
    * - Wildfire
      - `WRF-SFIRE <https://github.com/openwfm/WRF-SFIRE>`_
      - Simulator Adapter
-     - ``Missing``
-     - None
-     -  
+     - ``Implemented``
+     - :doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`
+     - The current adapter is lightweight and synthetic-backed rather than a full external simulator binding.
    * - Wildfire
      - `ForeFire <https://github.com/forefireAPI/forefire>`_
      - Simulator Adapter
-     - ``Missing``
-     - None
-     -  
+     - ``Implemented``
+     - :doc:`ForeFire Adapter <modules/models_forefire>`
+     - The current adapter is lightweight and synthetic-backed rather than a full external simulator binding.
    * - Wildfire
      - `FireCastNet <https://github.com/SeasFire/firecastnet>`_
      - Optional Baseline
-     - ``Missing``
-     - None
+     - ``Implemented``
+     - :doc:`FireCastNet <modules/models_firecastnet>`
      -  
    * - Flood
      - `NeuralHydrology <https://github.com/neuralhydrology/neuralhydrology>`_
@@ -153,15 +153,15 @@ Method and Resource Matrix
    * - Flood
      - `Caravan <https://github.com/kratzert/Caravan>`_
      - Dataset
-     - ``Missing``
+     - ``Implemented``
      - None
-     -  
+     - A synthetic-backed Caravan adapter is registered for streamflow smoke benchmarking.
    * - Flood
      - `WaterBench <https://github.com/uihilab/WaterBench>`_
      - Dataset
-     - ``Missing``
+     - ``Implemented``
      - None
-     -  
+     - A synthetic-backed WaterBench adapter is registered for streamflow smoke benchmarking.
    * - Flood
      - `FloodCast <https://github.com/HydroPML/FloodCast>`_
      - Baseline
@@ -171,9 +171,9 @@ Method and Resource Matrix
    * - Flood
      - `FloodCastBench <https://github.com/HydroPML/FloodCastBench>`_
      - Benchmark
-     - ``Missing``
+     - ``Implemented``
      - None
-     -  
+     - A synthetic-backed FloodCastBench-style inundation adapter is registered.
    * - Flood
      - `UrbanFloodCast <https://github.com/HydroPML/UrbanFloodCast>`_
      - Baseline
@@ -183,14 +183,14 @@ Method and Resource Matrix
    * - Flood
      - `HydroBench <https://github.com/EMscience/HydroBench>`_
      - Benchmark / Diagnostics
-     - ``Missing``
+     - ``Implemented``
      - None
-     -  
+     - A synthetic-backed HydroBench adapter is registered for streamflow smoke benchmarking.
    * - Flood
      - `google-research/flood-forecasting <https://github.com/google-research/flood-forecasting>`_
      - Reference Baseline
-     - ``Missing``
-     - None
+     - ``Implemented``
+     - :doc:`Google Flood Forecasting <modules/models_google_flood_forecasting>`
      -  
    * - Hurricane / Tropical Cyclone
      - `Hurricast <https://github.com/leobix/hurricast>`_
@@ -225,21 +225,21 @@ Method and Resource Matrix
    * - Hurricane / Tropical Cyclone
      - `TropiCycloneNet-Dataset <https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset>`_
      - Dataset
-     - ``Missing``
+     - ``Implemented``
      - None
-     -  
+     - A synthetic-backed TropiCycloneNet-Dataset adapter is registered.
    * - Hurricane / Tropical Cyclone
      - `TCBench Alpha <https://github.com/msgomez06/TCBench_Alpha>`_
      - Benchmark
-     - ``Missing``
+     - ``Implemented``
      - None
-     -  
+     - A synthetic-backed TCBench Alpha adapter is registered.
    * - Hurricane / Tropical Cyclone
      - `IBTrACS <https://www.ncei.noaa.gov/products/international-best-track-archive>`_
      - Dataset
-     - ``Missing``
+     - ``Implemented``
      - None
-     -  
+     - A synthetic-backed IBTrACS adapter is registered.
    * - Hurricane / Tropical Cyclone
      - `GraphCast / GenCast <https://github.com/google-deepmind/graphcast>`_
      - Foundation Adapter
@@ -278,10 +278,6 @@ part of the current core method set.
      - ``variant``
      - :doc:`CNN-ASPP <modules/models_wildfire_aspp>`
      - Implemented outside the current core method set and kept public as an additional model.
-   * - Wildfire
-     - ``variant``
-     - Shen et al. (2023) FPA-FOD family (:doc:`DNN <modules/models_wildfire_fpa_dnn>`, :doc:`DNN-LSTM-AutoEncoder <modules/models_wildfire_fpa>`, :doc:`LSTM <modules/models_wildfire_fpa_lstm>`, :doc:`LSTM-AutoEncoder <modules/models_wildfire_fpa_forecast>`)
-     - Same-paper family variants are grouped so they do not count as multiple core methods.
    * - Earthquake
      - ``variant``
      - :doc:`WaveCastNet <modules/models_wavecastnet>`

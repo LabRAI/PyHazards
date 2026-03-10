@@ -4,9 +4,11 @@ benchmark:
   metrics:
     - mae
     - rmse
+    - nse
+    - kge
   eval_split: test
 dataset:
-  name: flood_streamflow_synthetic
+  name: waterbench_streamflow
   params:
     micro: true
 model:

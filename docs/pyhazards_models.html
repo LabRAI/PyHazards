@@ -3,14 +3,14 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="EQNet" href="modules/models_eqnet.html"><link rel="prev" title="GOES-R" href="datasets/goesr.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="ASUFM" href="modules/models_asufm.html"><link rel="prev" title="GOES-R" href="datasets/goesr.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/pyhazards_models.html">
         <link rel="prefetch" href="_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>Models - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=aab0eeca" />
     
@@ -217,10 +217,14 @@
 </ul>
 </li>
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Models</a><input aria-label="Toggle navigation of Models" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_asufm.html">ASUFM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_eqnet.html">EQNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_eqtransformer.html">EQTransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_firecastnet.html">FireCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_floodcast.html">FloodCast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_forefire.html">ForeFire Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_fourcastnet_tc.html">FourCastNet TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_google_flood_forecasting.html">Google Flood Forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_gpd.html">GPD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_graphcast_tc.html">GraphCast TC Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_hurricast.html">Hurricast</a></li>
@@ -236,10 +240,10 @@
 <li class="toctree-l2"><a class="reference internal" href="modules/models_urbanfloodcast.html">UrbanFloodCast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_forecasting.html">wildfire_forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html">DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfirespreadts.html">WildfireSpreadTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wrf_sfire.html">WRF-SFIRE Adapter</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interactive_map.html">Wildfire Interactive Map</a></li>
@@ -317,9 +321,42 @@ the Implementation Guide for contributor workflow details.</p>
 <section id="core-baselines">
 <h4>Core Baselines<a class="headerlink" href="#core-baselines" title="Link to this heading">¶</a></h4>
 <p>These entries count toward the current core public method set.</p>
-<p>No core public methods are currently implemented for this
-hazard family. See <a class="reference internal" href="appendix_a_coverage.html"><span class="doc">Coverage Audit</span></a> for the audited
-missing baseline and benchmark adapters.</p>
+<div class="table-wrapper colwidths-given dataset-list docutils container">
+<table class="dataset-list docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_asufm.html"><span class="doc">ASUFM</span></a></p></td>
+<td><p>A temporal convolution baseline for weekly wildfire activity forecasting. See <a class="reference external" href="https://github.com/bronteee/fire-asufm">ASUFM repository</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a></p></td>
+<td><p>A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_firecastnet.html"><span class="doc">FireCastNet</span></a></p></td>
+<td><p>A compact encoder-decoder baseline for wildfire spread mask prediction. See <a class="reference external" href="https://github.com/SeasFire/firecastnet">FireCastNet repository</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_forefire.html"><span class="doc">ForeFire Adapter</span></a></p></td>
+<td><p>A lightweight simulator-style wildfire spread adapter inspired by front-propagation systems. See <a class="reference external" href="https://github.com/forefireAPI/forefire">ForeFire repository</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_forecasting.html"><span class="doc">wildfire_forecasting</span></a></p></td>
+<td><p>A sequence forecasting baseline for next-window wildfire activity across weekly count features. See <a class="reference external" href="https://github.com/Orion-AI-Lab/wildfire_forecasting">wildfire_forecasting repository</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_wildfirespreadts.html"><span class="doc">WildfireSpreadTS</span></a></p></td>
+<td><p>A temporal convolution wildfire spread baseline over short raster history windows. See <a class="reference external" href="https://github.com/SebastianGer/WildfireSpreadTS">WildfireSpreadTS repository</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_wrf_sfire.html"><span class="doc">WRF-SFIRE Adapter</span></a></p></td>
+<td><p>A lightweight raster wildfire spread adapter inspired by WRF-SFIRE style transport. See <a class="reference external" href="https://github.com/openwfm/WRF-SFIRE">WRF-SFIRE repository</a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 <section id="variants-and-additional-implementations">
 <h4>Variants and Additional Implementations<a class="headerlink" href="#variants-and-additional-implementations" title="Link to this heading">¶</a></h4>
@@ -338,9 +375,6 @@ missing baseline and benchmark adapters.</p>
 <tbody>
 <tr class="row-even"><td><p><a class="reference internal" href="modules/models_wildfire_aspp.html"><span class="doc">CNN-ASPP</span></a></p></td>
 <td><p>An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction. See <a class="reference external" href="https://ieeexplore.ieee.org/document/10568207">Application of Explainable Artificial Intelligence in Predicting Wildfire Spread</a>.</p></td>
-</tr>
-<tr class="row-odd"><td><p>Shen et al. (2023) FPA-FOD family</p></td>
-<td><p>Family variants: <a class="reference internal" href="modules/models_wildfire_fpa_dnn.html"><span class="doc">DNN</span></a>, <a class="reference internal" href="modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a>, <a class="reference internal" href="modules/models_wildfire_fpa_lstm.html"><span class="doc">LSTM</span></a>, <a class="reference internal" href="modules/models_wildfire_fpa_forecast.html"><span class="doc">LSTM-AutoEncoder</span></a>. These entries come from the same source paper and are grouped here so they do not count as separate core methods. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2949926723000033">Developing risk assessment framework for wildfire in the United States</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -436,10 +470,13 @@ missing baseline and benchmark adapters.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="modules/models_floodcast.html"><span class="doc">FloodCast</span></a></p></td>
 <td><p>A compact spatiotemporal flood-inundation baseline for raster forecast experiments. See <a class="reference external" href="https://github.com/HydroPML/FloodCast">FloodCast repository</a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="modules/models_neuralhydrology_lstm.html"><span class="doc">NeuralHydrology LSTM</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_google_flood_forecasting.html"><span class="doc">Google Flood Forecasting</span></a></p></td>
+<td><p>A transformer-style sequence baseline for nodewise streamflow forecasting. See <a class="reference external" href="https://github.com/google-research/flood-forecasting">google-research/flood-forecasting repository</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_neuralhydrology_lstm.html"><span class="doc">NeuralHydrology LSTM</span></a></p></td>
 <td><p>An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs. See <a class="reference external" href="https://github.com/neuralhydrology/neuralhydrology">NeuralHydrology repository</a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="modules/models_urbanfloodcast.html"><span class="doc">UrbanFloodCast</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/models_urbanfloodcast.html"><span class="doc">UrbanFloodCast</span></a></p></td>
 <td><p>A U-Net style urban inundation baseline for dense-grid flood prediction. See <a class="reference external" href="https://github.com/HydroPML/UrbanFloodCast">UrbanFloodCast repository</a>.</p></td>
 </tr>
 </tbody>
@@ -634,12 +671,12 @@ load the model by name through the shared registry.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="modules/models_eqnet.html">
+          <a class="next-page" href="modules/models_asufm.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">EQNet</div>
+                <div class="title">ASUFM</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

@@ -3,13 +3,13 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html">
-        <link rel="canonical" href="https://labrai.github.io/PyHazards/_modules/pyhazards/models/wildfire_fpa_forecast.html">
+        <link rel="canonical" href="https://labrai.github.io/PyHazards/_modules/pyhazards/models/firecastnet.html">
         <link rel="prefetch" href="../../../_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="../../../_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
-        <title>pyhazards.models.wildfire_fpa_forecast - PyHazards 1.0.4 documentation</title>
+    <link rel="shortcut icon" href="../../../_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>pyhazards.models.firecastnet - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=aab0eeca" />
     
@@ -216,10 +216,14 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_asufm.html">ASUFM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_eqnet.html">EQNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_eqtransformer.html">EQTransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_firecastnet.html">FireCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_floodcast.html">FloodCast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_forefire.html">ForeFire Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_fourcastnet_tc.html">FourCastNet TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_google_flood_forecasting.html">Google Flood Forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_gpd.html">GPD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_graphcast_tc.html">GraphCast TC Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_hurricast.html">Hurricast</a></li>
@@ -235,10 +239,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_urbanfloodcast.html">UrbanFloodCast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_forecasting.html">wildfire_forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_dnn.html">DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfirespreadts.html">WildfireSpreadTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wrf_sfire.html">WRF-SFIRE Adapter</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../interactive_map.html">Wildfire Interactive Map</a></li>
@@ -288,128 +292,88 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for pyhazards.models.wildfire_fpa_forecast</h1><div class="highlight"><pre>
+          <h1>Source code for pyhazards.models.firecastnet</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.wildfire_fpa_autoencoder</span><span class="w"> </span><span class="kn">import</span> <span class="n">WildfireFPAAutoencoder</span>
 
-
-<div class="viewcode-block" id="WildfireFPAForecast">
-<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.WildfireFPAForecast">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">WildfireFPAForecast</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Forecast model that combines an LSTM temporal encoder with an autoencoder latent summary.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FireCastNet">
+<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.FireCastNet">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FireCastNet</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compact encoder-decoder wildfire spread network.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">input_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">hidden_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
-        <span class="n">output_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-        <span class="n">latent_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
-        <span class="n">num_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="n">ae_hidden_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">ae_num_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
-        <span class="n">lookback</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span>
+        <span class="n">hidden_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
+        <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">input_dim</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;input_dim must be positive, got </span><span class="si">{</span><span class="n">input_dim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">in_channels</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;in_channels must be positive, got </span><span class="si">{</span><span class="n">in_channels</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">hidden_dim</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;hidden_dim must be positive, got </span><span class="si">{</span><span class="n">hidden_dim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">output_dim</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;output_dim must be positive, got </span><span class="si">{</span><span class="n">output_dim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">latent_dim</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;latent_dim must be positive, got </span><span class="si">{</span><span class="n">latent_dim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">num_layers</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;num_layers must be positive, got </span><span class="si">{</span><span class="n">num_layers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">lookback</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;lookback must be positive, got </span><span class="si">{</span><span class="n">lookback</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">out_channels</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;out_channels must be positive, got </span><span class="si">{</span><span class="n">out_channels</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">dropout</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dropout must be in [0, 1), got </span><span class="si">{</span><span class="n">dropout</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">lookback</span> <span class="o">=</span> <span class="n">lookback</span>
-        <span class="n">lstm_dropout</span> <span class="o">=</span> <span class="n">dropout</span> <span class="k">if</span> <span class="n">num_layers</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mf">0.0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">temporal</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span>
-            <span class="n">input_size</span><span class="o">=</span><span class="n">input_dim</span><span class="p">,</span>
-            <span class="n">hidden_size</span><span class="o">=</span><span class="n">hidden_dim</span><span class="p">,</span>
-            <span class="n">num_layers</span><span class="o">=</span><span class="n">num_layers</span><span class="p">,</span>
-            <span class="n">batch_first</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">dropout</span><span class="o">=</span><span class="n">lstm_dropout</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">in_channels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">GELU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">GELU</span><span class="p">(),</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">autoencoder</span> <span class="o">=</span> <span class="n">WildfireFPAAutoencoder</span><span class="p">(</span>
-            <span class="n">input_dim</span><span class="o">=</span><span class="n">input_dim</span><span class="p">,</span>
-            <span class="n">hidden_dim</span><span class="o">=</span><span class="n">ae_hidden_dim</span> <span class="ow">or</span> <span class="n">hidden_dim</span><span class="p">,</span>
-            <span class="n">latent_dim</span><span class="o">=</span><span class="n">latent_dim</span><span class="p">,</span>
-            <span class="n">num_layers</span><span class="o">=</span><span class="n">ae_num_layers</span> <span class="ow">or</span> <span class="n">num_layers</span><span class="p">,</span>
-            <span class="n">dropout</span><span class="o">=</span><span class="n">dropout</span><span class="p">,</span>
-            <span class="n">lookback</span><span class="o">=</span><span class="n">lookback</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-            <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">),</span>
-            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span> <span class="o">+</span> <span class="n">latent_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">),</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">GELU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Dropout2d</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span> <span class="k">if</span> <span class="n">dropout</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">nn</span><span class="o">.</span><span class="n">Identity</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="WildfireFPAForecast.forward">
-<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.WildfireFPAForecast.forward">[docs]</a>
+<div class="viewcode-block" id="FireCastNet.forward">
+<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.FireCastNet.forward">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected input shape (B, T, D), got </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lookback</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected lookback=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lookback</span><span class="si">}</span><span class="s2">, got sequence length </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-        <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">hidden</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">temporal</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">latent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoencoder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">hidden</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">latent</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span></div>
-
-
-<div class="viewcode-block" id="WildfireFPAForecast.forward_with_reconstruction">
-<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.WildfireFPAForecast.forward_with_reconstruction">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">forward_with_reconstruction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
-        <span class="n">preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">recon</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoencoder</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">preds</span><span class="p">,</span> <span class="n">recon</span></div>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;FireCastNet expects input shape (batch, channels, height, width), &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;FireCastNet expected in_channels=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="n">encoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span></div>
 </div>
 
 
 
-<div class="viewcode-block" id="wildfire_fpa_forecast_builder">
-<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.wildfire_fpa_forecast_builder">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">wildfire_fpa_forecast_builder</span><span class="p">(</span>
+<div class="viewcode-block" id="firecastnet_builder">
+<a class="viewcode-back" href="../../../api/pyhazards.models.html#pyhazards.models.firecastnet_builder">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">firecastnet_builder</span><span class="p">(</span>
     <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">input_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">hidden_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
-    <span class="n">output_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="n">latent_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
-    <span class="n">num_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">ae_hidden_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">ae_num_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
-    <span class="n">lookback</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="n">in_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="n">hidden_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
+    <span class="n">out_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">:</span>
     <span class="n">_</span> <span class="o">=</span> <span class="n">kwargs</span>
-    <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;regression&quot;</span><span class="p">,</span> <span class="s2">&quot;forecasting&quot;</span><span class="p">}:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;wildfire_fpa_forecast supports task=&#39;regression&#39; or &#39;forecasting&#39;, got </span><span class="si">{</span><span class="n">task</span><span class="si">!r}</span><span class="s2">&quot;</span>
-        <span class="p">)</span>
-    <span class="k">return</span> <span class="n">WildfireFPAForecast</span><span class="p">(</span>
-        <span class="n">input_dim</span><span class="o">=</span><span class="n">input_dim</span><span class="p">,</span>
+    <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;segmentation&quot;</span><span class="p">,</span> <span class="s2">&quot;regression&quot;</span><span class="p">}:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;firecastnet supports task=&#39;segmentation&#39; or &#39;regression&#39;, got </span><span class="si">{</span><span class="n">task</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">FireCastNet</span><span class="p">(</span>
+        <span class="n">in_channels</span><span class="o">=</span><span class="n">in_channels</span><span class="p">,</span>
         <span class="n">hidden_dim</span><span class="o">=</span><span class="n">hidden_dim</span><span class="p">,</span>
-        <span class="n">output_dim</span><span class="o">=</span><span class="n">output_dim</span><span class="p">,</span>
-        <span class="n">latent_dim</span><span class="o">=</span><span class="n">latent_dim</span><span class="p">,</span>
-        <span class="n">num_layers</span><span class="o">=</span><span class="n">num_layers</span><span class="p">,</span>
-        <span class="n">ae_hidden_dim</span><span class="o">=</span><span class="n">ae_hidden_dim</span><span class="p">,</span>
-        <span class="n">ae_num_layers</span><span class="o">=</span><span class="n">ae_num_layers</span><span class="p">,</span>
+        <span class="n">out_channels</span><span class="o">=</span><span class="n">out_channels</span><span class="p">,</span>
         <span class="n">dropout</span><span class="o">=</span><span class="n">dropout</span><span class="p">,</span>
-        <span class="n">lookback</span><span class="o">=</span><span class="n">lookback</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;WildfireFPAForecast&quot;</span><span class="p">,</span> <span class="s2">&quot;wildfire_fpa_forecast_builder&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;FireCastNet&quot;</span><span class="p">,</span> <span class="s2">&quot;firecastnet_builder&quot;</span><span class="p">]</span>
 </pre></div>
         </article>
       </div>

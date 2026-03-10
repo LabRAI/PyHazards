@@ -18,7 +18,7 @@ class FloodBenchmark(Benchmark):
     name = "flood"
     hazard_task = "flood.streamflow"
     metric_names_by_task = {
-        "flood.streamflow": ["mae", "rmse"],
+        "flood.streamflow": ["mae", "rmse", "nse", "kge"],
         "flood.inundation": ["pixel_mae", "iou", "f1"],
     }
 
@@ -62,15 +62,31 @@ class FloodBenchmark(Benchmark):
         else:
             mae = torch.mean(torch.abs(preds - targets))
             rmse = torch.sqrt(torch.mean((preds - targets) ** 2))
+            target_mean = torch.mean(targets)
+            denominator = torch.sum((targets - target_mean) ** 2).clamp(min=1e-6)
+            nse = 1.0 - torch.sum((preds - targets) ** 2) / denominator
+            pred_std = torch.std(preds).clamp(min=1e-6)
+            target_std = torch.std(targets).clamp(min=1e-6)
+            covariance = torch.mean((preds - torch.mean(preds)) * (targets - target_mean))
+            correlation = covariance / (pred_std * target_std)
+            alpha = pred_std / target_std
+            beta = torch.mean(preds) / target_mean.clamp(min=1e-6)
+            kge = 1.0 - torch.sqrt((correlation - 1.0) ** 2 + (alpha - 1.0) ** 2 + (beta - 1.0) ** 2)
             metrics = {
                 "mae": float(mae.detach().cpu()),
                 "rmse": float(rmse.detach().cpu()),
+                "nse": float(nse.detach().cpu()),
+                "kge": float(kge.detach().cpu()),
             }
         return BenchmarkResult(
             benchmark_name=self.name,
             hazard_task=config.benchmark.hazard_task,
             metrics=metrics,
-            metadata={"split": config.benchmark.eval_split},
+            metadata={
+                "split": config.benchmark.eval_split,
+                "dataset_name": data.metadata.get("dataset"),
+                "source_dataset": data.metadata.get("source_dataset", data.metadata.get("dataset")),
+            },
         )
 
 

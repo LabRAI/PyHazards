@@ -56,7 +56,11 @@ class SyntheticFloodStreamflowDataset(Dataset):
                 task_type="regression",
                 description="Next-step nodewise streamflow target.",
             ),
-            metadata={"hazard_task": "flood.streamflow"},
+            metadata={
+                "dataset": self.name,
+                "source_dataset": self.name,
+                "hazard_task": "flood.streamflow",
+            },
         )
 
 
@@ -127,8 +131,63 @@ class SyntheticFloodInundationDataset(Dataset):
                 task_type="regression",
                 description="Next-horizon inundation depth raster.",
             ),
-            metadata={"hazard_task": "flood.inundation"},
+            metadata={
+                "dataset": self.name,
+                "source_dataset": self.name,
+                "hazard_task": "flood.inundation",
+            },
         )
 
 
-__all__ = ["SyntheticFloodInundationDataset", "SyntheticFloodStreamflowDataset"]
+class CaravanStreamflowDataset(SyntheticFloodStreamflowDataset):
+    """Synthetic-backed streamflow adapter for Caravan-style smoke runs."""
+
+    name = "caravan_streamflow"
+
+    def _load(self) -> DataBundle:
+        bundle = super()._load()
+        bundle.metadata.update({"adapter": "Caravan", "source_dataset": self.name})
+        return bundle
+
+
+class WaterBenchStreamflowDataset(SyntheticFloodStreamflowDataset):
+    """Synthetic-backed streamflow adapter for WaterBench-style smoke runs."""
+
+    name = "waterbench_streamflow"
+
+    def _load(self) -> DataBundle:
+        bundle = super()._load()
+        bundle.metadata.update({"adapter": "WaterBench", "source_dataset": self.name})
+        return bundle
+
+
+class HydroBenchStreamflowDataset(SyntheticFloodStreamflowDataset):
+    """Synthetic-backed streamflow adapter for HydroBench diagnostics."""
+
+    name = "hydrobench_streamflow"
+
+    def _load(self) -> DataBundle:
+        bundle = super()._load()
+        bundle.metadata.update({"adapter": "HydroBench", "source_dataset": self.name})
+        return bundle
+
+
+class FloodCastBenchInundationDataset(SyntheticFloodInundationDataset):
+    """Synthetic-backed inundation adapter for FloodCastBench-style smoke runs."""
+
+    name = "floodcastbench_inundation"
+
+    def _load(self) -> DataBundle:
+        bundle = super()._load()
+        bundle.metadata.update({"adapter": "FloodCastBench", "source_dataset": self.name})
+        return bundle
+
+
+__all__ = [
+    "CaravanStreamflowDataset",
+    "FloodCastBenchInundationDataset",
+    "HydroBenchStreamflowDataset",
+    "SyntheticFloodInundationDataset",
+    "SyntheticFloodStreamflowDataset",
+    "WaterBenchStreamflowDataset",
+]

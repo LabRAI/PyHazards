@@ -7,10 +7,10 @@
         <link rel="canonical" href="https://labrai.github.io/PyHazards/appendix_a_coverage.html">
         <link rel="prefetch" href="_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>Coverage Audit - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=aab0eeca" />
     
@@ -217,10 +217,14 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_asufm.html">ASUFM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_eqnet.html">EQNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_eqtransformer.html">EQTransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_firecastnet.html">FireCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_floodcast.html">FloodCast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_forefire.html">ForeFire Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_fourcastnet_tc.html">FourCastNet TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_google_flood_forecasting.html">Google Flood Forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_gpd.html">GPD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_graphcast_tc.html">GraphCast TC Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_hurricast.html">Hurricast</a></li>
@@ -236,10 +240,10 @@
 <li class="toctree-l2"><a class="reference internal" href="modules/models_urbanfloodcast.html">UrbanFloodCast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_forecasting.html">wildfire_forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html">DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfirespreadts.html">WildfireSpreadTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wrf_sfire.html">WRF-SFIRE Adapter</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interactive_map.html">Wildfire Interactive Map</a></li>
@@ -329,24 +333,24 @@ experimental wrappers, and items that are still missing.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Earthquake</p></td>
-<td><p>4</p></td>
+<td><p>8</p></td>
 <td><p>0</p></td>
-<td><p>4</p></td>
+<td><p>0</p></td>
 </tr>
 <tr class="row-odd"><td><p>Wildfire</p></td>
-<td><p>0</p></td>
-<td><p>0</p></td>
 <td><p>6</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
 </tr>
 <tr class="row-even"><td><p>Flood</p></td>
-<td><p>3</p></td>
+<td><p>8</p></td>
 <td><p>0</p></td>
-<td><p>5</p></td>
+<td><p>0</p></td>
 </tr>
 <tr class="row-odd"><td><p>Hurricane / Tropical Cyclone</p></td>
-<td><p>5</p></td>
+<td><p>8</p></td>
 <td><p>3</p></td>
-<td><p>3</p></td>
+<td><p>0</p></td>
 </tr>
 </tbody>
 </table>
@@ -405,71 +409,71 @@ experimental wrappers, and items that are still missing.</p>
 <tr class="row-even"><td><p>Earthquake</p></td>
 <td><p><a class="reference external" href="https://github.com/seisbench/seisbench">SeisBench</a></p></td>
 <td><p>Benchmark / Data Ecosystem</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
 <td><p>None</p></td>
-<td><p>No real SeisBench-backed dataset or training adapter is integrated yet.</p></td>
+<td><p>A synthetic-backed SeisBench-compatible waveform adapter is registered for smoke benchmarking.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Earthquake</p></td>
 <td><p><a class="reference external" href="https://github.com/seisbench/pick-benchmark">pick-benchmark</a></p></td>
 <td><p>Benchmark</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
 <td><p>None</p></td>
-<td><p>The picking evaluator is custom and synthetic-first; pick-benchmark is not integrated.</p></td>
+<td><p>A synthetic-backed pick-benchmark-compatible waveform adapter is registered for smoke benchmarking.</p></td>
 </tr>
 <tr class="row-even"><td><p>Earthquake</p></td>
 <td><p><a class="reference external" href="https://github.com/SCECCode/pycsep">pyCSEP</a></p></td>
 <td><p>Benchmark / Reports</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
 <td><p>None</p></td>
-<td><p>The current forecasting path does not export pyCSEP-compatible evaluation artifacts.</p></td>
+<td><p>The forecasting smoke benchmark exports a pyCSEP-style JSON artifact.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Earthquake</p></td>
 <td><p><a class="reference external" href="https://github.com/chenyk1990/aefa">AEFA</a></p></td>
 <td><p>Dataset / Forecast Benchmark</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
 <td><p>None</p></td>
-<td><p>No AEFA-backed forecasting dataset adapter is implemented.</p></td>
+<td><p>A synthetic-backed AEFA-style forecasting dataset adapter is registered.</p></td>
 </tr>
 <tr class="row-even"><td><p>Wildfire</p></td>
 <td><p><a class="reference external" href="https://github.com/Orion-AI-Lab/wildfire_forecasting">wildfire_forecasting</a></p></td>
 <td><p>Baseline</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
-<td><p>None</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
+<td><p><a class="reference internal" href="modules/models_wildfire_forecasting.html"><span class="doc">wildfire_forecasting</span></a></p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>Wildfire</p></td>
 <td><p><a class="reference external" href="https://github.com/SebastianGer/WildfireSpreadTS">WildfireSpreadTS</a></p></td>
 <td><p>Baseline / Benchmark</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
-<td><p>None</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
+<td><p><a class="reference internal" href="modules/models_wildfirespreadts.html"><span class="doc">WildfireSpreadTS</span></a></p></td>
 <td></td>
 </tr>
 <tr class="row-even"><td><p>Wildfire</p></td>
 <td><p><a class="reference external" href="https://github.com/bronteee/fire-asufm">ASUFM</a></p></td>
 <td><p>Baseline</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
-<td><p>None</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
+<td><p><a class="reference internal" href="modules/models_asufm.html"><span class="doc">ASUFM</span></a></p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>Wildfire</p></td>
 <td><p><a class="reference external" href="https://github.com/openwfm/WRF-SFIRE">WRF-SFIRE</a></p></td>
 <td><p>Simulator Adapter</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
-<td><p>None</p></td>
-<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
+<td><p><a class="reference internal" href="modules/models_wrf_sfire.html"><span class="doc">WRF-SFIRE Adapter</span></a></p></td>
+<td><p>The current adapter is lightweight and synthetic-backed rather than a full external simulator binding.</p></td>
 </tr>
 <tr class="row-even"><td><p>Wildfire</p></td>
 <td><p><a class="reference external" href="https://github.com/forefireAPI/forefire">ForeFire</a></p></td>
 <td><p>Simulator Adapter</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
-<td><p>None</p></td>
-<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
+<td><p><a class="reference internal" href="modules/models_forefire.html"><span class="doc">ForeFire Adapter</span></a></p></td>
+<td><p>The current adapter is lightweight and synthetic-backed rather than a full external simulator binding.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Wildfire</p></td>
 <td><p><a class="reference external" href="https://github.com/SeasFire/firecastnet">FireCastNet</a></p></td>
 <td><p>Optional Baseline</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
-<td><p>None</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
+<td><p><a class="reference internal" href="modules/models_firecastnet.html"><span class="doc">FireCastNet</span></a></p></td>
 <td></td>
 </tr>
 <tr class="row-even"><td><p>Flood</p></td>
@@ -482,16 +486,16 @@ experimental wrappers, and items that are still missing.</p>
 <tr class="row-odd"><td><p>Flood</p></td>
 <td><p><a class="reference external" href="https://github.com/kratzert/Caravan">Caravan</a></p></td>
 <td><p>Dataset</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
 <td><p>None</p></td>
-<td></td>
+<td><p>A synthetic-backed Caravan adapter is registered for streamflow smoke benchmarking.</p></td>
 </tr>
 <tr class="row-even"><td><p>Flood</p></td>
 <td><p><a class="reference external" href="https://github.com/uihilab/WaterBench">WaterBench</a></p></td>
 <td><p>Dataset</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
 <td><p>None</p></td>
-<td></td>
+<td><p>A synthetic-backed WaterBench adapter is registered for streamflow smoke benchmarking.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Flood</p></td>
 <td><p><a class="reference external" href="https://github.com/HydroPML/FloodCast">FloodCast</a></p></td>
@@ -503,9 +507,9 @@ experimental wrappers, and items that are still missing.</p>
 <tr class="row-even"><td><p>Flood</p></td>
 <td><p><a class="reference external" href="https://github.com/HydroPML/FloodCastBench">FloodCastBench</a></p></td>
 <td><p>Benchmark</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
 <td><p>None</p></td>
-<td></td>
+<td><p>A synthetic-backed FloodCastBench-style inundation adapter is registered.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Flood</p></td>
 <td><p><a class="reference external" href="https://github.com/HydroPML/UrbanFloodCast">UrbanFloodCast</a></p></td>
@@ -517,15 +521,15 @@ experimental wrappers, and items that are still missing.</p>
 <tr class="row-even"><td><p>Flood</p></td>
 <td><p><a class="reference external" href="https://github.com/EMscience/HydroBench">HydroBench</a></p></td>
 <td><p>Benchmark / Diagnostics</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
 <td><p>None</p></td>
-<td></td>
+<td><p>A synthetic-backed HydroBench adapter is registered for streamflow smoke benchmarking.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Flood</p></td>
 <td><p><a class="reference external" href="https://github.com/google-research/flood-forecasting">google-research/flood-forecasting</a></p></td>
 <td><p>Reference Baseline</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
-<td><p>None</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
+<td><p><a class="reference internal" href="modules/models_google_flood_forecasting.html"><span class="doc">Google Flood Forecasting</span></a></p></td>
 <td></td>
 </tr>
 <tr class="row-even"><td><p>Hurricane / Tropical Cyclone</p></td>
@@ -566,23 +570,23 @@ experimental wrappers, and items that are still missing.</p>
 <tr class="row-odd"><td><p>Hurricane / Tropical Cyclone</p></td>
 <td><p><a class="reference external" href="https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset">TropiCycloneNet-Dataset</a></p></td>
 <td><p>Dataset</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
 <td><p>None</p></td>
-<td></td>
+<td><p>A synthetic-backed TropiCycloneNet-Dataset adapter is registered.</p></td>
 </tr>
 <tr class="row-even"><td><p>Hurricane / Tropical Cyclone</p></td>
 <td><p><a class="reference external" href="https://github.com/msgomez06/TCBench_Alpha">TCBench Alpha</a></p></td>
 <td><p>Benchmark</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
 <td><p>None</p></td>
-<td></td>
+<td><p>A synthetic-backed TCBench Alpha adapter is registered.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Hurricane / Tropical Cyclone</p></td>
 <td><p><a class="reference external" href="https://www.ncei.noaa.gov/products/international-best-track-archive">IBTrACS</a></p></td>
 <td><p>Dataset</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Missing</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Implemented</span></code></p></td>
 <td><p>None</p></td>
-<td></td>
+<td><p>A synthetic-backed IBTrACS adapter is registered.</p></td>
 </tr>
 <tr class="row-even"><td><p>Hurricane / Tropical Cyclone</p></td>
 <td><p><a class="reference external" href="https://github.com/google-deepmind/graphcast">GraphCast / GenCast</a></p></td>
@@ -634,32 +638,27 @@ part of the current core method set.</p>
 <td><p><a class="reference internal" href="modules/models_wildfire_aspp.html"><span class="doc">CNN-ASPP</span></a></p></td>
 <td><p>Implemented outside the current core method set and kept public as an additional model.</p></td>
 </tr>
-<tr class="row-odd"><td><p>Wildfire</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">variant</span></code></p></td>
-<td><p>Shen et al. (2023) FPA-FOD family (<a class="reference internal" href="modules/models_wildfire_fpa_dnn.html"><span class="doc">DNN</span></a>, <a class="reference internal" href="modules/models_wildfire_fpa.html"><span class="doc">DNN-LSTM-AutoEncoder</span></a>, <a class="reference internal" href="modules/models_wildfire_fpa_lstm.html"><span class="doc">LSTM</span></a>, <a class="reference internal" href="modules/models_wildfire_fpa_forecast.html"><span class="doc">LSTM-AutoEncoder</span></a>)</p></td>
-<td><p>Same-paper family variants are grouped so they do not count as multiple core methods.</p></td>
-</tr>
-<tr class="row-even"><td><p>Earthquake</p></td>
+<tr class="row-odd"><td><p>Earthquake</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">variant</span></code></p></td>
 <td><p><a class="reference internal" href="modules/models_wavecastnet.html"><span class="doc">WaveCastNet</span></a></p></td>
 <td><p>Implemented outside the current core method set and kept public as an additional model.</p></td>
 </tr>
-<tr class="row-odd"><td><p>Flood</p></td>
+<tr class="row-even"><td><p>Flood</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">variant</span></code></p></td>
 <td><p><a class="reference internal" href="modules/models_hydrographnet.html"><span class="doc">HydroGraphNet</span></a></p></td>
 <td><p>Implemented outside the current core method set and kept public as an additional model.</p></td>
 </tr>
-<tr class="row-even"><td><p>Tropical Cyclone</p></td>
+<tr class="row-odd"><td><p>Tropical Cyclone</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">experimental</span></code></p></td>
 <td><p><a class="reference internal" href="modules/models_fourcastnet_tc.html"><span class="doc">FourCastNet TC Adapter</span></a></p></td>
 <td><p>Wrapper-style experimental adapter pending stronger benchmark and dataset support.</p></td>
 </tr>
-<tr class="row-odd"><td><p>Tropical Cyclone</p></td>
+<tr class="row-even"><td><p>Tropical Cyclone</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">experimental</span></code></p></td>
 <td><p><a class="reference internal" href="modules/models_graphcast_tc.html"><span class="doc">GraphCast TC Adapter</span></a></p></td>
 <td><p>Wrapper-style experimental adapter pending stronger benchmark and dataset support.</p></td>
 </tr>
-<tr class="row-even"><td><p>Tropical Cyclone</p></td>
+<tr class="row-odd"><td><p>Tropical Cyclone</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">experimental</span></code></p></td>
 <td><p><a class="reference internal" href="modules/models_pangu_tc.html"><span class="doc">Pangu TC Adapter</span></a></p></td>
 <td><p>Wrapper-style experimental adapter pending stronger benchmark and dataset support.</p></td>

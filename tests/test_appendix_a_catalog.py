@@ -17,10 +17,12 @@ def test_appendix_a_page_lists_missing_and_non_core_entries() -> None:
     page = render_appendix_a_page(cards)
     assert "Coverage Audit" in page
     assert "`wildfire_forecasting <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_" in page
-    assert "``Missing``" in page
+    assert "``Implemented``" in page
     assert "``Experimental``" in page
     assert "GraphCast / GenCast" in page
-    assert "Shen et al. (2023) FPA-FOD family" in page
+    assert ":doc:`ForeFire Adapter <modules/models_forefire>`" in page
+    assert ":doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`" in page
+    assert ":doc:`FireCastNet <modules/models_firecastnet>`" in page
     assert ":doc:`WaveCastNet <modules/models_wavecastnet>`" in page
 
 

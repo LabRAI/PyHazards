@@ -1,0 +1,51 @@
+model_name: google_flood_forecasting
+display_name: Google Flood Forecasting
+hazard: Flood
+catalog_status: core
+source_file: pyhazards/models/google_flood_forecasting.py
+builder_name: google_flood_forecasting_builder
+summary: >
+  A transformer-style sequence baseline for nodewise streamflow forecasting.
+description:
+  - >
+    ``google_flood_forecasting`` is a compact sequence-to-node forecasting baseline
+    for flood streamflow prediction.
+  - >
+    The PyHazards implementation uses a transformer encoder over per-node history
+    windows and returns one forecast value per node.
+paper:
+  title: google-research/flood-forecasting repository
+  url: https://github.com/google-research/flood-forecasting
+tasks:
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(
+      name="google_flood_forecasting",
+      task="regression",
+      input_dim=2,
+      out_dim=1,
+      history=4,
+  )
+  preds = model({"x": torch.randn(2, 4, 6, 2)})
+  print(preds.shape)
+notes:
+  - "The smoke path uses the same streamflow-style graph fixture as the other flood baselines."
+smoke_test:
+  task: regression
+  build_kwargs:
+    input_dim: 2
+    hidden_dim: 32
+    out_dim: 1
+    history: 4
+    dropout: 0.0
+  input:
+    kind: mapping
+    mapping:
+      x:
+        shape: [2, 4, 6, 2]
+  expected_output:
+    kind: tensor
+    shape: [2, 6, 1]

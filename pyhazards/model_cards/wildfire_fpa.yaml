@@ -1,9 +1,7 @@
 model_name: wildfire_fpa
 display_name: DNN-LSTM-AutoEncoder
 hazard: Wildfire
-catalog_status: variant
-family_key: wildfire-fpa-2023
-family_label: Shen et al. (2023) FPA-FOD family
+catalog_status: core
 source_file: pyhazards/models/wildfire_fpa.py
 builder_name: wildfire_fpa_builder
 summary: >
@@ -14,8 +12,8 @@ description:
     ``wildfire_fpa`` is the paper-facing PyHazards entrypoint for the FPA-FOD wildfire
     framework described by Shen et al. (2023).
   - >
-    PyHazards exposes the classification and forecasting stages through one public
-    registry name while keeping the lower-level modules available internally.
+    PyHazards exposes the combined DNN-LSTM-AutoEncoder workflow through one public
+    registry name while keeping the lower-level components internal.
 paper:
   title: Developing risk assessment framework for wildfire in the United States
   url: https://www.sciencedirect.com/science/article/pii/S2949926723000033
@@ -40,6 +38,7 @@ example: |
   logits = model(x)
   print(logits.shape)
 notes:
+  - "This is the only retained public method from Shen et al. (2023) in the PyHazards catalog."
   - "Use ``task=\"classification\"`` for the DNN stage."
   - "Use ``task=\"forecasting\"`` or ``task=\"regression\"`` for the sequence stage."
 smoke_test:

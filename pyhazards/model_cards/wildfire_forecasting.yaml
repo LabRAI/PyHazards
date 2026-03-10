@@ -1,0 +1,52 @@
+model_name: wildfire_forecasting
+display_name: wildfire_forecasting
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/wildfire_forecasting.py
+builder_name: wildfire_forecasting_builder
+summary: >
+  A sequence forecasting baseline for next-window wildfire activity across weekly count features.
+description:
+  - >
+    ``wildfire_forecasting`` is a compact GRU-attention forecaster for weekly wildfire
+    activity windows.
+  - >
+    The PyHazards implementation targets smoke-testable next-window size-group prediction
+    through the shared wildfire benchmark flow.
+paper:
+  title: wildfire_forecasting repository
+  url: https://github.com/Orion-AI-Lab/wildfire_forecasting
+tasks:
+  - forecasting
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(
+      name="wildfire_forecasting",
+      task="forecasting",
+      input_dim=7,
+      output_dim=5,
+      lookback=12,
+  )
+  preds = model(torch.randn(2, 12, 7))
+  print(preds.shape)
+notes:
+  - "This public adapter is exercised on the weekly wildfire smoke benchmark."
+smoke_test:
+  task: forecasting
+  build_kwargs:
+    input_dim: 7
+    hidden_dim: 32
+    output_dim: 5
+    lookback: 12
+    num_layers: 2
+    dropout: 0.0
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 12, 7]
+  expected_output:
+    kind: tensor
+    shape: [2, 5]

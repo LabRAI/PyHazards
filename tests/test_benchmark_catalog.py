@@ -19,13 +19,19 @@ def test_benchmark_page_lists_summary_table_rows() -> None:
     assert "``FloodBenchmark`` (``flood``)" in page
     assert "``TropicalCycloneBenchmark`` (``tc``)" in page
     assert "``wildfire_danger_smoke.yaml``" in page
+    assert "``wildfire_forecasting_smoke.yaml``" in page
+    assert "``asufm_smoke.yaml``" in page
+    assert "``wildfirespreadts_smoke.yaml``" in page
+    assert "``forefire_smoke.yaml``" in page
+    assert "``wrf_sfire_smoke.yaml``" in page
+    assert "``firecastnet_smoke.yaml``" in page
     assert "``wavecastnet_benchmark_smoke.yaml``" in page
     assert "``fourcastnet_tc_smoke.yaml``" in page
     assert "``precision``" in page
     assert "``recall``" in page
     assert "Current Backing" in page
     assert "full roadmap parity" in page
-    assert "SeisBench, pick-benchmark, pyCSEP, and AEFA integration remain missing." in page
+    assert "SeisBench, pick-benchmark, AEFA, and pyCSEP-style integrations" in page
 
 
 def test_api_reference_order_is_curated() -> None:

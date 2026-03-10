@@ -6,7 +6,7 @@ benchmark:
     - mse
   eval_split: test
 dataset:
-  name: earthquake_forecast_synthetic
+  name: aefa_forecast
   params:
     micro: true
 model:

@@ -20,14 +20,19 @@ def test_model_page_lists_generated_hazard_sections() -> None:
     assert "Hurricane" in page
     assert "Tropical Cyclone" in page
     assert "Wildfire" in page
-    assert "No core public methods are currently implemented for this" in page
-    assert "Shen et al. (2023) FPA-FOD family" in page
-    assert ":doc:`DNN <modules/models_wildfire_fpa_dnn>`" in page
-    assert ":doc:`LSTM-AutoEncoder <modules/models_wildfire_fpa_forecast>`" in page
-    assert ":doc:`LSTM <modules/models_wildfire_fpa_lstm>`" in page
+    assert ":doc:`DNN-LSTM-AutoEncoder <modules/models_wildfire_fpa>`" in page
+    assert ":doc:`wildfire_forecasting <modules/models_wildfire_forecasting>`" in page
+    assert ":doc:`WildfireSpreadTS <modules/models_wildfirespreadts>`" in page
+    assert ":doc:`ASUFM <modules/models_asufm>`" in page
+    assert ":doc:`ForeFire Adapter <modules/models_forefire>`" in page
+    assert ":doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`" in page
+    assert ":doc:`FireCastNet <modules/models_firecastnet>`" in page
     assert ":doc:`WaveCastNet <modules/models_wavecastnet>`" in page
     assert ":doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`" in page
     assert ":doc:`Wildfire Mamba <modules/models_wildfire_mamba>`" not in page
+    assert ":doc:`DNN <modules/models_wildfire_fpa_dnn>`" not in page
+    assert ":doc:`LSTM-AutoEncoder <modules/models_wildfire_fpa_forecast>`" not in page
+    assert ":doc:`LSTM <modules/models_wildfire_fpa_lstm>`" not in page
 
 
 def test_hidden_models_are_omitted_from_public_catalog_pages() -> None:

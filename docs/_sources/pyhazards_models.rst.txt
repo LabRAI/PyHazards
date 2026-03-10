@@ -29,9 +29,27 @@ Core Baselines
 
 These entries count toward the current core public method set.
 
-No core public methods are currently implemented for this
-hazard family. See :doc:`appendix_a_coverage` for the audited
-missing baseline and benchmark adapters.
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+   :class: dataset-list
+
+   * - Model
+     - Description
+   * - :doc:`ASUFM <modules/models_asufm>`
+     - A temporal convolution baseline for weekly wildfire activity forecasting. See `ASUFM repository <https://github.com/bronteee/fire-asufm>`_.
+   * - :doc:`DNN-LSTM-AutoEncoder <modules/models_wildfire_fpa>`
+     - A two-stage wildfire framework with a DNN stage for incident-level cause and size prediction plus an LSTM + autoencoder stage for weekly forecasting. See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
+   * - :doc:`FireCastNet <modules/models_firecastnet>`
+     - A compact encoder-decoder baseline for wildfire spread mask prediction. See `FireCastNet repository <https://github.com/SeasFire/firecastnet>`_.
+   * - :doc:`ForeFire Adapter <modules/models_forefire>`
+     - A lightweight simulator-style wildfire spread adapter inspired by front-propagation systems. See `ForeFire repository <https://github.com/forefireAPI/forefire>`_.
+   * - :doc:`wildfire_forecasting <modules/models_wildfire_forecasting>`
+     - A sequence forecasting baseline for next-window wildfire activity across weekly count features. See `wildfire_forecasting repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_.
+   * - :doc:`WildfireSpreadTS <modules/models_wildfirespreadts>`
+     - A temporal convolution wildfire spread baseline over short raster history windows. See `WildfireSpreadTS repository <https://github.com/SebastianGer/WildfireSpreadTS>`_.
+   * - :doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`
+     - A lightweight raster wildfire spread adapter inspired by WRF-SFIRE style transport. See `WRF-SFIRE repository <https://github.com/openwfm/WRF-SFIRE>`_.
 
 Variants and Additional Implementations
 +++++++++++++++++++++++++++++++++++++++
@@ -47,8 +65,6 @@ These entries stay public, but they are grouped outside the core method count be
      - Description
    * - :doc:`CNN-ASPP <modules/models_wildfire_aspp>`
      - An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction. See `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_.
-   * - Shen et al. (2023) FPA-FOD family
-     - Family variants: :doc:`DNN <modules/models_wildfire_fpa_dnn>`, :doc:`DNN-LSTM-AutoEncoder <modules/models_wildfire_fpa>`, :doc:`LSTM <modules/models_wildfire_fpa_lstm>`, :doc:`LSTM-AutoEncoder <modules/models_wildfire_fpa_forecast>`. These entries come from the same source paper and are grouped here so they do not count as separate core methods. See `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_.
 
 Experimental Adapters
 +++++++++++++++++++++
@@ -124,6 +140,8 @@ These entries count toward the current core public method set.
      - An entity-aware hydrology baseline with static-feature gating over streamflow histories. See `NeuralHydrology repository <https://github.com/neuralhydrology/neuralhydrology>`_.
    * - :doc:`FloodCast <modules/models_floodcast>`
      - A compact spatiotemporal flood-inundation baseline for raster forecast experiments. See `FloodCast repository <https://github.com/HydroPML/FloodCast>`_.
+   * - :doc:`Google Flood Forecasting <modules/models_google_flood_forecasting>`
+     - A transformer-style sequence baseline for nodewise streamflow forecasting. See `google-research/flood-forecasting repository <https://github.com/google-research/flood-forecasting>`_.
    * - :doc:`NeuralHydrology LSTM <modules/models_neuralhydrology_lstm>`
      - An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs. See `NeuralHydrology repository <https://github.com/neuralhydrology/neuralhydrology>`_.
    * - :doc:`UrbanFloodCast <modules/models_urbanfloodcast>`
@@ -290,10 +308,14 @@ Notes
    :maxdepth: 1
    :hidden:
 
+   modules/models_asufm
    modules/models_eqnet
    modules/models_eqtransformer
+   modules/models_firecastnet
    modules/models_floodcast
+   modules/models_forefire
    modules/models_fourcastnet_tc
+   modules/models_google_flood_forecasting
    modules/models_gpd
    modules/models_graphcast_tc
    modules/models_hurricast
@@ -309,7 +331,7 @@ Notes
    modules/models_urbanfloodcast
    modules/models_wavecastnet
    modules/models_wildfire_aspp
+   modules/models_wildfire_forecasting
    modules/models_wildfire_fpa
-   modules/models_wildfire_fpa_dnn
-   modules/models_wildfire_fpa_forecast
-   modules/models_wildfire_fpa_lstm
+   modules/models_wildfirespreadts
+   modules/models_wrf_sfire

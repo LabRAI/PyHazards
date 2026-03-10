@@ -1,0 +1,43 @@
+model_name: wrf_sfire
+display_name: WRF-SFIRE Adapter
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/wrf_sfire.py
+builder_name: wrf_sfire_builder
+summary: >
+  A lightweight raster wildfire spread adapter inspired by WRF-SFIRE style transport.
+description:
+  - >
+    ``wrf_sfire`` approximates simulator-style spread transport with a fixed diffusion
+    and terrain-moisture modulation layer.
+  - >
+    The PyHazards adapter is designed for consistent smoke benchmarking rather than
+    full physical simulation.
+paper:
+  title: WRF-SFIRE repository
+  url: https://github.com/openwfm/WRF-SFIRE
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="wrf_sfire", task="segmentation", in_channels=12)
+  logits = model(torch.randn(2, 12, 16, 16))
+  print(logits.shape)
+notes:
+  - "This smoke-path adapter keeps the simulator slot benchmarkable without external binaries."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 12
+    out_channels: 1
+    diffusion_steps: 3
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 12, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

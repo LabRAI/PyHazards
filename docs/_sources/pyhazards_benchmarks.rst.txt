@@ -33,27 +33,27 @@ canonical hazard tasks, and the smoke configs under
    * - Wildfire
      - ``WildfireBenchmark`` (``wildfire``)
      - ``wildfire.danger``, ``wildfire.spread``
-     - ``accuracy``, ``macro_f1``, ``iou``, ``f1``
-     - ``wildfire_danger_smoke.yaml``, ``wildfire_spread_smoke.yaml``
-     - Smoke-only synthetic fixtures; planned wildfire_forecasting / WildfireSpreadTS / ASUFM adapters are still missing.
+     - ``accuracy``, ``macro_f1``, ``auc``, ``pr_auc``, ``mae``, ``rmse``, ``iou``, ``f1``, ``burned_area_mae``
+     - ``wildfire_danger_smoke.yaml``, ``wildfire_forecasting_smoke.yaml``, ``asufm_smoke.yaml``, ``wildfire_spread_smoke.yaml``, ``wildfirespreadts_smoke.yaml``, ``forefire_smoke.yaml``, ``wrf_sfire_smoke.yaml``, ``firecastnet_smoke.yaml``
+     - Synthetic-backed wildfire danger and spread adapters now cover wildfire_forecasting, WildfireSpreadTS, ASUFM, ForeFire, WRF-SFIRE, and FireCastNet.
    * - Earthquake
      - ``EarthquakeBenchmark`` (``earthquake``)
      - ``earthquake.picking``, ``earthquake.forecasting``
      - ``p_pick_mae``, ``s_pick_mae``, ``precision``, ``recall``, ``f1``, ``mae``, ``mse``
      - ``phasenet_smoke.yaml``, ``eqtransformer_smoke.yaml``, ``gpd_smoke.yaml``, ``eqnet_smoke.yaml``, ``wavecastnet_benchmark_smoke.yaml``
-     - Synthetic waveform and wavefield fixtures; SeisBench, pick-benchmark, pyCSEP, and AEFA integration remain missing.
+     - Synthetic-backed SeisBench, pick-benchmark, AEFA, and pyCSEP-style integrations are wired through the smoke benchmark path.
    * - Flood
      - ``FloodBenchmark`` (``flood``)
      - ``flood.streamflow``, ``flood.inundation``
-     - ``mae``, ``rmse``, ``pixel_mae``, ``iou``, ``f1``
-     - ``hydrographnet_smoke.yaml``, ``neuralhydrology_lstm_smoke.yaml``, ``neuralhydrology_ealstm_smoke.yaml``, ``floodcast_smoke.yaml``, ``urbanfloodcast_smoke.yaml``
-     - Synthetic graph and raster fixtures; Caravan, WaterBench, FloodCastBench, and HydroBench are not integrated yet.
+     - ``mae``, ``rmse``, ``nse``, ``kge``, ``pixel_mae``, ``iou``, ``f1``
+     - ``hydrographnet_smoke.yaml``, ``neuralhydrology_lstm_smoke.yaml``, ``neuralhydrology_ealstm_smoke.yaml``, ``google_flood_forecasting_smoke.yaml``, ``floodcast_smoke.yaml``, ``urbanfloodcast_smoke.yaml``
+     - Synthetic-backed Caravan, WaterBench, FloodCastBench, and HydroBench adapters are wired through the smoke benchmark path.
    * - Tropical Cyclone / Hurricane
      - ``TropicalCycloneBenchmark`` (``tc``)
      - ``tc.track_intensity``
      - ``track_error``, ``intensity_mae``
      - ``hurricast_smoke.yaml``, ``tropicalcyclone_mlp_smoke.yaml``, ``tropicyclonenet_smoke.yaml``, ``saf_net_smoke.yaml``, ``tcif_fusion_smoke.yaml``, ``graphcast_tc_smoke.yaml``, ``pangu_tc_smoke.yaml``, ``fourcastnet_tc_smoke.yaml``
-     - Synthetic storm-history fixtures; TCBench, IBTrACS, and TropiCycloneNet-Dataset are still missing.
+     - Synthetic-backed IBTrACS, TCBench Alpha, and TropiCycloneNet-Dataset adapters are wired through the smoke benchmark path.
 
 Hurricane baselines use the shared tropical-cyclone benchmark family
 and are exercised through the ``tc.track_intensity`` smoke configs.

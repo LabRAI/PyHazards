@@ -1,0 +1,23 @@
+benchmark:
+  name: wildfire
+  hazard_task: wildfire.spread
+  metrics:
+    - iou
+    - f1
+    - burned_area_mae
+  eval_split: test
+dataset:
+  name: wildfire_spread_synthetic
+  params:
+    micro: true
+model:
+  name: firecastnet
+  task: segmentation
+  params:
+    in_channels: 12
+    hidden_dim: 24
+report:
+  output_dir: reports/firecastnet
+  formats:
+    - json
+seed: 7

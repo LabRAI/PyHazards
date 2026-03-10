@@ -6,9 +6,9 @@
         <link rel="canonical" href="https://labrai.github.io/PyHazards/genindex.html">
         <link rel="prefetch" href="_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 --><title>Index - PyHazards 1.0.4 documentation</title>
+    <link rel="shortcut icon" href="_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 --><title>Index - PyHazards 1.0.4 documentation</title>
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=aab0eeca" />
     
@@ -215,10 +215,14 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_asufm.html">ASUFM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_eqnet.html">EQNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_eqtransformer.html">EQTransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_firecastnet.html">FireCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_floodcast.html">FloodCast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_forefire.html">ForeFire Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_fourcastnet_tc.html">FourCastNet TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_google_flood_forecasting.html">Google Flood Forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_gpd.html">GPD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_graphcast_tc.html">GraphCast TC Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_hurricast.html">Hurricast</a></li>
@@ -234,10 +238,10 @@
 <li class="toctree-l2"><a class="reference internal" href="modules/models_urbanfloodcast.html">UrbanFloodCast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_forecasting.html">wildfire_forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_dnn.html">DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wildfirespreadts.html">WildfireSpreadTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models_wrf_sfire.html">WRF-SFIRE Adapter</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="interactive_map.html">Wildfire Interactive Map</a></li>
@@ -348,18 +352,30 @@
 </li>
         <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.base.Transform._is_protocol">_is_protocol (pyhazards.datasets.base.Transform attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyhazards.html#pyhazards.Dataset._load">_load() (pyhazards.Dataset method)</a>
 
         <ul>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.AEFADataset._load">(pyhazards.datasets.AEFADataset method)</a>
+</li>
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.base.Dataset._load">(pyhazards.datasets.base.Dataset method)</a>
 </li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.CaravanStreamflowDataset._load">(pyhazards.datasets.CaravanStreamflowDataset method)</a>
+</li>
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.Dataset._load">(pyhazards.datasets.Dataset method)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.FloodCastBenchInundationDataset._load">(pyhazards.datasets.FloodCastBenchInundationDataset method)</a>
 </li>
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.FPAFODTabularDataset._load">(pyhazards.datasets.FPAFODTabularDataset method)</a>
 </li>
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.FPAFODWeeklyDataset._load">(pyhazards.datasets.FPAFODWeeklyDataset method)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.HydroBenchStreamflowDataset._load">(pyhazards.datasets.HydroBenchStreamflowDataset method)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.IBTrACSTropicalCycloneDataset._load">(pyhazards.datasets.IBTrACSTropicalCycloneDataset method)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.PickBenchmarkWaveformDataset._load">(pyhazards.datasets.PickBenchmarkWaveformDataset method)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.SeisBenchWaveformDataset._load">(pyhazards.datasets.SeisBenchWaveformDataset method)</a>
 </li>
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.SyntheticEarthquakeForecastDataset._load">(pyhazards.datasets.SyntheticEarthquakeForecastDataset method)</a>
 </li>
@@ -373,7 +389,17 @@
 </li>
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.SyntheticWildfireSpreadDataset._load">(pyhazards.datasets.SyntheticWildfireSpreadDataset method)</a>
 </li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.SyntheticWildfireSpreadTemporalDataset._load">(pyhazards.datasets.SyntheticWildfireSpreadTemporalDataset method)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.TCBenchAlphaDataset._load">(pyhazards.datasets.TCBenchAlphaDataset method)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.TropiCycloneNetDataset._load">(pyhazards.datasets.TropiCycloneNetDataset method)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.WaterBenchStreamflowDataset._load">(pyhazards.datasets.WaterBenchStreamflowDataset method)</a>
+</li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyhazards.engine.html#pyhazards.engine.BenchmarkRunner._load_data">_load_data() (pyhazards.engine.BenchmarkRunner method)</a>
 </li>
         <li><a href="api/pyhazards.engine.html#pyhazards.engine.Trainer._make_loader">_make_loader() (pyhazards.engine.Trainer method)</a>
@@ -418,6 +444,8 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyhazards.models.html#pyhazards.models.WavefieldMetrics.accuracy">accuracy() (pyhazards.models.WavefieldMetrics static method)</a>
 </li>
+        <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.AEFADataset">AEFADataset (class in pyhazards.datasets)</a>
+</li>
         <li><a href="api/pyhazards.html#pyhazards.Benchmark.aggregate_metrics">aggregate_metrics() (pyhazards.Benchmark method)</a>
 
         <ul>
@@ -440,14 +468,18 @@
           <li><a href="api/pyhazards.reports.html#pyhazards.reports.BenchmarkReport.artifacts">(pyhazards.reports.BenchmarkReport attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.ASUFM">ASUFM (class in pyhazards.models)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.asufm_builder">asufm_builder() (in module pyhazards.models)</a>
+</li>
         <li><a href="api/pyhazards.utils.html#pyhazards.utils.auto_device">auto_device() (in module pyhazards.utils)</a>
 
         <ul>
           <li><a href="api/pyhazards.utils.html#pyhazards.utils.hardware.auto_device">(in module pyhazards.utils.hardware)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyhazards.html#pyhazards.available_benchmarks">available_benchmarks() (in module pyhazards)</a>
 
         <ul>
@@ -578,6 +610,8 @@
   <h2>C</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.CaravanStreamflowDataset">CaravanStreamflowDataset (class in pyhazards.datasets)</a>
+</li>
         <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.base.FeatureSpec.channels">channels (pyhazards.datasets.base.FeatureSpec attribute)</a>
 
         <ul>
@@ -799,6 +833,10 @@
 </li>
           <li><a href="api/pyhazards.benchmarks.html#pyhazards.benchmarks.Benchmark.export_report">(pyhazards.benchmarks.Benchmark method)</a>
 </li>
+          <li><a href="api/pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.export_report">(pyhazards.benchmarks.earthquake.EarthquakeBenchmark method)</a>
+</li>
+          <li><a href="api/pyhazards.benchmarks.html#pyhazards.benchmarks.EarthquakeBenchmark.export_report">(pyhazards.benchmarks.EarthquakeBenchmark method)</a>
+</li>
         </ul></li>
         <li><a href="api/pyhazards.html#pyhazards.export_report_bundle">export_report_bundle() (in module pyhazards)</a>
 
@@ -846,6 +884,10 @@
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.base.FeatureSpec">(class in pyhazards.datasets.base)</a>
 </li>
         </ul></li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.FireCastNet">FireCastNet (class in pyhazards.models)</a>
+</li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.firecastnet_builder">firecastnet_builder() (in module pyhazards.models)</a>
+</li>
         <li><a href="api/pyhazards.engine.html#pyhazards.engine.Trainer.fit">fit() (pyhazards.engine.Trainer method)</a>
 
         <ul>
@@ -864,6 +906,12 @@
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.floodcast_builder">floodcast_builder() (in module pyhazards.models)</a>
 </li>
+        <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.FloodCastBenchInundationDataset">FloodCastBenchInundationDataset (class in pyhazards.datasets)</a>
+</li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.forefire_builder">forefire_builder() (in module pyhazards.models)</a>
+</li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.ForeFireAdapter">ForeFireAdapter (class in pyhazards.models)</a>
+</li>
         <li><a href="api/pyhazards.configs.html#pyhazards.configs._schema.ReportConfig.formats">formats (pyhazards.configs._schema.ReportConfig attribute)</a>
 
         <ul>
@@ -878,6 +926,8 @@
           <li><a href="api/pyhazards.html#pyhazards.CNNPatchEncoder.forward">(pyhazards.CNNPatchEncoder method)</a>
 </li>
           <li><a href="api/pyhazards.html#pyhazards.MLPBackbone.forward">(pyhazards.MLPBackbone method)</a>
+</li>
+          <li><a href="api/pyhazards.models.html#pyhazards.models.ASUFM.forward">(pyhazards.models.ASUFM method)</a>
 </li>
           <li><a href="api/pyhazards.models.html#pyhazards.models.backbones.CNNPatchEncoder.forward">(pyhazards.models.backbones.CNNPatchEncoder method)</a>
 </li>
@@ -895,9 +945,15 @@
 </li>
           <li><a href="api/pyhazards.models.html#pyhazards.models.EQTransformer.forward">(pyhazards.models.EQTransformer method)</a>
 </li>
+          <li><a href="api/pyhazards.models.html#pyhazards.models.FireCastNet.forward">(pyhazards.models.FireCastNet method)</a>
+</li>
           <li><a href="api/pyhazards.models.html#pyhazards.models.FloodCast.forward">(pyhazards.models.FloodCast method)</a>
 </li>
+          <li><a href="api/pyhazards.models.html#pyhazards.models.ForeFireAdapter.forward">(pyhazards.models.ForeFireAdapter method)</a>
+</li>
           <li><a href="api/pyhazards.models.html#pyhazards.models.FourCastNetTC.forward">(pyhazards.models.FourCastNetTC method)</a>
+</li>
+          <li><a href="api/pyhazards.models.html#pyhazards.models.GoogleFloodForecasting.forward">(pyhazards.models.GoogleFloodForecasting method)</a>
 </li>
           <li><a href="api/pyhazards.models.html#pyhazards.models.GPD.forward">(pyhazards.models.GPD method)</a>
 </li>
@@ -949,15 +1005,15 @@
 </li>
           <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireCNNASPP.forward">(pyhazards.models.WildfireCNNASPP method)</a>
 </li>
+          <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireForecasting.forward">(pyhazards.models.WildfireForecasting method)</a>
+</li>
           <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireFPA.forward">(pyhazards.models.WildfireFPA method)</a>
 </li>
-          <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireFPADNN.forward">(pyhazards.models.WildfireFPADNN method)</a>
-</li>
-          <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireFPAForecast.forward">(pyhazards.models.WildfireFPAForecast method)</a>
-</li>
-          <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireFPALSTM.forward">(pyhazards.models.WildfireFPALSTM method)</a>
-</li>
           <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireMamba.forward">(pyhazards.models.WildfireMamba method)</a>
+</li>
+          <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireSpreadTS.forward">(pyhazards.models.WildfireSpreadTS method)</a>
+</li>
+          <li><a href="api/pyhazards.models.html#pyhazards.models.WRFSFireAdapter.forward">(pyhazards.models.WRFSFireAdapter method)</a>
 </li>
           <li><a href="api/pyhazards.html#pyhazards.RegressionHead.forward">(pyhazards.RegressionHead method)</a>
 </li>
@@ -969,11 +1025,7 @@
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireFPA.forward_with_reconstruction">forward_with_reconstruction() (pyhazards.models.WildfireFPA method)</a>
-
-        <ul>
-          <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireFPAForecast.forward_with_reconstruction">(pyhazards.models.WildfireFPAForecast method)</a>
 </li>
-        </ul></li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.fourcastnet_tc_builder">fourcastnet_tc_builder() (in module pyhazards.models)</a>
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.FourCastNetTC">FourCastNetTC (class in pyhazards.models)</a>
@@ -1014,8 +1066,6 @@
         </ul></li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.registry.get_model_config">get_model_config() (in module pyhazards.models.registry)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyhazards.html#pyhazards.DataBundle.get_split">get_split() (pyhazards.DataBundle method)</a>
 
         <ul>
@@ -1024,6 +1074,12 @@
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.DataBundle.get_split">(pyhazards.datasets.DataBundle method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.google_flood_forecasting_builder">google_flood_forecasting_builder() (in module pyhazards.models)</a>
+</li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.GoogleFloodForecasting">GoogleFloodForecasting (class in pyhazards.models)</a>
+</li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.GPD">GPD (class in pyhazards.models)</a>
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.gpd_builder">gpd_builder() (in module pyhazards.models)</a>
@@ -1104,6 +1160,8 @@
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.hurricast_builder">hurricast_builder() (in module pyhazards.models)</a>
 </li>
+        <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.HydroBenchStreamflowDataset">HydroBenchStreamflowDataset (class in pyhazards.datasets)</a>
+</li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.HydroGraphNet">HydroGraphNet (class in pyhazards.models)</a>
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.hydrographnet_builder">hydrographnet_builder() (in module pyhazards.models)</a>
@@ -1118,6 +1176,8 @@
   <h2>I</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.IBTrACSTropicalCycloneDataset">IBTrACSTropicalCycloneDataset (class in pyhazards.datasets)</a>
+</li>
         <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.base.FeatureSpec.input_dim">input_dim (pyhazards.datasets.base.FeatureSpec attribute)</a>
 
         <ul>
@@ -1428,13 +1488,27 @@
 </li>
           <li><a href="api/pyhazards.html#pyhazards.DatasetRef.name">(pyhazards.DatasetRef attribute)</a>
 </li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.AEFADataset.name">(pyhazards.datasets.AEFADataset attribute)</a>
+</li>
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.base.Dataset.name">(pyhazards.datasets.base.Dataset attribute)</a>
 </li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.CaravanStreamflowDataset.name">(pyhazards.datasets.CaravanStreamflowDataset attribute)</a>
+</li>
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.Dataset.name">(pyhazards.datasets.Dataset attribute)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.FloodCastBenchInundationDataset.name">(pyhazards.datasets.FloodCastBenchInundationDataset attribute)</a>
 </li>
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.FPAFODTabularDataset.name">(pyhazards.datasets.FPAFODTabularDataset attribute)</a>
 </li>
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.FPAFODWeeklyDataset.name">(pyhazards.datasets.FPAFODWeeklyDataset attribute)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.HydroBenchStreamflowDataset.name">(pyhazards.datasets.HydroBenchStreamflowDataset attribute)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.IBTrACSTropicalCycloneDataset.name">(pyhazards.datasets.IBTrACSTropicalCycloneDataset attribute)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.PickBenchmarkWaveformDataset.name">(pyhazards.datasets.PickBenchmarkWaveformDataset attribute)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.SeisBenchWaveformDataset.name">(pyhazards.datasets.SeisBenchWaveformDataset attribute)</a>
 </li>
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.SyntheticEarthquakeForecastDataset.name">(pyhazards.datasets.SyntheticEarthquakeForecastDataset attribute)</a>
 </li>
@@ -1447,6 +1521,14 @@
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.SyntheticTropicalCycloneDataset.name">(pyhazards.datasets.SyntheticTropicalCycloneDataset attribute)</a>
 </li>
           <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.SyntheticWildfireSpreadDataset.name">(pyhazards.datasets.SyntheticWildfireSpreadDataset attribute)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.SyntheticWildfireSpreadTemporalDataset.name">(pyhazards.datasets.SyntheticWildfireSpreadTemporalDataset attribute)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.TCBenchAlphaDataset.name">(pyhazards.datasets.TCBenchAlphaDataset attribute)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.TropiCycloneNetDataset.name">(pyhazards.datasets.TropiCycloneNetDataset attribute)</a>
+</li>
+          <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.WaterBenchStreamflowDataset.name">(pyhazards.datasets.WaterBenchStreamflowDataset attribute)</a>
 </li>
           <li><a href="api/pyhazards.html#pyhazards.HazardTask.name">(pyhazards.HazardTask attribute)</a>
 </li>
@@ -1536,6 +1618,8 @@
         <li><a href="api/pyhazards.models.html#pyhazards.models.PhaseNet">PhaseNet (class in pyhazards.models)</a>
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.phasenet_builder">phasenet_builder() (in module pyhazards.models)</a>
+</li>
+        <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.PickBenchmarkWaveformDataset">PickBenchmarkWaveformDataset (class in pyhazards.datasets)</a>
 </li>
         <li><a href="api/pyhazards.engine.html#pyhazards.engine.Trainer.predict">predict() (pyhazards.engine.Trainer method)</a>
 
@@ -1944,6 +2028,8 @@
           <li><a href="api/pyhazards.metrics.html#pyhazards.metrics.SegmentationMetrics">(class in pyhazards.metrics)</a>
 </li>
         </ul></li>
+        <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.SeisBenchWaveformDataset">SeisBenchWaveformDataset (class in pyhazards.datasets)</a>
+</li>
         <li><a href="api/pyhazards.engine.html#pyhazards.engine.select_strategy">select_strategy() (in module pyhazards.engine)</a>
 
         <ul>
@@ -1992,6 +2078,8 @@
 </li>
         <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.SyntheticWildfireSpreadDataset">SyntheticWildfireSpreadDataset (class in pyhazards.datasets)</a>
 </li>
+        <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.SyntheticWildfireSpreadTemporalDataset">SyntheticWildfireSpreadTemporalDataset (class in pyhazards.datasets)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -2026,6 +2114,8 @@
           <li><a href="api/pyhazards.html#pyhazards.LabelSpec.task_type">(pyhazards.LabelSpec attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.TCBenchAlphaDataset">TCBenchAlphaDataset (class in pyhazards.datasets)</a>
+</li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.tcif_fusion_builder">tcif_fusion_builder() (in module pyhazards.models)</a>
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.TCIFFusion">TCIFFusion (class in pyhazards.models)</a>
@@ -2078,6 +2168,8 @@
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.tropicyclonenet_builder">tropicyclonenet_builder() (in module pyhazards.models)</a>
 </li>
+        <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.TropiCycloneNetDataset">TropiCycloneNetDataset (class in pyhazards.datasets)</a>
+</li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.TverskyLoss">TverskyLoss (class in pyhazards.models)</a>
 </li>
     </ul></td>
@@ -2120,6 +2212,8 @@
   <h2>W</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pyhazards.datasets.html#pyhazards.datasets.WaterBenchStreamflowDataset">WaterBenchStreamflowDataset (class in pyhazards.datasets)</a>
+</li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.WaveCastNet">WaveCastNet (class in pyhazards.models)</a>
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.wavecastnet_builder">wavecastnet_builder() (in module pyhazards.models)</a>
@@ -2130,20 +2224,16 @@
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.wildfire_aspp_builder">wildfire_aspp_builder() (in module pyhazards.models)</a>
 </li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.wildfire_forecasting_builder">wildfire_forecasting_builder() (in module pyhazards.models)</a>
+</li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.wildfire_fpa_builder">wildfire_fpa_builder() (in module pyhazards.models)</a>
 </li>
-        <li><a href="api/pyhazards.models.html#pyhazards.models.wildfire_fpa_dnn_builder">wildfire_fpa_dnn_builder() (in module pyhazards.models)</a>
-</li>
-        <li><a href="api/pyhazards.models.html#pyhazards.models.wildfire_fpa_forecast_builder">wildfire_fpa_forecast_builder() (in module pyhazards.models)</a>
-</li>
-        <li><a href="api/pyhazards.models.html#pyhazards.models.wildfire_fpa_lstm_builder">wildfire_fpa_lstm_builder() (in module pyhazards.models)</a>
-</li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyhazards.models.html#pyhazards.models.wildfire_mamba_builder">wildfire_mamba_builder() (in module pyhazards.models)</a>
 </li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireASPP">WildfireASPP (class in pyhazards.models)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pyhazards.benchmarks.html#pyhazards.benchmarks.WildfireBenchmark">WildfireBenchmark (class in pyhazards.benchmarks)</a>
 
         <ul>
@@ -2152,15 +2242,19 @@
         </ul></li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireCNNASPP">WildfireCNNASPP (class in pyhazards.models)</a>
 </li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireForecasting">WildfireForecasting (class in pyhazards.models)</a>
+</li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireFPA">WildfireFPA (class in pyhazards.models)</a>
 </li>
-        <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireFPADNN">WildfireFPADNN (class in pyhazards.models)</a>
-</li>
-        <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireFPAForecast">WildfireFPAForecast (class in pyhazards.models)</a>
-</li>
-        <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireFPALSTM">WildfireFPALSTM (class in pyhazards.models)</a>
-</li>
         <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireMamba">WildfireMamba (class in pyhazards.models)</a>
+</li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.WildfireSpreadTS">WildfireSpreadTS (class in pyhazards.models)</a>
+</li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.wildfirespreadts_builder">wildfirespreadts_builder() (in module pyhazards.models)</a>
+</li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.wrf_sfire_builder">wrf_sfire_builder() (in module pyhazards.models)</a>
+</li>
+        <li><a href="api/pyhazards.models.html#pyhazards.models.WRFSFireAdapter">WRFSFireAdapter (class in pyhazards.models)</a>
 </li>
     </ul></td>
   </tr></table>

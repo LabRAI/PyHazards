@@ -6,7 +6,7 @@ benchmark:
     - intensity_mae
   eval_split: test
 dataset:
-  name: tc_tracks_synthetic
+  name: ibtracs_tracks
   params:
     micro: true
 model:

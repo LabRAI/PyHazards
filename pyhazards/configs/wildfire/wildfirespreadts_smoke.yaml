@@ -1,0 +1,24 @@
+benchmark:
+  name: wildfire
+  hazard_task: wildfire.spread
+  metrics:
+    - iou
+    - f1
+    - burned_area_mae
+  eval_split: test
+dataset:
+  name: wildfire_spread_temporal_synthetic
+  params:
+    micro: true
+model:
+  name: wildfirespreadts
+  task: segmentation
+  params:
+    history: 4
+    in_channels: 6
+    hidden_dim: 24
+report:
+  output_dir: reports/wildfirespreadts
+  formats:
+    - json
+seed: 7

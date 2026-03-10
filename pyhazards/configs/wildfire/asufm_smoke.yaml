@@ -1,0 +1,27 @@
+benchmark:
+  name: wildfire
+  hazard_task: wildfire.danger
+  metrics:
+    - mae
+    - rmse
+  eval_split: test
+dataset:
+  name: fpa_fod_weekly
+  params:
+    micro: true
+    lookback_weeks: 12
+    features: counts+time
+model:
+  name: asufm
+  task: forecasting
+  params:
+    input_dim: 7
+    hidden_dim: 32
+    output_dim: 5
+    lookback: 12
+    dropout: 0.0
+report:
+  output_dir: reports/asufm
+  formats:
+    - json
+seed: 7

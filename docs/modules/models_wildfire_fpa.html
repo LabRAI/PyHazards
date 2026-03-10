@@ -3,14 +3,14 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="DNN" href="models_wildfire_fpa_dnn.html"><link rel="prev" title="CNN-ASPP" href="models_wildfire_aspp.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="WildfireSpreadTS" href="models_wildfirespreadts.html"><link rel="prev" title="wildfire_forecasting" href="models_wildfire_forecasting.html">
         <link rel="canonical" href="https://labrai.github.io/PyHazards/modules/models_wildfire_fpa.html">
         <link rel="prefetch" href="../_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="../_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>DNN-LSTM-AutoEncoder - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=aab0eeca" />
     
@@ -217,10 +217,14 @@
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="models_asufm.html">ASUFM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_eqnet.html">EQNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_eqtransformer.html">EQTransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models_firecastnet.html">FireCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_floodcast.html">FloodCast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models_forefire.html">ForeFire Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_fourcastnet_tc.html">FourCastNet TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models_google_flood_forecasting.html">Google Flood Forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_gpd.html">GPD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_graphcast_tc.html">GraphCast TC Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_hurricast.html">Hurricast</a></li>
@@ -236,10 +240,10 @@
 <li class="toctree-l2"><a class="reference internal" href="models_urbanfloodcast.html">UrbanFloodCast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="models_wildfire_aspp.html">CNN-ASPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models_wildfire_forecasting.html">wildfire_forecasting</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models_wildfire_fpa_dnn.html">DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models_wildfire_fpa_lstm.html">LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models_wildfirespreadts.html">WildfireSpreadTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models_wrf_sfire.html">WRF-SFIRE Adapter</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../interactive_map.html">Wildfire Interactive Map</a></li>
@@ -300,7 +304,7 @@
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">wildfire_fpa</span></code> is the paper-facing PyHazards entrypoint for the FPA-FOD wildfire framework described by Shen et al. (2023).</p>
-<p>PyHazards exposes the classification and forecasting stages through one public registry name while keeping the lower-level modules available internally.</p>
+<p>PyHazards exposes the combined DNN-LSTM-AutoEncoder workflow through one public registry name while keeping the lower-level components internal.</p>
 </section>
 <section id="paper">
 <h2>Paper<a class="headerlink" href="#paper" title="Link to this heading">¶</a></h2>
@@ -308,12 +312,11 @@
 </section>
 <section id="catalog-status">
 <h2>Catalog Status<a class="headerlink" href="#catalog-status" title="Link to this heading">¶</a></h2>
-<p>Status: <code class="docutils literal notranslate"><span class="pre">variant</span></code></p>
+<p>Status: <code class="docutils literal notranslate"><span class="pre">core</span></code></p>
 </section>
 <section id="registry-name">
 <h2>Registry Name<a class="headerlink" href="#registry-name" title="Link to this heading">¶</a></h2>
 <p>Primary entrypoint: <code class="docutils literal notranslate"><span class="pre">wildfire_fpa</span></code></p>
-<p>Family: <code class="docutils literal notranslate"><span class="pre">Shen</span> <span class="pre">et</span> <span class="pre">al.</span> <span class="pre">(2023)</span> <span class="pre">FPA-FOD</span> <span class="pre">family</span></code></p>
 </section>
 <section id="supported-tasks">
 <h2>Supported Tasks<a class="headerlink" href="#supported-tasks" title="Link to this heading">¶</a></h2>
@@ -346,6 +349,7 @@
 <section id="notes">
 <h2>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h2>
 <ul class="simple">
+<li><p>This is the only retained public method from Shen et al. (2023) in the PyHazards catalog.</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">task=&quot;classification&quot;</span></code> for the DNN stage.</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">task=&quot;forecasting&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">task=&quot;regression&quot;</span></code> for the sequence stage.</p></li>
 </ul>
@@ -357,23 +361,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="models_wildfire_fpa_dnn.html">
+          <a class="next-page" href="models_wildfirespreadts.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">DNN</div>
+                <div class="title">WildfireSpreadTS</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="models_wildfire_aspp.html">
+          <a class="prev-page" href="models_wildfire_forecasting.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">CNN-ASPP</div>
+                <div class="title">wildfire_forecasting</div>
                 
               </div>
             </a>

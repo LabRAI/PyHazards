@@ -1,0 +1,27 @@
+benchmark:
+  name: flood
+  hazard_task: flood.streamflow
+  metrics:
+    - mae
+    - rmse
+    - nse
+    - kge
+  eval_split: test
+dataset:
+  name: caravan_streamflow
+  params:
+    micro: true
+model:
+  name: google_flood_forecasting
+  task: regression
+  params:
+    input_dim: 2
+    hidden_dim: 32
+    out_dim: 1
+    history: 4
+    dropout: 0.0
+report:
+  output_dir: reports/google_flood_forecasting
+  formats:
+    - json
+seed: 7

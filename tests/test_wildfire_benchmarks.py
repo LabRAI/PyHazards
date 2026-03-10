@@ -9,6 +9,7 @@ def test_wildfire_danger_vertical_slice(tmp_path):
     assert summary.benchmark_name == "wildfire"
     assert summary.hazard_task == "wildfire.danger"
     assert "accuracy" in summary.metrics
+    assert "auc" in summary.metrics
 
 
 def test_wildfire_spread_vertical_slice(tmp_path):
@@ -17,3 +18,18 @@ def test_wildfire_spread_vertical_slice(tmp_path):
 
     assert summary.hazard_task == "wildfire.spread"
     assert "iou" in summary.metrics
+    assert "burned_area_mae" in summary.metrics
+
+
+def test_added_wildfire_breadth_configs(tmp_path):
+    expectations = {
+        "pyhazards/configs/wildfire/wildfire_forecasting_smoke.yaml": "mae",
+        "pyhazards/configs/wildfire/asufm_smoke.yaml": "mae",
+        "pyhazards/configs/wildfire/wildfirespreadts_smoke.yaml": "burned_area_mae",
+        "pyhazards/configs/wildfire/forefire_smoke.yaml": "burned_area_mae",
+        "pyhazards/configs/wildfire/wrf_sfire_smoke.yaml": "burned_area_mae",
+        "pyhazards/configs/wildfire/firecastnet_smoke.yaml": "burned_area_mae",
+    }
+    for path, metric_name in expectations.items():
+        summary = BenchmarkRunner().run(load_experiment_config(path), output_dir=str(tmp_path))
+        assert metric_name in summary.metrics

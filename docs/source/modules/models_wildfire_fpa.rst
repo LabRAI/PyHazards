@@ -9,7 +9,7 @@ Description
 ``wildfire_fpa`` is the paper-facing PyHazards entrypoint for the FPA-FOD wildfire framework described by Shen et al. (2023).
 
 
-PyHazards exposes the classification and forecasting stages through one public registry name while keeping the lower-level modules available internally.
+PyHazards exposes the combined DNN-LSTM-AutoEncoder workflow through one public registry name while keeping the lower-level components internal.
 
 
 Paper
@@ -20,14 +20,12 @@ See `Developing risk assessment framework for wildfire in the United States <htt
 Catalog Status
 --------------
 
-Status: ``variant``
+Status: ``core``
 
 Registry Name
 -------------
 
 Primary entrypoint: ``wildfire_fpa``
-
-Family: ``Shen et al. (2023) FPA-FOD family``
 
 Supported Tasks
 ---------------
@@ -60,5 +58,6 @@ Example of how to use it
 Notes
 -----
 
+- This is the only retained public method from Shen et al. (2023) in the PyHazards catalog.
 - Use ``task="classification"`` for the DNN stage.
 - Use ``task="forecasting"`` or ``task="regression"`` for the sequence stage.

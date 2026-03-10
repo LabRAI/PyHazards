@@ -32,7 +32,13 @@ class TropicalCycloneBenchmark(Benchmark):
             benchmark_name=self.name,
             hazard_task=config.benchmark.hazard_task,
             metrics=metrics,
-            metadata={"split": config.benchmark.eval_split},
+            metadata={
+                "split": config.benchmark.eval_split,
+                "dataset_name": data.metadata.get("dataset"),
+                "source_dataset": data.metadata.get("source_dataset", data.metadata.get("dataset")),
+                "history": data.metadata.get("history"),
+                "horizon": data.feature_spec.extra.get("horizon") if data.feature_spec.extra else None,
+            },
         )
 
 

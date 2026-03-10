@@ -1,0 +1,23 @@
+benchmark:
+  name: wildfire
+  hazard_task: wildfire.spread
+  metrics:
+    - iou
+    - f1
+    - burned_area_mae
+  eval_split: test
+dataset:
+  name: wildfire_spread_synthetic
+  params:
+    micro: true
+model:
+  name: forefire
+  task: segmentation
+  params:
+    in_channels: 12
+    diffusion_steps: 2
+report:
+  output_dir: reports/forefire
+  formats:
+    - json
+seed: 7

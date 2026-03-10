@@ -51,8 +51,50 @@ class SyntheticTropicalCycloneDataset(Dataset):
                 task_type="regression",
                 description="Forecast track latitude/longitude and intensity trajectory.",
             ),
-            metadata={"hazard_task": "tc.track_intensity"},
+            metadata={
+                "dataset": self.name,
+                "source_dataset": self.name,
+                "hazard_task": "tc.track_intensity",
+            },
         )
 
 
-__all__ = ["SyntheticTropicalCycloneDataset"]
+class IBTrACSTropicalCycloneDataset(SyntheticTropicalCycloneDataset):
+    """Synthetic-backed adapter for IBTrACS-style storm tracks."""
+
+    name = "ibtracs_tracks"
+
+    def _load(self) -> DataBundle:
+        bundle = super()._load()
+        bundle.metadata.update({"adapter": "IBTrACS", "source_dataset": self.name})
+        return bundle
+
+
+class TCBenchAlphaDataset(SyntheticTropicalCycloneDataset):
+    """Synthetic-backed adapter for TCBench Alpha evaluation runs."""
+
+    name = "tcbench_alpha"
+
+    def _load(self) -> DataBundle:
+        bundle = super()._load()
+        bundle.metadata.update({"adapter": "TCBench Alpha", "source_dataset": self.name})
+        return bundle
+
+
+class TropiCycloneNetDataset(SyntheticTropicalCycloneDataset):
+    """Synthetic-backed adapter for TropiCycloneNet-Dataset style smoke runs."""
+
+    name = "tropicyclonenet_dataset"
+
+    def _load(self) -> DataBundle:
+        bundle = super()._load()
+        bundle.metadata.update({"adapter": "TropiCycloneNet-Dataset", "source_dataset": self.name})
+        return bundle
+
+
+__all__ = [
+    "IBTrACSTropicalCycloneDataset",
+    "SyntheticTropicalCycloneDataset",
+    "TCBenchAlphaDataset",
+    "TropiCycloneNetDataset",
+]

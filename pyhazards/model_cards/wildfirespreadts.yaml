@@ -1,0 +1,49 @@
+model_name: wildfirespreadts
+display_name: WildfireSpreadTS
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/wildfirespreadts.py
+builder_name: wildfirespreadts_builder
+summary: >
+  A temporal convolution wildfire spread baseline over short raster history windows.
+description:
+  - >
+    ``wildfirespreadts`` models wildfire spread as a sequence-to-mask prediction task.
+  - >
+    The PyHazards adapter uses a compact 3D convolution stack that consumes short
+    raster history windows and predicts the next spread mask.
+paper:
+  title: WildfireSpreadTS repository
+  url: https://github.com/SebastianGer/WildfireSpreadTS
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(
+      name="wildfirespreadts",
+      task="segmentation",
+      history=4,
+      in_channels=6,
+  )
+  logits = model(torch.randn(2, 4, 6, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke dataset uses temporal wildfire spread tensors rather than single-frame rasters."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    history: 4
+    in_channels: 6
+    hidden_dim: 24
+    out_channels: 1
+    dropout: 0.0
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 4, 6, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

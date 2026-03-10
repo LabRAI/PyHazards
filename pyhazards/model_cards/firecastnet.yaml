@@ -1,0 +1,44 @@
+model_name: firecastnet
+display_name: FireCastNet
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/firecastnet.py
+builder_name: firecastnet_builder
+summary: >
+  A compact encoder-decoder baseline for wildfire spread mask prediction.
+description:
+  - >
+    ``firecastnet`` is a raster wildfire spread baseline that uses a shallow
+    encoder-decoder architecture.
+  - >
+    The PyHazards implementation is optimized for the shared smoke benchmark
+    rather than the full upstream training stack.
+paper:
+  title: FireCastNet repository
+  url: https://github.com/SeasFire/firecastnet
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="firecastnet", task="segmentation", in_channels=12)
+  logits = model(torch.randn(2, 12, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke configuration uses the single-frame wildfire spread raster fixture."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 12
+    hidden_dim: 24
+    out_channels: 1
+    dropout: 0.0
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 12, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

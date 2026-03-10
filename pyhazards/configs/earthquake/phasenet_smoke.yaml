@@ -6,7 +6,7 @@ benchmark:
     - s_pick_mae
   eval_split: test
 dataset:
-  name: earthquake_waveforms
+  name: seisbench_waveforms
   params:
     micro: true
 model:

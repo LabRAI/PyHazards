@@ -6,10 +6,10 @@
         <link rel="canonical" href="https://labrai.github.io/PyHazards/_modules/pyhazards/benchmarks/earthquake.html">
         <link rel="prefetch" href="../../../_static/logo.png" as="image">
 
-    <link rel="shortcut icon" href="../../../_static/logo.png"><!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="../../../_static/logo.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>pyhazards.benchmarks.earthquake - PyHazards 1.0.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=aab0eeca" />
     
@@ -216,10 +216,14 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../pyhazards_models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_asufm.html">ASUFM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_eqnet.html">EQNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_eqtransformer.html">EQTransformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_firecastnet.html">FireCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_floodcast.html">FloodCast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_forefire.html">ForeFire Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_fourcastnet_tc.html">FourCastNet TC Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_google_flood_forecasting.html">Google Flood Forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_gpd.html">GPD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_graphcast_tc.html">GraphCast TC Adapter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_hurricast.html">Hurricast</a></li>
@@ -235,10 +239,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_urbanfloodcast.html">UrbanFloodCast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wavecastnet.html">WaveCastNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_aspp.html">CNN-ASPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_forecasting.html">wildfire_forecasting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa.html">DNN-LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_dnn.html">DNN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_forecast.html">LSTM-AutoEncoder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfire_fpa_lstm.html">LSTM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wildfirespreadts.html">WildfireSpreadTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/models_wrf_sfire.html">WRF-SFIRE Adapter</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../interactive_map.html">Wildfire Interactive Map</a></li>
@@ -291,6 +295,8 @@
           <h1>Source code for pyhazards.benchmarks.earthquake</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -357,8 +363,35 @@
             <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;split&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">benchmark</span><span class="o">.</span><span class="n">eval_split</span><span class="p">,</span>
                 <span class="s2">&quot;threshold_curve&quot;</span><span class="p">:</span> <span class="n">threshold_curve</span><span class="p">,</span>
+                <span class="s2">&quot;dataset_name&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dataset&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;source_dataset&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source_dataset&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dataset&quot;</span><span class="p">)),</span>
             <span class="p">},</span>
         <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EarthquakeBenchmark.export_report">
+<a class="viewcode-back" href="../../../api/pyhazards.benchmarks.html#pyhazards.benchmarks.earthquake.EarthquakeBenchmark.export_report">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_report</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">result</span><span class="p">:</span> <span class="n">BenchmarkResult</span><span class="p">,</span>
+        <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">formats</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">export_report</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">formats</span><span class="o">=</span><span class="n">formats</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">hazard_task</span> <span class="o">==</span> <span class="s2">&quot;earthquake.forecasting&quot;</span><span class="p">:</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+            <span class="n">target</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">pycsep_path</span> <span class="o">=</span> <span class="n">target</span> <span class="o">/</span> <span class="s2">&quot;earthquake_pycsep.json&quot;</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;adapter&quot;</span><span class="p">:</span> <span class="s2">&quot;pyCSEP-style&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;benchmark_name&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">benchmark_name</span><span class="p">,</span>
+                <span class="s2">&quot;hazard_task&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">hazard_task</span><span class="p">,</span>
+                <span class="s2">&quot;metrics&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span>
+                <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">pycsep_path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+            <span class="n">paths</span><span class="p">[</span><span class="s2">&quot;pycsep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">pycsep_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">paths</span></div>
 </div>
 
 

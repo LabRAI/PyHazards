@@ -63,7 +63,11 @@ class SyntheticEarthquakeWaveformDataset(Dataset):
                 task_type="regression",
                 description="P- and S-arrival sample indices.",
             ),
-            metadata={"hazard_task": "earthquake.picking"},
+            metadata={
+                "dataset": self.name,
+                "source_dataset": self.name,
+                "hazard_task": "earthquake.picking",
+            },
         )
 
 
@@ -164,8 +168,51 @@ class SyntheticEarthquakeForecastDataset(Dataset):
                 task_type="regression",
                 description="Future dense-grid wavefield frames over the forecast horizon.",
             ),
-            metadata={"hazard_task": "earthquake.forecasting"},
+            metadata={
+                "dataset": self.name,
+                "source_dataset": self.name,
+                "hazard_task": "earthquake.forecasting",
+            },
         )
 
 
-__all__ = ["SyntheticEarthquakeForecastDataset", "SyntheticEarthquakeWaveformDataset"]
+class SeisBenchWaveformDataset(SyntheticEarthquakeWaveformDataset):
+    """Synthetic-backed adapter with the SeisBench public dataset surface."""
+
+    name = "seisbench_waveforms"
+
+    def _load(self) -> DataBundle:
+        bundle = super()._load()
+        bundle.metadata.update({"adapter": "SeisBench", "source_dataset": self.name})
+        return bundle
+
+
+class PickBenchmarkWaveformDataset(SyntheticEarthquakeWaveformDataset):
+    """Synthetic-backed adapter with the pick-benchmark public dataset surface."""
+
+    name = "pick_benchmark_waveforms"
+
+    def _load(self) -> DataBundle:
+        bundle = super()._load()
+        bundle.metadata.update({"adapter": "pick-benchmark", "source_dataset": self.name})
+        return bundle
+
+
+class AEFADataset(SyntheticEarthquakeForecastDataset):
+    """Synthetic-backed adapter for AEFA-style earthquake forecasting inputs."""
+
+    name = "aefa_forecast"
+
+    def _load(self) -> DataBundle:
+        bundle = super()._load()
+        bundle.metadata.update({"adapter": "AEFA", "source_dataset": self.name})
+        return bundle
+
+
+__all__ = [
+    "AEFADataset",
+    "PickBenchmarkWaveformDataset",
+    "SeisBenchWaveformDataset",
+    "SyntheticEarthquakeForecastDataset",
+    "SyntheticEarthquakeWaveformDataset",
+]

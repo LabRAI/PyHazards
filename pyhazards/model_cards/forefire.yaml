@@ -1,0 +1,42 @@
+model_name: forefire
+display_name: ForeFire Adapter
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/forefire.py
+builder_name: forefire_builder
+summary: >
+  A lightweight simulator-style wildfire spread adapter inspired by front-propagation systems.
+description:
+  - >
+    ``forefire`` is a deterministic raster adapter that approximates simulator-style
+    front propagation through fixed diffusion kernels.
+  - >
+    PyHazards exposes it as a benchmarkable baseline through the standard model registry.
+paper:
+  title: ForeFire repository
+  url: https://github.com/forefireAPI/forefire
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="forefire", task="segmentation", in_channels=12)
+  logits = model(torch.randn(2, 12, 16, 16))
+  print(logits.shape)
+notes:
+  - "This adapter is deterministic and does not learn parameters during the smoke test."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 12
+    out_channels: 1
+    diffusion_steps: 2
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 12, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]
