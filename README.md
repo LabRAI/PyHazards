@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/source/_static/logo.png" alt="PyHazards logo" width="220" />
+  <img src="https://raw.githubusercontent.com/LabRAI/PyHazards/main/docs/source/_static/logo.png" alt="PyHazards logo" width="220" />
 </p>
 
 <h1 align="center">PyHazards: A Python framework for AI-powered hazard prediction</h1>
@@ -143,9 +143,9 @@ Recommended reading order:
 
 If you want to extend PyHazards:
 
-- **Contributing guide**: [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)
-- **Developer implementation guide**: [docs/source/implementation.rst](docs/source/implementation.rst)
-- **Maintainer notes**: [.github/IMPLEMENTATION.md](.github/IMPLEMENTATION.md)
+- **Contributing guide**: [GitHub CONTRIBUTING](https://github.com/LabRAI/PyHazards/blob/main/.github/CONTRIBUTING.md)
+- **Developer implementation guide**: [Implementation Guide](https://labrai.github.io/PyHazards/implementation.html)
+- **Maintainer notes**: [Maintainer Notes](https://github.com/LabRAI/PyHazards/blob/main/.github/IMPLEMENTATION.md)
 
 Roadmap themes:
 
@@ -178,4 +178,4 @@ If you use PyHazards in your research, please cite:
 
 ## License
 
-[MIT License](LICENSE)
+[MIT License](https://github.com/LabRAI/PyHazards/blob/main/LICENSE)
