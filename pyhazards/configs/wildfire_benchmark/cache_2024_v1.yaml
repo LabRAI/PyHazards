@@ -1,0 +1,30 @@
+cache:
+  root: /home/runyang/my-copy/data_cache/wildfire_2024_v1
+
+data:
+  year: 2024
+  weather_dir: /home/runyang/output2024
+  weather_glob: pred_2024*.nc
+  sample_nc: pred_20240101_18.nc
+  weather_vars:
+    - T2M
+    - QV2M
+    - TQV
+    - U10M
+    - V10M
+    - GWETROOT
+    - TS
+    - LAI
+    - EFLUX
+    - HFLUX
+    - SWGNT
+    - SWTNT
+    - LWGAB
+    - LWGEM
+  firms_daily_dir: /home/runyang/ryang/firms/combine
+  landfire_tif: /home/runyang/ryang/landfire_fbfm40/LF2024_FBFM13_250_CONUS/Tif/LC24_F13_250.tif
+
+splits:
+  train: [2024-01-01, 2024-09-30]
+  val: [2024-10-01, 2024-10-31]
+  test: [2024-11-01, 2024-12-31]

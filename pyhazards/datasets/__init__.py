@@ -23,7 +23,14 @@ from .tc import (
     TCBenchAlphaDataset,
     TropiCycloneNetDataset,
 )
-from .wildfire import SyntheticWildfireSpreadDataset, SyntheticWildfireSpreadTemporalDataset
+from .wildfire import (
+    SyntheticWildfireSpreadDataset,
+    SyntheticWildfireSpreadTemporalDataset,
+    TrackOSplitConfig,
+    WildfireTrackO2024RasterDataset,
+    WildfireTrackO2024TabularDataset,
+    WildfireTrackO2024TemporalDataset,
+)
 
 __all__ = [
     "DataBundle",
@@ -55,6 +62,10 @@ __all__ = [
     "TropiCycloneNetDataset",
     "SyntheticWildfireSpreadDataset",
     "SyntheticWildfireSpreadTemporalDataset",
+    "TrackOSplitConfig",
+    "WildfireTrackO2024RasterDataset",
+    "WildfireTrackO2024TabularDataset",
+    "WildfireTrackO2024TemporalDataset",
 ]
 
 register_dataset(SyntheticEarthquakeForecastDataset.name, SyntheticEarthquakeForecastDataset)
@@ -76,3 +87,6 @@ register_dataset(TCBenchAlphaDataset.name, TCBenchAlphaDataset)
 register_dataset(TropiCycloneNetDataset.name, TropiCycloneNetDataset)
 register_dataset(SyntheticWildfireSpreadDataset.name, SyntheticWildfireSpreadDataset)
 register_dataset(SyntheticWildfireSpreadTemporalDataset.name, SyntheticWildfireSpreadTemporalDataset)
+register_dataset(WildfireTrackO2024RasterDataset.name, WildfireTrackO2024RasterDataset)
+register_dataset(WildfireTrackO2024TabularDataset.name, WildfireTrackO2024TabularDataset)
+register_dataset(WildfireTrackO2024TemporalDataset.name, WildfireTrackO2024TemporalDataset)

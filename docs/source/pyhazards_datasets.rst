@@ -30,7 +30,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         20
+         34
 
       .. container:: catalog-stat-note
 
@@ -41,7 +41,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         10
+         24
 
       .. container:: catalog-stat-note
 
@@ -173,6 +173,254 @@ primary source, and the most relevant inspection or registry surface.
             .. container:: catalog-link-row
 
                **Primary Source:** `Gelaro et al. (2017). The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA-2). <https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml>`_
+
+         .. grid-item-card:: HPWREN Weather
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Public HPWREN station feeds used for local weather-station context in wildfire operations and validation workflows.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Weather Stations` :bdg-info:`Station points with tabular observations`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** HPWREN station network footprint
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Real-time operational updates plus archived monthly summaries
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``find /home/runyang/ryang/HPWREN_Weather -maxdepth 2 -type f | head``
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`HPWREN Weather <datasets/hpwren_weather>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `HPWREN <https://hpwren.ucsd.edu/>`_
+
+         .. grid-item-card:: Spot Forecast
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               NOAA NWS spot forecast products used for incident-specific forecast guidance and fire-weather context.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Incident Forecast Guidance` :bdg-info:`Text and bulletin-style products`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Incident-specific forecast products
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated when requested for active incidents
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``find /home/runyang/ryang/Spot_Forecast_Current -maxdepth 2 -type f | head``
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Spot Forecast <datasets/spot_forecast>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `NWS Spot Forecast page <https://spot.weather.gov/>`_
+
+         .. grid-item-card:: NOHRSC SNODAS
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Daily snow-analysis grids used as snow-state context for mountain wildfire and seasonal fuel workflows.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Snow Analysis` :bdg-info:`Gridded raster fields`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Continental United States
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Daily
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``find /home/runyang/ryang/NOHRSC_SNODAS_masked_2024 -maxdepth 2 -type d | head``
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`NOHRSC SNODAS <datasets/nohrsc_snodas>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `NOHRSC archived data and SNODAS description <https://www.nohrsc.noaa.gov/archived_data/>`_
+
+         .. grid-item-card:: HRRR
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               NOAA's rapid-refresh forecast system used for short-range wildfire weather features and forecast forcing.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Weather Forecast` :bdg-info:`Gridded forecast fields`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** CONUS-focused forecast domain
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Hourly
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``find /home/runyang/ryang/HRRR/2024 -maxdepth 3 -type f | head``
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`HRRR <datasets/hrrr>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `HRRR official page <https://rapidrefresh.noaa.gov/hrrr/>`_
+
+         .. grid-item-card:: NDFD
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Official NWS forecast grids and warning products used for wildfire-weather context and public hazard overlays.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Forecast and Warnings` :bdg-info:`Gridded forecast layers and bulletins`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** United States public forecast grids
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Issue-based for hazards and routine forecast refresh for grids
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``find /home/runyang/ryang/NDFD -maxdepth 2 -type d | head``
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`NDFD <datasets/ndfd>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `NDFD / digital.weather.gov <https://digital.weather.gov/>`_
+
+         .. grid-item-card:: GOES GeoColor
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               GOES GeoColor imagery used for rapid visual fire-scene context and plume inspection.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Satellite Imagery Context` :bdg-info:`Geostationary imagery time series`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** GOES-East and GOES-West views over the Americas
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Continuous ingest as new imagery becomes available
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``find /home/runyang/ryang/GOES_GeoColor_CIRA -maxdepth 3 -type f | head``
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`GOES GeoColor <datasets/goes_geocolor>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `CIRA Slider <https://rammb-slider.cira.colostate.edu/>`_
+
+         .. grid-item-card:: NASA GIBS
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               NASA EOSDIS browse imagery used for daily wildfire scene context and qualitative event inspection.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Satellite Imagery Context` :bdg-info:`Tiled imagery and browse layers`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Global
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Daily
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``find /home/runyang/ryang/NASA_GIBS_2024 -maxdepth 3 -type f | head``
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`NASA GIBS <datasets/nasa_gibs>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `NASA GIBS overview <https://www.earthdata.nasa.gov/eosdis/science-system-description/eosdis-components/gibs>`_
+
+         .. grid-item-card:: Synoptic Weather
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Synoptic weather-station feeds used for local observation context and wildfire weather cross-checks.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Weather Stations` :bdg-info:`Station points with tabular observations and metadata`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Multi-network station coverage where access is available
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Near-real-time for current feeds; historical access depends on plan tier
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``find /home/runyang/ryang/Synoptic_Weather_Current -maxdepth 2 -type f | head``
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synoptic Weather <datasets/synoptic_weather>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Synoptic Weather API <https://docs.synopticdata.com/services/weather-api>`_
 
 
    .. tab-item:: Wildfire
@@ -396,6 +644,216 @@ primary source, and the most relevant inspection or registry surface.
             .. container:: catalog-link-row
 
                **Primary Source:** `National Interagency Fire Center. Wildland Fire Incident Geospatial Services (WFIGS). <https://data-nifc.opendata.arcgis.com/>`_
+
+         .. grid-item-card:: FRAP Fire Perimeters
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               California's authoritative historical fire perimeter archive maintained by CAL FIRE FRAP.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Historical Perimeters` :bdg-info:`Vector fire perimeter polygons`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** California
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Annual spring releases with new fire-season perimeters
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``ogrinfo -so "/home/runyang/ryang/FRAP_Fire_Perimeters/shapefile/California_Fire_Perimeters_(all).shp" "California_Fire_Perimeters_(all)"``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`FRAP Fire Perimeters <datasets/frap_fire_perimeters>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `CAL FIRE FRAP Fire Perimeters <https://www.fire.ca.gov/what-we-do/fire-resource-assessment-program/fire-perimeters>`_
+
+         .. grid-item-card:: GeoMAC Historical
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Historical GeoMAC wildfire perimeters preserved as a legacy U.S. perimeter archive for long-horizon evaluation.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Historical Perimeters` :bdg-info:`Archived wildfire perimeter polygons`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** United States
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Legacy archive; local copy is static
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``unzip -l "/home/runyang/ryang/GeoMAC_Historical/Historic_Geomac_Perimeters_All_Years_2000_2018/Historic_Geomac_Perimeters_All_Years_2000_2018.zip" | head``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`GeoMAC Historical <datasets/geomac_historical>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `USGS GeoMAC historical archive description <https://pubs.usgs.gov/publication/ds612>`_
+
+         .. grid-item-card:: HMS Smoke
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               NOAA analyst-drawn smoke plume polygons used for smoke tracking, verification, and wildfire smoke exposure analysis.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Smoke Plumes` :bdg-info:`Vector smoke polygons`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** North America, Hawaii, and the Caribbean
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Sub-daily near-real-time analyst updates
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``ogrinfo -so "/home/runyang/ryang/HMS_Smoke/2024/shapefile/hms_smoke2024.shp" hms_smoke2024``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`HMS Smoke <datasets/hms_smoke>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `NOAA HMS Fire and Smoke Analysis <https://www.ospo.noaa.gov/products/land/fire.html>`_
+
+         .. grid-item-card:: GOES-R FDCF
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               GOES-R ABI Fire/Hot Spot Characterization files used for high-frequency active-fire monitoring across the Americas.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Geostationary Active Fire` :bdg-info:`Raster NetCDF time series`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** GOES-East and GOES-West full-disk views
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** About every 10 minutes
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``python -m pyhazards.datasets.goesr.inspection --path /home/runyang/ryang/GOES_FDCF_G16/2024 --max-items 10``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`GOES-R FDCF <datasets/goesr_fdcf>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `GOES-R Fire/Hot Spot Characterization <https://goes-r.noaa.gov/products/baseline-fire-hot-spot.html>`_
+
+         .. grid-item-card:: WRC Housing Density
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Housing-density raster from Wildfire Risk to Communities used for WUI and exposure-aware wildfire analysis.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Exposure Context` :bdg-info:`Raster exposure layers`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** United States
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Release-based
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``find /home/runyang/ryang/WRC_Housing_Density -maxdepth 3 -type f | head``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`WRC Housing Density <datasets/wrc_housing_density>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Wildfire Risk to Communities datasets <https://www.fs.usda.gov/rds/archive/catalog/RDS-2020-0060-2>`_
+
+         .. grid-item-card:: LandScan Population
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Population raster used for population-at-risk and human exposure context in wildfire studies.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Population Exposure` :bdg-info:`Gridded population rasters`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Global
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Release-based / annual
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``find /home/runyang/ryang/LandScan_Global_2024 -maxdepth 3 -type f | head``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`LandScan Population <datasets/landscan_population>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `LandScan Global 2024 dataset entry <https://www.osti.gov/biblio/2587445>`_
 
 
    .. tab-item:: Flood
@@ -910,12 +1368,26 @@ model and evaluation coverage.
    datasets/era5
    datasets/goesr
    datasets/merra2
+   datasets/hpwren_weather
+   datasets/spot_forecast
+   datasets/nohrsc_snodas
+   datasets/hrrr
+   datasets/ndfd
+   datasets/goes_geocolor
+   datasets/nasa_gibs
+   datasets/synoptic_weather
    datasets/firms
    datasets/fpa_fod_tabular
    datasets/fpa_fod_weekly
    datasets/landfire
    datasets/mtbs
    datasets/wfigs
+   datasets/frap_fire_perimeters
+   datasets/geomac_historical
+   datasets/hms_smoke
+   datasets/goesr_fdcf
+   datasets/wrc_housing_density
+   datasets/landscan_population
    datasets/caravan_streamflow
    datasets/floodcastbench_inundation
    datasets/hydrobench_streamflow

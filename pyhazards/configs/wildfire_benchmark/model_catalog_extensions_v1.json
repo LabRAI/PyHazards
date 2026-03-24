@@ -1,0 +1,284 @@
+[
+  {
+    "name": "cnn_aspp",
+    "display_name": "CNN-ASPP",
+    "group": "satellite_remote_sensing",
+    "train_unit": "epoch",
+    "source_tier": "paper_only",
+    "priority": 201,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0003,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "asufm",
+    "display_name": "ASUFM",
+    "group": "satellite_remote_sensing",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 202,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "firecastnet",
+    "display_name": "FireCastNet",
+    "group": "seasonal_forecasting",
+    "train_unit": "epoch",
+    "source_tier": "paper_only",
+    "priority": 203,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "firepred",
+    "display_name": "FirePred",
+    "group": "satellite_remote_sensing",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 203,
+    "defaults": {
+      "history": 5,
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "viirs_375m_active_fire",
+    "display_name": "VIIRS 375 m Active Fire",
+    "group": "operational_detection",
+    "train_unit": "epoch",
+    "source_tier": "official_paper",
+    "priority": 204,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 80
+    }
+  },
+  {
+    "name": "modis_active_fire_c61",
+    "display_name": "MODIS Active Fire C6.1",
+    "group": "operational_detection",
+    "train_unit": "epoch",
+    "source_tier": "official_paper",
+    "priority": 205,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 80
+    }
+  },
+  {
+    "name": "wrf_sfire_adapter",
+    "display_name": "WRF-SFIRE Adapter",
+    "group": "physics_simulators",
+    "train_unit": "iteration",
+    "source_tier": "official_repo",
+    "priority": 204,
+    "defaults": {
+      "max_iter": 120
+    }
+  },
+  {
+    "name": "forefire_adapter",
+    "display_name": "ForeFire Adapter",
+    "group": "physics_simulators",
+    "train_unit": "iteration",
+    "source_tier": "official_repo",
+    "priority": 205,
+    "defaults": {
+      "max_iter": 120
+    }
+  },
+  {
+    "name": "wildfiregpt",
+    "display_name": "WildfireGPT",
+    "group": "llm_systems",
+    "train_unit": "iteration",
+    "source_tier": "official_repo",
+    "priority": 206,
+    "defaults": {
+      "max_iter": 80
+    }
+  },
+  {
+    "name": "gemini_25_pro_wildfire_prompted",
+    "display_name": "Gemini 2.5 Pro Wildfire Prompted",
+    "group": "llm_systems",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 206,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0001,
+      "max_epochs": 60,
+      "in_channels": 6,
+      "hidden_dim": 96,
+      "prompt_dim": 32,
+      "num_prompt_tokens": 6,
+      "num_heads": 8,
+      "dropout": 0.1
+    }
+  },
+  {
+    "name": "llama4_wildfire_prompted",
+    "display_name": "Llama 4 Wildfire Prompted",
+    "group": "llm_systems",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 207,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0001,
+      "max_epochs": 60,
+      "in_channels": 6,
+      "hidden_dim": 80,
+      "prompt_dim": 32,
+      "num_prompt_tokens": 4,
+      "num_heads": 8,
+      "dropout": 0.1
+    }
+  },
+  {
+    "name": "qwen25_vl_wildfire_prompted",
+    "display_name": "Qwen2.5-VL Wildfire Prompted",
+    "group": "llm_systems",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 206,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0001,
+      "max_epochs": 60
+    }
+  },
+  {
+    "name": "internvl3_wildfire_prompted",
+    "display_name": "InternVL3 Wildfire Prompted",
+    "group": "llm_systems",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 208,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0001,
+      "max_epochs": 60,
+      "in_channels": 6,
+      "hidden_dim": 96,
+      "prompt_dim": 32,
+      "num_prompt_tokens": 5,
+      "num_heads": 6,
+      "dropout": 0.1
+    }
+  },
+  {
+    "name": "firemm_ir",
+    "display_name": "FireMM-IR",
+    "group": "llm_systems",
+    "train_unit": "epoch",
+    "source_tier": "paper_only",
+    "priority": 207,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0001,
+      "max_epochs": 60
+    }
+  },
+  {
+    "name": "prithvi_eo_2_tl",
+    "display_name": "Prithvi-EO-2.0-TL",
+    "group": "foundation_models",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 208,
+    "defaults": {
+      "backbone": "Prithvi-EO-2.0",
+      "optimizer": "AdamW",
+      "lr": 0.0001,
+      "max_epochs": 80
+    }
+  },
+  {
+    "name": "prithvi_burnscars",
+    "display_name": "Prithvi BurnScars",
+    "group": "foundation_models",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 209,
+    "defaults": {
+      "backbone": "Prithvi-BurnScars",
+      "optimizer": "AdamW",
+      "lr": 0.0001,
+      "max_epochs": 80
+    }
+  },
+  {
+    "name": "prithvi_wxc",
+    "display_name": "Prithvi-WxC",
+    "group": "foundation_models",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 210,
+    "defaults": {
+      "backbone": "Prithvi-WxC",
+      "optimizer": "AdamW",
+      "lr": 0.0001,
+      "max_epochs": 80
+    }
+  },
+  {
+    "name": "wildfirespreadts",
+    "display_name": "WildfireSpreadTS",
+    "group": "satellite_remote_sensing",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 211,
+    "defaults": {
+      "history": 4,
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "ts_satfire",
+    "display_name": "TS-SatFire",
+    "group": "satellite_remote_sensing",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 213,
+    "defaults": {
+      "history": 5,
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "wildfire_fpa",
+    "display_name": "DNN-LSTM-AutoEncoder",
+    "group": "forecasting_systems",
+    "train_unit": "epoch",
+    "source_tier": "paper_only",
+    "priority": 214,
+    "defaults": {
+      "depth": 2,
+      "hidden_dim": 64,
+      "activation": "relu",
+      "dropout": 0.1,
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 120
+    }
+  }
+]

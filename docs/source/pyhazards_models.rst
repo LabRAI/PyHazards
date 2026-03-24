@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         24
+         66
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         27
+         61
 
       .. container:: catalog-stat-note
 
@@ -72,7 +72,7 @@ pages and compatible benchmark coverage.
 
       .. container:: catalog-section-note
 
-         Wildfire models cover danger forecasting, weekly activity forecasting, and spread prediction under the shared wildfire benchmark family.
+         Wildfire models now cover forecasting, spread prediction, operational detection, foundation-model transfer, and prompted multimodal reasoning under the shared wildfire benchmark family.
 
       .. rubric:: Implemented Models
 
@@ -184,29 +184,6 @@ pages and compatible benchmark coverage.
 
                **Paper:** `ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread <https://doi.org/10.21105/joss.08680>`_ | **Repo:** `Repository <https://github.com/forefireAPI/forefire>`__
 
-         .. grid-item-card:: Wildfire Forecasting
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               A sequence forecasting baseline for next-window wildfire activity across weekly count features.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`Wildfire Forecasting <modules/models_wildfire_forecasting>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Wildfire Danger Prediction and Understanding with Deep Learning <https://doi.org/10.1029/2022GL099368>`_ | **Repo:** `Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__
-
          .. grid-item-card:: WildfireSpreadTS
             :class-card: catalog-entry-card
 
@@ -287,6 +264,812 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_
+
+         .. grid-item-card:: FirePred
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A hybrid multi-temporal CNN wildfire spread model over short satellite-history windows.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`FirePred <modules/models_firepred>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Repo:** `Repository <https://github.com/Seyed-Ali-Ahmadi/FirePred>`__
+
+         .. grid-item-card:: FireMM-IR
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A benchmark-facing multi-modal large-model port for infrared-enhanced wildfire scene understanding.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`LLM / MLLM` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`FireMM-IR <modules/models_firemm_ir>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `FireMM-IR <https://www.mdpi.com/1424-8220/26/2/390>`_
+
+         .. grid-item-card:: MODIS Active Fire C6.1
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               An operational-detection baseline inspired by NASA's MODIS Collection 6.1 active-fire algorithm.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Operational Detection` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`MODIS Active Fire C6.1 <modules/models_modis_active_fire_c61>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Giglio et al. (2016) <https://doi.org/10.1016/j.rse.2016.02.054>`_
+
+         .. grid-item-card:: Prithvi-EO-2.0-TL
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A transfer-learning earth-observation foundation-model port for dense wildfire prediction.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Foundation Model` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Prithvi-EO-2.0-TL <modules/models_prithvi_eo_2_tl>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Model Card:** `IBM-NASA Prithvi-EO-2.0-300M-TL <https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL>`_
+
+         .. grid-item-card:: Prithvi BurnScars
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A benchmark-facing burn-scar segmentation downstream model derived from the Prithvi EO family.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Foundation Model` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Prithvi BurnScars <modules/models_prithvi_burnscars>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Model Card:** `Prithvi-EO-2.0-300M-BurnScars <https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars>`_
+
+         .. grid-item-card:: Prithvi-WxC
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A weather-climate foundation-model port adapted for dense wildfire-risk prediction.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Foundation Model` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Prithvi-WxC <modules/models_prithvi_wxc>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Prithvi WxC <https://huggingface.co/papers/2409.13598>`_
+
+         .. grid-item-card:: Gemini 2.5 Pro Wildfire Prompted
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A prompt-conditioned wildfire VLM baseline inspired by Gemini 2.5 Pro.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`LLM / MLLM` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Gemini 2.5 Pro Wildfire Prompted <modules/models_gemini_25_pro_wildfire_prompted>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Source:** `Gemini models documentation <https://ai.google.dev/gemini-api/docs/models/gemini-v2>`_
+
+         .. grid-item-card:: InternVL3 Wildfire Prompted
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A prompt-conditioned wildfire VLM baseline inspired by InternVL3.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`LLM / MLLM` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`InternVL3 Wildfire Prompted <modules/models_internvl3_wildfire_prompted>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Repo:** `Repository <https://github.com/OpenGVLab/InternVL>`__
+
+         .. grid-item-card:: Llama 4 Wildfire Prompted
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A prompt-conditioned multimodal wildfire baseline inspired by Meta Llama 4.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`LLM / MLLM` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Llama 4 Wildfire Prompted <modules/models_llama4_wildfire_prompted>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Source:** `Meta Llama <https://llama.meta.com/>`_
+
+         .. grid-item-card:: Qwen2.5-VL Wildfire Prompted
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A prompt-conditioned wildfire VLM baseline inspired by Qwen2.5-VL.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`LLM / MLLM` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Qwen2.5-VL Wildfire Prompted <modules/models_qwen25_vl_wildfire_prompted>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Qwen2.5-VL Technical Report <https://arxiv.org/abs/2502.13923>`_
+
+         .. grid-item-card:: TS-SatFire
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A spatio-temporal satellite wildfire benchmark model over multi-temporal raster sequences.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`TS-SatFire <modules/models_ts_satfire>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `TS-SatFire <https://www.nature.com/articles/s41597-025-06271-3>`_
+
+         .. grid-item-card:: VIIRS 375 m Active Fire
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               An operational-detection baseline inspired by NASA's VIIRS 375 m active-fire algorithm.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Operational Detection` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`VIIRS 375 m Active Fire <modules/models_viirs_375m_active_fire>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Schroeder et al. (2014) <https://doi.org/10.1016/j.rse.2013.12.008>`_
+
+         .. grid-item-card:: WildfireGPT
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A benchmark-facing multi-agent wildfire reasoning model inspired by WildfireGPT.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`LLM / MLLM` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`WildfireGPT <modules/models_wildfiregpt>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Repo:** `Repository <https://github.com/project-araia/WildfireGPT>`__
+
+
+.. grid-item-card:: Logistic Regression
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A classical binary wildfire occurrence baseline over tabular features.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`Logistic Regression <modules/models_logistic_regression>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: Random Forest
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A random-forest wildfire occurrence baseline over tabular features.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`Random Forest <modules/models_random_forest>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: XGBoost
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A boosted-tree wildfire occurrence baseline using a binary logistic objective.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`XGBoost <modules/models_xgboost>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: LightGBM
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A boosted-tree wildfire occurrence baseline using LightGBM binary classification.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`LightGBM <modules/models_lightgbm>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: U-Net
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A compact dense-prediction wildfire baseline built on a U-Net style encoder-decoder.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`U-Net <modules/models_unet>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: ResNet-18 U-Net
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A residual encoder-decoder wildfire segmentation baseline.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`ResNet-18 U-Net <modules/models_resnet18_unet>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: Attention U-Net
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      An attention-gated U-Net wildfire segmentation baseline.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`Attention U-Net <modules/models_attention_unet>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: DeepLabv3+
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A DeepLab-style wildfire segmentation baseline with ASPP-like context aggregation.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`DeepLabv3+ <modules/models_deeplabv3p>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: ConvLSTM
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A recurrent spatio-temporal wildfire prediction baseline over raster sequences.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Spatiotemporal` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`ConvLSTM <modules/models_convlstm>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: MAU
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A compact memory-augmented recurrent wildfire prediction baseline.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Spatiotemporal` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`MAU <modules/models_mau>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: PredRNN-v2
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A predictive recurrent wildfire raster baseline.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Spatiotemporal` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`PredRNN-v2 <modules/models_predrnn_v2>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: Rainformer
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A transformer-style spatio-temporal wildfire raster baseline.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Spatiotemporal` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`Rainformer <modules/models_rainformer>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: Earthformer
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A compact Earthformer-style wildfire forecasting baseline.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Spatiotemporal` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`Earthformer <modules/models_earthformer>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: SwinLSTM
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A windowed-attention recurrent wildfire raster baseline.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Spatiotemporal` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`SwinLSTM <modules/models_swinlstm>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: EarthFarseer
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A compact EarthFarseer-style wildfire forecasting baseline.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Spatiotemporal` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`EarthFarseer <modules/models_earthfarseer>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: ConvGRU / TrajGRU
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A recurrent wildfire baseline mixing ConvGRU and TrajGRU-style dynamics.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Spatiotemporal` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`ConvGRU / TrajGRU <modules/models_convgru_trajgru>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: TCN
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A temporal convolution wildfire baseline over short raster histories.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Spatiotemporal` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`TCN <modules/models_tcn>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: UTAE
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A temporal attention encoder wildfire baseline.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Spatiotemporal` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`UTAE <modules/models_utae>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: SegFormer
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A transformer-based dense wildfire prediction baseline.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Transformer` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`SegFormer <modules/models_segformer>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: Swin-UNet
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A Swin-style encoder-decoder wildfire segmentation baseline.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Transformer` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`Swin-UNet <modules/models_swin_unet>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: ViT Segmenter
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      A ViT-style dense wildfire segmentation baseline.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Transformer` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`ViT Segmenter <modules/models_vit_segmenter>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
+
+.. grid-item-card:: Deep Ensemble
+   :class-card: catalog-entry-card
+
+   .. container:: catalog-entry-summary
+
+      An ensemble wildfire segmentation baseline that averages multiple member networks.
+
+   .. container:: catalog-chip-row
+
+      :bdg-primary:`Wildfire` :bdg-secondary:`Uncertainty` :bdg-success:`Implemented`
+
+   .. container:: catalog-meta-row
+
+      **Details:** :doc:`Deep Ensemble <modules/models_deep_ensemble>`
+
+   .. container:: catalog-meta-row
+
+      **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+   .. container:: catalog-link-row
+
+      **Source:** Promoted Track-O baseline implementation.
 
 
    .. tab-item:: Earthquake
@@ -927,6 +1710,40 @@ before selecting a model for evaluation.
    modules/models_eqnet
    modules/models_eqtransformer
    modules/models_firecastnet
+   modules/models_logistic_regression
+   modules/models_random_forest
+   modules/models_xgboost
+   modules/models_lightgbm
+   modules/models_unet
+   modules/models_resnet18_unet
+   modules/models_attention_unet
+   modules/models_deeplabv3p
+   modules/models_convlstm
+   modules/models_mau
+   modules/models_predrnn_v2
+   modules/models_rainformer
+   modules/models_earthformer
+   modules/models_swinlstm
+   modules/models_earthfarseer
+   modules/models_convgru_trajgru
+   modules/models_tcn
+   modules/models_utae
+   modules/models_segformer
+   modules/models_swin_unet
+   modules/models_vit_segmenter
+   modules/models_deep_ensemble
+   modules/models_firemm_ir
+   modules/models_firepred
+   modules/models_gemini_25_pro_wildfire_prompted
+   modules/models_internvl3_wildfire_prompted
+   modules/models_llama4_wildfire_prompted
+   modules/models_modis_active_fire_c61
+   modules/models_prithvi_burnscars
+   modules/models_prithvi_eo_2_tl
+   modules/models_prithvi_wxc
+   modules/models_qwen25_vl_wildfire_prompted
+   modules/models_ts_satfire
+   modules/models_viirs_375m_active_fire
    modules/models_floodcast
    modules/models_forefire
    modules/models_fourcastnet_tc
@@ -946,7 +1763,7 @@ before selecting a model for evaluation.
    modules/models_urbanfloodcast
    modules/models_wavecastnet
    modules/models_wildfire_aspp
-   modules/models_wildfire_forecasting
+   modules/models_wildfiregpt
    modules/models_wildfire_fpa
    modules/models_wildfirespreadts
    modules/models_wrf_sfire

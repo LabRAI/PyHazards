@@ -1,0 +1,86 @@
+{
+  "benchmark_name": "WildfireBench",
+  "contract_version": "track_o_2024_real_v1",
+  "mode": "real_data_v1",
+  "task": "Track-O",
+  "description": "Unified real-data wildfire occurrence benchmark protocol for 2024 using FIRMS labels, Prithvi-WxC weather predictions, and LANDFIRE static fuels.",
+  "data": {
+    "year": 2024,
+    "label_source": "/home/runyang/ryang/firms/combine",
+    "dynamic_feature_sources": [
+      "/home/runyang/output2024"
+    ],
+    "static_feature_sources": [
+      "/home/runyang/ryang/landfire_fbfm40"
+    ],
+    "optional_feature_sources": [
+      "/home/runyang/ryang/WFIGS_Perimeters/history_2024",
+      "/home/runyang/ryang/WRC_Housing_Density",
+      "/home/runyang/ryang/LandScan_Global_2024"
+    ],
+    "index_unit": "county_day",
+    "split": {
+      "train": ["2024-01-01", "2024-09-30"],
+      "val": ["2024-10-01", "2024-10-31"],
+      "test": ["2024-11-01", "2024-12-31"]
+    },
+    "leakage_control": {
+      "fit_statistics_on_train_only": true,
+      "no_future_covariates": true,
+      "fixed_split_files_required_for_real_runs": true
+    }
+  },
+  "shared_training": {
+    "dry_run_seed_list": [42],
+    "final_seed_list": [42, 52, 62, 72, 82],
+    "optimizer_default": "AdamW",
+    "learning_rate_default": 0.001,
+    "weight_decay_default": 0.0001,
+    "class_imbalance": {
+      "policy": "pos_weight_neg_over_pos",
+      "clip_max": 50.0
+    },
+    "early_stopping": {
+      "enabled": true,
+      "monitor": "val_auprc",
+      "patience": 20,
+      "min_delta": 0.0001
+    },
+    "convergence_rule": {
+      "monitor": "val_loss",
+      "smoothing_window": 5,
+      "patience": 20,
+      "min_improvement": 0.0001
+    },
+    "report_requirements": {
+      "report_mean_std_across_seeds": true,
+      "must_include_train_curve": true,
+      "must_include_val_curve": true,
+      "must_log_best_step": true,
+      "must_log_converged_step": true,
+      "must_log_device": true,
+      "must_log_gpu_assignment": true
+    }
+  },
+  "metrics": {
+    "primary": ["auprc"],
+    "secondary": ["auroc"],
+    "reliability": ["brier", "nll", "ece"],
+    "temporal_consistency": ["mean_day_to_day_change", "normalized_consistency_score"]
+  },
+  "output_schema": {
+    "root": "/home/runyang/my-copy/runs/wildfire_benchmark/real/track_o_2024_real_v1",
+    "per_seed_files": [
+      "experiment_setting.json",
+      "history.csv",
+      "loss_curve.png",
+      "metrics.json"
+    ],
+    "per_model_files": [
+      "model_summary.json"
+    ],
+    "benchmark_files": [
+      "benchmark_summary.json"
+    ]
+  }
+}

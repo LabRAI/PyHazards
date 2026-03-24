@@ -3,6 +3,12 @@ from __future__ import annotations
 import torch
 
 from ..base import DataBundle, DataSplit, Dataset, FeatureSpec, LabelSpec
+from .real_track_o_2024 import (
+    TrackOSplitConfig,
+    WildfireTrackO2024RasterDataset,
+    WildfireTrackO2024TabularDataset,
+    WildfireTrackO2024TemporalDataset,
+)
 
 
 class SyntheticWildfireSpreadDataset(Dataset):
@@ -144,4 +150,11 @@ class SyntheticWildfireSpreadTemporalDataset(Dataset):
         )
 
 
-__all__ = ["SyntheticWildfireSpreadDataset", "SyntheticWildfireSpreadTemporalDataset"]
+__all__ = [
+    "SyntheticWildfireSpreadDataset",
+    "SyntheticWildfireSpreadTemporalDataset",
+    "TrackOSplitConfig",
+    "WildfireTrackO2024RasterDataset",
+    "WildfireTrackO2024TabularDataset",
+    "WildfireTrackO2024TemporalDataset",
+]

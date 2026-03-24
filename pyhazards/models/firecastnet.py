@@ -5,7 +5,7 @@ import torch.nn as nn
 
 
 class FireCastNet(nn.Module):
-    """Compact encoder-decoder wildfire spread network."""
+    """Compact encoder-decoder wildfire forecasting network."""
 
     def __init__(
         self,

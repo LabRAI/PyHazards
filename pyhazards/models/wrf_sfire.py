@@ -6,7 +6,7 @@ import torch.nn.functional as F
 
 
 class WRFSFireAdapter(nn.Module):
-    """Lightweight raster adapter inspired by WRF-SFIRE style spread diffusion."""
+    """Lightweight raster adapter inspired by WRF-SFIRE spread transport."""
 
     def __init__(
         self,
@@ -21,8 +21,10 @@ class WRFSFireAdapter(nn.Module):
             raise ValueError(f"WRFSFireAdapter only supports out_channels=1, got {out_channels}")
         if diffusion_steps <= 0:
             raise ValueError(f"diffusion_steps must be positive, got {diffusion_steps}")
+
         self.in_channels = int(in_channels)
         self.diffusion_steps = int(diffusion_steps)
+
         kernel = torch.tensor(
             [[0.02, 0.08, 0.02], [0.08, 0.60, 0.08], [0.02, 0.08, 0.02]],
             dtype=torch.float32,
@@ -36,13 +38,22 @@ class WRFSFireAdapter(nn.Module):
                 f"got {tuple(x.shape)}."
             )
         if x.size(1) != self.in_channels:
-            raise ValueError(f"WRFSFireAdapter expected in_channels={self.in_channels}, got {x.size(1)}.")
+            raise ValueError(
+                f"WRFSFireAdapter expected in_channels={self.in_channels}, got {x.size(1)}."
+            )
+
+        # The first three channels act as fireline, terrain, and moisture proxies.
         fireline = torch.sigmoid(x[:, :1])
         terrain = torch.sigmoid(x[:, 1:2])
         moisture = torch.sigmoid(x[:, 2:3])
+
         for _ in range(self.diffusion_steps):
             fireline = F.conv2d(fireline, self.transport_kernel, padding=1)
-            fireline = torch.clamp(fireline * (0.9 + 0.1 * terrain) * (1.0 - 0.15 * moisture), 0.0, 1.0)
+            fireline = torch.clamp(
+                fireline * (0.9 + 0.1 * terrain) * (1.0 - 0.15 * moisture),
+                0.0,
+                1.0,
+            )
         return fireline
 
 

@@ -1,0 +1,295 @@
+[
+  {
+    "name": "logistic_regression",
+    "display_name": "Logistic Regression",
+    "group": "classical_trees",
+    "train_unit": "iteration",
+    "source_tier": "no_official_repo",
+    "priority": 100,
+    "defaults": {
+      "solver": "lbfgs",
+      "max_iter": 500,
+      "class_weight": "balanced"
+    }
+  },
+  {
+    "name": "random_forest",
+    "display_name": "Random Forest",
+    "group": "classical_trees",
+    "train_unit": "tree",
+    "source_tier": "no_official_repo",
+    "priority": 101,
+    "defaults": {
+      "n_estimators": 500,
+      "max_depth": null,
+      "class_weight": "balanced_subsample"
+    }
+  },
+  {
+    "name": "xgboost",
+    "display_name": "XGBoost",
+    "group": "classical_trees",
+    "train_unit": "round",
+    "source_tier": "official_repo",
+    "priority": 1,
+    "defaults": {
+      "max_depth": 8,
+      "eta": 0.05,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "num_boost_round": 800
+    }
+  },
+  {
+    "name": "lightgbm",
+    "display_name": "LightGBM",
+    "group": "classical_trees",
+    "train_unit": "round",
+    "source_tier": "official_repo",
+    "priority": 2,
+    "defaults": {
+      "num_leaves": 63,
+      "learning_rate": 0.05,
+      "feature_fraction": 0.8,
+      "bagging_fraction": 0.8,
+      "num_boost_round": 800
+    }
+  },
+  {
+    "name": "unet",
+    "display_name": "U-Net",
+    "group": "segmentation_cnns",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 3,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.001,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "resnet18_unet",
+    "display_name": "ResNet-18 U-Net",
+    "group": "segmentation_cnns",
+    "train_unit": "epoch",
+    "source_tier": "no_official_repo",
+    "priority": 102,
+    "defaults": {
+      "backbone": "resnet18",
+      "optimizer": "AdamW",
+      "lr": 0.001,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "attention_unet",
+    "display_name": "Attention U-Net",
+    "group": "segmentation_cnns",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 4,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.001,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "deeplabv3p",
+    "display_name": "DeepLabv3+",
+    "group": "segmentation_cnns",
+    "train_unit": "epoch",
+    "source_tier": "paper_only",
+    "priority": 80,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0003,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "convlstm",
+    "display_name": "ConvLSTM",
+    "group": "spatiotemporal",
+    "train_unit": "epoch",
+    "source_tier": "no_official_repo",
+    "priority": 103,
+    "defaults": {
+      "optimizer": "Adam",
+      "lr": 0.001,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "mau",
+    "display_name": "MAU",
+    "group": "spatiotemporal",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 5,
+    "defaults": {
+      "optimizer": "Adam",
+      "lr": 0.0005,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "predrnn_v2",
+    "display_name": "PredRNN-v2",
+    "group": "spatiotemporal",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 6,
+    "defaults": {
+      "optimizer": "Adam",
+      "lr": 0.0005,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "rainformer",
+    "display_name": "Rainformer",
+    "group": "spatiotemporal",
+    "train_unit": "epoch",
+    "source_tier": "no_official_repo",
+    "priority": 104,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "earthformer",
+    "display_name": "Earthformer",
+    "group": "spatiotemporal",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 7,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "swinlstm",
+    "display_name": "SwinLSTM",
+    "group": "spatiotemporal",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 8,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "earthfarseer",
+    "display_name": "EarthFarseer",
+    "group": "spatiotemporal",
+    "train_unit": "epoch",
+    "source_tier": "paper_only",
+    "priority": 81,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "convgru_trajgru",
+    "display_name": "ConvGRU / TrajGRU",
+    "group": "spatiotemporal",
+    "train_unit": "epoch",
+    "source_tier": "no_official_repo",
+    "priority": 105,
+    "defaults": {
+      "optimizer": "Adam",
+      "lr": 0.001,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "tcn",
+    "display_name": "TCN",
+    "group": "spatiotemporal",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 9,
+    "defaults": {
+      "optimizer": "Adam",
+      "lr": 0.001,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "utae",
+    "display_name": "UTAE",
+    "group": "spatiotemporal",
+    "train_unit": "epoch",
+    "source_tier": "paper_only",
+    "priority": 82,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0003,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "segformer",
+    "display_name": "SegFormer",
+    "group": "transformers",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 10,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "swin_unet",
+    "display_name": "Swin-Unet",
+    "group": "transformers",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 11,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "vit_segmenter",
+    "display_name": "ViT-based Segmenter",
+    "group": "transformers",
+    "train_unit": "epoch",
+    "source_tier": "official_repo",
+    "priority": 12,
+    "defaults": {
+      "optimizer": "AdamW",
+      "lr": 0.0002,
+      "max_epochs": 120
+    }
+  },
+  {
+    "name": "deep_ensemble",
+    "display_name": "Deep Ensemble",
+    "group": "uncertainty",
+    "train_unit": "epoch",
+    "source_tier": "no_official_repo",
+    "priority": 106,
+    "defaults": {
+      "base_model": "tcn",
+      "ensemble_size": 5,
+      "optimizer": "AdamW",
+      "lr": 0.001,
+      "max_epochs": 120
+    }
+  }
+]

@@ -1,0 +1,82 @@
+{
+  "benchmark_name": "WildfireBench",
+  "contract_version": "track_o_2024_v1",
+  "mode": "scaffold_no_data",
+  "task": "Track-O",
+  "description": "Unified county-day wildfire occurrence benchmark protocol for 2024 only.",
+  "data": {
+    "year": 2024,
+    "label_source": "/home/runyang/ryang/firms_download/combine",
+    "dynamic_feature_sources": [
+      "/home/runyang/output2024"
+    ],
+    "static_feature_sources": [
+      "/home/runyang/ryang/landfire_fbfm40"
+    ],
+    "external_optional_sources": [
+      "geo",
+      "vegetation",
+      "flood"
+    ],
+    "index_unit": "county_day",
+    "split": {
+      "train": ["2024-01-01", "2024-09-30"],
+      "val": ["2024-10-01", "2024-10-31"],
+      "test": ["2024-11-01", "2024-12-31"]
+    },
+    "leakage_control": {
+      "fit_statistics_on_train_only": true,
+      "no_future_covariates": true,
+      "fixed_split_files_required_for_real_runs": true
+    }
+  },
+  "shared_training": {
+    "seed_list": [42, 52, 62, 72, 82],
+    "optimizer_default": "AdamW",
+    "learning_rate_default": 0.001,
+    "weight_decay_default": 0.0001,
+    "class_imbalance": {
+      "policy": "pos_weight_neg_over_pos",
+      "clip_max": 50.0
+    },
+    "early_stopping": {
+      "enabled": true,
+      "monitor": "val_auprc",
+      "patience": 10,
+      "min_delta": 0.0005
+    },
+    "convergence_rule": {
+      "monitor": "val_loss",
+      "smoothing_window": 5,
+      "patience": 5,
+      "min_improvement": 0.001
+    },
+    "report_requirements": {
+      "report_mean_std_across_seeds": true,
+      "must_include_train_curve": true,
+      "must_include_val_curve": true,
+      "must_log_best_step": true,
+      "must_log_converged_step": true
+    }
+  },
+  "metrics": {
+    "primary": ["auprc"],
+    "secondary": ["auroc"],
+    "reliability": ["brier", "nll", "ece"],
+    "temporal_consistency": ["mean_day_to_day_change", "normalized_consistency_score"]
+  },
+  "output_schema": {
+    "per_seed_files": [
+      "experiment_setting.json",
+      "history.csv",
+      "loss_curve.png",
+      "metrics.json"
+    ],
+    "per_model_files": [
+      "model_summary.json"
+    ],
+    "benchmark_files": [
+      "benchmark_summary.json"
+    ]
+  }
+}

@@ -37,7 +37,6 @@ smoke_configs:
   - pyhazards/configs/wildfire/firecastnet_smoke.yaml
 linked_models:
   - wildfire_fpa
-  - wildfire_forecasting
   - asufm
   - wildfire_aspp
   - wildfirespreadts
@@ -46,3 +45,5 @@ linked_models:
   - firecastnet
 notes:
   - "WildfireSpreadTS is the public Appendix-A benchmark ecosystem surfaced on this page."
+  - "Run artifacts are organized under runs/wildfire_benchmark/{smoke,real,archive}."
+  - "The canonical experiment-setting schema lives in pyhazards/benchmarks/wildfire_benchmark/experiment_settings.py."
