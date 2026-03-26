@@ -5,11 +5,11 @@ hazard_family: Wildfire
 benchmark_key: wildfire
 support_status: synthetic-backed
 summary: >
-  Shared PyHazards evaluator family for wildfire danger and wildfire spread experiments.
+  Shared PyHazards evaluator family for wildfire occurrence, risk, and spread experiments.
 description:
   - >
-    The wildfire benchmark family is the single scoring layer for tabular danger tasks,
-    weekly forecasting tasks, and raster spread tasks.
+    The wildfire benchmark family is the single scoring layer for tabular occurrence tasks,
+    risk forecasting baselines, and raster spread tasks.
   - >
     Current coverage is synthetic-backed, but it already exposes a single hazard-level
     evaluator contract across wildfire danger and wildfire spread smoke configs.
@@ -28,7 +28,6 @@ metrics:
   - burned_area_mae
 smoke_configs:
   - pyhazards/configs/wildfire/wildfire_danger_smoke.yaml
-  - pyhazards/configs/wildfire/wildfire_forecasting_smoke.yaml
   - pyhazards/configs/wildfire/asufm_smoke.yaml
   - pyhazards/configs/wildfire/wildfire_spread_smoke.yaml
   - pyhazards/configs/wildfire/wildfirespreadts_smoke.yaml
@@ -36,13 +35,36 @@ smoke_configs:
   - pyhazards/configs/wildfire/wrf_sfire_smoke.yaml
   - pyhazards/configs/wildfire/firecastnet_smoke.yaml
 linked_models:
-  - wildfire_fpa
-  - wildfire_forecasting
+  - logistic_regression
+  - random_forest
+  - xgboost
+  - lightgbm
+  - unet
+  - resnet18_unet
+  - attention_unet
+  - deeplabv3p
+  - convlstm
+  - mau
+  - predrnn_v2
+  - rainformer
+  - earthformer
+  - swinlstm
+  - earthfarseer
+  - convgru_trajgru
+  - tcn
+  - utae
+  - segformer
+  - swin_unet
+  - vit_segmenter
+  - deep_ensemble
   - asufm
   - wildfire_aspp
+  - firecastnet
+  - firepred
   - wildfirespreadts
+  - ts_satfire
+  - wildfire_fpa
   - forefire
   - wrf_sfire
-  - firecastnet
 notes:
   - "WildfireSpreadTS is the public Appendix-A benchmark ecosystem surfaced on this page."

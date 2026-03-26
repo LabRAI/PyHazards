@@ -1,0 +1,40 @@
+model_name: segformer
+display_name: SegFormer
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/segformer.py
+builder_name: segformer_builder
+summary: >
+  A compact SegFormer-style wildfire sequence segmenter.
+description:
+  - >
+    ``segformer`` is a transformer-style sequence-to-map wildfire baseline over short raster histories.
+  - >
+    PyHazards keeps it public as a modern dense-prediction alternative to recurrent wildfire models.
+paper:
+  title: "WildfireSpreadTS+: A Multi-Modal Dataset for Wildfire Spread Prediction with History Context"
+  url: https://arxiv.org/abs/2502.12003
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="segformer", task="segmentation", history=4, in_channels=8)
+  logits = model(torch.randn(2, 4, 8, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke path uses a short wildfire raster history and returns a one-channel prediction map."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    history: 4
+    in_channels: 8
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 4, 8, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

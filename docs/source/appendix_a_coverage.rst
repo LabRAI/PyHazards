@@ -34,7 +34,7 @@ Hazard Summary
      - 0
      - 0
    * - Wildfire
-     - 6
+     - 5
      - 0
      - 0
    * - Flood
@@ -108,12 +108,6 @@ Method and Resource Matrix
      - ``Implemented``
      - None
      - A synthetic-backed AEFA-style forecasting dataset adapter is registered.
-   * - Wildfire
-     - `wildfire_forecasting <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_
-     - Baseline
-     - ``Implemented``
-     - :doc:`Wildfire Forecasting <modules/models_wildfire_forecasting>`
-     -  
    * - Wildfire
      - `WildfireSpreadTS <https://github.com/SebastianGer/WildfireSpreadTS>`_
      - Baseline / Benchmark

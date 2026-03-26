@@ -43,7 +43,6 @@ APPENDIX_A_ENTRIES: List[AppendixAEntry] = [
     AppendixAEntry("Earthquake", "pick-benchmark", "Benchmark", "https://github.com/seisbench/pick-benchmark", "core", notes="A synthetic-backed pick-benchmark-compatible waveform adapter is registered for smoke benchmarking."),
     AppendixAEntry("Earthquake", "pyCSEP", "Benchmark / Reports", "https://github.com/SCECCode/pycsep", "core", notes="The forecasting smoke benchmark exports a pyCSEP-style JSON artifact."),
     AppendixAEntry("Earthquake", "AEFA", "Dataset / Forecast Benchmark", "https://github.com/chenyk1990/aefa", "core", notes="A synthetic-backed AEFA-style forecasting dataset adapter is registered."),
-    AppendixAEntry("Wildfire", "wildfire_forecasting", "Baseline", "https://github.com/Orion-AI-Lab/wildfire_forecasting", "core", ("wildfire_forecasting",)),
     AppendixAEntry("Wildfire", "WildfireSpreadTS", "Baseline / Benchmark", "https://github.com/SebastianGer/WildfireSpreadTS", "core", ("wildfirespreadts",)),
     AppendixAEntry("Wildfire", "ASUFM", "Baseline", "https://github.com/bronteee/fire-asufm", "core", ("asufm",)),
     AppendixAEntry("Wildfire", "WRF-SFIRE", "Simulator Adapter", "https://github.com/openwfm/WRF-SFIRE", "core", ("wrf_sfire",), "The current adapter is lightweight and synthetic-backed rather than a full external simulator binding."),

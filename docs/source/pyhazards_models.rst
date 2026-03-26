@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         24
+         47
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         27
+         50
 
       .. container:: catalog-stat-note
 
@@ -72,7 +72,7 @@ pages and compatible benchmark coverage.
 
       .. container:: catalog-section-note
 
-         Wildfire models cover danger forecasting, weekly activity forecasting, and spread prediction under the shared wildfire benchmark family.
+         Wildfire models cover tabular occurrence baselines, raster spread predictors, and spatio-temporal forecasting variants under the shared wildfire benchmark family.
 
       .. rubric:: Implemented Models
 
@@ -107,6 +107,141 @@ pages and compatible benchmark coverage.
 
                **Paper:** `Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer <https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278>`_ | **Repo:** `Repository <https://github.com/bronteee/fire-asufm>`__
 
+         .. grid-item-card:: Attention U-Net
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               An attention-gated U-Net baseline for wildfire raster prediction.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Attention U-Net <modules/models_attention_unet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `TS-SatFire: A wildfire progression benchmark from temporally dense satellite sequences <https://doi.org/10.1038/s41597-025-06271-3>`_
+
+         .. grid-item-card:: ConvGRU-TrajGRU
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact ConvGRU-style wildfire sequence baseline over raster histories.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`ConvGRU-TrajGRU <modules/models_convgru_trajgru>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction <https://doi.org/10.1038/s41598-025-30645-7>`_
+
+         .. grid-item-card:: ConvLSTM
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact ConvLSTM baseline for wildfire spread prediction from raster histories.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`ConvLSTM <modules/models_convlstm>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_
+
+         .. grid-item-card:: Deep Ensemble
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               An uncertainty-aware ensemble of compact wildfire segmentation members.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Deep Ensemble <modules/models_deep_ensemble>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles <https://proceedings.neurips.cc/paper/2017/hash/9ef2ed4b7fd2c810847ffa85bce38c92-Abstract.html>`_
+
+         .. grid-item-card:: DeepLabV3+
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact DeepLabV3+-style baseline for wildfire raster prediction.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`DeepLabV3+ <modules/models_deeplabv3p>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Wildfire spreading prediction using multimodal data and deep neural network approach <https://doi.org/10.1038/s41598-024-52821-x>`_
+
          .. grid-item-card:: DNN-LSTM-AutoEncoder
             :class-card: catalog-entry-card
 
@@ -129,6 +264,60 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_
+
+         .. grid-item-card:: EarthFarseer
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact EarthFarseer-style wildfire sequence baseline over raster histories.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`EarthFarseer <modules/models_earthfarseer>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Sim2Real-Fire: A Multi-Modal Simulation Dataset for Forecast and Backtracking of Real-World Forest Fire <https://openreview.net/forum?id=H1x4DwwRzC>`_
+
+         .. grid-item-card:: EarthFormer
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact EarthFormer-style wildfire sequence baseline over raster histories.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`EarthFormer <modules/models_earthformer>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Sim2Real-Fire: A Multi-Modal Simulation Dataset for Forecast and Backtracking of Real-World Forest Fire <https://openreview.net/forum?id=H1x4DwwRzC>`_
 
          .. grid-item-card:: FireCastNet
             :class-card: catalog-entry-card
@@ -157,6 +346,33 @@ pages and compatible benchmark coverage.
 
                **Paper:** `FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction <https://doi.org/10.1038/s41598-025-30645-7>`_ | **Repo:** `Repository <https://github.com/SeasFire/firecastnet>`__
 
+         .. grid-item-card:: FirePred
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A hybrid multi-temporal CNN wildfire predictor inspired by FirePred.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`FirePred <modules/models_firepred>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `FirePred: A hybrid multi-temporal convolutional network for wildfire spread prediction <https://doi.org/10.1016/j.ecoinf.2023.102282>`_
+
          .. grid-item-card:: ForeFire Adapter
             :class-card: catalog-entry-card
 
@@ -184,20 +400,20 @@ pages and compatible benchmark coverage.
 
                **Paper:** `ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread <https://doi.org/10.21105/joss.08680>`_ | **Repo:** `Repository <https://github.com/forefireAPI/forefire>`__
 
-         .. grid-item-card:: Wildfire Forecasting
+         .. grid-item-card:: LightGBM
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A sequence forecasting baseline for next-window wildfire activity across weekly count features.
+               A LightGBM wildfire occurrence baseline for fast tabular classification experiments.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
-               **Details:** :doc:`Wildfire Forecasting <modules/models_wildfire_forecasting>`
+               **Details:** :doc:`LightGBM <modules/models_lightgbm>`
 
             .. container:: catalog-meta-row
 
@@ -205,7 +421,377 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-link-row
 
-               **Paper:** `Wildfire Danger Prediction and Understanding with Deep Learning <https://doi.org/10.1029/2022GL099368>`_ | **Repo:** `Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__
+               **Paper:** `LightGBM: A Highly Efficient Gradient Boosting Decision Tree <https://proceedings.neurips.cc/paper_files/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html>`_
+
+         .. grid-item-card:: Logistic Regression
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A classical logistic-regression baseline for wildfire occurrence probability from tabular covariates.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Logistic Regression <modules/models_logistic_regression>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Next Day Wildfire Spread: A Machine Learning Dataset to Predict Wildfire Spreading From Remote-Sensing Data <https://doi.org/10.1109/TGRS.2022.3192974>`_
+
+         .. grid-item-card:: MAU
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact MAU-style spatio-temporal wildfire baseline over raster histories.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`MAU <modules/models_mau>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Sim2Real-Fire: A Multi-Modal Simulation Dataset for Forecast and Backtracking of Real-World Forest Fire <https://openreview.net/forum?id=H1x4DwwRzC>`_
+
+         .. grid-item-card:: PredRNN-v2
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact PredRNN-v2-style wildfire baseline over raster history windows.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`PredRNN-v2 <modules/models_predrnn_v2>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Sim2Real-Fire: A Multi-Modal Simulation Dataset for Forecast and Backtracking of Real-World Forest Fire <https://openreview.net/forum?id=H1x4DwwRzC>`_
+
+         .. grid-item-card:: Rainformer
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact Rainformer-style wildfire sequence baseline over raster histories.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Rainformer <modules/models_rainformer>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Sim2Real-Fire: A Multi-Modal Simulation Dataset for Forecast and Backtracking of Real-World Forest Fire <https://openreview.net/forum?id=H1x4DwwRzC>`_
+
+         .. grid-item-card:: Random Forest
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A random-forest wildfire occurrence baseline over tabular predictors.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Random Forest <modules/models_random_forest>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `WildfireDB: An Open-Source Dataset Connecting Wildfire Occurrence with Relevant Determinants <https://datasets-benchmarks-proceedings.neurips.cc/paper_files/paper/2021/hash/3fe94a002317b5f9259f82690aeea4cd-Abstract-round2.html>`_
+
+         .. grid-item-card:: ResNet18 U-Net
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A residual U-Net wildfire baseline for raster spread prediction.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`ResNet18 U-Net <modules/models_resnet18_unet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_
+
+         .. grid-item-card:: SegFormer
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact SegFormer-style wildfire sequence segmenter.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`SegFormer <modules/models_segformer>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `WildfireSpreadTS+: A Multi-Modal Dataset for Wildfire Spread Prediction with History Context <https://arxiv.org/abs/2502.12003>`_
+
+         .. grid-item-card:: Swin-Unet
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact Swin-Unet wildfire sequence segmenter.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Swin-Unet <modules/models_swin_unet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `WildfireSpreadTS+: A Multi-Modal Dataset for Wildfire Spread Prediction with History Context <https://arxiv.org/abs/2502.12003>`_
+
+         .. grid-item-card:: SwinLSTM
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact SwinLSTM-style wildfire sequence baseline over raster histories.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`SwinLSTM <modules/models_swinlstm>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Sim2Real-Fire: A Multi-Modal Simulation Dataset for Forecast and Backtracking of Real-World Forest Fire <https://openreview.net/forum?id=H1x4DwwRzC>`_
+
+         .. grid-item-card:: TCN
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact temporal-convolution wildfire baseline over raster histories.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`TCN <modules/models_tcn>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling <https://arxiv.org/abs/1803.01271>`_
+
+         .. grid-item-card:: TS-SatFire
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A spatio-temporal wildfire predictor inspired by TS-SatFire.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`TS-SatFire <modules/models_ts_satfire>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `TS-SatFire: A Benchmark Dataset and Deep Learning Models for Forest Fire Progression Prediction <https://doi.org/10.1038/s41597-025-06271-3>`_
+
+         .. grid-item-card:: U-Net
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact U-Net baseline for wildfire raster prediction.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`U-Net <modules/models_unet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_
+
+         .. grid-item-card:: U-TAE
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact U-TAE wildfire baseline over raster history windows.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`U-TAE <modules/models_utae>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_
+
+         .. grid-item-card:: ViT Segmenter
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A compact ViT-style wildfire sequence segmenter over raster histories.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`ViT Segmenter <modules/models_vit_segmenter>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `TS-SatFire: A wildfire progression benchmark from temporally dense satellite sequences <https://doi.org/10.1038/s41597-025-06271-3>`_
 
          .. grid-item-card:: WildfireSpreadTS
             :class-card: catalog-entry-card
@@ -260,6 +846,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011 <https://doi.org/10.5194/gmd-4-591-2011>`_ | **Repo:** `Repository <https://github.com/openwfm/WRF-SFIRE>`__
+
+         .. grid-item-card:: XGBoost
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A boosted-tree wildfire occurrence baseline with a binary logistic objective.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`XGBoost <modules/models_xgboost>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Wildfire Danger Prediction and Understanding With Deep Learning <https://doi.org/10.1029/2022GL099368>`_
 
          .. grid-item-card:: CNN-ASPP
             :class-card: catalog-entry-card
@@ -924,9 +1533,17 @@ before selecting a model for evaluation.
    :hidden:
 
    modules/models_asufm
+   modules/models_attention_unet
+   modules/models_convgru_trajgru
+   modules/models_convlstm
+   modules/models_deep_ensemble
+   modules/models_deeplabv3p
+   modules/models_earthfarseer
+   modules/models_earthformer
    modules/models_eqnet
    modules/models_eqtransformer
    modules/models_firecastnet
+   modules/models_firepred
    modules/models_floodcast
    modules/models_forefire
    modules/models_fourcastnet_tc
@@ -935,18 +1552,33 @@ before selecting a model for evaluation.
    modules/models_graphcast_tc
    modules/models_hurricast
    modules/models_hydrographnet
+   modules/models_lightgbm
+   modules/models_logistic_regression
+   modules/models_mau
    modules/models_neuralhydrology_ealstm
    modules/models_neuralhydrology_lstm
    modules/models_pangu_tc
    modules/models_phasenet
+   modules/models_predrnn_v2
+   modules/models_rainformer
+   modules/models_random_forest
+   modules/models_resnet18_unet
    modules/models_saf_net
+   modules/models_segformer
+   modules/models_swin_unet
+   modules/models_swinlstm
    modules/models_tcif_fusion
+   modules/models_tcn
    modules/models_tropicalcyclone_mlp
    modules/models_tropicyclonenet
+   modules/models_ts_satfire
+   modules/models_unet
    modules/models_urbanfloodcast
+   modules/models_utae
+   modules/models_vit_segmenter
    modules/models_wavecastnet
    modules/models_wildfire_aspp
-   modules/models_wildfire_forecasting
    modules/models_wildfire_fpa
    modules/models_wildfirespreadts
    modules/models_wrf_sfire
+   modules/models_xgboost

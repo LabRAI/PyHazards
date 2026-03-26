@@ -5,7 +5,30 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Literal, Optional, Sequence, Set
 
 import yaml
-from pydantic import BaseModel, Field, model_validator
+
+try:
+    from pydantic import BaseModel, Field, model_validator
+
+    def _after_model_validator(func):
+        return model_validator(mode="after")(func)
+
+    def _model_validate(model_cls, raw):
+        return model_cls.model_validate(raw)
+
+except ImportError:
+    from pydantic import BaseModel, Field, root_validator
+
+    def _after_model_validator(func):
+        @root_validator(skip_on_failure=True, allow_reuse=True)
+        def _wrapped(cls, values):
+            instance = cls.construct(**values)
+            func(instance)
+            return values
+
+        return _wrapped
+
+    def _model_validate(model_cls, raw):
+        return model_cls.parse_obj(raw)
 
 from .benchmarks import available_benchmarks, build_benchmark
 from .configs import load_experiment_config
@@ -97,7 +120,7 @@ class BenchmarkCard(BaseModel):
     notes: List[str] = Field(default_factory=list)
     source: Optional[BenchmarkSource] = None
 
-    @model_validator(mode="after")
+    @_after_model_validator
     def validate_card(self) -> "BenchmarkCard":
         if self.kind == "ecosystem" and self.source is None:
             raise ValueError("ecosystem benchmark cards require a source block")
@@ -117,7 +140,7 @@ def load_benchmark_cards(cards_dir: Path = BENCHMARK_CARDS_DIR) -> List[Benchmar
     seen_slugs: Set[str] = set()
     for path in sorted(cards_dir.glob("*.y*ml")):
         raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-        card = BenchmarkCard.model_validate(raw)
+        card = _model_validate(BenchmarkCard, raw)
         if path.stem != card.slug:
             raise ValueError(
                 "Benchmark card filename must match slug: "

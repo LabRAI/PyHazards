@@ -6,7 +6,47 @@ from shlex import split as shlex_split
 from typing import Dict, Iterable, List, Optional, Sequence, Set
 
 import yaml
-from pydantic import AliasChoices, BaseModel, Field, model_validator
+
+try:
+    from pydantic import AliasChoices, BaseModel, Field, model_validator
+
+    def _field(*args, validation_alias=None, **kwargs):
+        if validation_alias is not None:
+            kwargs["validation_alias"] = validation_alias
+        return Field(*args, **kwargs)
+
+    def _after_model_validator(func):
+        return model_validator(mode="after")(func)
+
+    def _model_validate(model_cls, raw):
+        return model_cls.model_validate(raw)
+
+except ImportError:
+    from pydantic import BaseModel, Field, root_validator
+
+    class AliasChoices:
+        def __init__(self, *choices):
+            self.choices = choices
+
+    def _field(*args, validation_alias=None, **kwargs):
+        if validation_alias is not None and "alias" not in kwargs:
+            if isinstance(validation_alias, AliasChoices):
+                kwargs["alias"] = validation_alias.choices[0]
+            else:
+                kwargs["alias"] = validation_alias
+        return Field(*args, **kwargs)
+
+    def _after_model_validator(func):
+        @root_validator(skip_on_failure=True, allow_reuse=True)
+        def _wrapped(cls, values):
+            instance = cls.construct(**values)
+            func(instance)
+            return values
+
+        return _wrapped
+
+    def _model_validate(model_cls, raw):
+        return model_cls.parse_obj(raw)
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -111,7 +151,7 @@ class InspectionSpec(BaseModel):
     module: Optional[str] = None
     notes: List[str] = Field(default_factory=list)
 
-    @model_validator(mode="after")
+    @_after_model_validator
     def derive_module_from_command(self) -> "InspectionSpec":
         if self.module:
             return self
@@ -122,7 +162,7 @@ class InspectionSpec(BaseModel):
 
 
 class RegistrySpec(BaseModel):
-    name: str = Field(validation_alias=AliasChoices("name", "dataset_name"))
+    name: str = _field(validation_alias=AliasChoices("name", "dataset_name"))
     example: str
     notes: List[str] = Field(default_factory=list)
 
@@ -146,7 +186,7 @@ class DatasetCard(BaseModel):
     typical_use_cases: List[str] = Field(default_factory=list)
     access_links: List[DatasetLink] = Field(default_factory=list)
     inspection: Optional[InspectionSpec] = None
-    references: List[DatasetReference] = Field(
+    references: List[DatasetReference] = _field(
         default_factory=list,
         validation_alias=AliasChoices("references", "primary_references"),
     )
@@ -156,7 +196,7 @@ class DatasetCard(BaseModel):
     related_benchmarks: List[str] = Field(default_factory=list)
     notes: List[str] = Field(default_factory=list)
 
-    @model_validator(mode="after")
+    @_after_model_validator
     def validate_card(self) -> "DatasetCard":
         if not self.references:
             raise ValueError("dataset cards require at least one reference")
@@ -188,7 +228,12 @@ def load_dataset_cards(cards_dir: Path = DATASET_CARDS_DIR) -> List[DatasetCard]
     seen_slugs: Set[str] = set()
     for path in sorted(cards_dir.glob("*.y*ml")):
         raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-        card = DatasetCard.model_validate(raw)
+        if "primary_references" in raw and "references" not in raw:
+            raw["references"] = raw.pop("primary_references")
+        registry = raw.get("registry")
+        if isinstance(registry, dict) and "dataset_name" in registry and "name" not in registry:
+            registry["name"] = registry.pop("dataset_name")
+        card = _model_validate(DatasetCard, raw)
         if path.stem != card.slug:
             raise ValueError(
                 f"Dataset card filename must match slug: {path.name} vs {card.slug}"

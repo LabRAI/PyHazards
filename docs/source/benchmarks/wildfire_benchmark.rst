@@ -6,7 +6,7 @@ Wildfire Benchmark
 Overview
 --------
 
-The wildfire benchmark family is the single scoring layer for tabular danger tasks, weekly forecasting tasks, and raster spread tasks.
+The wildfire benchmark family is the single scoring layer for tabular occurrence tasks, risk forecasting baselines, and raster spread tasks.
 
 Current coverage is synthetic-backed, but it already exposes a single hazard-level evaluator contract across wildfire danger and wildfire spread smoke configs.
 
@@ -55,11 +55,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         8
+         31
 
       .. container:: catalog-stat-note
 
-         8 models
+         31 models
 
 
 Benchmark Mapping
@@ -97,7 +97,6 @@ Mapped benchmark ecosystems
    :class-container: catalog-dropdown
 
    - ``wildfire_danger_smoke.yaml``
-   - ``wildfire_forecasting_smoke.yaml``
    - ``asufm_smoke.yaml``
    - ``wildfire_spread_smoke.yaml``
    - ``wildfirespreadts_smoke.yaml``
@@ -108,7 +107,7 @@ Mapped benchmark ecosystems
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`ASUFM </modules/models_asufm>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS </modules/models_wildfirespreadts>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`FireCastNet </modules/models_firecastnet>`.
+   :doc:`Logistic Regression </modules/models_logistic_regression>`, :doc:`Random Forest </modules/models_random_forest>`, :doc:`XGBoost </modules/models_xgboost>`, :doc:`LightGBM </modules/models_lightgbm>`, :doc:`U-Net </modules/models_unet>`, :doc:`ResNet18 U-Net </modules/models_resnet18_unet>`, :doc:`Attention U-Net </modules/models_attention_unet>`, :doc:`DeepLabV3+ </modules/models_deeplabv3p>`, :doc:`ConvLSTM </modules/models_convlstm>`, :doc:`MAU </modules/models_mau>`, :doc:`PredRNN-v2 </modules/models_predrnn_v2>`, :doc:`Rainformer </modules/models_rainformer>`, :doc:`EarthFormer </modules/models_earthformer>`, :doc:`SwinLSTM </modules/models_swinlstm>`, :doc:`EarthFarseer </modules/models_earthfarseer>`, :doc:`ConvGRU-TrajGRU </modules/models_convgru_trajgru>`, :doc:`TCN </modules/models_tcn>`, :doc:`U-TAE </modules/models_utae>`, :doc:`SegFormer </modules/models_segformer>`, :doc:`Swin-Unet </modules/models_swin_unet>`, :doc:`ViT Segmenter </modules/models_vit_segmenter>`, :doc:`Deep Ensemble </modules/models_deep_ensemble>`, :doc:`ASUFM </modules/models_asufm>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`FireCastNet </modules/models_firecastnet>`, :doc:`FirePred </modules/models_firepred>`, :doc:`WildfireSpreadTS </modules/models_wildfirespreadts>`, :doc:`TS-SatFire </modules/models_ts_satfire>`, :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`.
 
 .. dropdown:: Notes
    :class-container: catalog-dropdown

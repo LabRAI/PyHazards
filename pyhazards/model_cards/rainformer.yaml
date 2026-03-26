@@ -1,0 +1,40 @@
+model_name: rainformer
+display_name: Rainformer
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/rainformer.py
+builder_name: rainformer_builder
+summary: >
+  A compact Rainformer-style wildfire sequence baseline over raster histories.
+description:
+  - >
+    ``rainformer`` adapts sequence-to-map transformer-style modeling to short wildfire raster histories.
+  - >
+    It stays lightweight so the PyHazards wildfire catalog can expose a modern temporal attention baseline without external dependencies.
+paper:
+  title: "Sim2Real-Fire: A Multi-Modal Simulation Dataset for Forecast and Backtracking of Real-World Forest Fire"
+  url: https://openreview.net/forum?id=H1x4DwwRzC
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="rainformer", task="segmentation", history=4, in_channels=8)
+  logits = model(torch.randn(2, 4, 8, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke path uses a short wildfire raster history and returns a one-channel prediction map."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    history: 4
+    in_channels: 8
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 4, 8, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

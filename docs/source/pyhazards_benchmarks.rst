@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         27
+         26
 
       .. container:: catalog-stat-note
 
@@ -74,7 +74,7 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-entry-summary
 
-         Shared PyHazards evaluator family for wildfire danger and wildfire spread experiments.
+         Shared PyHazards evaluator family for wildfire occurrence, risk, and spread experiments.
 
       .. container:: catalog-chip-row
 
@@ -90,7 +90,7 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-meta-row
 
-         **Coverage:** 8 smoke configs | 8 models | 1 ecosystem
+         **Coverage:** 7 smoke configs | 31 models | 1 ecosystem
 
       .. container:: catalog-link-row
 
@@ -200,7 +200,7 @@ status without opening the detail pages first.
      - :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
      - Danger, Spread
      - Accuracy, Macro F1, AUC, PR-AUC, +5 more
-     - 8 models
+     - 31 models
      - Synthetic-backed
    * - Earthquake
      - :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
@@ -264,7 +264,7 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Coverage:** 5 smoke configs | 5 models
+               **Coverage:** 5 smoke configs | 25 models
 
             .. container:: catalog-link-row
 

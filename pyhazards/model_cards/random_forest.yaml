@@ -1,0 +1,39 @@
+model_name: random_forest
+display_name: Random Forest
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/random_forest.py
+builder_name: random_forest_builder
+summary: >
+  A random-forest wildfire occurrence baseline over tabular predictors.
+description:
+  - >
+    ``random_forest`` is a classical ensemble baseline for wildfire occurrence and danger classification.
+  - >
+    It gives the wildfire catalog a non-neural tree baseline that remains easy to compare against the deep raster families.
+paper:
+  title: "WildfireDB: An Open-Source Dataset Connecting Wildfire Occurrence with Relevant Determinants"
+  url: https://datasets-benchmarks-proceedings.neurips.cc/paper_files/paper/2021/hash/3fe94a002317b5f9259f82690aeea4cd-Abstract-round2.html
+tasks:
+  - classification
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="random_forest", task="classification", n_estimators=64)
+  probs = model(torch.randn(4, 8))
+  print(probs.shape)
+notes:
+  - "The smoke path uses flattened wildfire covariates and returns two-class probabilities."
+smoke_test:
+  task: classification
+  build_kwargs:
+    n_estimators: 64
+    max_depth: 6
+  input:
+    kind: tensor
+    tensor:
+      shape: [4, 8]
+  expected_output:
+    kind: tensor
+    shape: [4, 2]

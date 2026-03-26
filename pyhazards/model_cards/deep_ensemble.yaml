@@ -1,0 +1,40 @@
+model_name: deep_ensemble
+display_name: Deep Ensemble
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/deep_ensemble.py
+builder_name: deep_ensemble_builder
+summary: >
+  An uncertainty-aware ensemble of compact wildfire segmentation members.
+description:
+  - >
+    ``deep_ensemble`` averages several compact wildfire raster predictors to provide a simple uncertainty-aware baseline.
+  - >
+    It is kept public so the wildfire catalog includes at least one ensemble-style dense predictor beside single-model baselines.
+paper:
+  title: "Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles"
+  url: https://proceedings.neurips.cc/paper/2017/hash/9ef2ed4b7fd2c810847ffa85bce38c92-Abstract.html
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="deep_ensemble", task="segmentation", in_channels=12, ensemble_size=3)
+  logits = model(torch.randn(2, 12, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke path averages several compact wildfire raster predictors into one output map."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 12
+    ensemble_size: 3
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 12, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

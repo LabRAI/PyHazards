@@ -1,0 +1,40 @@
+model_name: utae
+display_name: U-TAE
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/utae.py
+builder_name: utae_builder
+summary: >
+  A compact U-TAE wildfire baseline over raster history windows.
+description:
+  - >
+    ``utae`` is a sequence-to-map wildfire baseline that fuses short temporal windows before dense decoding.
+  - >
+    It stays aligned with the WildfireSpreadTS-style benchmark family used for temporal wildfire spread prediction.
+paper:
+  title: "WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction"
+  url: https://openreview.net/forum?id=RgdGkPRQ03
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="utae", task="segmentation", history=4, in_channels=8)
+  logits = model(torch.randn(2, 4, 8, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke path uses a short wildfire raster history and returns a one-channel prediction map."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    history: 4
+    in_channels: 8
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 4, 8, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

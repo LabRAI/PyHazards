@@ -55,11 +55,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         5
+         25
 
       .. container:: catalog-stat-note
 
-         5 models
+         25 models
 
 
 Benchmark Mapping
@@ -103,4 +103,4 @@ Primary Source
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS </modules/models_wildfirespreadts>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`FireCastNet </modules/models_firecastnet>`.
+   :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`U-Net </modules/models_unet>`, :doc:`ResNet18 U-Net </modules/models_resnet18_unet>`, :doc:`Attention U-Net </modules/models_attention_unet>`, :doc:`DeepLabV3+ </modules/models_deeplabv3p>`, :doc:`ConvLSTM </modules/models_convlstm>`, :doc:`MAU </modules/models_mau>`, :doc:`PredRNN-v2 </modules/models_predrnn_v2>`, :doc:`Rainformer </modules/models_rainformer>`, :doc:`EarthFormer </modules/models_earthformer>`, :doc:`SwinLSTM </modules/models_swinlstm>`, :doc:`EarthFarseer </modules/models_earthfarseer>`, :doc:`ConvGRU-TrajGRU </modules/models_convgru_trajgru>`, :doc:`TCN </modules/models_tcn>`, :doc:`U-TAE </modules/models_utae>`, :doc:`SegFormer </modules/models_segformer>`, :doc:`Swin-Unet </modules/models_swin_unet>`, :doc:`ViT Segmenter </modules/models_vit_segmenter>`, :doc:`Deep Ensemble </modules/models_deep_ensemble>`, :doc:`FireCastNet </modules/models_firecastnet>`, :doc:`FirePred </modules/models_firepred>`, :doc:`WildfireSpreadTS </modules/models_wildfirespreadts>`, :doc:`TS-SatFire </modules/models_ts_satfire>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`.

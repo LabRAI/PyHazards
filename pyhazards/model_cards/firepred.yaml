@@ -1,0 +1,40 @@
+model_name: firepred
+display_name: FirePred
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/firepred.py
+builder_name: firepred_builder
+summary: >
+  A hybrid multi-temporal CNN wildfire predictor inspired by FirePred.
+description:
+  - >
+    ``firepred`` mixes recent temporal context, averaged daily context, and a latest-step snapshot branch for wildfire prediction.
+  - >
+    PyHazards exposes it as a lightweight approximation of the wildfire-native FirePred modeling idea.
+paper:
+  title: "FirePred: A hybrid multi-temporal convolutional network for wildfire spread prediction"
+  url: https://doi.org/10.1016/j.ecoinf.2023.102282
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="firepred", task="segmentation", history=5, in_channels=8)
+  logits = model(torch.randn(2, 5, 8, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke path uses a five-step wildfire raster history and returns a one-channel prediction map."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    history: 5
+    in_channels: 8
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 5, 8, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]
