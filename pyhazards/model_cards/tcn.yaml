@@ -1,0 +1,40 @@
+model_name: tcn
+display_name: TCN
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/tcn.py
+builder_name: tcn_builder
+summary: >
+  A compact temporal-convolution wildfire baseline over raster histories.
+description:
+  - >
+    ``tcn`` applies temporal convolution over short wildfire raster histories before decoding a dense output map.
+  - >
+    It gives the wildfire catalog a lightweight non-recurrent temporal baseline beside ConvLSTM-style models.
+paper:
+  title: "An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling"
+  url: https://arxiv.org/abs/1803.01271
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="tcn", task="segmentation", history=4, in_channels=8)
+  logits = model(torch.randn(2, 4, 8, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke path uses a short wildfire raster history and returns a one-channel prediction map."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    history: 4
+    in_channels: 8
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 4, 8, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

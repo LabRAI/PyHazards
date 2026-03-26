@@ -1,0 +1,40 @@
+model_name: lightgbm
+display_name: LightGBM
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/lightgbm.py
+builder_name: lightgbm_builder
+summary: >
+  A LightGBM wildfire occurrence baseline for fast tabular classification experiments.
+description:
+  - >
+    ``lightgbm`` is a boosted-tree baseline for wildfire occurrence and danger classification on flattened covariates.
+  - >
+    PyHazards keeps it alongside ``xgboost`` so the wildfire catalog covers both major tree-boosting baselines.
+paper:
+  title: "LightGBM: A Highly Efficient Gradient Boosting Decision Tree"
+  url: https://proceedings.neurips.cc/paper_files/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html
+tasks:
+  - classification
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="lightgbm", task="classification", num_boost_round=64)
+  probs = model(torch.randn(4, 8))
+  print(probs.shape)
+notes:
+  - "The smoke path uses flattened wildfire covariates and returns two-class probabilities."
+smoke_test:
+  task: classification
+  build_kwargs:
+    num_leaves: 31
+    learning_rate: 0.1
+    num_boost_round: 64
+  input:
+    kind: tensor
+    tensor:
+      shape: [4, 8]
+  expected_output:
+    kind: tensor
+    shape: [4, 2]

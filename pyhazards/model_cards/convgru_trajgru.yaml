@@ -1,0 +1,40 @@
+model_name: convgru_trajgru
+display_name: ConvGRU-TrajGRU
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/convgru_trajgru.py
+builder_name: convgru_trajgru_builder
+summary: >
+  A compact ConvGRU-style wildfire sequence baseline over raster histories.
+description:
+  - >
+    ``convgru_trajgru`` provides a gated recurrent raster-history baseline for wildfire sequence prediction.
+  - >
+    PyHazards keeps it available as a lightweight proxy for ConvGRU and TrajGRU style wildfire forecasters.
+paper:
+  title: "FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction"
+  url: https://doi.org/10.1038/s41598-025-30645-7
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="convgru_trajgru", task="segmentation", history=4, in_channels=8)
+  logits = model(torch.randn(2, 4, 8, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke path uses a short wildfire raster history and returns a one-channel prediction map."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    history: 4
+    in_channels: 8
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 4, 8, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

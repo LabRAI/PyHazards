@@ -5,6 +5,7 @@ from .cnn_aspp import WildfireCNNASPP, cnn_aspp_builder
 from .eqnet import EQNet, eqnet_builder
 from .eqtransformer import EQTransformer, eqtransformer_builder
 from .firecastnet import FireCastNet, firecastnet_builder
+from .firepred import FirePred, firepred_builder
 from .floodcast import FloodCast, floodcast_builder
 from .forefire import ForeFireAdapter, forefire_builder
 from .fourcastnet_tc import FourCastNetTC, fourcastnet_tc_builder
@@ -35,6 +36,29 @@ from .wildfire_forecasting import WildfireForecasting, wildfire_forecasting_buil
 from .wildfire_aspp import TverskyLoss, WildfireASPP, wildfire_aspp_builder
 from .wildfire_fpa import WildfireFPA, wildfire_fpa_builder
 from .wildfire_mamba import WildfireMamba, wildfire_mamba_builder
+from .lightgbm import LightGBMModel, lightgbm_builder
+from .logistic_regression import LogisticRegressionModel, logistic_regression_builder
+from .random_forest import RandomForestModel, random_forest_builder
+from .xgboost import XGBoostModel, xgboost_builder
+from .unet import TinyUNet, unet_builder
+from .resnet18_unet import TinyResNet18UNet, resnet18_unet_builder
+from .attention_unet import TinyAttentionUNet, attention_unet_builder
+from .deeplabv3p import TinyDeepLabV3P, deeplabv3p_builder
+from .convlstm import TinyConvLSTM, convlstm_builder
+from .mau import TinyMAU, mau_builder
+from .predrnn_v2 import TinyPredRNNv2, predrnn_v2_builder
+from .rainformer import TinyRainformer, rainformer_builder
+from .earthformer import TinyEarthFormer, earthformer_builder
+from .swinlstm import TinySwinLSTM, swinlstm_builder
+from .earthfarseer import TinyEarthFarseer, earthfarseer_builder
+from .convgru_trajgru import TinyConvGRTrajGRU, convgru_trajgru_builder
+from .tcn import TinyTCN, tcn_builder
+from .utae import TinyUTAE, utae_builder
+from .segformer import TinySegFormer, segformer_builder
+from .swin_unet import TinySwinUNet, swin_unet_builder
+from .vit_segmenter import TinyViTSegmenter, vit_segmenter_builder
+from .deep_ensemble import DeepEnsemble, deep_ensemble_builder
+from .ts_satfire import TSSatFire, ts_satfire_builder
 from .wildfirespreadts import WildfireSpreadTS, wildfirespreadts_builder
 from .wrf_sfire import WRFSFireAdapter, wrf_sfire_builder
 
@@ -57,6 +81,54 @@ __all__ = [
     "eqtransformer_builder",
     "FireCastNet",
     "firecastnet_builder",
+    "FirePred",
+    "firepred_builder",
+    "LightGBMModel",
+    "lightgbm_builder",
+    "LogisticRegressionModel",
+    "logistic_regression_builder",
+    "RandomForestModel",
+    "random_forest_builder",
+    "XGBoostModel",
+    "xgboost_builder",
+    "TinyUNet",
+    "unet_builder",
+    "TinyResNet18UNet",
+    "resnet18_unet_builder",
+    "TinyAttentionUNet",
+    "attention_unet_builder",
+    "TinyDeepLabV3P",
+    "deeplabv3p_builder",
+    "TinyConvLSTM",
+    "convlstm_builder",
+    "TinyMAU",
+    "mau_builder",
+    "TinyPredRNNv2",
+    "predrnn_v2_builder",
+    "TinyRainformer",
+    "rainformer_builder",
+    "TinyEarthFormer",
+    "earthformer_builder",
+    "TinySwinLSTM",
+    "swinlstm_builder",
+    "TinyEarthFarseer",
+    "earthfarseer_builder",
+    "TinyConvGRTrajGRU",
+    "convgru_trajgru_builder",
+    "TinyTCN",
+    "tcn_builder",
+    "TinyUTAE",
+    "utae_builder",
+    "TinySegFormer",
+    "segformer_builder",
+    "TinySwinUNet",
+    "swin_unet_builder",
+    "TinyViTSegmenter",
+    "vit_segmenter_builder",
+    "DeepEnsemble",
+    "deep_ensemble_builder",
+    "TSSatFire",
+    "ts_satfire_builder",
     "FloodCast",
     "floodcast_builder",
     "ForeFireAdapter",
@@ -235,6 +307,163 @@ register_model(
         "out_channels": 1,
         "dropout": 0.1,
     },
+)
+
+register_model(
+    "logistic_regression",
+    logistic_regression_builder,
+    defaults={
+        "max_iter": 500,
+    },
+)
+
+register_model(
+    "random_forest",
+    random_forest_builder,
+    defaults={
+        "n_estimators": 500,
+        "max_depth": None,
+    },
+)
+
+register_model(
+    "xgboost",
+    xgboost_builder,
+    defaults={
+        "max_depth": 8,
+        "eta": 0.05,
+        "num_boost_round": 800,
+    },
+)
+
+register_model(
+    "lightgbm",
+    lightgbm_builder,
+    defaults={
+        "num_leaves": 63,
+        "learning_rate": 0.05,
+        "num_boost_round": 800,
+    },
+)
+
+register_model(
+    "unet",
+    unet_builder,
+    defaults={"in_channels": 1, "base_channels": 16, "out_dim": 1},
+)
+
+register_model(
+    "resnet18_unet",
+    resnet18_unet_builder,
+    defaults={"in_channels": 1, "base_channels": 16, "out_dim": 1},
+)
+
+register_model(
+    "attention_unet",
+    attention_unet_builder,
+    defaults={"in_channels": 1, "base_channels": 16, "out_dim": 1},
+)
+
+register_model(
+    "deeplabv3p",
+    deeplabv3p_builder,
+    defaults={"in_channels": 1, "hidden_dim": 32, "out_dim": 1},
+)
+
+register_model(
+    "convlstm",
+    convlstm_builder,
+    defaults={"history": 4, "in_channels": 1, "hidden_dim": 24, "out_dim": 1},
+)
+
+register_model(
+    "mau",
+    mau_builder,
+    defaults={"history": 4, "in_channels": 1, "hidden_dim": 24, "out_dim": 1},
+)
+
+register_model(
+    "predrnn_v2",
+    predrnn_v2_builder,
+    defaults={"history": 4, "in_channels": 1, "hidden_dim": 24, "out_dim": 1},
+)
+
+register_model(
+    "rainformer",
+    rainformer_builder,
+    defaults={"history": 4, "in_channels": 1, "hidden_dim": 24, "out_dim": 1},
+)
+
+register_model(
+    "earthformer",
+    earthformer_builder,
+    defaults={"history": 4, "in_channels": 1, "hidden_dim": 32, "out_dim": 1},
+)
+
+register_model(
+    "swinlstm",
+    swinlstm_builder,
+    defaults={"history": 4, "in_channels": 1, "hidden_dim": 24, "out_dim": 1},
+)
+
+register_model(
+    "earthfarseer",
+    earthfarseer_builder,
+    defaults={"history": 4, "in_channels": 1, "hidden_dim": 24, "out_dim": 1},
+)
+
+register_model(
+    "convgru_trajgru",
+    convgru_trajgru_builder,
+    defaults={"history": 4, "in_channels": 1, "hidden_dim": 24, "out_dim": 1},
+)
+
+register_model(
+    "tcn",
+    tcn_builder,
+    defaults={"history": 4, "in_channels": 1, "hidden_dim": 24, "out_dim": 1},
+)
+
+register_model(
+    "utae",
+    utae_builder,
+    defaults={"history": 4, "in_channels": 1, "hidden_dim": 24, "out_dim": 1},
+)
+
+register_model(
+    "segformer",
+    segformer_builder,
+    defaults={"history": 4, "in_channels": 1, "hidden_dim": 32, "out_dim": 1},
+)
+
+register_model(
+    "swin_unet",
+    swin_unet_builder,
+    defaults={"history": 4, "in_channels": 1, "base_channels": 16, "out_dim": 1},
+)
+
+register_model(
+    "vit_segmenter",
+    vit_segmenter_builder,
+    defaults={"history": 4, "in_channels": 1, "hidden_dim": 32, "out_dim": 1},
+)
+
+register_model(
+    "deep_ensemble",
+    deep_ensemble_builder,
+    defaults={"in_channels": 1, "base_channels": 16, "out_dim": 1, "ensemble_size": 3},
+)
+
+register_model(
+    "firepred",
+    firepred_builder,
+    defaults={"history": 5, "in_channels": 8, "hidden_dim": 32, "out_channels": 1, "dropout": 0.1},
+)
+
+register_model(
+    "ts_satfire",
+    ts_satfire_builder,
+    defaults={"history": 5, "in_channels": 8, "hidden_dim": 32, "out_channels": 1, "dropout": 0.1},
 )
 
 register_model(

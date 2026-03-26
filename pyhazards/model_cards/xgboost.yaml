@@ -1,0 +1,40 @@
+model_name: xgboost
+display_name: XGBoost
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/xgboost.py
+builder_name: xgboost_builder
+summary: >
+  A boosted-tree wildfire occurrence baseline with a binary logistic objective.
+description:
+  - >
+    ``xgboost`` is a strong tabular baseline for wildfire occurrence and danger prediction.
+  - >
+    PyHazards keeps it public because gradient-boosted trees remain a standard reference point for wildfire risk forecasting.
+paper:
+  title: "Wildfire Danger Prediction and Understanding With Deep Learning"
+  url: https://doi.org/10.1029/2022GL099368
+tasks:
+  - classification
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="xgboost", task="classification", num_boost_round=64)
+  probs = model(torch.randn(4, 8))
+  print(probs.shape)
+notes:
+  - "The smoke path uses flattened wildfire covariates and returns two-class probabilities."
+smoke_test:
+  task: classification
+  build_kwargs:
+    max_depth: 4
+    eta: 0.1
+    num_boost_round: 64
+  input:
+    kind: tensor
+    tensor:
+      shape: [4, 8]
+  expected_output:
+    kind: tensor
+    shape: [4, 2]

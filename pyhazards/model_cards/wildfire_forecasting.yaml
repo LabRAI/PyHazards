@@ -1,7 +1,8 @@
 model_name: wildfire_forecasting
 display_name: Wildfire Forecasting
 hazard: Wildfire
-catalog_status: core
+include_in_public_catalog: false
+catalog_status: hidden
 source_file: pyhazards/models/wildfire_forecasting.py
 builder_name: wildfire_forecasting_builder
 summary: >
@@ -14,7 +15,7 @@ description:
     The PyHazards implementation targets smoke-testable next-window size-group prediction
     through the shared wildfire benchmark flow.
 paper:
-  title: Wildfire Danger Prediction and Understanding with Deep Learning
+  title: "Wildfire Danger Prediction and Understanding with Deep Learning"
   url: https://doi.org/10.1029/2022GL099368
   repo_url: https://github.com/Orion-AI-Lab/wildfire_forecasting
 tasks:
@@ -34,7 +35,7 @@ example: |
   preds = model(torch.randn(2, 12, 7))
   print(preds.shape)
 notes:
-  - "This public adapter is exercised on the weekly wildfire smoke benchmark."
+  - "Retained as a hidden compatibility entry; it is no longer part of the public 31-model wildfire roster."
 smoke_test:
   task: forecasting
   build_kwargs:

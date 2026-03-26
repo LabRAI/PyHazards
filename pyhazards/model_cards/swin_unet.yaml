@@ -1,0 +1,41 @@
+model_name: swin_unet
+display_name: Swin-Unet
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/swin_unet.py
+builder_name: swin_unet_builder
+summary: >
+  A compact Swin-Unet wildfire sequence segmenter.
+description:
+  - >
+    ``swin_unet`` combines a short wildfire raster history with a windowed encoder-decoder segmentation backbone.
+  - >
+    It serves as the PyHazards entry for Swin-based transformer segmentation within the wildfire benchmark family.
+paper:
+  title: "WildfireSpreadTS+: A Multi-Modal Dataset for Wildfire Spread Prediction with History Context"
+  url: https://arxiv.org/abs/2502.12003
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="swin_unet", task="segmentation", history=4, in_channels=8, window_size=4)
+  logits = model(torch.randn(2, 4, 8, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke path uses a short wildfire raster history and returns a one-channel prediction map."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    history: 4
+    in_channels: 8
+    window_size: 4
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 4, 8, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

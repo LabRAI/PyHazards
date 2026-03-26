@@ -1,0 +1,39 @@
+model_name: unet
+display_name: U-Net
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/unet.py
+builder_name: unet_builder
+summary: >
+  A compact U-Net baseline for wildfire raster prediction.
+description:
+  - >
+    ``unet`` is the canonical encoder-decoder raster baseline for wildfire spread-style prediction in PyHazards.
+  - >
+    It provides the simplest dense prediction reference point before moving to recurrent or transformer-style wildfire models.
+paper:
+  title: "WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction"
+  url: https://openreview.net/forum?id=RgdGkPRQ03
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="unet", task="segmentation", in_channels=12)
+  logits = model(torch.randn(2, 12, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke path uses a single wildfire raster snapshot and returns a one-channel prediction map."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 12
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 12, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

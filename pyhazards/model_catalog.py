@@ -7,7 +7,30 @@ from typing import Any, Dict, Iterable, List, Literal, Mapping, Optional, Sequen
 
 import torch
 import yaml
-from pydantic import BaseModel, Field, model_validator
+
+try:
+    from pydantic import BaseModel, Field, model_validator
+
+    def _after_model_validator(func):
+        return model_validator(mode="after")(func)
+
+    def _model_validate(model_cls, raw):
+        return model_cls.model_validate(raw)
+
+except ImportError:
+    from pydantic import BaseModel, Field, root_validator
+
+    def _after_model_validator(func):
+        @root_validator(skip_on_failure=True, allow_reuse=True)
+        def _wrapped(cls, values):
+            instance = cls.construct(**values)
+            func(instance)
+            return values
+
+        return _wrapped
+
+    def _model_validate(model_cls, raw):
+        return model_cls.parse_obj(raw)
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -59,8 +82,9 @@ EXPERIMENTAL_SECTION_SUMMARY = (
 
 HAZARD_SECTION_SUMMARIES = {
     "Wildfire": (
-        "Wildfire models cover danger forecasting, weekly activity forecasting, "
-        "and spread prediction under the shared wildfire benchmark family."
+        "Wildfire models cover tabular occurrence baselines, raster spread "
+        "predictors, and spatio-temporal forecasting variants under the shared "
+        "wildfire benchmark family."
     ),
     "Earthquake": (
         "Earthquake models span phase picking and dense-grid forecasting, with "
@@ -128,7 +152,7 @@ class SmokeInputSpec(BaseModel):
     mapping: Dict[str, SmokeTensorSpec] = Field(default_factory=dict)
     kwargs: Dict[str, SmokeTensorSpec] = Field(default_factory=dict)
 
-    @model_validator(mode="after")
+    @_after_model_validator
     def validate_payload(self) -> "SmokeInputSpec":
         kind = self.kind.lower()
         if kind == "tensor" and self.tensor is None:
@@ -147,7 +171,7 @@ class SmokeOutputSpec(BaseModel):
     shape: Optional[List[int]] = None
     shapes: List[List[int]] = Field(default_factory=list)
 
-    @model_validator(mode="after")
+    @_after_model_validator
     def validate_payload(self) -> "SmokeOutputSpec":
         kind = self.kind.lower()
         if kind == "tensor" and self.shape is None:
@@ -186,7 +210,7 @@ class ModelCard(BaseModel):
     doc_slug: Optional[str] = None
     smoke_test: SmokeTestSpec
 
-    @model_validator(mode="after")
+    @_after_model_validator
     def validate_catalog_metadata(self) -> "ModelCard":
         if self.catalog_status == "hidden" and self.include_in_public_catalog:
             raise ValueError("hidden catalog_status requires include_in_public_catalog: false")
@@ -218,7 +242,7 @@ def load_model_cards(cards_dir: Path = MODEL_CARDS_DIR) -> List[ModelCard]:
     seen_registry_names: Set[str] = set()
     for path in sorted(cards_dir.glob("*.y*ml")):
         raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-        card = ModelCard.model_validate(raw)
+        card = _model_validate(ModelCard, raw)
         if path.stem != card.model_name:
             raise ValueError(
                 "Model card filename must match model_name: "

@@ -112,4 +112,4 @@ Programmatic Use
 Notes
 -----
 
-- The CI smoke test validates the default binary-classification path on synthetic data.
+- Retained as a hidden compatibility entry; it is no longer part of the public 31-model wildfire roster.

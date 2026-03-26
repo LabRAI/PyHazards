@@ -30,7 +30,27 @@ smoke_configs:
   - pyhazards/configs/wildfire/firecastnet_smoke.yaml
 linked_models:
   - wildfire_aspp
+  - unet
+  - resnet18_unet
+  - attention_unet
+  - deeplabv3p
+  - convlstm
+  - mau
+  - predrnn_v2
+  - rainformer
+  - earthformer
+  - swinlstm
+  - earthfarseer
+  - convgru_trajgru
+  - tcn
+  - utae
+  - segformer
+  - swin_unet
+  - vit_segmenter
+  - deep_ensemble
+  - firecastnet
+  - firepred
   - wildfirespreadts
+  - ts_satfire
   - forefire
   - wrf_sfire
-  - firecastnet

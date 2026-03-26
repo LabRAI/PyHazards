@@ -1,0 +1,40 @@
+model_name: mau
+display_name: MAU
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/mau.py
+builder_name: mau_builder
+summary: >
+  A compact MAU-style spatio-temporal wildfire baseline over raster histories.
+description:
+  - >
+    ``mau`` is a recurrent spatio-temporal wildfire baseline inspired by memory-in-memory sequence modeling.
+  - >
+    PyHazards keeps it public because the Sim2Real-Fire benchmark family compares MAU-style models against other wildfire sequence forecasters.
+paper:
+  title: "Sim2Real-Fire: A Multi-Modal Simulation Dataset for Forecast and Backtracking of Real-World Forest Fire"
+  url: https://openreview.net/forum?id=H1x4DwwRzC
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="mau", task="segmentation", history=4, in_channels=8)
+  logits = model(torch.randn(2, 4, 8, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke path uses a short wildfire raster history and returns a one-channel prediction map."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    history: 4
+    in_channels: 8
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 4, 8, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

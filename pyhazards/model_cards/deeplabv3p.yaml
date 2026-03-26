@@ -1,0 +1,39 @@
+model_name: deeplabv3p
+display_name: DeepLabV3+
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/deeplabv3p.py
+builder_name: deeplabv3p_builder
+summary: >
+  A compact DeepLabV3+-style baseline for wildfire raster prediction.
+description:
+  - >
+    ``deeplabv3p`` provides an ASPP-style dense-prediction baseline for wildfire rasters within the shared PyHazards registry.
+  - >
+    It complements U-Net family baselines with a lighter context-aggregation decoder.
+paper:
+  title: "Wildfire spreading prediction using multimodal data and deep neural network approach"
+  url: https://doi.org/10.1038/s41598-024-52821-x
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="deeplabv3p", task="segmentation", in_channels=12)
+  logits = model(torch.randn(2, 12, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke path uses a single wildfire raster snapshot and returns a one-channel prediction map."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 12
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 12, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

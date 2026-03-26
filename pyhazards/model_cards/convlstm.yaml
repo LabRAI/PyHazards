@@ -1,0 +1,40 @@
+model_name: convlstm
+display_name: ConvLSTM
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/convlstm.py
+builder_name: convlstm_builder
+summary: >
+  A compact ConvLSTM baseline for wildfire spread prediction from raster histories.
+description:
+  - >
+    ``convlstm`` is the standard recurrent raster-history baseline for wildfire prediction in PyHazards.
+  - >
+    It maps short spatio-temporal covariate windows to the next wildfire risk or spread-style output map.
+paper:
+  title: "WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction"
+  url: https://openreview.net/forum?id=RgdGkPRQ03
+tasks:
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="convlstm", task="segmentation", history=4, in_channels=8)
+  logits = model(torch.randn(2, 4, 8, 16, 16))
+  print(logits.shape)
+notes:
+  - "The smoke path uses a short wildfire raster history and returns a one-channel prediction map."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    history: 4
+    in_channels: 8
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 4, 8, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

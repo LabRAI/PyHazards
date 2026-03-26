@@ -36,7 +36,7 @@ example: |
   logits = model(x)
   print(logits.shape)
 notes:
-  - "The CI smoke test validates the default binary-classification path on synthetic data."
+  - "Retained as a hidden compatibility entry; it is no longer part of the public 31-model wildfire roster."
 smoke_test:
   task: classification
   build_kwargs:

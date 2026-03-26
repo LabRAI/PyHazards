@@ -1,0 +1,38 @@
+model_name: logistic_regression
+display_name: Logistic Regression
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/logistic_regression.py
+builder_name: logistic_regression_builder
+summary: >
+  A classical logistic-regression baseline for wildfire occurrence probability from tabular covariates.
+description:
+  - >
+    ``logistic_regression`` is a lightweight classical baseline for wildfire occurrence and danger classification.
+  - >
+    PyHazards exposes it through the shared wildfire benchmark family for direct comparison against tree and raster deep-learning models.
+paper:
+  title: "Next Day Wildfire Spread: A Machine Learning Dataset to Predict Wildfire Spreading From Remote-Sensing Data"
+  url: https://doi.org/10.1109/TGRS.2022.3192974
+tasks:
+  - classification
+example: |
+  import torch
+  from pyhazards.models import build_model
+  
+  model = build_model(name="logistic_regression", task="classification", max_iter=200)
+  probs = model(torch.randn(4, 8))
+  print(probs.shape)
+notes:
+  - "The smoke path uses flattened wildfire covariates and returns two-class probabilities."
+smoke_test:
+  task: classification
+  build_kwargs:
+    max_iter: 200
+  input:
+    kind: tensor
+    tensor:
+      shape: [4, 8]
+  expected_output:
+    kind: tensor
+    shape: [4, 2]
