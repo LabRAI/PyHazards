@@ -4,6 +4,7 @@ from typing import Any
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 from ._wildfire_layers import check_sequence_input
 
@@ -28,8 +29,8 @@ class TinyEarthFarseer(nn.Module):
         if x.size(1) != self.history:
             raise ValueError(f"TinyEarthFarseer expected history={self.history}, got {x.size(1)}.")
         x3d = x.permute(0, 2, 1, 3, 4)
-        f1 = torch.mean(torch.gelu(self.branch1(x3d)), dim=2)
-        f2 = torch.mean(torch.gelu(self.branch2(x3d)), dim=2)
+        f1 = torch.mean(F.gelu(self.branch1(x3d)), dim=2)
+        f2 = torch.mean(F.gelu(self.branch2(x3d)), dim=2)
         return self.project(torch.cat([f1, f2], dim=1))
 
 

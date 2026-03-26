@@ -33,6 +33,7 @@ class LogisticRegressionModel(BinaryEstimatorProxy):
 
 def logistic_regression_builder(task: str, **kwargs: Any) -> nn.Module:
     require_task(task, {'classification'}, 'logistic_regression')
+    kwargs.pop('name', None)
     return LogisticRegressionModel(**kwargs)
 
 

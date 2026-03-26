@@ -42,6 +42,7 @@ class LightGBMModel(BinaryEstimatorProxy):
 
 def lightgbm_builder(task: str, **kwargs: Any) -> nn.Module:
     require_task(task, {'classification'}, 'lightgbm')
+    kwargs.pop('name', None)
     return LightGBMModel(**kwargs)
 
 

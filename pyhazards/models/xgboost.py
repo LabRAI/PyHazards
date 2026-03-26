@@ -42,6 +42,7 @@ class XGBoostModel(BinaryEstimatorProxy):
 
 def xgboost_builder(task: str, **kwargs: Any) -> nn.Module:
     require_task(task, {'classification'}, 'xgboost')
+    kwargs.pop('name', None)
     return XGBoostModel(**kwargs)
 
 

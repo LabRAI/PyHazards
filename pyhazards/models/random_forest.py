@@ -39,6 +39,7 @@ class RandomForestModel(BinaryEstimatorProxy):
 
 def random_forest_builder(task: str, **kwargs: Any) -> nn.Module:
     require_task(task, {'classification'}, 'random_forest')
+    kwargs.pop('name', None)
     return RandomForestModel(**kwargs)
 
 
