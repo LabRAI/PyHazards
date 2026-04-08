@@ -10,6 +10,7 @@ from .wildfire_aspp import WildfireASPP, TverskyLoss, wildfire_aspp_builder
 from .cnn_aspp import WildfireCNNASPP, cnn_aspp_builder
 from .hydrographnet import HydroGraphNet, HydroGraphNetLoss, hydrographnet_builder
 from .wavecastnet import WaveCastNet, ConvLEMCell, wavecastnet_builder
+from .dlwp import DLWP, dlwp_builder, DoubleConv, Down, Up
 
 __all__ = [
     # Core API
@@ -43,6 +44,13 @@ __all__ = [
     "WaveCastNet", 
     "ConvLEMCell",
     "wavecastnet_builder",
+    
+    # Weather models
+    "DLWP",
+    "dlwp_builder",
+    "DoubleConv",
+    "Down",
+    "Up",
 ]
 
 # -------------------------------------------------
@@ -141,4 +149,16 @@ register_model(
               "tanh", 
               "dropout": 0.1, 
     }, 
+)
+
+register_model(
+    "dlwp",
+    dlwp_builder,
+    defaults={
+        "num_levels": 4,
+        "base_channels": 64,
+        "kernel_size": 3,
+        "activation": "relu",
+        "dropout": 0.1,
+    },
 )
