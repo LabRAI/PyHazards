@@ -321,5 +321,103 @@ def dlwp_builder(
         dropout=kwargs.get("dropout", 0.1),
     )
 
+class WeatherMetrics:
+    """
+    Metrics for weather prediction evaluation:
+        RMSE
+        BIAS
+        ACC
+    """
+    
+    @staticmethod
+    def rmse(pred: torch.Tensor, target: torch.Tensor) -> float:
+        """
+        Compute Root Mean Square Error.
+        
+        Args:
+            pred: Predicted atmospheric state (B, C, F, H, W)
+            target: Ground truth atmospheric state (B, C, F, H, W)
+        
+        Returns:
+            RMSE value (lower is better)
+        """
+        mse = torch.mean((pred - target) ** 2)
+        rmse = torch.sqrt(mse)
+        return rmse.item()
+    
+    @staticmethod
+    def bias(pred: torch.Tensor, target: torch.Tensor) -> float:
+        """
+        Compute mean bias.
+        
+        Args:
+            pred: Predicted atmospheric state (B, C, F, H, W)
+            target: Ground truth atmospheric state (B, C, F, H, W)
+        
+        Returns:
+            Bias value (0 is perfect, positive/negative indicates direction)
+        """
+        bias = torch.mean(pred - target)
+        # Bias = mean(pred - target)
+        # Positive bias = systematic overprediction
+        # Negative bias = systematic underprediction
+
+        return bias.item()
+    
+    @staticmethod
+    def acc(pred: torch.Tensor, target: torch.Tensor, climatology: Optional[torch.Tensor] = None) -> float:
+        """
+        Compute Anomaly Correlation Coefficient (ACC).
+        
+        Args:
+            pred: Predicted atmospheric state (B, C, F, H, W)
+            target: Ground truth atmospheric state (B, C, F, H, W)
+            climatology: Long-term mean state (C, F, H, W), optional
+        
+        Returns:
+            ACC value in [-1, 1], where 1 is perfect correlation
+        """
+        # Compute anomalies (deviations from climatology)
+        if climatology is None:
+            # Use target mean as approximation
+            climatology = target.mean(dim=0, keepdim=True)
+        else:
+            climatology = climatology.unsqueeze(0)  # Add batch dim
+        
+        pred_anom = pred - climatology
+        target_anom = target - climatology
+        
+        # Compute correlation
+        numerator = (pred_anom * target_anom).sum()
+        denominator = torch.sqrt((pred_anom ** 2).sum() * (target_anom ** 2).sum())
+        
+        # ACC = Σ(pred_anom * target_anom) / sqrt(Σ(pred_anom²) * Σ(target_anom²))
+
+        acc = numerator / denominator.clamp(min=1e-8)
+        
+        return acc.item()
+    
+    @staticmethod
+    def compute_all(
+        pred: torch.Tensor,
+        target: torch.Tensor,
+        climatology: Optional[torch.Tensor] = None
+    ) -> dict:
+        """
+        Compute all metrics at once.
+        
+        Args:
+            pred: Predicted atmospheric state (B, C, F, H, W)
+            target: Ground truth atmospheric state (B, C, F, H, W)
+            climatology: Long-term mean state (C, F, H, W), optional
+        
+        Returns:
+            Dictionary with all metric values
+        """
+        return {
+            "RMSE": WeatherMetrics.rmse(pred, target),
+            "Bias": WeatherMetrics.bias(pred, target),
+            "ACC": WeatherMetrics.acc(pred, target, climatology),
+        }
 
 __all__ = ["DLWP", "dlwp_builder", "DoubleConv", "Down", "Up"]
