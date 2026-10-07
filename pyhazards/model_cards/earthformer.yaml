@@ -1,0 +1,166 @@
+model_name: earthformer
+display_name: Earthformer
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/earthformer.py
+builder_name: earthformer_builder
+summary: >
+  Space-time Transformer built from cuboid attention with global vectors, a hierarchical
+  encoder-decoder for frame sequences; one of the Sim2Real-Fire forecasting baselines.
+description:
+  - >
+    ``earthformer`` forecasts a sequence of future frames from past frames (Gao et al., NeurIPS
+    2022). Cuboid attention splits the (time, height, width) tensor into cuboids and attends inside
+    each; the "axial" pattern used for all released models stacks three of them, (T, 1, 1),
+    (1, H, 1) and (1, 1, W), each with a pre-LN feed-forward layer, and optional global vectors
+    exchange information between cuboids. Convolutions with patch merging first reduce the
+    frames (12x for SEVIR), a two-level encoder follows (patch merging between levels), and a
+    non-autoregressive decoder starts from learned query frames (the projected positional
+    embedding), alternates self-attention with cross-attention to the encoder memory of each
+    level and upsamples back to the input resolution.
+  - >
+    The module is a port of the official ``CuboidTransformerModel`` (Apache-2.0) with its
+    parameter names, creation order and initialisation, so the official state dicts load with
+    ``strict=True`` and the same seed gives the same weights. ``config`` selects an official
+    configuration file: ``sevir`` (earthformer_sevir_v1.yaml, the released SEVIR checkpoint,
+    default), ``sevir_lr``, ``moving_mnist`` / ``nbody`` and ``enso`` (the released ICAR-ENSO
+    checkpoint); any constructor argument can be overridden. ``pretrained="sevir"`` or
+    ``"icarenso2021"`` loads the official weights.
+  - >
+    ``task="forecasting"`` maps ``(batch, history, in_channels, H, W)`` to ``(batch, horizon,
+    out_channels, H, W)``; ``task="segmentation"`` is the same network predicting one frame with one
+    channel and returns next-fire-mask logits ``(batch, 1, H, W)``. The official code works in
+    ``(batch, T, H, W, C)``; ``CuboidTransformerModel`` keeps that layout.
+paper:
+  title: "Earthformer: Exploring Space-Time Transformers for Earth System Forecasting"
+  url: https://arxiv.org/abs/2207.05833
+  repo_url: https://github.com/amazon-science/earth-forecasting-transformer
+references:
+  - title: "Sim2Real-Fire: A Multi-modal Simulation Dataset for Forecast and Backtracking of Real-world Forest Fire"
+    url: https://github.com/TJU-IDVLab/Sim2Real-Fire
+    repo_url: https://github.com/TJU-IDVLab/Sim2Real-Fire
+    note: >
+      Li et al., NeurIPS 2024 Datasets and Benchmarks. Models are trained on about 1M simulated
+      wildfire scenarios (FARSITE, WFDS, WRF-SFIRE) and tested on simulated and about 1K real
+      scenarios; the input is the source sequence of binary fire-area masks with satellite image
+      sequences, topography, vegetation, fuel maps and weather, and the target is the future
+      (forecast) or past (backtracking) mask sequence. Earthformer is one of the "commonly used AI
+      models that can be easily adapted" (Sec. 4.1). Table 2 (AUPRC / F1 / IoU, %): forecast
+      77.2 / 73.5 / 59.7 on simulated and 65.4 / 61.7 / 50.1 on real-world data; backtracking
+      71.4 / 63.0 / 48.1 and 53.4 / 51.3 / 41.7. Tables 4 and 6 report the AUPRC without each
+      modality. Configuration not published: the paper and the repository (which contains only
+      S2R-FireTr) give no Earthformer hyperparameters, input stacking, resolution, loss or output
+      head; S2R-FireTr itself uses 3 input frames at 256 x 256.
+reproduction:
+  reference_code: https://github.com/amazon-science/earth-forecasting-transformer/blob/7732b03bdb366110563516c3502315deab4c2026/src/earthformer/cuboid_transformer/cuboid_transformer.py
+  reference_commit: 7732b03bdb366110563516c3502315deab4c2026
+  reference_license: Apache-2.0 (Copyright Amazon.com, Inc. or its affiliates)
+  reference_config: >
+    CuboidTransformerModel built as the official training scripts build it from the model section
+    of scripts/cuboid_transformer/sevir/earthformer_sevir_v1.yaml (13 x 384 x 384 -> 12 frames,
+    base 128 channels, stack-conv down-sampling 3-2-2 to 32 x 32, one axial block per level,
+    8 global vectors with separate projections and global self-attention, 8,659,677
+    parameters) and moving_mnist/cfg.yaml (10 x 64 x 64 -> 10, base 64, four blocks per level, no
+    global vectors, 6,702,109), plus sevir/cfg_sevirlr.yaml (1,505,069), enso/earthformer_enso_v1.yaml
+    (1,394,325), six configurations with other patterns and options, and the official
+    earthformer_sevir.pt and earthformer_icarenso2021.pt checkpoints (sha256-pinned Internet
+    Archive copies). Seeded initialisation, eval and train-mode outputs and gradients are
+    compared; architecture checks run at 13 x 48 x 48 and 13 x 50 x 50 (SEVIR) and 10 x 32 x 32
+    (Moving-MNIST), the checkpoints at 13 x 384 x 384 and 12 x 24 x 48.
+  parameter_count: 8659677
+  checks: [parameter_count, initialization, state_dict, forward, pretrained_weights]
+  oracle_test: tests/oracle/test_earthformer_oracle.py
+  deviations:
+    - >
+      task="segmentation" is a PyHazards adaptation, not from Sim2Real-Fire (whose Earthformer
+      setup is unpublished): the network is built with target_shape (1, H, W, 1) and its single
+      predicted frame is returned as (batch, 1, H, W) logits. Parameter names are those of
+      CuboidTransformerModel (no prefix).
+    - >
+      Earthformer and EarthformerSegmenter take (batch, time, channels, H, W) and permute to the
+      official (batch, time, H, W, channels) layout; CuboidTransformerModel keeps the official
+      layout. Inputs must have exactly the configured shape (ValueError otherwise); the official
+      code also accepts sizes that pad to the same token grid and then returns the configured
+      output size.
+    - >
+      Three paths that only raise errors in the official code work here: PatchMerging3D pads when
+      only the time axis needs padding (the official test reads "pad_h or pad_h or pad_w"), the
+      CTHW layout of Upsample3DLayer (official: undefined self.output_size), and cuboid
+      cross-attention with padding_type "zeros" or "nearest" when padding is needed (official:
+      undefined mask; here padded entries count as tokens, as in the self-attention mask). None
+      of them is reached by the official configurations.
+    - >
+      Only CuboidTransformerModel is ported. CuboidTransformerAuxModel and the U-Net decoder
+      (cuboid_transformer_unet_dec.py, used for EarthNet2021 with auxiliary inputs and
+      the earthformer_earthnet2021.pt checkpoint) and the unused DownSampling3D layer are not.
+tasks:
+  - forecasting
+  - segmentation
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  # Released SEVIR configuration: 13 frames of 384 x 384 VIL (scaled to [0, 1]) -> 12 frames.
+  model = build_model(name="earthformer", task="forecasting")  # 8,659,677 parameters
+  # Official SEVIR weights (Apache-2.0, downloaded and sha256-checked on first use):
+  # model = build_model(name="earthformer", task="forecasting", pretrained="sevir")
+  model.eval()
+  with torch.no_grad():
+      frames = model(torch.rand(1, 13, 1, 384, 384))  # (batch, time, channels, H, W)
+  print(frames.shape)  # (1, 12, 1, 384, 384)
+
+  # Next-fire-mask adaptation (PyHazards): 3 days of 8 channels at 256 x 256 -> one mask logit map.
+  fire = build_model(name="earthformer", task="segmentation", history=3, in_channels=8, img_size=256)
+  print(fire(torch.randn(2, 3, 8, 256, 256)).shape)  # (2, 1, 256, 256)
+notes:
+  - >
+    Parameter counts in the paper. The released configurations are smaller than the models in
+    the paper's tables (15.1M on SEVIR, 7.6M on Moving-MNIST, N-body MNIST and ICAR-ENSO), and the
+    official class reproduces the paper's numbers exactly when built from them as follows
+    (checked against the official code): SEVIR with enc_depth = dec_depth = [2, 2], two cuboid
+    attention blocks per level as listed in the paper's Table 9 (the released v1 file has one),
+    gives 13,075,029 without global vectors (13.1M, "w/o global") and 15,082,069 (15.1M) with
+    eight global vectors that share the local q/k/v projections and have no FFN of their own;
+    Moving-MNIST cfg.yaml with "t+h+w" instead of "t+hw" positional embeddings (-90,112) gives
+    6,611,997 (6.61M, "Axial" / "w/o global") and 7,610,781 (7.61M) with those global vectors;
+    ICAR-ENSO with four blocks per level (the Moving-MNIST architecture, paper Table 8) gives
+    6,601,293 and 7,600,077 (6.6M / 7.6M). The counts also fix that the decoder self-attention
+    uses no global vectors (which would add parameters); whether the decoder cross-attention and
+    the global self-attention use them does not change the count. The appendix equations show a
+    global FFN, but with it the totals would not match. The released v1 files instead use one
+    block per level, and SEVIR v1 uses separate global projections with global self-attention.
+  - >
+    Official weights: earthformer_sevir.pt (SEVIR, 34.8 MB) and earthformer_icarenso2021.pt
+    (ICAR-ENSO, 5.7 MB) are plain CuboidTransformerModel state dicts for the sevir and enso
+    presets. The S3 bucket of the README (earthformer.s3.amazonaws.com) answered HTTP 403 on 2026-10-07;
+    pretrained= tries it first and then the Internet Archive capture of 2025-05-17, whose SHA-1
+    equals the archived original (S3 Last-Modified 2023-07-14), and checks the pinned sha256. The
+    SEVIR model expects VIL divided by 255 in (batch, 13, 1, 384, 384) and was trained with MSE.
+    No Moving-MNIST or N-body weights were released.
+  - >
+    Behaviour of the official code that is kept because it changes outputs: cuboid patterns are
+    computed from the encoder memory shapes, so the decoder's temporal cuboids hold T_in frames;
+    with T_out < T_in they shrink and the relative-position bias table is sliced as a flattened
+    index (exact when only the outermost non-unit cuboid axis shrinks, as with the axial
+    pattern), and with T_out > T_in (ICAR-ENSO, 12 -> 14) the decoder frames are padded to a
+    multiple of T_in. With padding_type "zeros" (all official files) padded positions take part
+    in attention as zero vectors. z_init_method "zeros" makes the decoder queries the projected
+    positional embedding, independent of the input.
+  - >
+    Sizes that the initial down-sampling does not divide (for example 256 with the 12x SEVIR
+    stack) are zero-padded inside the patch merging, and the final upsampling returns the
+    configured size. Gradient checkpointing (checkpoint_level 1 or 2) uses the reentrant variant
+    as the official code does; all official configuration files set checkpoint_level 0.
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    history: 3
+    in_channels: 4
+    img_size: 48
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 3, 4, 48, 48]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 48, 48]

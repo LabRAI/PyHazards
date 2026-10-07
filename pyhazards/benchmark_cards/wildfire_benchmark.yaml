@@ -50,6 +50,7 @@ linked_models:
   - swin_unet
   - attention_unet
   - tcn
+  - earthformer
   - forefire
   - wrf_sfire
   - firecastnet

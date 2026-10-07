@@ -36,6 +36,11 @@ repos:
     url: https://github.com/SeasFire/firecastnet.git
     commit: dc0d131be7f0638e3a84c16817e7bc9be454e53e
     license: none at repo level; seasfire/backbones/graphcast/* carry NVIDIA SPDX Apache-2.0 headers (test oracle only, never vendored)
+  earth-forecasting-transformer:
+    # Earthformer (Gao et al., NeurIPS 2022), official code; pyhazards/models/earthformer.py is a port of it.
+    url: https://github.com/amazon-science/earth-forecasting-transformer.git
+    commit: 7732b03bdb366110563516c3502315deab4c2026
+    license: Apache-2.0 (Copyright Amazon.com, Inc. or its affiliates)
 
 assets:
   utae_pastis_weights:
@@ -84,6 +89,17 @@ assets:
   prithvi_burnscars_example:
     url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars/resolve/a3f2c410e45b8ac7417976614528a872f024d831/examples/subsetted_512x512_HLS.S30.T10SEH.2018190.v1.4_merged.tif
     sha256: 13bc592a5e569d837bd8bb3524bb0d2f28418830bcc7b0750e74033078f8b17e
+    license: Apache-2.0
+  # Official Earthformer checkpoints (README "Pretrained Weights"). The S3 bucket answered HTTP 403
+  # on 2026-10-07; these are the Internet Archive captures of 2025-05-17 (payload SHA-1 identical to the
+  # archived originals, S3 Last-Modified 2023-07-14). State dicts of CuboidTransformerModel.
+  earthformer_sevir:
+    url: https://web.archive.org/web/20250517094035id_/https://earthformer.s3.amazonaws.com/pretrained_checkpoints/earthformer_sevir.pt
+    sha256: 2795b23a32cc03ebd77a6c6b57ebbe133070ff9cae1b365d82bb363fd6967215
+    license: Apache-2.0
+  earthformer_icarenso2021:
+    url: https://web.archive.org/web/20250517094035id_/https://earthformer.s3.amazonaws.com/pretrained_checkpoints/earthformer_icarenso2021.pt
+    sha256: 3428356328ec02291461f737684ea597a3126af86a09fe173b75ed54ffe1511f
     license: Apache-2.0
   # Large checkpoints: fetched only when named explicitly (or with --large), never in routine CI.
   prithvi_eo2_300m_burnscars_weights:

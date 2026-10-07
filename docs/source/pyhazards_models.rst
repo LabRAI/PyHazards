@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         34
+         35
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         35
+         36
 
       .. container:: catalog-stat-note
 
@@ -179,6 +179,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_
+
+         .. grid-item-card:: Earthformer
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Space-time Transformer built from cuboid attention with global vectors, a hierarchical encoder-decoder for frame sequences; one of the Sim2Real-Fire forecasting baselines.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Earthformer <modules/models_earthformer>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Earthformer: Exploring Space-Time Transformers for Earth System Forecasting <https://arxiv.org/abs/2207.05833>`_ | **Repo:** `Repository <https://github.com/amazon-science/earth-forecasting-transformer>`__
 
          .. grid-item-card:: FireCastNet
             :class-card: catalog-entry-card
@@ -1168,6 +1191,7 @@ before selecting a model for evaluation.
    modules/models_asufm
    modules/models_attention_unet
    modules/models_convlstm
+   modules/models_earthformer
    modules/models_eqnet
    modules/models_eqtransformer
    modules/models_firecastnet

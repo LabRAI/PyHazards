@@ -1,0 +1,4 @@
+# Reference stack for tests/oracle/test_earthformer_oracle.py. The official Earthformer model file
+# (src/earthformer/cuboid_transformer/cuboid_transformer.py) imports only torch and einops; einops is
+# not used by the network itself. CPU torch is installed by the workflow.
+einops==0.8.2

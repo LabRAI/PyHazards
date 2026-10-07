@@ -4,6 +4,7 @@ from .attention_unet import AttentionUnet, TemporalAttentionUnet, attention_unet
 from .builder import build_model, default_builder
 from .cnn_aspp import WildfireCNNASPP, cnn_aspp_builder
 from .convlstm import ConvLSTM, ConvLSTMCell, ConvLSTMSegmenter, convlstm_builder
+from .earthformer import CuboidTransformerModel, Earthformer, EarthformerSegmenter, earthformer_builder
 from .eqnet import EQNet, eqnet_builder
 from .eqtransformer import EQTransformer, eqtransformer_builder
 from .firecastnet import FireCastNet, firecastnet_builder
@@ -138,6 +139,10 @@ __all__ = [
     "ConvLSTMCell",
     "ConvLSTMSegmenter",
     "convlstm_builder",
+    "CuboidTransformerModel",
+    "Earthformer",
+    "EarthformerSegmenter",
+    "earthformer_builder",
     "PixelLogisticRegression",
     "logistic_regression_builder",
     "ResNetUNet",
@@ -275,6 +280,13 @@ register_model(
     "utae",
     utae_builder,
     defaults={"out_channels": 1},
+)
+
+register_model(
+    "earthformer",
+    earthformer_builder,
+    # Shapes and hyperparameters come from the preset (official earthformer_sevir_v1.yaml).
+    defaults={"config": "sevir", "pretrained": None},
 )
 
 register_model(

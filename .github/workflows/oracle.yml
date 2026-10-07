@@ -59,6 +59,14 @@ jobs:
               firecastnet firecastnet_global_cls_ts24_h1 firecastnet_global_regr_ts24_h1
               firecastnet_lam_aust_cls_ts24_h1
             tests: tests/oracle/test_firecastnet_oracle.py
+          # The official Earthformer model file needs einops, which no other suite installs. The SEVIR
+          # and ICAR-ENSO checkpoints (35 MB and 6 MB) are fetched and compared in CI.
+          - suite: earthformer
+            python: "3.10"
+            torch: torch
+            requirements: tests/oracle/requirements-earthformer.txt
+            references: earth-forecasting-transformer earthformer_sevir earthformer_icarenso2021
+            tests: tests/oracle/test_earthformer_oracle.py
           # TerraTorch 0.99.8 (the Prithvi-EO-2.0 BurnScars training stack) needs Python >= 3.12 and
           # torch 2.6. The 1.3 GB checkpoints are not fetched in CI; those tests run locally.
           - suite: prithvi
