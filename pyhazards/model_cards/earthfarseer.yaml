@@ -1,0 +1,127 @@
+model_name: earthfarseer
+display_name: Earthfarseer
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/earthfarseer.py
+builder_name: earthfarseer_builder
+summary: >
+  Spatio-temporal forecaster that combines a local CNN branch with a global Fourier transformer
+  (FoTF) and a SimVP-style temporal block with Fourier mixing (TeDev); a Sim2Real-Fire
+  fire-forecasting baseline.
+description:
+  - >
+    ``earthfarseer`` maps ``T`` input frames ``(batch, T, C, H, W)`` to the next ``T`` frames
+    (Wu et al., AAAI 2024). The spatial block FoTF runs a global Fourier transformer (16x16
+    patches, 12 blocks of width 768 whose token mixing is an adaptive Fourier neural operator,
+    then three transposed convolutions back to pixels) next to a local convolution branch, and
+    lets the two exchange features three times. A strided convolutional encoder (``hid_S``
+    channels, ``N_S`` layers) compresses each frame; TeDev stacks the frames as channels and
+    runs a U-shaped stack of multi-kernel Inception blocks (``N_T`` down, ``N_T`` up, ``hid_T``
+    channels) with 12 Fourier blocks at its bottleneck; a mirrored decoder returns to pixels,
+    and the output of a complete SimVP network on the raw input is added.
+  - >
+    The default is the official ``Earthfarseer_model(shape_in=(10, 1, 64, 64))`` (the paper's
+    Moving MNIST setting, 10 -> 10 frames): hid_S 512, hid_T 256, N_S 4, N_T 8, Inception kernels
+    3/5/7/11 with 8 groups, 157,518,863 parameters. The official code has no license, so the
+    model is written from the paper and permissively licensed parts (OpenSTL's SimVP Inception
+    block, Apache-2.0); parameter names and creation order follow the official code, so its
+    state dicts load with ``strict=True`` and the same seed gives the same weights.
+  - >
+    ``task="forecasting"`` returns the frame forecast. ``task="segmentation"`` is a PyHazards
+    adaptation for next-step fire masks: a 1x1 convolution (``segmentation_head``) maps the
+    channels of the first predicted frame to ``out_channels`` logits ``(batch, 1, H, W)``; the
+    Earthfarseer parameters keep their official names at the top level of the state dict.
+paper:
+  title: "Earthfarseer: Versatile Spatio-Temporal Dynamical Systems Modeling in One Model"
+  url: https://arxiv.org/abs/2312.08403
+  repo_url: https://github.com/easylearningscores/EarthFarseer
+references:
+  - title: "Sim2Real-Fire: A Multi-modal Simulation Dataset for Forecast and Backtracking of Real-world Forest Fire"
+    url: https://github.com/TJU-IDVLab/Sim2Real-Fire
+    repo_url: https://github.com/TJU-IDVLab/Sim2Real-Fire
+    note: >
+      Li et al., NeurIPS 2024 Datasets and Benchmarks. Listed as "Earthfarsser" among the AI
+      baselines of Table 2, trained on simulated wildfire scenarios and tested on simulated and
+      real-world fires (binary fire-area sequences with satellite, topography, vegetation, fuel
+      and weather inputs). Forecast AUPRC / F1 / IoU: 73.4 / 70.6 / 63.5 (simulation) and
+      62.4 / 60.5 / 49.2 (real world); backtracking: 69.3 / 68.5 / 50.9 and 51.6 / 49.4 / 37.5.
+      Configuration not published: the paper only calls the baselines "commonly used AI models
+      that can be easily adapted", and its repository contains only S2R-FireTr (3 input frames
+      at 256x256), so the input stacking, model size, loss and output head of this baseline are
+      unknown. These numbers are not reproduced by PyHazards.
+reproduction:
+  reference_code: https://github.com/Alexander-wu/EarthFarseer
+  reference_commit: 258d4bb56497a6fb4022a5c37dec1e05ab1bedb1
+  reference_license: >-
+    none (no LICENSE file; the README's Apache-2.0 badge links to OpenSTL's licence and does not
+    license this repository); used only as a test oracle, not copied
+  reference_config: >
+    Earthfarseer_model(shape_in=(10, 1, 64, 64)) with its defaults hid_S=512, hid_T=256, N_S=4,
+    N_T=8, incep_ker=[3, 5, 7, 11], groups=8 (timm 0.9.16 as in the official requirements):
+    157,518,863 parameters, seeded initialisation and outputs compared locally with
+    PYHAZARDS_ORACLE_LARGE=1 (bit-identical in eval and train mode). CI compares three reduced
+    models (other frame counts, channels, sizes, N_S 2/4/6, N_T 2/3, kernels and groups) in which
+    only the hard-coded FoTF transformer width and depth (768, 12) are overridden in the official
+    GF_Block call, plus official state dicts loaded into the builder's forecasting and
+    segmentation models.
+  parameter_count: 157518863
+  checks: [parameter_count, initialization, state_dict, forward]
+  oracle_test: tests/oracle/test_earthfarseer_oracle.py
+  deviations:
+    - >
+      task="segmentation" (first predicted frame, 1x1 convolution to out_channels logits) is a
+      PyHazards adaptation, not from Sim2Real-Fire, whose baseline heads are unpublished.
+    - >
+      The official model sizes the TeDev Fourier token grid as int(H / 2 ** (N_S / 2)), plus 1
+      when H is divisible by 3. Because H must be a multiple of 16, this disagrees with the real
+      latent size, and the official forward fails, whenever H is divisible by 3 (48, 96, ..., 384)
+      or N_S is odd. PyHazards uses the real latent size, which equals the official value
+      wherever the official model runs.
+    - >
+      The official FoTF builds its transformer for H x H (img_size=H), so non-square inputs fail
+      its patch-embedding assertion; PyHazards builds it for H x W.
+    - >
+      gf_embed_dim, gf_depth and num_interactions are hard-coded in the official model (768, 12,
+      3); PyHazards exposes them only to build smaller models (smoke tests). Their defaults give
+      the official network.
+tasks:
+  - forecasting
+  - segmentation
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  # Official default: 10 frames of 1 x 64 x 64 -> the next 10 frames (157.5M parameters).
+  model = build_model(name="earthfarseer", task="forecasting")
+  x = torch.randn(2, 10, 1, 64, 64)  # (batch, time, channels, height, width)
+  print(model(x).shape)  # (2, 10, 1, 64, 64)
+
+  # PyHazards next-step fire-mask adaptation on 3 frames of 4 channels at 128 x 128.
+  seg = build_model(name="earthfarseer", task="segmentation", in_channels=4, history=3, img_size=128)
+  print(seg(torch.randn(2, 3, 4, 128, 128)).shape)  # (2, 1, 128, 128)
+notes:
+  - "The output has as many frames as the input. The paper's temporal projection to other lengths (10 -> 30, 50 -> 50 frames) is not in the released code, so it is not provided."
+  - "Height and width must be multiples of 16 (FoTF patches and its 16x transposed-convolution head) and of the encoder stride; the parameter count depends on the frame count and size (for example 145,121,999 for 3 frames of 1 x 256 x 256)."
+  - "Kept from the official code because they change outputs or parameter counts: the same global transformer and local branch are applied seven times inside FoTF; the transformer MLP replaces fc2 by an average pool over groups of four hidden features (fc2 is built but unused); the Fourier operator's second layer computes its imaginary part from the already updated real part; a second encoder (enc) is built but unused; the added SimVP branch (skip_conneciton, spelling kept) has fixed sizes 16 / 256 / 4 / 8."
+  - "Where the paper and the released code differ, PyHazards follows the code: the local branch is one 1x1 transposed convolution (the paper describes 3x3 ConvNormReLU units), the FoTF up-exchange is a transposed convolution and the down-exchange a convolution (the paper states the reverse), and the TeDev kernels are 3/5/7/11 (the paper lists 1/3/7/11)."
+  - "Every dropout and stochastic-depth rate is 0 in the official model, so training and evaluation mode give the same outputs (GroupNorm and LayerNorm only)."
+  - "No official pretrained weights were found."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 2
+    history: 2
+    img_size: 32
+    hid_S: 8
+    hid_T: 16
+    N_S: 4
+    N_T: 2
+    gf_embed_dim: 32
+    gf_depth: 1
+  input:
+    kind: tensor
+    tensor:
+      shape: [1, 2, 2, 32, 32]
+  expected_output:
+    kind: tensor
+    shape: [1, 1, 32, 32]

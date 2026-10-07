@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         34
+         36
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         35
+         37
 
       .. container:: catalog-stat-note
 
@@ -180,6 +180,29 @@ pages and compatible benchmark coverage.
 
                **Paper:** `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_
 
+         .. grid-item-card:: Earthfarseer
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Spatio-temporal forecaster that combines a local CNN branch with a global Fourier transformer (FoTF) and a SimVP-style temporal block with Fourier mixing (TeDev); a Sim2Real-Fire fire-forecasting baseline.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Earthfarseer <modules/models_earthfarseer>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Earthfarseer: Versatile Spatio-Temporal Dynamical Systems Modeling in One Model <https://arxiv.org/abs/2312.08403>`_ | **Repo:** `Repository <https://github.com/easylearningscores/EarthFarseer>`__
+
          .. grid-item-card:: FireCastNet
             :class-card: catalog-entry-card
 
@@ -294,6 +317,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Prithvi-EO-2.0: A Versatile Multi-Temporal Foundation Model for Earth Observation Applications <https://arxiv.org/abs/2412.02732>`_ | **Repo:** `Repository <https://github.com/NASA-IMPACT/Prithvi-EO-2.0>`__
+
+         .. grid-item-card:: Rainformer
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               U-shaped radar-nowcasting network whose stages fuse shifted-window self-attention (global) and CNN + CBAM attention (local) features through a gate; the strongest Sim2Real-Fire baseline, with the official KNMI weights verified.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Rainformer <modules/models_rainformer>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Rainformer: Features Extraction Balanced Network for Radar-Based Precipitation Nowcasting <https://doi.org/10.1109/LGRS.2022.3162882>`_ | **Repo:** `Repository <https://github.com/Zjut-MultimediaPlus/Rainformer>`__
 
          .. grid-item-card:: ResNet-18 U-Net
             :class-card: catalog-entry-card
@@ -1168,6 +1214,7 @@ before selecting a model for evaluation.
    modules/models_asufm
    modules/models_attention_unet
    modules/models_convlstm
+   modules/models_earthfarseer
    modules/models_eqnet
    modules/models_eqtransformer
    modules/models_firecastnet
@@ -1186,6 +1233,7 @@ before selecting a model for evaluation.
    modules/models_phasenet
    modules/models_prithvi_burnscars
    modules/models_prithvi_eo_2_tl
+   modules/models_rainformer
    modules/models_resnet18_unet
    modules/models_saf_net
    modules/models_segformer

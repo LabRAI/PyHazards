@@ -3,7 +3,8 @@
 usage: python scripts/fetch_oracles.py [--dest DIR] [NAME ...]
 
 DIR defaults to $PYHAZARDS_ORACLE_DIR, then ~/.cache/pyhazards-oracles. Git repositories are
-checked out at the pinned commit; assets are downloaded and verified against their sha256.
+checked out at the pinned commit; assets are downloaded and verified against their sha256 (saved
+under the URL's file name, or ``filename`` when the URL has none, e.g. Google Drive downloads).
 Assets marked ``large: true`` (multi-GB checkpoints) are fetched only when named explicitly or
 with ``--large``; the tests that need them are skipped when they are absent.
 Run the oracle tests afterwards with ``PYHAZARDS_ORACLE_DIR=DIR python -m pytest tests/oracle``.
@@ -58,10 +59,10 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def fetch_asset(dest: Path, name: str, url: str, sha256: str, extract: bool = False) -> None:
+def fetch_asset(dest: Path, name: str, url: str, sha256: str, extract: bool = False, filename: str | None = None) -> None:
     target = dest / name
     target.mkdir(parents=True, exist_ok=True)
-    archive = target / Path(url.split("?")[0]).name
+    archive = target / (filename or Path(url.split("?")[0]).name)
     if not archive.exists() or _sha256(archive) != sha256:
         print(f"download {name}")
         urllib.request.urlretrieve(url, archive)
@@ -100,7 +101,7 @@ def main(argv=None) -> int:
             fetch_repo(dest, name, spec["url"], spec["commit"])
     for name, spec in manifest.get("assets", {}).items():
         if name in wanted or (not wanted and (args.large or not spec.get("large", False))):
-            fetch_asset(dest, name, spec["url"], spec["sha256"], spec.get("extract", False))
+            fetch_asset(dest, name, spec["url"], spec["sha256"], spec.get("extract", False), spec.get("filename"))
     print(f"oracles in {dest}")
     return 0
 
