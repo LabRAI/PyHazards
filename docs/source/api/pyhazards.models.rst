@@ -17,7 +17,7 @@ Wildfire
 Implemented Models
 ++++++++++++++++++
 
-:doc:`ASUFM </modules/models_asufm>`, :doc:`ConvLSTM </modules/models_convlstm>`, :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`FireCastNet </modules/models_firecastnet>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`Logistic Regression (pixel) </modules/models_logistic_regression>`, :doc:`ResNet-18 U-Net </modules/models_resnet18_unet>`, :doc:`U-TAE </modules/models_utae>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`WildfireSpreadTS Baselines </modules/models_wildfirespreadts>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`.
+:doc:`ASUFM </modules/models_asufm>`, :doc:`ConvLSTM </modules/models_convlstm>`, :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`FireCastNet </modules/models_firecastnet>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`Logistic Regression (pixel) </modules/models_logistic_regression>`, :doc:`Prithvi-EO-2.0 BurnScars </modules/models_prithvi_burnscars>`, :doc:`Prithvi-EO-2.0-TL </modules/models_prithvi_eo_2_tl>`, :doc:`ResNet-18 U-Net </modules/models_resnet18_unet>`, :doc:`U-TAE </modules/models_utae>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`WildfireSpreadTS Baselines </modules/models_wildfirespreadts>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`.
 
 Earthquake
 ~~~~~~~~~~

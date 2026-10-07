@@ -114,3 +114,4 @@ Mapped benchmark ecosystems
    :class-container: catalog-dropdown
 
    - WildfireSpreadTS is the public Appendix-A benchmark ecosystem surfaced on this page.
+   - Prithvi-EO-2.0 BurnScars and Prithvi-EO-2.0-TL segment burn scars after a fire (post-fire burned-area mapping). They are wildfire models but are not linked here, because this family scores danger and spread prediction, not post-fire mapping.

@@ -17,3 +17,27 @@ assets:
     sha256: 43a9db40ca002d9feac3a6b387838f24c3a7191b4257065d83206379f8ef957a
     license: CC-BY-4.0
     extract: true
+  # Prithvi-EO-2.0 (Hugging Face ibm-nasa-geospatial, Apache-2.0), pinned to a repo revision.
+  prithvi_eo2_tl_model_code:
+    url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL/resolve/63adbd39c271da4c42f447e69b1a7c91a338cdc9/prithvi_mae.py
+    sha256: 9cee9a8cb17c3859d6365a7e58f723e0f4c08e3e29aa4b8e6523506db70321da
+    license: Apache-2.0
+  prithvi_burnscars_config:
+    url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars/resolve/a3f2c410e45b8ac7417976614528a872f024d831/burn_scars_config.yaml
+    sha256: 9b40e6d8c6369b863d29fb1d69b6185aa366f8ee4c2de955bbad28d3ee32f466
+    license: Apache-2.0
+  prithvi_burnscars_example:
+    url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars/resolve/a3f2c410e45b8ac7417976614528a872f024d831/examples/subsetted_512x512_HLS.S30.T10SEH.2018190.v1.4_merged.tif
+    sha256: 13bc592a5e569d837bd8bb3524bb0d2f28418830bcc7b0750e74033078f8b17e
+    license: Apache-2.0
+  # Large checkpoints: fetched only when named explicitly (or with --large), never in routine CI.
+  prithvi_eo2_300m_burnscars_weights:
+    url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars/resolve/a3f2c410e45b8ac7417976614528a872f024d831/Prithvi_EO_V2_300M_BurnScars.pt
+    sha256: 0c5f9334be9a75c9006387ab8f3dc05a55ea7fb5ef7956717316be57c62954d3
+    license: Apache-2.0
+    large: true
+  prithvi_eo2_300m_tl_weights:
+    url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL/resolve/63adbd39c271da4c42f447e69b1a7c91a338cdc9/Prithvi_EO_V2_300M_TL.pt
+    sha256: 3629cedfbb350faafcb0dac902ae0d3c927e25ce8d9e0024aa1276ec66956ddb
+    license: Apache-2.0
+    large: true

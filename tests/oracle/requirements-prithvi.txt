@@ -1,0 +1,12 @@
+# Reference stack for tests/oracle/test_prithvi_oracle.py. Needs Python >= 3.12 (TerraTorch's
+# torchgeo) and CPU torch installed first:
+#   pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cpu
+# TerraTorch 0.99.8 is the release pinned by the official Prithvi-EO-2.0 BurnScars demo Space and the
+# stack the burn-scar checkpoint was trained with (it was saved by Lightning 2.5.0.post0, which 0.99.8
+# pins). 0.99.8 leaves smp and timm unpinned; the releases current when the checkpoint was published
+# (2025-02-28) are pinned here. smp 0.5.0 changed the U-Net decoder's last upsampling step, which
+# changes this model's outputs.
+terratorch==0.99.8
+segmentation-models-pytorch==0.4.0
+timm==1.0.15
+pytest

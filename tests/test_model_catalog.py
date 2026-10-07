@@ -27,6 +27,8 @@ def test_model_page_lists_generated_hazard_sections() -> None:
     assert ":doc:`Wildfire Forecasting <modules/models_wildfire_forecasting>`" in page
     assert ":doc:`WildfireSpreadTS Baselines <modules/models_wildfirespreadts>`" in page
     assert ":doc:`U-TAE <modules/models_utae>`" in page
+    assert ":doc:`Prithvi-EO-2.0 BurnScars <modules/models_prithvi_burnscars>`" in page
+    assert ":doc:`Prithvi-EO-2.0-TL <modules/models_prithvi_eo_2_tl>`" in page
     assert ":doc:`ASUFM <modules/models_asufm>`" in page
     assert ":doc:`ForeFire Adapter <modules/models_forefire>`" in page
     assert ":doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`" in page
