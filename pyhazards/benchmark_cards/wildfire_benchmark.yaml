@@ -45,9 +45,12 @@ linked_models:
   - logistic_regression
   - resnet18_unet
   - convlstm
+  - convgru
   - utae
   - segformer
   - swin_unet
+  - swinlstm
+  - trajgru
   - attention_unet
   - tcn
   - forefire

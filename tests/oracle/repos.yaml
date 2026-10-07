@@ -36,6 +36,17 @@ repos:
     url: https://github.com/SeasFire/firecastnet.git
     commit: dc0d131be7f0638e3a84c16817e7bc9be454e53e
     license: none at repo level; seasfire/backbones/graphcast/* carry NVIDIA SPDX Apache-2.0 headers (test oracle only, never vendored)
+  SwinLSTM:
+    # Tang et al., ICCV 2023. The repository also holds the Moving-MNIST SwinLSTM-D weights
+    # (Pretrained/trained_model_state_dict).
+    url: https://github.com/SongTang-x/SwinLSTM.git
+    commit: 4425bcfefbebfac85c9fc6c6659361b8154d5ca3
+    license: MIT
+  HKO-7:
+    # Shi et al., NeurIPS 2017 (TrajGRU), MXNet code.
+    url: https://github.com/sxjscience/HKO-7.git
+    commit: 57b987bd893bd6910996494c247359ace371d333
+    license: MIT
 
 assets:
   utae_pastis_weights:
@@ -85,6 +96,19 @@ assets:
     url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars/resolve/a3f2c410e45b8ac7417976614528a872f024d831/examples/subsetted_512x512_HLS.S30.T10SEH.2018190.v1.4_merged.tif
     sha256: 13bc592a5e569d837bd8bb3524bb0d2f28418830bcc7b0750e74033078f8b17e
     license: Apache-2.0
+  # Official HKO-7 (TrajGRU, NIPS 2017) checkpoints in MXNet format, linked from
+  # experiments/movingmnist/download_pretrained.sh and experiments/hko/download_pretrained.sh of the
+  # MIT repository. Dropbox serves each shared folder as a zip that is byte-identical across downloads.
+  hko7_movingmnist_weights:
+    url: https://www.dropbox.com/sh/n7gxfdd1pdasoio/AAC8uC4yto5Uam_7f3BEl-3La?dl=1
+    sha256: 0e7741208adb720c271bee69e38bbe16f7c673554e254c60433e3cd066958aba
+    license: MIT (sxjscience/HKO-7)
+    extract: true
+  hko7_hko_weights:
+    url: https://www.dropbox.com/sh/cp8zpi08umfiyha/AAAS6HJSsDQPjpKlxnBHtHvga?dl=1
+    sha256: 6441a1fd07ec4672603b34448357e2b21f7ee0f0107790a7df0f3ff86a306a81
+    license: MIT (sxjscience/HKO-7)
+    extract: true
   # Large checkpoints: fetched only when named explicitly (or with --large), never in routine CI.
   prithvi_eo2_300m_burnscars_weights:
     url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars/resolve/a3f2c410e45b8ac7417976614528a872f024d831/Prithvi_EO_V2_300M_BurnScars.pt

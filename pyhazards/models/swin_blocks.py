@@ -1,4 +1,4 @@
-"""Swin Transformer building blocks shared by ``swin_unet`` and ``asufm``.
+"""Swin Transformer building blocks shared by ``swin_unet``, ``asufm`` and ``swinlstm``.
 
 Attribution:
 
@@ -309,17 +309,9 @@ class SwinTransformerBlock(nn.Module):
         mask = labels.unsqueeze(1) - labels.unsqueeze(2)
         return mask.masked_fill(mask != 0, float(-100.0)).masked_fill(mask == 0, float(0.0))
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        h, w = self.input_resolution
-        b, length, c = x.shape
-        if length != h * w:
-            raise ValueError(f"Swin block expected {h * w} tokens for resolution {(h, w)}, got {length}.")
-
-        shortcut = x
-        x = self.norm1(x).view(b, h, w, c)
-        if self.use_modulation:
-            # ASUFM applies norm1 a second time to the modulated features.
-            x = self.norm1(self.modulation(x))
+    def _window_attention(self, x: torch.Tensor) -> torch.Tensor:
+        """(Shifted) window attention on normalised ``(B, H, W, C)`` features; returns ``(B, H * W, C)``."""
+        b, h, w, c = x.shape
         if self.shift_size > 0:
             x = torch.roll(x, shifts=(-self.shift_size, -self.shift_size), dims=(1, 2))
         windows = window_partition(x, self.window_size).view(-1, self.window_size * self.window_size, c)
@@ -327,8 +319,27 @@ class SwinTransformerBlock(nn.Module):
         x = window_reverse(windows, self.window_size, h, w)
         if self.shift_size > 0:
             x = torch.roll(x, shifts=(self.shift_size, self.shift_size), dims=(1, 2))
+        return x.view(b, h * w, c)
 
-        x = shortcut + self.drop_path(x.view(b, h * w, c))
+    def _check_tokens(self, x: torch.Tensor) -> None:
+        h, w = self.input_resolution
+        if x.ndim != 3 or x.shape[1] != h * w:
+            raise ValueError(
+                f"Swin block expected tokens of shape (batch, {h * w}, channels) for resolution {(h, w)}, "
+                f"got {tuple(x.shape)}."
+            )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        self._check_tokens(x)
+        h, w = self.input_resolution
+        b, _, c = x.shape
+
+        shortcut = x
+        x = self.norm1(x).view(b, h, w, c)
+        if self.use_modulation:
+            # ASUFM applies norm1 a second time to the modulated features.
+            x = self.norm1(self.modulation(x))
+        x = shortcut + self.drop_path(self._window_attention(x))
         return x + self.drop_path(self.mlp(self.norm2(x)))
 
 

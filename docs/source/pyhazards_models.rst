@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         34
+         37
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         35
+         38
 
       .. container:: catalog-stat-note
 
@@ -129,6 +129,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Attention U-Net: Learning Where to Look for the Pancreas <https://arxiv.org/abs/1804.03999>`_ | **Repo:** `Repository <https://github.com/ozan-oktay/Attention-Gated-Networks>`__
+
+         .. grid-item-card:: ConvGRU
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Convolutional GRU (Ballas et al., ICLR 2016) with a convolutional head on the last hidden state: the Conv-GRU baseline that FireCastNet trained for seasonal burned-area prediction.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`ConvGRU <modules/models_convgru>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Delving Deeper into Convolutional Networks for Learning Video Representations <https://arxiv.org/abs/1511.06432>`_
 
          .. grid-item-card:: ConvLSTM
             :class-card: catalog-entry-card
@@ -376,6 +399,29 @@ pages and compatible benchmark coverage.
 
                **Paper:** `Swin-Unet: Unet-like Pure Transformer for Medical Image Segmentation <https://arxiv.org/abs/2105.05537>`_ | **Repo:** `Repository <https://github.com/HuCaoFighting/Swin-Unet>`__
 
+         .. grid-item-card:: SwinLSTM
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Recurrent cell built from Swin Transformer blocks (Tang et al., ICCV 2023): a frames-to-frames forecaster with the official Moving-MNIST weights, one of the forecasters Sim2Real-Fire compares for fire-area forecasting.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`SwinLSTM <modules/models_swinlstm>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `SwinLSTM: Improving Spatiotemporal Prediction Accuracy using Swin Transformer and LSTM <https://arxiv.org/abs/2308.09891>`_ | **Repo:** `Repository <https://github.com/SongTang-x/SwinLSTM>`__
+
          .. grid-item-card:: TCN
             :class-card: catalog-entry-card
 
@@ -398,6 +444,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling <https://arxiv.org/abs/1803.01271>`_ | **Repo:** `Repository <https://github.com/locuslab/TCN>`__
+
+         .. grid-item-card:: TrajGRU
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Trajectory GRU encoder-forecaster for precipitation nowcasting (Shi et al., NeurIPS 2017): a frames-to-frames forecaster whose recurrent connections follow learned flow fields, ported from the official MXNet code with its HKO-7 and MovingMNIST++ weights.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`TrajGRU <modules/models_trajgru>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Deep Learning for Precipitation Nowcasting: A Benchmark and A New Model <https://arxiv.org/abs/1706.03458>`_ | **Repo:** `Repository <https://github.com/sxjscience/HKO-7>`__
 
          .. grid-item-card:: U-TAE
             :class-card: catalog-entry-card
@@ -1167,6 +1236,7 @@ before selecting a model for evaluation.
 
    modules/models_asufm
    modules/models_attention_unet
+   modules/models_convgru
    modules/models_convlstm
    modules/models_eqnet
    modules/models_eqtransformer
@@ -1190,8 +1260,10 @@ before selecting a model for evaluation.
    modules/models_saf_net
    modules/models_segformer
    modules/models_swin_unet
+   modules/models_swinlstm
    modules/models_tcif_fusion
    modules/models_tcn
+   modules/models_trajgru
    modules/models_tropicalcyclone_mlp
    modules/models_tropicyclonenet
    modules/models_urbanfloodcast
