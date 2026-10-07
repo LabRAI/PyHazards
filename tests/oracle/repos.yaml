@@ -37,6 +37,14 @@ repos:
     commit: dc0d131be7f0638e3a84c16817e7bc9be454e53e
     license: none at repo level; seasfire/backbones/graphcast/* carry NVIDIA SPDX Apache-2.0 headers (test oracle only, never vendored)
 
+  uncertainty-wildfires:
+    # Kondylatos et al., "Uncertainty-Aware Deep Learning for Wildfire Danger Forecasting"
+    # (arXiv 2509.25017). The repository holds the paper's checkpoints, including the ten
+    # deep-ensemble LSTMs in trained_models/ensembles/no-noisy (deep_ensemble oracle).
+    url: https://github.com/Orion-AI-Lab/uncertainty-wildfires.git
+    commit: fcfbfb894926d173e2f4cafc95b08f02cefe6e00
+    license: MIT
+
 assets:
   utae_pastis_weights:
     url: https://zenodo.org/records/5172293/files/UTAE_SemanticSeg_weights.zip

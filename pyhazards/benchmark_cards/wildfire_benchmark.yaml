@@ -39,6 +39,9 @@ smoke_configs:
 linked_models:
   - wildfire_fpa
   - wildfire_forecasting
+  - random_forest
+  - xgboost
+  - deep_ensemble
   - asufm
   - wildfire_aspp
   - wildfirespreadts
@@ -55,6 +58,12 @@ linked_models:
   - firecastnet
 notes:
   - "WildfireSpreadTS is the public Appendix-A benchmark ecosystem surfaced on this page."
+  - >
+    The Kondylatos et al. (2022) tree baselines ``random_forest`` and ``xgboost`` read the same
+    daily danger tensors as ``wildfire_forecasting`` but must be fitted (``model.fit``) before
+    they are scored, so they have no smoke config; pass the fitted model to
+    ``BenchmarkRunner.run(model=...)``. ``deep_ensemble`` wraps any of the linked models (the
+    ten-LSTM danger ensemble of Kondylatos et al. 2025, or U-TAE members for spread).
   - >
     FireCastNet forecasts seasonal burned-area presence on the SeasFire datacube (AUPRC in its
     paper); without a SeasFire adapter its smoke config runs on synthetic rasters and is scored

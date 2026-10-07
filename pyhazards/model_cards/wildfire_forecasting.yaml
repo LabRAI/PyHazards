@@ -26,7 +26,8 @@ description:
     The implementation is a port of ``SimpleLSTM`` and ``SimpleConvLSTM`` from the official code.
     Parameter names and initialisation order match the reference, so its state dicts load with
     ``strict=True``; ``hidden_size`` defaults to the paper runs (64 for the LSTM, 32 for the
-    ConvLSTM). The paper's random forest and XGBoost baselines are not part of this entry.
+    ConvLSTM). The paper's random forest and XGBoost baselines are the separate
+    ``random_forest`` and ``xgboost`` entries, which read the same daily tensors.
 paper:
   title: "Wildfire Danger Prediction and Understanding With Deep Learning"
   url: https://doi.org/10.1029/2022GL099368

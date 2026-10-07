@@ -256,7 +256,11 @@ def main() -> int:
                     "Smoke test failed for `{name}`: {error}".format(name=name, error=exc)
                 )
             else:
-                if not smoke["ok"]:
+                if smoke.get("skipped"):
+                    warnings.append(
+                        "Smoke test for `{name}` was skipped: {reason}.".format(name=name, reason=smoke["skipped"])
+                    )
+                elif not smoke["ok"]:
                     blockers.append(
                         "Smoke test shape mismatch for `{name}`: expected {expected}, got {actual}.".format(
                             name=name,

@@ -55,11 +55,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         16
+         19
 
       .. container:: catalog-stat-note
 
-         16 models
+         19 models
 
 
 Benchmark Mapping
@@ -109,11 +109,12 @@ Mapped benchmark ecosystems
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`ASUFM </modules/models_asufm>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS Baselines </modules/models_wildfirespreadts>`, :doc:`Logistic Regression (pixel) </modules/models_logistic_regression>`, :doc:`ResNet-18 U-Net </modules/models_resnet18_unet>`, :doc:`ConvLSTM </modules/models_convlstm>`, :doc:`U-TAE </modules/models_utae>`, :doc:`SegFormer </modules/models_segformer>`, :doc:`Swin-Unet </modules/models_swin_unet>`, :doc:`Attention U-Net </modules/models_attention_unet>`, :doc:`TCN </modules/models_tcn>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`FireCastNet </modules/models_firecastnet>`.
+   :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`Random Forest </modules/models_random_forest>`, :doc:`XGBoost </modules/models_xgboost>`, :doc:`Deep Ensemble </modules/models_deep_ensemble>`, :doc:`ASUFM </modules/models_asufm>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS Baselines </modules/models_wildfirespreadts>`, :doc:`Logistic Regression (pixel) </modules/models_logistic_regression>`, :doc:`ResNet-18 U-Net </modules/models_resnet18_unet>`, :doc:`ConvLSTM </modules/models_convlstm>`, :doc:`U-TAE </modules/models_utae>`, :doc:`SegFormer </modules/models_segformer>`, :doc:`Swin-Unet </modules/models_swin_unet>`, :doc:`Attention U-Net </modules/models_attention_unet>`, :doc:`TCN </modules/models_tcn>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`FireCastNet </modules/models_firecastnet>`.
 
 .. dropdown:: Notes
    :class-container: catalog-dropdown
 
    - WildfireSpreadTS is the public Appendix-A benchmark ecosystem surfaced on this page.
+   - The Kondylatos et al. (2022) tree baselines ``random_forest`` and ``xgboost`` read the same daily danger tensors as ``wildfire_forecasting`` but must be fitted (``model.fit``) before they are scored, so they have no smoke config; pass the fitted model to ``BenchmarkRunner.run(model=...)``. ``deep_ensemble`` wraps any of the linked models (the ten-LSTM danger ensemble of Kondylatos et al. 2025, or U-TAE members for spread).
    - FireCastNet forecasts seasonal burned-area presence on the SeasFire datacube (AUPRC in its paper); without a SeasFire adapter its smoke config runs on synthetic rasters and is scored with the spread-mask metrics.
    - Prithvi-EO-2.0 BurnScars and Prithvi-EO-2.0-TL segment burn scars after a fire (post-fire burned-area mapping). They are wildfire models but are not linked here, because this family scores danger and spread prediction, not post-fire mapping.

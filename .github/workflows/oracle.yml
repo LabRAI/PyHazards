@@ -35,10 +35,12 @@ jobs:
             requirements: tests/oracle/requirements.txt
             references: >-
               utae-paps WildfireSpreadTS utae_pastis_weights wildfire_forecasting
-              segformer_mit_b0 segformer_b0_ade TS-SatFire TCN
+              segformer_mit_b0 segformer_b0_ade TS-SatFire TCN uncertainty-wildfires
             tests: >-
               tests/oracle/test_wildfirespreadts_oracle.py
               tests/oracle/test_wildfire_forecasting_oracle.py
+              tests/oracle/test_classical_oracle.py
+              tests/oracle/test_deep_ensemble_oracle.py
               tests/oracle/test_segformer_oracle.py
               tests/oracle/test_attention_unet_oracle.py
               tests/oracle/test_tcn_oracle.py

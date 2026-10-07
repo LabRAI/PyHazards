@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import inspect
 from collections import defaultdict
 from pathlib import Path
@@ -209,9 +210,33 @@ class SmokeOutputSpec(BaseModel):
         return self
 
 
+class SmokeFitSpec(BaseModel):
+    """Random training data for models fitted before the forward call (``model.fit(inputs, targets)``).
+
+    Estimator models (e.g. scikit-learn wrappers) cannot predict before they are fitted. Inputs are
+    standard normal; with ``num_classes`` the targets are integer labels covering every class (the
+    first ``num_classes`` samples get one of each), otherwise standard normal values.
+    """
+
+    inputs: SmokeTensorSpec
+    targets: SmokeTensorSpec
+    num_classes: Optional[int] = Field(default=None, ge=1)
+
+    @model_validator(mode="after")
+    def validate_payload(self) -> "SmokeFitSpec":
+        if not self.inputs.shape or not self.targets.shape or self.inputs.shape[0] != self.targets.shape[0]:
+            raise ValueError("smoke fit inputs and targets need the same leading (sample) dimension")
+        if self.num_classes is not None and self.targets.shape[0] < self.num_classes:
+            raise ValueError("smoke fit targets need at least one sample per class")
+        return self
+
+
 class SmokeTestSpec(BaseModel):
     task: str
     build_kwargs: Dict[str, Any] = Field(default_factory=dict)
+    # Optional packages the model needs; the smoke test is skipped when one is not installed.
+    requires: List[str] = Field(default_factory=list)
+    fit: Optional[SmokeFitSpec] = None
     input: SmokeInputSpec
     expected_output: SmokeOutputSpec
 
@@ -1283,8 +1308,38 @@ def _shape_of_output(output: Any) -> Any:
     return type(output).__name__
 
 
+def _make_fit_targets(spec: SmokeFitSpec) -> torch.Tensor:
+    if spec.num_classes is None:
+        return _make_tensor(spec.targets)
+    count = 1
+    for size in spec.targets.shape:
+        count *= size
+    labels = torch.arange(count) % spec.num_classes
+    rest = labels[spec.num_classes :]
+    labels[spec.num_classes :] = rest[torch.randperm(rest.numel())]
+    return labels.reshape(spec.targets.shape).to(_dtype_for_name(spec.targets.dtype))
+
+
+def missing_smoke_requirements(card: ModelCard) -> List[str]:
+    """Optional packages of ``card.smoke_test.requires`` that are not installed."""
+    return [name for name in card.smoke_test.requires if importlib.util.find_spec(name) is None]
+
+
 def run_smoke_test(card: ModelCard) -> Dict[str, Any]:
     from pyhazards.models import build_model
+
+    expected = card.smoke_test.expected_output
+    expected_shape = expected.shape if expected.kind.lower() == "tensor" else expected.shapes
+    missing = missing_smoke_requirements(card)
+    if missing:
+        reason = "optional package(s) not installed: {names}".format(names=", ".join(missing))
+        return {
+            "ok": True,
+            "skipped": reason,
+            "actual_shape": None,
+            "expected_shape": expected_shape,
+            "summary": "{name}: skipped ({reason})".format(name=card.model_name, reason=reason),
+        }
 
     torch.manual_seed(0)
     model = build_model(
@@ -1292,6 +1347,9 @@ def run_smoke_test(card: ModelCard) -> Dict[str, Any]:
         task=card.smoke_test.task,
         **card.smoke_test.build_kwargs
     )
+    fit_spec = card.smoke_test.fit
+    if fit_spec is not None:
+        model.fit(_make_tensor(fit_spec.inputs), _make_fit_targets(fit_spec))
     model.eval()
     prepared = _prepare_smoke_input(card.smoke_test.input)
     with torch.no_grad():
@@ -1303,16 +1361,13 @@ def run_smoke_test(card: ModelCard) -> Dict[str, Any]:
             output = model(**prepared)
 
     actual_shape = _shape_of_output(output)
-    expected = card.smoke_test.expected_output
-    if expected.kind.lower() == "tensor":
-        ok = actual_shape == expected.shape
-    else:
-        ok = actual_shape == expected.shapes
+    ok = actual_shape == expected_shape
 
     return {
         "ok": ok,
+        "skipped": None,
         "actual_shape": actual_shape,
-        "expected_shape": expected.shape if expected.kind.lower() == "tensor" else expected.shapes,
+        "expected_shape": expected_shape,
         "summary": "{name}: output shape {actual}".format(
             name=card.model_name,
             actual=actual_shape,

@@ -2,8 +2,10 @@ from .backbones import CNNPatchEncoder, MLPBackbone, TemporalEncoder
 from .asufm import ASUFM, asufm_builder
 from .attention_unet import AttentionUnet, TemporalAttentionUnet, attention_unet_builder
 from .builder import build_model, default_builder
+from .classical import EstimatorModule, kondylatos_instance_features, random_forest_builder, xgboost_builder
 from .cnn_aspp import WildfireCNNASPP, cnn_aspp_builder
 from .convlstm import ConvLSTM, ConvLSTMCell, ConvLSTMSegmenter, convlstm_builder
+from .deep_ensemble import DeepEnsemble, deep_ensemble_builder
 from .eqnet import EQNet, eqnet_builder
 from .eqtransformer import EQTransformer, eqtransformer_builder
 from .firecastnet import FireCastNet, firecastnet_builder
@@ -68,6 +70,12 @@ __all__ = [
     "TemporalAttentionUnet",
     "attention_unet_builder",
     "ClassificationHead",
+    "DeepEnsemble",
+    "deep_ensemble_builder",
+    "EstimatorModule",
+    "kondylatos_instance_features",
+    "random_forest_builder",
+    "xgboost_builder",
     "RegressionHead",
     "SegmentationHead",
     "EQNet",
@@ -223,6 +231,28 @@ register_model(
         "dropout": 0.5,
         "patch_size": 25,
     },
+)
+
+# Kondylatos et al. (2022) notebooks/RF.ipynb; the daily-tensor layout is a builder default.
+register_model(
+    "random_forest",
+    random_forest_builder,
+    defaults={
+        "n_estimators": 100,
+        "max_depth": 10,
+        "min_samples_split": 2,
+        "min_samples_leaf": 1,
+        "random_state": 123,
+    },
+)
+
+# Library defaults of xgboost.XGBClassifier (the paper's values are in its unread Supporting Information).
+register_model("xgboost", xgboost_builder, defaults={})
+
+register_model(
+    "deep_ensemble",
+    deep_ensemble_builder,
+    defaults={"num_members": 5, "regression_output": "gaussian", "mc_dropout_passes": 0},
 )
 
 register_model(

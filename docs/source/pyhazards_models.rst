@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         34
+         37
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         35
+         38
 
       .. container:: catalog-stat-note
 
@@ -156,6 +156,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Convolutional LSTM Network: A Machine Learning Approach for Precipitation Nowcasting <https://arxiv.org/abs/1506.04214>`_ | **Repo:** `Repository <https://github.com/VSainteuf/utae-paps>`__
+
+         .. grid-item-card:: Deep Ensemble
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Deep ensembles (Lakshminarayanan et al., 2017) of any registered PyHazards model, with the uncertainty terms of the ten-LSTM wildfire-danger ensemble of Kondylatos et al. (2025).
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-secondary:`Segmentation` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Deep Ensemble <modules/models_deep_ensemble>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles <https://arxiv.org/abs/1612.01474>`_
 
          .. grid-item-card:: DNN-LSTM-AutoEncoder
             :class-card: catalog-entry-card
@@ -294,6 +317,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Prithvi-EO-2.0: A Versatile Multi-Temporal Foundation Model for Earth Observation Applications <https://arxiv.org/abs/2412.02732>`_ | **Repo:** `Repository <https://github.com/NASA-IMPACT/Prithvi-EO-2.0>`__
+
+         .. grid-item-card:: Random Forest
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The random-forest baseline of Kondylatos et al. (2022) for next-day wildfire danger: a scikit-learn forest of 100 trees of depth 10 on 35 instance features built from ten days of covariates.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Random Forest <modules/models_random_forest>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Random Forests <https://doi.org/10.1023/A:1010933404324>`_ | **Repo:** `Repository <https://github.com/scikit-learn/scikit-learn>`__
 
          .. grid-item-card:: ResNet-18 U-Net
             :class-card: catalog-entry-card
@@ -529,6 +575,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread: An ASPP-Enabled CNN Approach <https://doi.org/10.1109/LGRS.2024.3417624>`_
+
+         .. grid-item-card:: XGBoost
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Gradient-boosted trees (XGBoost) on the 35 instance features of Kondylatos et al. (2022) for next-day wildfire danger, with library-default hyperparameters until the paper's are known.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`XGBoost <modules/models_xgboost>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `XGBoost: A Scalable Tree Boosting System <https://doi.org/10.1145/2939672.2939785>`_ | **Repo:** `Repository <https://github.com/dmlc/xgboost>`__
 
 
    .. tab-item:: Earthquake
@@ -1168,6 +1237,7 @@ before selecting a model for evaluation.
    modules/models_asufm
    modules/models_attention_unet
    modules/models_convlstm
+   modules/models_deep_ensemble
    modules/models_eqnet
    modules/models_eqtransformer
    modules/models_firecastnet
@@ -1186,6 +1256,7 @@ before selecting a model for evaluation.
    modules/models_phasenet
    modules/models_prithvi_burnscars
    modules/models_prithvi_eo_2_tl
+   modules/models_random_forest
    modules/models_resnet18_unet
    modules/models_saf_net
    modules/models_segformer
@@ -1202,3 +1273,4 @@ before selecting a model for evaluation.
    modules/models_wildfire_fpa
    modules/models_wildfirespreadts
    modules/models_wrf_sfire
+   modules/models_xgboost
