@@ -19,6 +19,20 @@ def test_wildfire_spread_vertical_slice(tmp_path):
     assert summary.hazard_task == "wildfire.spread"
     assert "iou" in summary.metrics
     assert "burned_area_mae" in summary.metrics
+    assert 0.0 <= summary.metrics["average_precision"] <= 1.0
+
+
+def test_spread_average_precision_matches_sklearn():
+    import torch
+    from sklearn.metrics import average_precision_score
+
+    from pyhazards.benchmarks.wildfire import _spread_metrics
+
+    torch.manual_seed(0)
+    logits = torch.randn(3, 1, 8, 8)
+    targets = (torch.rand(3, 1, 8, 8) > 0.8).float()
+    expected = average_precision_score(targets.flatten().numpy(), torch.sigmoid(logits).flatten().numpy())
+    assert abs(_spread_metrics(logits, targets)["average_precision"] - expected) < 1e-9
 
 
 def test_added_wildfire_breadth_configs(tmp_path):

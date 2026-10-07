@@ -87,6 +87,7 @@ Primary Source
 .. dropdown:: Key Metrics
    :class-container: catalog-dropdown
 
+   - ``average_precision``
    - ``iou``
    - ``f1``
    - ``burned_area_mae``

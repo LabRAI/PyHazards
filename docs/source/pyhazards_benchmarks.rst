@@ -86,7 +86,7 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-meta-row
 
-         **Key Metrics:** Accuracy, Macro F1, AUC, PR-AUC, +5 more
+         **Key Metrics:** Accuracy, Macro F1, AUC, PR-AUC, +6 more
 
       .. container:: catalog-meta-row
 
@@ -199,7 +199,7 @@ status without opening the detail pages first.
    * - Wildfire
      - :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
      - Danger, Spread
-     - Accuracy, Macro F1, AUC, PR-AUC, +5 more
+     - Accuracy, Macro F1, AUC, PR-AUC, +6 more
      - 12 models
      - Synthetic-backed
    * - Earthquake
@@ -260,7 +260,7 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Key Metrics:** IoU, F1, Burned-area MAE
+               **Key Metrics:** Average Precision, IoU, F1, Burned-area MAE
 
             .. container:: catalog-meta-row
 

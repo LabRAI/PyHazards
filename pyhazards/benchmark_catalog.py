@@ -70,6 +70,7 @@ METRIC_DISPLAY_LABELS = {
     "s_pick_mae": "S-pick MAE",
     "pixel_mae": "Pixel MAE",
     "burned_area_mae": "Burned-area MAE",
+    "average_precision": "Average Precision",
     "track_error": "Track Error",
     "intensity_mae": "Intensity MAE",
 }

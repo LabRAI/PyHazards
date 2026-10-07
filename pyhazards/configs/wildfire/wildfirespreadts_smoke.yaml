@@ -2,6 +2,7 @@ benchmark:
   name: wildfire
   hazard_task: wildfire.spread
   metrics:
+    - average_precision
     - iou
     - f1
     - burned_area_mae

@@ -16,6 +16,10 @@ from .schemas import BenchmarkResult
 
 def _spread_metrics(logits: torch.Tensor, targets: torch.Tensor) -> Dict[str, float]:
     probs = torch.sigmoid(logits)
+    # Pixel-level average precision is the primary WildfireSpreadTS metric.
+    flat_targets = targets.detach().flatten().cpu().numpy() > 0.5
+    flat_probs = probs.detach().flatten().cpu().numpy()
+    average_precision = float(average_precision_score(flat_targets, flat_probs)) if flat_targets.any() else 0.0
     preds = (probs >= 0.5).float()
     targets = targets.float()
     intersection = (preds * targets).sum()
@@ -25,7 +29,12 @@ def _spread_metrics(logits: torch.Tensor, targets: torch.Tensor) -> Dict[str, fl
     burned_area_mae = float(
         torch.mean(torch.abs(preds.flatten(1).sum(dim=1) - targets.flatten(1).sum(dim=1))).detach().cpu()
     )
-    return {"iou": iou, "f1": f1, "burned_area_mae": burned_area_mae}
+    return {
+        "average_precision": average_precision,
+        "iou": iou,
+        "f1": f1,
+        "burned_area_mae": burned_area_mae,
+    }
 
 
 def _danger_metrics(logits: torch.Tensor, targets: torch.Tensor) -> Dict[str, float]:
@@ -66,7 +75,7 @@ class WildfireBenchmark(Benchmark):
     hazard_task = "wildfire.danger"
     metric_names_by_task = {
         "wildfire.danger": ["accuracy", "macro_f1", "auc", "pr_auc", "mae", "rmse"],
-        "wildfire.spread": ["iou", "f1", "burned_area_mae"],
+        "wildfire.spread": ["average_precision", "iou", "f1", "burned_area_mae"],
     }
 
     def evaluate(self, model: nn.Module, data: DataBundle, config: ExperimentConfig) -> BenchmarkResult:

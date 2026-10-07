@@ -89,6 +89,7 @@ Mapped benchmark ecosystems
    - ``pr_auc``
    - ``mae``
    - ``rmse``
+   - ``average_precision``
    - ``iou``
    - ``f1``
    - ``burned_area_mae``
