@@ -24,6 +24,7 @@ from .registry import available_models, register_model
 from .resnet_unet import ResNetUNet, resnet18_unet_builder
 from .saf_net import SAFNet, saf_net_builder
 from .segformer import SegFormer, segformer_builder
+from .swin_unet import SwinUnet, swin_unet_builder
 from .tcif_fusion import TCIFFusion, tcif_fusion_builder
 from .tropicalcyclone_mlp import TropicalCycloneMLP, tropicalcyclone_mlp_builder
 from .tropicyclonenet import TropiCycloneNet, tropicyclonenet_builder
@@ -129,6 +130,8 @@ __all__ = [
     "segformer_builder",
     "UTAE",
     "utae_builder",
+    "SwinUnet",
+    "swin_unet_builder",
     "WRFSFireAdapter",
     "wrf_sfire_builder",
     "ConvLEMCell",
@@ -209,13 +212,13 @@ register_model(
 register_model(
     "asufm",
     asufm_builder,
-    defaults={
-        "input_dim": 7,
-        "hidden_dim": 64,
-        "output_dim": 5,
-        "lookback": 12,
-        "dropout": 0.1,
-    },
+    defaults={"in_channels": 6, "out_channels": 1, "img_size": 64, "window_size": 8, "focal": True},
+)
+
+register_model(
+    "swin_unet",
+    swin_unet_builder,
+    defaults={"out_channels": 1, "history": 1, "img_size": 224, "window_size": 7, "drop_path_rate": 0.2, "pretrained": None},
 )
 
 register_model(

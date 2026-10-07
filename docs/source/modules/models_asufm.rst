@@ -6,7 +6,7 @@ ASUFM
 Overview
 --------
 
-``asufm`` is a compact temporal convolution baseline for next-window wildfire activity prediction.
+``asufm`` is a Swin U-Net (patch 4, embedding 96, depths (2, 2, 2, 2), heads (3, 6, 12, 24), window 8) whose encoder blocks apply focal modulation before window attention, with patch-expanding decoder stages and skip connections. It maps one day of Next Day Wildfire Spread (NDWS) features, 64x64 at 1 km, to logits for the next day's fire mask (Li & Rad, IEEE CAI 2024).
 
 At a Glance
 -----------
@@ -46,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-note
 
-         Forecasting
+         Segmentation
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,9 +63,9 @@ At a Glance
 Description
 -----------
 
-``asufm`` is a compact temporal convolution baseline for next-window wildfire activity prediction.
+``asufm`` is a Swin U-Net (patch 4, embedding 96, depths (2, 2, 2, 2), heads (3, 6, 12, 24), window 8) whose encoder blocks apply focal modulation before window attention, with patch-expanding decoder stages and skip connections. It maps one day of Next Day Wildfire Spread (NDWS) features, 64x64 at 1 km, to logits for the next day's fire mask (Li & Rad, IEEE CAI 2024).
 
-PyHazards exposes it through the shared wildfire benchmark and config workflow.
+The implementation reproduces the official fire-asufm code (``get_asfum_6_configs`` with six features by default, ``get_asufm_12_configs`` with all twelve) with the same parameter names and initialisation, so official checkpoints load with ``strict=True``. It is assembled from MIT-licensed Swin Transformer and FocalNet blocks rather than copied, because the official model package derives from the unlicensed Attention Swin U-Net code.
 
 Benchmark Compatibility
 -----------------------
@@ -75,12 +75,25 @@ Benchmark Compatibility
 External References
 -------------------
 
-**Paper:** `Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer <https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278>`_ | **Repo:** `Repository <https://github.com/bronteee/fire-asufm>`__
+**Paper:** `Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer <https://doi.org/10.1109/CAI59869.2024.00278>`_ | **Repo:** `Repository <https://github.com/bronteee/fire-asufm>`__
+
+Used In
+-------
+
+- `Next Day Wildfire Spread: A Machine Learning Dataset to Predict Wildfire Spreading From Remote-Sensing Data <https://doi.org/10.1109/TGRS.2022.3192974>`_ (`repo <https://github.com/google-research/google-research/tree/master/simulation_research/next_day_wildfire_spread>`__): Dataset used by ASUFM (64x64 tiles, 12 input features). The official training script uses six features (elevation, th, sph, pr, NDVI, PrevFireMask), BCE with pos_weight 3, AdamW (amsgrad) lr 1e-4 with cosine annealing and linear warm-up, batch 16 and mixed precision; the authors also release a 2012-2023 North America extension on Kaggle. Reported scores are not reproduced here because the paper (IEEE CAI 2024, pp. 1536-1541) is paywalled and could not be obtained.
+- `Focal Modulation Networks <https://arxiv.org/abs/2203.11926>`_ (`repo <https://github.com/microsoft/FocalNet>`__): Focal modulation in the encoder blocks (focal level 1, window 3).
+- `Swin Transformer: Hierarchical Vision Transformer using Shifted Windows <https://arxiv.org/abs/2103.14030>`_ (`repo <https://github.com/microsoft/Swin-Transformer>`__): Window-attention blocks, patch merging and patch embedding.
 
 Reproduction
 ------------
 
-Not yet verified against a reference implementation.
+- **Reference implementation:** `https://github.com/bronteee/fire-asufm <https://github.com/bronteee/fire-asufm>`__ at ``688dda9`` (Apache-2.0)
+- **Checked configuration:** ASUFM(get_asfum_6_configs(), num_classes=1) and ASUFM(get_asufm_12_configs(), num_classes=1) from configs/asufm.py (35,047,840 and 35,057,056 parameters), plus the focal=False variant get_swin_unet_attention_configs, on (batch, 6 or 12, 64, 64) inputs.
+- **Parameter count:** 35,047,840
+- **Verified:** parameter count, seeded initialisation, parameter names and shapes, forward outputs
+- **Oracle test:** ``tests/oracle/test_swin_oracle.py``
+- **Deviation:** The official blocks return their window-attention maps and the decoder adds the encoder's maps to them ("spatial attention"), but the sums are discarded and never reach the output. They are not computed here; outputs are identical.
+- **Deviation:** The configuration's cross-contextual-attention mode (CrossViT skips) is not part of ASUFM and is not implemented.
 
 Registry Name
 -------------
@@ -90,7 +103,7 @@ Primary entrypoint: ``asufm``
 Supported Tasks
 ---------------
 
-- Forecasting
+- Segmentation
 
 Programmatic Use
 ----------------
@@ -100,17 +113,16 @@ Programmatic Use
    import torch
    from pyhazards.models import build_model
 
-   model = build_model(
-       name="asufm",
-       task="forecasting",
-       input_dim=7,
-       output_dim=5,
-       lookback=12,
-   )
-   preds = model(torch.randn(2, 12, 7))
-   print(preds.shape)
+   # Six NDWS features: elevation, th, sph, pr, NDVI, PrevFireMask.
+   model = build_model(name="asufm", task="segmentation", in_channels=6)
+   logits = model(torch.randn(2, 6, 64, 64))
+   print(logits.shape)  # (2, 1, 64, 64)
 
 Notes
 -----
 
-- The smoke path uses weekly wildfire count windows with seasonal time features.
+- Inputs must be 64x64 (img_size); the architecture is tied to the token grid it was built for.
+- Decoder stages fuse each skip connection twice through the same concat_back_dim layer, because the configured spatial-attention branch concatenates and projects again. This is the official behaviour and is kept.
+- Decoder blocks contain focal-modulation weights that the official code never applies; the top-level patch_embed (4 input channels) and decoder.norm are also unused. All are kept so official state dicts load.
+- The official model ignores the config's drop_path_rate, attn_drop_rate, ape and patch_size (fixed at 0.1, 0, False and 4).
+- The authors' Kaggle checkpoint link (bronteli/attention-swin-u-net-with-focal-modulation-asufm) returned HTTP 404 on 2026-10-07, so no trained weights are checked.

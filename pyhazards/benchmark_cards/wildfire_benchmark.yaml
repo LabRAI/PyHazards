@@ -47,6 +47,7 @@ linked_models:
   - convlstm
   - utae
   - segformer
+  - swin_unet
   - forefire
   - wrf_sfire
   - firecastnet

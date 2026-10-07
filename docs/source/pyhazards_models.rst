@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         29
+         30
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         32
+         33
 
       .. container:: catalog-stat-note
 
@@ -89,11 +89,11 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-entry-summary
 
-               A temporal convolution baseline for weekly wildfire activity forecasting.
+               Attention Swin U-Net with Focal Modulation for next-day wildfire spread (fire-mask segmentation of 64x64 Next Day Wildfire Spread tiles).
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -105,7 +105,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-link-row
 
-               **Paper:** `Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer <https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278>`_ | **Repo:** `Repository <https://github.com/bronteee/fire-asufm>`__
+               **Paper:** `Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer <https://doi.org/10.1109/CAI59869.2024.00278>`_ | **Repo:** `Repository <https://github.com/bronteee/fire-asufm>`__
 
          .. grid-item-card:: ConvLSTM
             :class-card: catalog-entry-card
@@ -291,6 +291,33 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `SegFormer: Simple and Efficient Design for Semantic Segmentation with Transformers <https://arxiv.org/abs/2105.15203>`_ | **Repo:** `Repository <https://github.com/NVlabs/SegFormer>`__
+
+         .. grid-item-card:: Swin-Unet
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               U-shaped pure Swin Transformer (Swin-Unet-Tiny), the attention-based spread baseline of the WSTS+ wildfire benchmark.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Swin-Unet <modules/models_swin_unet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Swin-Unet: Unet-like Pure Transformer for Medical Image Segmentation <https://arxiv.org/abs/2105.05537>`_ | **Repo:** `Repository <https://github.com/HuCaoFighting/Swin-Unet>`__
 
          .. grid-item-card:: U-TAE
             :class-card: catalog-entry-card
@@ -1079,6 +1106,7 @@ before selecting a model for evaluation.
    modules/models_resnet18_unet
    modules/models_saf_net
    modules/models_segformer
+   modules/models_swin_unet
    modules/models_tcif_fusion
    modules/models_tropicalcyclone_mlp
    modules/models_tropicyclonenet

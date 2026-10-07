@@ -50,6 +50,5 @@ primary_references:
     url: https://github.com/LabRAI/PyHazards
 related_models:
   - wildfire_fpa
-  - asufm
 related_benchmarks:
   - wildfire_benchmark

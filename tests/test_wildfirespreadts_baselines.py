@@ -110,3 +110,20 @@ def test_oracle_manifest_pins_full_commits():
         assert len(spec["commit"]) == 40, name
     for name, spec in manifest["assets"].items():
         assert len(spec["sha256"]) == 64, name
+
+
+def test_oracle_workflow_runs_every_oracle_test_once():
+    import yaml
+
+    root = Path(__file__).resolve().parents[1]
+    workflow = yaml.safe_load((root / ".github" / "workflows" / "oracle.yml").read_text())
+    entries = workflow["jobs"]["oracle"]["strategy"]["matrix"]["include"]
+    listed = sorted(path for entry in entries for path in entry["tests"].split())
+    expected = sorted(path.relative_to(root).as_posix() for path in (root / "tests" / "oracle").glob("test_*.py"))
+    assert listed == expected
+
+    manifest = yaml.safe_load((root / "tests" / "oracle" / "repos.yaml").read_text())
+    known = set(manifest["repos"]) | set(manifest["assets"])
+    for entry in entries:
+        assert (root / entry["requirements"]).exists(), entry["suite"]
+        assert set(entry["references"].split()) <= known, entry["suite"]

@@ -125,7 +125,7 @@ Method and Resource Matrix
      - Baseline
      - ``Implemented``
      - :doc:`ASUFM <modules/models_asufm>`
-     -  
+     - Next-day fire-mask segmentation on 64x64 NDWS tiles, verified against the official code; the smoke benchmark runs it on synthetic 64x64 spread rasters because no NDWS loader exists yet.
    * - Wildfire
      - `WRF-SFIRE <https://github.com/openwfm/WRF-SFIRE>`_
      - Simulator Adapter

@@ -16,6 +16,14 @@ repos:
     url: https://github.com/Orion-AI-Lab/wildfire_forecasting.git
     commit: 2b18bcf194284d56bd4e1774f7d5315db94cba34
     license: MIT
+  Swin-Unet:
+    url: https://github.com/HuCaoFighting/Swin-Unet.git
+    commit: f48f623e226e25b6e395c37207915c50aaa9c776
+    license: none (no LICENSE file; used only as a test oracle, never vendored)
+  fire-asufm:
+    url: https://github.com/bronteee/fire-asufm.git
+    commit: 688dda94dec9e3b22f149f2b9335d3b38fd2277f
+    license: Apache-2.0
 
 assets:
   utae_pastis_weights:
@@ -33,3 +41,7 @@ assets:
     url: https://huggingface.co/nvidia/segformer-b0-finetuned-ade-512-512/resolve/489d5cd81a0b59fab9b7ea758d3548ebe99677da/model.safetensors
     sha256: 6ae39addd01de6b1b8bde2cf677d43a5cd733424b8d186de3f95d1c51fee23f9
     license: NVIDIA Source Code License for SegFormer (non-commercial)
+  swin_tiny_imagenet:
+    url: https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_tiny_patch4_window7_224.pth
+    sha256: 9f71c168d837d1b99dd1dc29e14990a7a9e8bdc5f673d46b04fe36fe15590ad3
+    license: MIT (microsoft/Swin-Transformer)

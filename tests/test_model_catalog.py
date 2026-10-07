@@ -29,6 +29,7 @@ def test_model_page_lists_generated_hazard_sections() -> None:
     assert ":doc:`U-TAE <modules/models_utae>`" in page
     assert ":doc:`SegFormer <modules/models_segformer>`" in page
     assert ":doc:`ASUFM <modules/models_asufm>`" in page
+    assert ":doc:`Swin-Unet <modules/models_swin_unet>`" in page
     assert ":doc:`ForeFire Adapter <modules/models_forefire>`" in page
     assert ":doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`" in page
     assert ":doc:`FireCastNet <modules/models_firecastnet>`" in page

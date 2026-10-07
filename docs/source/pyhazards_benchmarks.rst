@@ -90,7 +90,7 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-meta-row
 
-         **Coverage:** 8 smoke configs | 13 models | 1 ecosystem
+         **Coverage:** 8 smoke configs | 14 models | 1 ecosystem
 
       .. container:: catalog-link-row
 
@@ -200,7 +200,7 @@ status without opening the detail pages first.
      - :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
      - Danger, Spread
      - Accuracy, Macro F1, AUC, PR-AUC, +6 more
-     - 13 models
+     - 14 models
      - Synthetic-backed
    * - Earthquake
      - :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
@@ -264,7 +264,7 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Coverage:** 5 smoke configs | 10 models
+               **Coverage:** 5 smoke configs | 11 models
 
             .. container:: catalog-link-row
 
