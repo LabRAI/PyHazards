@@ -48,6 +48,8 @@ linked_models:
   - utae
   - segformer
   - swin_unet
+  - attention_unet
+  - tcn
   - forefire
   - wrf_sfire
   - firecastnet

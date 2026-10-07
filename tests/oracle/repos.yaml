@@ -24,6 +24,14 @@ repos:
     url: https://github.com/bronteee/fire-asufm.git
     commit: 688dda94dec9e3b22f149f2b9335d3b38fd2277f
     license: Apache-2.0
+  TS-SatFire:
+    url: https://github.com/zhaoyutim/TS-SatFire.git
+    commit: da7573219967edfe17e317310b66fd8a913f4a2e
+    license: none (no LICENSE file; test-time oracle only, never vendored)
+  TCN:
+    url: https://github.com/locuslab/TCN.git
+    commit: 2f8c2b817050206397458dfd1f5a25ce8a32fe65
+    license: MIT
 
 assets:
   utae_pastis_weights:

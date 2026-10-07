@@ -33,11 +33,13 @@ jobs:
             requirements: tests/oracle/requirements.txt
             references: >-
               utae-paps WildfireSpreadTS utae_pastis_weights wildfire_forecasting
-              segformer_mit_b0 segformer_b0_ade
+              segformer_mit_b0 segformer_b0_ade TS-SatFire TCN
             tests: >-
               tests/oracle/test_wildfirespreadts_oracle.py
               tests/oracle/test_wildfire_forecasting_oracle.py
               tests/oracle/test_segformer_oracle.py
+              tests/oracle/test_attention_unet_oracle.py
+              tests/oracle/test_tcn_oracle.py
           # timm 0.4.12 (fire-asufm) conflicts with the timm 0.6.12 pin of smp 0.3.2.
           - suite: swin
             requirements: tests/oracle/requirements-swin.txt

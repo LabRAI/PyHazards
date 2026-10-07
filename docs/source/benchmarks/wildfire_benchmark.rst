@@ -55,11 +55,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         14
+         16
 
       .. container:: catalog-stat-note
 
-         14 models
+         16 models
 
 
 Benchmark Mapping
@@ -109,7 +109,7 @@ Mapped benchmark ecosystems
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`ASUFM </modules/models_asufm>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS Baselines </modules/models_wildfirespreadts>`, :doc:`Logistic Regression (pixel) </modules/models_logistic_regression>`, :doc:`ResNet-18 U-Net </modules/models_resnet18_unet>`, :doc:`ConvLSTM </modules/models_convlstm>`, :doc:`U-TAE </modules/models_utae>`, :doc:`SegFormer </modules/models_segformer>`, :doc:`Swin-Unet </modules/models_swin_unet>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`FireCastNet </modules/models_firecastnet>`.
+   :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`ASUFM </modules/models_asufm>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS Baselines </modules/models_wildfirespreadts>`, :doc:`Logistic Regression (pixel) </modules/models_logistic_regression>`, :doc:`ResNet-18 U-Net </modules/models_resnet18_unet>`, :doc:`ConvLSTM </modules/models_convlstm>`, :doc:`U-TAE </modules/models_utae>`, :doc:`SegFormer </modules/models_segformer>`, :doc:`Swin-Unet </modules/models_swin_unet>`, :doc:`Attention U-Net </modules/models_attention_unet>`, :doc:`TCN </modules/models_tcn>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`FireCastNet </modules/models_firecastnet>`.
 
 .. dropdown:: Notes
    :class-container: catalog-dropdown

@@ -1,0 +1,120 @@
+model_name: attention_unet
+display_name: Attention U-Net
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/attention_unet.py
+builder_name: attention_unet_builder
+summary: >
+  U-Net with additive attention gates on its skip connections, in MONAI's implementation,
+  configured by default as the TS-SatFire spatio-temporal (3D) baseline.
+description:
+  - >
+    ``attention_unet`` is an encoder-decoder with strided-convolution down-sampling and
+    transposed-convolution up-sampling in which every skip connection is multiplied by an
+    attention map before it is merged with the decoder feature, following the additive attention
+    gate of Oktay et al. (2018).
+  - >
+    The implementation reproduced is MONAI's ``AttentionUnet`` (MONAI 1.3.2, Apache-2.0), because
+    that is what the wildfire paper used, ported to plain PyTorch with MONAI's module names so
+    MONAI state dicts load with ``strict=True``. It is not Oktay et al.'s official network: MONAI
+    computes the gate at the skip resolution from the already up-sampled decoder feature, with no
+    grid sub-sampling of the gating signal, a single gate per level and no deep supervision.
+  - >
+    With the defaults (``spatial_dims=3``) the model is TS-SatFire's Attention-U-Net-3D: input
+    ``(batch, time, channels, H, W)``, 3D convolutions over (time, H, W) with stride (1, 2, 2) at
+    every level so time is never down-sampled, widths 64-1024, and two-class logits averaged over
+    time to ``(batch, 2, H, W)``. ``spatial_dims=2`` gives TS-SatFire's single-image 2D baseline
+    (stride 2 at every level, input ``(batch, channels, H, W)``).
+paper:
+  title: "Attention U-Net: Learning Where to Look for the Pancreas"
+  url: https://arxiv.org/abs/1804.03999
+  repo_url: https://github.com/ozan-oktay/Attention-Gated-Networks
+references:
+  - title: "TS-SatFire: A Multi-Task Satellite Image Time-Series Dataset for Wildfire Detection and Prediction"
+    url: https://doi.org/10.1038/s41597-025-06271-3
+    repo_url: https://github.com/zhaoyutim/TS-SatFire
+    note: >
+      Attention-U-Net-3D from the repository's modified MONAI copy (channels 64-1024, stride
+      (1, 2, 2) at every level) on 256x256 tiles of daily VIIRS and auxiliary data, 43 channels
+      after the land-cover one-hot for next-day progression prediction, T in {2, 4, 6}, logits
+      averaged over time; Dice loss, Adam lr 0.0012, batch 8, 100 epochs. Paper Table 3 (6 input
+      days; arXiv 2412.11555): 94.5M parameters, F1 0.770 / 0.712 / 0.354 and IoU
+      0.654 / 0.607 / 0.312 on active fire / burned area / prediction. The 2D Attention-U-Net
+      (stock MONAI, stride 2) has 31.7M parameters and F1 0.763 / 0.793 on active fire / burned area.
+reproduction:
+  reference_code: https://github.com/Project-MONAI/MONAI
+  reference_commit: "1.3.2"
+  reference_license: Apache-2.0
+  reference_config: >
+    TS-SatFire's AttentionUnet(spatial_dims=3, in_channels=43, out_channels=2,
+    channels=(64, 128, 256, 512, 1024), strides=(1, 2, 2)) from spatial_models/attentionunet.py at
+    da75732 (MONAI 1.2/1.3.0 code with shared strides; the repository has no license and is used
+    only as a test oracle) on monai 1.3.2, with its outputs averaged over time; MONAI 1.3.2
+    AttentionUnet(spatial_dims=2, in_channels=8, out_channels=2, same channels, strides=(2, 2, 2, 2))
+    for the 2D baseline (31,743,282 parameters); and 1D/2D/3D MONAI configurations with
+    non-uniform per-level strides, kernel size 5 and dropout. Forward passes use 32x32 (3D, T=2)
+    and 64x64 (2D) inputs instead of 256x256 to keep the CPU test fast.
+  parameter_count: 94555506
+  checks: [parameter_count, initialization, state_dict, forward]
+  oracle_test: tests/oracle/test_attention_unet_oracle.py
+  deviations:
+    - >
+      Architecture is MONAI's, not the official Attention-Gated-Networks code (eee4881, MIT),
+      which is not ported. Its 3D segmentation networks (unet_grid_attention_3D,
+      unet_CT_single/multi_att_dsv_3D) down-sample with max pooling at widths
+      [64, 128, 256, 512, 1024] / feature_scale (4 by default), take the gating signal from a
+      coarser level, sub-sample the skip feature with a strided theta convolution
+      (attention_dsample (2, 2, 2)) before the additive gate, up-sample the attention map
+      trilinearly and pass the gated feature through a 1x1 convolution and BatchNorm; the CT
+      models add deep supervision (and two gates per level in the multi-attention model), and all
+      use Kaiming initialisation. MONAI gates at the skip resolution with the up-convolved decoder
+      feature, has one gate per level, no deep supervision and PyTorch's default initialisation.
+    - >
+      TS-SatFire's copy was taken from MONAI 1.2/1.3.0 and ignores ``kernel_size`` (its blocks are
+      always 3x3x3); this port honours ``kernel_size`` as MONAI 1.3.2 does. The two are identical
+      at the kernel size 3 that TS-SatFire uses.
+    - >
+      TS-SatFire averages the 3D logits over time in its training script
+      (``outputs.mean(2)``); here that read-out is part of the model (``time_reduction="mean"``),
+      which also takes PyHazards' ``(batch, time, channels, H, W)`` layout instead of
+      ``(batch, channels, time, H, W)``.
+    - >
+      Configurations the reference rejects with IndexError or NotImplementedError (too few
+      strides, even kernel sizes) or a size-mismatch RuntimeError (spatial sizes not divisible by
+      the stride product) raise ValueError instead.
+    - >
+      The paper reports 94.5M parameters for Attention-U-Net-3D across all three tasks; the
+      prediction configuration with 43 input channels has 94,555,506 (94,495,026 with the
+      8-channel active-fire / burned-area input).
+tasks:
+  - segmentation
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  # TS-SatFire prediction model: 43 channels, logits averaged over the input days.
+  model = build_model(name="attention_unet", task="segmentation", in_channels=43)
+  logits = model(torch.randn(1, 4, 43, 64, 64))  # (batch, days, channels, H, W)
+  print(logits.shape)  # (1, 2, 64, 64)
+
+  # TS-SatFire's single-image 2D baseline.
+  model_2d = build_model(name="attention_unet", task="segmentation", in_channels=8, spatial_dims=2)
+  print(model_2d(torch.randn(1, 8, 64, 64)).shape)  # (1, 2, 64, 64)
+notes:
+  - "Every spatial size must be divisible by the product of the strides along that dimension: 16 for height and width with the default four levels; time is never down-sampled."
+  - "The default two output channels follow TS-SatFire, which applied a sigmoid Dice loss to both; use out_channels=1 for a single-logit binary head."
+  - "time_reduction='none' returns per-date maps (batch, classes, time, H, W), as TS-SatFire uses for its active-fire and burned-area tasks."
+  - "strides follow MONAI (one entry per level, each an int or one value per dimension); stride_mode='shared' takes TS-SatFire's single strides=(1, 2, 2) literally and builds the same network as strides=[(1, 2, 2)] * 4."
+  - "MONAI quirks are kept: the merge convolution after each gate uses instance norm and PReLU, and dropout is applied in the convolution blocks and merges but never in the gates or up-convolutions."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 4
+    channels: [8, 16, 32]
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 3, 4, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 2, 16, 16]

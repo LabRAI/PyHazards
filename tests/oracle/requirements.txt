@@ -3,3 +3,5 @@ segmentation-models-pytorch==0.3.2
 # SegFormer reference. 4.57.6 is the last release line whose module names match the Hub checkpoints
 # (transformers 5.9 renamed them); it resolves together with smp 0.3.2 and its timm 0.6.12 pin.
 transformers==4.57.6
+# MONAI AttentionUnet (the version in TS-SatFire's environment.yml); also imported by TS-SatFire's copy.
+monai==1.3.2
