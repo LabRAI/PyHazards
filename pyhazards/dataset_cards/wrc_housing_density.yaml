@@ -1,0 +1,46 @@
+slug: wrc_housing_density
+display_name: "Wildfire Risk to Communities: Housing Density"
+hazard_family: Wildfire
+source_role: Exposure and Risk
+summary: USDA Forest Service 30 m rasters of housing-unit density, exposure and wildfire risk for populated areas of the United States (2nd edition, 2024).
+provider: USDA Forest Service, Rocky Mountain Research Station (Forest Service Research Data Archive)
+geometry: Gridded raster layers
+spatial_resolution: 30 m
+temporal_resolution: Static snapshot
+update_cadence: Edition-based (2nd edition published June 2024, metadata corrected September 2024)
+period_of_record: Housing from 2020 Census estimates, building footprints reflecting 2022, wildfire hazard from LANDFIRE 2020 (v2.2.0)
+coverage: Conterminous United States, Alaska and Hawaii (per-state files and CONUS mosaics)
+formats: LZW-compressed GeoTIFF
+overview:
+  - >
+    The Wildfire Risk to Communities populated-areas data set (RDS-2020-0060-2) maps where people
+    and homes are and how exposed they are to wildfire, combining census housing and population
+    estimates with building footprints and the Forest Service wildfire hazard layers.
+  - >
+    Its housing-unit density layer (HUDen) gives housing units per square kilometre at 30 m, an
+    exposure covariate for wildfire-risk and wildland-urban-interface studies.
+data_characteristics:
+  - >
+    Ten layers: BuildingCount, BuildingDensity, BuildingCover, PopCount, PopDen, HUCount, HUDen
+    (housing units per square kilometre), HUExposure, HUImpact and HURisk.
+  - HUExposure, HUImpact and HURisk are NoData outside populated areas.
+  - The 1st edition (RDS-2020-0060) used 2018 Census estimates; the 2nd edition uses 2020 housing estimates.
+typical_use_cases:
+  - Housing exposure and wildland-urban-interface covariates for wildfire models.
+  - Weighting wildfire hazard maps by the homes at risk.
+access_links:
+  - label: Forest Service Research Data Archive, RDS-2020-0060-2
+    url: https://www.fs.usda.gov/rds/archive/catalog/RDS-2020-0060-2
+pyhazards_usage:
+  - >
+    PyHazards does not load this source; it is listed as an external reference for wildfire
+    exposure.
+primary_references:
+  - citation: "Jaffe, Scott, Callahan, Dillon, Karau and Lazarz (2024). Wildfire Risk to Communities: Spatial datasets of wildfire risk for populated areas in the United States. 2nd Edition. Forest Service Research Data Archive."
+    url: https://doi.org/10.2737/RDS-2020-0060-2
+related_models: []
+related_benchmarks: []
+notes:
+  - >
+    Terms: the data "can be used without additional permissions or fees"; the archive asks that
+    publications cite the data set as above, and gives no warranty.

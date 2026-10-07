@@ -34,7 +34,7 @@ inspection:
     - Some archive and bulk-download routes require Earthdata login credentials.
 primary_references:
   - citation: Schroeder et al. (2014). The New VIIRS 375 m active fire detection data product.
-    url: https://doi.org/10.1016/j.rse.2013.08.008
+    url: https://doi.org/10.1016/j.rse.2013.12.008
 related_models: []
 related_benchmarks:
   - wildfire_benchmark

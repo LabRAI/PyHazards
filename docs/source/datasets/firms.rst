@@ -92,4 +92,4 @@ Use the documented inspection path below to validate local files before training
 Reference
 ---------
 
-- `Schroeder et al. (2014). The New VIIRS 375 m active fire detection data product. <https://doi.org/10.1016/j.rse.2013.08.008>`_.
+- `Schroeder et al. (2014). The New VIIRS 375 m active fire detection data product. <https://doi.org/10.1016/j.rse.2013.12.008>`_.
