@@ -23,6 +23,7 @@ from .phasenet import PhaseNet, phasenet_builder
 from .registry import available_models, register_model
 from .resnet_unet import ResNetUNet, resnet18_unet_builder
 from .saf_net import SAFNet, saf_net_builder
+from .segformer import SegFormer, segformer_builder
 from .tcif_fusion import TCIFFusion, tcif_fusion_builder
 from .tropicalcyclone_mlp import TropicalCycloneMLP, tropicalcyclone_mlp_builder
 from .tropicyclonenet import TropiCycloneNet, tropicyclonenet_builder
@@ -124,6 +125,8 @@ __all__ = [
     "logistic_regression_builder",
     "ResNetUNet",
     "resnet18_unet_builder",
+    "SegFormer",
+    "segformer_builder",
     "UTAE",
     "utae_builder",
     "WRFSFireAdapter",
@@ -235,6 +238,12 @@ register_model(
     "resnet18_unet",
     resnet18_unet_builder,
     defaults={"out_channels": 1, "history": 1, "encoder_name": "resnet18", "encoder_weights": None},
+)
+
+register_model(
+    "segformer",
+    segformer_builder,
+    defaults={"out_channels": 1, "history": 1, "variant": "b2", "encoder_weights": None, "upsample": True},
 )
 
 register_model(

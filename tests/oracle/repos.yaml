@@ -23,3 +23,13 @@ assets:
     sha256: 43a9db40ca002d9feac3a6b387838f24c3a7191b4257065d83206379f8ef957a
     license: CC-BY-4.0
     extract: true
+  # SegFormer checkpoints from the Hugging Face Hub, pinned to a revision. NVIDIA licenses them for
+  # non-commercial use only (NVIDIA Source Code License for SegFormer); used here only as test data.
+  segformer_mit_b0:
+    url: https://huggingface.co/nvidia/mit-b0/resolve/80983a413c30d36a39c20203974ae7807835e2b4/pytorch_model.bin
+    sha256: 4af8348c2a802bf76115d34797ff5ce1d9f110bb8593c22d9b66d8bd7fa227fc
+    license: NVIDIA Source Code License for SegFormer (non-commercial)
+  segformer_b0_ade:
+    url: https://huggingface.co/nvidia/segformer-b0-finetuned-ade-512-512/resolve/489d5cd81a0b59fab9b7ea758d3548ebe99677da/model.safetensors
+    sha256: 6ae39addd01de6b1b8bde2cf677d43a5cd733424b8d186de3f95d1c51fee23f9
+    license: NVIDIA Source Code License for SegFormer (non-commercial)

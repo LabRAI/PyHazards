@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         28
+         29
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         31
+         32
 
       .. container:: catalog-stat-note
 
@@ -264,6 +264,33 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `U-Net: Convolutional Networks for Biomedical Image Segmentation <https://arxiv.org/abs/1505.04597>`_ | **Repo:** `Repository <https://github.com/qubvel-org/segmentation_models.pytorch>`__
+
+         .. grid-item-card:: SegFormer
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Hierarchical Mix Transformer encoder with a lightweight all-MLP decoder (SegFormer-B0 to B5), used as a Transformer baseline for next-day wildfire spread on WildfireSpreadTS.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`SegFormer <modules/models_segformer>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `SegFormer: Simple and Efficient Design for Semantic Segmentation with Transformers <https://arxiv.org/abs/2105.15203>`_ | **Repo:** `Repository <https://github.com/NVlabs/SegFormer>`__
 
          .. grid-item-card:: U-TAE
             :class-card: catalog-entry-card
@@ -1051,6 +1078,7 @@ before selecting a model for evaluation.
    modules/models_phasenet
    modules/models_resnet18_unet
    modules/models_saf_net
+   modules/models_segformer
    modules/models_tcif_fusion
    modules/models_tropicalcyclone_mlp
    modules/models_tropicyclonenet

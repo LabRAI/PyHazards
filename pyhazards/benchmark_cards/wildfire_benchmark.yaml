@@ -46,6 +46,7 @@ linked_models:
   - resnet18_unet
   - convlstm
   - utae
+  - segformer
   - forefire
   - wrf_sfire
   - firecastnet
