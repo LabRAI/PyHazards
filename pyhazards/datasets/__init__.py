@@ -23,7 +23,11 @@ from .tc import (
     TCBenchAlphaDataset,
     TropiCycloneNetDataset,
 )
-from .wildfire import SyntheticWildfireSpreadDataset, SyntheticWildfireSpreadTemporalDataset
+from .wildfire import (
+    SyntheticWildfireDangerDataset,
+    SyntheticWildfireSpreadDataset,
+    SyntheticWildfireSpreadTemporalDataset,
+)
 
 __all__ = [
     "DataBundle",
@@ -53,6 +57,7 @@ __all__ = [
     "SyntheticTropicalCycloneDataset",
     "TCBenchAlphaDataset",
     "TropiCycloneNetDataset",
+    "SyntheticWildfireDangerDataset",
     "SyntheticWildfireSpreadDataset",
     "SyntheticWildfireSpreadTemporalDataset",
 ]
@@ -74,5 +79,6 @@ register_dataset(SyntheticTropicalCycloneDataset.name, SyntheticTropicalCycloneD
 register_dataset(IBTrACSTropicalCycloneDataset.name, IBTrACSTropicalCycloneDataset)
 register_dataset(TCBenchAlphaDataset.name, TCBenchAlphaDataset)
 register_dataset(TropiCycloneNetDataset.name, TropiCycloneNetDataset)
+register_dataset(SyntheticWildfireDangerDataset.name, SyntheticWildfireDangerDataset)
 register_dataset(SyntheticWildfireSpreadDataset.name, SyntheticWildfireSpreadDataset)
 register_dataset(SyntheticWildfireSpreadTemporalDataset.name, SyntheticWildfireSpreadTemporalDataset)

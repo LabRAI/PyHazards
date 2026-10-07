@@ -297,11 +297,11 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-entry-summary
 
-               A sequence forecasting baseline for next-window wildfire activity across weekly count features.
+               The LSTM and ConvLSTM of Kondylatos et al. (2022) that classify next-day wildfire danger of a 1 km cell from ten days of weather, vegetation, terrain, human and land-cover covariates.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -313,7 +313,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-link-row
 
-               **Paper:** `Wildfire Danger Prediction and Understanding with Deep Learning <https://doi.org/10.1029/2022GL099368>`_ | **Repo:** `Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__
+               **Paper:** `Wildfire Danger Prediction and Understanding With Deep Learning <https://doi.org/10.1029/2022GL099368>`_ | **Repo:** `Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__
 
          .. grid-item-card:: WildfireSpreadTS Baselines
             :class-card: catalog-entry-card

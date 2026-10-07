@@ -35,7 +35,12 @@ from .wavecastnet import (
     WavefieldMetrics,
     wavecastnet_builder,
 )
-from .wildfire_forecasting import WildfireForecasting, wildfire_forecasting_builder
+from .wildfire_forecasting import (
+    WILDFIRE_FORECASTING_VARIANTS,
+    SimpleConvLSTM,
+    SimpleLSTM,
+    wildfire_forecasting_builder,
+)
 from .wildfire_aspp import TverskyLoss, WildfireASPP, wildfire_aspp_builder
 from .wildfire_fpa import WildfireFPA, wildfire_fpa_builder
 from .wildfire_mamba import WildfireMamba, wildfire_mamba_builder
@@ -101,7 +106,9 @@ __all__ = [
     "wildfire_aspp_builder",
     "WildfireCNNASPP",
     "cnn_aspp_builder",
-    "WildfireForecasting",
+    "SimpleLSTM",
+    "SimpleConvLSTM",
+    "WILDFIRE_FORECASTING_VARIANTS",
     "wildfire_forecasting_builder",
     "WildfireFPA",
     "wildfire_fpa_builder",
@@ -186,13 +193,13 @@ register_model(
 register_model(
     "wildfire_forecasting",
     wildfire_forecasting_builder,
+    # hidden_size is left to the builder: its paper value depends on the variant (64 / 32).
     defaults={
-        "input_dim": 7,
-        "hidden_dim": 64,
-        "output_dim": 5,
-        "lookback": 12,
-        "num_layers": 2,
-        "dropout": 0.1,
+        "variant": "lstm",
+        "input_dim": 25,
+        "lstm_layers": 1,
+        "dropout": 0.5,
+        "patch_size": 25,
     },
 )
 

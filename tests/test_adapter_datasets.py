@@ -14,6 +14,7 @@ def test_named_adapter_datasets_are_registered_and_loadable():
         "tcbench_alpha",
         "tropicyclonenet_dataset",
         "wildfire_spread_temporal_synthetic",
+        "wildfire_danger_synthetic",
     }
     assert expected.issubset(set(available_datasets()))
 

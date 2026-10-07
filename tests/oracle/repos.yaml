@@ -10,6 +10,12 @@ repos:
     url: https://github.com/SebastianGer/WildfireSpreadTS.git
     commit: f62dc49f2c2a6d249c071533ae5340c0d01bfb95
     license: MIT
+  wildfire_forecasting:
+    # Kondylatos et al., GRL 2022. Model code is identical to the v0.1-alpha release
+    # (ee4f168, archived as Zenodo 10.5281/zenodo.6524771) that the paper cites.
+    url: https://github.com/Orion-AI-Lab/wildfire_forecasting.git
+    commit: 2b18bcf194284d56bd4e1774f7d5315db94cba34
+    license: MIT
 
 assets:
   utae_pastis_weights:

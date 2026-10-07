@@ -98,7 +98,7 @@ Related Coverage
 
 **Benchmarks:** :doc:`Wildfire Benchmark </benchmarks/wildfire_benchmark>`
 
-**Representative Models:** :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`ASUFM </modules/models_asufm>`
+**Representative Models:** :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`ASUFM </modules/models_asufm>`
 
 Inspection Workflow
 -------------------

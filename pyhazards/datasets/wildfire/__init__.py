@@ -144,4 +144,89 @@ class SyntheticWildfireSpreadTemporalDataset(Dataset):
         )
 
 
-__all__ = ["SyntheticWildfireSpreadDataset", "SyntheticWildfireSpreadTemporalDataset"]
+class SyntheticWildfireDangerDataset(Dataset):
+    """Synthetic next-day fire-danger samples shaped like the Kondylatos et al. (2022) datasets.
+
+    ``access_mode="temporal"`` gives per-cell series ``(samples, history, channels)`` for the LSTM;
+    ``access_mode="spatiotemporal"`` gives ``(samples, history, channels, patch_size, patch_size)``
+    blocks for the ConvLSTM. Labels are ``int64`` (0 = no fire, 1 = fire) with two negatives per
+    positive, the paper's sampling ratio. Positives get a warmer, drier signal on their first two
+    channels over the last days so that smoke runs have something to learn; the values are random
+    and carry no physical meaning.
+    """
+
+    name = "wildfire_danger_synthetic"
+
+    def __init__(
+        self,
+        cache_dir: str | None = None,
+        samples: int = 96,
+        access_mode: str = "temporal",
+        history: int = 10,
+        channels: int = 25,
+        patch_size: int = 25,
+        micro: bool = False,
+        seed: int = 7,
+    ):
+        super().__init__(cache_dir=cache_dir)
+        if access_mode not in {"temporal", "spatiotemporal"}:
+            raise ValueError(f"access_mode must be 'temporal' or 'spatiotemporal', got {access_mode!r}")
+        if channels < 2:
+            raise ValueError(f"channels must be at least 2, got {channels}")
+        self.samples = 24 if micro else int(samples)
+        self.access_mode = access_mode
+        self.history = int(history)
+        self.channels = int(channels)
+        self.patch_size = int(patch_size)
+        self.seed = int(seed)
+
+    def _load(self) -> DataBundle:
+        generator = torch.Generator().manual_seed(self.seed)
+        positives = max(1, self.samples // 3)
+        y = torch.zeros(self.samples, dtype=torch.long)
+        y[:positives] = 1
+        y = y[torch.randperm(self.samples, generator=generator)]
+
+        spatial = (self.patch_size, self.patch_size) if self.access_mode == "spatiotemporal" else ()
+        shape = (self.samples, self.history, self.channels, *spatial)
+        x = torch.randn(*shape, generator=generator)
+        recent = max(1, self.history // 3)
+        signal = torch.zeros(self.history, self.channels, *spatial)
+        signal[-recent:, 0] = 1.5  # e.g. maximum temperature
+        signal[-recent:, 1] = -1.5  # e.g. minimum relative humidity
+        x = x + y.view(-1, *([1] * (x.ndim - 1))).float() * signal
+
+        train_end = max(1, int(0.7 * self.samples))
+        val_end = max(train_end + 1, int(0.85 * self.samples))
+        splits = {
+            "train": DataSplit(x[:train_end], y[:train_end]),
+            "val": DataSplit(x[train_end:val_end], y[train_end:val_end]),
+            "test": DataSplit(x[val_end:], y[val_end:]),
+        }
+        return DataBundle(
+            splits=splits,
+            feature_spec=FeatureSpec(
+                input_dim=self.channels,
+                channels=self.channels,
+                description="Synthetic daily dynamic, static and land-cover covariates for fire danger.",
+                extra={"history": self.history, "access_mode": self.access_mode, "patch_size": self.patch_size},
+            ),
+            label_spec=LabelSpec(
+                num_targets=2,
+                task_type="classification",
+                description="Whether the cell burns on the next day (0 = no fire, 1 = fire).",
+            ),
+            metadata={
+                "dataset": self.name,
+                "source_dataset": self.name,
+                "hazard_task": "wildfire.danger",
+                "access_mode": self.access_mode,
+            },
+        )
+
+
+__all__ = [
+    "SyntheticWildfireDangerDataset",
+    "SyntheticWildfireSpreadDataset",
+    "SyntheticWildfireSpreadTemporalDataset",
+]

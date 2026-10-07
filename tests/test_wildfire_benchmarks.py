@@ -23,7 +23,7 @@ def test_wildfire_spread_vertical_slice(tmp_path):
 
 def test_added_wildfire_breadth_configs(tmp_path):
     expectations = {
-        "pyhazards/configs/wildfire/wildfire_forecasting_smoke.yaml": "mae",
+        "pyhazards/configs/wildfire/wildfire_forecasting_smoke.yaml": "macro_f1",
         "pyhazards/configs/wildfire/asufm_smoke.yaml": "mae",
         "pyhazards/configs/wildfire/wildfirespreadts_smoke.yaml": "burned_area_mae",
         "pyhazards/configs/wildfire/forefire_smoke.yaml": "burned_area_mae",
