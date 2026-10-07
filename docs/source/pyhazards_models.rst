@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         28
+         30
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         31
+         33
 
       .. container:: catalog-stat-note
 
@@ -106,6 +106,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer <https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278>`_ | **Repo:** `Repository <https://github.com/bronteee/fire-asufm>`__
+
+         .. grid-item-card:: Attention U-Net
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               U-Net with additive attention gates on its skip connections, in MONAI's implementation, configured by default as the TS-SatFire spatio-temporal (3D) baseline.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Attention U-Net <modules/models_attention_unet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Attention U-Net: Learning Where to Look for the Pancreas <https://arxiv.org/abs/1804.03999>`_ | **Repo:** `Repository <https://github.com/ozan-oktay/Attention-Gated-Networks>`__
 
          .. grid-item-card:: ConvLSTM
             :class-card: catalog-entry-card
@@ -264,6 +287,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `U-Net: Convolutional Networks for Biomedical Image Segmentation <https://arxiv.org/abs/1505.04597>`_ | **Repo:** `Repository <https://github.com/qubvel-org/segmentation_models.pytorch>`__
+
+         .. grid-item-card:: TCN
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Generic temporal convolutional network of Bai et al. (2018): causal dilated residual convolutions with weight normalisation and a linear head, for per-step feature sequences.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`TCN <modules/models_tcn>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling <https://arxiv.org/abs/1803.01271>`_ | **Repo:** `Repository <https://github.com/locuslab/TCN>`__
 
          .. grid-item-card:: U-TAE
             :class-card: catalog-entry-card
@@ -1032,6 +1078,7 @@ before selecting a model for evaluation.
    :hidden:
 
    modules/models_asufm
+   modules/models_attention_unet
    modules/models_convlstm
    modules/models_eqnet
    modules/models_eqtransformer
@@ -1052,6 +1099,7 @@ before selecting a model for evaluation.
    modules/models_resnet18_unet
    modules/models_saf_net
    modules/models_tcif_fusion
+   modules/models_tcn
    modules/models_tropicalcyclone_mlp
    modules/models_tropicyclonenet
    modules/models_urbanfloodcast

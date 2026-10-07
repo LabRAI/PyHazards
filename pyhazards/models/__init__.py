@@ -1,5 +1,6 @@
 from .backbones import CNNPatchEncoder, MLPBackbone, TemporalEncoder
 from .asufm import ASUFM, asufm_builder
+from .attention_unet import AttentionUnet, TemporalAttentionUnet, attention_unet_builder
 from .builder import build_model, default_builder
 from .cnn_aspp import WildfireCNNASPP, cnn_aspp_builder
 from .convlstm import ConvLSTM, ConvLSTMCell, ConvLSTMSegmenter, convlstm_builder
@@ -24,6 +25,7 @@ from .registry import available_models, register_model
 from .resnet_unet import ResNetUNet, resnet18_unet_builder
 from .saf_net import SAFNet, saf_net_builder
 from .tcif_fusion import TCIFFusion, tcif_fusion_builder
+from .tcn import TCN, TemporalConvNet, tcn_builder
 from .tropicalcyclone_mlp import TropicalCycloneMLP, tropicalcyclone_mlp_builder
 from .tropicyclonenet import TropiCycloneNet, tropicyclonenet_builder
 from .urbanfloodcast import UrbanFloodCast, urbanfloodcast_builder
@@ -52,6 +54,9 @@ __all__ = [
     "TemporalEncoder",
     "ASUFM",
     "asufm_builder",
+    "AttentionUnet",
+    "TemporalAttentionUnet",
+    "attention_unet_builder",
     "ClassificationHead",
     "RegressionHead",
     "SegmentationHead",
@@ -90,6 +95,9 @@ __all__ = [
     "saf_net_builder",
     "TCIFFusion",
     "tcif_fusion_builder",
+    "TCN",
+    "TemporalConvNet",
+    "tcn_builder",
     "TropicalCycloneMLP",
     "tropicalcyclone_mlp_builder",
     "TropiCycloneNet",
@@ -240,6 +248,34 @@ register_model(
     "utae",
     utae_builder,
     defaults={"out_channels": 1},
+)
+
+register_model(
+    "attention_unet",
+    attention_unet_builder,
+    defaults={
+        "out_channels": 2,
+        "spatial_dims": 3,
+        "channels": (64, 128, 256, 512, 1024),
+        "strides": None,
+        "dropout": 0.0,
+        "time_reduction": "mean",
+    },
+)
+
+register_model(
+    "tcn",
+    tcn_builder,
+    defaults={
+        "input_dim": 2,
+        "out_dim": 1,
+        "hidden_dim": 30,
+        "num_levels": 8,
+        "kernel_size": 7,
+        "dropout": 0.0,
+        "readout": "last",
+        "head_init": "normal",
+    },
 )
 
 register_model(

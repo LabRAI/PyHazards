@@ -10,6 +10,14 @@ repos:
     url: https://github.com/SebastianGer/WildfireSpreadTS.git
     commit: f62dc49f2c2a6d249c071533ae5340c0d01bfb95
     license: MIT
+  TS-SatFire:
+    url: https://github.com/zhaoyutim/TS-SatFire.git
+    commit: da7573219967edfe17e317310b66fd8a913f4a2e
+    license: none (no LICENSE file; test-time oracle only, never vendored)
+  TCN:
+    url: https://github.com/locuslab/TCN.git
+    commit: 2f8c2b817050206397458dfd1f5a25ce8a32fe65
+    license: MIT
 
 assets:
   utae_pastis_weights:

@@ -1,2 +1,4 @@
 # Packages that provide reference implementations for tests/oracle (install next to CPU torch).
 segmentation-models-pytorch==0.3.2
+# MONAI AttentionUnet (the version in TS-SatFire's environment.yml); also imported by TS-SatFire's copy.
+monai==1.3.2

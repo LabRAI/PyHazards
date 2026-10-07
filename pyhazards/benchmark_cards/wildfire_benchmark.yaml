@@ -45,6 +45,8 @@ linked_models:
   - resnet18_unet
   - convlstm
   - utae
+  - attention_unet
+  - tcn
   - forefire
   - wrf_sfire
   - firecastnet
