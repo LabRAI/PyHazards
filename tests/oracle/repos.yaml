@@ -32,6 +32,12 @@ repos:
     url: https://github.com/locuslab/TCN.git
     commit: 2f8c2b817050206397458dfd1f5a25ce8a32fe65
     license: MIT
+  forefire:
+    # ForeFire v2.5.0, the tag of the PyPI 2.5.0 wheel used by tests/oracle/test_forefire_oracle.py
+    # (official example scripts and the tests/runff regression case).
+    url: https://github.com/forefireAPI/forefire.git
+    commit: ca433e01a9f2a146b1709da816a68feafcbfda41
+    license: GPL-3.0 (test oracle only; never vendored, copied or imported by the pyhazards package)
   firecastnet:
     url: https://github.com/SeasFire/firecastnet.git
     commit: dc0d131be7f0638e3a84c16817e7bc9be454e53e
@@ -148,6 +154,16 @@ assets:
     sha256: 6441a1fd07ec4672603b34448357e2b21f7ee0f0107790a7df0f3ff86a306a81
     license: MIT (sxjscience/HKO-7)
     extract: true
+  # Git LFS files of ForeFire's tests/runff regression case at v2.5.0 (sha256 = the LFS object ids):
+  # the landscape (fuel, altitude, wind) and the reference arrival-time map written by save[].
+  forefire_runff_data:
+    url: https://media.githubusercontent.com/media/forefireAPI/forefire/ca433e01a9f2a146b1709da816a68feafcbfda41/tests/runff/data.nc
+    sha256: a6c756c4dfeb1f1a5838b1cfdc2ee130d300aa5d09d0a73475e8d30cd73490fb
+    license: GPL-3.0 (ForeFire repository test data; test-time only)
+  forefire_runff_reference:
+    url: https://media.githubusercontent.com/media/forefireAPI/forefire/ca433e01a9f2a146b1709da816a68feafcbfda41/tests/runff/ForeFire.0.nc.ref
+    sha256: 45a2b159caad744d15d8cdd1b43d738a6626259ebc8542944d5daa06a2fad42a
+    license: GPL-3.0 (ForeFire repository test data; test-time only)
   # Large checkpoints: fetched only when named explicitly (or with --large), never in routine CI.
   prithvi_eo2_300m_burnscars_weights:
     url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars/resolve/a3f2c410e45b8ac7417976614528a872f024d831/Prithvi_EO_V2_300M_BurnScars.pt

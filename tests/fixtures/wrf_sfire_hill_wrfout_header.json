@@ -1,0 +1,314 @@
+{
+ "description": "Layout of a real WRF-SFIRE history file: test/em_fire/hill (namelist.input.hill, history every 30 s instead of 5 s) of WRF-SFIRE W4.4-S0.1 (commit c959580092191b315d936566361314f9cab669ec), built serially with conda-forge gfortran 16.2 and classic NetCDF. Header of wrfout_d01_0001-01-01_00:00:00 (dimensions, selected global attributes, fire-grid variables) plus values observed in it. Used by tests/test_wrf_sfire_reader.py to write synthetic files with the same layout.",
+ "file": "wrfout_d01_0001-01-01_00:00:00",
+ "file_format": "NETCDF3_64BIT_OFFSET",
+ "dimensions": {
+  "Time": 11,
+  "DateStrLen": 19,
+  "west_east": 41,
+  "south_north": 41,
+  "bottom_top": 40,
+  "bottom_top_stag": 41,
+  "soil_layers_stag": 5,
+  "west_east_stag": 42,
+  "south_north_stag": 42,
+  "west_east_subgrid": 420,
+  "south_north_subgrid": 420,
+  "fuel_moisture_classes_stag": 6,
+  "fuel_moisture_extended_paramete": 2,
+  "seed_dim_stag": 8
+ },
+ "global_attributes": {
+  "TITLE": " OUTPUT FROM WRF V4.4 MODEL",
+  "SIMULATION_START_DATE": "0001-01-01_00:00:00",
+  "WEST-EAST_GRID_DIMENSION": 42,
+  "SOUTH-NORTH_GRID_DIMENSION": 42,
+  "DX": 60.0,
+  "DY": 60.0
+ },
+ "variables": {
+  "Times": {
+   "dimensions": [
+    "Time",
+    "DateStrLen"
+   ],
+   "dtype": "|S1",
+   "attributes": {}
+  },
+  "XTIME": {
+   "dimensions": [
+    "Time"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "0  ",
+    "description": "minutes since 0001-01-01 00:00:00",
+    "units": "minutes since 0001-01-01 00:00:00",
+    "stagger": ""
+   }
+  },
+  "TIGN_G": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "ignition time on ground",
+    "units": "s",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  },
+  "LFN": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "level function",
+    "units": "1",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  },
+  "FIRE_AREA": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "fraction of cell area on fire",
+    "units": "1",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  },
+  "FGRNHFX": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "heat flux from ground fire",
+    "units": "W/m^2",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  },
+  "ROS": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "rate of spread",
+    "units": "m/s",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  },
+  "F_ROS": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "max spread rate in any direction",
+    "units": "m/s",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  },
+  "FUEL_FRAC": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "fuel remaining",
+    "units": "1",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  },
+  "NFUEL_CAT": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "fuel data",
+    "units": "-",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  },
+  "ZSF": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "height of surface above sea level",
+    "units": "m",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  },
+  "FXLONG": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "longitude of midpoints of fire cells",
+    "units": "degrees",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  },
+  "FXLAT": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "latitude of midpoints of fire cells",
+    "units": "degrees",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  },
+  "UF": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "fire wind",
+    "units": "m/s",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  },
+  "VF": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "fire wind",
+    "units": "m/s",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  },
+  "FLINEINT": {
+   "dimensions": [
+    "Time",
+    "south_north_subgrid",
+    "west_east_subgrid"
+   ],
+   "dtype": "float32",
+   "attributes": {
+    "FieldType": 104,
+    "MemoryOrder": "XY ",
+    "description": "fireline intensity",
+    "units": "W/m",
+    "stagger": "Z",
+    "coordinates": "XLONG XLAT XTIME"
+   }
+  }
+ },
+ "observations": {
+  "sr_x_sr_y_global_attributes": "absent (refinement 10 x 10 follows from 420 = (41 + 1) * 10)",
+  "fire_dt_s": 0.25,
+  "TIGN_G_unburned": "frame time + 0.25 s (0.5 s at t = 0)",
+  "TIGN_G_padding": 0.0,
+  "LFN_t0": "positive everywhere (no fire)",
+  "LFN_lt_0_equals_TIGN_G_le_t": true,
+  "xtime_minutes": [
+   0.0,
+   0.5,
+   1.0,
+   1.5,
+   2.0,
+   2.5,
+   3.0,
+   3.5,
+   4.0,
+   4.5,
+   5.0
+  ],
+  "burned_fire_cells_per_frame": [
+   0,
+   72,
+   470,
+   1371,
+   2853,
+   5031,
+   7902,
+   11220,
+   14441,
+   18203,
+   23301
+  ],
+  "arrival_time_range_s": [
+   2.0006,
+   299.9918
+  ]
+ }
+}

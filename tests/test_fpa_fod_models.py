@@ -60,7 +60,6 @@ def test_wildfire_fpa_autoencoder_forward():
 
 def test_added_wildfire_public_methods_forward():
     daily_x = torch.randn(2, 10, 25)
-    spread_x = torch.randn(2, 12, 16, 16)
     temporal_spread_x = torch.randn(2, 4, 6, 16, 16)
 
     danger = build_model(name="wildfire_forecasting", task="classification")
@@ -70,8 +69,6 @@ def test_added_wildfire_public_methods_forward():
         history=4,
         in_channels=6,
     )
-    forefire = build_model(name="forefire", task="segmentation", in_channels=12)
-    wrf_sfire = build_model(name="wrf_sfire", task="segmentation", in_channels=12)
     # FireCastNet on a 16 x 16 window of 0.25-degree cells (4 x 4 one-degree graph nodes).
     firecastnet = build_model(
         name="firecastnet",
@@ -90,6 +87,4 @@ def test_added_wildfire_public_methods_forward():
 
     assert danger(daily_x).shape == (2, 2)
     assert spread_ts(temporal_spread_x).shape == (2, 1, 16, 16)
-    assert forefire(spread_x).shape == (2, 1, 16, 16)
-    assert wrf_sfire(spread_x).shape == (2, 1, 16, 16)
     assert firecastnet(temporal_spread_x).shape == (2, 1, 16, 16)

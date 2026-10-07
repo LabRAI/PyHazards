@@ -33,8 +33,6 @@ smoke_configs:
   - pyhazards/configs/wildfire/asufm_smoke.yaml
   - pyhazards/configs/wildfire/wildfire_spread_smoke.yaml
   - pyhazards/configs/wildfire/wildfirespreadts_smoke.yaml
-  - pyhazards/configs/wildfire/forefire_smoke.yaml
-  - pyhazards/configs/wildfire/wrf_sfire_smoke.yaml
   - pyhazards/configs/wildfire/firecastnet_smoke.yaml
 linked_models:
   - wildfire_fpa
@@ -65,8 +63,6 @@ linked_models:
   - deeplabv3
   - earthfarseer
   - rainformer
-  - forefire
-  - wrf_sfire
   - firecastnet
 notes:
   - "WildfireSpreadTS is the public Appendix-A benchmark ecosystem surfaced on this page."
@@ -88,3 +84,8 @@ notes:
     Prithvi-EO-2.0 BurnScars and Prithvi-EO-2.0-TL segment burn scars after a fire (post-fire
     burned-area mapping). They are wildfire models but are not linked here, because this family
     scores danger and spread prediction, not post-fire mapping.
+  - >-
+    ForeFire and WRF-SFIRE are physics simulators, not trainable models, so they are not linked
+    models. ``pyhazards.simulators.ForeFireSimulator`` runs the official ForeFire (installed
+    separately) on spread rasters, and the ``wrf_sfire_spread`` dataset turns WRF-SFIRE ``wrfout``
+    files into spread samples for this family's ``wildfire.spread`` task.

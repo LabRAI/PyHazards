@@ -27,8 +27,10 @@ Wildfire
 - Kondylatos, S., Prapas, I., Ronco, M., et al. (2022). *Wildfire Danger Prediction and Understanding With Deep Learning*. Geophysical Research Letters, 49(17), e2022GL099368. `[paper] <https://doi.org/10.1029/2022GL099368>`__, `[repo] <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__.
 - *WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction*. `[paper] <https://openreview.net/forum?id=RgdGkPRQ03>`__, `[repo] <https://github.com/SebastianGer/WildfireSpreadTS>`__.
 - *Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer*. `[paper] <https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278>`__, `[repo] <https://github.com/bronteee/fire-asufm>`__.
-- *ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread*. `[paper] <https://doi.org/10.21105/joss.08680>`__, `[repo] <https://github.com/forefireAPI/forefire>`__.
-- *Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011*. `[paper] <https://doi.org/10.5194/gmd-4-591-2011>`__, `[repo] <https://github.com/openwfm/WRF-SFIRE>`__.
+- *ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread* (Filippi et al., JOSS 2025). `[paper] <https://doi.org/10.21105/joss.08680>`__, `[repo] <https://github.com/forefireAPI/forefire>`__.
+- *Discrete Event Front-tracking Simulation of a Physical Fire-spread Model* (Filippi et al., SIMULATION 86(10)). `[paper] <https://doi.org/10.1177/0037549709343117>`__.
+- *Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011* (Mandel, Beezley and Kochanski, GMD 2011). `[paper] <https://doi.org/10.5194/gmd-4-591-2011>`__, `[repo] <https://github.com/openwfm/WRF-SFIRE>`__.
+- *Recent advances and applications of WRF-SFIRE* (Mandel et al., NHESS 2014). `[paper] <https://doi.org/10.5194/nhess-14-2829-2014>`__.
 - *FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction*. `[paper] <https://doi.org/10.1038/s41598-025-30645-7>`__, `[repo] <https://github.com/SeasFire/firecastnet>`__.
 
 Earthquake

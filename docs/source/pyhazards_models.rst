@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         49
+         47
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         50
+         48
 
       .. container:: catalog-stat-note
 
@@ -317,33 +317,6 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction <https://doi.org/10.1038/s41598-025-30645-7>`_ | **Repo:** `Repository <https://github.com/SeasFire/firecastnet>`__
-
-         .. grid-item-card:: ForeFire Adapter
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               A lightweight simulator-style wildfire spread adapter inspired by front-propagation systems.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`ForeFire Adapter <modules/models_forefire>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread <https://doi.org/10.21105/joss.08680>`_ | **Repo:** `Repository <https://github.com/forefireAPI/forefire>`__
 
          .. grid-item-card:: Logistic Regression (pixel)
             :class-card: catalog-entry-card
@@ -774,33 +747,6 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ | **Repo:** `Repository <https://github.com/SebastianGer/WildfireSpreadTS>`__
-
-         .. grid-item-card:: WRF-SFIRE Adapter
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               A lightweight raster wildfire spread adapter inspired by WRF-SFIRE style transport.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011 <https://doi.org/10.5194/gmd-4-591-2011>`_ | **Repo:** `Repository <https://github.com/openwfm/WRF-SFIRE>`__
 
          .. grid-item-card:: CNN-ASPP
             :class-card: catalog-entry-card
@@ -1522,7 +1468,6 @@ before selecting a model for evaluation.
    modules/models_eqtransformer
    modules/models_firecastnet
    modules/models_floodcast
-   modules/models_forefire
    modules/models_fourcastnet_tc
    modules/models_google_flood_forecasting
    modules/models_gpd
@@ -1560,5 +1505,4 @@ before selecting a model for evaluation.
    modules/models_wildfire_forecasting
    modules/models_wildfire_fpa
    modules/models_wildfirespreadts
-   modules/models_wrf_sfire
    modules/models_xgboost

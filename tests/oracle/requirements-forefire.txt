@@ -1,0 +1,4 @@
+# Reference engine for tests/oracle/test_forefire_oracle.py: the official ForeFire Python bindings
+# (PyPI distribution "forefire", module "pyforefire"; self-contained manylinux wheels with NetCDF).
+# ForeFire is GPL-3.0, so it is installed only in this test job and is never a PyHazards dependency.
+forefire==2.5.0
