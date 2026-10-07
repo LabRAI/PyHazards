@@ -32,6 +32,8 @@ def test_model_page_lists_generated_hazard_sections() -> None:
     assert ":doc:`Prithvi-EO-2.0-TL <modules/models_prithvi_eo_2_tl>`" in page
     assert ":doc:`ASUFM <modules/models_asufm>`" in page
     assert ":doc:`Swin-Unet <modules/models_swin_unet>`" in page
+    assert ":doc:`Earthfarseer <modules/models_earthfarseer>`" in page
+    assert ":doc:`Rainformer <modules/models_rainformer>`" in page
     assert ":doc:`ForeFire Adapter <modules/models_forefire>`" in page
     assert ":doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`" in page
     assert ":doc:`FireCastNet <modules/models_firecastnet>`" in page

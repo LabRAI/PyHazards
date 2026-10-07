@@ -3,6 +3,7 @@ from .asufm import ASUFM, asufm_builder
 from .attention_unet import AttentionUnet, TemporalAttentionUnet, attention_unet_builder
 from .builder import build_model, default_builder
 from .cnn_aspp import WildfireCNNASPP, cnn_aspp_builder
+from .earthfarseer import Earthfarseer, EarthfarseerSegmenter, earthfarseer_builder
 from .convlstm import ConvLSTM, ConvLSTMCell, ConvLSTMSegmenter, convlstm_builder
 from .earthformer import CuboidTransformerModel, Earthformer, EarthformerSegmenter, earthformer_builder
 from .deeplabv3 import DeepLabV3, deeplabv3_builder
@@ -26,6 +27,7 @@ from .phasenet import PhaseNet, phasenet_builder
 from .prithvi import PrithviMAE, PrithviSegmentation, PrithviViT
 from .prithvi_burnscars import prithvi_burnscars_builder
 from .prithvi_eo_2_tl import prithvi_eo_2_tl_builder
+from .rainformer import Rainformer, RainformerSegmenter, rainformer_builder
 from .registry import available_models, register_model
 from .resnet_unet import ResNetUNet, resnet18_unet_builder
 from .saf_net import SAFNet, saf_net_builder
@@ -159,6 +161,12 @@ __all__ = [
     "utae_builder",
     "SwinUnet",
     "swin_unet_builder",
+    "Earthfarseer",
+    "EarthfarseerSegmenter",
+    "earthfarseer_builder",
+    "Rainformer",
+    "RainformerSegmenter",
+    "rainformer_builder",
     "WRFSFireAdapter",
     "wrf_sfire_builder",
     "ConvLEMCell",
@@ -246,6 +254,18 @@ register_model(
     "swin_unet",
     swin_unet_builder,
     defaults={"out_channels": 1, "history": 1, "img_size": 224, "window_size": 7, "drop_path_rate": 0.2, "pretrained": None},
+)
+
+register_model(
+    "earthfarseer",
+    earthfarseer_builder,
+    defaults={"in_channels": 1, "history": 10, "img_size": 64, "out_channels": 1},
+)
+
+register_model(
+    "rainformer",
+    rainformer_builder,
+    defaults={"in_channels": 1, "history": 9, "img_size": 288, "out_channels": 1},
 )
 
 register_model(

@@ -1,0 +1,7 @@
+# Reference stack for tests/oracle/test_earthfarseer_oracle.py and test_rainformer_oracle.py.
+# EarthFarseer pins timm 0.9.16 (its requirements.txt), which conflicts with the timm 0.6.12 pin of
+# segmentation-models-pytorch (requirements.txt) and the timm 0.4.12 of requirements-swin.txt, so
+# the Oracle workflow installs this file in its own job. Rainformer needs einops. torchvision
+# (CPU, needed by timm) is installed by the workflow next to torch.
+timm==0.9.16
+einops==0.8.2

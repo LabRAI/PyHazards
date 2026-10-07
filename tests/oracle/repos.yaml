@@ -41,6 +41,15 @@ repos:
     url: https://github.com/amazon-science/earth-forecasting-transformer.git
     commit: 7732b03bdb366110563516c3502315deab4c2026
     license: Apache-2.0 (Copyright Amazon.com, Inc. or its affiliates)
+  EarthFarseer:
+    # Wu et al., AAAI 2024. The paper links easylearningscores/EarthFarseer, which now redirects here.
+    url: https://github.com/Alexander-wu/EarthFarseer.git
+    commit: 258d4bb56497a6fb4022a5c37dec1e05ab1bedb1
+    license: none (no LICENSE file; the README's Apache-2.0 badge links to OpenSTL's licence; test oracle only, never vendored)
+  Rainformer:
+    url: https://github.com/Zjut-MultimediaPlus/Rainformer.git
+    commit: c4e04e9011b7bbc1201a781fe5e0e56530126120
+    license: none (no LICENSE file; test oracle only, never vendored)
 
 assets:
   utae_pastis_weights:
@@ -118,4 +127,12 @@ assets:
     url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL/resolve/63adbd39c271da4c42f447e69b1a7c91a338cdc9/Prithvi_EO_V2_300M_TL.pt
     sha256: 3629cedfbb350faafcb0dac902ae0d3c927e25ce8d9e0024aa1276ec66956ddb
     license: Apache-2.0
+    large: true
+  # Official Rainformer KNMI checkpoint (train.py configuration, 288x288, 9 -> 9 frames), from the
+  # Google Drive link in PreTrainModel/address.txt. No licence is stated: used only as test data.
+  rainformer_knmi_weights:
+    url: https://drive.usercontent.google.com/download?id=1LyLOJI9sf1sdZE1FwyTLPEGEcUuvXQc3&export=download&confirm=t
+    filename: model1_1_100.pt
+    sha256: e3d5e4e59b32f13a74c7ffdc02ae65f9da3362c036b60e73e46dffe8721ae6b2
+    license: none stated (Zjut-MultimediaPlus/Rainformer release; test data only, never redistributed)
     large: true

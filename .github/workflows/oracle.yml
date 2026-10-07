@@ -57,6 +57,17 @@ jobs:
             requirements: tests/oracle/requirements-swin.txt
             references: Swin-Unet fire-asufm swin_tiny_imagenet
             tests: tests/oracle/test_swin_oracle.py
+          # EarthFarseer pins timm 0.9.16 (smp 0.3.2 needs 0.6.12, fire-asufm 0.4.12); Rainformer needs
+          # einops. Default-size models and the 751 MB Rainformer KNMI checkpoint are compared locally
+          # (PYHAZARDS_ORACLE_LARGE=1); CI compares reduced models.
+          - suite: farseer-rainformer
+            python: "3.10"
+            torch: torch torchvision
+            requirements: tests/oracle/requirements-farseer-rainformer.txt
+            references: EarthFarseer Rainformer
+            tests: >-
+              tests/oracle/test_earthfarseer_oracle.py
+              tests/oracle/test_rainformer_oracle.py
           # The official FireCastNet code runs on DGL, whose CPU wheels need torch 2.4 (pinned in the
           # requirements file). The comparison on the full global grid peaks at about 8 GB of RAM.
           - suite: firecastnet
