@@ -53,7 +53,16 @@ class Trainer:
         """
         Minimal fit loop that works for tensor-based splits.
         Extend/replace with custom DataLoaders for complex data.
+
+        Models that are not trained as one network by gradient descent declare a
+        ``custom_fit_reason`` (scikit-learn estimator wrappers such as ``random_forest`` and
+        ``xgboost``, and ``deep_ensemble``, whose members train independently); ``fit`` raises
+        ``TypeError`` with that reason instead of running a loop that would not train them.
+        ``evaluate`` and ``predict`` work for them.
         """
+        custom_fit_reason = getattr(self.model, "custom_fit_reason", None)
+        if custom_fit_reason:
+            raise TypeError(f"Trainer.fit cannot train this model: {custom_fit_reason}")
         if optimizer is None or loss_fn is None:
             raise ValueError("optimizer and loss_fn must be provided.")
 

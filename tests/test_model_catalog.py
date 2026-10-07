@@ -1,8 +1,18 @@
+import importlib.util
+
+import pytest
+import torch
+from pydantic import ValidationError
+
 from pyhazards.model_catalog import (
+    SmokeFitSpec,
+    _make_fit_targets,
+    card_by_registry_name,
     load_model_cards,
     model_catalog_alignment_issues,
     render_api_page,
     render_model_page,
+    run_smoke_test,
 )
 
 
@@ -65,3 +75,42 @@ def test_hidden_models_are_omitted_from_public_catalog_pages() -> None:
     assert "Developer Registry Workflow" in api_page
     assert "Catalog Summary" in api_page
     assert "Hurricane" not in api_page
+
+
+def test_smoke_test_fits_estimator_models_first() -> None:
+    card = card_by_registry_name(load_model_cards())["random_forest"]
+    assert card.smoke_test.fit is not None
+    result = run_smoke_test(card)
+    assert result["ok"] and result["skipped"] is None
+    assert result["actual_shape"] == [4, 2]
+
+
+def test_smoke_test_skips_missing_optional_packages() -> None:
+    cards = card_by_registry_name(load_model_cards())
+    card = cards["xgboost"].model_copy(deep=True)
+    card.smoke_test.requires = ["pyhazards_no_such_package"]
+    result = run_smoke_test(card)
+    assert result["ok"] and "pyhazards_no_such_package" in result["skipped"]
+    assert result["actual_shape"] is None and result["expected_shape"] == [4, 2]
+
+    xgboost_result = run_smoke_test(cards["xgboost"])
+    assert xgboost_result["ok"]
+    assert (xgboost_result["skipped"] is None) == (importlib.util.find_spec("xgboost") is not None)
+
+
+def test_smoke_fit_spec_validation_and_targets() -> None:
+    spec = SmokeFitSpec.model_validate(
+        {"inputs": {"shape": [6, 3]}, "targets": {"shape": [6], "dtype": "int64"}, "num_classes": 3}
+    )
+    torch.manual_seed(0)
+    targets = _make_fit_targets(spec)
+    assert targets.dtype == torch.int64 and targets.shape == (6,)
+    assert set(targets.tolist()) == {0, 1, 2}
+    regression = SmokeFitSpec.model_validate({"inputs": {"shape": [4, 3]}, "targets": {"shape": [4, 2]}})
+    assert _make_fit_targets(regression).dtype == torch.float32
+    with pytest.raises(ValidationError):
+        SmokeFitSpec.model_validate({"inputs": {"shape": [6, 3]}, "targets": {"shape": [5]}})
+    with pytest.raises(ValidationError):
+        SmokeFitSpec.model_validate(
+            {"inputs": {"shape": [2, 3]}, "targets": {"shape": [2], "dtype": "int64"}, "num_classes": 3}
+        )

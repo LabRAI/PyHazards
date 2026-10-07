@@ -39,6 +39,12 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
+[project.optional-dependencies]
+# The `xgboost` model (XGBoost on the Kondylatos et al. 2022 instance features). It uses the library
+# defaults, which changed in xgboost 2.0 (hist trees, estimated base_score); checked with 3.2.0.
+# `pip install xgboost-cpu` provides the same module without the CUDA/NCCL wheels.
+xgboost = ["xgboost>=2.0"]
+
 [project.urls]
 Homepage = "https://labrai.github.io/PyHazards/"
 Repository = "https://github.com/LabRAI/PyHazards"

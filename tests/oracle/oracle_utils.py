@@ -9,6 +9,7 @@ fetched in CI: tests that need them skip when the asset is absent, unless
 
 from __future__ import annotations
 
+import ast
 import importlib
 import importlib.metadata
 import os
@@ -16,6 +17,7 @@ import subprocess
 import sys
 from pathlib import Path
 from types import ModuleType
+from typing import Any, Dict, Iterable, Optional
 
 import pytest
 import yaml
@@ -83,6 +85,29 @@ def import_from(root: Path, module: str) -> ModuleType:
         for name in set(sys.modules) - before:
             if name.split(".")[0] == module.split(".")[0]:
                 del sys.modules[name]
+
+
+def load_definitions(path: Path, names: Iterable[str], namespace: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """Execute only the named top-level functions / classes of a reference source file.
+
+    For reference files whose module-level imports pull in heavy packages that the needed code does
+    not use (Lightning, plotting, a vendored library): the definitions are compiled from the file's
+    own source, unchanged, into ``namespace`` (which must provide the names they use, e.g. ``torch``
+    and ``nn``), and returned by name.
+    """
+    wanted = set(names)
+    tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    nodes = [
+        node
+        for node in tree.body
+        if isinstance(node, (ast.FunctionDef, ast.ClassDef)) and node.name in wanted
+    ]
+    found = {node.name for node in nodes}
+    if found != wanted:
+        raise AssertionError(f"{path} does not define {sorted(wanted - found)}")
+    scope: Dict[str, Any] = dict(namespace or {})
+    exec(compile(ast.Module(body=nodes, type_ignores=[]), str(path), "exec"), scope)
+    return {name: scope[name] for name in wanted}
 
 
 def oracle_package(name: str, version: str, requirements: str = "requirements.txt") -> ModuleType:

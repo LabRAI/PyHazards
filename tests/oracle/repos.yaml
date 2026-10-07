@@ -51,6 +51,14 @@ repos:
     commit: c4e04e9011b7bbc1201a781fe5e0e56530126120
     license: none (no LICENSE file; test oracle only, never vendored)
 
+  uncertainty-wildfires:
+    # Kondylatos et al., "Uncertainty-Aware Deep Learning for Wildfire Danger Forecasting"
+    # (arXiv 2509.25017). The repository holds the paper's checkpoints, including the ten
+    # deep-ensemble LSTMs in trained_models/ensembles/no-noisy (deep_ensemble oracle).
+    url: https://github.com/Orion-AI-Lab/uncertainty-wildfires.git
+    commit: fcfbfb894926d173e2f4cafc95b08f02cefe6e00
+    license: MIT
+
 assets:
   utae_pastis_weights:
     url: https://zenodo.org/records/5172293/files/UTAE_SemanticSeg_weights.zip

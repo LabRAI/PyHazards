@@ -113,7 +113,7 @@ Method and Resource Matrix
      - Baseline
      - ``Implemented``
      - :doc:`Wildfire Forecasting <modules/models_wildfire_forecasting>`
-     - The paper's LSTM (default) and ConvLSTM are ported and checked against the official code; the Greek datacube is not loaded yet (synthetic smoke data), and the random forest / XGBoost baselines are not included.
+     - The paper's LSTM (default) and ConvLSTM are ported and checked against the official code; the Greek datacube is not loaded yet (synthetic smoke data). The paper's random forest (random_forest, checked against the official notebook) and XGBoost (xgboost, hyperparameters pending the paper's Supporting Information) are separate entries.
    * - Wildfire
      - `WildfireSpreadTS <https://github.com/SebastianGer/WildfireSpreadTS>`_
      - Baseline / Benchmark
@@ -281,6 +281,10 @@ part of the current core method set.
    * - Wildfire
      - ``variant``
      - :doc:`U-Net <modules/models_unet>`
+     - Implemented outside the current core method set and kept public as an additional model.
+   * - Wildfire
+     - ``variant``
+     - :doc:`XGBoost <modules/models_xgboost>`
      - Implemented outside the current core method set and kept public as an additional model.
    * - Earthquake
      - ``variant``

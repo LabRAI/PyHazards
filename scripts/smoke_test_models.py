@@ -40,6 +40,9 @@ def main() -> int:
     for name in selected:
         card = mapping[name]
         result = run_smoke_test(card)
+        if result.get("skipped"):
+            print("[SKIP] {name}: {reason}".format(name=card.model_name, reason=result["skipped"]))
+            continue
         status = "PASS" if result["ok"] else "FAIL"
         print(
             "[{status}] {name}: expected {expected}, got {actual}".format(

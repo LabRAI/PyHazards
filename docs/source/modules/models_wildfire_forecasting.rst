@@ -67,7 +67,7 @@ Description
 
 The 25 features per day are 10 dynamic variables (NDVI, day and night land surface temperature, soil moisture index, and ERA5-Land maximum 2 m temperature, dew point, surface pressure and wind speed, total precipitation and minimum relative humidity), 5 static variables (elevation, slope, distance to roads and waterways, population density) and the 10 Corine Land Cover class fractions, concatenated in that order; static variables and land cover are repeated over the ten days.
 
-The implementation is a port of ``SimpleLSTM`` and ``SimpleConvLSTM`` from the official code. Parameter names and initialisation order match the reference, so its state dicts load with ``strict=True``; ``hidden_size`` defaults to the paper runs (64 for the LSTM, 32 for the ConvLSTM). The paper's random forest and XGBoost baselines are not part of this entry.
+The implementation is a port of ``SimpleLSTM`` and ``SimpleConvLSTM`` from the official code. Parameter names and initialisation order match the reference, so its state dicts load with ``strict=True``; ``hidden_size`` defaults to the paper runs (64 for the LSTM, 32 for the ConvLSTM). The paper's random forest and XGBoost baselines are the separate ``random_forest`` and ``xgboost`` entries, which read the same daily tensors.
 
 Benchmark Compatibility
 -----------------------
