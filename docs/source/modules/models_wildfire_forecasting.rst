@@ -6,7 +6,7 @@ Wildfire Forecasting
 Overview
 --------
 
-``wildfire_forecasting`` is a compact GRU-attention forecaster for weekly wildfire activity windows.
+``wildfire_forecasting`` builds one of the two deep models of Kondylatos et al. (GRL 2022) for next-day wildfire danger in Greece and the Eastern Mediterranean. ``variant="lstm"`` (default) reads the ten-day series of 25 features of one cell, ``(batch, 10, 25)``; ``variant="convlstm"`` reads the ten-day block of 25 x 25 cells centred on it, ``(batch, 10, 25, 25, 25)``. Both return ``(batch, 2)`` log-probabilities over (no fire, fire).
 
 At a Glance
 -----------
@@ -46,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-note
 
-         Forecasting
+         Classification
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,9 +63,11 @@ At a Glance
 Description
 -----------
 
-``wildfire_forecasting`` is a compact GRU-attention forecaster for weekly wildfire activity windows.
+``wildfire_forecasting`` builds one of the two deep models of Kondylatos et al. (GRL 2022) for next-day wildfire danger in Greece and the Eastern Mediterranean. ``variant="lstm"`` (default) reads the ten-day series of 25 features of one cell, ``(batch, 10, 25)``; ``variant="convlstm"`` reads the ten-day block of 25 x 25 cells centred on it, ``(batch, 10, 25, 25, 25)``. Both return ``(batch, 2)`` log-probabilities over (no fire, fire).
 
-The PyHazards implementation targets smoke-testable next-window size-group prediction through the shared wildfire benchmark flow.
+The 25 features per day are 10 dynamic variables (NDVI, day and night land surface temperature, soil moisture index, and ERA5-Land maximum 2 m temperature, dew point, surface pressure and wind speed, total precipitation and minimum relative humidity), 5 static variables (elevation, slope, distance to roads and waterways, population density) and the 10 Corine Land Cover class fractions, concatenated in that order; static variables and land cover are repeated over the ten days.
+
+The implementation is a port of ``SimpleLSTM`` and ``SimpleConvLSTM`` from the official code. Parameter names and initialisation order match the reference, so its state dicts load with ``strict=True``; ``hidden_size`` defaults to the paper runs (64 for the LSTM, 32 for the ConvLSTM). The paper's random forest and XGBoost baselines are not part of this entry.
 
 Benchmark Compatibility
 -----------------------
@@ -75,12 +77,25 @@ Benchmark Compatibility
 External References
 -------------------
 
-**Paper:** `Wildfire Danger Prediction and Understanding with Deep Learning <https://doi.org/10.1029/2022GL099368>`_ | **Repo:** `Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__
+**Paper:** `Wildfire Danger Prediction and Understanding With Deep Learning <https://doi.org/10.1029/2022GL099368>`_ | **Repo:** `Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__
+
+Used In
+-------
+
+- `Wildfire Danger Prediction and Understanding With Deep Learning <https://doi.org/10.1029/2022GL099368>`_ (`repo <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__): Kondylatos et al., Geophysical Research Letters 49(17), e2022GL099368. Daily 1 km datacube of Greece and the Eastern Mediterranean, 2009-2021 (data sets: Zenodo 6528394); target = cell inside a burned area larger than 30 ha from a fire that started that day; two negatives per positive, sampled on fire-free days and stratified by land cover. Train 2009-2018, validation 2019, test 2020 and 2021. Test F1 (Table 1, 2020 / 2021): LSTM 0.804 / 0.879 (precision 0.861 / 0.904, recall 0.755 / 0.855), ConvLSTM 0.806 / 0.871 (precision 0.923 / 0.950, recall 0.716 / 0.804); random forest 0.703 / 0.778 and XGBoost 0.782 / 0.786 for comparison.
+- `Deep Learning Methods for Daily Wildfire Danger Forecasting <https://arxiv.org/abs/2111.02736>`_: Prapas, Kondylatos et al., NeurIPS 2021 workshop paper, the precursor on the same datacube (train 2009-2018, validation 2019, test 2020). Same LSTM layer sizes (LSTM 64, linear 64-32); its ConvLSTM had 16 filters and a 16-8 linear head, which this entry does not reproduce. Test F1 0.751 (LSTM) and 0.714 (ConvLSTM), AUROC 0.920 and 0.926.
 
 Reproduction
 ------------
 
-Not yet verified against a reference implementation.
+- **Reference implementation:** `https://github.com/Orion-AI-Lab/wildfire_forecasting <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__ at ``2b18bcf`` (MIT)
+- **Checked configuration:** SimpleLSTM (hidden_size 64, 1 layer, dropout 0.5; 29,652 parameters) and SimpleConvLSTM (hidden_size 32, 1 layer, dropout 0.5, 25x25 patches; 372,212 parameters) from wildfire_forecasting/models/modules/fire_modules.py with 10 dynamic + 5 static features and the 10-d land-cover vector (clc='vec'), as set in configs/experiment/lstm_temporal_cls.yaml and clstm_spatiotemporal_cls.yaml, which the repository names as the paper's hyperparameters. The model code is unchanged since the v0.1-alpha release cited by the paper (Zenodo 6524771).
+- **Verified:** parameter count, seeded initialisation, parameter names and shapes, forward outputs
+- **Oracle test:** ``tests/oracle/test_wildfire_forecasting_oracle.py``
+- **Deviation:** The ConvLSTM's first linear layer is sized from ``patch_size`` (default 25) instead of the hard-coded ``25 // 2``; identical for the paper's 25x25 patches.
+- **Deviation:** Hyperparameters are constructor arguments (``input_dim``, ``hidden_size``, ``lstm_layers``, ``dropout``) instead of an ``hparams`` dict whose input size is counted from feature-name lists.
+- **Deviation:** The ConvLSTM recurrence is ``pyhazards.models.convlstm.ConvLSTM`` rather than a copy of the repository's ``convlstm.py`` (from ndrplz/ConvLSTM_pytorch): same gates, zero initial state and parameter names, outputs equal in the oracle test. The reference's ``dilation`` option, always 1 in ``SimpleConvLSTM``, is not exposed.
+- **Deviation:** The reference LightningModule's ``attention=True`` option refers to an undefined ``SimpleLSTMAttention`` class and crashes; it is not ported.
 
 Registry Name
 -------------
@@ -90,7 +105,7 @@ Primary entrypoint: ``wildfire_forecasting``
 Supported Tasks
 ---------------
 
-- Forecasting
+- Classification
 
 Programmatic Use
 ----------------
@@ -100,17 +115,24 @@ Programmatic Use
    import torch
    from pyhazards.models import build_model
 
-   model = build_model(
-       name="wildfire_forecasting",
-       task="forecasting",
-       input_dim=7,
-       output_dim=5,
-       lookback=12,
-   )
-   preds = model(torch.randn(2, 12, 7))
-   print(preds.shape)
+   lstm = build_model(name="wildfire_forecasting", task="classification")
+   log_probs = lstm(torch.randn(4, 10, 25))
+   danger = log_probs.exp()[:, 1]  # probability of fire
+   print(log_probs.shape)  # (4, 2)
+
+   convlstm = build_model(name="wildfire_forecasting", task="classification", variant="convlstm")
+   print(convlstm(torch.randn(4, 10, 25, 25, 25)).shape)  # (4, 2)
 
 Notes
 -----
 
-- This public adapter is exercised on the weekly wildfire smoke benchmark.
+- The output is log-probabilities, as in the reference (``log_softmax`` over two classes). The reference trains with ``nn.NLLLoss`` (class weights 0.5 / 0.5, i.e. unweighted); ``nn.CrossEntropyLoss`` gives the same loss because ``log_softmax`` is idempotent. The paper calls this a binary cross-entropy loss.
+
+- Paper training settings (repository experiment configs): Adam, StepLR(step 15, gamma 0.1), batch 256, 30 epochs; LSTM lr 1e-3 and weight decay 1e-3, ConvLSTM lr 1e-4 and weight decay 0.01. Features are min-max scaled; missing dynamic values take the sample's mean over time (LSTM) or space (ConvLSTM), other missing values become -1, missing land cover 0.
+
+- The LSTM is the default: the paper builds its danger maps and explainability analysis on it, its F1 is within 0.01 of the ConvLSTM in both test years, and it is about 12 times smaller.
+
+- At the pinned commit the repository's dataset class validates on 2020 and tests on 2021 (``val_year = 2020``), whereas the paper validates on 2019 and tests on 2020 and 2021.
+
+- PyHazards does not load the Greek datacube yet; the smoke config uses the synthetic ``wildfire_danger_synthetic`` dataset (``access_mode='temporal'`` or ``'spatiotemporal'``).
+

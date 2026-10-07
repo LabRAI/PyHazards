@@ -33,7 +33,7 @@ def test_model_page_lists_generated_hazard_sections() -> None:
     assert ":doc:`FireCastNet <modules/models_firecastnet>`" in page
     assert ":doc:`WaveCastNet <modules/models_wavecastnet>`" in page
     assert ":doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`" in page
-    assert "Wildfire Danger Prediction and Understanding with Deep Learning" in page
+    assert "Wildfire Danger Prediction and Understanding With Deep Learning" in page
     assert "`Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_" in page
     assert page.count("Implemented Models") == 5
     assert page.count("Experimental Adapters") == 2

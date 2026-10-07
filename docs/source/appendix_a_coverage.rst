@@ -113,7 +113,7 @@ Method and Resource Matrix
      - Baseline
      - ``Implemented``
      - :doc:`Wildfire Forecasting <modules/models_wildfire_forecasting>`
-     -  
+     - The paper's LSTM (default) and ConvLSTM are ported and checked against the official code; the Greek datacube is not loaded yet (synthetic smoke data), and the random forest / XGBoost baselines are not included.
    * - Wildfire
      - `WildfireSpreadTS <https://github.com/SebastianGer/WildfireSpreadTS>`_
      - Baseline / Benchmark

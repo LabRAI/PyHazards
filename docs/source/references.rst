@@ -24,7 +24,7 @@ Wildfire
 
 - *Developing risk assessment framework for wildfire in the United States*. `[paper] <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`__.
 - *Application of Explainable Artificial Intelligence in Predicting Wildfire Spread: An ASPP-Enabled CNN Approach*. `[paper] <https://ieeexplore.ieee.org/document/10568207>`__.
-- *Wildfire Danger Prediction and Understanding with Deep Learning*. `[paper] <https://doi.org/10.1029/2022GL099368>`__, `[repo] <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__.
+- Kondylatos, S., Prapas, I., Ronco, M., et al. (2022). *Wildfire Danger Prediction and Understanding With Deep Learning*. Geophysical Research Letters, 49(17), e2022GL099368. `[paper] <https://doi.org/10.1029/2022GL099368>`__, `[repo] <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__.
 - *WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction*. `[paper] <https://openreview.net/forum?id=RgdGkPRQ03>`__, `[repo] <https://github.com/SebastianGer/WildfireSpreadTS>`__.
 - *Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer*. `[paper] <https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278>`__, `[repo] <https://github.com/bronteee/fire-asufm>`__.
 - *ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread*. `[paper] <https://doi.org/10.21105/joss.08680>`__, `[repo] <https://github.com/forefireAPI/forefire>`__.

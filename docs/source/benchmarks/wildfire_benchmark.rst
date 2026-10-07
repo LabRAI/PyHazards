@@ -6,7 +6,7 @@ Wildfire Benchmark
 Overview
 --------
 
-The wildfire benchmark family is the single scoring layer for tabular danger tasks, weekly forecasting tasks, and raster spread tasks.
+The wildfire benchmark family is the single scoring layer for tabular and daily-sequence danger tasks, weekly forecasting tasks, and raster spread tasks.
 
 Current coverage is synthetic-backed, but it already exposes a single hazard-level evaluator contract across wildfire danger and wildfire spread smoke configs.
 
