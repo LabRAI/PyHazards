@@ -53,4 +53,40 @@ jobs:
         run: |
           export PYHAZARDS_ORACLE_DIR="$HOME/.cache/pyhazards-oracles"
           export PYHAZARDS_ORACLE_REQUIRED=1
-          python -m pytest tests/oracle -v
+          # FireCastNet needs DGL and its own torch version: see the oracle-firecastnet job.
+          python -m pytest tests/oracle -v --ignore=tests/oracle/test_firecastnet_oracle.py
+
+  oracle-firecastnet:
+    # The official FireCastNet code (SeasFire/firecastnet) runs on DGL, whose CPU wheels need torch 2.4.
+    # The comparison on the full global grid peaks at about 8 GB of RAM.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Cache reference implementation and checkpoints
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pyhazards-oracles
+          key: oracles-firecastnet-${{ hashFiles('tests/oracle/repos.yaml') }}
+
+      - name: Install dependencies (CPU Torch 2.4 + DGL 2.4 + reference packages)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r tests/oracle/requirements-firecastnet.txt -e .
+
+      - name: Fetch pinned reference implementation and checkpoints
+        run: >
+          python scripts/fetch_oracles.py --dest ~/.cache/pyhazards-oracles firecastnet
+          firecastnet_global_cls_ts24_h1 firecastnet_global_regr_ts24_h1 firecastnet_lam_aust_cls_ts24_h1
+
+      - name: Oracle tests
+        run: |
+          export PYHAZARDS_ORACLE_DIR="$HOME/.cache/pyhazards-oracles"
+          export PYHAZARDS_ORACLE_REQUIRED=1
+          export DGLBACKEND=pytorch
+          python -m pytest tests/oracle/test_firecastnet_oracle.py -v

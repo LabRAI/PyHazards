@@ -10,6 +10,10 @@ repos:
     url: https://github.com/SebastianGer/WildfireSpreadTS.git
     commit: f62dc49f2c2a6d249c071533ae5340c0d01bfb95
     license: MIT
+  firecastnet:
+    url: https://github.com/SeasFire/firecastnet.git
+    commit: dc0d131be7f0638e3a84c16817e7bc9be454e53e
+    license: none at repo level; seasfire/backbones/graphcast/* carry NVIDIA SPDX Apache-2.0 headers (test oracle only, never vendored)
 
 assets:
   utae_pastis_weights:
@@ -17,3 +21,18 @@ assets:
     sha256: 43a9db40ca002d9feac3a6b387838f24c3a7191b4257065d83206379f8ef957a
     license: CC-BY-4.0
     extract: true
+  firecastnet_global_cls_ts24_h1:
+    # FireCastNet global classification checkpoint (24 x 8-day input, 1-step horizon), Lightning format.
+    url: https://huggingface.co/datasets/d-michail/firecastnet-artifacts/resolve/f0bd28428d36b933ef4fb581189c741bf4ed1a10/model_ckpts/firecastnet-cls-ts24-h1.ckpt
+    sha256: c1e525d8b726f9c725c755da3edeab6f310db82689d4c57a22d001baab724916
+    license: Apache-2.0
+  firecastnet_global_regr_ts24_h1:
+    # The same network trained for burned-area regression (log-transformed target, Huber loss).
+    url: https://huggingface.co/datasets/d-michail/firecastnet-artifacts/resolve/f0bd28428d36b933ef4fb581189c741bf4ed1a10/model_ckpts/firecastnet-regr-ts24-h1.ckpt
+    sha256: 2b3bcf43fe853bee04b6bf2250facf10184ec9eaa2114633b74b71eec5b6ccb2
+    license: Apache-2.0
+  firecastnet_lam_aust_cls_ts24_h1:
+    # FireCastNet local-area model for the GFED AUST region (single 2002-vertex LAM mesh).
+    url: https://huggingface.co/datasets/d-michail/firecastnet-artifacts/resolve/f0bd28428d36b933ef4fb581189c741bf4ed1a10/lam_model_ckpts/firecastnet-cls-AUST-ts24-h1.ckpt
+    sha256: 4fea29fb69a4e6e171ae159001129167879424c489ba649ffc1f2017d3e6b126
+    license: Apache-2.0

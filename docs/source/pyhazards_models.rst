@@ -162,11 +162,11 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-entry-summary
 
-               A compact encoder-decoder baseline for wildfire spread mask prediction.
+               GraphCast on an icosahedral multi-mesh for global seasonal burned-area forecasting on the SeasFire datacube, with the official pretrained weights.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -175,10 +175,6 @@ pages and compatible benchmark coverage.
             .. container:: catalog-meta-row
 
                **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
 
             .. container:: catalog-link-row
 
@@ -987,7 +983,7 @@ starting point for each hazard family.
 
       **Start with:** :doc:`FireCastNet <modules/models_firecastnet>`
 
-      A compact encoder-decoder baseline for wildfire spread mask prediction.
+      GraphCast on an icosahedral multi-mesh for global seasonal burned-area forecasting on the SeasFire datacube, with the official pretrained weights.
 
       **Benchmark:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
 

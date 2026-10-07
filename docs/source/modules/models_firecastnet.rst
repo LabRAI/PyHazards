@@ -6,7 +6,7 @@ FireCastNet
 Overview
 --------
 
-``firecastnet`` is a raster wildfire spread baseline that uses a shallow encoder-decoder architecture.
+``firecastnet`` predicts whether fire will burn in each 0.25-degree cell during a future 8-day period (horizon 1 to 24 periods) from a time series of Earth-system variables (Michail et al., Scientific Reports 2025). A cube embedding (``Conv3d`` with kernel and stride ``T x 4 x 4`` plus LayerNorm) maps ``T = 24`` steps of the global 720 x 1440 grid (10 SeasFire variables, land-sea mask and cos/sin coordinates) to 64 features on a 1-degree grid. A GraphCast encoder-processor-decoder passes messages between that grid and a multi-mesh made of icosphere levels 0-6 (40,962 nodes, 12 processor layers, hidden size 64). A sub-pixel shuffle turns 16 outputs per 1-degree cell into one logit per 0.25-degree cell.
 
 At a Glance
 -----------
@@ -42,11 +42,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         1
+         2
 
       .. container:: catalog-stat-note
 
-         Spread
+         Segmentation, Forecasting
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,26 +63,38 @@ At a Glance
 Description
 -----------
 
-``firecastnet`` is a raster wildfire spread baseline that uses a shallow encoder-decoder architecture.
+``firecastnet`` predicts whether fire will burn in each 0.25-degree cell during a future 8-day period (horizon 1 to 24 periods) from a time series of Earth-system variables (Michail et al., Scientific Reports 2025). A cube embedding (``Conv3d`` with kernel and stride ``T x 4 x 4`` plus LayerNorm) maps ``T = 24`` steps of the global 720 x 1440 grid (10 SeasFire variables, land-sea mask and cos/sin coordinates) to 64 features on a 1-degree grid. A GraphCast encoder-processor-decoder passes messages between that grid and a multi-mesh made of icosphere levels 0-6 (40,962 nodes, 12 processor layers, hidden size 64). A sub-pixel shuffle turns 16 outputs per 1-degree cell into one logit per 0.25-degree cell.
 
-The PyHazards implementation is optimized for the shared smoke benchmark rather than the full upstream training stack.
+This is a pure PyTorch port of the official code (no DGL). The icosphere multi-mesh and the grid/mesh graphs are generated when the model is built and match the official graphs bit for bit. Parameter names follow the official network, so the released checkpoints load with ``strict=True`` through ``build_model(..., checkpoint=path)``: global ``ts24`` models for horizons 1, 2, 4, 8, 16 and 24 (classification and regression) and per-GFED-region local-area models, which also need their mesh file from the official repository (``icospheres_graph_path``).
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Wildfire Benchmark </benchmarks/wildfire_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`WildfireSpreadTS </benchmarks/wildfirespreadts_ecosystem>`
-
 External References
 -------------------
 
 **Paper:** `FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction <https://doi.org/10.1038/s41598-025-30645-7>`_ | **Repo:** `Repository <https://github.com/SeasFire/firecastnet>`__
 
+Used In
+-------
+
+- `FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction (arXiv:2502.01550) <https://arxiv.org/abs/2502.01550>`_ (`repo <https://github.com/SeasFire/firecastnet>`__): SeasFire datacube (0.25 degree, 8-day steps), years 2002-2017 / 2018 / 2019 for train / validation / test, binary burned area (gwis_ba) at horizon h, one model per horizon, BCE, AdamW lr 1e-3, 50 epochs, batch 1. Global test AUPRC with 24 input steps (Table 2): 0.641 / 0.636 / 0.631 / 0.631 / 0.628 / 0.633 for h = 1 / 2 / 4 / 8 / 16 / 24, ahead of GRU, Conv-GRU, Conv-LSTM, U-TAE and TeleViT; local-area models per GFED region in Table 4 (for example AUST 0.25 at h = 1, against 0.31 for the global model).
+
 Reproduction
 ------------
 
-Not yet verified against a reference implementation.
+- **Reference implementation:** `https://github.com/SeasFire/firecastnet <https://github.com/SeasFire/firecastnet>`__ at ``dc0d131`` (none at repository level (test oracle only); the ported GraphCast layers are Apache-2.0 (NVIDIA), as is NVIDIA Modulus v0.5.0, which the graph construction follows; checkpoints Apache-2.0 (Hugging Face d-michail/firecastnet-artifacts))
+- **Checked configuration:** Released global classifier firecastnet-cls-ts24-h1.ckpt: 24 steps x 11 inputs (+3 static channels) on the 720 x 1440 grid, Conv3d 24x4x4 to 64 channels with LayerNorm, 1-degree graph grid (180 x 360), icosphere levels 0-6 (40,962 mesh nodes; 327,660 mesh, 100,160 grid-to-mesh and 64,800 mesh-to-grid edges), 12 processor layers, hidden 64, sum aggregation, 16 outputs and PixelShuffle(4); likewise firecastnet-regr-ts24-h1.ckpt and the AUST local-area checkpoint firecastnet-cls-AUST-ts24-h1.ckpt (2,002-node mesh), plus small global configurations with seeded initialisation. All 94 released checkpoint configurations use this network configuration.
+- **Parameter count:** 9,087,568
+- **Verified:** parameter count, seeded initialisation, parameter names and shapes, forward outputs, official pretrained weights
+- **Oracle test:** ``tests/oracle/test_firecastnet_oracle.py``
+- **Deviation:** Only the configuration FireCastNet uses is ported: a cube embedding whose temporal patch spans the whole input (embed_cube_time == timeseries_len). The reference's other options (no cube embedding, ViT and L-TAE cube embedders, the recurrent processor used when the embedded cube keeps a time axis, do_concat_trick) appear neither in the paper nor in the released checkpoints and raise an error here.
+- **Deviation:** The reference LightningModule accepts a batch size of 1. Here the cube embedding is batched and the graph network runs once per sample, which gives the same per-sample outputs.
+- **Deviation:** The reference sizes its DGL bipartite graphs by the largest mesh vertex a grid node links to, so it fails unless the grid reaches the last mesh vertex (in practice, only global grids work). The port counts all mesh vertices, so regional windows also run; outputs on global grids are unchanged.
+- **Deviation:** The reference also lists GraphNorm, InstanceNorm, BatchNorm and MessageNorm as norm_type but looks them up in torch.nn, where none exists; only LayerNorm (or none) is accepted here. Non-square patches switch the reference to a ConvTranspose3d up-sampling that fails on its 4-D input; the port requires square patches.
+- **Deviation:** Nearest neighbours for the grid/mesh graphs come from a SciPy KD-tree with exact float64 re-ranking instead of scikit-learn; the oracle checks that every graph (edge order and features) is bitwise identical for the global and the local-area meshes.
 
 Registry Name
 -------------
@@ -92,7 +104,8 @@ Primary entrypoint: ``firecastnet``
 Supported Tasks
 ---------------
 
-- Spread
+- Segmentation
+- Forecasting
 
 Programmatic Use
 ----------------
@@ -102,11 +115,28 @@ Programmatic Use
    import torch
    from pyhazards.models import build_model
 
-   model = build_model(name="firecastnet", task="segmentation", in_channels=12)
-   logits = model(torch.randn(2, 12, 16, 16))
-   print(logits.shape)
+   # Released configuration: 24 eight-day steps of 11 variables on the global 0.25-degree grid.
+   model = build_model(name="firecastnet", task="segmentation")  # 9,087,568 parameters
+   # Official weights (huggingface.co/datasets/d-michail/firecastnet-artifacts, Apache-2.0):
+   # model = build_model(name="firecastnet", task="segmentation", checkpoint="firecastnet-cls-ts24-h1.ckpt")
+   model.eval()
+   x = torch.randn(1, 24, 11, 720, 1440)  # (batch, time, variables, lat, lon), standardised
+   with torch.no_grad():
+       probability = torch.sigmoid(model(x))  # (1, 1, 720, 1440)
+   print(probability.shape)
 
 Notes
 -----
 
-- The smoke configuration uses the single-frame wildfire spread raster fixture.
+- Input channels, in order: mslp, tp, vpd, sst, t2m_mean, ssrd, swvl1, lst_day, ndvi, pop_dens, lsm. Preprocessing is done outside the model, as in the official inference script: log(1 + x) for tp and pop_dens, standardisation of the 10 dynamic variables with SeasFire statistics (lsm stays raw), missing values set to -1, and a window of 24 steps ending h periods before the target period. The official inference sets predictions to 0 where lsm < 0.1.
+
+- The cube LayerNorm normalises over the whole embedded cube (64 x 1 x 180 x 360) with an elementwise affine of that shape: 8,294,400 of the 9,087,568 parameters. A model therefore only runs on the grid it was built for; the default is the global 0.25-degree grid.
+
+- Kept from the reference because they change outputs: mesh-node features are cos/sin of latitude and longitude in degrees passed to cos/sin without conversion to radians (as in NVIDIA Modulus), and icosphere vertices come from midpoint subdivision of the flat icosahedron with one projection onto the sphere at the end, not a projection after every refinement step as the paper describes.
+
+- The cos(lat), sin(lon) and cos(lon) channels are appended inside the model (``lat_lon_static_data``). Any latitude/longitude window and resolution can be configured; the smoke test uses a tiny 2.5-degree global grid with icosphere levels 0-2.
+
+- Local-area checkpoints for BONA and SHSA point to mesh files that are not in the official repository (final_icospheres/icosphere_s3_BONA_6u.json and icospheres-lam/icospheres/icosphere_s3_SHSA_7u_SHAF_2n.json), so they cannot be run as released; their weights still load, since no weight depends on the mesh.
+
+- A global forward pass on CPU needs about 5 GB of memory (the float32 input alone is 1.1 GB). The paper's AUPRC was not re-evaluated here: that needs the 44 GB SeasFire datacube.
+

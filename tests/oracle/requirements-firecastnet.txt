@@ -1,0 +1,13 @@
+# Reference environment for tests/oracle/test_firecastnet_oracle.py (the official FireCastNet code
+# needs DGL). DGL 2.4.0 publishes CPU wheels for torch 2.4 only, so this job pins CPU torch 2.4.0.
+--extra-index-url https://download.pytorch.org/whl/cpu
+--find-links https://data.dgl.ai/wheels/torch-2.4/repo.html
+torch==2.4.0+cpu
+dgl==2.4.0
+einops==0.8.1
+scikit-learn==1.6.1
+lightning==2.5.1.post0
+torchmetrics==1.7.1
+xarray==2025.3.1
+zarr==2.18.3
+pytest

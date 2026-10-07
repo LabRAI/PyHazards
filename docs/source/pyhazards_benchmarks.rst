@@ -264,7 +264,7 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Coverage:** 5 smoke configs | 9 models
+               **Coverage:** 4 smoke configs | 8 models
 
             .. container:: catalog-link-row
 

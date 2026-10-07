@@ -143,7 +143,7 @@ Method and Resource Matrix
      - Optional Baseline
      - ``Implemented``
      - :doc:`FireCastNet <modules/models_firecastnet>`
-     -  
+     - Pure PyTorch port of the official model; the released SeasFire checkpoints load and match the official DGL implementation. SeasFire datacube backing is still missing.
    * - Flood
      - `NeuralHydrology <https://github.com/neuralhydrology/neuralhydrology>`_
      - Baseline Family

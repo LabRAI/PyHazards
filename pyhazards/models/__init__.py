@@ -266,10 +266,8 @@ register_model(
     "firecastnet",
     firecastnet_builder,
     defaults={
-        "in_channels": 12,
-        "hidden_dim": 32,
-        "out_channels": 1,
-        "dropout": 0.1,
+        "in_channels": 11,
+        "timeseries_len": 24,
     },
 )
 

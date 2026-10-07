@@ -48,7 +48,7 @@ APPENDIX_A_ENTRIES: List[AppendixAEntry] = [
     AppendixAEntry("Wildfire", "ASUFM", "Baseline", "https://github.com/bronteee/fire-asufm", "core", ("asufm",)),
     AppendixAEntry("Wildfire", "WRF-SFIRE", "Simulator Adapter", "https://github.com/openwfm/WRF-SFIRE", "core", ("wrf_sfire",), "The current adapter is lightweight and synthetic-backed rather than a full external simulator binding."),
     AppendixAEntry("Wildfire", "ForeFire", "Simulator Adapter", "https://github.com/forefireAPI/forefire", "core", ("forefire",), "The current adapter is lightweight and synthetic-backed rather than a full external simulator binding."),
-    AppendixAEntry("Wildfire", "FireCastNet", "Optional Baseline", "https://github.com/SeasFire/firecastnet", "core", ("firecastnet",)),
+    AppendixAEntry("Wildfire", "FireCastNet", "Optional Baseline", "https://github.com/SeasFire/firecastnet", "core", ("firecastnet",), "Pure PyTorch port of the official model; the released SeasFire checkpoints load and match the official DGL implementation. SeasFire datacube backing is still missing."),
     AppendixAEntry("Flood", "NeuralHydrology", "Baseline Family", "https://github.com/neuralhydrology/neuralhydrology", "core", ("neuralhydrology_lstm", "neuralhydrology_ealstm"), "The LSTM and EA-LSTM adapters are implemented, but Caravan / WaterBench benchmark backing is still missing."),
     AppendixAEntry("Flood", "Caravan", "Dataset", "https://github.com/kratzert/Caravan", "core", notes="A synthetic-backed Caravan adapter is registered for streamflow smoke benchmarking."),
     AppendixAEntry("Flood", "WaterBench", "Dataset", "https://github.com/uihilab/WaterBench", "core", notes="A synthetic-backed WaterBench adapter is registered for streamflow smoke benchmarking."),
