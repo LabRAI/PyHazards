@@ -1,0 +1,25 @@
+benchmark:
+  name: wildfire
+  hazard_task: wildfire.danger
+  metrics:
+    - accuracy
+    - macro_f1
+    - auc
+    - pr_auc
+  eval_split: test
+dataset:
+  name: wildfire_track_o_temporal
+  params:
+    micro: true
+    history: 6
+model:
+  name: convlstm
+  task: segmentation
+  params:
+    in_channels: 5
+    hidden_dim: 16
+report:
+  output_dir: reports/track_o_convlstm
+  formats:
+    - json
+seed: 7

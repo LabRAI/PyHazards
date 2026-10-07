@@ -30,7 +30,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         20
+         21
 
       .. container:: catalog-stat-note
 
@@ -52,7 +52,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         12
+         13
 
       .. container:: catalog-stat-note
 
@@ -361,6 +361,41 @@ primary source, and the most relevant inspection or registry surface.
             .. container:: catalog-link-row
 
                **Primary Source:** `Eidenshink et al. (2007). A project for monitoring trends in burn severity. <https://doi.org/10.4996/fireecology.0301003>`_
+
+         .. grid-item-card:: Track-O Wildfire Occurrence
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Daily fire / no-fire grids from NASA FIRMS detections with gridded weather and LANDFIRE fuel covariates, built locally for gridded wildfire-danger experiments.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Occurrence Benchmark` :bdg-info:`Daily latitude-longitude grids`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** The weather grid's extent (global for MERRA-2); the LANDFIRE fuel layer covers the conterminous United States only
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Built by the user from downloaded source files; PyHazards downloads nothing for it
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('wildfire_track_o_raster', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Track-O Wildfire Occurrence <datasets/wildfire_track_o>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Schroeder et al. (2014). The New VIIRS 375 m active fire detection data product: Algorithm description and initial assessment. <https://doi.org/10.1016/j.rse.2013.12.008>`_
 
          .. grid-item-card:: WFIGS
             :class-card: catalog-entry-card
@@ -915,6 +950,7 @@ model and evaluation coverage.
    datasets/fpa_fod_weekly
    datasets/landfire
    datasets/mtbs
+   datasets/wildfire_track_o
    datasets/wfigs
    datasets/caravan_streamflow
    datasets/floodcastbench_inundation

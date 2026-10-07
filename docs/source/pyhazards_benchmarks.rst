@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         27
+         28
 
       .. container:: catalog-stat-note
 
@@ -90,7 +90,7 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-meta-row
 
-         **Coverage:** 8 smoke configs | 31 models | 1 ecosystem
+         **Coverage:** 9 smoke configs | 31 models | 1 ecosystem
 
       .. container:: catalog-link-row
 

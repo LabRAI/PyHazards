@@ -27,6 +27,9 @@ from .wildfire import (
     SyntheticWildfireDangerDataset,
     SyntheticWildfireSpreadDataset,
     SyntheticWildfireSpreadTemporalDataset,
+    WildfireTrackORasterDataset,
+    WildfireTrackOTabularDataset,
+    WildfireTrackOTemporalDataset,
 )
 
 __all__ = [
@@ -60,6 +63,9 @@ __all__ = [
     "SyntheticWildfireDangerDataset",
     "SyntheticWildfireSpreadDataset",
     "SyntheticWildfireSpreadTemporalDataset",
+    "WildfireTrackORasterDataset",
+    "WildfireTrackOTabularDataset",
+    "WildfireTrackOTemporalDataset",
 ]
 
 register_dataset(SyntheticEarthquakeForecastDataset.name, SyntheticEarthquakeForecastDataset)
@@ -82,3 +88,6 @@ register_dataset(TropiCycloneNetDataset.name, TropiCycloneNetDataset)
 register_dataset(SyntheticWildfireDangerDataset.name, SyntheticWildfireDangerDataset)
 register_dataset(SyntheticWildfireSpreadDataset.name, SyntheticWildfireSpreadDataset)
 register_dataset(SyntheticWildfireSpreadTemporalDataset.name, SyntheticWildfireSpreadTemporalDataset)
+register_dataset(WildfireTrackORasterDataset.name, WildfireTrackORasterDataset)
+register_dataset(WildfireTrackOTemporalDataset.name, WildfireTrackOTemporalDataset)
+register_dataset(WildfireTrackOTabularDataset.name, WildfireTrackOTabularDataset)

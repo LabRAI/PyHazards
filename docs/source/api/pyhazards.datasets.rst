@@ -19,7 +19,7 @@ Shared Forcing
 Wildfire
 ~~~~~~~~
 
-:doc:`FIRMS </datasets/firms>`, :doc:`FPA-FOD Tabular </datasets/fpa_fod_tabular>`, :doc:`FPA-FOD Weekly </datasets/fpa_fod_weekly>`, :doc:`LANDFIRE </datasets/landfire>`, :doc:`MTBS </datasets/mtbs>`, :doc:`WFIGS </datasets/wfigs>`.
+:doc:`FIRMS </datasets/firms>`, :doc:`FPA-FOD Tabular </datasets/fpa_fod_tabular>`, :doc:`FPA-FOD Weekly </datasets/fpa_fod_weekly>`, :doc:`LANDFIRE </datasets/landfire>`, :doc:`MTBS </datasets/mtbs>`, :doc:`Track-O Wildfire Occurrence </datasets/wildfire_track_o>`, :doc:`WFIGS </datasets/wfigs>`.
 
 Flood
 ~~~~~

@@ -75,6 +75,7 @@ SOURCE_ROLE_BADGE_ROLES = {
     "Inundation Benchmark": "secondary",
     "Track Archive": "secondary",
     "Track Benchmark": "secondary",
+    "Occurrence Benchmark": "secondary",
 }
 
 GEOMETRY_BADGE_ROLES = {
@@ -92,6 +93,7 @@ GEOMETRY_BADGE_ROLES = {
     "Graph-temporal basin or node sequences": "info",
     "Raster inundation sequences": "info",
     "Storm-track history sequences": "info",
+    "Daily latitude-longitude grids": "info",
 }
 
 

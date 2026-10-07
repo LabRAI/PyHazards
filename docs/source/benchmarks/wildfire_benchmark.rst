@@ -6,7 +6,7 @@ Wildfire Benchmark
 Overview
 --------
 
-The wildfire benchmark family is the single scoring layer for tabular and daily-sequence danger tasks, weekly forecasting tasks, and raster spread tasks.
+The wildfire benchmark family is the single scoring layer for tabular, daily-sequence and gridded (per-cell) danger tasks, weekly forecasting tasks, and raster spread tasks.
 
 Current coverage is synthetic-backed, but it already exposes a single hazard-level evaluator contract across wildfire danger and wildfire spread smoke configs.
 
@@ -105,6 +105,7 @@ Mapped benchmark ecosystems
    - ``forefire_smoke.yaml``
    - ``wrf_sfire_smoke.yaml``
    - ``firecastnet_smoke.yaml``
+   - ``track_o_convlstm_smoke.yaml``
 
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
@@ -115,6 +116,7 @@ Mapped benchmark ecosystems
    :class-container: catalog-dropdown
 
    - WildfireSpreadTS is the public Appendix-A benchmark ecosystem surfaced on this page.
+   - Track-O (from PR #33 by runyangxu) scores ``wildfire.danger`` as daily fire occurrence on a latitude-longitude grid: whether a cell has a NASA FIRMS detection on a day, from that day's weather (MERRA-2 surface variables or any NetCDF files on a regular grid) and LANDFIRE fuels. Build the cache with ``scripts/build_wildfire_track_o_cache.py``, load it with the ``wildfire_track_o_raster`` / ``_temporal`` / ``_tabular`` datasets, and train and score registry models with ``scripts/run_wildfire_track_o_baselines.py``. Raster and temporal layouts are scored per cell (one logit per cell; accuracy and macro F1 at probability 0.5, ROC AUC, PR AUC). The smoke config ``track_o_convlstm_smoke.yaml`` runs on the synthetic ``micro`` cache; no real-data Track-O results are published with PyHazards.
    - The Kondylatos et al. (2022) tree baselines ``random_forest`` and ``xgboost`` read the same daily danger tensors as ``wildfire_forecasting`` but must be fitted (``model.fit``) before they are scored, so they have no smoke config; pass the fitted model to ``BenchmarkRunner.run(model=...)``. ``deep_ensemble`` wraps any of the linked models (the ten-LSTM danger ensemble of Kondylatos et al. 2025, or U-TAE members for spread).
    - FireCastNet forecasts seasonal burned-area presence on the SeasFire datacube (AUPRC in its paper); without a SeasFire adapter its smoke config runs on synthetic rasters and is scored with the spread-mask metrics.
    - Earthfarseer and Rainformer are frame-sequence forecasters (Sim2Real-Fire baselines); their task="segmentation" adaptation maps the first predicted frame to fire-mask logits, which is a PyHazards convention, not a published Sim2Real-Fire configuration.

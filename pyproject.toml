@@ -44,6 +44,11 @@ classifiers = [
 # defaults, which changed in xgboost 2.0 (hist trees, estimated base_score); checked with 3.2.0.
 # `pip install xgboost-cpu` provides the same module without the CUDA/NCCL wheels.
 xgboost = ["xgboost>=2.0"]
+# Reprojecting a LANDFIRE fuel raster onto a Track-O cache grid
+# (pyhazards.datasets.wildfire.track_o_cache.align_fuel_to_grid); imported only there.
+geo = ["rasterio>=1.3"]
+# Loss-curve PNGs written by scripts/run_wildfire_track_o_baselines.py; skipped without it.
+plot = ["matplotlib>=3.5"]
 
 [project.urls]
 Homepage = "https://labrai.github.io/PyHazards/"
