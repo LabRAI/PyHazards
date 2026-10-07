@@ -3,6 +3,7 @@ from __future__ import annotations
 import torch
 
 from ..base import DataBundle, DataSplit, Dataset, FeatureSpec, LabelSpec
+from .track_o import WildfireTrackORasterDataset, WildfireTrackOTabularDataset, WildfireTrackOTemporalDataset
 
 
 class SyntheticWildfireSpreadDataset(Dataset):
@@ -229,4 +230,7 @@ __all__ = [
     "SyntheticWildfireDangerDataset",
     "SyntheticWildfireSpreadDataset",
     "SyntheticWildfireSpreadTemporalDataset",
+    "WildfireTrackORasterDataset",
+    "WildfireTrackOTabularDataset",
+    "WildfireTrackOTemporalDataset",
 ]

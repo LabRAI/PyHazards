@@ -14,12 +14,12 @@ For the curated browsing experience, use :doc:`/pyhazards_datasets`.
 Shared Forcing
 ~~~~~~~~~~~~~~
 
-:doc:`ERA5 </datasets/era5>`, :doc:`GOES-R </datasets/goesr>`, :doc:`MERRA-2 </datasets/merra2>`.
+:doc:`ERA5 </datasets/era5>`, :doc:`GOES-R </datasets/goesr>`, :doc:`HRRR </datasets/hrrr>`, :doc:`LandScan Global </datasets/landscan_population>`, :doc:`MERRA-2 </datasets/merra2>`, :doc:`NDFD </datasets/ndfd>`, :doc:`SNODAS </datasets/nohrsc_snodas>`.
 
 Wildfire
 ~~~~~~~~
 
-:doc:`FIRMS </datasets/firms>`, :doc:`FPA-FOD Tabular </datasets/fpa_fod_tabular>`, :doc:`FPA-FOD Weekly </datasets/fpa_fod_weekly>`, :doc:`LANDFIRE </datasets/landfire>`, :doc:`MTBS </datasets/mtbs>`, :doc:`WFIGS </datasets/wfigs>`, :doc:`WRF-SFIRE Outputs </datasets/wrf_sfire>`.
+:doc:`CAL FIRE FRAP Fire Perimeters </datasets/frap_fire_perimeters>`, :doc:`FIRMS </datasets/firms>`, :doc:`FPA-FOD Tabular </datasets/fpa_fod_tabular>`, :doc:`FPA-FOD Weekly </datasets/fpa_fod_weekly>`, :doc:`GeoMAC Historical Perimeters </datasets/geomac_historical>`, :doc:`GOES-R ABI Fire/Hot Spot Characterization (FDCF) </datasets/goesr_fdcf>`, :doc:`LANDFIRE </datasets/landfire>`, :doc:`MTBS </datasets/mtbs>`, :doc:`NOAA HMS Smoke Polygons </datasets/hms_smoke>`, :doc:`Track-O Wildfire Occurrence </datasets/wildfire_track_o>`, :doc:`WFIGS </datasets/wfigs>`, :doc:`Wildfire Risk to Communities: Housing Density </datasets/wrc_housing_density>`, :doc:`WRF-SFIRE Outputs </datasets/wrf_sfire>`.
 
 Flood
 ~~~~~

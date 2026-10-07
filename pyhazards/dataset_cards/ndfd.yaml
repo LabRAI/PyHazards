@@ -1,0 +1,57 @@
+slug: ndfd
+display_name: NDFD
+hazard_family: Shared Forcing
+source_role: Weather Forecast
+summary: The National Weather Service's gridded official forecasts, including relative humidity, wind, Red Flag Warnings and SPC fire-weather outlook grids, archived since 2004.
+provider: NOAA National Weather Service (forecast offices and NCEP; the Storm Prediction Center supplies the fire-weather outlooks)
+geometry: Gridded forecast fields
+spatial_resolution: 2.5 km for CONUS (2145 x 1377 Lambert conformal grid); separate Alaska, Hawaii, Puerto Rico, Guam and oceanic grids
+temporal_resolution: Element-dependent forecast steps over days 1-7
+update_cadence: As often as every 30 minutes, depending on the element
+period_of_record: 6 June 2004 to the present at NCEI; AWS archive from 16 April 2020
+coverage: United States and territories
+formats: GRIB2
+overview:
+  - >
+    The National Digital Forecast Database holds the official National Weather Service forecasts
+    as grids: temperature, humidity, wind, precipitation, sky cover, weather type and hazard
+    (watch / warning / advisory) elements, written by the forecast offices and national centres.
+  - >
+    For wildfire work it carries the fire-weather ingredients forecasters use (minimum relative
+    humidity, wind and gusts) and the SPC fire-weather outlook grids.
+data_characteristics:
+  - >
+    Fire-relevant elements: SPC fire-weather outlooks (critfireo, critical and extremely critical
+    areas, days 1-7; dryfireo, dry thunderstorm areas), minrh / maxrh / rhm, wspd / wdir / wgust, and
+    the wwa hazard grid, whose codes include Red Flag Warning (FW.W) and Fire Weather Watch (FW.A).
+    The SPC outlook grids became operational on 14 July 2011 and cover CONUS only.
+  - >
+    Archive access depends on the period: NCEI holds data from 6 June 2004 (older years in bulk
+    archives, recent years online) and AWS from 16 April 2020.
+  - Some GRIB2 decoders misread the grid scanning order; NOAA recommends degrib, wgrib2 or grib2io.
+typical_use_cases:
+  - Operational fire-weather forecast covariates and Red Flag Warning history.
+  - Comparing machine-learning forecasts with the official forecast.
+access_links:
+  - label: NDFD at NOAA NCEI (archive)
+    url: https://www.ncei.noaa.gov/products/weather-climate-models/national-digital-forecast-database
+  - label: NOAA NDFD on the AWS Registry of Open Data
+    url: https://registry.opendata.aws/noaa-ndfd/
+  - label: Current NDFD GRIB2 files (NWS)
+    url: https://tgftp.nws.noaa.gov/SL.us008001/ST.opnl/DF.gr2/DC.ndfd/
+  - label: NDFD documentation (NOAA MDL)
+    url: https://vlab.noaa.gov/web/mdl/ndfd
+pyhazards_usage:
+  - >
+    PyHazards does not load this source; it is listed as an external reference for official
+    fire-weather forecasts.
+primary_references:
+  - citation: Glahn and Ruth (2003). The New Digital Forecast Database of the National Weather Service. Bulletin of the American Meteorological Society 84(2), 195-202.
+    url: https://doi.org/10.1175/BAMS-84-2-195
+related_models: []
+related_benchmarks: []
+notes:
+  - >
+    Terms: NWS information is in the public domain unless noted otherwise and may be used for any
+    lawful purpose as long as users do not claim it as their own, imply NWS endorsement, or present
+    modified content as official (https://www.weather.gov/disclaimer).

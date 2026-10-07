@@ -30,7 +30,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         21
+         31
 
       .. container:: catalog-stat-note
 
@@ -52,7 +52,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         13
+         14
 
       .. container:: catalog-stat-note
 
@@ -73,7 +73,7 @@ primary source, and the most relevant inspection or registry surface.
 
       .. container:: catalog-section-note
 
-         Cross-hazard meteorology and imagery sources that support multiple PyHazards workflows, inspections, and forcing pipelines.
+         Cross-hazard meteorology, imagery, snow and population sources: some feed PyHazards inspections and forcing pipelines, others are external references.
 
       .. rubric:: Implemented Datasets
 
@@ -143,6 +143,60 @@ primary source, and the most relevant inspection or registry surface.
 
                **Primary Source:** `Schmit et al. (2017). A closer look at the ABI on the GOES-R series. <https://doi.org/10.1175/BAMS-D-15-00230.1>`_
 
+         .. grid-item-card:: HRRR
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               NOAA's 3 km, hourly updated, convection-allowing forecast model for the United States, archived on AWS since July 2014.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Weather Forecast` :bdg-info:`Gridded forecast fields`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Conterminous United States; an Alaska domain from July 2018
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Every hour for CONUS; every 3 hours for Alaska
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`HRRR <datasets/hrrr>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Dowell et al. (2022). The High-Resolution Rapid Refresh (HRRR): An Hourly Updating Convection-Allowing Forecast Model. Part I: Motivation and System Description. Weather and Forecasting 37(8), 1371-1395. <https://doi.org/10.1175/WAF-D-21-0151.1>`_
+
+         .. grid-item-card:: LandScan Global
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               ORNL's annual 30 arc-second global grid of ambient (24-hour average) population, an exposure layer for hazard impact studies.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Population Exposure` :bdg-info:`Gridded population rasters (WGS84 geographic)`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Global
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Annual releases (LandScan Global 2024 was published in August 2025)
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`LandScan Global <datasets/landscan_population>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Lebakula et al. (2025). LandScan Global 2024. Oak Ridge National Laboratory. <https://doi.org/10.48690/1532445>`_
+
          .. grid-item-card:: MERRA-2
             :class-card: catalog-entry-card
 
@@ -174,18 +228,99 @@ primary source, and the most relevant inspection or registry surface.
 
                **Primary Source:** `Gelaro et al. (2017). The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA-2). <https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml>`_
 
+         .. grid-item-card:: NDFD
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The National Weather Service's gridded official forecasts, including relative humidity, wind, Red Flag Warnings and SPC fire-weather outlook grids, archived since 2004.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Weather Forecast` :bdg-info:`Gridded forecast fields`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** United States and territories
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** As often as every 30 minutes, depending on the element
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`NDFD <datasets/ndfd>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Glahn and Ruth (2003). The New Digital Forecast Database of the National Weather Service. Bulletin of the American Meteorological Society 84(2), 195-202. <https://doi.org/10.1175/BAMS-84-2-195>`_
+
+         .. grid-item-card:: SNODAS
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               NOAA NOHRSC's daily 1 km snow analysis (snow water equivalent, depth, melt, sublimation) for the conterminous United States, distributed by NSIDC since 2003.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Snow Analysis` :bdg-info:`Regular latitude-longitude grid`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Masked version, conterminous United States and some Canadian basins (24.95-52.875 N, 124.733-66.942 W); unmasked version extends into Canada and Mexico
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Daily
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`SNODAS <datasets/nohrsc_snodas>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `National Operational Hydrologic Remote Sensing Center (2004). Snow Data Assimilation System (SNODAS) Data Products at NSIDC, Version 1. NSIDC. <https://doi.org/10.7265/N5TB14TC>`_
+
 
    .. tab-item:: Wildfire
 
       .. container:: catalog-section-note
 
-         Wildfire datasets span authoritative incident records, active-fire detections, fuels, burn severity, and forecast-ready benchmark adapters.
+         Wildfire datasets span authoritative incident records, perimeters, active-fire detections, smoke, fuels, burn severity, exposure, and forecast-ready benchmark adapters.
 
       .. rubric:: Implemented Datasets
 
       .. grid:: 1 1 2 2
          :gutter: 2
          :class-container: catalog-grid
+
+         .. grid-item-card:: CAL FIRE FRAP Fire Perimeters
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               California's historical wildfire perimeter archive, maintained by CAL FIRE's Fire and Resource Assessment Program, with fires back to 1878.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Historical Perimeters` :bdg-info:`Fire perimeter polygons`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** California
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Annual, each spring, adding the previous fire season (release firep25_1, April 2026)
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`CAL FIRE FRAP Fire Perimeters <datasets/frap_fire_perimeters>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `CAL FIRE FRAP (2026). Fire Perimeters, release firep25_1 (metadata). <https://www.arcgis.com/sharing/rest/content/items/a31aa1efe1d6466f8530b501c30ab00a/data>`_
 
          .. grid-item-card:: FIRMS
             :class-card: catalog-entry-card
@@ -220,7 +355,7 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `Schroeder et al. (2014). The New VIIRS 375 m active fire detection data product. <https://doi.org/10.1016/j.rse.2013.08.008>`_
+               **Primary Source:** `Schroeder et al. (2014). The New VIIRS 375 m active fire detection data product. <https://doi.org/10.1016/j.rse.2013.12.008>`_
 
          .. grid-item-card:: FPA-FOD Tabular
             :class-card: catalog-entry-card
@@ -292,6 +427,60 @@ primary source, and the most relevant inspection or registry surface.
 
                **Primary Source:** `PyHazards FPA-FOD weekly adaptation for the wildfire forecasting path. <https://github.com/LabRAI/PyHazards>`_
 
+         .. grid-item-card:: GeoMAC Historical Perimeters
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Wildfire perimeters processed by the USGS GeoMAC service from 2000 to 2019, now distributed by the National Interagency Fire Center.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Historical Perimeters` :bdg-info:`Fire perimeter polygons`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** United States (the 2019 layer covers the conterminous 48 states and Alaska)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Static archive (GeoMAC was retired on 30 April 2020)
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`GeoMAC Historical Perimeters <datasets/geomac_historical>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `National Interagency Fire Center. Historic Perimeters Combined 2000-2018 GeoMAC (NIFC Open Data). <https://data-nifc.opendata.arcgis.com/datasets/nifc::historic-perimeters-combined-2000-2018-geomac/about>`_
+
+         .. grid-item-card:: GOES-R ABI Fire/Hot Spot Characterization (FDCF)
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               NOAA's GOES-R ABI Level-2 fire detection and characterization product on the full-disk scan, every 10 minutes since April 2019, openly distributed on AWS.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Active Fire Detections` :bdg-info:`Raster imagery time series on the ABI fixed grid`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** The full disk of each GOES satellite (GOES-East and GOES-West positions over the Americas)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Continuous operational production
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`GOES-R ABI Fire/Hot Spot Characterization (FDCF) <datasets/goesr_fdcf>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Schmidt (2020). Monitoring Fires with the GOES-R Series. In The GOES-R Series, Elsevier, 145-163. <https://doi.org/10.1016/B978-0-12-814327-8.00013-5>`_
+
          .. grid-item-card:: LANDFIRE
             :class-card: catalog-entry-card
 
@@ -362,6 +551,68 @@ primary source, and the most relevant inspection or registry surface.
 
                **Primary Source:** `Eidenshink et al. (2007). A project for monitoring trends in burn severity. <https://doi.org/10.4996/fireecology.0301003>`_
 
+         .. grid-item-card:: NOAA HMS Smoke Polygons
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Analyst-drawn smoke plume outlines from NOAA's Hazard Mapping System, produced daily since August 2005.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Smoke Plumes` :bdg-info:`Analyst-drawn smoke polygons`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** North America, Hawaii and the Caribbean
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Daily
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`NOAA HMS Smoke Polygons <datasets/hms_smoke>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Ruminski and Kondragunta (2006). Monitoring fire and smoke emissions with the hazard mapping system. Proc. SPIE 6412. <https://doi.org/10.1117/12.694183>`_
+
+         .. grid-item-card:: Track-O Wildfire Occurrence
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Daily fire / no-fire grids from NASA FIRMS detections with gridded weather and LANDFIRE fuel covariates, built locally for gridded wildfire-danger experiments.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Occurrence Benchmark` :bdg-info:`Daily latitude-longitude grids`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** The weather grid's extent (global for MERRA-2); the LANDFIRE fuel layer covers the conterminous United States only
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Built by the user from downloaded source files; PyHazards downloads nothing for it
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('wildfire_track_o_raster', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Track-O Wildfire Occurrence <datasets/wildfire_track_o>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Schroeder et al. (2014). The New VIIRS 375 m active fire detection data product: Algorithm description and initial assessment. <https://doi.org/10.1016/j.rse.2013.12.008>`_
+
          .. grid-item-card:: WFIGS
             :class-card: catalog-entry-card
 
@@ -396,6 +647,33 @@ primary source, and the most relevant inspection or registry surface.
             .. container:: catalog-link-row
 
                **Primary Source:** `National Interagency Fire Center. Wildland Fire Incident Geospatial Services (WFIGS). <https://data-nifc.opendata.arcgis.com/>`_
+
+         .. grid-item-card:: Wildfire Risk to Communities: Housing Density
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               USDA Forest Service 30 m rasters of housing-unit density, exposure and wildfire risk for populated areas of the United States (2nd edition, 2024).
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Exposure and Risk` :bdg-info:`Gridded raster layers`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Conterminous United States, Alaska and Hawaii (per-state files and CONUS mosaics)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Edition-based (2nd edition published June 2024, metadata corrected September 2024)
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Wildfire Risk to Communities: Housing Density <datasets/wrc_housing_density>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Jaffe, Scott, Callahan, Dillon, Karau and Lazarz (2024). Wildfire Risk to Communities: Spatial datasets of wildfire risk for populated areas in the United States. 2nd Edition. Forest Service Research Data Archive. <https://doi.org/10.2737/RDS-2020-0060-2>`_
 
          .. grid-item-card:: WRF-SFIRE Outputs
             :class-card: catalog-entry-card
@@ -944,13 +1222,23 @@ model and evaluation coverage.
 
    datasets/era5
    datasets/goesr
+   datasets/hrrr
+   datasets/landscan_population
    datasets/merra2
+   datasets/ndfd
+   datasets/nohrsc_snodas
+   datasets/frap_fire_perimeters
    datasets/firms
    datasets/fpa_fod_tabular
    datasets/fpa_fod_weekly
+   datasets/geomac_historical
+   datasets/goesr_fdcf
    datasets/landfire
    datasets/mtbs
+   datasets/hms_smoke
+   datasets/wildfire_track_o
    datasets/wfigs
+   datasets/wrc_housing_density
    datasets/wrf_sfire
    datasets/caravan_streamflow
    datasets/floodcastbench_inundation

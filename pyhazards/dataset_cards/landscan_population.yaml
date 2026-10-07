@@ -1,0 +1,51 @@
+slug: landscan_population
+display_name: LandScan Global
+hazard_family: Shared Forcing
+source_role: Population Exposure
+summary: ORNL's annual 30 arc-second global grid of ambient (24-hour average) population, an exposure layer for hazard impact studies.
+provider: Oak Ridge National Laboratory (ORNL)
+geometry: Gridded population rasters (WGS84 geographic)
+spatial_resolution: 30 arc-seconds (about 1 km at the equator); 21,600 x 43,200 cells
+temporal_resolution: Annual
+update_cadence: Annual releases (LandScan Global 2024 was published in August 2025)
+period_of_record: 2000 to 2024
+coverage: Global
+formats: GeoTIFF
+overview:
+  - >
+    LandScan Global estimates the ambient (24-hour average) population of every 30 arc-second cell
+    of the world, as one grid per year from 2000.
+  - >
+    For hazards it is a population-exposure layer: how many people live or spend time where a fire,
+    flood or storm occurs.
+data_characteristics:
+  - One band of population counts per cell, one file per year.
+  - Ambient (24-hour average) population rather than night-time residence counts.
+  - >
+    Downloads from the ORNL portal require a short registration form; the 2000-2022 releases are
+    also mirrored on figshare.
+typical_use_cases:
+  - Population exposure to wildfire, flood or tropical-cyclone footprints.
+  - Weighting hazard maps by the people affected.
+access_links:
+  - label: LandScan portal (ORNL)
+    url: https://landscan.ornl.gov/
+  - label: LandScan Global 2024 record (OSTI)
+    url: https://www.osti.gov/biblio/2587445
+pyhazards_usage:
+  - >
+    PyHazards does not load this source; it is listed as an external reference for population
+    exposure.
+primary_references:
+  - citation: Lebakula et al. (2025). LandScan Global 2024. Oak Ridge National Laboratory.
+    url: https://doi.org/10.48690/1532445
+  - citation: Lebakula et al. (2025). LandScan Global 30 Arcsecond Annual Global Gridded Population Datasets from 2000 to 2022. Scientific Data 12, 495.
+    url: https://doi.org/10.1038/s41597-025-04817-z
+related_models: []
+related_benchmarks: []
+notes:
+  - >
+    Terms: since May 2022 LandScan Global is released under the Creative Commons Attribution 4.0
+    International licence ("free to use, copy, distribute, transmit, and adapt the data for
+    commercial and non-commercial purposes ... as long as clear attribution of the source is
+    provided"). The figshare mirror is labelled CC0; the ORNL licence is the authoritative one.

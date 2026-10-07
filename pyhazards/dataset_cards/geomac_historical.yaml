@@ -1,0 +1,53 @@
+slug: geomac_historical
+display_name: GeoMAC Historical Perimeters
+hazard_family: Wildfire
+source_role: Historical Perimeters
+summary: Wildfire perimeters processed by the USGS GeoMAC service from 2000 to 2019, now distributed by the National Interagency Fire Center.
+provider: USGS Geospatial Multi-Agency Coordination (GeoMAC; shut down on 30 April 2020), archive distributed by NIFC Open Data
+geometry: Fire perimeter polygons
+spatial_resolution: Vector polygons (geographic coordinates, NAD83)
+temporal_resolution: The latest perimeter processed for each fire, with its perimeter date and time
+update_cadence: Static archive (GeoMAC was retired on 30 April 2020)
+period_of_record: 2000 to 2019 (a combined 2000-2018 layer and a separate 2019 layer)
+coverage: United States (the 2019 layer covers the conterminous 48 states and Alaska)
+formats: File geodatabase downloads and ArcGIS feature services
+overview:
+  - >
+    GeoMAC was the USGS-operated wildfire mapping website (2000-2020) that published fire
+    perimeters for incident support. After it was shut down on 30 April 2020, its historical
+    perimeters moved to the National Interagency Fire Center (NIFC) open-data site.
+  - >
+    It is the main national perimeter archive for 2000-2019. For 2021 onwards the interagency WFIGS
+    perimeters are the successor; the NIFC Interagency Fire Perimeter History layer also covers
+    perimeters through 2019.
+data_characteristics:
+  - The combined 2000-2018 layer holds 23,776 perimeters; 2019 is a separate layer.
+  - >
+    Attributes include incidentname, fireyear, perimeterdatetime, gisacres, agency, mapmethod,
+    uniquefireidentifier, irwinid, state and complexname.
+  - >
+    The perimeters are the last ones processed by the GeoMAC team for each fire; NIFC notes that
+    they are not necessarily the final or official perimeter.
+typical_use_cases:
+  - National wildfire burned-area footprints for 2000-2019.
+  - Extending perimeter records before the WFIGS era.
+access_links:
+  - label: NIFC Open Data, Historic Perimeters Combined 2000-2018 GeoMAC
+    url: https://data-nifc.opendata.arcgis.com/datasets/nifc::historic-perimeters-combined-2000-2018-geomac/about
+  - label: NIFC Open Data, Historic GeoMAC Perimeters 2019
+    url: https://data-nifc.opendata.arcgis.com/datasets/nifc::historic-geomac-perimeters-2019/about
+pyhazards_usage:
+  - >
+    PyHazards does not load this source; it is listed as an external reference for historical
+    U.S. wildfire perimeters.
+primary_references:
+  - citation: National Interagency Fire Center. Historic Perimeters Combined 2000-2018 GeoMAC (NIFC Open Data).
+    url: https://data-nifc.opendata.arcgis.com/datasets/nifc::historic-perimeters-combined-2000-2018-geomac/about
+  - citation: Walters, Schneider and Guthrie (2011). Geospatial Multi-Agency Coordination (GeoMAC) wildland fire perimeters, 2008. USGS Data Series 612 (documents the 2008 season only).
+    url: https://doi.org/10.3133/ds612
+related_models: []
+related_benchmarks: []
+notes:
+  - >
+    Terms: the NIFC items state no licence and carry no-warranty disclaimers. USGS-produced data
+    are in the U.S. public domain under USGS policy, but the items do not say so explicitly.

@@ -41,6 +41,7 @@ def test_added_wildfire_breadth_configs(tmp_path):
         "pyhazards/configs/wildfire/asufm_smoke.yaml": "burned_area_mae",
         "pyhazards/configs/wildfire/wildfirespreadts_smoke.yaml": "burned_area_mae",
         "pyhazards/configs/wildfire/firecastnet_smoke.yaml": "burned_area_mae",
+        "pyhazards/configs/wildfire/track_o_convlstm_smoke.yaml": "pr_auc",
     }
     for path, metric_name in expectations.items():
         summary = BenchmarkRunner().run(load_experiment_config(path), output_dir=str(tmp_path))

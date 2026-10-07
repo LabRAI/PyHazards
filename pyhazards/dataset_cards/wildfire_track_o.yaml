@@ -1,0 +1,118 @@
+slug: wildfire_track_o
+display_name: Track-O Wildfire Occurrence
+hazard_family: Wildfire
+source_role: Occurrence Benchmark
+summary: Daily fire / no-fire grids from NASA FIRMS detections with gridded weather and LANDFIRE fuel covariates, built locally for gridded wildfire-danger experiments.
+provider: "PyHazards cache builder (PR #33, runyangxu) over NASA FIRMS, MERRA-2 or other gridded weather, and LANDFIRE"
+geometry: Daily latitude-longitude grids
+spatial_resolution: That of the weather grid (0.5 deg x 0.625 deg for MERRA-2), optionally subsampled
+temporal_resolution: Daily (UTC days)
+update_cadence: Built by the user from downloaded source files; PyHazards downloads nothing for it
+period_of_record: Any period covered by the user's weather and FIRMS files; the default split is calendar year 2024
+coverage: The weather grid's extent (global for MERRA-2); the LANDFIRE fuel layer covers the conterminous United States only
+formats: NetCDF weather, FIRMS CSV and LANDFIRE GeoTIFF inputs; NumPy .npy cache
+overview:
+  - >
+    Track-O ("occurrence") is the real-data wildfire setting contributed in PyHazards PR #33: on a daily
+    latitude-longitude grid, predict whether a cell has at least one satellite fire detection on a day
+    from that day's weather (and, in the temporal layout, the preceding days) and a static fuel layer.
+  - >
+    ``scripts/build_wildfire_track_o_cache.py`` turns NASA FIRMS active-fire CSVs, daily weather
+    NetCDF files and an optional LANDFIRE fuel-model GeoTIFF into a cache of per-day NumPy arrays; the
+    three registered datasets read that cache as raster, temporal or tabular samples.
+data_characteristics:
+  - >
+    Label: 1 where at least one FIRMS detection falls nearest to the cell centre on that UTC day
+    (``acq_date``). By default only FIRMS ``type`` 0 (presumed vegetation fire) is kept, which drops
+    volcanoes, other static land sources and offshore detections. ``type`` exists only in the
+    standard-quality (archive) files, so near-real-time files are used unfiltered; detections
+    outside the grid are ignored.
+  - >
+    Weather: daily means of the requested variables, by default the 14 MERRA-2 surface variables
+    T2M, QV2M, TQV, U10M, V10M, GWETROOT, TS, LAI, EFLUX, HFLUX, SWGNT, SWTNT, LWGAB and LWGEM,
+    standardised with training-split statistics; missing values (MERRA-2 land variables over the
+    ocean) become 0 after standardisation.
+  - >
+    Fuel: the most frequent LANDFIRE fuel-model code (FBFM13 or FBFM40) within each cell divided by
+    100, plus a validity mask; both are 0 outside the raster. LANDFIRE's -9999 fill is excluded and
+    the non-burnable codes (91, 92, 93, 98 and 99) are kept as codes. The code is categorical, so the scaled value
+    is only a crude numeric encoding (kept from PR #33).
+  - >
+    Same-day setting: the label of day t is paired with the weather of day t. With reanalysis
+    weather such as MERRA-2 this is not a forecast, because that weather is only known afterwards.
+  - >
+    Default split (PR #33): train 2024-01-01 to 2024-09-30, validation October 2024, test
+    November-December 2024. The test months have a different fire regime from the training months.
+typical_use_cases:
+  - Gridded wildfire danger baselines scored by the PyHazards wildfire benchmark (``wildfire.danger``).
+  - Comparing tabular (tree), raster and temporal models on the same daily fire labels.
+access_links:
+  - label: NASA FIRMS archive download
+    url: https://firms.modaps.eosdis.nasa.gov/download/
+  - label: MERRA-2 at NASA GES DISC
+    url: https://disc.gsfc.nasa.gov/datasets?project=MERRA-2
+  - label: LANDFIRE
+    url: https://landfire.gov/
+  - label: "PyHazards PR #33 (original Track-O pipeline)"
+    url: https://github.com/LabRAI/PyHazards/pull/33
+pyhazards_usage:
+  - >
+    Build a cache with ``python scripts/build_wildfire_track_o_cache.py --cache-dir DIR --weather-dir
+    WEATHER --firms-dir FIRMS [--fuel-raster LANDFIRE.tif]``. The default variables are in the
+    MERRA-2 hourly collections M2T1NXSLV (T2M, QV2M, TQV, U10M, V10M, TS), M2T1NXLND (GWETROOT, LAI),
+    M2T1NXFLX (EFLUX, HFLUX) and M2T1NXRAD (SWGNT, SWTNT, LWGAB, LWGEM), which can be passed as they
+    are (an Earthdata login is needed to download them); the ``MERRA2_sfc_YYYYMMDD.nc`` files written
+    by ``python -m pyhazards.datasets.merra2.inspection YYYYMMDD`` also hold them. Any NetCDF files
+    with the variables on a regular latitude-longitude grid and the date in the file name work.
+    Aligning the fuel raster needs ``pip install 'pyhazards[geo]'``.
+  - >
+    Train and score registry models with ``python scripts/run_wildfire_track_o_baselines.py
+    --cache-dir DIR --output-dir RUNS``; it writes per-seed histories, metrics and settings.
+registry:
+  name: wildfire_track_o_raster
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    # micro=True is a small synthetic cache for smoke tests; pass cache_dir="..." for real data.
+    data = load_dataset("wildfire_track_o_raster", micro=True).load()
+    train = data.get_split("train")
+    print(train.inputs.shape, train.targets.shape)  # (days, channels, height, width), (days, 1, height, width)
+  notes:
+    - >
+      ``wildfire_track_o_temporal`` gives windows of ``history`` consecutive days (default 6)
+      ``(samples, history, channels, height, width)``; windows that would cross a missing day are
+      skipped. ``wildfire_track_o_tabular`` gives one row per cell and day with the weather,
+      normalised latitude / longitude, day-of-year sine and cosine and the fuel columns, and int64 labels.
+    - >
+      ``downsample_factor`` keeps every f-th grid row and column (defaults: 4 raster, 8 temporal and
+      tabular) and ``spatial_multiple`` crops the grid to a multiple of it (4 by default; 16 for the
+      U-Net).
+    - >
+      ``micro=True`` replaces the cache with random fields on a 64 x 96 grid; its numbers mean nothing.
+primary_references:
+  - citation: "Schroeder et al. (2014). The New VIIRS 375 m active fire detection data product: Algorithm description and initial assessment."
+    url: https://doi.org/10.1016/j.rse.2013.12.008
+  - citation: Giglio, Schroeder and Justice (2016). The collection 6 MODIS active fire detection algorithm and fire products.
+    url: https://doi.org/10.1016/j.rse.2016.02.054
+  - citation: Gelaro et al. (2017). The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA-2).
+    url: https://doi.org/10.1175/JCLI-D-16-0758.1
+  - citation: "Rollins (2009). LANDFIRE: A nationally consistent vegetation, wildland fire, and fuel assessment."
+    url: https://doi.org/10.1071/WF08088
+related_models:
+  - logistic_regression
+  - unet
+  - convlstm
+  - random_forest
+  - xgboost
+related_benchmarks:
+  - wildfire_benchmark
+notes:
+  - >
+    PR #33 took its weather from its own Prithvi-WxC forecast files, which were not published; the
+    builder reads MERRA-2 (or any gridded NetCDF) instead. PR #33's fuel alignment wrote the
+    LANDFIRE layer north-up onto a grid whose latitude runs south to north (as MERRA-2's and
+    Prithvi-WxC's files do), which puts CONUS fuels at 22-52 degrees south, and shifted it by half
+    a cell; the builder here aligns it to the cell edges and the cache's row order.
+  - >
+    PyHazards publishes no real-data Track-O results. ``scripts/run_wildfire_track_o_baselines.py``
+    has only been run on the synthetic micro cache and on small synthetic fixtures.

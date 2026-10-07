@@ -8,8 +8,8 @@ summary: >
   Shared PyHazards evaluator family for wildfire danger and wildfire spread experiments.
 description:
   - >
-    The wildfire benchmark family is the single scoring layer for tabular and daily-sequence
-    danger tasks, weekly forecasting tasks, and raster spread tasks.
+    The wildfire benchmark family is the single scoring layer for tabular, daily-sequence and
+    gridded (per-cell) danger tasks, weekly forecasting tasks, and raster spread tasks.
   - >
     Current coverage is synthetic-backed, but it already exposes a single hazard-level
     evaluator contract across wildfire danger and wildfire spread smoke configs.
@@ -34,6 +34,7 @@ smoke_configs:
   - pyhazards/configs/wildfire/wildfire_spread_smoke.yaml
   - pyhazards/configs/wildfire/wildfirespreadts_smoke.yaml
   - pyhazards/configs/wildfire/firecastnet_smoke.yaml
+  - pyhazards/configs/wildfire/track_o_convlstm_smoke.yaml
 linked_models:
   - wildfire_fpa
   - wildfire_forecasting
@@ -66,6 +67,16 @@ linked_models:
   - firecastnet
 notes:
   - "WildfireSpreadTS is the public Appendix-A benchmark ecosystem surfaced on this page."
+  - >
+    Track-O (from PR #33 by runyangxu) scores ``wildfire.danger`` as daily fire occurrence on a
+    latitude-longitude grid: whether a cell has a NASA FIRMS detection on a day, from that day's
+    weather (MERRA-2 surface variables or any NetCDF files on a regular grid) and LANDFIRE fuels.
+    Build the cache with ``scripts/build_wildfire_track_o_cache.py``, load it with the
+    ``wildfire_track_o_raster`` / ``_temporal`` / ``_tabular`` datasets, and train and score
+    registry models with ``scripts/run_wildfire_track_o_baselines.py``. Raster and temporal
+    layouts are scored per cell (one logit per cell; accuracy and macro F1 at probability 0.5,
+    ROC AUC, PR AUC). The smoke config ``track_o_convlstm_smoke.yaml`` runs on the synthetic
+    ``micro`` cache; no real-data Track-O results are published with PyHazards.
   - >
     The Kondylatos et al. (2022) tree baselines ``random_forest`` and ``xgboost`` read the same
     daily danger tensors as ``wildfire_forecasting`` but must be fitted (``model.fit``) before

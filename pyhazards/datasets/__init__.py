@@ -27,6 +27,9 @@ from .wildfire import (
     SyntheticWildfireDangerDataset,
     SyntheticWildfireSpreadDataset,
     SyntheticWildfireSpreadTemporalDataset,
+    WildfireTrackORasterDataset,
+    WildfireTrackOTabularDataset,
+    WildfireTrackOTemporalDataset,
 )
 from .wrf_sfire import WRFSFireSpreadDataset
 
@@ -62,6 +65,9 @@ __all__ = [
     "SyntheticWildfireSpreadDataset",
     "SyntheticWildfireSpreadTemporalDataset",
     "WRFSFireSpreadDataset",
+    "WildfireTrackORasterDataset",
+    "WildfireTrackOTabularDataset",
+    "WildfireTrackOTemporalDataset",
 ]
 
 register_dataset(SyntheticEarthquakeForecastDataset.name, SyntheticEarthquakeForecastDataset)
@@ -85,3 +91,6 @@ register_dataset(SyntheticWildfireDangerDataset.name, SyntheticWildfireDangerDat
 register_dataset(SyntheticWildfireSpreadDataset.name, SyntheticWildfireSpreadDataset)
 register_dataset(SyntheticWildfireSpreadTemporalDataset.name, SyntheticWildfireSpreadTemporalDataset)
 register_dataset(WRFSFireSpreadDataset.name, WRFSFireSpreadDataset)
+register_dataset(WildfireTrackORasterDataset.name, WildfireTrackORasterDataset)
+register_dataset(WildfireTrackOTemporalDataset.name, WildfireTrackOTemporalDataset)
+register_dataset(WildfireTrackOTabularDataset.name, WildfireTrackOTabularDataset)

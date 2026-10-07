@@ -37,6 +37,40 @@ def _spread_metrics(logits: torch.Tensor, targets: torch.Tensor) -> Dict[str, fl
     }
 
 
+def _binary_map_metrics(logits: torch.Tensor, targets: torch.Tensor) -> Dict[str, float]:
+    """Danger metrics for per-cell binary maps: one logit per cell, 0/1 targets of the same shape."""
+    probs = torch.sigmoid(logits.detach().float()).flatten().cpu().numpy()
+    y_true = targets.detach().float().flatten().cpu().numpy() > 0.5
+    y_pred = probs >= 0.5
+    try:
+        auc = float(roc_auc_score(y_true, probs))
+    except ValueError:
+        auc = 0.0
+    pr_auc = float(average_precision_score(y_true, probs)) if y_true.any() else 0.0
+    return {
+        "accuracy": float(accuracy_score(y_true, y_pred)),
+        "macro_f1": float(f1_score(y_true, y_pred, average="macro", labels=[False, True], zero_division=0)),
+        "auc": auc,
+        "pr_auc": pr_auc,
+    }
+
+
+def _batched_forward(model: nn.Module, inputs: torch.Tensor, batch_size: int | None) -> torch.Tensor:
+    """Run ``model`` over ``inputs`` in chunks on the model's device and return CPU outputs."""
+    parameter = next(model.parameters(), None)
+    device = parameter.device if parameter is not None else None
+    if not batch_size or batch_size >= len(inputs):
+        chunks = [inputs]
+    else:
+        chunks = list(torch.split(inputs, int(batch_size)))
+    outputs = []
+    for chunk in chunks:
+        if device is not None and isinstance(chunk, torch.Tensor):
+            chunk = chunk.to(device)
+        outputs.append(model(chunk).detach().cpu())
+    return outputs[0] if len(outputs) == 1 else torch.cat(outputs)
+
+
 def _danger_metrics(logits: torch.Tensor, targets: torch.Tensor) -> Dict[str, float]:
     if targets.dtype in {torch.int32, torch.int64} or targets.ndim == 1:
         preds = logits.argmax(dim=1)
@@ -82,10 +116,19 @@ class WildfireBenchmark(Benchmark):
         split = data.get_split(config.benchmark.eval_split)
         x = split.inputs
         y = split.targets
-        logits = model(x)
+        logits = _batched_forward(model, x, config.benchmark.params.get("batch_size"))
 
         if config.benchmark.hazard_task == "wildfire.danger":
-            metrics = _danger_metrics(logits, y)
+            if data.label_spec.task_type == "segmentation":
+                # Danger maps (e.g. the Track-O raster and temporal layouts): one logit per cell.
+                if tuple(logits.shape) != tuple(y.shape):
+                    raise ValueError(
+                        "wildfire.danger maps need logits with the target shape (one logit per cell): "
+                        f"got logits of shape {tuple(logits.shape)} for targets of shape {tuple(y.shape)}."
+                    )
+                metrics = _binary_map_metrics(logits, y)
+            else:
+                metrics = _danger_metrics(logits, y)
         else:
             metrics = _spread_metrics(logits, y)
 
