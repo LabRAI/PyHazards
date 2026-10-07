@@ -45,7 +45,7 @@ APPENDIX_A_ENTRIES: List[AppendixAEntry] = [
     AppendixAEntry("Earthquake", "AEFA", "Dataset / Forecast Benchmark", "https://github.com/chenyk1990/aefa", "core", notes="A synthetic-backed AEFA-style forecasting dataset adapter is registered."),
     AppendixAEntry("Wildfire", "wildfire_forecasting", "Baseline", "https://github.com/Orion-AI-Lab/wildfire_forecasting", "core", ("wildfire_forecasting",)),
     AppendixAEntry("Wildfire", "WildfireSpreadTS", "Baseline / Benchmark", "https://github.com/SebastianGer/WildfireSpreadTS", "core", ("wildfirespreadts",)),
-    AppendixAEntry("Wildfire", "ASUFM", "Baseline", "https://github.com/bronteee/fire-asufm", "core", ("asufm",)),
+    AppendixAEntry("Wildfire", "ASUFM", "Baseline", "https://github.com/bronteee/fire-asufm", "core", ("asufm",), "Next-day fire-mask segmentation on 64x64 NDWS tiles, verified against the official code; the smoke benchmark runs it on synthetic 64x64 spread rasters because no NDWS loader exists yet."),
     AppendixAEntry("Wildfire", "WRF-SFIRE", "Simulator Adapter", "https://github.com/openwfm/WRF-SFIRE", "core", ("wrf_sfire",), "The current adapter is lightweight and synthetic-backed rather than a full external simulator binding."),
     AppendixAEntry("Wildfire", "ForeFire", "Simulator Adapter", "https://github.com/forefireAPI/forefire", "core", ("forefire",), "The current adapter is lightweight and synthetic-backed rather than a full external simulator binding."),
     AppendixAEntry("Wildfire", "FireCastNet", "Optional Baseline", "https://github.com/SeasFire/firecastnet", "core", ("firecastnet",)),

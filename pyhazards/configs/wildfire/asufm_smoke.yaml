@@ -1,25 +1,23 @@
 benchmark:
   name: wildfire
-  hazard_task: wildfire.danger
+  hazard_task: wildfire.spread
   metrics:
-    - mae
-    - rmse
+    - iou
+    - f1
+    - burned_area_mae
   eval_split: test
 dataset:
-  name: fpa_fod_weekly
+  name: wildfire_spread_synthetic
   params:
     micro: true
-    lookback_weeks: 12
-    features: counts+time
+    channels: 6
+    height: 64
+    width: 64
 model:
   name: asufm
-  task: forecasting
+  task: segmentation
   params:
-    input_dim: 7
-    hidden_dim: 32
-    output_dim: 5
-    lookback: 12
-    dropout: 0.0
+    in_channels: 6
 report:
   output_dir: reports/asufm
   formats:

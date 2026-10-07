@@ -10,6 +10,14 @@ repos:
     url: https://github.com/SebastianGer/WildfireSpreadTS.git
     commit: f62dc49f2c2a6d249c071533ae5340c0d01bfb95
     license: MIT
+  Swin-Unet:
+    url: https://github.com/HuCaoFighting/Swin-Unet.git
+    commit: f48f623e226e25b6e395c37207915c50aaa9c776
+    license: none (no LICENSE file; used only as a test oracle, never vendored)
+  fire-asufm:
+    url: https://github.com/bronteee/fire-asufm.git
+    commit: 688dda94dec9e3b22f149f2b9335d3b38fd2277f
+    license: Apache-2.0
 
 assets:
   utae_pastis_weights:
@@ -17,3 +25,7 @@ assets:
     sha256: 43a9db40ca002d9feac3a6b387838f24c3a7191b4257065d83206379f8ef957a
     license: CC-BY-4.0
     extract: true
+  swin_tiny_imagenet:
+    url: https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_tiny_patch4_window7_224.pth
+    sha256: 9f71c168d837d1b99dd1dc29e14990a7a9e8bdc5f673d46b04fe36fe15590ad3
+    license: MIT (microsoft/Swin-Transformer)

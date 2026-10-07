@@ -70,13 +70,6 @@ def test_added_wildfire_public_methods_forward():
         output_dim=5,
         lookback=12,
     )
-    asufm = build_model(
-        name="asufm",
-        task="forecasting",
-        input_dim=7,
-        output_dim=5,
-        lookback=12,
-    )
     spread_ts = build_model(
         name="wildfirespreadts",
         task="segmentation",
@@ -88,7 +81,6 @@ def test_added_wildfire_public_methods_forward():
     firecastnet = build_model(name="firecastnet", task="segmentation", in_channels=12)
 
     assert forecasting(weekly_x).shape == (2, 5)
-    assert asufm(weekly_x).shape == (2, 5)
     assert spread_ts(temporal_spread_x).shape == (2, 1, 16, 16)
     assert forefire(spread_x).shape == (2, 1, 16, 16)
     assert wrf_sfire(spread_x).shape == (2, 1, 16, 16)

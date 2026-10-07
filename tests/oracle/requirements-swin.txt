@@ -1,0 +1,8 @@
+# Reference stack for tests/oracle/test_swin_oracle.py (Swin-Unet and fire-asufm).
+# timm 0.4.12 is pinned by fire-asufm and conflicts with the timm 0.6.12 pin of
+# segmentation-models-pytorch in requirements.txt, so the Oracle workflow installs this file in
+# its own job. torchvision (CPU) is installed by the workflow next to torch.
+timm==0.4.12
+einops==0.8.2
+ml-collections==1.1.0
+yacs==0.1.8

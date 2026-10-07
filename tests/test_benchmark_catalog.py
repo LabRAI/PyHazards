@@ -51,7 +51,7 @@ def test_benchmark_page_lists_family_and_ecosystem_tables() -> None:
         assert page.count(card) == 1
 
     assert "WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction" in page
-    assert "8 smoke configs | 12 models | 1 ecosystem" in page
+    assert "8 smoke configs | 13 models | 1 ecosystem" in page
     assert "5 smoke configs | 5 models | 4 ecosystems" in page
     assert "6 smoke configs | 6 models | 4 ecosystems" in page
     assert "8 smoke configs | 8 models | 3 ecosystems" in page

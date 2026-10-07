@@ -35,6 +35,7 @@ linked_models:
   - resnet18_unet
   - convlstm
   - utae
+  - swin_unet
   - forefire
   - wrf_sfire
   - firecastnet
