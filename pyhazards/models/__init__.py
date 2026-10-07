@@ -5,6 +5,7 @@ from .builder import build_model, default_builder
 from .classical import EstimatorModule, kondylatos_instance_features, random_forest_builder, xgboost_builder
 from .cnn_aspp import WildfireCNNASPP, cnn_aspp_builder
 from .earthfarseer import Earthfarseer, EarthfarseerSegmenter, earthfarseer_builder
+from .convgru import ConvGRU, ConvGRUCell, ConvGRUSegmenter, convgru_builder
 from .convlstm import ConvLSTM, ConvLSTMCell, ConvLSTMSegmenter, convlstm_builder
 from .earthformer import CuboidTransformerModel, Earthformer, EarthformerSegmenter, earthformer_builder
 from .deeplabv3 import DeepLabV3, deeplabv3_builder
@@ -36,8 +37,10 @@ from .saf_net import SAFNet, saf_net_builder
 from .segformer import SegFormer, segformer_builder
 from .swin_unet import SwinUnet, swin_unet_builder
 from .swin_unetr import SwinUNETR, TemporalSwinUNETR, swin_unetr_builder
+from .swinlstm import SwinLSTM, SwinLSTMSegmenter, swinlstm_builder
 from .tcif_fusion import TCIFFusion, tcif_fusion_builder
 from .tcn import TCN, TemporalConvNet, tcn_builder
+from .trajgru import TrajGRU, TrajGRUSegmenter, trajgru_builder
 from .tropicalcyclone_mlp import TropicalCycloneMLP, tropicalcyclone_mlp_builder
 from .tropicyclonenet import TropiCycloneNet, tropicyclonenet_builder
 from .unet import UNet, unet_builder
@@ -159,6 +162,10 @@ __all__ = [
     "Earthformer",
     "EarthformerSegmenter",
     "earthformer_builder",
+    "ConvGRU",
+    "ConvGRUCell",
+    "ConvGRUSegmenter",
+    "convgru_builder",
     "PixelLogisticRegression",
     "logistic_regression_builder",
     "ResNetUNet",
@@ -190,6 +197,12 @@ __all__ = [
     "UNETR",
     "TemporalUNETR",
     "unetr_builder",
+    "SwinLSTM",
+    "SwinLSTMSegmenter",
+    "swinlstm_builder",
+    "TrajGRU",
+    "TrajGRUSegmenter",
+    "trajgru_builder",
     "WRFSFireAdapter",
     "wrf_sfire_builder",
     "ConvLEMCell",
@@ -314,6 +327,18 @@ register_model(
 )
 
 register_model(
+    "swinlstm",
+    swinlstm_builder,
+    defaults={"variant": "d", "in_channels": 1, "img_size": 64, "num_output_frames": 10},
+)
+
+register_model(
+    "trajgru",
+    trajgru_builder,
+    defaults={"config": "hko7", "in_channels": 1, "out_channels": 1, "layer_type": "TrajGRU"},
+)
+
+register_model(
     "wildfirespreadts",
     wildfirespreadts_builder,
     defaults={
@@ -358,6 +383,12 @@ register_model(
     "convlstm",
     convlstm_builder,
     defaults={"out_channels": 1, "hidden_dim": 64, "kernel_size": 3, "num_layers": 1, "readout": "cell"},
+)
+
+register_model(
+    "convgru",
+    convgru_builder,
+    defaults={"in_channels": 11, "out_channels": 1, "hidden_dim": 128, "kernel_size": 5, "num_layers": 1},
 )
 
 register_model(

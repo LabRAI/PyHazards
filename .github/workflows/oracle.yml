@@ -35,7 +35,7 @@ jobs:
             requirements: tests/oracle/requirements.txt
             references: >-
               utae-paps WildfireSpreadTS utae_pastis_weights wildfire_forecasting
-              segformer_mit_b0 segformer_b0_ade TS-SatFire TCN uncertainty-wildfires
+              segformer_mit_b0 segformer_b0_ade TS-SatFire TCN uncertainty-wildfires firecastnet
             tests: >-
               tests/oracle/test_wildfirespreadts_oracle.py
               tests/oracle/test_wildfire_forecasting_oracle.py
@@ -45,6 +45,7 @@ jobs:
               tests/oracle/test_attention_unet_oracle.py
               tests/oracle/test_tcn_oracle.py
               tests/oracle/test_deeplabv3_oracle.py
+              tests/oracle/test_convgru_oracle.py
           # The original U-Net release is Caffe; OpenCV 4.x's Caffe importer runs it (OpenCV 5 dropped it).
           - suite: unet
             python: "3.10"
@@ -57,8 +58,8 @@ jobs:
             python: "3.10"
             torch: torch torchvision
             requirements: tests/oracle/requirements-swin.txt
-            references: Swin-Unet fire-asufm swin_tiny_imagenet
-            tests: tests/oracle/test_swin_oracle.py
+            references: Swin-Unet fire-asufm swin_tiny_imagenet SwinLSTM
+            tests: tests/oracle/test_swin_oracle.py tests/oracle/test_swinlstm_oracle.py
           # EarthFarseer pins timm 0.9.16 (smp 0.3.2 needs 0.6.12, fire-asufm 0.4.12); Rainformer needs
           # einops. Default-size models and the 751 MB Rainformer KNMI checkpoint are compared locally
           # (PYHAZARDS_ORACLE_LARGE=1); CI compares reduced models.
@@ -99,6 +100,13 @@ jobs:
             requirements: tests/oracle/requirements-earthformer.txt
             references: earth-forecasting-transformer earthformer_sevir earthformer_icarenso2021
             tests: tests/oracle/test_earthformer_oracle.py
+          # The official TrajGRU code (HKO-7) is MXNet; MXNet 1.9.1 runs it and needs numpy < 1.24.
+          - suite: trajgru
+            python: "3.10"
+            torch: torch
+            requirements: tests/oracle/requirements-trajgru.txt
+            references: HKO-7 hko7_movingmnist_weights hko7_hko_weights
+            tests: tests/oracle/test_trajgru_oracle.py
           # TerraTorch 0.99.8 (the Prithvi-EO-2.0 BurnScars training stack) needs Python >= 3.12 and
           # torch 2.6. The 1.3 GB checkpoints are not fetched in CI; those tests run locally.
           - suite: prithvi
