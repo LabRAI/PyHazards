@@ -40,8 +40,6 @@ def test_added_wildfire_breadth_configs(tmp_path):
         "pyhazards/configs/wildfire/wildfire_forecasting_smoke.yaml": "macro_f1",
         "pyhazards/configs/wildfire/asufm_smoke.yaml": "burned_area_mae",
         "pyhazards/configs/wildfire/wildfirespreadts_smoke.yaml": "burned_area_mae",
-        "pyhazards/configs/wildfire/forefire_smoke.yaml": "burned_area_mae",
-        "pyhazards/configs/wildfire/wrf_sfire_smoke.yaml": "burned_area_mae",
         "pyhazards/configs/wildfire/firecastnet_smoke.yaml": "burned_area_mae",
     }
     for path, metric_name in expectations.items():

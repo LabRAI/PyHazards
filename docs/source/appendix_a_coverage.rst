@@ -9,41 +9,48 @@ Overview
 This page audits the current PyHazards implementation against the
 planned methods, benchmarks, and datasets listed in ``pyhazard_plan.pdf``.
 It separates implemented public entries from variant-only entries,
-experimental wrappers, and items that are still missing.
+experimental wrappers, external simulators, and items that are still missing.
 
 Status meanings:
 
 - ``Implemented``: a public PyHazards adapter exists for the named method or resource.
 - ``Experimental``: a lightweight wrapper exists, but it should not be counted as stable core coverage.
+- ``External simulator``: PyHazards drives the official simulator, installed separately, or reads
+  its outputs. Nothing of the simulator is reimplemented, and it is not counted as a model.
 - ``Missing``: no aligned adapter or benchmark integration is present yet.
 
 Hazard Summary
 --------------
 
 .. list-table::
-   :widths: 26 18 18 18
+   :widths: 26 16 16 16 16
    :header-rows: 1
    :class: dataset-list
 
    * - Hazard Family
      - Implemented
      - Experimental
+     - External
      - Missing
    * - Earthquake
      - 8
      - 0
      - 0
-   * - Wildfire
-     - 6
      - 0
+   * - Wildfire
+     - 4
+     - 0
+     - 2
      - 0
    * - Flood
      - 8
      - 0
      - 0
+     - 0
    * - Hurricane / Tropical Cyclone
      - 8
      - 3
+     - 0
      - 0
 
 Method and Resource Matrix
@@ -128,16 +135,16 @@ Method and Resource Matrix
      - Next-day fire-mask segmentation on 64x64 NDWS tiles, verified against the official code; the smoke benchmark runs it on synthetic 64x64 spread rasters because no NDWS loader exists yet.
    * - Wildfire
      - `WRF-SFIRE <https://github.com/openwfm/WRF-SFIRE>`_
-     - Simulator Adapter
-     - ``Implemented``
-     - :doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`
-     - The current adapter is lightweight and synthetic-backed rather than a full external simulator binding.
+     - Simulator Output Reader
+     - ``External simulator``
+     - :doc:`WRF-SFIRE Outputs <datasets/wrf_sfire>`, :doc:`Simulators <pyhazards_simulators>`
+     - PyHazards does not run WRF-SFIRE (an MPI Fortran model). The ``wrf_sfire_spread`` dataset reads the fire grid (TIGN_G, LFN, FIRE_AREA, FGRNHFX, ROS, ...) of wrfout files written by the official model into spread rasters. Variable names and layout follow the official Registry and were checked on a real output of the official hill ideal case.
    * - Wildfire
      - `ForeFire <https://github.com/forefireAPI/forefire>`_
      - Simulator Adapter
-     - ``Implemented``
-     - :doc:`ForeFire Adapter <modules/models_forefire>`
-     - The current adapter is lightweight and synthetic-backed rather than a full external simulator binding.
+     - ``External simulator``
+     - :doc:`Simulators <pyhazards_simulators>`
+     - ForeFireSimulator runs the official ForeFire engine (GPL-3.0; installed separately with ``pip install forefire``, never vendored) on PyHazards rasters and returns arrival-time and burned-mask rasters. It reproduces ForeFire's own regression reference (tests/runff) and the official idealized-wind example. It is a physics simulator, not a trainable model.
    * - Wildfire
      - `FireCastNet <https://github.com/SeasFire/firecastnet>`_
      - Optional Baseline

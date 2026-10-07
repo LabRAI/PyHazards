@@ -8,7 +8,6 @@ from .eqnet import EQNet, eqnet_builder
 from .eqtransformer import EQTransformer, eqtransformer_builder
 from .firecastnet import FireCastNet, firecastnet_builder
 from .floodcast import FloodCast, floodcast_builder
-from .forefire import ForeFireAdapter, forefire_builder
 from .fourcastnet_tc import FourCastNetTC, fourcastnet_tc_builder
 from .gpd import GPD, gpd_builder
 from .google_flood_forecasting import GoogleFloodForecasting, google_flood_forecasting_builder
@@ -52,7 +51,6 @@ from .wildfire_aspp import TverskyLoss, WildfireASPP, wildfire_aspp_builder
 from .wildfire_fpa import WildfireFPA, wildfire_fpa_builder
 from .wildfire_mamba import WildfireMamba, wildfire_mamba_builder
 from .wildfirespreadts import WILDFIRESPREADTS_BASELINES, wildfirespreadts_builder
-from .wrf_sfire import WRFSFireAdapter, wrf_sfire_builder
 
 
 __all__ = [
@@ -78,8 +76,6 @@ __all__ = [
     "firecastnet_builder",
     "FloodCast",
     "floodcast_builder",
-    "ForeFireAdapter",
-    "forefire_builder",
     "FourCastNetTC",
     "fourcastnet_tc_builder",
     "GPD",
@@ -148,8 +144,6 @@ __all__ = [
     "utae_builder",
     "SwinUnet",
     "swin_unet_builder",
-    "WRFSFireAdapter",
-    "wrf_sfire_builder",
     "ConvLEMCell",
     "WaveCastNet",
     "WaveCastNetLoss",
@@ -315,26 +309,6 @@ register_model(
     "prithvi_eo_2_tl",
     prithvi_eo_2_tl_builder,
     defaults={"variant": "300m", "in_channels": 6, "num_classes": 2, "num_frames": 1, "pretrained": False},
-)
-
-register_model(
-    "forefire",
-    forefire_builder,
-    defaults={
-        "in_channels": 12,
-        "out_channels": 1,
-        "diffusion_steps": 2,
-    },
-)
-
-register_model(
-    "wrf_sfire",
-    wrf_sfire_builder,
-    defaults={
-        "in_channels": 12,
-        "out_channels": 1,
-        "diffusion_steps": 3,
-    },
 )
 
 register_model(

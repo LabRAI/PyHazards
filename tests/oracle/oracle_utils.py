@@ -85,8 +85,14 @@ def import_from(root: Path, module: str) -> ModuleType:
                 del sys.modules[name]
 
 
-def oracle_package(name: str, version: str, requirements: str = "requirements.txt") -> ModuleType:
-    """Import a pip-installed reference package at an exact version (see ``requirements``)."""
+def oracle_package(
+    name: str, version: str, requirements: str = "requirements.txt", distribution: str | None = None
+) -> ModuleType:
+    """Import a pip-installed reference package at an exact version (see ``requirements``).
+
+    ``distribution`` is the PyPI name when it differs from the module name (``forefire`` installs
+    ``pyforefire``).
+    """
     try:
         module = importlib.import_module(name)
     except ImportError:
@@ -94,7 +100,7 @@ def oracle_package(name: str, version: str, requirements: str = "requirements.tx
     found = getattr(module, "__version__", None)
     if found is None:
         try:
-            found = importlib.metadata.version(name)
+            found = importlib.metadata.version(distribution or name)
         except importlib.metadata.PackageNotFoundError:
             pass
     if found != version:

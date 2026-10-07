@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Sequence
+from typing import Dict, List, Sequence, Tuple
 
 from .model_catalog import ModelCard, group_cards_by_hazard, load_model_cards, public_catalog_cards
 
@@ -19,8 +19,11 @@ STATUS_LABELS = {
     "core": "Implemented",
     "variant": "Variant only",
     "experimental": "Experimental",
+    "external": "External simulator",
     "missing": "Missing",
 }
+
+SUMMARY_STATUSES = ("core", "experimental", "external", "missing")
 
 
 @dataclass(frozen=True)
@@ -32,7 +35,22 @@ class AppendixAEntry:
     status: str
     mapped_models: Sequence[str] = ()
     notes: str = ""
+    # (label, Sphinx docname) links for entries that are not models, e.g. an external simulator.
+    mapped_docs: Sequence[Tuple[str, str]] = ()
 
+
+FOREFIRE_NOTE = (
+    "ForeFireSimulator runs the official ForeFire engine (GPL-3.0; installed separately with "
+    "``pip install forefire``, never vendored) on PyHazards rasters and returns arrival-time and "
+    "burned-mask rasters. It reproduces ForeFire's own regression reference (tests/runff) and the "
+    "official idealized-wind example. It is a physics simulator, not a trainable model."
+)
+WRF_SFIRE_NOTE = (
+    "PyHazards does not run WRF-SFIRE (an MPI Fortran model). The ``wrf_sfire_spread`` dataset reads "
+    "the fire grid (TIGN_G, LFN, FIRE_AREA, FGRNHFX, ROS, ...) of wrfout files written by the official "
+    "model into spread rasters. Variable names and layout follow the official Registry and were "
+    "checked on a real output of the official hill ideal case."
+)
 
 APPENDIX_A_ENTRIES: List[AppendixAEntry] = [
     AppendixAEntry("Earthquake", "PhaseNet", "Baseline", "https://github.com/AI4EPS/PhaseNet", "core", ("phasenet",), "Model adapter is implemented, but the SeisBench / pick-benchmark data path is still missing."),
@@ -46,8 +64,8 @@ APPENDIX_A_ENTRIES: List[AppendixAEntry] = [
     AppendixAEntry("Wildfire", "wildfire_forecasting", "Baseline", "https://github.com/Orion-AI-Lab/wildfire_forecasting", "core", ("wildfire_forecasting",), "The paper's LSTM (default) and ConvLSTM are ported and checked against the official code; the Greek datacube is not loaded yet (synthetic smoke data), and the random forest / XGBoost baselines are not included."),
     AppendixAEntry("Wildfire", "WildfireSpreadTS", "Baseline / Benchmark", "https://github.com/SebastianGer/WildfireSpreadTS", "core", ("wildfirespreadts",)),
     AppendixAEntry("Wildfire", "ASUFM", "Baseline", "https://github.com/bronteee/fire-asufm", "core", ("asufm",), "Next-day fire-mask segmentation on 64x64 NDWS tiles, verified against the official code; the smoke benchmark runs it on synthetic 64x64 spread rasters because no NDWS loader exists yet."),
-    AppendixAEntry("Wildfire", "WRF-SFIRE", "Simulator Adapter", "https://github.com/openwfm/WRF-SFIRE", "core", ("wrf_sfire",), "The current adapter is lightweight and synthetic-backed rather than a full external simulator binding."),
-    AppendixAEntry("Wildfire", "ForeFire", "Simulator Adapter", "https://github.com/forefireAPI/forefire", "core", ("forefire",), "The current adapter is lightweight and synthetic-backed rather than a full external simulator binding."),
+    AppendixAEntry("Wildfire", "WRF-SFIRE", "Simulator Output Reader", "https://github.com/openwfm/WRF-SFIRE", "external", notes=WRF_SFIRE_NOTE, mapped_docs=(("WRF-SFIRE Outputs", "datasets/wrf_sfire"), ("Simulators", "pyhazards_simulators"))),
+    AppendixAEntry("Wildfire", "ForeFire", "Simulator Adapter", "https://github.com/forefireAPI/forefire", "external", notes=FOREFIRE_NOTE, mapped_docs=(("Simulators", "pyhazards_simulators"),)),
     AppendixAEntry("Wildfire", "FireCastNet", "Optional Baseline", "https://github.com/SeasFire/firecastnet", "core", ("firecastnet",), "Pure PyTorch port of the official model; the released SeasFire checkpoints load and match the official DGL implementation. SeasFire datacube backing is still missing."),
     AppendixAEntry("Flood", "NeuralHydrology", "Baseline Family", "https://github.com/neuralhydrology/neuralhydrology", "core", ("neuralhydrology_lstm", "neuralhydrology_ealstm"), "The LSTM and EA-LSTM adapters are implemented, but Caravan / WaterBench benchmark backing is still missing."),
     AppendixAEntry("Flood", "Caravan", "Dataset", "https://github.com/kratzert/Caravan", "core", notes="A synthetic-backed Caravan adapter is registered for streamflow smoke benchmarking."),
@@ -71,10 +89,48 @@ APPENDIX_A_ENTRIES: List[AppendixAEntry] = [
 ]
 
 
-def appendix_a_alignment_issues(cards: Sequence[ModelCard]) -> List[str]:
+def _doc_exists(docname: str) -> bool:
+    if docname.startswith("datasets/"):
+        from .dataset_catalog import load_dataset_cards
+
+        return docname.split("/", 1)[1] in {card.slug for card in load_dataset_cards()}
+    return (DOCS_SOURCE_DIR / f"{docname}.rst").exists()
+
+
+def appendix_a_alignment_issues(
+    cards: Sequence[ModelCard],
+    entries: Sequence[AppendixAEntry] | None = None,
+) -> List[str]:
     issues: List[str] = []
     mapping = {card.model_name: card for card in cards}
-    for entry in APPENDIX_A_ENTRIES:
+    for entry in APPENDIX_A_ENTRIES if entries is None else entries:
+        if entry.status not in STATUS_LABELS:
+            issues.append(
+                "Coverage entry '{name}' has unknown status '{status}'.".format(
+                    name=entry.source_name,
+                    status=entry.status,
+                )
+            )
+        if entry.status == "external" and entry.mapped_models:
+            issues.append(
+                "Coverage entry '{name}' is an external simulator and must not map to model cards.".format(
+                    name=entry.source_name,
+                )
+            )
+        if entry.status == "external" and not entry.mapped_docs:
+            issues.append(
+                "Coverage entry '{name}' is an external simulator but links no documentation.".format(
+                    name=entry.source_name,
+                )
+            )
+        for _, docname in entry.mapped_docs:
+            if not _doc_exists(docname):
+                issues.append(
+                    "Coverage entry '{name}' links missing doc '{doc}'.".format(
+                        name=entry.source_name,
+                        doc=docname,
+                    )
+                )
         for model_name in entry.mapped_models:
             card = mapping.get(model_name)
             if card is None:
@@ -109,7 +165,7 @@ def _summary_rows() -> Dict[str, Dict[str, int]]:
     for entry in APPENDIX_A_ENTRIES:
         bucket = summary.setdefault(
             entry.hazard_family,
-            {"core": 0, "experimental": 0, "missing": 0},
+            {status: 0 for status in SUMMARY_STATUSES},
         )
         if entry.status in bucket:
             bucket[entry.status] += 1
@@ -133,6 +189,12 @@ def _grouped_non_core_cards(cards: Sequence[ModelCard]) -> Dict[str, List[List[M
                 entries.append([card])
         grouped[hazard] = entries
     return grouped
+
+
+def _mapping_cell(entry: AppendixAEntry, cards: Sequence[ModelCard]) -> str:
+    links = [_linked_models(cards)] if cards else []
+    links.extend(":doc:`{label} <{doc}>`".format(label=label, doc=doc) for label, doc in entry.mapped_docs)
+    return ", ".join(links) if links else "None"
 
 
 def _linked_models(cards: Sequence[ModelCard]) -> str:
@@ -166,25 +228,28 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
         "This page audits the current PyHazards implementation against the",
         "planned methods, benchmarks, and datasets listed in ``pyhazard_plan.pdf``.",
         "It separates implemented public entries from variant-only entries,",
-        "experimental wrappers, and items that are still missing.",
+        "experimental wrappers, external simulators, and items that are still missing.",
         "",
         "Status meanings:",
         "",
         "- ``Implemented``: a public PyHazards adapter exists for the named method or resource.",
         "- ``Experimental``: a lightweight wrapper exists, but it should not be counted as stable core coverage.",
+        "- ``External simulator``: PyHazards drives the official simulator, installed separately, or reads",
+        "  its outputs. Nothing of the simulator is reimplemented, and it is not counted as a model.",
         "- ``Missing``: no aligned adapter or benchmark integration is present yet.",
         "",
         "Hazard Summary",
         "--------------",
         "",
         ".. list-table::",
-        "   :widths: 26 18 18 18",
+        "   :widths: 26 16 16 16 16",
         "   :header-rows: 1",
         "   :class: dataset-list",
         "",
         "   * - Hazard Family",
         "     - Implemented",
         "     - Experimental",
+        "     - External",
         "     - Missing",
     ]
 
@@ -194,6 +259,7 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
                 "   * - {hazard}".format(hazard=hazard_family),
                 "     - {count}".format(count=counts["core"]),
                 "     - {count}".format(count=counts["experimental"]),
+                "     - {count}".format(count=counts["external"]),
                 "     - {count}".format(count=counts["missing"]),
             ]
         )
@@ -226,7 +292,7 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
                 "     - `{name} <{url}>`_".format(name=entry.source_name, url=entry.source_url),
                 "     - {item_type}".format(item_type=entry.item_type),
                 "     - ``{status}``".format(status=STATUS_LABELS[entry.status]),
-                "     - {mapping}".format(mapping=_linked_models(mapped_cards)),
+                "     - {mapping}".format(mapping=_mapping_cell(entry, mapped_cards)),
                 "     - {notes}".format(notes=entry.notes or " "),
             ]
         )
@@ -319,6 +385,8 @@ def sync_generated_appendix_a_docs(check: bool = False) -> List[Path]:
 __all__ = [
     "APPENDIX_A_ENTRIES",
     "APPENDIX_A_PAGE_PATH",
+    "AppendixAEntry",
+    "STATUS_LABELS",
     "appendix_a_alignment_issues",
     "render_appendix_a_page",
     "sync_generated_appendix_a_docs",

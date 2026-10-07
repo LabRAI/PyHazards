@@ -26,8 +26,6 @@ metrics:
 smoke_configs:
   - pyhazards/configs/wildfire/wildfire_spread_smoke.yaml
   - pyhazards/configs/wildfire/wildfirespreadts_smoke.yaml
-  - pyhazards/configs/wildfire/forefire_smoke.yaml
-  - pyhazards/configs/wildfire/wrf_sfire_smoke.yaml
 linked_models:
   - wildfire_aspp
   - wildfirespreadts
@@ -37,5 +35,3 @@ linked_models:
   - utae
   - segformer
   - swin_unet
-  - forefire
-  - wrf_sfire

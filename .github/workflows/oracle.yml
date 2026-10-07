@@ -9,6 +9,7 @@ on:
     branches: [main, master]
     paths:
       - "pyhazards/models/**"
+      - "pyhazards/simulators/**"
       - "tests/oracle/**"
       - "scripts/fetch_oracles.py"
       - ".github/workflows/oracle.yml"
@@ -16,6 +17,7 @@ on:
     branches: [main, master]
     paths:
       - "pyhazards/models/**"
+      - "pyhazards/simulators/**"
       - "tests/oracle/**"
       - "scripts/fetch_oracles.py"
       - ".github/workflows/oracle.yml"
@@ -59,6 +61,14 @@ jobs:
               firecastnet firecastnet_global_cls_ts24_h1 firecastnet_global_regr_ts24_h1
               firecastnet_lam_aust_cls_ts24_h1
             tests: tests/oracle/test_firecastnet_oracle.py
+          # ForeFire (GPL-3.0) is installed from its official 2.5.0 wheel in this job only; the pinned
+          # repository and its Git LFS test files provide the official inputs and reference output.
+          - suite: forefire
+            python: "3.10"
+            torch: torch
+            requirements: tests/oracle/requirements-forefire.txt
+            references: forefire forefire_runff_data forefire_runff_reference
+            tests: tests/oracle/test_forefire_oracle.py
           # TerraTorch 0.99.8 (the Prithvi-EO-2.0 BurnScars training stack) needs Python >= 3.12 and
           # torch 2.6. The 1.3 GB checkpoints are not fetched in CI; those tests run locally.
           - suite: prithvi

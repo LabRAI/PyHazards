@@ -287,6 +287,7 @@ for project discussion and coordination.
 
    pyhazards_datasets
    pyhazards_models
+   pyhazards_simulators
    pyhazards_benchmarks
    pyhazards_configs
    pyhazards_reports

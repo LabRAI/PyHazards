@@ -32,8 +32,9 @@ def test_model_page_lists_generated_hazard_sections() -> None:
     assert ":doc:`Prithvi-EO-2.0-TL <modules/models_prithvi_eo_2_tl>`" in page
     assert ":doc:`ASUFM <modules/models_asufm>`" in page
     assert ":doc:`Swin-Unet <modules/models_swin_unet>`" in page
-    assert ":doc:`ForeFire Adapter <modules/models_forefire>`" in page
-    assert ":doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`" in page
+    # ForeFire and WRF-SFIRE are external simulators (pyhazards.simulators, datasets/wrf_sfire), not models.
+    assert "models_forefire" not in page
+    assert "models_wrf_sfire" not in page
     assert ":doc:`FireCastNet <modules/models_firecastnet>`" in page
     assert ":doc:`WaveCastNet <modules/models_wavecastnet>`" in page
     assert ":doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`" in page

@@ -28,6 +28,7 @@ from .wildfire import (
     SyntheticWildfireSpreadDataset,
     SyntheticWildfireSpreadTemporalDataset,
 )
+from .wrf_sfire import WRFSFireSpreadDataset
 
 __all__ = [
     "DataBundle",
@@ -60,6 +61,7 @@ __all__ = [
     "SyntheticWildfireDangerDataset",
     "SyntheticWildfireSpreadDataset",
     "SyntheticWildfireSpreadTemporalDataset",
+    "WRFSFireSpreadDataset",
 ]
 
 register_dataset(SyntheticEarthquakeForecastDataset.name, SyntheticEarthquakeForecastDataset)
@@ -82,3 +84,4 @@ register_dataset(TropiCycloneNetDataset.name, TropiCycloneNetDataset)
 register_dataset(SyntheticWildfireDangerDataset.name, SyntheticWildfireDangerDataset)
 register_dataset(SyntheticWildfireSpreadDataset.name, SyntheticWildfireSpreadDataset)
 register_dataset(SyntheticWildfireSpreadTemporalDataset.name, SyntheticWildfireSpreadTemporalDataset)
+register_dataset(WRFSFireSpreadDataset.name, WRFSFireSpreadDataset)
