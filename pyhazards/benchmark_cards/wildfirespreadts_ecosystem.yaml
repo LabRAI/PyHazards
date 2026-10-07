@@ -28,7 +28,6 @@ smoke_configs:
   - pyhazards/configs/wildfire/wildfirespreadts_smoke.yaml
   - pyhazards/configs/wildfire/forefire_smoke.yaml
   - pyhazards/configs/wildfire/wrf_sfire_smoke.yaml
-  - pyhazards/configs/wildfire/firecastnet_smoke.yaml
 linked_models:
   - wildfire_aspp
   - wildfirespreadts
@@ -40,4 +39,3 @@ linked_models:
   - swin_unet
   - forefire
   - wrf_sfire
-  - firecastnet

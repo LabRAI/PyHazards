@@ -72,10 +72,24 @@ def test_added_wildfire_public_methods_forward():
     )
     forefire = build_model(name="forefire", task="segmentation", in_channels=12)
     wrf_sfire = build_model(name="wrf_sfire", task="segmentation", in_channels=12)
-    firecastnet = build_model(name="firecastnet", task="segmentation", in_channels=12)
+    # FireCastNet on a 16 x 16 window of 0.25-degree cells (4 x 4 one-degree graph nodes).
+    firecastnet = build_model(
+        name="firecastnet",
+        task="segmentation",
+        in_channels=6,
+        timeseries_len=4,
+        mesh_levels=(0, 1, 2, 3, 4),
+        sp_res=0.25,
+        max_lat=41.875,
+        min_lat=38.125,
+        max_lon=-120.125,
+        min_lon=-123.875,
+        hidden_dim=16,
+        embed_cube_dim=16,
+    )
 
     assert danger(daily_x).shape == (2, 2)
     assert spread_ts(temporal_spread_x).shape == (2, 1, 16, 16)
     assert forefire(spread_x).shape == (2, 1, 16, 16)
     assert wrf_sfire(spread_x).shape == (2, 1, 16, 16)
-    assert firecastnet(spread_x).shape == (2, 1, 16, 16)
+    assert firecastnet(temporal_spread_x).shape == (2, 1, 16, 16)
