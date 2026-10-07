@@ -79,6 +79,11 @@ External References
 
 **Paper:** `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://arxiv.org/abs/2102.01204>`_ | **Repo:** `Repository <https://github.com/leobix/hurricast>`__
 
+Reproduction
+------------
+
+Not yet verified against a reference implementation.
+
 Registry Name
 -------------
 

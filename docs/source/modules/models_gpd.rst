@@ -79,6 +79,11 @@ External References
 
 **Paper:** `Generalized Seismic Phase Detection with Deep Learning <https://doi.org/10.1785/0120180080>`_ | **Repo:** `Repository <https://github.com/interseismic/generalized-phase-detection>`__
 
+Reproduction
+------------
+
+Not yet verified against a reference implementation.
+
 Registry Name
 -------------
 

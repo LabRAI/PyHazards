@@ -31,6 +31,10 @@ smoke_configs:
 linked_models:
   - wildfire_aspp
   - wildfirespreadts
+  - logistic_regression
+  - resnet18_unet
+  - convlstm
+  - utae
   - forefire
   - wrf_sfire
   - firecastnet

@@ -79,6 +79,11 @@ External References
 
 **Paper:** `Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.5194/egusphere-2024-250>`_ | **Repo:** `Repository <https://github.com/wangchong96/TCIF-fusion>`__
 
+Reproduction
+------------
+
+Not yet verified against a reference implementation.
+
 Registry Name
 -------------
 

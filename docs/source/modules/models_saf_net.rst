@@ -79,6 +79,11 @@ External References
 
 **Paper:** `SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction <https://www.sciencedirect.com/science/article/pii/S1568494623003152>`_ | **Repo:** `Repository <https://github.com/xuguangning1218/TI_Prediction>`__
 
+Reproduction
+------------
+
+Not yet verified against a reference implementation.
+
 Registry Name
 -------------
 

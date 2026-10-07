@@ -79,6 +79,11 @@ External References
 
 **Paper:** `Deep Learning Experiments for Tropical Cyclone Intensity Forecasts <https://doi.org/10.1145/3447548.3467351>`_ | **Repo:** `Repository <https://github.com/wenweixu/tropicalcyclone_MLP>`__
 
+Reproduction
+------------
+
+Not yet verified against a reference implementation.
+
 Registry Name
 -------------
 

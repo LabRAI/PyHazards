@@ -118,7 +118,7 @@ Method and Resource Matrix
      - `WildfireSpreadTS <https://github.com/SebastianGer/WildfireSpreadTS>`_
      - Baseline / Benchmark
      - ``Implemented``
-     - :doc:`WildfireSpreadTS <modules/models_wildfirespreadts>`
+     - :doc:`WildfireSpreadTS Baselines <modules/models_wildfirespreadts>`
      -  
    * - Wildfire
      - `ASUFM <https://github.com/bronteee/fire-asufm>`_

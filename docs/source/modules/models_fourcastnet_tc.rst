@@ -79,6 +79,11 @@ External References
 
 **Paper:** `FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators <https://arxiv.org/abs/2202.11214>`_ | **Repo:** `Repository <https://github.com/NVlabs/FourCastNet>`__
 
+Reproduction
+------------
+
+Not yet verified against a reference implementation.
+
 Registry Name
 -------------
 

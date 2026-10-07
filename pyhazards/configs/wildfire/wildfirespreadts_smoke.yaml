@@ -14,9 +14,9 @@ model:
   name: wildfirespreadts
   task: segmentation
   params:
+    baseline: utae
     history: 4
     in_channels: 6
-    hidden_dim: 24
 report:
   output_dir: reports/wildfirespreadts
   formats:

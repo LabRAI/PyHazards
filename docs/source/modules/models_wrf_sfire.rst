@@ -79,6 +79,11 @@ External References
 
 **Paper:** `Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011 <https://doi.org/10.5194/gmd-4-591-2011>`_ | **Repo:** `Repository <https://github.com/openwfm/WRF-SFIRE>`__
 
+Reproduction
+------------
+
+Not yet verified against a reference implementation.
+
 Registry Name
 -------------
 

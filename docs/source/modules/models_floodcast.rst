@@ -79,6 +79,11 @@ External References
 
 **Paper:** `Large-scale flood modeling and forecasting with FloodCast <https://doi.org/10.1038/s41586-024-08028-8>`_ | **Repo:** `Repository <https://github.com/HydroPML/FloodCast>`__
 
+Reproduction
+------------
+
+Not yet verified against a reference implementation.
+
 Registry Name
 -------------
 

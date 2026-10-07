@@ -79,6 +79,11 @@ External References
 
 **Paper:** `An End-To-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning <https://www.osti.gov/biblio/1978539>`_ | **Repo:** `Repository <https://github.com/AI4EPS/EQNet>`__
 
+Reproduction
+------------
+
+Not yet verified against a reference implementation.
+
 Registry Name
 -------------
 

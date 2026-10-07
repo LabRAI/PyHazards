@@ -2,6 +2,7 @@ from .backbones import CNNPatchEncoder, MLPBackbone, TemporalEncoder
 from .asufm import ASUFM, asufm_builder
 from .builder import build_model, default_builder
 from .cnn_aspp import WildfireCNNASPP, cnn_aspp_builder
+from .convlstm import ConvLSTM, ConvLSTMCell, ConvLSTMSegmenter, convlstm_builder
 from .eqnet import EQNet, eqnet_builder
 from .eqtransformer import EQTransformer, eqtransformer_builder
 from .firecastnet import FireCastNet, firecastnet_builder
@@ -14,16 +15,19 @@ from .graphcast_tc import GraphCastTC, graphcast_tc_builder
 from .heads import ClassificationHead, RegressionHead, SegmentationHead
 from .hurricast import Hurricast, hurricast_builder
 from .hydrographnet import HydroGraphNet, HydroGraphNetLoss, hydrographnet_builder
+from .logistic_regression import PixelLogisticRegression, logistic_regression_builder
 from .neuralhydrology_ealstm import NeuralHydrologyEALSTM, neuralhydrology_ealstm_builder
 from .neuralhydrology_lstm import NeuralHydrologyLSTM, neuralhydrology_lstm_builder
 from .pangu_tc import PanguTC, pangu_tc_builder
 from .phasenet import PhaseNet, phasenet_builder
 from .registry import available_models, register_model
+from .resnet_unet import ResNetUNet, resnet18_unet_builder
 from .saf_net import SAFNet, saf_net_builder
 from .tcif_fusion import TCIFFusion, tcif_fusion_builder
 from .tropicalcyclone_mlp import TropicalCycloneMLP, tropicalcyclone_mlp_builder
 from .tropicyclonenet import TropiCycloneNet, tropicyclonenet_builder
 from .urbanfloodcast import UrbanFloodCast, urbanfloodcast_builder
+from .utae import UTAE, utae_builder
 from .wavecastnet import (
     ConvLEMCell,
     WaveCastNet,
@@ -35,7 +39,7 @@ from .wildfire_forecasting import WildfireForecasting, wildfire_forecasting_buil
 from .wildfire_aspp import TverskyLoss, WildfireASPP, wildfire_aspp_builder
 from .wildfire_fpa import WildfireFPA, wildfire_fpa_builder
 from .wildfire_mamba import WildfireMamba, wildfire_mamba_builder
-from .wildfirespreadts import WildfireSpreadTS, wildfirespreadts_builder
+from .wildfirespreadts import WILDFIRESPREADTS_BASELINES, wildfirespreadts_builder
 from .wrf_sfire import WRFSFireAdapter, wrf_sfire_builder
 
 
@@ -103,8 +107,18 @@ __all__ = [
     "wildfire_fpa_builder",
     "WildfireMamba",
     "wildfire_mamba_builder",
-    "WildfireSpreadTS",
+    "WILDFIRESPREADTS_BASELINES",
     "wildfirespreadts_builder",
+    "ConvLSTM",
+    "ConvLSTMCell",
+    "ConvLSTMSegmenter",
+    "convlstm_builder",
+    "PixelLogisticRegression",
+    "logistic_regression_builder",
+    "ResNetUNet",
+    "resnet18_unet_builder",
+    "UTAE",
+    "utae_builder",
     "WRFSFireAdapter",
     "wrf_sfire_builder",
     "ConvLEMCell",
@@ -198,12 +212,34 @@ register_model(
     "wildfirespreadts",
     wildfirespreadts_builder,
     defaults={
-        "history": 4,
-        "in_channels": 6,
-        "hidden_dim": 32,
-        "out_channels": 1,
-        "dropout": 0.1,
+        "baseline": "utae",
+        "in_channels": 40,
+        "history": 5,
     },
+)
+
+register_model(
+    "logistic_regression",
+    logistic_regression_builder,
+    defaults={"out_channels": 1, "history": 1, "kernel_size": 3},
+)
+
+register_model(
+    "resnet18_unet",
+    resnet18_unet_builder,
+    defaults={"out_channels": 1, "history": 1, "encoder_name": "resnet18", "encoder_weights": None},
+)
+
+register_model(
+    "convlstm",
+    convlstm_builder,
+    defaults={"out_channels": 1, "hidden_dim": 64, "kernel_size": 3, "num_layers": 1, "readout": "cell"},
+)
+
+register_model(
+    "utae",
+    utae_builder,
+    defaults={"out_channels": 1},
 )
 
 register_model(

@@ -1,0 +1,56 @@
+name: Oracle
+
+# Compares PyHazards models with their pinned reference implementations (tests/oracle).
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "pyhazards/models/**"
+      - "tests/oracle/**"
+      - "scripts/fetch_oracles.py"
+      - ".github/workflows/oracle.yml"
+  pull_request:
+    branches: [main, master]
+    paths:
+      - "pyhazards/models/**"
+      - "tests/oracle/**"
+      - "scripts/fetch_oracles.py"
+      - ".github/workflows/oracle.yml"
+  workflow_dispatch:
+
+jobs:
+  oracle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Cache reference implementations and weights
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pyhazards-oracles
+            ~/.cache/torch/hub
+          key: oracles-${{ hashFiles('tests/oracle/repos.yaml') }}
+
+      - name: Install dependencies (CPU Torch + reference packages)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install pytest
+          python -m pip install -e .
+          python -m pip install -r tests/oracle/requirements.txt
+
+      - name: Fetch pinned reference implementations
+        run: python scripts/fetch_oracles.py --dest ~/.cache/pyhazards-oracles
+
+      - name: Oracle tests
+        run: |
+          export PYHAZARDS_ORACLE_DIR="$HOME/.cache/pyhazards-oracles"
+          export PYHAZARDS_ORACLE_REQUIRED=1
+          python -m pytest tests/oracle -v

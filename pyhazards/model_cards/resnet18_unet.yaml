@@ -1,0 +1,72 @@
+model_name: resnet18_unet
+display_name: ResNet-18 U-Net
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/resnet_unet.py
+builder_name: resnet18_unet_builder
+summary: >
+  U-Net with a ResNet-18 encoder, equivalent to segmentation_models_pytorch's Unet and used
+  as the U-Net baseline of WildfireSpreadTS.
+description:
+  - >
+    ``resnet18_unet`` pairs a torchvision-style ResNet-18 encoder with the U-Net decoder of
+    segmentation_models_pytorch: five nearest-neighbour upsampling blocks with skip connections
+    and two Conv-BN-ReLU layers each, followed by a 3x3 segmentation head.
+  - >
+    The network is a plain-PyTorch re-implementation of ``smp.Unet("resnet18")`` from
+    segmentation_models_pytorch 0.3.2, the version WildfireSpreadTS pins, with the same
+    initialisation and parameter names. ``encoder_weights="imagenet"`` loads the ImageNet
+    ResNet-18 checkpoint and adapts the first convolution to the input channels the way smp
+    does. Multi-day input ``(batch, time, channels, height, width)`` is flattened to
+    ``time * channels`` channels.
+paper:
+  title: "U-Net: Convolutional Networks for Biomedical Image Segmentation"
+  url: https://arxiv.org/abs/1505.04597
+  repo_url: https://github.com/qubvel-org/segmentation_models.pytorch
+references:
+  - title: "WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction"
+    url: https://openreview.net/forum?id=RgdGkPRQ03
+    repo_url: https://github.com/SebastianGer/WildfireSpreadTS
+    note: >
+      smp.Unet("resnet18", encoder_weights=None) on 1 or 5 days of 40 channels, Dice loss, AdamW
+      lr 1e-3; 14.4M parameters for one day.
+  - title: "Improved Wildfire Spread Prediction with Time-Series Data and the WSTS+ Benchmark"
+    url: https://arxiv.org/abs/2502.12003
+    note: >
+      Same network with ImageNet encoder weights and focal loss (WACV 2026); test AP 0.455-0.472.
+  - title: "Deep Residual Learning for Image Recognition"
+    url: https://arxiv.org/abs/1512.03385
+    note: ResNet-18 encoder.
+reproduction:
+  reference_code: https://github.com/qubvel-org/segmentation_models.pytorch
+  reference_commit: v0.3.2
+  reference_license: MIT
+  reference_config: >
+    smp.Unet(encoder_name="resnet18", encoder_weights=None, in_channels=40, classes=1) as in
+    WildfireSpreadTS src/models/SMPModel.py, plus the ImageNet-initialised stem for 40 channels.
+  parameter_count: 14444241
+  checks: [parameter_count, initialization, state_dict, forward, pretrained_weights]
+  oracle_test: tests/oracle/test_wildfirespreadts_oracle.py
+tasks:
+  - segmentation
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="resnet18_unet", task="segmentation", in_channels=40)
+  logits = model(torch.randn(2, 40, 128, 128))
+  print(logits.shape)  # (2, 1, 128, 128)
+notes:
+  - "Height and width must be divisible by 32."
+  - "encoder_name='resnet34' gives the ResNet-34 variant."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 6
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 6, 64, 64]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 64, 64]

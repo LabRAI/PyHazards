@@ -1,0 +1,74 @@
+model_name: utae
+display_name: U-TAE
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/utae.py
+builder_name: utae_builder
+summary: >
+  U-Net whose temporal dimension is collapsed by a lightweight temporal attention encoder,
+  the strongest WildfireSpreadTS baseline.
+description:
+  - >
+    ``utae`` encodes every date of a satellite image time series with a shared convolutional
+    encoder, collapses time at the lowest resolution with a Lightweight Temporal Attention
+    Encoder (L-TAE), reuses the attention masks to aggregate the skip connections, and decodes
+    to per-pixel scores (Sainte Fare Garnot & Landrieu, ICCV 2021).
+  - >
+    The implementation is a port of the official utae-paps code, which WildfireSpreadTS vendors
+    unchanged. Parameter names match the reference, so the official PASTIS checkpoints load
+    with ``strict=True``. Acquisition dates go in ``batch_positions`` (day of year in
+    WildfireSpreadTS); when omitted, ``0..T-1`` is used.
+paper:
+  title: "Panoptic Segmentation of Satellite Image Time Series with Convolutional Temporal Attention Networks"
+  url: https://arxiv.org/abs/2107.07933
+  repo_url: https://github.com/VSainteuf/utae-paps
+references:
+  - title: "WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction"
+    url: https://openreview.net/forum?id=RgdGkPRQ03
+    repo_url: https://github.com/SebastianGer/WildfireSpreadTS
+    note: >
+      Default U-TAE with out_conv (32, 1), 5 days x 40 channels with day-of-year positions,
+      BCE with positive-class weight, AdamW lr 0.01; best baseline in the paper (test AP 0.372 on
+      vegetation features).
+reproduction:
+  reference_code: https://github.com/VSainteuf/utae-paps
+  reference_commit: 987874e27a98bb399277f2d55eb010744d26f881
+  reference_license: MIT
+  reference_config: >
+    UTAE(input_dim=40, out_conv=[32, 1]) with the remaining defaults (WildfireSpreadTS), and
+    UTAE(input_dim=10, out_conv=[32, 20]) loaded with the official PASTIS fold-1 weights
+    (Zenodo 5172293, CC-BY-4.0).
+  parameter_count: 1099011
+  checks: [parameter_count, initialization, state_dict, forward, pretrained_weights]
+  oracle_test: tests/oracle/test_wildfirespreadts_oracle.py
+  deviations:
+    - >
+      To read the output shape for padded dates, the reference runs each shared encoder block
+      once more on an all-zero batch. That pass is skipped here; with the default GroupNorm it
+      has no effect on outputs.
+tasks:
+  - segmentation
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="utae", task="segmentation", in_channels=40)
+  x = torch.randn(2, 5, 40, 128, 128)
+  day_of_year = torch.tensor([[150, 151, 152, 153, 154]] * 2, dtype=torch.float32)
+  scores = model(x, batch_positions=day_of_year)
+  print(scores.shape)  # (2, 1, 128, 128)
+notes:
+  - "Height and width must be divisible by 8 with the default three down-sampling stages."
+  - "As in the reference code, the output block ends with BatchNorm and ReLU, so scores are non-negative."
+  - "Dates whose frame equals pad_value (default 0) everywhere are treated as padding."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 6
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 4, 6, 32, 32]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 32, 32]

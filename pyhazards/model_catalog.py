@@ -117,6 +117,34 @@ class PaperReference(BaseModel):
     repo_url: Optional[str] = None
 
 
+class UsageReference(PaperReference):
+    """A paper or benchmark that used this model, and how."""
+
+    note: Optional[str] = None
+
+
+REPRODUCTION_CHECKS = {
+    "parameter_count": "parameter count",
+    "initialization": "seeded initialisation",
+    "state_dict": "parameter names and shapes",
+    "forward": "forward outputs",
+    "pretrained_weights": "official pretrained weights",
+}
+
+
+class ReproductionSpec(BaseModel):
+    """How the PyHazards implementation was checked against the reference code."""
+
+    reference_code: str
+    reference_commit: str
+    reference_license: str
+    reference_config: str
+    parameter_count: Optional[int] = None
+    checks: List[Literal["parameter_count", "initialization", "state_dict", "forward", "pretrained_weights"]]
+    oracle_test: str
+    deviations: List[str] = Field(default_factory=list)
+
+
 class SmokeTensorSpec(BaseModel):
     shape: List[int]
     dtype: str = "float32"
@@ -179,6 +207,8 @@ class ModelCard(BaseModel):
     summary: str
     description: List[str]
     paper: PaperReference
+    references: List[UsageReference] = Field(default_factory=list)
+    reproduction: Optional[ReproductionSpec] = None
     tasks: List[str]
     example: str
     notes: List[str] = Field(default_factory=list)
@@ -991,6 +1021,21 @@ def render_module_page(card: ModelCard) -> str:
             "",
             _paper_links(card),
             "",
+        ]
+    )
+    if card.references:
+        lines.extend(["Used In", "-------", ""])
+        for reference in card.references:
+            entry = "- `{title} <{url}>`_".format(title=reference.title, url=reference.url)
+            if reference.repo_url:
+                entry += " (`repo <{url}>`__)".format(url=reference.repo_url)
+            if reference.note:
+                entry += ": " + _single_line(reference.note)
+            lines.append(entry)
+        lines.append("")
+    lines.extend(_render_reproduction(card))
+    lines.extend(
+        [
             "Registry Name",
             "-------------",
             "",
@@ -1038,6 +1083,46 @@ def render_module_page(card: ModelCard) -> str:
         lines.append("")
 
     return "\n".join(lines)
+
+
+def _short_commit(ref: str) -> str:
+    is_sha = len(ref) == 40 and all(char in "0123456789abcdef" for char in ref)
+    return ref[:7] if is_sha else ref
+
+
+def _render_reproduction(card: ModelCard) -> List[str]:
+    lines = ["Reproduction", "------------", ""]
+    spec = card.reproduction
+    if spec is None:
+        lines.extend(
+            [
+                "Not yet verified against a reference implementation.",
+                "",
+            ]
+        )
+        return lines
+    lines.extend(
+        [
+            "- **Reference implementation:** `{url} <{url}>`__ at ``{commit}`` ({license})".format(
+                url=spec.reference_code,
+                commit=_short_commit(spec.reference_commit),
+                license=spec.reference_license,
+            ),
+            "- **Checked configuration:** {config}".format(config=_single_line(spec.reference_config)),
+        ]
+    )
+    if spec.parameter_count is not None:
+        lines.append("- **Parameter count:** {count:,}".format(count=spec.parameter_count))
+    lines.append(
+        "- **Verified:** {checks}".format(
+            checks=", ".join(REPRODUCTION_CHECKS[check] for check in spec.checks)
+        )
+    )
+    lines.append("- **Oracle test:** ``{path}``".format(path=spec.oracle_test))
+    for deviation in spec.deviations:
+        lines.append("- **Deviation:** {text}".format(text=_single_line(deviation)))
+    lines.append("")
+    return lines
 
 
 def rendered_docs(cards: Sequence[ModelCard]) -> Dict[Path, str]:

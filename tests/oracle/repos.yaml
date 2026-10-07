@@ -1,0 +1,19 @@
+# Reference implementations that the oracle tests compare PyHazards models against.
+# Each entry is pinned to an exact commit or checksum. They are fetched only for testing
+# (scripts/fetch_oracles.py) and are never copied into the pyhazards package.
+repos:
+  utae-paps:
+    url: https://github.com/VSainteuf/utae-paps.git
+    commit: 987874e27a98bb399277f2d55eb010744d26f881
+    license: MIT
+  WildfireSpreadTS:
+    url: https://github.com/SebastianGer/WildfireSpreadTS.git
+    commit: f62dc49f2c2a6d249c071533ae5340c0d01bfb95
+    license: MIT
+
+assets:
+  utae_pastis_weights:
+    url: https://zenodo.org/records/5172293/files/UTAE_SemanticSeg_weights.zip
+    sha256: 43a9db40ca002d9feac3a6b387838f24c3a7191b4257065d83206379f8ef957a
+    license: CC-BY-4.0
+    extract: true

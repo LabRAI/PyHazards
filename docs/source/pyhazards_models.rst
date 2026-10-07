@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         24
+         28
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         27
+         31
 
       .. container:: catalog-stat-note
 
@@ -106,6 +106,33 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer <https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278>`_ | **Repo:** `Repository <https://github.com/bronteee/fire-asufm>`__
+
+         .. grid-item-card:: ConvLSTM
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Convolutional LSTM over daily raster sequences with a convolutional head on the final cell state, as used by the WildfireSpreadTS benchmark.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`ConvLSTM <modules/models_convlstm>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Convolutional LSTM Network: A Machine Learning Approach for Precipitation Nowcasting <https://arxiv.org/abs/1506.04214>`_ | **Repo:** `Repository <https://github.com/VSainteuf/utae-paps>`__
 
          .. grid-item-card:: DNN-LSTM-AutoEncoder
             :class-card: catalog-entry-card
@@ -184,6 +211,87 @@ pages and compatible benchmark coverage.
 
                **Paper:** `ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread <https://doi.org/10.21105/joss.08680>`_ | **Repo:** `Repository <https://github.com/forefireAPI/forefire>`__
 
+         .. grid-item-card:: Logistic Regression (pixel)
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Per-pixel logistic regression over a 3x3 neighbourhood, the linear baseline of WildfireSpreadTS and Next Day Wildfire Spread.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Logistic Regression (pixel) <modules/models_logistic_regression>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ | **Repo:** `Repository <https://github.com/SebastianGer/WildfireSpreadTS>`__
+
+         .. grid-item-card:: ResNet-18 U-Net
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               U-Net with a ResNet-18 encoder, equivalent to segmentation_models_pytorch's Unet and used as the U-Net baseline of WildfireSpreadTS.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`ResNet-18 U-Net <modules/models_resnet18_unet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `U-Net: Convolutional Networks for Biomedical Image Segmentation <https://arxiv.org/abs/1505.04597>`_ | **Repo:** `Repository <https://github.com/qubvel-org/segmentation_models.pytorch>`__
+
+         .. grid-item-card:: U-TAE
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               U-Net whose temporal dimension is collapsed by a lightweight temporal attention encoder, the strongest WildfireSpreadTS baseline.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`U-TAE <modules/models_utae>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Panoptic Segmentation of Satellite Image Time Series with Convolutional Temporal Attention Networks <https://arxiv.org/abs/2107.07933>`_ | **Repo:** `Repository <https://github.com/VSainteuf/utae-paps>`__
+
          .. grid-item-card:: Wildfire Forecasting
             :class-card: catalog-entry-card
 
@@ -207,12 +315,12 @@ pages and compatible benchmark coverage.
 
                **Paper:** `Wildfire Danger Prediction and Understanding with Deep Learning <https://doi.org/10.1029/2022GL099368>`_ | **Repo:** `Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__
 
-         .. grid-item-card:: WildfireSpreadTS
+         .. grid-item-card:: WildfireSpreadTS Baselines
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A temporal convolution wildfire spread baseline over short raster history windows.
+               The four learned WildfireSpreadTS baselines (logistic regression, ResNet-18 U-Net, ConvLSTM, U-TAE) with the benchmark's own configurations.
 
             .. container:: catalog-chip-row
 
@@ -220,7 +328,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Details:** :doc:`WildfireSpreadTS <modules/models_wildfirespreadts>`
+               **Details:** :doc:`WildfireSpreadTS Baselines <modules/models_wildfirespreadts>`
 
             .. container:: catalog-meta-row
 
@@ -232,7 +340,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-link-row
 
-               **Paper:** `WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ | **Repo:** `Repository <https://github.com/SebastianGer/WildfireSpreadTS>`__
+               **Paper:** `WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ | **Repo:** `Repository <https://github.com/SebastianGer/WildfireSpreadTS>`__
 
          .. grid-item-card:: WRF-SFIRE Adapter
             :class-card: catalog-entry-card
@@ -924,6 +1032,7 @@ before selecting a model for evaluation.
    :hidden:
 
    modules/models_asufm
+   modules/models_convlstm
    modules/models_eqnet
    modules/models_eqtransformer
    modules/models_firecastnet
@@ -935,15 +1044,18 @@ before selecting a model for evaluation.
    modules/models_graphcast_tc
    modules/models_hurricast
    modules/models_hydrographnet
+   modules/models_logistic_regression
    modules/models_neuralhydrology_ealstm
    modules/models_neuralhydrology_lstm
    modules/models_pangu_tc
    modules/models_phasenet
+   modules/models_resnet18_unet
    modules/models_saf_net
    modules/models_tcif_fusion
    modules/models_tropicalcyclone_mlp
    modules/models_tropicyclonenet
    modules/models_urbanfloodcast
+   modules/models_utae
    modules/models_wavecastnet
    modules/models_wildfire_aspp
    modules/models_wildfire_forecasting

@@ -1,0 +1,2 @@
+# Packages that provide reference implementations for tests/oracle (install next to CPU torch).
+segmentation-models-pytorch==0.3.2

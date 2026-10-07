@@ -41,6 +41,10 @@ linked_models:
   - asufm
   - wildfire_aspp
   - wildfirespreadts
+  - logistic_regression
+  - resnet18_unet
+  - convlstm
+  - utae
   - forefire
   - wrf_sfire
   - firecastnet

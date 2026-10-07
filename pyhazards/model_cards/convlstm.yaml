@@ -1,0 +1,72 @@
+model_name: convlstm
+display_name: ConvLSTM
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/convlstm.py
+builder_name: convlstm_builder
+summary: >
+  Convolutional LSTM over daily raster sequences with a convolutional head on the
+  final cell state, as used by the WildfireSpreadTS benchmark.
+description:
+  - >
+    ``convlstm`` runs a stack of ConvLSTM cells (Shi et al., 2015) over a
+    ``(batch, time, channels, height, width)`` sequence and maps the cell state of the last
+    time step to per-pixel logits with a ``Conv2d`` head.
+  - >
+    The implementation is a port of the ConvLSTM that WildfireSpreadTS vendors from
+    utae-paps (originally TUM-LMF/MTLCC-pytorch): gates come from one convolution over the
+    concatenated input and hidden state, there are no peephole connections, and the head reads
+    the cell state rather than the hidden state. Parameter names match the reference, so its
+    state dicts load with ``strict=True``.
+paper:
+  title: "Convolutional LSTM Network: A Machine Learning Approach for Precipitation Nowcasting"
+  url: https://arxiv.org/abs/1506.04214
+  repo_url: https://github.com/VSainteuf/utae-paps
+references:
+  - title: "WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction"
+    url: https://openreview.net/forum?id=RgdGkPRQ03
+    repo_url: https://github.com/SebastianGer/WildfireSpreadTS
+    note: >
+      One layer, 64 hidden channels, 3x3 kernels, 5 days x 40 channels, 128x128 crops with tiled
+      inference, Jaccard loss, AdamW lr 0.01; test AP 0.292-0.310 (paper Table 5).
+reproduction:
+  reference_code: https://github.com/VSainteuf/utae-paps
+  reference_commit: 987874e27a98bb399277f2d55eb010744d26f881
+  reference_license: MIT
+  reference_config: >
+    ConvLSTM_Seg(num_classes=1, input_dim=40, hidden_dim=64, kernel_size=(3, 3)), the
+    WildfireSpreadTS configuration; WildfireSpreadTS vendors this file unchanged.
+  parameter_count: 240449
+  checks: [parameter_count, initialization, state_dict, forward]
+  oracle_test: tests/oracle/test_wildfirespreadts_oracle.py
+  deviations:
+    - >
+      The reference fixes the spatial size at construction; this port reads it from the input.
+      Outputs are identical at the reference size.
+    - >
+      The reference head uses ``padding=1`` for every kernel size; this port uses
+      ``kernel_size // 2``, which only differs for kernels other than 3x3.
+tasks:
+  - segmentation
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="convlstm", task="segmentation", in_channels=40)
+  logits = model(torch.randn(2, 5, 40, 128, 128))
+  print(logits.shape)  # (2, 1, 128, 128)
+notes:
+  - "Multi-layer stacks are supported; WildfireSpreadTS uses one layer."
+  - "Set readout='hidden' to read the last hidden state instead of the cell state."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 6
+    hidden_dim: 16
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 4, 6, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 16, 16]

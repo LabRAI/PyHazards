@@ -79,6 +79,11 @@ External References
 
 **Paper:** `UrbanFloodCast: WMO Urban Flooding Forecasting Challenge <https://arxiv.org/abs/2405.21179>`_ | **Repo:** `Repository <https://github.com/HydroPML/UrbanFloodCast>`__
 
+Reproduction
+------------
+
+Not yet verified against a reference implementation.
+
 Registry Name
 -------------
 
