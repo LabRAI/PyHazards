@@ -84,13 +84,13 @@ example: |
   pretrained = build_model(name="segformer", task="segmentation", in_channels=40, encoder_weights="imagenet")
 notes:
   - >
-    NVIDIA licenses the SegFormer and MiT weights (nvidia/mit-b*, nvidia/segformer-*) for
+    NVIDIA licenses the SegFormer and MiT weights (``nvidia/mit-b*``, ``nvidia/segformer-*``) for
     non-commercial use only (NVIDIA Source Code License for SegFormer). PyHazards does not bundle
     them; encoder_weights="imagenet" downloads the revision-pinned nvidia/mit-<variant> checkpoint
     from the Hugging Face Hub, and a local pytorch_model.bin or model.safetensors path also works.
   - >
     load_hf_state_dict() loads transformers state dicts: SegformerForSemanticSegmentation into the
-    whole model; SegformerForImageClassification (nvidia/mit-b*: the "segformer." prefix is removed
+    whole model; SegformerForImageClassification (``nvidia/mit-b*``: the "segformer." prefix is removed
     and the ImageNet classifier dropped) and SegformerModel into model.segformer.
   - >
     Like transformers, every LayerNorm uses eps=1e-5. The official MiT uses 1e-6 in the

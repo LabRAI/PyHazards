@@ -126,9 +126,9 @@ Programmatic Use
 Notes
 -----
 
-- NVIDIA licenses the SegFormer and MiT weights (nvidia/mit-b*, nvidia/segformer-*) for non-commercial use only (NVIDIA Source Code License for SegFormer). PyHazards does not bundle them; encoder_weights="imagenet" downloads the revision-pinned nvidia/mit-<variant> checkpoint from the Hugging Face Hub, and a local pytorch_model.bin or model.safetensors path also works.
+- NVIDIA licenses the SegFormer and MiT weights (``nvidia/mit-b*``, ``nvidia/segformer-*``) for non-commercial use only (NVIDIA Source Code License for SegFormer). PyHazards does not bundle them; encoder_weights="imagenet" downloads the revision-pinned nvidia/mit-<variant> checkpoint from the Hugging Face Hub, and a local pytorch_model.bin or model.safetensors path also works.
 
-- load_hf_state_dict() loads transformers state dicts: SegformerForSemanticSegmentation into the whole model; SegformerForImageClassification (nvidia/mit-b*: the "segformer." prefix is removed and the ImageNet classifier dropped) and SegformerModel into model.segformer.
+- load_hf_state_dict() loads transformers state dicts: SegformerForSemanticSegmentation into the whole model; SegformerForImageClassification (``nvidia/mit-b*``: the "segformer." prefix is removed and the ImageNet classifier dropped) and SegformerModel into model.segformer.
 
 - Like transformers, every LayerNorm uses eps=1e-5. The official MiT uses 1e-6 in the Transformer blocks and stage norms; with the ADE20K B0 weights this changes logits by up to about 6e-3 (99.99% argmax agreement on random input).
 
