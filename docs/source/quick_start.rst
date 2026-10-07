@@ -54,6 +54,7 @@ dataset, model, and training engine work together in one workflow.
     from pyhazards.data.load_hydrograph_data import load_hydrograph_data
     from pyhazards.datasets import graph_collate
     from pyhazards.engine import Trainer
+    from pyhazards.metrics import RegressionMetrics
     from pyhazards.models import build_model
 
     data = load_hydrograph_data("pyhazards/data/era5_subset", max_nodes=50)
@@ -66,7 +67,7 @@ dataset, model, and training engine work together in one workflow.
         out_dim=1,
     )
 
-    trainer = Trainer(model=model, mixed_precision=False)
+    trainer = Trainer(model=model, metrics=[RegressionMetrics()], mixed_precision=False)
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
     loss_fn = torch.nn.MSELoss()
 

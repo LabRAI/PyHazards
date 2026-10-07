@@ -7,7 +7,12 @@ import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset, Dataset
 
 from ..datasets.base import DataBundle
-from ..metrics import MetricBase
+from ..metrics import (
+    ClassificationMetrics,
+    MetricBase,
+    RegressionMetrics,
+    SegmentationMetrics,
+)
 from ..utils.hardware import auto_device
 from .distributed import select_strategy
 
@@ -28,7 +33,7 @@ class Trainer:
     ):
         self.model = model
         self.device = torch.device(device) if device else auto_device()
-        self.metrics = metrics or []
+        self.metrics = list(metrics) if metrics is not None else None
         self.strategy = select_strategy(strategy)
         self.mixed_precision = mixed_precision
         self.model.to(self.device)
@@ -93,18 +98,19 @@ class Trainer:
     ) -> Dict[str, float]:
         split_data = data.get_split(split)
         loader = self._make_loader(split_data.inputs, split_data.targets, batch_size, num_workers, collate_fn, shuffle=False)
+        metrics = self._resolve_metrics(data)
         self.model.eval()
-        for metric in self.metrics:
+        for metric in metrics:
             metric.reset()
         with torch.no_grad():
             for x, y in loader:
                 x = self._to_device(x)
                 y = self._to_device(y)
                 preds = self.model(x)
-                for metric in self.metrics:
+                for metric in metrics:
                     metric.update(preds, y)
         results: Dict[str, float] = {}
-        for metric in self.metrics:
+        for metric in metrics:
             results.update(metric.compute())
         return results
 
@@ -158,3 +164,16 @@ class Trainer:
         if isinstance(obj, dict):
             return {k: self._to_device(v) for k, v in obj.items()}
         return obj
+
+    def _resolve_metrics(self, data: DataBundle) -> List[MetricBase]:
+        if self.metrics is not None:
+            return self.metrics
+
+        task_type = data.label_spec.task_type.lower()
+        if task_type == "regression":
+            return [RegressionMetrics()]
+        if task_type == "classification":
+            return [ClassificationMetrics()]
+        if task_type == "segmentation":
+            return [SegmentationMetrics()]
+        return []

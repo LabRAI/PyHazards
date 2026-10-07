@@ -49,6 +49,7 @@ def load_hydrograph_data(
             ds = xr.open_mfdataset(
                 files,
                 combine="by_coords",
+                compat="no_conflicts",
                 chunks={},
                 engine=engine,
             )
