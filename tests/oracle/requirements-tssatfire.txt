@@ -1,0 +1,7 @@
+# Reference stack for the TS-SatFire oracle tests (unet3d, unetr, swin_unetr and the ts_satfire
+# preset). monai 1.3.2 is the version in TS-SatFire's environment.yml; MONAI's UNETR and SwinUNETR
+# need einops, and TS-SatFire's spatial_models/swinunetr/swinunetr.py imports torchinfo at module
+# level (both pinned to the versions in the same environment.yml).
+monai==1.3.2
+einops==0.8.0
+torchinfo==1.8.0

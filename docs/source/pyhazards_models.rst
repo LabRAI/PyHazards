@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         39
+         43
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         40
+         44
 
       .. container:: catalog-stat-note
 
@@ -468,6 +468,29 @@ pages and compatible benchmark coverage.
 
                **Paper:** `Swin-Unet: Unet-like Pure Transformer for Medical Image Segmentation <https://arxiv.org/abs/2105.05537>`_ | **Repo:** `Repository <https://github.com/HuCaoFighting/Swin-Unet>`__
 
+         .. grid-item-card:: SwinUNETR
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Swin-Transformer encoder with a convolutional U-Net decoder (MONAI's SwinUNETR), configured by default as TS-SatFire's spatio-temporal (3D) reference model for next-day fire progression.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`SwinUNETR <modules/models_swin_unetr>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Swin UNETR: Swin Transformers for Semantic Segmentation of Brain Tumors in MRI Images <https://arxiv.org/abs/2201.01266>`_ | **Repo:** `Repository <https://github.com/Project-MONAI/research-contributions>`__
+
          .. grid-item-card:: TCN
             :class-card: catalog-entry-card
 
@@ -490,6 +513,52 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling <https://arxiv.org/abs/1803.01271>`_ | **Repo:** `Repository <https://github.com/locuslab/TCN>`__
+
+         .. grid-item-card:: TS-SatFire Baselines
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The four spatio-temporal TS-SatFire prediction baselines (U-Net-3D, Attention-U-Net-3D, UNETR-3D, SwinUNETR-3D) with the benchmark's own configurations.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`TS-SatFire Baselines <modules/models_ts_satfire>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `TS-SatFire: A Multi-Task Satellite Image Time-Series Dataset for Wildfire Detection and Prediction <https://doi.org/10.1038/s41597-025-06271-3>`_ | **Repo:** `Repository <https://github.com/zhaoyutim/TS-SatFire>`__
+
+         .. grid-item-card:: U-Net-3D (MONAI)
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               MONAI's strided-convolution U-Net, configured by default as the TS-SatFire spatio-temporal (3D) baseline for next-day fire progression.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`U-Net-3D (MONAI) <modules/models_unet3d>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Left-Ventricle Quantification Using Residual U-Net <https://doi.org/10.1007/978-3-030-12029-0_40>`_ | **Repo:** `Repository <https://github.com/Project-MONAI/MONAI>`__
 
          .. grid-item-card:: U-TAE
             :class-card: catalog-entry-card
@@ -517,6 +586,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Panoptic Segmentation of Satellite Image Time Series with Convolutional Temporal Attention Networks <https://arxiv.org/abs/2107.07933>`_ | **Repo:** `Repository <https://github.com/VSainteuf/utae-paps>`__
+
+         .. grid-item-card:: UNETR
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Vision-Transformer encoder with a convolutional U-Net decoder (MONAI's UNETR), configured by default as the TS-SatFire spatio-temporal (3D) baseline for next-day fire progression.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`UNETR <modules/models_unetr>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `UNETR: Transformers for 3D Medical Image Segmentation <https://arxiv.org/abs/2103.10504>`_ | **Repo:** `Repository <https://github.com/Project-MONAI/research-contributions>`__
 
          .. grid-item-card:: Wildfire Forecasting
             :class-card: catalog-entry-card
@@ -1309,11 +1401,15 @@ before selecting a model for evaluation.
    modules/models_saf_net
    modules/models_segformer
    modules/models_swin_unet
+   modules/models_swin_unetr
    modules/models_tcif_fusion
    modules/models_tcn
    modules/models_tropicalcyclone_mlp
    modules/models_tropicyclonenet
+   modules/models_ts_satfire
    modules/models_unet
+   modules/models_unet3d
+   modules/models_unetr
    modules/models_urbanfloodcast
    modules/models_utae
    modules/models_wavecastnet
