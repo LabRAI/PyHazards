@@ -29,10 +29,14 @@ from .resnet_unet import ResNetUNet, resnet18_unet_builder
 from .saf_net import SAFNet, saf_net_builder
 from .segformer import SegFormer, segformer_builder
 from .swin_unet import SwinUnet, swin_unet_builder
+from .swin_unetr import SwinUNETR, TemporalSwinUNETR, swin_unetr_builder
 from .tcif_fusion import TCIFFusion, tcif_fusion_builder
 from .tcn import TCN, TemporalConvNet, tcn_builder
 from .tropicalcyclone_mlp import TropicalCycloneMLP, tropicalcyclone_mlp_builder
 from .tropicyclonenet import TropiCycloneNet, tropicyclonenet_builder
+from .ts_satfire import TS_SATFIRE_BASELINES, ts_satfire_builder
+from .unet3d import TemporalUNet, UNet, unet3d_builder
+from .unetr import UNETR, TemporalUNETR, unetr_builder
 from .urbanfloodcast import UrbanFloodCast, urbanfloodcast_builder
 from .utae import UTAE, utae_builder
 from .wavecastnet import (
@@ -148,6 +152,17 @@ __all__ = [
     "utae_builder",
     "SwinUnet",
     "swin_unet_builder",
+    "SwinUNETR",
+    "TemporalSwinUNETR",
+    "swin_unetr_builder",
+    "TS_SATFIRE_BASELINES",
+    "ts_satfire_builder",
+    "UNet",
+    "TemporalUNet",
+    "unet3d_builder",
+    "UNETR",
+    "TemporalUNETR",
+    "unetr_builder",
     "WRFSFireAdapter",
     "wrf_sfire_builder",
     "ConvLEMCell",
@@ -286,6 +301,65 @@ register_model(
         "channels": (64, 128, 256, 512, 1024),
         "strides": None,
         "dropout": 0.0,
+        "time_reduction": "mean",
+    },
+)
+
+register_model(
+    "unet3d",
+    unet3d_builder,
+    defaults={
+        "out_channels": 2,
+        "spatial_dims": 3,
+        "channels": (64, 128, 256, 512, 1024),
+        "strides": None,
+        "num_res_units": 0,
+        "dropout": 0.0,
+        "time_reduction": "mean",
+    },
+)
+
+register_model(
+    "unetr",
+    unetr_builder,
+    defaults={
+        "out_channels": 2,
+        "spatial_dims": 3,
+        "history": 6,
+        "image_size": 256,
+        "feature_size": 16,
+        "hidden_size": 384,
+        "mlp_dim": 1536,
+        "num_heads": 12,
+        "norm_name": "batch",
+        "time_reduction": "mean",
+    },
+)
+
+register_model(
+    "swin_unetr",
+    swin_unetr_builder,
+    defaults={
+        "out_channels": 2,
+        "spatial_dims": 3,
+        "history": 6,
+        "image_size": 256,
+        "norm_name": "batch",
+        "attn_version": "v1",
+        "time_reduction": "mean",
+    },
+)
+
+register_model(
+    "ts_satfire",
+    ts_satfire_builder,
+    defaults={
+        "baseline": "swinunetr3d",
+        "in_channels": 43,
+        "history": 6,
+        "image_size": 256,
+        "out_channels": 2,
+        "num_heads": 3,
         "time_reduction": "mean",
     },
 )

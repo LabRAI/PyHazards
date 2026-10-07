@@ -49,6 +49,10 @@ linked_models:
   - segformer
   - swin_unet
   - attention_unet
+  - ts_satfire
+  - unet3d
+  - unetr
+  - swin_unetr
   - tcn
   - forefire
   - wrf_sfire
