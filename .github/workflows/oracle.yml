@@ -42,6 +42,14 @@ jobs:
               tests/oracle/test_segformer_oracle.py
               tests/oracle/test_attention_unet_oracle.py
               tests/oracle/test_tcn_oracle.py
+              tests/oracle/test_deeplabv3_oracle.py
+          # The original U-Net release is Caffe; OpenCV 4.x's Caffe importer runs it (OpenCV 5 dropped it).
+          - suite: unet
+            python: "3.10"
+            torch: torch
+            requirements: tests/oracle/requirements-unet.txt
+            references: unet_release
+            tests: tests/oracle/test_unet_oracle.py
           # timm 0.4.12 (fire-asufm) conflicts with the timm 0.6.12 pin of smp 0.3.2.
           - suite: swin
             python: "3.10"

@@ -101,6 +101,13 @@ assets:
     url: https://web.archive.org/web/20250517094035id_/https://earthformer.s3.amazonaws.com/pretrained_checkpoints/earthformer_icarenso2021.pt
     sha256: 3428356328ec02291461f737684ea597a3126af86a09fe173b75ed54ffe1511f
     license: Apache-2.0
+  unet_release:
+    # Ronneberger et al.'s U-Net release (Caffe/MATLAB, 185 MB): phseg_v5 network definition,
+    # trained weights, modified Caffe sources and two sample images. No license is stated; it is
+    # fetched at test time only and nothing from it is vendored (read in place with tarfile).
+    url: https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-release-2015-10-02.tar.gz
+    sha256: 260c51948e9e0f3fe1f1282dbedaf2ca69bea38b8392ef8df6d751e58b234740
+    license: none stated (test-time oracle only, never vendored)
   # Large checkpoints: fetched only when named explicitly (or with --large), never in routine CI.
   prithvi_eo2_300m_burnscars_weights:
     url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars/resolve/a3f2c410e45b8ac7417976614528a872f024d831/Prithvi_EO_V2_300M_BurnScars.pt

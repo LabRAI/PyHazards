@@ -1,0 +1,103 @@
+model_name: unet
+display_name: U-Net
+hazard: Wildfire
+catalog_status: variant
+source_file: pyhazards/models/unet.py
+builder_name: unet_builder
+summary: >
+  The original U-Net of Ronneberger et al. (MICCAI 2015): a contracting and an expansive path of
+  unpadded 3x3 convolutions joined by centre-cropped skip connections, without batch normalisation.
+description:
+  - >
+    ``unet`` rebuilds the network of the paper's Fig. 1: four 2x2 max-pooling steps and four 2x2
+    up-convolutions, 64-128-256-512-1024 channels, two unpadded 3x3 convolutions with ReLU per
+    level, concatenation of each up-sampled map with the centre-cropped feature map of the same
+    level, a final 1x1 convolution, dropout (p = 0.5) at the end of the contracting path and the
+    paper's Gaussian initialisation with standard deviation sqrt(2/N). It has 31,030,658
+    parameters for one input channel and two classes.
+  - >
+    The paper's valid convolutions make the output smaller than the input (572 x 572 -> 388 x 388);
+    the paper tiles large images with mirrored borders (overlap-tile). ``unet_output_size`` and
+    ``unet_input_size`` in ``pyhazards.models.unet`` give the sizes, and valid inputs are
+    16k + 60 pixels (k >= 8). ``padding="same"`` zero-pads the 3x3 convolutions so the output keeps
+    the input size, for fixed-size wildfire tiles; that is a PyHazards option, not the paper's network.
+  - >
+    The authors released a Caffe network without a license, so nothing was copied from it. It is
+    used as a test oracle: ``variant="phseg_v5"`` builds the released network (a ReLU after each
+    up-convolution, 128 output channels in the last up-convolution, 31,100,354 parameters), its
+    trained weights load with ``strict=True`` under the Caffe layer names, and the outputs match
+    the release run through OpenCV's Caffe importer. The release also fixed the details the paper
+    leaves open (concatenation order, centred crop, dropout placement, up-convolution initialisation).
+  - >
+    No wildfire study in the PyHazards inventory used this network. WildfireSpreadTS's U-Net is
+    segmentation_models_pytorch's ResNet-18 U-Net (``resnet18_unet``), TS-SatFire's is MONAI's
+    residual-unit UNet (ported separately as ``unet3d``), and Shadrin et al. (2024) cite Ronneberger
+    et al. for a ResNet-18 U-Net with three encoder stages. ``unet`` is the reference architecture.
+paper:
+  title: "U-Net: Convolutional Networks for Biomedical Image Segmentation"
+  url: https://arxiv.org/abs/1505.04597
+  repo_url: https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/
+reproduction:
+  source: paper
+  reference_code: https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-release-2015-10-02.tar.gz
+  reference_commit: u-net-release-2015-10-02
+  reference_license: no license stated; fetched at test time only, nothing copied
+  reference_config: >
+    Paper Fig. 1 and Sections 2-3: 1 input channel, 2 classes, 572 x 572 input -> 388 x 388 output,
+    feature maps 568/280/136/64/28 on the contracting path and 52/100/196/388 on the expansive path.
+    The oracle test checks the released phseg_v5 network (``variant="phseg_v5"``): every layer of
+    phseg_v5-train.prototxt against the module of the same name, the release's patched Gaussian
+    weight filler, loading of phseg_v5.caffemodel with strict=True (31,100,354 parameters), and
+    outputs against OpenCV 4.10's Caffe runtime on a random 572 x 572 tile and on the first
+    444 x 892 tile of the release's sample image (max abs difference about 1e-5 for outputs up to 11).
+  parameter_count: 31030658
+  checks: [parameter_count, state_dict, forward, pretrained_weights]
+  oracle_test: tests/oracle/test_unet_oracle.py
+  deviations:
+    - >
+      The default follows the paper's Fig. 1 where it and the release differ: the release applies a
+      ReLU after every up-convolution and gives its last up-convolution 128 output channels instead
+      of 64 (31,100,354 instead of 31,030,658 parameters); ``variant="phseg_v5"`` reproduces it.
+    - >
+      Input sizes for which a 2x2 max-pooling would see an odd size raise ValueError: the paper
+      requires even sizes there (Sec. 2) and the release's tiling script only uses such sizes. On
+      other sizes the release's Caffe would still run, pooling in ceil mode and cropping with fixed
+      offsets, so its skip connections would be misaligned by half a pixel.
+    - >
+      ``padding="same"`` (zero-padded 3x3 convolutions, input divisible by 16, output size equal to
+      the input) is a PyHazards option for fixed-size wildfire tiles and is not in the paper.
+tasks:
+  - segmentation
+example: |
+  import torch
+  from pyhazards.models import build_model
+  from pyhazards.models.unet import unet_input_size, unet_output_size
+
+  # The paper's network: valid convolutions, 572 x 572 tile -> 388 x 388 two-class logits.
+  model = build_model(name="unet", task="segmentation", in_channels=1, out_channels=2).eval()
+  print(unet_output_size(572), unet_input_size(388))  # 388 572
+  with torch.no_grad():
+      print(model(torch.randn(1, 1, 572, 572)).shape)  # (1, 2, 388, 388)
+
+  # Same-size output for 64 x 64 wildfire tiles (not the paper's valid convolutions).
+  tiles = build_model(name="unet", task="segmentation", in_channels=12, out_channels=1, padding="same")
+  print(tiles(torch.randn(2, 12, 64, 64)).shape)  # (2, 1, 64, 64)
+notes:
+  - "Returns logits. The paper's energy function is a pixel-wise softmax with a weighted cross-entropy (class-balancing weights plus a border term with w0 = 10 and sigma = 5 pixels); the weight map depends on instance labels and is not part of the model."
+  - "Module names follow the Caffe layer names of the release (conv_d0a-b -> conv_d0a_b, upconv_d4c_u3a, ..., conv_u0d-score -> conv_u0d_score). The up-sampled map comes first in each concatenation, then the skip feature."
+  - "Dropout (p = 0.5, training only) follows the last ReLU of the 512- and 1024-channel levels. As in the release, where it is applied in place, the dropped-out 512-channel map also feeds the skip connection."
+  - "Weights are drawn from N(0, 2/n) with n the number of weights per output unit and biases start at zero, as in the release's patched Caffe filler. For the 2x2 up-convolutions this is n = 4 x output channels."
+  - "Training in the paper: SGD with momentum 0.99, one large tile per batch, elastic-deformation augmentation. Reported results: ISBI 2012 EM segmentation warping error 0.000353 and Rand error 0.0382; ISBI 2015 cell tracking IoU 0.9203 (PhC-U373) and 0.7756 (DIC-HeLa)."
+  - "The model takes (batch, channels, height, width); stack time steps into channels for multi-day wildfire input."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 1
+    channels: [4, 8, 16, 32, 64]
+  input:
+    kind: tensor
+    tensor:
+      shape: [1, 1, 220, 220]
+  expected_output:
+    kind: tensor
+    shape: [1, 2, 36, 36]

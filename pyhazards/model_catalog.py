@@ -136,7 +136,8 @@ class ReproductionSpec(BaseModel):
     """How the PyHazards implementation was checked against its source.
 
     ``source: code`` means it was compared with a pinned reference implementation by an oracle
-    test; ``source: paper`` means no code was released and the model was rebuilt from the paper.
+    test; ``source: paper`` means the model was rebuilt from the paper, either because no code was
+    released or because the released code may not be copied (it may still serve as an oracle).
     """
 
     source: Literal["code", "paper"] = "code"
@@ -1123,7 +1124,16 @@ def _render_reproduction(card: ModelCard) -> List[str]:
             ]
         )
         return lines
-    if spec.source == "paper":
+    if spec.source == "paper" and spec.reference_code:
+        lines.append(
+            "- **Reference implementation:** `{url} <{url}>`__ (``{commit}``, {license}); "
+            "not ported, the model is rebuilt from the paper and the release serves as a test oracle.".format(
+                url=spec.reference_code,
+                commit=_short_commit(spec.reference_commit or "unversioned"),
+                license=spec.reference_license or "license unknown",
+            )
+        )
+    elif spec.source == "paper":
         lines.append("- **Reference implementation:** none released; rebuilt from the paper.")
     else:
         lines.append(

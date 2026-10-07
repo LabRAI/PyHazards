@@ -1,0 +1,4 @@
+# Reference runtime for tests/oracle/test_unet_oracle.py: OpenCV's Caffe importer (Apache-2.0) runs
+# the authors' released Caffe U-Net. OpenCV 5 removed the Caffe importer, so this pins the 4.x
+# release the test was written against.
+opencv-python-headless==4.10.0.84

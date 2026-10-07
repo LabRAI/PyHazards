@@ -51,6 +51,8 @@ linked_models:
   - attention_unet
   - tcn
   - earthformer
+  - unet
+  - deeplabv3
   - forefire
   - wrf_sfire
   - firecastnet
