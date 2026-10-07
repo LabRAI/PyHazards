@@ -97,7 +97,7 @@ def test_unknown_baseline_raises():
 
 def test_reproduction_metadata_points_at_existing_oracle_tests():
     for card in load_model_cards():
-        if card.reproduction is None:
+        if card.reproduction is None or card.reproduction.oracle_test is None:
             continue
         assert (REPO_ROOT / card.reproduction.oracle_test).exists(), card.model_name
 

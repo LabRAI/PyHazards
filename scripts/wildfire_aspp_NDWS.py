@@ -27,11 +27,7 @@ import torch
 import torch.nn as nn
 import lightning.pytorch as pl
 from torch.utils.data import DataLoader, Dataset, WeightedRandomSampler
-from pyhazards.models.wildfire_aspp import WildfireASPP, TverskyLoss
-
-# ✅ Use the PyHazards model registry
 from pyhazards.models import build_model
-# keep your loss
 from pyhazards.models.wildfire_aspp import TverskyLoss
 
 
@@ -282,14 +278,10 @@ class WildfireLitModule(pl.LightningModule):
 
         # ✅ build from registry (your CNN+ASPP implemented in PyHazards)
         self.model = build_model(
-            name="wildfire_cnn_aspp",
+            name="wildfire_aspp",
             task="segmentation",
             in_channels=int(in_channels),
-            base_channels=32,
-            aspp_channels=32,
-            dilations=(1, 3, 6, 12),
-            dropout=0.0,
-            )
+        )
 
         capped = min(float(pos_weight_value), 25.0)
         self.register_buffer("pos_weight", torch.tensor([capped], dtype=torch.float32))
@@ -475,9 +467,10 @@ def main():
     ap.add_argument("--num_workers", type=int, default=0)
     ap.add_argument("--lr", type=float, default=4e-4)
 
-    ap.add_argument("--loss", type=str, default="bce_tversky", choices=["bce", "tversky", "bce_tversky"])
-    ap.add_argument("--tversky_alpha", type=float, default=0.8)
-    ap.add_argument("--tversky_beta", type=float, default=0.2)
+    # Marjani et al. (2024) train with the Tversky loss only: 0.7 on false negatives, 0.3 on false positives.
+    ap.add_argument("--loss", type=str, default="tversky", choices=["bce", "tversky", "bce_tversky"])
+    ap.add_argument("--tversky_alpha", type=float, default=0.3, help="weight on false positives")
+    ap.add_argument("--tversky_beta", type=float, default=0.7, help="weight on false negatives")
 
     ap.add_argument("--use_pos_weight", action="store_true", help="Use BCE pos_weight (often hurts precision)")
     ap.add_argument("--bce_weight", type=float, default=0.5)

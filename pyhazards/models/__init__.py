@@ -276,13 +276,7 @@ register_model(
 register_model(
     "wildfire_cnn_aspp",
     cnn_aspp_builder,
-    defaults={
-        "in_channels": 12,
-        "base_channels": 32,
-        "aspp_channels": 32,
-        "dilations": (1, 3, 6, 12),
-        "dropout": 0.0,
-    },
+    defaults={"in_channels": 12, "dilations": (1, 3, 6, 12)},
 )
 
 register_model(

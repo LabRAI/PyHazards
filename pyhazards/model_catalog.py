@@ -133,16 +133,38 @@ REPRODUCTION_CHECKS = {
 
 
 class ReproductionSpec(BaseModel):
-    """How the PyHazards implementation was checked against the reference code."""
+    """How the PyHazards implementation was checked against its source.
 
-    reference_code: str
-    reference_commit: str
-    reference_license: str
+    ``source: code`` means it was compared with a pinned reference implementation by an oracle
+    test; ``source: paper`` means no code was released and the model was rebuilt from the paper.
+    """
+
+    source: Literal["code", "paper"] = "code"
+    reference_code: Optional[str] = None
+    reference_commit: Optional[str] = None
+    reference_license: Optional[str] = None
     reference_config: str
     parameter_count: Optional[int] = None
-    checks: List[Literal["parameter_count", "initialization", "state_dict", "forward", "pretrained_weights"]]
-    oracle_test: str
+    checks: List[Literal["parameter_count", "initialization", "state_dict", "forward", "pretrained_weights"]] = Field(
+        default_factory=list
+    )
+    oracle_test: Optional[str] = None
     deviations: List[str] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def validate_source(self) -> "ReproductionSpec":
+        if self.source == "code":
+            missing = [
+                name
+                for name in ("reference_code", "reference_commit", "reference_license", "oracle_test")
+                if not getattr(self, name)
+            ]
+            if missing or not self.checks:
+                raise ValueError(
+                    "reproduction with source 'code' needs reference_code, reference_commit, "
+                    "reference_license, oracle_test and checks"
+                )
+        return self
 
 
 class SmokeTensorSpec(BaseModel):
@@ -1101,24 +1123,28 @@ def _render_reproduction(card: ModelCard) -> List[str]:
             ]
         )
         return lines
-    lines.extend(
-        [
+    if spec.source == "paper":
+        lines.append("- **Reference implementation:** none released; rebuilt from the paper.")
+    else:
+        lines.append(
             "- **Reference implementation:** `{url} <{url}>`__ at ``{commit}`` ({license})".format(
                 url=spec.reference_code,
                 commit=_short_commit(spec.reference_commit),
                 license=spec.reference_license,
-            ),
-            "- **Checked configuration:** {config}".format(config=_single_line(spec.reference_config)),
-        ]
-    )
+            )
+        )
+    label = "Paper configuration" if spec.source == "paper" else "Checked configuration"
+    lines.append("- **{label}:** {config}".format(label=label, config=_single_line(spec.reference_config)))
     if spec.parameter_count is not None:
         lines.append("- **Parameter count:** {count:,}".format(count=spec.parameter_count))
-    lines.append(
-        "- **Verified:** {checks}".format(
-            checks=", ".join(REPRODUCTION_CHECKS[check] for check in spec.checks)
+    if spec.checks:
+        lines.append(
+            "- **Verified:** {checks}".format(
+                checks=", ".join(REPRODUCTION_CHECKS[check] for check in spec.checks)
+            )
         )
-    )
-    lines.append("- **Oracle test:** ``{path}``".format(path=spec.oracle_test))
+    if spec.oracle_test:
+        lines.append("- **Oracle test:** ``{path}``".format(path=spec.oracle_test))
     for deviation in spec.deviations:
         lines.append("- **Deviation:** {text}".format(text=_single_line(deviation)))
     lines.append("")

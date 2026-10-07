@@ -374,7 +374,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-entry-summary
 
-               An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction.
+               A fully convolutional network with an atrous spatial pyramid of four dilation rates for next-day wildfire spread on Next Day Wildfire Spread tiles.
 
             .. container:: catalog-chip-row
 
@@ -394,7 +394,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-link-row
 
-               **Paper:** `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_
+               **Paper:** `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread: An ASPP-Enabled CNN Approach <https://doi.org/10.1109/LGRS.2024.3417624>`_
 
 
    .. tab-item:: Earthquake
