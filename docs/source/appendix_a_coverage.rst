@@ -278,6 +278,10 @@ part of the current core method set.
      - ``variant``
      - :doc:`CNN-ASPP <modules/models_wildfire_aspp>`
      - Implemented outside the current core method set and kept public as an additional model.
+   * - Wildfire
+     - ``variant``
+     - :doc:`U-Net <modules/models_unet>`
+     - Implemented outside the current core method set and kept public as an additional model.
    * - Earthquake
      - ``variant``
      - :doc:`WaveCastNet <modules/models_wavecastnet>`

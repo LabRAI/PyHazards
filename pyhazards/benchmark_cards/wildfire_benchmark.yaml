@@ -50,6 +50,8 @@ linked_models:
   - swin_unet
   - attention_unet
   - tcn
+  - unet
+  - deeplabv3
   - forefire
   - wrf_sfire
   - firecastnet

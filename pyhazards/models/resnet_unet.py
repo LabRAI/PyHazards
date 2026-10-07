@@ -81,7 +81,41 @@ class ResNetEncoder(nn.Module):
                 nn.init.constant_(m.weight, 1)
                 nn.init.constant_(m.bias, 0)
         self.out_channels = [3, 64, 64, 128, 256, 512][: depth + 1]
+        self._output_stride = 32
         self.set_in_channels(in_channels, pretrained=False)
+
+    @property
+    def output_stride(self) -> int:
+        return min(self._output_stride, 2**self.depth)
+
+    def load_imagenet_weights(self) -> None:
+        """Load the torchvision ImageNet checkpoint that smp uses (needs a 3-channel stem)."""
+        state = torch.hub.load_state_dict_from_url(RESNET_IMAGENET_URLS[self.name], progress=False)
+        state.pop("fc.weight", None)
+        state.pop("fc.bias", None)
+        self.load_state_dict(state)
+
+    def make_dilated(self, output_stride: int) -> None:
+        """Trade the strides of the last stages for dilation, as smp's ``EncoderMixin.make_dilated``.
+
+        Every convolution of ``layer4`` (output stride 16), or of ``layer3`` and ``layer4`` (output
+        stride 8), gets stride 1 and dilation 2 / 4, including the first block's convolution and
+        its 1x1 shortcut (torchvision keeps the previous dilation there; smp does not).
+        """
+        if output_stride == 16:
+            stages, rates = [self.layer4], [2]
+        elif output_stride == 8:
+            stages, rates = [self.layer3, self.layer4], [2, 4]
+        else:
+            raise ValueError(f"output_stride must be 8 or 16, got {output_stride}")
+        self._output_stride = output_stride
+        for stage, rate in zip(stages, rates):
+            for module in stage.modules():
+                if isinstance(module, nn.Conv2d):
+                    module.stride = (1, 1)
+                    module.dilation = (rate, rate)
+                    kh, _ = module.kernel_size
+                    module.padding = ((kh // 2) * rate, (kh // 2) * rate)  # smp uses kh for both axes
 
     def _make_layer(self, planes: int, blocks: int, stride: int = 1) -> nn.Sequential:
         downsample = None
@@ -210,10 +244,7 @@ class ResNetUNet(nn.Module):
         if encoder_weights is not None:
             if encoder_weights != "imagenet":
                 raise ValueError(f"encoder_weights must be None or 'imagenet', got {encoder_weights!r}")
-            state = torch.hub.load_state_dict_from_url(RESNET_IMAGENET_URLS[encoder_name], progress=False)
-            state.pop("fc.weight", None)
-            state.pop("fc.bias", None)
-            self.encoder.load_state_dict(state)
+            self.encoder.load_imagenet_weights()
         self.encoder.set_in_channels(in_channels, pretrained=encoder_weights is not None)
         self.in_channels = int(in_channels)
         self.output_stride = 2 ** encoder_depth

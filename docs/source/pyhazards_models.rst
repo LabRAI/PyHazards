@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         34
+         36
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         35
+         37
 
       .. container:: catalog-stat-note
 
@@ -156,6 +156,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Convolutional LSTM Network: A Machine Learning Approach for Precipitation Nowcasting <https://arxiv.org/abs/1506.04214>`_ | **Repo:** `Repository <https://github.com/VSainteuf/utae-paps>`__
+
+         .. grid-item-card:: DeepLabV3
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               DeepLabV3 (Chen et al., 2017) as implemented by segmentation_models_pytorch: a dilated ResNet encoder, atrous spatial pyramid pooling with image-level features, and bilinear up-sampling, configured as the DeepLabV3 baseline of Shadrin et al. (2024) for multi-day wildfire spread.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`DeepLabV3 <modules/models_deeplabv3>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Rethinking Atrous Convolution for Semantic Image Segmentation <https://arxiv.org/abs/1706.05587>`_ | **Repo:** `Repository <https://github.com/tensorflow/models/tree/master/research/deeplab>`__
 
          .. grid-item-card:: DNN-LSTM-AutoEncoder
             :class-card: catalog-entry-card
@@ -529,6 +552,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread: An ASPP-Enabled CNN Approach <https://doi.org/10.1109/LGRS.2024.3417624>`_
+
+         .. grid-item-card:: U-Net
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The original U-Net of Ronneberger et al. (MICCAI 2015): a contracting and an expansive path of unpadded 3x3 convolutions joined by centre-cropped skip connections, without batch normalisation.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`U-Net <modules/models_unet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `U-Net: Convolutional Networks for Biomedical Image Segmentation <https://arxiv.org/abs/1505.04597>`_ | **Repo:** `Repository <https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/>`__
 
 
    .. tab-item:: Earthquake
@@ -1168,6 +1214,7 @@ before selecting a model for evaluation.
    modules/models_asufm
    modules/models_attention_unet
    modules/models_convlstm
+   modules/models_deeplabv3
    modules/models_eqnet
    modules/models_eqtransformer
    modules/models_firecastnet
@@ -1194,6 +1241,7 @@ before selecting a model for evaluation.
    modules/models_tcn
    modules/models_tropicalcyclone_mlp
    modules/models_tropicyclonenet
+   modules/models_unet
    modules/models_urbanfloodcast
    modules/models_utae
    modules/models_wavecastnet

@@ -1,0 +1,115 @@
+model_name: deeplabv3
+display_name: DeepLabV3
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/deeplabv3.py
+builder_name: deeplabv3_builder
+summary: >
+  DeepLabV3 (Chen et al., 2017) as implemented by segmentation_models_pytorch: a dilated ResNet
+  encoder, atrous spatial pyramid pooling with image-level features, and bilinear up-sampling,
+  configured as the DeepLabV3 baseline of Shadrin et al. (2024) for multi-day wildfire spread.
+description:
+  - >
+    ``deeplabv3`` runs a ResNet encoder at output stride 8 (the strides of ``layer3`` and
+    ``layer4`` replaced by dilation 2 and 4) and applies atrous spatial pyramid pooling to its
+    deepest feature: a 1x1 branch, three 3x3 atrous branches at rates 12, 24 and 36 and an
+    image-pooling branch, each with 256 filters, batch normalisation and ReLU, concatenated and
+    projected by a 1x1 convolution with dropout 0.5. A 3x3 convolution, a 1x1 classifier and
+    bilinear up-sampling by 8 return logits at the input resolution.
+  - >
+    The implementation reproduced is ``segmentation_models_pytorch.DeepLabV3`` (smp 0.3.2; the
+    code path is identical from 0.2.0 to 0.3.4), because Shadrin et al. describe their models
+    in smp's terms ("encoder backbone ResNet18, number of stages used in encoder equals to 3 ...
+    default values for the other hyperparameters") and report smp's ``micro-imagewise`` metric
+    reduction. It is ported to plain PyTorch with smp's parameter names, creation order and
+    initialisation, so smp state dicts load with ``strict=True``; ``encoder_weights="imagenet"``
+    loads the ImageNet ResNet and adapts the stem to the input channels the way smp does.
+  - >
+    The builder defaults are Shadrin et al.'s configuration: ResNet-18 with three encoder stages
+    and 58 input channels (the 3-day horizon), on 32 x 32 tiles. With three stages the ASPP runs on
+    the 128-channel, stride-8 output of ``layer2``; smp still builds (and dilates) ``layer3`` and
+    ``layer4``, whose 10,493,440 parameters are kept for state-dict compatibility although the
+    forward pass never uses them. The ``DeepLabV3`` class itself defaults to smp's ResNet-34 with
+    five stages.
+paper:
+  title: "Rethinking Atrous Convolution for Semantic Image Segmentation"
+  url: https://arxiv.org/abs/1706.05587
+  repo_url: https://github.com/tensorflow/models/tree/master/research/deeplab
+references:
+  - title: "Wildfire spreading prediction using multimodal data and deep neural network approach"
+    url: https://doi.org/10.1038/s41598-024-52821-x
+    note: >
+      Shadrin et al., Scientific Reports 14:2606 (2024). DeepLabV3 with "encoder backbone ResNet18,
+      number of stages used in encoder equals to 3 ... default values for the other hyperparameters"
+      (smp defaults: 256 ASPP channels, output stride 8, rates 12/24/36, ImageNet encoder weights),
+      compared with U-Net, U-Net++ and MA-Net. 947 fires of 2021-2022 in Krasnoyarsk, Irkutsk and
+      Sakha, split 4:1. Input: 32 x 32 tiles (21 x 21 km at 650 m around the ignition point; the
+      data are first resampled to 128 x 128 at 0.0059435 degrees) with one ignition layer, 21 static
+      layers (17 land-cover masks, elevation, aspect, slope, population), 6 MODIS vegetation layers
+      and 10 ERA5-Land/MODIS weather layers per forecast day: 58 channels for 3 days, 78 for 5.
+      Target: burned-area mask. F1 for the day-3 forecast (micro-imagewise, Table 3) with BCE 0.64,
+      Dice 0.66, focal 0.63, Dice + focal 0.65, generalized Dice 0.66 and Tversky 0.66 (+- 0.004 to
+      0.006); the selected MA-Net reaches 0.67. Only MA-Net's training setup is given (Adam, lr 3e-3,
+      L2 1e-5, OneCycleLR, 35 epochs, batch 32). No code was released; data on request.
+reproduction:
+  reference_code: https://github.com/qubvel-org/segmentation_models.pytorch
+  reference_commit: v0.3.2
+  reference_license: MIT (the ASPP/decoder file is from torchvision, BSD-3-Clause)
+  reference_config: >
+    smp.DeepLabV3(encoder_name="resnet18", encoder_depth=3, encoder_weights=None, in_channels=58,
+    classes=1) on 2 x 58 x 32 x 32 inputs (Shadrin et al.), plus smp's defaults (ResNet-34, five
+    stages, 26,007,105 parameters), ResNet-18 with four and five stages, and the ImageNet-initialised
+    58-channel stem. The decoder and 1x1 classifier are also checked against torchvision's DeepLabHead.
+  parameter_count: 13220609
+  checks: [parameter_count, initialization, state_dict, forward, pretrained_weights]
+  oracle_test: tests/oracle/test_deeplabv3_oracle.py
+  deviations:
+    - >
+      ``encoder_weights`` defaults to None, so building the model downloads nothing; smp's default
+      (which Shadrin et al. kept) is "imagenet". Pass ``encoder_weights="imagenet"`` to match it.
+    - >
+      Inputs whose height or width is not divisible by the output stride raise ValueError instead
+      of smp's RuntimeError, and ``encoder_depth`` outside smp's documented range [3, 5] raises
+      ValueError (smp builds such a model, but its fixed x8 up-sampling then no longer restores the
+      input size).
+tasks:
+  - segmentation
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  # Shadrin et al. (2024): ResNet-18, three encoder stages, 58 channels for a 3-day horizon.
+  model = build_model(name="deeplabv3", task="segmentation", in_channels=58)
+  logits = model(torch.randn(2, 58, 32, 32))
+  print(logits.shape)  # (2, 1, 32, 32)
+
+  # smp's own defaults (ResNet-34, five stages); encoder_weights="imagenet" downloads ImageNet weights.
+  smp_default = build_model(name="deeplabv3", task="segmentation", in_channels=3,
+                            encoder_name="resnet34", encoder_depth=5)
+notes:
+  - >
+    smp's DeepLabV3 differs from the paper's network: it keeps output stride 8 throughout (the
+    paper trains at 16 with rates 6/12/18 and evaluates at 8 with 12/24/36), has no multi-grid,
+    dilates every convolution of the dilated stages including the first block's (torchvision keeps
+    the previous dilation there), adds a 3x3 convolution after the ASPP and dropout 0.5 in the
+    projection (both from torchvision), uses ResNet-18/34 rather than ResNet-50/101, and up-samples
+    the logits with align_corners=True.
+  - >
+    On Shadrin et al.'s 32 x 32 tiles with three encoder stages the ASPP sees 4 x 4 features, so the
+    rate-12/24/36 branches reach only padding outside their centre tap and act as 1x1 convolutions
+    (the degenerate case discussed in the DeepLabV3 paper).
+  - "smp 0.3.x never calls its initialize() for DeepLabV3, so the decoder and head keep PyTorch's default initialisation; the port does the same."
+  - "The image-pooling branch has batch normalisation on a 1 x 1 map, so training needs a batch size above 1, as in smp and torchvision."
+  - "Height and width must be divisible by 8. Encoders: resnet18 and resnet34. smp's auxiliary classification head (aux_params) and output activation are not ported."
+  - "This is DeepLabV3, not DeepLabV3+; no wildfire paper in the PyHazards inventory used V3+."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 6
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 6, 32, 32]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 32, 32]

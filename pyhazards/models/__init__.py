@@ -4,6 +4,7 @@ from .attention_unet import AttentionUnet, TemporalAttentionUnet, attention_unet
 from .builder import build_model, default_builder
 from .cnn_aspp import WildfireCNNASPP, cnn_aspp_builder
 from .convlstm import ConvLSTM, ConvLSTMCell, ConvLSTMSegmenter, convlstm_builder
+from .deeplabv3 import DeepLabV3, deeplabv3_builder
 from .eqnet import EQNet, eqnet_builder
 from .eqtransformer import EQTransformer, eqtransformer_builder
 from .firecastnet import FireCastNet, firecastnet_builder
@@ -33,6 +34,7 @@ from .tcif_fusion import TCIFFusion, tcif_fusion_builder
 from .tcn import TCN, TemporalConvNet, tcn_builder
 from .tropicalcyclone_mlp import TropicalCycloneMLP, tropicalcyclone_mlp_builder
 from .tropicyclonenet import TropiCycloneNet, tropicyclonenet_builder
+from .unet import UNet, unet_builder
 from .urbanfloodcast import UrbanFloodCast, urbanfloodcast_builder
 from .utae import UTAE, utae_builder
 from .wavecastnet import (
@@ -142,6 +144,10 @@ __all__ = [
     "logistic_regression_builder",
     "ResNetUNet",
     "resnet18_unet_builder",
+    "UNet",
+    "unet_builder",
+    "DeepLabV3",
+    "deeplabv3_builder",
     "SegFormer",
     "segformer_builder",
     "UTAE",
@@ -257,6 +263,19 @@ register_model(
     "resnet18_unet",
     resnet18_unet_builder,
     defaults={"out_channels": 1, "history": 1, "encoder_name": "resnet18", "encoder_weights": None},
+)
+
+register_model(
+    "unet",
+    unet_builder,
+    defaults={"in_channels": 1, "out_channels": 2, "padding": "valid", "dropout": 0.5, "variant": "paper"},
+)
+
+register_model(
+    "deeplabv3",
+    deeplabv3_builder,
+    # Shadrin et al. (2024): smp DeepLabV3, ResNet-18 encoder with three stages, 58 channels for day 3.
+    defaults={"in_channels": 58, "out_channels": 1, "encoder_name": "resnet18", "encoder_depth": 3, "encoder_weights": None},
 )
 
 register_model(
