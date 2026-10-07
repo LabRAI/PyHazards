@@ -2,12 +2,15 @@
 
 The oracle tests are skipped unless ``PYHAZARDS_ORACLE_DIR`` points at a directory filled by
 ``scripts/fetch_oracles.py``. With ``PYHAZARDS_ORACLE_REQUIRED=1`` (the Oracle CI workflow) a
-missing reference fails the test instead.
+missing reference fails the test instead. Multi-GB assets (``large: true`` in repos.yaml) are not
+fetched in CI: tests that need them skip when the asset is absent, unless
+``PYHAZARDS_ORACLE_LARGE=1`` makes them mandatory too.
 """
 
 from __future__ import annotations
 
 import importlib
+import importlib.metadata
 import os
 import subprocess
 import sys
@@ -54,6 +57,17 @@ def oracle_asset(name: str) -> Path:
     return path
 
 
+def oracle_large_asset(name: str) -> Path:
+    """Path of a ``large: true`` asset; skipped when absent unless ``PYHAZARDS_ORACLE_LARGE=1``."""
+    path = oracle_dir() / name
+    if not path.exists():
+        reason = f"large oracle asset {name!r} is missing; run scripts/fetch_oracles.py {name}"
+        if os.environ.get("PYHAZARDS_ORACLE_LARGE") == "1":
+            pytest.fail(reason)
+        pytest.skip(reason)
+    return path
+
+
 def import_from(root: Path, module: str) -> ModuleType:
     """Import ``module`` with ``root`` on sys.path, then drop it from sys.modules.
 
@@ -71,12 +85,18 @@ def import_from(root: Path, module: str) -> ModuleType:
                 del sys.modules[name]
 
 
-def oracle_package(name: str, version: str) -> ModuleType:
-    """Import a pip-installed reference package at an exact version (see requirements.txt)."""
+def oracle_package(name: str, version: str, requirements: str = "requirements.txt") -> ModuleType:
+    """Import a pip-installed reference package at an exact version (see ``requirements``)."""
     try:
         module = importlib.import_module(name)
     except ImportError:
-        missing(f"{name} is not installed; pip install -r tests/oracle/requirements.txt")
-    if getattr(module, "__version__", None) != version:
-        missing(f"needs {name}=={version}, found {getattr(module, '__version__', None)}")
+        missing(f"{name} is not installed; pip install -r tests/oracle/{requirements}")
+    found = getattr(module, "__version__", None)
+    if found is None:
+        try:
+            found = importlib.metadata.version(name)
+        except importlib.metadata.PackageNotFoundError:
+            pass
+    if found != version:
+        missing(f"needs {name}=={version}, found {found}")
     return module

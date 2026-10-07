@@ -4,6 +4,8 @@ usage: python scripts/fetch_oracles.py [--dest DIR] [NAME ...]
 
 DIR defaults to $PYHAZARDS_ORACLE_DIR, then ~/.cache/pyhazards-oracles. Git repositories are
 checked out at the pinned commit; assets are downloaded and verified against their sha256.
+Assets marked ``large: true`` (multi-GB checkpoints) are fetched only when named explicitly or
+with ``--large``; the tests that need them are skipped when they are absent.
 Run the oracle tests afterwards with ``PYHAZARDS_ORACLE_DIR=DIR python -m pytest tests/oracle``.
 """
 
@@ -77,7 +79,8 @@ def fetch_asset(dest: Path, name: str, url: str, sha256: str, extract: bool = Fa
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("names", nargs="*", help="repos/assets to fetch (default: all)")
+    parser.add_argument("names", nargs="*", help="repos/assets to fetch (default: all but large assets)")
+    parser.add_argument("--large", action="store_true", help="also fetch assets marked large: true")
     parser.add_argument(
         "--dest",
         default=os.environ.get("PYHAZARDS_ORACLE_DIR", str(Path.home() / ".cache" / "pyhazards-oracles")),
@@ -96,7 +99,7 @@ def main(argv=None) -> int:
         if not wanted or name in wanted:
             fetch_repo(dest, name, spec["url"], spec["commit"])
     for name, spec in manifest.get("assets", {}).items():
-        if not wanted or name in wanted:
+        if name in wanted or (not wanted and (args.large or not spec.get("large", False))):
             fetch_asset(dest, name, spec["url"], spec["sha256"], spec.get("extract", False))
     print(f"oracles in {dest}")
     return 0

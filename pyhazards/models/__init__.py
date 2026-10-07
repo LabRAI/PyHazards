@@ -21,6 +21,9 @@ from .neuralhydrology_ealstm import NeuralHydrologyEALSTM, neuralhydrology_ealst
 from .neuralhydrology_lstm import NeuralHydrologyLSTM, neuralhydrology_lstm_builder
 from .pangu_tc import PanguTC, pangu_tc_builder
 from .phasenet import PhaseNet, phasenet_builder
+from .prithvi import PrithviMAE, PrithviSegmentation, PrithviViT
+from .prithvi_burnscars import prithvi_burnscars_builder
+from .prithvi_eo_2_tl import prithvi_eo_2_tl_builder
 from .registry import available_models, register_model
 from .resnet_unet import ResNetUNet, resnet18_unet_builder
 from .saf_net import SAFNet, saf_net_builder
@@ -98,6 +101,11 @@ __all__ = [
     "pangu_tc_builder",
     "PhaseNet",
     "phasenet_builder",
+    "PrithviMAE",
+    "PrithviSegmentation",
+    "PrithviViT",
+    "prithvi_burnscars_builder",
+    "prithvi_eo_2_tl_builder",
     "SAFNet",
     "saf_net_builder",
     "TCIFFusion",
@@ -295,6 +303,18 @@ register_model(
         "readout": "last",
         "head_init": "normal",
     },
+)
+
+register_model(
+    "prithvi_burnscars",
+    prithvi_burnscars_builder,
+    defaults={"in_channels": 6, "num_classes": 2, "pretrained": False},
+)
+
+register_model(
+    "prithvi_eo_2_tl",
+    prithvi_eo_2_tl_builder,
+    defaults={"variant": "300m", "in_channels": 6, "num_classes": 2, "num_frames": 1, "pretrained": False},
 )
 
 register_model(

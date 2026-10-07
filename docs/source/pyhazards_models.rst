@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         32
+         34
 
       .. container:: catalog-stat-note
 
@@ -256,6 +256,44 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ | **Repo:** `Repository <https://github.com/SebastianGer/WildfireSpreadTS>`__
+
+         .. grid-item-card:: Prithvi-EO-2.0 BurnScars
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The IBM/NASA Prithvi-EO-2.0-300M foundation model fine-tuned to segment burn scars in single HLS scenes (post-fire burned-area mapping), with the official weights.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Prithvi-EO-2.0 BurnScars <modules/models_prithvi_burnscars>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Prithvi-EO-2.0: A Versatile Multi-Temporal Foundation Model for Earth Observation Applications <https://arxiv.org/abs/2412.02732>`_ | **Repo:** `Repository <https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars>`__
+
+         .. grid-item-card:: Prithvi-EO-2.0-TL
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Prithvi-EO-2.0 Earth-observation foundation-model encoder with time and location embeddings (300M or 600M, official pretrained weights), wrapped in the official burn-scar segmentation head for fine-tuning.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Prithvi-EO-2.0-TL <modules/models_prithvi_eo_2_tl>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Prithvi-EO-2.0: A Versatile Multi-Temporal Foundation Model for Earth Observation Applications <https://arxiv.org/abs/2412.02732>`_ | **Repo:** `Repository <https://github.com/NASA-IMPACT/Prithvi-EO-2.0>`__
 
          .. grid-item-card:: ResNet-18 U-Net
             :class-card: catalog-entry-card
@@ -1146,6 +1184,8 @@ before selecting a model for evaluation.
    modules/models_neuralhydrology_lstm
    modules/models_pangu_tc
    modules/models_phasenet
+   modules/models_prithvi_burnscars
+   modules/models_prithvi_eo_2_tl
    modules/models_resnet18_unet
    modules/models_saf_net
    modules/models_segformer

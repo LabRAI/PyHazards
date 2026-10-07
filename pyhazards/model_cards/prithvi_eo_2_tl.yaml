@@ -1,0 +1,131 @@
+model_name: prithvi_eo_2_tl
+display_name: Prithvi-EO-2.0-TL
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/prithvi_eo_2_tl.py
+builder_name: prithvi_eo_2_tl_builder
+summary: >
+  Prithvi-EO-2.0 Earth-observation foundation-model encoder with time and location embeddings
+  (300M or 600M, official pretrained weights), wrapped in the official burn-scar segmentation head
+  for fine-tuning.
+description:
+  - >
+    Prithvi-EO-2.0 (IBM, NASA and Julich Supercomputing Centre) is a ViT masked autoencoder pretrained
+    on 4.2M Harmonized Landsat Sentinel-2 samples of four time steps. The TL variants add sin/cos
+    encodings of each frame's acquisition date (year, day of year) and of the scene's latitude and
+    longitude, each multiplied by a learned scale, to the patch tokens. ``prithvi_eo_2_tl`` ports the
+    official ``prithvi_mae.py`` encoder; ``pretrained=True`` loads the released 300M-TL (ViT-L/16) or
+    600M-TL (ViT-H/14) weights, downloaded from Hugging Face on first use and never bundled.
+  - >
+    Because PyHazards builders return a task model, the encoder is wrapped in the segmentation recipe
+    of the official Prithvi-EO-2.0 burn-scar fine-tune (TerraTorch EncoderDecoderFactory: four encoder
+    blocks at the per-size indices of the official configs, a learned feature pyramid, a U-Net
+    decoder and a 1x1 head). Only the encoder is pretrained; the neck, decoder and head are randomly
+    initialised and need fine-tuning. Inputs are ``(B, C, T, H, W)`` with optional
+    ``temporal_coords`` ``(B, T, 2)`` and ``location_coords`` ``(B, 2)``; with ``num_frames`` T > 1
+    the frames are stacked along channels as in the official multi-temporal configs.
+    ``model.encoder.forward_features`` returns the raw tokens of every block, and
+    ``pyhazards.models.PrithviMAE`` is the full autoencoder for reconstruction.
+paper:
+  title: "Prithvi-EO-2.0: A Versatile Multi-Temporal Foundation Model for Earth Observation Applications"
+  url: https://arxiv.org/abs/2412.02732
+  repo_url: https://github.com/NASA-IMPACT/Prithvi-EO-2.0
+references:
+  - title: "Prithvi-EO-2.0-300M-TL (model card)"
+    url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL
+    note: >
+      The released 300M-TL pretraining checkpoint and prithvi_mae.py (Apache-2.0): 224 x 224 crops of
+      four frames, 6 HLS bands, patch 1x16x16, mask ratio 0.75, time and location encodings with
+      learned scales. The 600M-TL checkpoint is ibm-nasa-geospatial/Prithvi-EO-2.0-600M-TL.
+  - title: "Prithvi-EO-2.0-300M-BurnScars (model card)"
+    url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars
+    note: >
+      Source of the segmentation head recipe (SelectIndices, ReshapeTokensToImage,
+      LearnedInterpolateToPyramidal, UNetDecoder [512, 256, 128, 64]); that checkpoint uses the
+      non-TL 300M encoder and is available as prithvi_burnscars.
+  - title: "Prithvi-EO-2.0-300M-TL-Sen1Floods11 (model card)"
+    url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL-Sen1Floods11
+    note: >
+      Official flood-mapping fine-tune of the 300M-TL encoder with a UperNet decoder (not ported).
+      The paper reports Sen1Floods11 test mIoU 90.0 and water IoU 82.6 for 300M-TL, 90.3 and 83.1
+      for 600M-TL (Table IV).
+reproduction:
+  reference_code: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL
+  reference_commit: 63adbd39c271da4c42f447e69b1a7c91a338cdc9
+  reference_license: Apache-2.0
+  reference_config: >
+    prithvi_mae.py PrithviMAE with the 300M-TL config.json (ViT-L 1024/24/16, decoder 512/8/16, 4
+    frames) loaded strictly with the official Prithvi_EO_V2_300M_TL.pt (sha256 3629cedf...):
+    identical loss, reconstructions and masks with and without coordinates (330,419,716 parameters).
+    The registry model's encoder (303,886,338 parameters) loaded from the same file matches TerraTorch
+    0.99.8's prithvi_eo_v2_300_tl backbone, and the full model matches TerraTorch's
+    EncoderDecoderFactory with the burn-scar recipe at random initialisation, for one and three
+    frames. The 600M-TL architecture is checked against TerraTorch at reduced depth.
+  parameter_count: 324204676
+  checks: [parameter_count, initialization, state_dict, forward, pretrained_weights]
+  oracle_test: tests/oracle/test_prithvi_oracle.py
+  deviations:
+    - >
+      When the position table has to be rebuilt for a different number of frames (more than one) and
+      resized, prithvi_mae.py fails on a ``view`` of a non-contiguous tensor; the port uses
+      ``reshape`` (as later TerraTorch releases do).
+    - >
+      Integer temporal or location coordinates are converted to float; the reference asserts a
+      float dtype.
+    - >
+      TerraTorch 0.99.8's PixelWiseModel cannot pad 5-D input, so multi-temporal segmentation is
+      checked module by module (encoder, necks, decoder, head) against the reference. Padding,
+      non-square inputs and num_classes=1 follow prithvi_burnscars (same deviations).
+    - >
+      The registry model loads the encoder part of the pretraining checkpoint and, like TerraTorch,
+      rebuilds the fixed sin/cos position table for its own frame count instead of copying the
+      checkpoint's; the stored table equals the rebuilt one up to float32 rounding (4.6e-7).
+tasks:
+  - segmentation
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  # Pretrained 300M-TL encoder (about 1.3 GB, downloaded once) + burn-scar head to fine-tune.
+  model = build_model(name="prithvi_eo_2_tl", task="segmentation", num_frames=2, pretrained=True)
+  x = torch.randn(1, 6, 2, 224, 224)                            # (B, C, T, H, W), standardised HLS bands
+  temporal_coords = torch.tensor([[[2020.0, 150], [2020.0, 250]]])  # (year, day of year) per frame
+  location_coords = torch.tensor([[37.5, -120.0]])               # (latitude, longitude)
+  logits = model(x, temporal_coords=temporal_coords, location_coords=location_coords)
+  print(logits.shape)  # (1, 2, 224, 224)
+notes:
+  - >
+    Pretraining normalisation: HLS digital numbers standardised with PRITHVI_EO_V2_MEAN and
+    PRITHVI_EO_V2_STD (pyhazards.models.prithvi), bands Blue, Green, Red, NIR narrow, SWIR 1, SWIR 2.
+    Coordinates are optional; the encodings were randomly dropped during pretraining.
+  - >
+    variant="600m" selects the 600M-TL encoder (patch 14, blocks 8/16/24/32 feed the head). Its
+    weights are pinned by revision and sha256 but were not downloaded for the oracle comparison;
+    the 300M-TL weights were.
+  - >
+    The paper reports wildfire scar mapping (Table V, UperNet decoder, 224 x 224 crops, ten seeds)
+    test mIoU 89.3 and burn-scar IoU 81.1 for 300M-TL, 90.5 and 83.2 for 600M-TL. These are fine-tunes
+    that were not released; nothing here was re-trained.
+  - >
+    The burn-scar head maps burned area after a fire; it is not linked to the wildfire benchmark's
+    danger or spread tasks.
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    embed_dim: 64
+    depth: 4
+    num_heads: 2
+    select_indices: [0, 1, 2, 3]
+    decoder_channels: [32, 16, 8, 4]
+  input:
+    kind: kwargs
+    kwargs:
+      x:
+        shape: [2, 6, 64, 64]
+      temporal_coords:
+        shape: [2, 1, 2]
+      location_coords:
+        shape: [2, 2]
+  expected_output:
+    kind: tensor
+    shape: [2, 2, 64, 64]

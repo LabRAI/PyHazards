@@ -116,3 +116,4 @@ Mapped benchmark ecosystems
 
    - WildfireSpreadTS is the public Appendix-A benchmark ecosystem surfaced on this page.
    - FireCastNet forecasts seasonal burned-area presence on the SeasFire datacube (AUPRC in its paper); without a SeasFire adapter its smoke config runs on synthetic rasters and is scored with the spread-mask metrics.
+   - Prithvi-EO-2.0 BurnScars and Prithvi-EO-2.0-TL segment burn scars after a fire (post-fire burned-area mapping). They are wildfire models but are not linked here, because this family scores danger and spread prediction, not post-fire mapping.
