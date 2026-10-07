@@ -18,6 +18,8 @@ land cover one-hot encoded) and uses 1 or 5 days of history.
 
 from __future__ import annotations
 
+from typing import Optional, Sequence
+
 import torch.nn as nn
 
 from .convlstm import ConvLSTMSegmenter
@@ -26,6 +28,9 @@ from .resnet_unet import ResNetUNet
 from .utae import UTAE
 
 WILDFIRESPREADTS_BASELINES = ("logistic_regression", "resnet18_unet", "convlstm", "utae")
+# Static per-day features of the 40-channel "All features" layout (topography and the 17 land-cover
+# one-hot channels); FireSpreadDataset.get_static_and_dynamic_feature_ids in WildfireSpreadTS.
+WILDFIRESPREADTS_STATIC_FEATURE_IDS = (12, 13, 14, *range(16, 33))
 
 
 def wildfirespreadts_builder(
@@ -33,6 +38,8 @@ def wildfirespreadts_builder(
     baseline: str = "utae",
     in_channels: int = 40,
     history: int = 5,
+    remove_duplicate_features: Optional[bool] = None,
+    static_feature_ids: Sequence[int] = WILDFIRESPREADTS_STATIC_FEATURE_IDS,
     **kwargs,
 ) -> nn.Module:
     """Build one WildfireSpreadTS baseline.
@@ -41,6 +48,11 @@ def wildfirespreadts_builder(
     by the baselines that flatten time into channels (logistic regression and the U-Net). Every
     baseline takes input shape ``(batch, history, in_channels, height, width)`` and returns
     ``(batch, 1, height, width)`` logits; ``utae`` also accepts ``batch_positions`` (day of year).
+
+    ``remove_duplicate_features`` (``resnet18_unet`` only; on by default for the 40-feature layout,
+    as in the benchmark's U-Net runs) keeps the static features listed in ``static_feature_ids``
+    for the last day only, so a 5-day, 40-feature U-Net has 4 * 20 + 40 = 120 input channels
+    instead of 200.
     """
     _ = kwargs
     if task.lower() != "segmentation":
@@ -50,7 +62,16 @@ def wildfirespreadts_builder(
     if baseline == "logistic_regression":
         return PixelLogisticRegression(in_channels * history, out_channels=1, kernel_size=3)
     if baseline == "resnet18_unet":
-        return ResNetUNet(in_channels * history, classes=1, encoder_name="resnet18", encoder_weights=None)
+        if remove_duplicate_features is None:
+            # On by default only for the benchmark's own 40-feature layout, where static_feature_ids apply.
+            remove_duplicate_features = in_channels == 40
+        static = tuple(static_feature_ids) if remove_duplicate_features and history > 1 else None
+        if static is not None and (not static or max(static) >= in_channels):
+            raise ValueError(f"static_feature_ids must index the {in_channels} input channels, got {static}.")
+        channels = in_channels * history if static is None else (history - 1) * (in_channels - len(static)) + in_channels
+        return ResNetUNet(
+            channels, classes=1, encoder_name="resnet18", encoder_weights=None, static_feature_ids=static
+        )
     if baseline == "convlstm":
         return ConvLSTMSegmenter(in_channels, num_classes=1, hidden_dim=64, kernel_size=3, num_layers=1)
     if baseline == "utae":

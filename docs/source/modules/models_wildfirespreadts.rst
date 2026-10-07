@@ -114,4 +114,5 @@ Notes
 -----
 
 - The benchmark trains on random 128x128 crops; ConvLSTM is evaluated by tiling 128x128 crops.
+- For the multi-day U-Net, the 20 static features (topography, land-cover one-hot) are kept for the last day only, as in the benchmark (remove_duplicate_features): 120 input channels and 14,695,121 parameters for 5 days.
 - Training losses differ per baseline: Dice (logistic regression, U-Net), Jaccard (ConvLSTM), weighted BCE (U-TAE).

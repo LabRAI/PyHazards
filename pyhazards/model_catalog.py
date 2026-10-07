@@ -104,7 +104,7 @@ MATURITY_BADGE_ROLES = {
 }
 
 STARTER_MODELS = {
-    "Wildfire": "firecastnet",
+    "Wildfire": "wildfirespreadts",
     "Earthquake": "phasenet",
     "Flood": "floodcast",
     "Tropical Cyclone": "hurricast",

@@ -82,7 +82,7 @@ External References
 Used In
 -------
 
-- `WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ (`repo <https://github.com/SebastianGer/WildfireSpreadTS>`__): smp.Unet("resnet18", encoder_weights=None) on 1 or 5 days of 40 channels, Dice loss, AdamW lr 1e-3; 14.4M parameters for one day.
+- `WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ (`repo <https://github.com/SebastianGer/WildfireSpreadTS>`__): smp.Unet("resnet18", encoder_weights=None) on 1 or 5 days of 40 channels, with static features kept for the last day only (120 channels for 5 days), Dice loss, AdamW lr 1e-3; 14.4M parameters for one day and 14.7M for five (paper Table 5).
 - `Improved Wildfire Spread Prediction with Time-Series Data and the WSTS+ Benchmark <https://arxiv.org/abs/2502.12003>`_: Same network with ImageNet encoder weights and focal loss (WACV 2026); test AP 0.455-0.472.
 - `Deep Residual Learning for Image Recognition <https://arxiv.org/abs/1512.03385>`_: ResNet-18 encoder.
 

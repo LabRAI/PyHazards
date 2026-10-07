@@ -28,8 +28,9 @@ references:
     url: https://openreview.net/forum?id=RgdGkPRQ03
     repo_url: https://github.com/SebastianGer/WildfireSpreadTS
     note: >
-      smp.Unet("resnet18", encoder_weights=None) on 1 or 5 days of 40 channels, Dice loss, AdamW
-      lr 1e-3; 14.4M parameters for one day.
+      smp.Unet("resnet18", encoder_weights=None) on 1 or 5 days of 40 channels, with static
+      features kept for the last day only (120 channels for 5 days), Dice loss, AdamW lr 1e-3;
+      14.4M parameters for one day and 14.7M for five (paper Table 5).
   - title: "Improved Wildfire Spread Prediction with Time-Series Data and the WSTS+ Benchmark"
     url: https://arxiv.org/abs/2502.12003
     note: >

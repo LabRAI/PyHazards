@@ -1119,9 +1119,9 @@ starting point for each hazard family.
    .. grid-item-card:: Wildfire
       :class-card: catalog-detail-card
 
-      **Start with:** :doc:`FireCastNet <modules/models_firecastnet>`
+      **Start with:** :doc:`WildfireSpreadTS Baselines <modules/models_wildfirespreadts>`
 
-      GraphCast on an icosahedral multi-mesh for global seasonal burned-area forecasting on the SeasFire datacube, with the official pretrained weights.
+      The four learned WildfireSpreadTS baselines (logistic regression, ResNet-18 U-Net, ConvLSTM, U-TAE) with the benchmark's own configurations.
 
       **Benchmark:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
 

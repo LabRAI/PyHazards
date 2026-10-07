@@ -9,6 +9,9 @@ the same seed, requires identical parameter names and initial values, and compar
 from __future__ import annotations
 
 import re
+import sys
+import types
+import typing
 
 import torch
 
@@ -175,11 +178,39 @@ def test_resnet18_unet_matches_smp():
 def test_resnet18_unet_multiday_flattening_matches_smp():
     smp = _smp()
     reference = smp.Unet(encoder_name="resnet18", encoder_weights=None, in_channels=200, classes=1).eval()
-    port = build_model("wildfirespreadts", task="segmentation", baseline="resnet18_unet", in_channels=40, history=5).eval()
+    port = build_model(
+        "wildfirespreadts",
+        task="segmentation",
+        baseline="resnet18_unet",
+        in_channels=40,
+        history=5,
+        remove_duplicate_features=False,
+    ).eval()
     port.load_state_dict(reference.state_dict(), strict=True)
     x = torch.randn(1, 5, 40, 32, 32)
     with torch.no_grad():
         _assert_close(port(x), reference(x.flatten(1, 2)))
+
+
+def test_resnet18_unet_removes_duplicate_static_features_like_wildfirespreadts():
+    smp = _smp()
+    # Shims needed only to import the module: rasterio is used for reading GeoTIFFs, and T_co was
+    # removed from torch.utils.data.dataset in recent torch releases.
+    sys.modules.setdefault("rasterio", types.ModuleType("rasterio"))
+    import torch.utils.data.dataset as torch_dataset
+
+    if not hasattr(torch_dataset, "T_co"):
+        torch_dataset.T_co = typing.TypeVar("T_co", covariant=True)
+    dataset = import_from(oracle_repo("WildfireSpreadTS"), "src.dataloader.FireSpreadDataset").FireSpreadDataset
+    assert dataset.get_n_features(5, None, True) == 120
+    reference = smp.Unet(encoder_name="resnet18", encoder_weights=None, in_channels=120, classes=1).eval()
+    port = build_model("wildfirespreadts", task="segmentation", baseline="resnet18_unet", in_channels=40, history=5).eval()
+    port.load_state_dict(reference.state_dict(), strict=True)
+    x = torch.randn(2, 5, 40, 32, 32)
+    holder = types.SimpleNamespace(features_to_keep=None, get_static_and_dynamic_features_to_keep=dataset.get_static_and_dynamic_features_to_keep)
+    flattened = torch.stack([dataset.flatten_and_remove_duplicate_features_(holder, sample) for sample in x])
+    with torch.no_grad():
+        _assert_close(port(x), reference(flattened))
 
 
 def test_resnet18_unet_imagenet_stem_matches_smp():

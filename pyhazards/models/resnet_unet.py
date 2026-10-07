@@ -181,7 +181,9 @@ class ResNetUNet(nn.Module):
 
     Accepts ``(batch, channels, height, width)``, or ``(batch, time, channels, height, width)``
     which is flattened to ``time * channels`` input channels as WildfireSpreadTS does for its
-    multi-day U-Net. Height and width must be divisible by ``2 ** encoder_depth``.
+    multi-day U-Net. With ``static_feature_ids``, those per-day features (constant over time) are
+    kept for the last day only, as WildfireSpreadTS does with ``remove_duplicate_features``.
+    Height and width must be divisible by ``2 ** encoder_depth``.
     """
 
     def __init__(
@@ -193,8 +195,10 @@ class ResNetUNet(nn.Module):
         encoder_weights: Optional[str] = None,
         decoder_channels: Sequence[int] = (256, 128, 64, 32, 16),
         decoder_use_batchnorm: bool = True,
+        static_feature_ids: Optional[Sequence[int]] = None,
     ):
         super().__init__()
+        self.static_feature_ids = None if static_feature_ids is None else tuple(int(i) for i in static_feature_ids)
         if len(decoder_channels) != encoder_depth:
             raise ValueError(
                 f"decoder_channels needs {encoder_depth} entries for encoder_depth={encoder_depth}, "
@@ -234,7 +238,10 @@ class ResNetUNet(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         if x.ndim == 5:
-            x = x.flatten(start_dim=1, end_dim=2)
+            if self.static_feature_ids is None:
+                x = x.flatten(start_dim=1, end_dim=2)
+            else:
+                x = flatten_and_remove_duplicate_features(x, self.static_feature_ids)
         if x.ndim != 4:
             raise ValueError(
                 "ResNetUNet expects input shape (batch, channels, height, width) or "
@@ -249,6 +256,21 @@ class ResNetUNet(nn.Module):
             )
         features = self.encoder(x)
         return self.segmentation_head(self.decoder(*features))
+
+
+def flatten_and_remove_duplicate_features(x: torch.Tensor, static_feature_ids: Sequence[int]) -> torch.Tensor:
+    """Flatten ``(B, T, C, H, W)`` to channels, keeping static features for the last day only.
+
+    Matches WildfireSpreadTS ``FireSpreadDataset.flatten_and_remove_duplicate_features_``: the
+    dynamic features of days ``0..T-2`` (day-major), followed by all ``C`` features of the last
+    day, giving ``(T - 1) * (C - len(static_feature_ids)) + C`` channels.
+    """
+    if x.ndim != 5:
+        raise ValueError(f"expected input shape (batch, time, channels, height, width), got {tuple(x.shape)}.")
+    static = set(int(i) for i in static_feature_ids)
+    dynamic = [i for i in range(x.size(2)) if i not in static]
+    earlier = x[:, :-1, dynamic].flatten(start_dim=1, end_dim=2)
+    return torch.cat([earlier, x[:, -1]], dim=1)
 
 
 def resnet18_unet_builder(
@@ -273,4 +295,4 @@ def resnet18_unet_builder(
     )
 
 
-__all__ = ["ResNetEncoder", "ResNetUNet", "resnet18_unet_builder"]
+__all__ = ["ResNetEncoder", "ResNetUNet", "flatten_and_remove_duplicate_features", "resnet18_unet_builder"]

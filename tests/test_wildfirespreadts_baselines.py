@@ -127,3 +127,19 @@ def test_oracle_workflow_runs_every_oracle_test_once():
     for entry in entries:
         assert (root / entry["requirements"]).exists(), entry["suite"]
         assert set(entry["references"].split()) <= known, entry["suite"]
+
+
+def test_multiday_unet_removes_duplicate_static_features():
+    from pyhazards.models.resnet_unet import flatten_and_remove_duplicate_features
+    from pyhazards.models.wildfirespreadts import WILDFIRESPREADTS_STATIC_FEATURE_IDS
+
+    model = build_model("wildfirespreadts", task="segmentation", baseline="resnet18_unet", in_channels=40, history=5)
+    assert model.in_channels == 4 * 20 + 40
+    assert _n_params(model) == 14_695_121  # paper Table 5: 14.7M for five days
+    x = torch.randn(1, 5, 40, 32, 32)
+    flat = flatten_and_remove_duplicate_features(x, WILDFIRESPREADTS_STATIC_FEATURE_IDS)
+    assert flat.shape == (1, 120, 32, 32)
+    torch.testing.assert_close(flat[:, -40:], x[:, -1])
+    model.eval()
+    with torch.no_grad():
+        torch.testing.assert_close(model(x), model(flat))
