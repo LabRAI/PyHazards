@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         47
+         45
 
       .. container:: catalog-stat-note
 
@@ -40,7 +40,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         3
+         5
 
       .. container:: catalog-stat-note
 
@@ -838,39 +838,12 @@ pages and compatible benchmark coverage.
          :gutter: 2
          :class-container: catalog-grid
 
-         .. grid-item-card:: EQNet
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               A transformer-style earthquake phase-picking baseline for modern sequence modeling comparisons.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-success:`Implemented`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`EQNet <modules/models_eqnet>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`SeisBench <benchmarks/seisbench>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `An End-To-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning <https://www.osti.gov/biblio/1978539>`_ | **Repo:** `Repository <https://github.com/AI4EPS/EQNet>`__
-
          .. grid-item-card:: EQTransformer
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A bidirectional sequence encoder for joint earthquake phase picking with attention pooling over waveform windows.
+               Earthquake Transformer (Mousavi et al., Nature Communications 2020): a multi-task network that turns a 60-s three-component seismogram into per-sample earthquake-detection, P-arrival and S-arrival probabilities, ported from the official Keras code with its two released models.
 
             .. container:: catalog-chip-row
 
@@ -886,18 +859,18 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`pick-benchmark <benchmarks/pick_benchmark>`
+               **Benchmark Ecosystems:** :doc:`pick-benchmark <benchmarks/pick_benchmark>`, :doc:`SeisBench <benchmarks/seisbench>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `Earthquake Transformer-An attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ | **Repo:** `Repository <https://github.com/smousavi05/EQTransformer>`__
+               **Paper:** `Earthquake transformer—an attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ | **Repo:** `Repository <https://github.com/smousavi05/EQTransformer>`__
 
          .. grid-item-card:: GPD
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A compact CNN baseline for generalized phase detection and historical earthquake picking comparisons.
+               Generalized Phase Detection (Ross et al., BSSA 2018): a convolutional classifier that labels 4-s three-component windows as P, S or noise, and picks continuous data with a sliding window. Ported from the official Keras release, whose weights load and reproduce the official picks.
 
             .. container:: catalog-chip-row
 
@@ -913,7 +886,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`pick-benchmark <benchmarks/pick_benchmark>`
+               **Benchmark Ecosystems:** :doc:`pick-benchmark <benchmarks/pick_benchmark>`, :doc:`SeisBench <benchmarks/seisbench>`
 
             .. container:: catalog-link-row
 
@@ -924,7 +897,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-entry-summary
 
-               A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows.
+               1-D U-Net that turns three-component waveforms into per-sample probabilities of noise, P and S arrivals (Zhu & Beroza, GJI 2019); picks are the peaks of the P and S traces.
 
             .. container:: catalog-chip-row
 
@@ -940,11 +913,44 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`SeisBench <benchmarks/seisbench>`
+               **Benchmark Ecosystems:** :doc:`pick-benchmark <benchmarks/pick_benchmark>`, :doc:`SeisBench <benchmarks/seisbench>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `PhaseNet: A Deep-Neural-Network-Based Seismic Arrival Time Picking Method <https://arxiv.org/abs/1803.03211>`_ | **Repo:** `Repository <https://github.com/AI4EPS/PhaseNet>`__
+               **Paper:** `PhaseNet: a deep-neural-network-based seismic arrival-time picking method <https://doi.org/10.1093/gji/ggy423>`_ | **Repo:** `Repository <https://github.com/AI4EPS/PhaseNet>`__
+
+      .. rubric:: Experimental Adapters
+
+      .. container:: catalog-section-note
+
+         These entries remain public as lightweight wrapper or prototype integrations and should not be counted as stable implemented methods.
+
+      .. grid:: 1 1 2 2
+         :gutter: 2
+         :class-container: catalog-grid
+
+         .. grid-item-card:: EQNet (stand-in)
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Experimental stand-in under the EQNet name: a small transformer-encoder regressor of one P and one S arrival sample per trace. It is not the EQNet of Zhu et al. (2022).
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Earthquake` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`EQNet (stand-in) <modules/models_eqnet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `An End-to-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning <https://doi.org/10.1029/2021JB023283>`_ | **Repo:** `Repository <https://github.com/AI4EPS/EQNet>`__
 
          .. grid-item-card:: WaveCastNet
             :class-card: catalog-entry-card
@@ -955,7 +961,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Earthquake` :bdg-secondary:`Wavefield Forecasting` :bdg-success:`Implemented`
+               :bdg-primary:`Earthquake` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
 
             .. container:: catalog-meta-row
 
@@ -965,13 +971,9 @@ pages and compatible benchmark coverage.
 
                **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
 
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`AEFA <benchmarks/aefa>`, :doc:`pyCSEP <benchmarks/pycsep>`
-
             .. container:: catalog-link-row
 
-               **Paper:** `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_
+               **Paper:** `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_ | **Repo:** `Repository <https://github.com/dwlyu/WaveCastNet>`__
 
 
    .. tab-item:: Flood
@@ -1421,7 +1423,7 @@ starting point for each hazard family.
 
       **Start with:** :doc:`PhaseNet <modules/models_phasenet>`
 
-      A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows.
+      1-D U-Net that turns three-component waveforms into per-sample probabilities of noise, P and S arrivals (Zhu & Beroza, GJI 2019); picks are the peaks of the P and S traces.
 
       **Benchmark:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
 

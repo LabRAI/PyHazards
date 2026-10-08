@@ -1,7 +1,7 @@
 model_name: wavecastnet
 display_name: WaveCastNet
 hazard: Earthquake
-catalog_status: variant
+catalog_status: experimental
 source_file: pyhazards/models/wavecastnet.py
 builder_name: wavecastnet_builder
 summary: >
@@ -17,6 +17,7 @@ description:
 paper:
   title: Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning
   url: https://doi.org/10.1038/s41467-025-65435-2
+  repo_url: https://github.com/dwlyu/WaveCastNet
 tasks:
   - regression
 example: |
@@ -40,6 +41,9 @@ example: |
   y = model(x)
   print(y.shape)
 notes:
+  - "Lyu, Nakata, Ren, Mahoney, Pitarka, Nakata & Erichson, Nature Communications 16:10622 (2025); arXiv:2405.20516. Official code: dwlyu/WaveCastNet (MIT)."
+  - "Not yet faithful (audit of 2026-10-07): the core ConvLEM cell pair is there, but the down-sampling embedding, the PixelShuffle reconstruction, the reset gate, the peephole dimensions and the training loss (Huber delta 0.2 in the official training) differ from the official code, so the official checkpoints do not load. Marked experimental until it is ported."
+  - "WaveCastNet forecasts ground-motion wavefields. It is not related to AEFA (an earthquake-occurrence forecasting dataset) or pyCSEP (tests of earthquake-rate forecasts), which earlier versions of the catalog linked to it."
   - "The PyHazards version currently targets dense-grid forecasting rather than the paper's sparse-sensor variants."
   - "The smoke test uses reduced spatial and temporal sizes so it stays CPU-safe in CI."
 smoke_test:

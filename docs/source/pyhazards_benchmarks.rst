@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         12
+         10
 
       .. container:: catalog-stat-note
 
@@ -101,11 +101,11 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-entry-summary
 
-         Shared PyHazards evaluator family for earthquake phase-picking and wavefield-forecasting runs.
+         Shared PyHazards evaluator for seismic phase picking (pick metrics of the PhaseNet and EQTransformer papers) and dense-grid wavefield forecasting.
 
       .. container:: catalog-chip-row
 
-         :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-secondary:`Wavefield Forecasting` :bdg-info:`Synthetic-backed`
+         :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-secondary:`Wavefield Forecasting` :bdg-success:`Real-backed`
 
       .. container:: catalog-meta-row
 
@@ -113,11 +113,11 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-meta-row
 
-         **Key Metrics:** P-pick MAE, S-pick MAE, Precision, Recall, +3 more
+         **Key Metrics:** P Precision, P Recall, P F1, P Residual Mean, +13 more
 
       .. container:: catalog-meta-row
 
-         **Coverage:** 5 smoke configs | 5 models | 4 ecosystems
+         **Coverage:** 5 smoke configs | 5 models | 2 ecosystems
 
       .. container:: catalog-link-row
 
@@ -205,9 +205,9 @@ status without opening the detail pages first.
    * - Earthquake
      - :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
      - Phase Picking, Wavefield Forecasting
-     - P-pick MAE, S-pick MAE, Precision, Recall, +3 more
+     - P Precision, P Recall, P F1, P Residual Mean, +13 more
      - 5 models
-     - Synthetic-backed
+     - Real-backed
    * - Flood
      - :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
      - Streamflow, Inundation
@@ -287,47 +287,16 @@ and the models currently mapped to that ecosystem.
          :gutter: 2
          :class-container: catalog-grid
 
-         .. grid-item-card:: AEFA
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               AEFA-style forecasting dataset support for the shared earthquake forecasting path.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Earthquake` :bdg-secondary:`Wavefield Forecasting` :bdg-info:`Synthetic-backed`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Key Metrics:** MAE, MSE
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** 1 smoke config | 1 model
-
-            .. container:: catalog-link-row
-
-               **View Details:** :doc:`AEFA <benchmarks/aefa>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `AEFA <https://github.com/chenyk1990/aefa>`_
-
          .. grid-item-card:: pick-benchmark
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               pick-benchmark-compatible waveform picking support routed through the shared earthquake evaluator.
+               The SeisBench picking benchmark of Münchmeyer et al. (2022). Its datasets can be read with ``seisbench_waveforms``; its own three evaluation tasks are not implemented in PyHazards.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-info:`Synthetic-backed`
+               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-warning:`Experimental`
 
             .. container:: catalog-meta-row
 
@@ -335,11 +304,11 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Key Metrics:** P-pick MAE, S-pick MAE, Precision, Recall, +1 more
+               **Key Metrics:** P F1, S F1
 
             .. container:: catalog-meta-row
 
-               **Coverage:** 2 smoke configs | 2 models
+               **Coverage:** 2 smoke configs | 3 models
 
             .. container:: catalog-link-row
 
@@ -347,49 +316,18 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-link-row
 
-               **Paper:** `pick-benchmark <https://github.com/seisbench/pick-benchmark>`_
-
-         .. grid-item-card:: pyCSEP
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               pyCSEP-style forecasting report export for the earthquake forecasting smoke path.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Earthquake` :bdg-secondary:`Wavefield Forecasting` :bdg-info:`Synthetic-backed`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Key Metrics:** MAE, MSE
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** 1 smoke config | 1 model
-
-            .. container:: catalog-link-row
-
-               **View Details:** :doc:`pyCSEP <benchmarks/pycsep>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `pyCSEP <https://github.com/SCECCode/pycsep>`_
+               **Paper:** `Which Picker Fits My Data? A Quantitative Evaluation of Deep Learning Based Seismic Pickers (Münchmeyer et al., J. Geophys. Res. Solid Earth 127, e2021JB023499, 2022) <https://doi.org/10.1029/2021JB023499>`_ | **Repo:** `Repository <https://github.com/seisbench/pick-benchmark>`__
 
          .. grid-item-card:: SeisBench
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               SeisBench-shaped waveform picking support for the shared earthquake benchmark family.
+               SeisBench-format waveform datasets (STEAD, INSTANCE, ETHZ, ...) read by PyHazards' own ``seisbench_waveforms`` reader and scored by the earthquake picking evaluator.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-info:`Synthetic-backed`
+               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-success:`Real-backed`
 
             .. container:: catalog-meta-row
 
@@ -397,11 +335,11 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Key Metrics:** P-pick MAE, S-pick MAE, Precision, Recall, +1 more
+               **Key Metrics:** P Precision, P Recall, P F1, P-pick MAE, +4 more
 
             .. container:: catalog-meta-row
 
-               **Coverage:** 2 smoke configs | 2 models
+               **Coverage:** 1 smoke config | 3 models
 
             .. container:: catalog-link-row
 
@@ -409,7 +347,7 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-link-row
 
-               **Paper:** `SeisBench - A Toolbox for Machine Learning in Seismology <https://joss.theoj.org/papers/10.21105/joss.04418>`_ | **Repo:** `Repository <https://github.com/seisbench/seisbench>`__
+               **Paper:** `SeisBench - A Toolbox for Machine Learning in Seismology (Woollam et al., Seismological Research Letters 93(3):1695-1709, 2022) <https://doi.org/10.1785/0220210324>`_ | **Repo:** `Repository <https://github.com/seisbench/seisbench>`__
 
 
    .. tab-item:: Flood
@@ -676,7 +614,6 @@ and :doc:`pyhazards_reports` for comparable benchmark exports.
    :maxdepth: 1
    :hidden:
 
-   benchmarks/aefa
    benchmarks/caravan
    benchmarks/earthquake_benchmark
    benchmarks/flood_benchmark
@@ -684,7 +621,6 @@ and :doc:`pyhazards_reports` for comparable benchmark exports.
    benchmarks/hydrobench
    benchmarks/ibtracs
    benchmarks/pick_benchmark
-   benchmarks/pycsep
    benchmarks/seisbench
    benchmarks/tcbench_alpha
    benchmarks/tropical_cyclone_benchmark

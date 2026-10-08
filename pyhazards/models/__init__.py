@@ -584,31 +584,19 @@ register_model(
 register_model(
     "phasenet",
     phasenet_builder,
-    defaults={
-        "in_channels": 3,
-        "hidden_dim": 32,
-    },
+    defaults={"in_channels": 3},
 )
 
 register_model(
     "eqtransformer",
     eqtransformer_builder,
-    defaults={
-        "in_channels": 3,
-        "hidden_dim": 48,
-        "num_layers": 2,
-        "dropout": 0.1,
-    },
+    defaults={"in_channels": 3},
 )
 
 register_model(
     "gpd",
     gpd_builder,
-    defaults={
-        "in_channels": 3,
-        "hidden_dim": 32,
-        "dropout": 0.1,
-    },
+    defaults={"in_channels": 3},
 )
 
 register_model(

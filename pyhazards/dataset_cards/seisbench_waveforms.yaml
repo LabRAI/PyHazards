@@ -1,31 +1,58 @@
 slug: seisbench_waveforms
-display_name: SeisBench
+display_name: SeisBench-format Waveforms
 hazard_family: Earthquake
 source_role: Waveform Benchmark
-summary: Synthetic-backed waveform picking adapter aligned to the SeisBench ecosystem.
-provider: SeisBench ecosystem surfaced through a PyHazards adapter
-geometry: Multichannel waveform windows
-spatial_resolution: Benchmark-defined waveform channels and sample windows
-temporal_resolution: Short waveform windows with phase-pick targets
-update_cadence: Generated locally for smoke and benchmark-alignment runs
-period_of_record: Synthetic-backed benchmark adapter
-coverage: Benchmark-aligned earthquake phase-picking samples
-formats: PyTorch tensors via the dataset registry
+summary: Reader for labelled three-component waveform datasets in the SeisBench format (STEAD, INSTANCE, ETHZ, ... as distributed for SeisBench) and in STEAD's own CSV + HDF5 layout.
+provider: Dataset authors (STEAD - Stanford; INSTANCE - INGV; others via SeisBench); read by PyHazards
+geometry: Three-component station waveform windows
+spatial_resolution: Single seismic stations
+temporal_resolution: Dataset sampling rate (100 Hz for STEAD and INSTANCE)
+update_cadence: Static benchmark releases downloaded by the user
+period_of_record: Dataset dependent (see the dataset papers)
+coverage: Dataset dependent (STEAD global; INSTANCE Italy)
+formats: metadata CSV + waveform HDF5
 overview:
-  - SeisBench is the public waveform adapter used by PyHazards for the earthquake picking path.
-  - The current implementation is synthetic-backed, but it preserves the picking task shape, labels, and metrics expected by the shared earthquake evaluator.
+  - >
+    ``seisbench_waveforms`` reads real phase-picking datasets from disk: the SeisBench format
+    (``metadata.csv`` + ``waveforms.hdf5``, optionally in chunks, with trace blocks
+    ``<block>$<slice>``) and the layout in which the STEAD authors distribute STEAD
+    (``<name>.csv`` + ``<name>.hdf5``, one ``(6000, 3)`` E/N/Z array per trace). PyHazards implements
+    the reader itself with ``h5py`` and ``csv``; SeisBench (GPL-3.0) is not imported. Its output equals
+    SeisBench's ``WaveformDataset`` on a dataset written by SeisBench's ``WaveformDataWriter``
+    (``tests/oracle/test_seisbench_reader_oracle.py``).
+  - >
+    Nothing is downloaded or redistributed: STEAD is about 85 GB and INSTANCE's event waveforms about
+    160 GB. Download them from their providers (or with SeisBench, which converts them to its format)
+    and pass the directory as ``path``.
 data_characteristics:
-  - Multichannel waveform windows paired with P- and S-arrival sample targets.
-  - Registry-backed benchmark adapter rather than a raw external waveform ingestion path.
-  - Intended for phase-picking validation and smoke tests.
+  - >
+    Inputs ``(n, 3, window)`` float32 in the dataset's component order (``metadata["component_order"]``,
+    e.g. ``ZNE`` for SeisBench files, ``ENZ`` for STEAD's own files); the earthquake benchmark reorders
+    channels to each model's order. Targets ``(n, 2)``: P and S arrival samples relative to the window
+    start, NaN when a trace has no such arrival (noise traces) or it falls outside the window.
+  - >
+    Splits follow the dataset's ``split`` column (``train`` / ``dev`` -> ``val`` / ``test``). STEAD's own
+    files have no split: ``test_trace_names`` (e.g. EQTransformer's ``ModelsAndSampleData/test.npy``)
+    selects the test traces and the rest are ``train``; without it all traces are ``test``.
+  - >
+    Arrival columns are read in order of preference (``trace_p_arrival_sample``,
+    ``trace_P_arrival_sample``, ``trace_P1_arrival_sample``, ``trace_Pg_arrival_sample``, ... and the S
+    equivalents; ``p_arrival_sample`` / ``s_arrival_sample`` for STEAD files); ``phase_columns``
+    overrides the list.
+  - >
+    Licences: STEAD and INSTANCE are CC BY 4.0 (STEAD repository LICENSE; INGV INSTANCE page and
+    repository). Cite the dataset papers below when publishing results.
 typical_use_cases:
-  - PhaseNet and EQNet smoke tests.
-  - Shared earthquake benchmark runs on picking tasks.
-  - Regression checks for waveform-based seismic models.
+  - Scoring PhaseNet, EQTransformer and GPD (official weights) with the ``earthquake.picking`` benchmark.
+  - Training phase pickers on real labelled waveforms.
 access_links:
-  - label: SeisBench paper
-    url: https://joss.theoj.org/papers/10.21105/joss.04418
-  - label: SeisBench repository
+  - label: STEAD (download links and licence)
+    url: https://github.com/smousavi05/STEAD
+  - label: INSTANCE (INGV)
+    url: https://www.pi.ingv.it/instance/
+  - label: SeisBench data format
+    url: https://seisbench.readthedocs.io/en/stable/pages/data_format.html
+  - label: SeisBench repository (GPL-3.0)
     url: https://github.com/seisbench/seisbench
 inspection: null
 registry:
@@ -33,26 +60,41 @@ registry:
   example: |
     from pyhazards.datasets import load_dataset
 
-    data = load_dataset(
-        "seisbench_waveforms",
-        micro=True,
-        channels=3,
-        length=256,
-    ).load()
+    # A SeisBench-format directory (metadata.csv + waveforms.hdf5), e.g. SeisBench's copy of STEAD.
+    data = load_dataset("seisbench_waveforms", path="~/.seisbench/datasets/stead", max_traces=1000).load()
 
-    train = data.get_split("train")
-    print(train.inputs.shape, train.targets.shape)
-primary_references:
-  - citation: SeisBench - A Toolbox for Machine Learning in Seismology
-    url: https://joss.theoj.org/papers/10.21105/joss.04418
+    # STEAD as distributed by its authors (merged.csv + merged.hdf5) with EQTransformer's test split.
+    stead = load_dataset(
+        "seisbench_waveforms",
+        path="/data/STEAD",
+        preset="stead",
+        test_trace_names="/data/STEAD/test.npy",
+    ).load()
+    test = stead.get_split("test")
+    print(test.inputs.shape, test.targets.shape)  # (n, 3, 6000), (n, 2)
+  notes:
+    - "``window_samples`` / ``window_start`` cut a fixed window (zero-padded when a trace is shorter); traces of different lengths need it."
+    - "``max_traces`` keeps the first rows of each split (``micro=True`` keeps 8); ``trace_category`` filters STEAD's ``earthquake_local`` / ``noise`` rows."
+    - "``preset='instance'`` supplies INSTANCE's component order (E, N, Z) and 100 Hz when the files lack a ``data_format`` group."
+references:
+  - citation: "Woollam, J., Münchmeyer, J., Tilmann, F., et al. (2022). SeisBench - A Toolbox for Machine Learning in Seismology. Seismological Research Letters 93(3):1695-1709."
+    url: https://doi.org/10.1785/0220210324
     repo_url: https://github.com/seisbench/seisbench
+  - citation: "Mousavi, S. M., Sheng, Y., Zhu, W., Beroza, G. C. (2019). STanford EArthquake Dataset (STEAD): A Global Data Set of Seismic Signals for AI. IEEE Access 7:179464-179476."
+    url: https://doi.org/10.1109/ACCESS.2019.2947848
+    repo_url: https://github.com/smousavi05/STEAD
+  - citation: "Michelini, A., Cianetti, S., Gaviano, S., Giunchi, C., Jozinović, D., Lauciani, V. (2021). INSTANCE - the Italian seismic dataset for machine learning. Earth System Science Data 13:5509-5544."
+    url: https://doi.org/10.5194/essd-13-5509-2021
+    repo_url: https://github.com/INGV/instance
 pyhazards_usage:
-  - Use this adapter when you want the public SeisBench-aligned waveform surface exposed by the earthquake benchmark.
+  - Pair it with ``phasenet``, ``eqtransformer`` (60-s windows, ``window_samples=6000``) or ``gpd`` and the ``earthquake`` benchmark (``hazard_task=earthquake.picking``).
 related_models:
   - phasenet
-  - eqnet
+  - eqtransformer
+  - gpd
 related_benchmarks:
   - earthquake_benchmark
   - seisbench
+  - pick_benchmark
 notes:
-  - This is a synthetic-backed benchmark adapter rather than a full SeisBench ingestion pipeline.
+  - "Until this release ``seisbench_waveforms`` and ``pick_benchmark_waveforms`` generated synthetic Gaussian pulses; the synthetic data is now ``earthquake_waveforms_synthetic``."

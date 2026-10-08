@@ -53,7 +53,9 @@ def test_model_page_lists_generated_hazard_sections() -> None:
     assert "Wildfire Danger Prediction and Understanding With Deep Learning" in page
     assert "`Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_" in page
     assert page.count("Implemented Models") == 5
-    assert page.count("Experimental Adapters") == 2
+    # Tropical cyclone adapters, plus the earthquake eqnet stand-in and wavecastnet (not yet faithful).
+    assert page.count("Experimental Adapters") == 3
+    assert ":doc:`EQNet (stand-in) <modules/models_eqnet>`" in page
     assert "Core Baselines" not in page
     assert "Variants and Additional Implementations" not in page
     assert page.count(":doc:`DNN-LSTM-AutoEncoder <modules/models_wildfire_fpa>`") == 1
@@ -69,7 +71,7 @@ def test_hidden_models_are_omitted_from_public_catalog_pages() -> None:
     api_page = render_api_page(cards)
     assert ":doc:`Wildfire Mamba </modules/models_wildfire_mamba>`" not in api_page
     assert api_page.count("Implemented Models") == 4
-    assert api_page.count("Experimental Adapters") == 1
+    assert api_page.count("Experimental Adapters") == 2
     assert "Core Baselines" not in api_page
     assert "Variants and Additional Implementations" not in api_page
     assert ":doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`" in api_page

@@ -3,9 +3,8 @@ from pyhazards.datasets import available_datasets, load_dataset
 
 def test_named_adapter_datasets_are_registered_and_loadable():
     expected = {
-        "seisbench_waveforms",
-        "pick_benchmark_waveforms",
-        "aefa_forecast",
+        "earthquake_waveforms_synthetic",
+        "earthquake_forecast_synthetic",
         "caravan_streamflow",
         "waterbench_streamflow",
         "hydrobench_streamflow",
@@ -22,3 +21,13 @@ def test_named_adapter_datasets_are_registered_and_loadable():
         bundle = load_dataset(name, micro=True).load()
         assert bundle.splits["test"].inputs is not None
         assert bundle.metadata.get("source_dataset", name) == name or bundle.metadata.get("dataset") == name
+
+
+def test_real_earthquake_reader_is_registered_but_needs_data():
+    import pytest
+
+    assert "seisbench_waveforms" in available_datasets()
+    for removed in ("pick_benchmark_waveforms", "aefa_forecast", "earthquake_waveforms"):
+        assert removed not in available_datasets()
+    with pytest.raises(ValueError, match="path="):
+        load_dataset("seisbench_waveforms", micro=True).load()

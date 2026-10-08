@@ -37,8 +37,6 @@ def test_benchmark_page_lists_family_and_ecosystem_tables() -> None:
         ".. grid-item-card:: WildfireSpreadTS",
         ".. grid-item-card:: SeisBench",
         ".. grid-item-card:: pick-benchmark",
-        ".. grid-item-card:: pyCSEP",
-        ".. grid-item-card:: AEFA",
         ".. grid-item-card:: Caravan",
         ".. grid-item-card:: WaterBench",
         ".. grid-item-card:: FloodCastBench",
@@ -52,7 +50,9 @@ def test_benchmark_page_lists_family_and_ecosystem_tables() -> None:
 
     assert "WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction" in page
     assert "7 smoke configs | 29 models | 1 ecosystem" in page
-    assert "5 smoke configs | 5 models | 4 ecosystems" in page
+    assert "5 smoke configs | 5 models | 2 ecosystems" in page
+    # AEFA (earthquake-occurrence data) and pyCSEP (rate-forecast tests) are not implemented.
+    assert ".. grid-item-card:: pyCSEP" not in page and ".. grid-item-card:: AEFA" not in page
     assert "6 smoke configs | 6 models | 4 ecosystems" in page
     assert "8 smoke configs | 8 models | 3 ecosystems" in page
 

@@ -31,7 +31,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         Implemented
+         Experimental Adapter
 
       .. container:: catalog-stat-note
 
@@ -46,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-note
 
-         Wavefield Forecasting
+         Forecasting
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -72,12 +72,10 @@ Benchmark Compatibility
 
 **Primary benchmark family:** :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`AEFA </benchmarks/aefa>`, :doc:`pyCSEP </benchmarks/pycsep>`
-
 External References
 -------------------
 
-**Paper:** `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_
+**Paper:** `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_ | **Repo:** `Repository <https://github.com/dwlyu/WaveCastNet>`__
 
 Reproduction
 ------------
@@ -92,7 +90,7 @@ Primary entrypoint: ``wavecastnet``
 Supported Tasks
 ---------------
 
-- Wavefield Forecasting
+- Forecasting
 
 Programmatic Use
 ----------------
@@ -122,5 +120,8 @@ Programmatic Use
 Notes
 -----
 
+- Lyu, Nakata, Ren, Mahoney, Pitarka, Nakata & Erichson, Nature Communications 16:10622 (2025); arXiv:2405.20516. Official code: dwlyu/WaveCastNet (MIT).
+- Not yet faithful (audit of 2026-10-07): the core ConvLEM cell pair is there, but the down-sampling embedding, the PixelShuffle reconstruction, the reset gate, the peephole dimensions and the training loss (Huber delta 0.2 in the official training) differ from the official code, so the official checkpoints do not load. Marked experimental until it is ported.
+- WaveCastNet forecasts ground-motion wavefields. It is not related to AEFA (an earthquake-occurrence forecasting dataset) or pyCSEP (tests of earthquake-rate forecasts), which earlier versions of the catalog linked to it.
 - The PyHazards version currently targets dense-grid forecasting rather than the paper's sparse-sensor variants.
 - The smoke test uses reduced spatial and temporal sizes so it stays CPU-safe in CI.

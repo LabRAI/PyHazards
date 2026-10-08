@@ -896,7 +896,7 @@ def render_api_page(cards: Sequence[ModelCard]) -> str:
             "",
             "    model = build_model(",
             '        name="phasenet",',
-            '        task="regression",',
+            '        task="picking",',
             "        in_channels=3,",
             "    )",
             "",

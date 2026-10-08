@@ -75,6 +75,28 @@ repos:
     commit: 57b987bd893bd6910996494c247359ace371d333
     license: MIT
 
+  # Earthquake phase pickers (batch 4). Official TensorFlow / Keras code and released weights; the
+  # PyTorch ports in pyhazards/models/{phasenet,eqtransformer,gpd}.py are checked against them.
+  PhaseNet:
+    # Zhu & Beroza, GJI 2019. TF1 graph code (phasenet/model.py) and the released checkpoint
+    # model/190703-214543 (model_95.ckpt.*).
+    url: https://github.com/AI4EPS/PhaseNet.git
+    commit: 62005c6195638f88d077f8870ea895971062715a
+    license: MIT (Copyright (c) 2021 Weiqiang Zhu)
+  EQTransformer:
+    # Mousavi et al., Nat. Commun. 2020. Keras code (EQTransformer/core/EqT_utils.py), the paper model
+    # (ModelsAndSampleData/EqT_original_model.h5), the conservative model and 100 STEAD sample traces
+    # (100samples.hdf5/.csv, STEAD layout, CC BY 4.0 data).
+    url: https://github.com/smousavi05/EQTransformer.git
+    commit: a589da6504b11df8341fe1dc859a025f49955409
+    license: MIT (Copyright (c) 2020-2025 S. Mostafa Mousavi)
+  generalized-phase-detection:
+    # Ross et al., BSSA 2018. Keras 2.2.2 model (model_pol.json + model_pol_best.hdf5), gpd_predict.py and
+    # the Anza 2016 example (three mseed files and the expected picks anza2016.out).
+    url: https://github.com/interseismic/generalized-phase-detection.git
+    commit: ea81ef17d204797de6a99d277fd2b9407fc77df7
+    license: MIT (Copyright (c) 2018 Zachary E. Ross)
+
 assets:
   utae_pastis_weights:
     url: https://zenodo.org/records/5172293/files/UTAE_SemanticSeg_weights.zip
@@ -183,3 +205,24 @@ assets:
     sha256: e3d5e4e59b32f13a74c7ffdc02ae65f9da3362c036b60e73e46dffe8721ae6b2
     license: none stated (Zjut-MultimediaPlus/Rainformer release; test data only, never redistributed)
     large: true
+  # SeisBench conversions of the official picker weights (SeisBench is GPL-3.0: its package and these
+  # files are used only as a second oracle, never vendored). The weights are the authors' MIT-licensed
+  # releases converted to SeisBench's PyTorch layout.
+  seisbench_phasenet_original:
+    url: https://hifis-storage.desy.de/Helmholtz/HelmholtzAI/SeisBench/models/v3/phasenet/original.pt.v2
+    sha256: 184dd85b896eebf8d5967ee15a722a477fa2e4ce479a3b113ecbcb8a6419113f
+    license: MIT (original PhaseNet weights; SeisBench conversion)
+  seisbench_eqtransformer_original:
+    # SeisBench "original" = the conservative Keras model (EqT_model_conservative.h5).
+    url: https://hifis-storage.desy.de/Helmholtz/HelmholtzAI/SeisBench/models/v3/eqtransformer/original.pt.v3
+    sha256: c363c59dfb4562ba3b1356fb03dc9c776bbcfe3384b5db22e5ee3689de0a4df9
+    license: MIT (original EQTransformer weights; SeisBench conversion)
+  seisbench_eqtransformer_original_nonconservative:
+    # SeisBench "original_nonconservative" = the paper model (EqT_original_model.h5).
+    url: https://hifis-storage.desy.de/Helmholtz/HelmholtzAI/SeisBench/models/v3/eqtransformer/original_nonconservative.pt.v1
+    sha256: 2b9d843994429f73ce6eb5c94d40c75972032d4cdb660d29a1fa8ead6ac357d0
+    license: MIT (original EQTransformer weights; SeisBench conversion)
+  seisbench_gpd_original:
+    url: https://hifis-storage.desy.de/Helmholtz/HelmholtzAI/SeisBench/models/v3/gpd/original.pt
+    sha256: 4bb54c3728095e6dc4f7f16f4483c7f6dcb47a794bb5f110725680c16591d46c
+    license: MIT (original GPD weights; SeisBench conversion)

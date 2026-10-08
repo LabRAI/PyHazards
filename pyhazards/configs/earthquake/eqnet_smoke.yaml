@@ -1,15 +1,21 @@
+# The experimental `eqnet` stand-in regresses one (P, S) arrival sample pair per trace; the picking
+# benchmark scores those as one pick of each phase. Short windows keep its attention cheap.
 benchmark:
   name: earthquake
   hazard_task: earthquake.picking
   metrics:
+    - p_f1
+    - s_f1
     - p_pick_mae
     - s_pick_mae
-    - f1
   eval_split: test
+  params:
+    protocol: eqtransformer
 dataset:
-  name: seisbench_waveforms
+  name: earthquake_waveforms_synthetic
   params:
     micro: true
+    length: 512
 model:
   name: eqnet
   task: regression

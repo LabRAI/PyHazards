@@ -6,9 +6,9 @@ pick-benchmark
 Overview
 --------
 
-The current pick-benchmark path reuses the synthetic waveform picking bundle and tags it as a pick-benchmark-style benchmark adapter.
+pick-benchmark compares deep-learning pickers on eight SeisBench datasets with three tasks: event detection (ROC-AUC), phase identification (Matthews correlation) and onset-time regression (residual distributions), on windows cut around the picks. PyHazards scores pickers with the pick metrics of the PhaseNet and EQTransformer papers instead; pick-benchmark's tasks, window sampling and MCC / AUC metrics are not reproduced.
 
-It supports the earthquake picking smoke path for the transformer and CNN picking baselines.
+Its numbers for PhaseNet were obtained with SeisBench's pre-0.3 PhaseNet (23,305 parameters), not the original architecture that PyHazards ports.
 
 At a Glance
 -----------
@@ -44,7 +44,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         :bdg-info:`Synthetic-backed`
+         :bdg-warning:`Experimental`
 
       .. container:: catalog-stat-note
 
@@ -55,11 +55,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         2
+         3
 
       .. container:: catalog-stat-note
 
-         2 models
+         3 models
 
 
 Benchmark Mapping
@@ -77,7 +77,7 @@ Mapped benchmark family
 Primary Source
 ~~~~~~~~~~~~~~
 
-`pick-benchmark <https://github.com/seisbench/pick-benchmark>`_.
+`Which Picker Fits My Data? A Quantitative Evaluation of Deep Learning Based Seismic Pickers (Münchmeyer et al., J. Geophys. Res. Solid Earth 127, e2021JB023499, 2022) <https://doi.org/10.1029/2021JB023499>`_ (`repo <https://github.com/seisbench/pick-benchmark>`__).
 
 .. dropdown:: Supported Tasks
    :class-container: catalog-dropdown
@@ -87,11 +87,8 @@ Primary Source
 .. dropdown:: Key Metrics
    :class-container: catalog-dropdown
 
-   - ``p_pick_mae``
-   - ``s_pick_mae``
-   - ``precision``
-   - ``recall``
-   - ``f1``
+   - ``p_f1``
+   - ``s_f1``
 
 .. dropdown:: Smoke Configs
    :class-container: catalog-dropdown
@@ -102,4 +99,9 @@ Primary Source
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`.
+   :doc:`PhaseNet </modules/models_phasenet>`, :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`.
+
+.. dropdown:: Notes
+   :class-container: catalog-dropdown
+
+   - pick-benchmark is GPL-3.0; it is not vendored or imported.

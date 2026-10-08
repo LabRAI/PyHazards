@@ -25,7 +25,12 @@ Earthquake
 Implemented Models
 ++++++++++++++++++
 
-:doc:`EQNet </modules/models_eqnet>`, :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`, :doc:`PhaseNet </modules/models_phasenet>`, :doc:`WaveCastNet </modules/models_wavecastnet>`.
+:doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`, :doc:`PhaseNet </modules/models_phasenet>`.
+
+Experimental Adapters
++++++++++++++++++++++
+
+:doc:`EQNet (stand-in) </modules/models_eqnet>`, :doc:`WaveCastNet </modules/models_wavecastnet>`.
 
 Flood
 ~~~~~
@@ -63,7 +68,7 @@ Build a Registered Model
 
     model = build_model(
         name="phasenet",
-        task="regression",
+        task="picking",
         in_channels=3,
     )
 

@@ -3,31 +3,39 @@ display_name: SeisBench
 kind: ecosystem
 hazard_family: Earthquake
 benchmark_key: earthquake
-support_status: synthetic-backed
+support_status: real-backed
 summary: >
-  SeisBench-shaped waveform picking support for the shared earthquake benchmark family.
+  SeisBench-format waveform datasets (STEAD, INSTANCE, ETHZ, ...) read by PyHazards' own
+  ``seisbench_waveforms`` reader and scored by the earthquake picking evaluator.
 description:
   - >
-    The current SeisBench path uses a synthetic waveform adapter that preserves the same
-    picking task shape expected by the shared earthquake benchmark.
+    SeisBench (Woollam et al. 2022) distributes seismic machine-learning benchmark datasets in a
+    common format (metadata CSV + waveform HDF5). PyHazards reads that format without importing
+    SeisBench, whose GPL-3.0 code is used only as a test oracle (the reader, and the PhaseNet,
+    EQTransformer and GPD ports, are compared with SeisBench in ``tests/oracle``).
   - >
-    It exists today as a benchmark-compatible smoke path rather than a full external
-    SeisBench ingestion pipeline.
+    The datasets are not redistributed; download them with SeisBench or from their providers.
 source:
-  title: SeisBench - A Toolbox for Machine Learning in Seismology
-  url: https://joss.theoj.org/papers/10.21105/joss.04418
+  title: "SeisBench - A Toolbox for Machine Learning in Seismology (Woollam et al., Seismological Research Letters 93(3):1695-1709, 2022)"
+  url: https://doi.org/10.1785/0220210324
   repo_url: https://github.com/seisbench/seisbench
 tasks:
   - earthquake.picking
 metrics:
+  - p_precision
+  - p_recall
+  - p_f1
   - p_pick_mae
+  - s_precision
+  - s_recall
+  - s_f1
   - s_pick_mae
-  - precision
-  - recall
-  - f1
 smoke_configs:
   - pyhazards/configs/earthquake/phasenet_smoke.yaml
-  - pyhazards/configs/earthquake/eqnet_smoke.yaml
 linked_models:
   - phasenet
-  - eqnet
+  - eqtransformer
+  - gpd
+notes:
+  - "SeisBench is GPL-3.0; PyHazards (MIT) neither vendors nor imports it."
+  - "The smoke config runs on synthetic windows; point ``seisbench_waveforms`` at a downloaded dataset for real numbers."
