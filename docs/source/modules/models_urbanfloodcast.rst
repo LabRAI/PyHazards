@@ -6,7 +6,7 @@ UrbanFloodCast
 Overview
 --------
 
-``urbanfloodcast`` adds an urban-focused raster baseline to the PyHazards inundation benchmark stack.
+``urbanfloodcast`` is a small PyHazards 2-D convolutional network that maps ``(batch, history, channels, H, W)`` rasters to a next-step depth raster. It is not UrbanFloodCast: the published model is a deep neural operator (U-NO / Fourier layers, 4,470,437 parameters for DNO-3) that predicts 24 steps at once, with transfer-learning variants, on simulated design storms for two areas of Berlin (Zenodo 10.5281/zenodo.15700880, CC BY 4.0).
 
 At a Glance
 -----------
@@ -31,7 +31,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         Implemented
+         Experimental Adapter
 
       .. container:: catalog-stat-note
 
@@ -42,11 +42,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         1
+         2
 
       .. container:: catalog-stat-note
 
-         Inundation
+         Forecasting, Segmentation
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,21 +63,24 @@ At a Glance
 Description
 -----------
 
-``urbanfloodcast`` adds an urban-focused raster baseline to the PyHazards inundation benchmark stack.
+``urbanfloodcast`` is a small PyHazards 2-D convolutional network that maps ``(batch, history, channels, H, W)`` rasters to a next-step depth raster. It is not UrbanFloodCast: the published model is a deep neural operator (U-NO / Fourier layers, 4,470,437 parameters for DNO-3) that predicts 24 steps at once, with transfer-learning variants, on simulated design storms for two areas of Berlin (Zenodo 10.5281/zenodo.15700880, CC BY 4.0).
 
-The implementation keeps the shared spatiotemporal tensor contract used by the synthetic inundation smoke dataset.
+The official code has no licence, so a faithful port must be rewritten from the paper (its U-NO and FNO components come from BSD-2 / MIT projects). The smoke configuration scores this placeholder on ``flood_inundation_synthetic`` (random rasters).
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Flood Benchmark </benchmarks/flood_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`FloodCastBench </benchmarks/floodcastbench>`
-
 External References
 -------------------
 
-**Paper:** `UrbanFloodCast: WMO Urban Flooding Forecasting Challenge <https://arxiv.org/abs/2405.21179>`_ | **Repo:** `Repository <https://github.com/HydroPML/UrbanFloodCast>`__
+**Paper:** `Urban flood modeling and forecasting with deep neural operator and transfer learning <https://doi.org/10.1016/j.jhydrol.2025.133705>`_ | **Repo:** `Repository <https://github.com/HydroPML/UrbanFloodCast>`__
+
+Used In
+-------
+
+- `Urban flood modeling and forecasting with deep neural operator and transfer learning <https://doi.org/10.1016/j.jhydrol.2025.133705>`_ (`repo <https://github.com/HydroPML/UrbanFloodCast>`__): Xu, De Vos, Shi, Rüther, Bronstert and Zhu, Journal of Hydrology 661:133705 (2025). The repository (no licence) holds the DNO models and training scripts.
 
 Reproduction
 ------------
@@ -92,7 +95,8 @@ Primary entrypoint: ``urbanfloodcast``
 Supported Tasks
 ---------------
 
-- Inundation
+- Forecasting
+- Segmentation
 
 Programmatic Use
 ----------------
@@ -110,3 +114,5 @@ Notes
 -----
 
 - Outputs are next-horizon inundation depth rasters.
+- Experimental: kept under its published name only until a reimplementation from the paper replaces it; do not report its results as UrbanFloodCast's.
+

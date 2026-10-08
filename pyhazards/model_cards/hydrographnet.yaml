@@ -1,22 +1,36 @@
 model_name: hydrographnet
 display_name: HydroGraphNet
 hazard: Flood
-catalog_status: variant
+catalog_status: experimental
 source_file: pyhazards/models/hydrographnet.py
 builder_name: hydrographnet_builder
 summary: >
-  A physics-informed graph neural network for flood forecasting with interpretable
-  KAN-style components, residual message passing, and delta-state decoding.
+  A compact graph network loosely modelled on HydroGraphNet; not yet a port of the published model
+  (experimental).
 description:
   - >
-    ``hydrographnet`` is the PyHazards entrypoint for flood forecasting on irregular
-    meshes with graph-structured hydrologic state updates.
+    ``hydrographnet`` is a PyHazards message-passing network with a harmonic (KAN-style) node encoder,
+    residual edge / node updates and a delta-state decoder over ``{"x": (batch, time, nodes, features),
+    "adj", "coords"}`` inputs. It is not the published HydroGraphNet: the official model (MeshGraphKAN in
+    NVIDIA PhysicsNeMo) has LayerNorm in its MLPs, sum aggregation, a different feature and KAN layout and
+    a physics-informed loss (2,318,722 parameters at the official configuration, against 204,802 here).
   - >
-    In PyHazards, this model is typically paired with the ERA5-based hydrograph
-    adapter ``load_hydrograph_data`` for end-to-end smoke validation.
+    The original task is water depth and volume on the 4,787-node HEC-RAS mesh of the White River near
+    Muncie, Indiana (Zenodo 14969507, CC BY 4.0). PyHazards does not load that dataset; the smoke
+    configuration scores the model on ``flood_mesh_synthetic`` (random node series) with the inundation
+    metrics, per mesh node.
 paper:
-  title: Interpretable physics-informed graph neural networks for flood forecasting
-  url: https://onlinelibrary.wiley.com/doi/10.1111/mice.13484
+  title: "Interpretable physics-informed graph neural networks for flood forecasting"
+  url: https://doi.org/10.1111/mice.13484
+  repo_url: https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet
+references:
+  - title: "Interpretable physics-informed graph neural networks for flood forecasting"
+    url: https://doi.org/10.1111/mice.13484
+    repo_url: https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet
+    note: >
+      Taghizadeh, Zandsalimi, Nabian, Shafiee-Jood and Alemazkoor, Computer-Aided Civil and
+      Infrastructure Engineering 40(18):2629-2649 (2025). Official code: NVIDIA PhysicsNeMo
+      (Apache-2.0), contributed by the first author.
 tasks:
   - regression
 example: |
@@ -39,6 +53,9 @@ example: |
   preds = model(batch)
   print(preds.shape)
 notes:
+  - >
+    Experimental: kept under its published name only until a faithful port of MeshGraphKAN (checked
+    against PhysicsNeMo) replaces it; do not report its results as HydroGraphNet's.
   - "The smoke test uses a synthetic graph batch so it stays CPU-safe in CI."
 smoke_test:
   task: regression

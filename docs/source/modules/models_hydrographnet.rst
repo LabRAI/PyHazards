@@ -6,7 +6,7 @@ HydroGraphNet
 Overview
 --------
 
-``hydrographnet`` is the PyHazards entrypoint for flood forecasting on irregular meshes with graph-structured hydrologic state updates.
+``hydrographnet`` is a PyHazards message-passing network with a harmonic (KAN-style) node encoder, residual edge / node updates and a delta-state decoder over ``{"x": (batch, time, nodes, features), "adj", "coords"}`` inputs. It is not the published HydroGraphNet: the official model (MeshGraphKAN in NVIDIA PhysicsNeMo) has LayerNorm in its MLPs, sum aggregation, a different feature and KAN layout and a physics-informed loss (2,318,722 parameters at the official configuration, against 204,802 here).
 
 At a Glance
 -----------
@@ -31,7 +31,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         Implemented
+         Experimental Adapter
 
       .. container:: catalog-stat-note
 
@@ -46,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-note
 
-         Streamflow
+         Forecasting
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,21 +63,24 @@ At a Glance
 Description
 -----------
 
-``hydrographnet`` is the PyHazards entrypoint for flood forecasting on irregular meshes with graph-structured hydrologic state updates.
+``hydrographnet`` is a PyHazards message-passing network with a harmonic (KAN-style) node encoder, residual edge / node updates and a delta-state decoder over ``{"x": (batch, time, nodes, features), "adj", "coords"}`` inputs. It is not the published HydroGraphNet: the official model (MeshGraphKAN in NVIDIA PhysicsNeMo) has LayerNorm in its MLPs, sum aggregation, a different feature and KAN layout and a physics-informed loss (2,318,722 parameters at the official configuration, against 204,802 here).
 
-In PyHazards, this model is typically paired with the ERA5-based hydrograph adapter ``load_hydrograph_data`` for end-to-end smoke validation.
+The original task is water depth and volume on the 4,787-node HEC-RAS mesh of the White River near Muncie, Indiana (Zenodo 14969507, CC BY 4.0). PyHazards does not load that dataset; the smoke configuration scores the model on ``flood_mesh_synthetic`` (random node series) with the inundation metrics, per mesh node.
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Flood Benchmark </benchmarks/flood_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`HydroBench </benchmarks/hydrobench>`
-
 External References
 -------------------
 
-**Paper:** `Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_
+**Paper:** `Interpretable physics-informed graph neural networks for flood forecasting <https://doi.org/10.1111/mice.13484>`_ | **Repo:** `Repository <https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet>`__
+
+Used In
+-------
+
+- `Interpretable physics-informed graph neural networks for flood forecasting <https://doi.org/10.1111/mice.13484>`_ (`repo <https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet>`__): Taghizadeh, Zandsalimi, Nabian, Shafiee-Jood and Alemazkoor, Computer-Aided Civil and Infrastructure Engineering 40(18):2629-2649 (2025). Official code: NVIDIA PhysicsNeMo (Apache-2.0), contributed by the first author.
 
 Reproduction
 ------------
@@ -92,7 +95,7 @@ Primary entrypoint: ``hydrographnet``
 Supported Tasks
 ---------------
 
-- Streamflow
+- Forecasting
 
 Programmatic Use
 ----------------
@@ -120,5 +123,7 @@ Programmatic Use
 
 Notes
 -----
+
+- Experimental: kept under its published name only until a faithful port of MeshGraphKAN (checked against PhysicsNeMo) replaces it; do not report its results as HydroGraphNet's.
 
 - The smoke test uses a synthetic graph batch so it stays CPU-safe in CI.

@@ -40,9 +40,11 @@ Key corrections from the audit:
 - Earthquake has the main model adapters (`PhaseNet`, `EQTransformer`, `GPD`,
   `EQNet`), but the SeisBench / pick-benchmark / pyCSEP / AEFA benchmark-data
   stack is still missing.
-- Flood has the main model adapters (`NeuralHydrology`, `FloodCast`,
-  `UrbanFloodCast`), but the Caravan / WaterBench / FloodCastBench /
-  HydroBench benchmark-data stack is still missing.
+- Flood: the NeuralHydrology LSTM / EA-LSTM and Google's released FloodHub
+  model are faithful ports, with real CAMELS-US and Caravan readers and per-basin
+  NSE / KGE evaluation. `FloodCast`, `UrbanFloodCast` and `HydroGraphNet` are
+  experimental stand-ins, and WaterBench / FloodCastBench / HydroBench have no
+  readers (their former adapters generated random numbers and were removed).
 - Storm has the main model adapters, but `TCBench`, `IBTrACS`, and
   `TropiCycloneNet-Dataset` are still missing. `GraphCast`, `Pangu`, and
   `FourCastNet` remain experimental wrappers and must not be counted as

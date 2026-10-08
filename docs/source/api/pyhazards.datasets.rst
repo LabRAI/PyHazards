@@ -24,7 +24,7 @@ Wildfire
 Flood
 ~~~~~
 
-:doc:`Caravan </datasets/caravan_streamflow>`, :doc:`FloodCastBench </datasets/floodcastbench_inundation>`, :doc:`HydroBench </datasets/hydrobench_streamflow>`, :doc:`NOAA Flood Events </datasets/noaa_flood>`, :doc:`WaterBench </datasets/waterbench_streamflow>`.
+:doc:`CAMELS-US </datasets/camels_us_streamflow>`, :doc:`Caravan </datasets/caravan_streamflow>`, :doc:`NOAA Flood Events </datasets/noaa_flood>`.
 
 Earthquake
 ~~~~~~~~~~

@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         12
+         10
 
       .. container:: catalog-stat-note
 
@@ -128,11 +128,11 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-entry-summary
 
-         Shared PyHazards evaluator family for streamflow forecasting and inundation prediction.
+         Shared PyHazards evaluator for daily streamflow (per-basin NSE, KGE and the other NeuralHydrology metrics) and for inundation depth / extent prediction.
 
       .. container:: catalog-chip-row
 
-         :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-secondary:`Inundation` :bdg-info:`Synthetic-backed`
+         :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-secondary:`Inundation` :bdg-success:`Real-backed`
 
       .. container:: catalog-meta-row
 
@@ -140,11 +140,11 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-meta-row
 
-         **Key Metrics:** MAE, RMSE, NSE, KGE, +3 more
+         **Key Metrics:** NSE, KGE, Alpha-NSE, Beta-NSE, +8 more
 
       .. container:: catalog-meta-row
 
-         **Coverage:** 6 smoke configs | 6 models | 4 ecosystems
+         **Coverage:** 6 smoke configs | 6 models | 2 ecosystems
 
       .. container:: catalog-link-row
 
@@ -211,9 +211,9 @@ status without opening the detail pages first.
    * - Flood
      - :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
      - Streamflow, Inundation
-     - MAE, RMSE, NSE, KGE, +3 more
+     - NSE, KGE, Alpha-NSE, Beta-NSE, +8 more
      - 6 models
-     - Synthetic-backed
+     - Real-backed
    * - Tropical Cyclone
      - :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
      - Track + Intensity
@@ -424,16 +424,16 @@ and the models currently mapped to that ecosystem.
          :gutter: 2
          :class-container: catalog-grid
 
-         .. grid-item-card:: Caravan
+         .. grid-item-card:: CAMELS-US
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               Caravan-style streamflow benchmark coverage for the shared flood streamflow evaluator.
+               The CAMELS-US benchmark of Kratzert et al. (2019): 531 basins, extended Maurer forcings, 27 attributes, test 1989-1999, scored per basin with NSE and the FDC metrics.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-info:`Synthetic-backed`
+               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-success:`Real-backed`
 
             .. container:: catalog-meta-row
 
@@ -441,11 +441,42 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Key Metrics:** MAE, RMSE, NSE, KGE
+               **Key Metrics:** NSE, Mean NSE, Basins with NSE <= 0, Alpha-NSE, +4 more
 
             .. container:: catalog-meta-row
 
                **Coverage:** 2 smoke configs | 2 models
+
+            .. container:: catalog-link-row
+
+               **View Details:** :doc:`CAMELS-US <benchmarks/camels_us>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ | **Repo:** `Repository <https://github.com/kratzert/ealstm_regional_modeling>`__
+
+         .. grid-item-card:: Caravan
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Caravan, the global large-sample hydrology dataset, read from a local copy and scored with the per-basin streamflow metrics.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-success:`Real-backed`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Key Metrics:** NSE, KGE, Mean NSE
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** 2 smoke configs | 3 models
 
             .. container:: catalog-link-row
 
@@ -453,100 +484,7 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-link-row
 
-               **Paper:** `Caravan - A global community dataset for large-sample hydrology <https://www.nature.com/articles/s41597-023-01975-w>`_ | **Repo:** `Repository <https://github.com/kratzert/Caravan>`__
-
-         .. grid-item-card:: FloodCastBench
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               FloodCastBench-style inundation benchmark coverage for the shared flood inundation evaluator.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Flood` :bdg-secondary:`Inundation` :bdg-info:`Synthetic-backed`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Key Metrics:** Pixel MAE, IoU, F1
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** 2 smoke configs | 2 models
-
-            .. container:: catalog-link-row
-
-               **View Details:** :doc:`FloodCastBench <benchmarks/floodcastbench>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `FloodCastBench <https://github.com/HydroPML/FloodCastBench>`_
-
-         .. grid-item-card:: HydroBench
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               HydroBench-style streamflow diagnostics coverage for the shared flood streamflow evaluator.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-info:`Synthetic-backed`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Key Metrics:** MAE, RMSE, NSE, KGE
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** 1 smoke config | 1 model
-
-            .. container:: catalog-link-row
-
-               **View Details:** :doc:`HydroBench <benchmarks/hydrobench>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `HydroBench <https://github.com/EMscience/HydroBench>`_
-
-         .. grid-item-card:: WaterBench
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               WaterBench-style streamflow benchmark coverage for the shared flood evaluator.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-info:`Synthetic-backed`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Key Metrics:** MAE, RMSE, NSE, KGE
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** 1 smoke config | 1 model
-
-            .. container:: catalog-link-row
-
-               **View Details:** :doc:`WaterBench <benchmarks/waterbench>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `WaterBench: A Large-scale Benchmark Dataset for Data-driven Streamflow Forecasting <https://neurips.cc/virtual/2023/80632>`_ | **Repo:** `Repository <https://github.com/uihilab/WaterBench>`__
+               **Paper:** `Caravan - A global community dataset for large-sample hydrology <https://doi.org/10.1038/s41597-023-01975-w>`_ | **Repo:** `Repository <https://github.com/kratzert/Caravan>`__
 
 
    .. tab-item:: Tropical Cyclone
@@ -677,11 +615,10 @@ and :doc:`pyhazards_reports` for comparable benchmark exports.
    :hidden:
 
    benchmarks/aefa
+   benchmarks/camels_us
    benchmarks/caravan
    benchmarks/earthquake_benchmark
    benchmarks/flood_benchmark
-   benchmarks/floodcastbench
-   benchmarks/hydrobench
    benchmarks/ibtracs
    benchmarks/pick_benchmark
    benchmarks/pycsep
@@ -689,6 +626,5 @@ and :doc:`pyhazards_reports` for comparable benchmark exports.
    benchmarks/tcbench_alpha
    benchmarks/tropical_cyclone_benchmark
    benchmarks/tropicyclonenet_dataset
-   benchmarks/waterbench
    benchmarks/wildfire_benchmark
    benchmarks/wildfirespreadts_ecosystem

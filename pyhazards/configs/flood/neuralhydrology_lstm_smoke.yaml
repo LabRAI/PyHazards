@@ -1,23 +1,28 @@
+# Kratzert et al. (2019) LSTM with static inputs (5 forcings + 27 attributes, hidden 256) on synthetic basins.
+# Real data: dataset camels_us_streamflow with params {data_dir, basins} (paper periods and 270-day windows).
 benchmark:
   name: flood
   hazard_task: flood.streamflow
   metrics:
-    - mae
-    - rmse
     - nse
     - kge
+    - alpha_nse
+    - beta_nse
+    - fhv
+    - fms
+    - flv
   eval_split: test
 dataset:
-  name: caravan_streamflow
+  name: flood_streamflow_synthetic
   params:
     micro: true
 model:
   name: neuralhydrology_lstm
   task: regression
   params:
-    input_dim: 2
-    hidden_dim: 64
-    out_dim: 1
+    n_dynamic: 5
+    n_static: 27
+    hidden_size: 256
 report:
   output_dir: reports/flood_neuralhydrology_lstm
   formats:

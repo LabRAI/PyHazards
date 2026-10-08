@@ -3,38 +3,63 @@ display_name: Flood Benchmark
 kind: family
 hazard_family: Flood
 benchmark_key: flood
-support_status: synthetic-backed
+support_status: real-backed
 summary: >
-  Shared PyHazards evaluator family for streamflow forecasting and inundation prediction.
+  Shared PyHazards evaluator for daily streamflow (per-basin NSE, KGE and the other NeuralHydrology
+  metrics) and for inundation depth / extent prediction.
 description:
   - >
-    The flood benchmark family keeps streamflow and inundation scoring under one shared
-    evaluator contract while preserving hazard-task-specific metrics.
+    ``flood.streamflow`` follows Kratzert et al. (HESS 2019) and NeuralHydrology: each model predicts the
+    discharge of every day of the evaluation period from the preceding window of daily forcings and the
+    basin's static attributes; predictions go back to mm/day with the training scaler, negative values
+    are set to zero, and NeuralHydrology's metrics (NSE, MSE, RMSE, KGE, alpha-NSE, beta-KGE, beta-NSE,
+    Pearson r, FHV, FMS, FLV, peak timing, missed peaks, peak MAPE) are computed per basin over the period.
+    Reported values are the median over basins (``nse``, ``kge``, ...), the mean over basins
+    (``nse_mean``, ...), ``n_basins`` and ``n_basins_nse_le_0``; per-basin values are in the report
+    metadata. Probabilistic models are scored by their mixture mean.
   - >
-    Current public coverage is synthetic-backed, but the same family already drives the
-    streamflow and inundation smoke configs used across the flood models.
+    Real streamflow data come from ``camels_us_streamflow`` and ``caravan_streamflow`` (local copies of the
+    official releases); the smoke configs run the same contract on ``flood_streamflow_synthetic``.
+    ``flood.inundation`` compares depth rasters (or mesh-node depths) cell by cell: mean absolute depth
+    error and IoU / F1 of the wet masks; it has no real-data backing yet.
 tasks:
   - flood.streamflow
   - flood.inundation
 metrics:
-  - mae
-  - rmse
   - nse
   - kge
+  - alpha_nse
+  - beta_nse
+  - fhv
+  - fms
+  - flv
+  - nse_mean
+  - n_basins_nse_le_0
   - pixel_mae
   - iou
   - f1
 smoke_configs:
-  - pyhazards/configs/flood/hydrographnet_smoke.yaml
   - pyhazards/configs/flood/neuralhydrology_lstm_smoke.yaml
   - pyhazards/configs/flood/neuralhydrology_ealstm_smoke.yaml
   - pyhazards/configs/flood/google_flood_forecasting_smoke.yaml
+  - pyhazards/configs/flood/hydrographnet_smoke.yaml
   - pyhazards/configs/flood/floodcast_smoke.yaml
   - pyhazards/configs/flood/urbanfloodcast_smoke.yaml
 linked_models:
-  - hydrographnet
   - neuralhydrology_lstm
   - neuralhydrology_ealstm
   - google_flood_forecasting
+  - hydrographnet
   - floodcast
   - urbanfloodcast
+notes:
+  - >
+    The streamflow evaluation (reader, normalisation, rescaling, clipping and per-basin metrics) is
+    checked against NeuralHydrology's Tester on real CAMELS-US basins, and the metric code reproduces
+    Table 2 of Kratzert et al. (2019) from the official stored simulations.
+  - >
+    hydrographnet, floodcast and urbanfloodcast are experimental stand-ins (not ports of the published
+    models); their smoke configs only exercise the inundation contract on synthetic data.
+  - >
+    WaterBench, HydroBench and FloodCastBench have no PyHazards reader; the former adapters with these
+    names generated random numbers and were removed.

@@ -1,14 +1,14 @@
+# HydroGraphNet (not yet a faithful port) on synthetic mesh-node water depths, scored per node.
 benchmark:
   name: flood
-  hazard_task: flood.streamflow
+  hazard_task: flood.inundation
   metrics:
-    - mae
-    - rmse
-    - nse
-    - kge
+    - pixel_mae
+    - iou
+    - f1
   eval_split: test
 dataset:
-  name: hydrobench_streamflow
+  name: flood_mesh_synthetic
   params:
     micro: true
 model:

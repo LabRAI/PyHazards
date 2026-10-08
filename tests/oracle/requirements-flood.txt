@@ -1,0 +1,21 @@
+# Reference stack for tests/oracle/test_neuralhydrology_oracle.py and test_google_flood_forecasting_oracle.py
+# (Python 3.12, CPU torch installed by the workflow). NeuralHydrology (ea94a40) and googlehydrology
+# (google-research/flood-forecasting cdda28d) are imported from their pinned checkouts, so only their
+# dependencies are installed here: the model, dataset, metric and Tester modules import numba, ruamel.yaml,
+# xarray/netCDF4, scipy, matplotlib and tensorboard (NeuralHydrology), dask, zarr, more-itertools and
+# pydantic (googlehydrology).
+numpy==2.5.3
+pandas==3.0.6
+xarray==2026.9.0
+netCDF4==1.7.4
+h5py==3.16.0
+scipy==1.18.1
+numba==0.68.0
+ruamel.yaml==0.19.1
+matplotlib==3.11.2
+tensorboard==2.21.0
+tqdm==4.70.1
+dask==2026.8.0
+zarr==3.4.0
+more-itertools==11.1.0
+pydantic==2.13.5

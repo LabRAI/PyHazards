@@ -6,7 +6,7 @@ NeuralHydrology LSTM
 Overview
 --------
 
-``neuralhydrology_lstm`` is the first community-style hydrology baseline in the PyHazards flood roadmap.
+``neuralhydrology_lstm`` is a port of NeuralHydrology's ``CudaLSTM`` with its regression head. It reads ``{"x_d": (batch, time, n_dynamic), "x_s": (batch, n_static)}``: the static attributes are concatenated to the dynamic inputs at every day, a single-layer LSTM runs over the sequence, and dropout plus a linear head give a discharge value for every day. Like the reference it returns a dict with ``y_hat`` (batch, time, n_targets), ``lstm_output`` and the final states ``h_n`` and ``c_n``; streamflow evaluation uses the last day of each window.
 
 At a Glance
 -----------
@@ -63,26 +63,43 @@ At a Glance
 Description
 -----------
 
-``neuralhydrology_lstm`` is the first community-style hydrology baseline in the PyHazards flood roadmap.
+``neuralhydrology_lstm`` is a port of NeuralHydrology's ``CudaLSTM`` with its regression head. It reads ``{"x_d": (batch, time, n_dynamic), "x_s": (batch, n_static)}``: the static attributes are concatenated to the dynamic inputs at every day, a single-layer LSTM runs over the sequence, and dropout plus a linear head give a discharge value for every day. Like the reference it returns a dict with ``y_hat`` (batch, time, n_targets), ``lstm_output`` and the final states ``h_n`` and ``c_n``; streamflow evaluation uses the last day of each window.
 
-The adapter consumes the shared graph-temporal streamflow batch format and produces next-step nodewise discharge predictions.
+Defaults are the "LSTM with static inputs" of Kratzert et al. (2019): 5 extended-Maurer forcings, 27 CAMELS attributes, hidden size 256, output dropout 0.4, forget-gate bias initialised to 5, used on 270-day windows (297,217 parameters). ``n_static=0`` gives their "LSTM without static inputs". Parameter names, initialisation and outputs equal NeuralHydrology's, and the official 2019 checkpoints load through ``checkpoint=`` (converted from the paper code's single-bias layout).
+
+Data: ``camels_us_streamflow`` (the paper's setup, from a local CAMELS-US copy) or ``caravan_streamflow``; both normalise inputs as NeuralHydrology does and are scored by the flood benchmark's per-basin NSE / KGE.
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Flood Benchmark </benchmarks/flood_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`Caravan </benchmarks/caravan>`
+**Mapped benchmark ecosystems:** :doc:`CAMELS-US </benchmarks/camels_us>`, :doc:`Caravan </benchmarks/caravan>`
 
 External References
 -------------------
 
-**Paper:** `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ | **Repo:** `Repository <https://github.com/neuralhydrology/neuralhydrology>`__
+**Paper:** `Rainfall-runoff modelling using Long Short-Term Memory (LSTM) networks <https://doi.org/10.5194/hess-22-6005-2018>`_ | **Repo:** `Repository <https://github.com/neuralhydrology/neuralhydrology>`__
+
+Used In
+-------
+
+- `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ (`repo <https://github.com/kratzert/ealstm_regional_modeling>`__): Kratzert, Klotz, Shalev, Klambauer, Hochreiter and Nearing, HESS 23:5089-5110 (2019). One LSTM for 531 CAMELS-US basins: 5 extended-Maurer forcings + 27 attributes, hidden 256, dropout 0.4, 270-day windows, train 1999-10-01 to 2008-09-30, test 1989-10-01 to 1999-09-30, NSE* or MSE loss, 8 seeds. Table 2, LSTM with static inputs, NSE* loss: single model mean NSE 0.69 (+/-0.013), median 0.73 (+/-0.002), 2 (+/-1) basins with NSE <= 0; ensemble of 8: mean 0.72, median 0.76. MSE loss: median 0.73 (single), 0.76 (ensemble). Without static inputs (NSE*): median 0.59 (single), 0.64 (ensemble). The flood benchmark reproduces all of these from the official stored simulations (gated oracle test).
+- `NeuralHydrology - A Python library for Deep Learning research in hydrology <https://doi.org/10.21105/joss.04050>`_ (`repo <https://github.com/neuralhydrology/neuralhydrology>`__): Kratzert, Gauch, Nearing and Klotz, Journal of Open Source Software 7(71):4050 (2022). The library whose CudaLSTM, regression head, CAMELS-US / Caravan readers and metrics PyHazards ports.
+- `Rainfall-runoff modelling using Long Short-Term Memory (LSTM) networks <https://doi.org/10.5194/hess-22-6005-2018>`_: Kratzert, Klotz, Brenner, Schulz and Herrnegger, HESS 22:6005-6022 (2018). The LSTM rainfall-runoff model, there with 2 layers of 20 cells, 365-day windows and 5 Daymet forcings, trained per basin (mean NSE 0.63 over 241 basins in experiment 1). That two-layer variant is not a CudaLSTM configuration and is not provided.
 
 Reproduction
 ------------
 
-Not yet verified against a reference implementation.
+- **Reference implementation:** `https://github.com/neuralhydrology/neuralhydrology <https://github.com/neuralhydrology/neuralhydrology>`__ at ``ea94a40`` (BSD-3-Clause)
+- **Checked configuration:** neuralhydrology/modelzoo/cudalstm.py (CudaLSTM) with a regression head, built from a Config with 5 dynamic inputs, the 27 static attributes, hidden_size 256, output_dropout 0.4 and initial_forget_bias 5 (297,217 parameters; 269,569 without static inputs). Official weights: the 16 LSTM runs of Kratzert et al. (2019) on HydroShare (doi 10.4211/hs.83ea5312635e44dc824eeb99eda12f06, CC BY 4.0), written by papercode/lstm.py of kratzert/ealstm_regional_modeling @ d118158.
+- **Parameter count:** 297,217
+- **Verified:** parameter count, seeded initialisation, parameter names and shapes, forward outputs, official pretrained weights
+- **Oracle test:** ``tests/oracle/test_neuralhydrology_oracle.py``
+- **Deviation:** Only the configuration of the paper is ported: NeuralHydrology's optional static / dynamic embedding networks, basin one-hot encoding, evolving attributes, autoregressive inputs and the GMM / CMAL / UMAL heads are not available on this model.
+- **Deviation:** Dynamic inputs are one tensor ``x_d`` (batch, time, n_dynamic) instead of a dict of per-feature tensors; NeuralHydrology concatenates the dict in configuration order, so the network input is the same.
+- **Deviation:** The 2019 checkpoints have one bias per gate (gate order f, i, o, g); the conversion puts it into ``bias_ih_l0`` with a zero ``bias_hh_l0``, which gives the same outputs (checked to 1e-6 on all three model types). The port therefore has 1,024 more parameters than the 2019 LSTM (296,193), as NeuralHydrology's CudaLSTM does.
+- **Deviation:** The default ``initial_forget_bias`` is 5 (the 2019 code); NeuralHydrology's default is None (no special initialisation) and its example configurations use 3.
 
 Registry Name
 -------------
@@ -102,11 +119,15 @@ Programmatic Use
    import torch
    from pyhazards.models import build_model
 
-   model = build_model(name="neuralhydrology_lstm", task="regression", input_dim=2, out_dim=1)
-   preds = model({"x": torch.randn(1, 4, 6, 2)})
-   print(preds.shape)
+   model = build_model(name="neuralhydrology_lstm", task="regression")  # Kratzert et al. (2019)
+   out = model({"x_d": torch.randn(2, 270, 5), "x_s": torch.randn(2, 27)})
+   print(out["y_hat"].shape)  # (2, 270, 1): discharge for every day; the last day is the prediction
 
 Notes
 -----
 
-- The smoke test uses the shared synthetic streamflow dataset shape.
+- Training recipe of the paper (not part of the model): Adam, learning rate 1e-3 (5e-4 after epoch 10, 1e-4 after epoch 20), 30 epochs, batch 256, gradient clipping at norm 1, loss on the last time step, NSE* (squared error weighted by 1 / (std of the basin's training discharge + 0.1)^2) or MSE. PyHazards does not ship the NSE* loss yet.
+
+- The 2019 checkpoints expect the 27 attributes in the column order of their ``attributes.db`` (``pyhazards.datasets.flood.KRATZERT2019_CHECKPOINT_STATIC_ORDER``), while PyHazards (like NeuralHydrology) sorts static attributes alphabetically; permute ``x_s`` accordingly, and normalise the forcings with the 2019 code's fixed scaler (papercode/datautils.py), before applying them to real data.
+
+- The smoke configuration runs on ``flood_streamflow_synthetic`` (random basins, 30-day windows).

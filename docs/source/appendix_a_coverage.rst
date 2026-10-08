@@ -43,10 +43,10 @@ Hazard Summary
      - 2
      - 0
    * - Flood
-     - 8
+     - 3
+     - 2
      - 0
-     - 0
-     - 0
+     - 3
    * - Hurricane / Tropical Cyclone
      - 8
      - 3
@@ -156,49 +156,49 @@ Method and Resource Matrix
      - Baseline Family
      - ``Implemented``
      - :doc:`NeuralHydrology LSTM <modules/models_neuralhydrology_lstm>`, :doc:`EA-LSTM <modules/models_neuralhydrology_ealstm>`
-     - The LSTM and EA-LSTM adapters are implemented, but Caravan / WaterBench benchmark backing is still missing.
+     - Ports of NeuralHydrology's CudaLSTM and EA-LSTM at the Kratzert et al. (2019) configuration, checked against NeuralHydrology and the official 2019 checkpoints; CAMELS-US and Caravan readers and the per-basin NSE / KGE evaluation are checked against NeuralHydrology's datasets and Tester.
    * - Flood
      - `Caravan <https://github.com/kratzert/Caravan>`_
      - Dataset
      - ``Implemented``
-     - None
-     - A synthetic-backed Caravan adapter is registered for streamflow smoke benchmarking.
+     - :doc:`Caravan <datasets/caravan_streamflow>`
+     - ``caravan_streamflow`` reads a local copy of the official release (netCDF or CSV) into NeuralHydrology-style samples; checked against NeuralHydrology's reader on real Caravan files.
    * - Flood
      - `WaterBench <https://github.com/uihilab/WaterBench>`_
      - Dataset
-     - ``Implemented``
+     - ``Missing``
      - None
-     - A synthetic-backed WaterBench adapter is registered for streamflow smoke benchmarking.
+     - No reader. The former ``waterbench_streamflow`` adapter generated random numbers and was removed.
    * - Flood
      - `FloodCast <https://github.com/HydroPML/FloodCast>`_
      - Baseline
-     - ``Implemented``
+     - ``Experimental``
      - :doc:`FloodCast <modules/models_floodcast>`
-     - The model adapter is implemented, but FloodCastBench-backed evaluation is not wired yet.
+     - The model under this name is a small CNN, not FloodCast; the official flood-model code was never released, so a port must be written from the paper.
    * - Flood
      - `FloodCastBench <https://github.com/HydroPML/FloodCastBench>`_
      - Benchmark
-     - ``Implemented``
+     - ``Missing``
      - None
-     - A synthetic-backed FloodCastBench-style inundation adapter is registered.
+     - No reader. The former ``floodcastbench_inundation`` adapter generated random numbers and was removed.
    * - Flood
      - `UrbanFloodCast <https://github.com/HydroPML/UrbanFloodCast>`_
      - Baseline
-     - ``Implemented``
+     - ``Experimental``
      - :doc:`UrbanFloodCast <modules/models_urbanfloodcast>`
-     - The model adapter is implemented on synthetic inundation fixtures today.
+     - The model under this name is a four-layer CNN, not the published deep neural operator (official code has no licence).
    * - Flood
      - `HydroBench <https://github.com/EMscience/HydroBench>`_
      - Benchmark / Diagnostics
-     - ``Implemented``
+     - ``Missing``
      - None
-     - A synthetic-backed HydroBench adapter is registered for streamflow smoke benchmarking.
+     - No integration. The former ``hydrobench_streamflow`` adapter generated random numbers and was removed; the flood benchmark computes NeuralHydrology's hydrograph metrics instead.
    * - Flood
      - `google-research/flood-forecasting <https://github.com/google-research/flood-forecasting>`_
      - Reference Baseline
      - ``Implemented``
      - :doc:`Google Flood Forecasting <modules/models_google_flood_forecasting>`
-     -  
+     - Port of the released FloodHub model (MeanEmbeddingForecastLSTM, Gauch et al. 2025); the released weights load and match googlehydrology. Caravan MultiMet forecast inputs are not read yet.
    * - Hurricane / Tropical Cyclone
      - `Hurricast <https://github.com/leobix/hurricast>`_
      - Baseline
@@ -298,9 +298,17 @@ part of the current core method set.
      - :doc:`WaveCastNet <modules/models_wavecastnet>`
      - Implemented outside the current core method set and kept public as an additional model.
    * - Flood
-     - ``variant``
+     - ``experimental``
+     - :doc:`FloodCast <modules/models_floodcast>`
+     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
+   * - Flood
+     - ``experimental``
      - :doc:`HydroGraphNet <modules/models_hydrographnet>`
-     - Implemented outside the current core method set and kept public as an additional model.
+     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
+   * - Flood
+     - ``experimental``
+     - :doc:`UrbanFloodCast <modules/models_urbanfloodcast>`
+     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
    * - Tropical Cyclone
      - ``experimental``
      - :doc:`FourCastNet TC Adapter <modules/models_fourcastnet_tc>`

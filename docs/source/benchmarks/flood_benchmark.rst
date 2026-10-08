@@ -6,9 +6,9 @@ Flood Benchmark
 Overview
 --------
 
-The flood benchmark family keeps streamflow and inundation scoring under one shared evaluator contract while preserving hazard-task-specific metrics.
+``flood.streamflow`` follows Kratzert et al. (HESS 2019) and NeuralHydrology: each model predicts the discharge of every day of the evaluation period from the preceding window of daily forcings and the basin's static attributes; predictions go back to mm/day with the training scaler, negative values are set to zero, and NeuralHydrology's metrics (NSE, MSE, RMSE, KGE, alpha-NSE, beta-KGE, beta-NSE, Pearson r, FHV, FMS, FLV, peak timing, missed peaks, peak MAPE) are computed per basin over the period. Reported values are the median over basins (``nse``, ``kge``, ...), the mean over basins (``nse_mean``, ...), ``n_basins`` and ``n_basins_nse_le_0``; per-basin values are in the report metadata. Probabilistic models are scored by their mixture mean.
 
-Current public coverage is synthetic-backed, but the same family already drives the streamflow and inundation smoke configs used across the flood models.
+Real streamflow data come from ``camels_us_streamflow`` and ``caravan_streamflow`` (local copies of the official releases); the smoke configs run the same contract on ``flood_streamflow_synthetic``. ``flood.inundation`` compares depth rasters (or mesh-node depths) cell by cell: mean absolute depth error and IoU / F1 of the wet masks; it has no real-data backing yet.
 
 At a Glance
 -----------
@@ -44,7 +44,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         :bdg-info:`Synthetic-backed`
+         :bdg-success:`Real-backed`
 
       .. container:: catalog-stat-note
 
@@ -72,7 +72,7 @@ Benchmark Mapping
 Mapped benchmark ecosystems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:doc:`Caravan </benchmarks/caravan>`, :doc:`FloodCastBench </benchmarks/floodcastbench>`, :doc:`HydroBench </benchmarks/hydrobench>`, :doc:`WaterBench </benchmarks/waterbench>`.
+:doc:`CAMELS-US </benchmarks/camels_us>`, :doc:`Caravan </benchmarks/caravan>`.
 
 .. dropdown:: Supported Tasks
    :class-container: catalog-dropdown
@@ -83,10 +83,15 @@ Mapped benchmark ecosystems
 .. dropdown:: Key Metrics
    :class-container: catalog-dropdown
 
-   - ``mae``
-   - ``rmse``
    - ``nse``
    - ``kge``
+   - ``alpha_nse``
+   - ``beta_nse``
+   - ``fhv``
+   - ``fms``
+   - ``flv``
+   - ``nse_mean``
+   - ``n_basins_nse_le_0``
    - ``pixel_mae``
    - ``iou``
    - ``f1``
@@ -94,14 +99,21 @@ Mapped benchmark ecosystems
 .. dropdown:: Smoke Configs
    :class-container: catalog-dropdown
 
-   - ``hydrographnet_smoke.yaml``
    - ``neuralhydrology_lstm_smoke.yaml``
    - ``neuralhydrology_ealstm_smoke.yaml``
    - ``google_flood_forecasting_smoke.yaml``
+   - ``hydrographnet_smoke.yaml``
    - ``floodcast_smoke.yaml``
    - ``urbanfloodcast_smoke.yaml``
 
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`HydroGraphNet </modules/models_hydrographnet>`, :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`, :doc:`FloodCast </modules/models_floodcast>`, :doc:`UrbanFloodCast </modules/models_urbanfloodcast>`.
+   :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`, :doc:`HydroGraphNet </modules/models_hydrographnet>`, :doc:`FloodCast </modules/models_floodcast>`, :doc:`UrbanFloodCast </modules/models_urbanfloodcast>`.
+
+.. dropdown:: Notes
+   :class-container: catalog-dropdown
+
+   - The streamflow evaluation (reader, normalisation, rescaling, clipping and per-basin metrics) is checked against NeuralHydrology's Tester on real CAMELS-US basins, and the metric code reproduces Table 2 of Kratzert et al. (2019) from the official stored simulations.
+   - hydrographnet, floodcast and urbanfloodcast are experimental stand-ins (not ports of the published models); their smoke configs only exercise the inundation contract on synthetic data.
+   - WaterBench, HydroBench and FloodCastBench have no PyHazards reader; the former adapters with these names generated random numbers and were removed.

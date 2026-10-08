@@ -6,7 +6,7 @@ FloodCast
 Overview
 --------
 
-``floodcast`` is the first public inundation model in the staged PyHazards flood roadmap.
+``floodcast`` is a compact PyHazards spatiotemporal network that maps ``(batch, history, channels, H, W)`` rasters to a next-step depth raster ``(batch, 1, H, W)``. It is not FloodCast: the published model is a physics-constrained Fourier-neural-operator solver of the shallow-water equations (GeoPINS), trained per event without labels and rolled out over sequences, and its flood-model code was never released (the official repository holds toy PDE examples and empty placeholders).
 
 At a Glance
 -----------
@@ -31,7 +31,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         Implemented
+         Experimental Adapter
 
       .. container:: catalog-stat-note
 
@@ -42,11 +42,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         1
+         2
 
       .. container:: catalog-stat-note
 
-         Inundation
+         Forecasting, Segmentation
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,21 +63,24 @@ At a Glance
 Description
 -----------
 
-``floodcast`` is the first public inundation model in the staged PyHazards flood roadmap.
+``floodcast`` is a compact PyHazards spatiotemporal network that maps ``(batch, history, channels, H, W)`` rasters to a next-step depth raster ``(batch, 1, H, W)``. It is not FloodCast: the published model is a physics-constrained Fourier-neural-operator solver of the shallow-water equations (GeoPINS), trained per event without labels and rolled out over sequences, and its flood-model code was never released (the official repository holds toy PDE examples and empty placeholders).
 
-The adapter uses shared raster tensors so it can be benchmarked through the ``flood.inundation`` evaluator without dataset-specific glue code.
+The smoke configuration scores it on ``flood_inundation_synthetic`` (random rasters). FloodCastBench (the benchmark of the FloodCast paper) is not loaded by PyHazards.
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Flood Benchmark </benchmarks/flood_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`FloodCastBench </benchmarks/floodcastbench>`
-
 External References
 -------------------
 
-**Paper:** `Large-scale flood modeling and forecasting with FloodCast <https://doi.org/10.1038/s41586-024-08028-8>`_ | **Repo:** `Repository <https://github.com/HydroPML/FloodCast>`__
+**Paper:** `Large-scale flood modeling and forecasting with FloodCast <https://doi.org/10.1016/j.watres.2024.122162>`_ | **Repo:** `Repository <https://github.com/HydroPML/FloodCast>`__
+
+Used In
+-------
+
+- `Large-scale flood modeling and forecasting with FloodCast <https://doi.org/10.1016/j.watres.2024.122162>`_ (`repo <https://github.com/HydroPML/FloodCast>`__): Xu, Shi, Bamber, Ouyang and Zhu, Water Research 264:122162 (2024); arXiv 2403.12226. The repository has no licence and does not contain the flood model (only GeoPINS toy examples), so a port has to be written from the paper.
 
 Reproduction
 ------------
@@ -92,7 +95,8 @@ Primary entrypoint: ``floodcast``
 Supported Tasks
 ---------------
 
-- Inundation
+- Forecasting
+- Segmentation
 
 Programmatic Use
 ----------------
@@ -110,3 +114,5 @@ Notes
 -----
 
 - Outputs are next-horizon inundation depth rasters.
+- Experimental: kept under its published name only until a reimplementation from the paper replaces it; do not report its results as FloodCast's.
+

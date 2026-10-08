@@ -10,6 +10,9 @@ on:
     paths:
       - "pyhazards/models/**"
       - "pyhazards/simulators/**"
+      - "pyhazards/datasets/flood/**"
+      - "pyhazards/metrics/**"
+      - "pyhazards/benchmarks/flood.py"
       - "tests/oracle/**"
       - "scripts/fetch_oracles.py"
       - ".github/workflows/oracle.yml"
@@ -18,6 +21,9 @@ on:
     paths:
       - "pyhazards/models/**"
       - "pyhazards/simulators/**"
+      - "pyhazards/datasets/flood/**"
+      - "pyhazards/metrics/**"
+      - "pyhazards/benchmarks/flood.py"
       - "tests/oracle/**"
       - "scripts/fetch_oracles.py"
       - ".github/workflows/oracle.yml"
@@ -117,6 +123,18 @@ jobs:
             requirements: tests/oracle/requirements-forefire.txt
             references: forefire forefire_runff_data forefire_runff_reference
             tests: tests/oracle/test_forefire_oracle.py
+          # NeuralHydrology and googlehydrology (Google's flood-forecasting fork) are imported from their pinned
+          # checkouts; googlehydrology targets Python 3.12. Both repositories provide real test data (4 CAMELS-US
+          # basins, Caravan netCDF files) and the released FloodHub weights; the 939 MB HydroShare archive of the
+          # Kratzert et al. (2019) runs is not fetched in CI (those tests run locally with PYHAZARDS_ORACLE_LARGE=1).
+          - suite: flood
+            python: "3.12"
+            torch: torch
+            requirements: tests/oracle/requirements-flood.txt
+            references: neuralhydrology ealstm_regional_modeling flood-forecasting floodhub_weights
+            tests: >-
+              tests/oracle/test_neuralhydrology_oracle.py
+              tests/oracle/test_google_flood_forecasting_oracle.py
           # TerraTorch 0.99.8 (the Prithvi-EO-2.0 BurnScars training stack) needs Python >= 3.12 and
           # torch 2.6. The 1.3 GB checkpoints are not fetched in CI; those tests run locally.
           - suite: prithvi

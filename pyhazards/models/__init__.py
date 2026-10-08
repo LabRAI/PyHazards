@@ -526,11 +526,12 @@ register_model(
     "neuralhydrology_lstm",
     neuralhydrology_lstm_builder,
     defaults={
-        "input_dim": 2,
-        "hidden_dim": 64,
-        "num_layers": 2,
-        "out_dim": 1,
-        "dropout": 0.1,
+        "n_dynamic": 5,
+        "n_static": 27,
+        "hidden_size": 256,
+        "n_targets": 1,
+        "output_dropout": 0.4,
+        "initial_forget_bias": 5.0,
     },
 )
 
@@ -538,11 +539,12 @@ register_model(
     "neuralhydrology_ealstm",
     neuralhydrology_ealstm_builder,
     defaults={
-        "input_dim": 2,
-        "hidden_dim": 64,
-        "num_layers": 1,
-        "out_dim": 1,
-        "dropout": 0.1,
+        "n_dynamic": 5,
+        "n_static": 27,
+        "hidden_size": 256,
+        "n_targets": 1,
+        "output_dropout": 0.4,
+        "initial_forget_bias": 5.0,
     },
 )
 
@@ -572,13 +574,7 @@ register_model(
 register_model(
     "google_flood_forecasting",
     google_flood_forecasting_builder,
-    defaults={
-        "input_dim": 2,
-        "hidden_dim": 64,
-        "out_dim": 1,
-        "history": 4,
-        "dropout": 0.1,
-    },
+    defaults={"config": "floodhub", "pretrained": False},
 )
 
 register_model(

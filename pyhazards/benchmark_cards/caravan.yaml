@@ -3,29 +3,35 @@ display_name: Caravan
 kind: ecosystem
 hazard_family: Flood
 benchmark_key: flood
-support_status: synthetic-backed
+support_status: real-backed
 summary: >
-  Caravan-style streamflow benchmark coverage for the shared flood streamflow evaluator.
+  Caravan, the global large-sample hydrology dataset, read from a local copy and scored with the
+  per-basin streamflow metrics.
 description:
   - >
-    The current Caravan alignment is a metadata-backed streamflow adapter layered on top
-    of the shared synthetic graph-temporal flood dataset.
+    ``caravan_streamflow`` reads the official Caravan layout (per-basin netCDF or CSV time series and
+    attribute CSVs) into NeuralHydrology-style samples; the ``flood.streamflow`` evaluator then reports
+    per-basin NSE, KGE and the other NeuralHydrology metrics, summarised by the median and mean over basins.
   - >
-    It currently drives the public smoke runs for NeuralHydrology LSTM and Google Flood Forecasting.
+    Caravan has no fixed benchmark split: choose inputs, basins and periods for the experiment. Google's
+    FloodHub model was trained on Caravan with the MultiMet forecast products (not read by PyHazards).
+    The smoke configs exercise the same contract on synthetic basins.
 source:
-  title: Caravan - A global community dataset for large-sample hydrology
-  url: https://www.nature.com/articles/s41597-023-01975-w
+  title: "Caravan - A global community dataset for large-sample hydrology"
+  url: https://doi.org/10.1038/s41597-023-01975-w
   repo_url: https://github.com/kratzert/Caravan
 tasks:
   - flood.streamflow
 metrics:
-  - mae
-  - rmse
   - nse
   - kge
+  - nse_mean
 smoke_configs:
   - pyhazards/configs/flood/neuralhydrology_lstm_smoke.yaml
   - pyhazards/configs/flood/google_flood_forecasting_smoke.yaml
 linked_models:
   - neuralhydrology_lstm
+  - neuralhydrology_ealstm
   - google_flood_forecasting
+notes:
+  - The reader is checked against NeuralHydrology's Caravan dataset on real Caravan basin files.

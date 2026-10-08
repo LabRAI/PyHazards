@@ -107,7 +107,7 @@ MATURITY_BADGE_ROLES = {
 STARTER_MODELS = {
     "Wildfire": "wildfirespreadts",
     "Earthquake": "phasenet",
-    "Flood": "floodcast",
+    "Flood": "neuralhydrology_lstm",
     "Tropical Cyclone": "hurricast",
 }
 
@@ -195,9 +195,12 @@ class SmokeInputSpec(BaseModel):
 
 
 class SmokeOutputSpec(BaseModel):
+    """Expected output: one tensor (``shape``), a tuple/list (``shapes``) or a dict of tensors (``mapping``)."""
+
     kind: str = "tensor"
     shape: Optional[List[int]] = None
     shapes: List[List[int]] = Field(default_factory=list)
+    mapping: Dict[str, List[int]] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def validate_payload(self) -> "SmokeOutputSpec":
@@ -206,9 +209,20 @@ class SmokeOutputSpec(BaseModel):
             raise ValueError("tensor smoke outputs require the 'shape' field")
         if kind == "sequence" and not self.shapes:
             raise ValueError("sequence smoke outputs require the 'shapes' field")
-        if kind not in {"tensor", "sequence"}:
-            raise ValueError("smoke output kind must be one of: tensor, sequence")
+        if kind == "mapping" and not self.mapping:
+            raise ValueError("mapping smoke outputs require the 'mapping' field")
+        if kind not in {"tensor", "sequence", "mapping"}:
+            raise ValueError("smoke output kind must be one of: tensor, sequence, mapping")
         return self
+
+    @property
+    def expected(self) -> Any:
+        kind = self.kind.lower()
+        if kind == "tensor":
+            return self.shape
+        if kind == "sequence":
+            return self.shapes
+        return dict(self.mapping)
 
 
 class SmokeFitSpec(BaseModel):
@@ -1315,6 +1329,8 @@ def _shape_of_output(output: Any) -> Any:
         return list(output.shape)
     if isinstance(output, (list, tuple)):
         return [_shape_of_output(item) for item in output]
+    if isinstance(output, Mapping):
+        return {key: _shape_of_output(value) for key, value in output.items()}
     return type(output).__name__
 
 
@@ -1338,8 +1354,7 @@ def missing_smoke_requirements(card: ModelCard) -> List[str]:
 def run_smoke_test(card: ModelCard) -> Dict[str, Any]:
     from pyhazards.models import build_model
 
-    expected = card.smoke_test.expected_output
-    expected_shape = expected.shape if expected.kind.lower() == "tensor" else expected.shapes
+    expected_shape = card.smoke_test.expected_output.expected
     missing = missing_smoke_requirements(card)
     if missing:
         reason = "optional package(s) not installed: {names}".format(names=", ".join(missing))

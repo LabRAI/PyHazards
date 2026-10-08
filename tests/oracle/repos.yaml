@@ -74,6 +74,26 @@ repos:
     url: https://github.com/sxjscience/HKO-7.git
     commit: 57b987bd893bd6910996494c247359ace371d333
     license: MIT
+  neuralhydrology:
+    # NeuralHydrology (Kratzert et al., JOSS 2022), v1.13.0 + 6 commits. Oracle for the CudaLSTM and
+    # EALSTM ports, the hydrological metrics, and the CAMELS-US / Caravan readers. Its test data
+    # (test/test_data/camels_us: 4 real CAMELS-US basins, 2000-2002) feed the reader comparison.
+    url: https://github.com/neuralhydrology/neuralhydrology.git
+    commit: ea94a40d2f271994e33baa70f5ca1dd82e0e539d
+    license: BSD-3-Clause (Copyright (c) 2021, NeuralHydrology)
+  ealstm_regional_modeling:
+    # Code of Kratzert et al., HESS 2019 (papercode/lstm.py, papercode/ealstm.py, main.py Model):
+    # the layout of the official HydroShare checkpoints (kratzert2019_hydroshare_runs).
+    url: https://github.com/kratzert/ealstm_regional_modeling.git
+    commit: d11815824793737f28f125d55477e42f8900a78e
+    license: Apache-2.0
+  flood-forecasting:
+    # google-research/flood-forecasting (googlehydrology 1.13.0, a NeuralHydrology fork). Oracle for
+    # google_flood_forecasting; holds the released FloodHub model (pretrained-models/
+    # google-floodhub-settings-110-epochs) and a real Caravan netCDF file in test/test_data/multimet.
+    url: https://github.com/google-research/flood-forecasting.git
+    commit: cdda28dda4cc6f1c5e3aaafcc69c6602c9e7cda1
+    license: Apache-2.0 (Copyright 2025 Google LLC)
 
 assets:
   utae_pastis_weights:
@@ -164,6 +184,13 @@ assets:
     url: https://media.githubusercontent.com/media/forefireAPI/forefire/ca433e01a9f2a146b1709da816a68feafcbfda41/tests/runff/ForeFire.0.nc.ref
     sha256: 45a2b159caad744d15d8cdd1b43d738a6626259ebc8542944d5daa06a2fad42a
     license: GPL-3.0 (ForeFire repository test data; test-time only)
+  # Released FloodHub model of google-research/flood-forecasting (MeanEmbeddingForecastLSTM, Gauch et
+  # al. 2025 architecture, trained 1982-2023 on Caravan + MultiMet). The repository's Apache-2.0 LICENSE
+  # is the only licence statement covering it. The flood-forecasting checkout holds the same file.
+  floodhub_weights:
+    url: https://raw.githubusercontent.com/google-research/flood-forecasting/cdda28dda4cc6f1c5e3aaafcc69c6602c9e7cda1/pretrained-models/google-floodhub-settings-110-epochs/model_epoch110.pt
+    sha256: 90280f0687a5a95006580164c243be6f8551580f772be26247c8b0ef3d53fdba
+    license: Apache-2.0 (google-research/flood-forecasting repository licence)
   # Large checkpoints: fetched only when named explicitly (or with --large), never in routine CI.
   prithvi_eo2_300m_burnscars_weights:
     url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars/resolve/a3f2c410e45b8ac7417976614528a872f024d831/Prithvi_EO_V2_300M_BurnScars.pt
@@ -182,4 +209,13 @@ assets:
     filename: model1_1_100.pt
     sha256: e3d5e4e59b32f13a74c7ffdc02ae65f9da3362c036b60e73e46dffe8721ae6b2
     license: none stated (Zjut-MultimediaPlus/Rainformer release; test data only, never redistributed)
+    large: true
+  # Official runs of Kratzert et al., HESS 2019 (HydroShare resource 83ea5312635e44dc824eeb99eda12f06,
+  # doi 10.4211/hs.83ea5312635e44dc824eeb99eda12f06, CC BY 4.0): 48 runs (EA-LSTM, LSTM with and without
+  # static inputs; NSE* and MSE loss; 8 seeds), each with model_epoch30.pt, cfg.json and the stored
+  # 1989-1999 test simulations of the 531 basins. Read in place from the zip (not extracted).
+  kratzert2019_hydroshare_runs:
+    url: https://www.hydroshare.org/resource/83ea5312635e44dc824eeb99eda12f06/data/contents/Kratzert_et_al_2019_HESSD_LSTM_4_REGIONAL_MODELING.zip
+    sha256: 864be7a84256314b04f872cc8eca8382825ed0fdf07c3e3dd4fdb0cef3353f3d
+    license: CC-BY-4.0
     large: true
