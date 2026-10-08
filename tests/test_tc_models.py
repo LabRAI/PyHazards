@@ -123,9 +123,13 @@ def test_tropicyclonenet_validation_and_checkpoint_guard(tmp_path):
 
 def test_experimental_storm_adapters_keep_the_generic_interface():
     x = torch.randn(2, 6, 8)
-    for name in ["hurricast", "tcif_fusion", "graphcast_tc", "pangu_tc", "fourcastnet_tc"]:
-        kwargs = {"input_dim": 8, "horizon": 5, "output_dim": 3}
-        if name == "fourcastnet_tc":
-            kwargs["history"] = 6
-        model = build_model(name=name, task="regression", **kwargs)
+    for name in ["hurricast", "tcif_fusion"]:
+        model = build_model(name=name, task="regression", input_dim=8, horizon=5, output_dim=3)
         assert model(x).shape == (2, 5, 3)
+
+
+def test_weather_model_placeholders_are_not_registered():
+    # FourCastNet, GraphCast and Pangu-Weather are forecast + tracker pipelines (pyhazards.forecasts).
+    from pyhazards.models import available_models
+
+    assert not {"graphcast_tc", "pangu_tc", "fourcastnet_tc"} & set(available_models())

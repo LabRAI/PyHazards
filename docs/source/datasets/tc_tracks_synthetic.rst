@@ -3,7 +3,7 @@
 Synthetic Storm Histories
 =========================
 
-Random storm-history features and lat / lon / intensity targets for smoke tests of the generic experimental storm adapters (hurricast, tcif_fusion, graphcast_tc, pangu_tc, fourcastnet_tc).
+Random storm-history features and lat / lon / intensity targets for smoke tests of the generic experimental storm adapters (hurricast, tcif_fusion).
 
 Overview
 --------
@@ -78,7 +78,7 @@ Related Coverage
 
 **Benchmarks:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-**Representative Models:** :doc:`Hurricast </modules/models_hurricast>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`, :doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`
+**Representative Models:** :doc:`Hurricast </modules/models_hurricast>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`
 
 Inspection Workflow
 -------------------

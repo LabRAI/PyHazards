@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         8
+         9
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         26
+         23
 
       .. container:: catalog-stat-note
 
@@ -171,7 +171,7 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-meta-row
 
-         **Coverage:** 8 smoke configs | 8 models | 3 ecosystems
+         **Coverage:** 5 smoke configs | 5 models | 4 ecosystems
 
       .. container:: catalog-link-row
 
@@ -218,7 +218,7 @@ status without opening the detail pages first.
      - :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
      - Track + Intensity, Intensity
      - Track Error (km), Intensity MAE, Pressure MAE, Best-of-k Track Error (km), +4 more
-     - 8 models
+     - 5 models
      - Real-backed
 
 Benchmark Ecosystems
@@ -499,6 +499,37 @@ and the models currently mapped to that ecosystem.
 
                **Paper:** `Deep Learning Experiments for Tropical Cyclone Intensity Forecasts <https://doi.org/10.1175/WAF-D-20-0104.1>`_ | **Repo:** `Repository <https://github.com/wenweixu/tropicalcyclone_MLP>`__
 
+         .. grid-item-card:: TCBench Alpha
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               TCBench (Gomez et al. 2026): 2023 cyclone tracks of Pangu-Weather, FourCastNet v2 and AIFS extracted with TempestExtremes, matched to IBTrACS and scored by direct position error and intensity errors.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Real-backed`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Key Metrics:** Track Error (km), Intensity MAE, Pressure MAE
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** 0 smoke configs | 0 models
+
+            .. container:: catalog-link-row
+
+               **View Details:** :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `TCBench: A Benchmark for Tropical Cyclone Track and Intensity Forecasting at the Global Scale <https://arxiv.org/abs/2601.23268>`_ | **Repo:** `Repository <https://github.com/msgomez06/TCBench_Alpha>`__
+
          .. grid-item-card:: TropiCycloneNet Dataset
             :class-card: catalog-entry-card
 
@@ -560,6 +591,7 @@ and :doc:`pyhazards_reports` for comparable benchmark exports.
    benchmarks/pick_benchmark
    benchmarks/seisbench
    benchmarks/ships_xu2021
+   benchmarks/tcbench_alpha
    benchmarks/tropical_cyclone_benchmark
    benchmarks/tropicyclonenet_dataset
    benchmarks/wildfire_benchmark

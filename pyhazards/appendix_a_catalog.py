@@ -20,10 +20,14 @@ STATUS_LABELS = {
     "variant": "Variant only",
     "experimental": "Experimental",
     "external": "External simulator",
+    "pipeline": "Foundation model pipeline",
     "missing": "Missing",
 }
 
-SUMMARY_STATUSES = ("core", "experimental", "external", "missing")
+SUMMARY_STATUSES = ("core", "experimental", "external", "pipeline", "missing")
+
+# Statuses for resources that are not PyHazards models: they must link documentation, not model cards.
+NON_MODEL_STATUSES = {"external": "an external simulator", "pipeline": "a foundation model pipeline"}
 
 
 @dataclass(frozen=True)
@@ -35,7 +39,8 @@ class AppendixAEntry:
     status: str
     mapped_models: Sequence[str] = ()
     notes: str = ""
-    # (label, Sphinx docname) links for entries that are not models, e.g. an external simulator.
+    # (label, Sphinx docname) links for entries that are not models, e.g. an external simulator or a
+    # foundation-model pipeline.
     mapped_docs: Sequence[Tuple[str, str]] = ()
 
 
@@ -50,6 +55,28 @@ WRF_SFIRE_NOTE = (
     "the fire grid (TIGN_G, LFN, FIRE_AREA, FGRNHFX, ROS, ...) of wrfout files written by the official "
     "model into spread rasters. Variable names and layout follow the official Registry and were "
     "checked on a real output of the official hill ideal case."
+)
+
+FOUNDATION_PIPELINE_DOCS = (("Foundation Weather Models", "pyhazards_forecasts"),)
+GRAPHCAST_NOTE = (
+    "Not reimplemented: GraphCast (36.3M parameters, JAX) is a global weather model whose cyclone tracks come "
+    "from a tracker run on its forecasts. PyHazards reads WeatherBench 2's GraphCast forecasts (2018 from the "
+    "1979-2017 model, 2020), can run it through earth2studio (user-installed; weights CC BY 4.0 per the README "
+    "since 2026-08-06), tracks with a re-implementation of the paper's modified ECMWF tracker (the tracker was "
+    "never released) and scores against IBTrACS. The paper's Fig. 3 numbers are not reproduced. GenCast is a "
+    "different model and is not covered."
+)
+PANGU_NOTE = (
+    "Not reimplemented: PyHazards reads TCBench's released 2023 Pangu-Weather tracks and fields and WeatherBench "
+    "2's 2018-2022 forecasts, can run the official ONNX graphs through earth2studio, and tracks with the paper's "
+    "ECMWF-style rules or TCBench's TempestExtremes rules. TCBench's released tracks are reproduced byte for byte "
+    "from the raw fields, and its published DPE values exactly. The TC2018 numbers (120.29 / 195.65 km) are not "
+    "reproduced. Weights CC BY-NC-SA 4.0 (non-commercial); the official repository has no code licence."
+)
+FOURCASTNET_NOTE = (
+    "Not reimplemented: FourCastNet (74.7M-parameter AFNO) can be run through earth2studio (FCN, a 26-variable "
+    "retrain) and its fields tracked and scored. The paper has only a qualitative cyclone case. TCBench's "
+    "'FourCastNet v2' tracks and fields (SFNO small, a different model) can be read and scored."
 )
 
 APPENDIX_A_ENTRIES: List[AppendixAEntry] = [
@@ -81,11 +108,11 @@ APPENDIX_A_ENTRIES: List[AppendixAEntry] = [
     AppendixAEntry("Hurricane / Tropical Cyclone", "SAF-Net", "Baseline", "https://github.com/xuguangning1218/TI_Prediction", "core", ("saf_net",), "Written from the paper (the official code has no licence); the released checkpoint loads strictly and matches the official notebook network. The CMA / ERA-Interim inputs have no PyHazards reader yet (synthetic layout only)."),
     AppendixAEntry("Hurricane / Tropical Cyclone", "TropiCycloneNet", "Baseline", "https://github.com/xiaochengfuhuo/TropiCycloneNet", "core", ("tropicyclonenet",), "The six-generator GAN (CC BY 4.0 release) is ported; the released checkpoint loads strictly and matches the official code. The benchmark reports the paper's best-of-6 errors next to sample-mean errors."),
     AppendixAEntry("Hurricane / Tropical Cyclone", "TropiCycloneNet-Dataset", "Dataset", "https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset", "core", notes="tropicyclonenet_dataset reads TCND Data1d, Env-Data and 500 hPa GPH files (Zenodo, CC BY 4.0) exactly like the official TropiCycloneNet loader; tropicyclonenet_dataset_synthetic is a random stand-in for smoke tests.", mapped_docs=(("TropiCycloneNet Dataset", "datasets/tropicyclonenet_dataset"),)),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "TCBench Alpha", "Benchmark", "https://github.com/msgomez06/TCBench_Alpha", "missing", notes="No loader. The former tcbench_alpha dataset generated random numbers and was removed; none of the ported models was evaluated on TCBench in its paper.", mapped_docs=(("TCBench Alpha", "datasets/tcbench_alpha"),)),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "TCBench Alpha", "Benchmark", "https://github.com/msgomez06/TCBench_Alpha", "core", notes="pyhazards.forecasts reads TCBench's released tracks and raw forecast fields (Hugging Face, pinned revision), re-implements its TempestExtremes tracking (identical tracks) and HuracanPy matching, and scores direct position error and intensity errors exactly as its evaluation does (the DPE values printed in its notebook are reproduced; one only with the IBTrACS position TCBench used, since revised by NCEI). CRPS, along/cross-track errors, rapid-intensification scores and its post-processing models are not implemented.", mapped_docs=(("TCBench Alpha", "datasets/tcbench_alpha"), ("Foundation Weather Models", "pyhazards_forecasts"))),
     AppendixAEntry("Hurricane / Tropical Cyclone", "IBTrACS", "Dataset", "https://www.ncei.noaa.gov/products/international-best-track-archive", "core", notes="ibtracs_tracks reads NOAA NCEI IBTrACS v04 CSV or netCDF files (best-track positions, intensities, agency columns) into forecast windows; the cyclone benchmark scores great-circle track error in km and intensity errors per lead time.", mapped_docs=(("IBTrACS", "datasets/ibtracs_tracks"),)),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "GraphCast / GenCast", "Foundation Adapter", "https://github.com/google-deepmind/weathernext", "experimental", ("graphcast_tc",), "Placeholder network without GraphCast forecast fields, weights or tracker (github.com/google-deepmind/graphcast now redirects to weathernext). A faithful version is a forecast-tracker-IBTrACS pipeline."),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "Pangu-Weather", "Foundation Adapter", "https://github.com/198808xc/Pangu-Weather", "experimental", ("pangu_tc",), "Placeholder network without Pangu-Weather forecast fields, weights or tracker. The official repository has no code licence and the weights are CC BY-NC-SA 4.0 (non-commercial)."),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "FourCastNet", "Foundation Adapter", "https://github.com/NVlabs/FourCastNet", "experimental", ("fourcastnet_tc",), "Placeholder network without FourCastNet forecast fields, weights or tracker. A faithful version is a forecast-tracker-IBTrACS pipeline."),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "GraphCast", "Foundation Model Pipeline", "https://github.com/google-deepmind/weathernext", "pipeline", notes=GRAPHCAST_NOTE, mapped_docs=FOUNDATION_PIPELINE_DOCS),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "Pangu-Weather", "Foundation Model Pipeline", "https://github.com/198808xc/Pangu-Weather", "pipeline", notes=PANGU_NOTE, mapped_docs=FOUNDATION_PIPELINE_DOCS),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "FourCastNet", "Foundation Model Pipeline", "https://github.com/NVlabs/FourCastNet", "pipeline", notes=FOURCASTNET_NOTE, mapped_docs=FOUNDATION_PIPELINE_DOCS),
 ]
 
 
@@ -111,16 +138,19 @@ def appendix_a_alignment_issues(
                     status=entry.status,
                 )
             )
-        if entry.status == "external" and entry.mapped_models:
+        kind = NON_MODEL_STATUSES.get(entry.status)
+        if kind and entry.mapped_models:
             issues.append(
-                "Coverage entry '{name}' is an external simulator and must not map to model cards.".format(
+                "Coverage entry '{name}' is {kind} and must not map to model cards.".format(
                     name=entry.source_name,
+                    kind=kind,
                 )
             )
-        if entry.status == "external" and not entry.mapped_docs:
+        if kind and not entry.mapped_docs:
             issues.append(
-                "Coverage entry '{name}' is an external simulator but links no documentation.".format(
+                "Coverage entry '{name}' is {kind} but links no documentation.".format(
                     name=entry.source_name,
+                    kind=kind,
                 )
             )
         for _, docname in entry.mapped_docs:
@@ -228,7 +258,7 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
         "This page audits the current PyHazards implementation against the",
         "planned methods, benchmarks, and datasets listed in ``pyhazard_plan.pdf``.",
         "It separates implemented public entries from variant-only entries,",
-        "experimental wrappers, external simulators, and items that are still missing.",
+        "experimental wrappers, external simulators, foundation-model pipelines, and items that are still missing.",
         "",
         "Status meanings:",
         "",
@@ -236,13 +266,17 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
         "- ``Experimental``: a lightweight wrapper exists, but it should not be counted as stable core coverage.",
         "- ``External simulator``: PyHazards drives the official simulator, installed separately, or reads",
         "  its outputs. Nothing of the simulator is reimplemented, and it is not counted as a model.",
+        "- ``Foundation model pipeline``: a global weather model whose hazard results come from tracking its",
+        "  forecast fields. PyHazards reads published forecasts or tracks, can run the official model through a",
+        "  separately installed runner, and provides the tracker and the scoring; the model itself is not",
+        "  reimplemented and is not counted as a model.",
         "- ``Missing``: no aligned adapter or benchmark integration is present yet.",
         "",
         "Hazard Summary",
         "--------------",
         "",
         ".. list-table::",
-        "   :widths: 26 16 16 16 16",
+        "   :widths: 26 14 14 14 14 14",
         "   :header-rows: 1",
         "   :class: dataset-list",
         "",
@@ -250,6 +284,7 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
         "     - Implemented",
         "     - Experimental",
         "     - External",
+        "     - Pipeline",
         "     - Missing",
     ]
 
@@ -260,6 +295,7 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
                 "     - {count}".format(count=counts["core"]),
                 "     - {count}".format(count=counts["experimental"]),
                 "     - {count}".format(count=counts["external"]),
+                "     - {count}".format(count=counts["pipeline"]),
                 "     - {count}".format(count=counts["missing"]),
             ]
         )
@@ -386,6 +422,7 @@ __all__ = [
     "APPENDIX_A_ENTRIES",
     "APPENDIX_A_PAGE_PATH",
     "AppendixAEntry",
+    "NON_MODEL_STATUSES",
     "STATUS_LABELS",
     "appendix_a_alignment_issues",
     "render_appendix_a_page",

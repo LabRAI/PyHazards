@@ -14,17 +14,14 @@ from .eqnet import EQNet, eqnet_builder
 from .eqtransformer import EQTransformer, eqtransformer_builder
 from .firecastnet import FireCastNet, firecastnet_builder
 from .floodcast import FloodCast, floodcast_builder
-from .fourcastnet_tc import FourCastNetTC, fourcastnet_tc_builder
 from .gpd import GPD, gpd_builder
 from .google_flood_forecasting import GoogleFloodForecasting, google_flood_forecasting_builder
-from .graphcast_tc import GraphCastTC, graphcast_tc_builder
 from .heads import ClassificationHead, RegressionHead, SegmentationHead
 from .hurricast import Hurricast, hurricast_builder
 from .hydrographnet import HydroGraphNet, HydroGraphNetLoss, hydrographnet_builder
 from .logistic_regression import PixelLogisticRegression, logistic_regression_builder
 from .neuralhydrology_ealstm import NeuralHydrologyEALSTM, neuralhydrology_ealstm_builder
 from .neuralhydrology_lstm import NeuralHydrologyLSTM, neuralhydrology_lstm_builder
-from .pangu_tc import PanguTC, pangu_tc_builder
 from .phasenet import PhaseNet, phasenet_builder
 from .prithvi import PrithviMAE, PrithviSegmentation, PrithviViT
 from .prithvi_burnscars import prithvi_burnscars_builder
@@ -101,14 +98,10 @@ __all__ = [
     "firecastnet_builder",
     "FloodCast",
     "floodcast_builder",
-    "FourCastNetTC",
-    "fourcastnet_tc_builder",
     "GPD",
     "gpd_builder",
     "GoogleFloodForecasting",
     "google_flood_forecasting_builder",
-    "GraphCastTC",
-    "graphcast_tc_builder",
     "Hurricast",
     "hurricast_builder",
     "HydroGraphNet",
@@ -118,8 +111,6 @@ __all__ = [
     "neuralhydrology_ealstm_builder",
     "NeuralHydrologyLSTM",
     "neuralhydrology_lstm_builder",
-    "PanguTC",
-    "pangu_tc_builder",
     "PhaseNet",
     "phasenet_builder",
     "PrithviMAE",
@@ -677,45 +668,6 @@ register_model(
     defaults={
         "input_dim": 8,
         "hidden_dim": 64,
-        "horizon": 5,
-        "output_dim": 3,
-        "dropout": 0.1,
-    },
-)
-
-register_model(
-    "graphcast_tc",
-    graphcast_tc_builder,
-    defaults={
-        "input_dim": 8,
-        "hidden_dim": 96,
-        "horizon": 5,
-        "output_dim": 3,
-        "num_layers": 2,
-        "num_heads": 4,
-        "dropout": 0.1,
-    },
-)
-
-register_model(
-    "pangu_tc",
-    pangu_tc_builder,
-    defaults={
-        "input_dim": 8,
-        "hidden_dim": 96,
-        "horizon": 5,
-        "output_dim": 3,
-        "dropout": 0.1,
-    },
-)
-
-register_model(
-    "fourcastnet_tc",
-    fourcastnet_tc_builder,
-    defaults={
-        "input_dim": 8,
-        "history": 6,
-        "hidden_dim": 96,
         "horizon": 5,
         "output_dim": 3,
         "dropout": 0.1,

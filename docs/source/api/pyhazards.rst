@@ -11,6 +11,7 @@ Subpackages
    pyhazards.models
    pyhazards.prompted
    pyhazards.simulators
+   pyhazards.forecasts
    pyhazards.benchmarks
    pyhazards.configs
    pyhazards.reports

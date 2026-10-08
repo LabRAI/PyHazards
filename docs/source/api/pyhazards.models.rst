@@ -56,7 +56,7 @@ Implemented Models
 Experimental Adapters
 +++++++++++++++++++++
 
-:doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Hurricast </modules/models_hurricast>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`.
+:doc:`Hurricast </modules/models_hurricast>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`.
 
 Developer Registry Workflow
 ---------------------------

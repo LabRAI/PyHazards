@@ -21,7 +21,8 @@ def test_appendix_a_page_lists_missing_and_non_core_entries() -> None:
     assert "`wildfire_forecasting <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_" in page
     assert "``Implemented``" in page
     assert "``Experimental``" in page
-    assert "GraphCast / GenCast" in page
+    assert "`GraphCast <https://github.com/google-deepmind/weathernext>`_" in page
+    assert "GraphCast / GenCast" not in page
     assert "models_forefire" not in page
     assert "models_wrf_sfire" not in page
     assert ":doc:`FireCastNet <modules/models_firecastnet>`" in page
@@ -64,3 +65,26 @@ def test_external_status_rules_are_enforced() -> None:
     assert any("no_such_page" in issue for issue in issues)
     assert any("no_such_dataset" in issue for issue in issues)
     assert any("Sim D" in issue and "unknown status" in issue for issue in issues)
+
+
+def test_foundation_model_pipelines_are_listed_without_model_cards() -> None:
+    cards = load_model_cards()
+    page = render_appendix_a_page(cards)
+    entries = {entry.source_name: entry for entry in APPENDIX_A_ENTRIES}
+    for name in ("GraphCast", "Pangu-Weather", "FourCastNet"):
+        assert entries[name].status == "pipeline"
+        assert not entries[name].mapped_models
+        assert ("Foundation Weather Models", "pyhazards_forecasts") in entries[name].mapped_docs
+    assert "``Foundation model pipeline``" in page
+    assert "     - Pipeline" in page
+    assert ":doc:`Foundation Weather Models <pyhazards_forecasts>`" in page
+    assert not {"graphcast_tc", "pangu_tc", "fourcastnet_tc"} & {card.model_name for card in cards}
+    assert entries["TCBench Alpha"].status == "core"
+    bad = [
+        AppendixAEntry("Hurricane / Tropical Cyclone", "Model A", "Foundation Model Pipeline", "https://example.org", "pipeline", ("hurricast",),
+                       mapped_docs=(("Foundation Weather Models", "pyhazards_forecasts"),)),
+        AppendixAEntry("Hurricane / Tropical Cyclone", "Model B", "Foundation Model Pipeline", "https://example.org", "pipeline"),
+    ]
+    issues = appendix_a_alignment_issues(cards, entries=bad)
+    assert any("Model A" in issue and "foundation model pipeline and must not map" in issue for issue in issues)
+    assert any("Model B" in issue and "links no documentation" in issue for issue in issues)

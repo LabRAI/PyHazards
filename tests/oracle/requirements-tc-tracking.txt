@@ -1,0 +1,5 @@
+# Cyclone tracking and TCBench scoring oracles (tests/oracle/test_tempest_oracle.py,
+# tests/oracle/test_tcbench_evaluation_oracle.py). TempestExtremes is built from the pinned source
+# (CMake + the netCDF C library, installed by the workflow with apt). TCBench's metric functions run on
+# joblib, pinned as in TCBench_Alpha's requirements.txt.
+joblib==1.3.2

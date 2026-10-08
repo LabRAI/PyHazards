@@ -289,6 +289,7 @@ for project discussion and coordination.
    pyhazards_models
    pyhazards_prompted
    pyhazards_simulators
+   pyhazards_forecasts
    pyhazards_benchmarks
    pyhazards_configs
    pyhazards_reports

@@ -253,17 +253,12 @@ Own:
 - `pyhazards/models/tropicyclonenet.py`
 - `pyhazards/models/saf_net.py`
 - `pyhazards/models/tcif_fusion.py`
-- `pyhazards/models/graphcast_tc.py`
-- `pyhazards/models/pangu_tc.py`
-- `pyhazards/models/fourcastnet_tc.py`
+- `pyhazards/forecasts/**` (FourCastNet / GraphCast / Pangu-Weather cyclone pipelines; the former graphcast_tc, pangu_tc and fourcastnet_tc placeholders were removed)
 - `pyhazards/model_cards/hurricast.yaml`
 - `pyhazards/model_cards/tropicalcyclone_mlp.yaml`
 - `pyhazards/model_cards/tropicyclonenet.yaml`
 - `pyhazards/model_cards/saf_net.yaml`
 - `pyhazards/model_cards/tcif_fusion.yaml`
-- `pyhazards/model_cards/graphcast_tc.yaml`
-- `pyhazards/model_cards/pangu_tc.yaml`
-- `pyhazards/model_cards/fourcastnet_tc.yaml`
 - `tests/test_tc_*.py`
 
 Do not edit:
@@ -539,17 +534,12 @@ You own:
 - pyhazards/models/tropicyclonenet.py
 - pyhazards/models/saf_net.py
 - pyhazards/models/tcif_fusion.py
-- pyhazards/models/graphcast_tc.py
-- pyhazards/models/pangu_tc.py
-- pyhazards/models/fourcastnet_tc.py
+- pyhazards/forecasts/** (FourCastNet / GraphCast / Pangu-Weather cyclone pipelines; the former graphcast_tc, pangu_tc and fourcastnet_tc placeholders were removed)
 - pyhazards/model_cards/hurricast.yaml
 - pyhazards/model_cards/tropicalcyclone_mlp.yaml
 - pyhazards/model_cards/tropicyclonenet.yaml
 - pyhazards/model_cards/saf_net.yaml
 - pyhazards/model_cards/tcif_fusion.yaml
-- pyhazards/model_cards/graphcast_tc.yaml
-- pyhazards/model_cards/pangu_tc.yaml
-- pyhazards/model_cards/fourcastnet_tc.yaml
 - tests/test_tc_*.py
 
 Do not edit:

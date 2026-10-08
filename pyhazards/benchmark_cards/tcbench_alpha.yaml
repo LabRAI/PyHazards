@@ -1,0 +1,38 @@
+slug: tcbench_alpha
+display_name: TCBench Alpha
+kind: ecosystem
+hazard_family: Tropical Cyclone
+benchmark_key: tc
+support_status: real-backed
+summary: >
+  TCBench (Gomez et al. 2026): 2023 cyclone tracks of Pangu-Weather, FourCastNet v2 and AIFS extracted
+  with TempestExtremes, matched to IBTrACS and scored by direct position error and intensity errors.
+description:
+  - >
+    ``pyhazards.forecasts`` reads TCBench's released tracks and raw forecast fields from the Hugging Face
+    dataset (pinned revision), re-implements its TempestExtremes tracking and HuracanPy matching, and
+    scores tracks with ``score_forecast_tracks(..., protocol="tcbench")``, which reproduces TCBench's
+    ``evaluate_tracks.py`` exactly (including its float16 reading of IBTrACS positions).
+  - >
+    Verified: on TCBench's raw Pangu-Weather fields the tracker writes TCBench's released track files
+    byte for byte (and the official TempestExtremes binaries agree), every row of the released Pangu-Weather
+    and FourCastNet v2 matched tracks scores exactly as TCBench's own metric code, and the DPE / AE values
+    printed in TCBench's notebook are reproduced.
+  - >
+    Not implemented: CRPS, along/cross-track errors, rapid-intensification scores and TCBench's
+    post-processing models. TCBench's "FourCastNet v2" is SFNO-small, not the FourCastNet of Pathak et al.
+source:
+  title: "TCBench: A Benchmark for Tropical Cyclone Track and Intensity Forecasting at the Global Scale"
+  url: https://arxiv.org/abs/2601.23268
+  repo_url: https://github.com/msgomez06/TCBench_Alpha
+tasks:
+  - tc.track_intensity
+metrics:
+  - track_error_km
+  - intensity_mae
+  - pressure_mae
+smoke_configs: []
+linked_models: []
+notes:
+  - "TCBench code and data are MIT-licensed; the Pangu-Weather forecasts derive from CC BY-NC-SA 4.0 weights (non-commercial)."
+  - "Weather models are pipelines, not PyHazards models, so no model is linked here; see the Foundation Weather Models page."

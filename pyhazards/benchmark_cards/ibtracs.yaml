@@ -13,8 +13,11 @@ description:
     forecasting windows (history of six-hourly observations, targets at the requested lead times) for any
     agency's winds and pressures.
   - >
-    No ported model consumes IBTrACS directly yet: Hurricast (which uses IBTrACS with ERA5) and the
-    weather-model cyclone pipelines (forecast fields, tracker, scoring against IBTrACS) are pending.
+    IBTrACS is also the reference of the weather-model cyclone pipelines in ``pyhazards.forecasts``:
+    forecast tracks of FourCastNet, GraphCast and Pangu-Weather (tracked in their forecast fields) are
+    matched to IBTrACS storms and scored by great-circle track error and intensity errors per lead time.
+    No ported neural network consumes IBTrACS directly yet (Hurricast, which uses IBTrACS with ERA5, is
+    pending).
 source:
   title: IBTrACS
   url: https://www.ncei.noaa.gov/products/international-best-track-archive

@@ -3,14 +3,14 @@
 TCBench Alpha
 =============
 
-Benchmark platform matching forecast cyclone tracks from numerical and ML weather models with IBTrACS; documented as an external reference, with no PyHazards loader.
+Weather-model cyclone tracks (Pangu-Weather, FourCastNet v2, AIFS; 2023) matched to IBTrACS, with the raw forecast fields they were tracked in; read by pyhazards.forecasts at a pinned revision.
 
 Overview
 --------
 
-TCBench provides data-processing tools, evaluation protocols and baselines to compare tropical cyclone forecasts: tracks extracted from numerical and data-driven weather models (with TempestExtremes) are matched with IBTrACS best tracks and scored by lead time.
+TCBench provides data-processing tools, evaluation protocols and baselines to compare tropical cyclone forecasts: tracks extracted from numerical and data-driven weather models with TempestExtremes are matched with IBTrACS best tracks and scored by lead time.
 
-PyHazards does not load TCBench. An earlier ``tcbench_alpha`` dataset generated random numbers under this name and was removed; none of the PyHazards cyclone models was evaluated on TCBench in its paper.
+``pyhazards.forecasts.tcbench`` reads the released ``matched_tracks`` and ``unmatched_tracks`` files and, with HTTP range requests, only the variables a tracker needs from the raw forecast files. ``pyhazards.forecasts.tempest`` reproduces TCBench's TempestExtremes tracks from those fields byte for byte, and ``score_forecast_tracks(..., protocol="tcbench")`` its evaluation.
 
 At a Glance
 -----------
@@ -20,7 +20,7 @@ At a Glance
    :stub-columns: 1
 
    * - Provider
-     - TCBench project (Gomez et al.), MIT-licensed code; track files on the Hugging Face Hub
+     - TCBench project (Gomez et al.), MIT-licensed code and data on the Hugging Face Hub (TCBench/TCBench)
    * - Hazard Family
      - Tropical Cyclone
    * - Source Role
@@ -28,27 +28,31 @@ At a Glance
    * - Coverage
      - Global tropical cyclones present in IBTrACS
    * - Geometry
-     - Storm-track history sequences
+     - Storm-track tables and global gridded forecast fields
    * - Spatial Resolution
-     - Storm-centre positions extracted from forecast fields
+     - 0.25-degree global fields; track points on that grid
    * - Temporal Resolution
-     - Six-hourly forecast tracks
+     - Six-hourly forecast steps to 120 h, initialised at 00 and 12 UTC
    * - Update Cadence
-     - Maintained by the TCBench project
+     - Static release (PyHazards pins revision 0124d14d)
    * - Period of Record
-     - Depends on the forecast archive (e.g. 2023 matched tracks)
+     - 2023 forecasts (TCBench's test year)
    * - Formats
-     - CSV track tables (matched_tracks) and Python evaluation tools
+     - CSV track tables (matched_tracks, unmatched_tracks) and netCDF4 forecast fields (about 3 GB per forecast)
 
 Data Characteristics
 --------------------
 
-- Forecast tracks with position, maximum wind and minimum pressure matched to IBTrACS storms.
+- matched_tracks/2023_<model>.csv: SID, Initial Time, Valid Time, wind max (m/s in the released files), pressure min (Pa), lat, lon.
+- unmatched_tracks: TempestExtremes StitchNodes CSV per forecast (track_id, time, grid indices, lon, lat, slp, wind10).
+- neural_weather_models: int16-packed netCDF4 fields (msl, u10, v10, t2m and u, v, z, t, q on 13 levels for Pangu-Weather) for lead times 6-120 h.
+- TCBench's evaluation reads IBTrACS LAT / LON as float16, which shifts its position errors by up to several km; the tcbench protocol reproduces this.
 
 Typical Use Cases
 ~~~~~~~~~~~~~~~~~
 
-- Comparing weather-model cyclone forecasts (e.g. Pangu-Weather, FourCastNet v2) against best tracks.
+- Scoring weather-model cyclone tracks against IBTrACS with TCBench's protocol.
+- Re-tracking published weather-model forecasts with other trackers (e.g. the ECMWF-style tracker of the Pangu-Weather and GraphCast papers).
 
 Access
 ------
@@ -61,12 +65,12 @@ Use the links below to access the upstream source or its public documentation.
 PyHazards Usage
 ---------------
 
-Not loadable from PyHazards. Score matched forecast tracks against ``ibtracs_tracks`` with the ``tc`` benchmark instead.
+Not a registered dataset: the tracks are forecasts, not training data. Use ``pyhazards.forecasts.read_tcbench_matched_tracks`` / ``read_tcbench_fields`` and score with ``pyhazards.forecasts.score_forecast_tracks`` against IBTrACS (see the Foundation Weather Models page).
 
 Related Coverage
 ~~~~~~~~~~~~~~~~
 
-**Benchmarks:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
+**Benchmarks:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`, :doc:`TCBench Alpha </benchmarks/tcbench_alpha>`
 
 Inspection Workflow
 -------------------
@@ -77,9 +81,12 @@ as an external reference. Use the provider's access links above.
 Notes
 -----
 
-- The repository is MIT-licensed (Copyright (c) 2023 Milton Gomez).
+- The repository and the Hugging Face dataset are MIT-licensed (Copyright (c) 2023 Milton Gomez).
+- The Pangu-Weather forecasts derive from weights licensed CC BY-NC-SA 4.0 (non-commercial use only).
+- TCBench's "FourCastNet v2" is NVIDIA's SFNO-small, not the FourCastNet (AFNO) of Pathak et al. 2022.
 
 Reference
 ---------
 
+- `Gomez, M. et al. (2026). TCBench: A Benchmark for Tropical Cyclone Track and Intensity Forecasting at the Global Scale. arXiv:2601.23268. <https://arxiv.org/abs/2601.23268>`_.
 - `TCBench Alpha (repository and documentation) <https://github.com/msgomez06/TCBench_Alpha>`_.

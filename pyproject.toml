@@ -49,6 +49,10 @@ xgboost = ["xgboost>=2.0"]
 geo = ["rasterio>=1.3"]
 # Loss-curve PNGs written by scripts/run_wildfire_track_o_baselines.py; skipped without it.
 plot = ["matplotlib>=3.5"]
+# WeatherBench 2 forecast stores (pyhazards.forecasts.weatherbench2): zarr and anonymous Google Cloud
+# Storage access. The earth2studio runner (pyhazards.forecasts.earth2studio_runner) is not an extra:
+# install earth2studio (Python >= 3.11) and the model's own extra yourself.
+weather = ["zarr>=2.16", "gcsfs>=2023.1"]
 # Prompted multimodal-LLM baselines (pyhazards.prompted, SmokeBench protocol). Pillow decodes the FIgLib
 # frames and OpenCV draws the numbered grid overlay exactly as the SmokeBench authors' script does.
 prompted = ["pillow>=9.1", "opencv-python-headless>=4.8"]

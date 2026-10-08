@@ -14,6 +14,7 @@ on:
       - "pyhazards/datasets/figlib_smokebench/**"
       - "pyhazards/datasets/tc/**"
       - "pyhazards/benchmarks/tc.py"
+      - "pyhazards/forecasts/**"
       - "pyhazards/datasets/flood/**"
       - "pyhazards/metrics/**"
       - "pyhazards/benchmarks/flood.py"
@@ -29,6 +30,7 @@ on:
       - "pyhazards/datasets/figlib_smokebench/**"
       - "pyhazards/datasets/tc/**"
       - "pyhazards/benchmarks/tc.py"
+      - "pyhazards/forecasts/**"
       - "pyhazards/datasets/flood/**"
       - "pyhazards/metrics/**"
       - "pyhazards/benchmarks/flood.py"
@@ -151,6 +153,27 @@ jobs:
               tests/oracle/test_tropicalcyclone_mlp_oracle.py
               tests/oracle/test_saf_net_oracle.py
               tests/oracle/test_tropicyclonenet_oracle.py
+          # Cyclone trackers and TCBench scoring: TempestExtremes v2.4.2 is built from its pinned source
+          # (needs cmake and the netCDF C library) and compared with pyhazards.forecasts.tempest on synthetic
+          # fields; TCBench's own metric functions score its released 2023 tracks. The check on TCBench's
+          # raw Pangu-Weather fields reads ~200 MB over HTTP and runs locally (PYHAZARDS_ORACLE_LARGE=1).
+          - suite: tc-tracking
+            python: "3.10"
+            torch: torch
+            apt: cmake libnetcdf-dev
+            requirements: tests/oracle/requirements-tc-tracking.txt
+            references: >-
+              tempestextremes TCBench_Alpha tcbench_matched_pangu tcbench_matched_fcnet tcbench_ibtracs_2023
+              tcbench_pangu_unmatched_20230716_12
+            tests: tests/oracle/test_tempest_oracle.py tests/oracle/test_tcbench_evaluation_oracle.py
+          # Weather-model sources: earth2studio 0.19.0 (Python >= 3.11) drives its Persistence model through
+          # the PyHazards runner; zarr + gcsfs read small slices of the public WeatherBench 2 stores.
+          - suite: weather
+            python: "3.12"
+            torch: torch
+            requirements: tests/oracle/requirements-weather.txt
+            references: ""
+            tests: tests/oracle/test_forecasts_weather_oracle.py
           # NeuralHydrology and googlehydrology (Google's flood-forecasting fork) are imported from their pinned
           # checkouts; googlehydrology targets Python 3.12. Both repositories provide real test data (4 CAMELS-US
           # basins, Caravan netCDF files) and the released FloodHub weights; the 939 MB HydroShare archive of the
@@ -203,6 +226,10 @@ jobs:
             ~/.cache/torch/hub
           key: oracles-${{ matrix.suite }}-${{ hashFiles('tests/oracle/repos.yaml') }}
 
+      - name: Install system packages
+        if: matrix.apt != ''
+        run: sudo apt-get update && sudo apt-get install -y ${{ matrix.apt }}
+
       - name: Install dependencies (CPU Torch + reference packages)
         run: |
           python -m pip install --upgrade pip
@@ -214,11 +241,13 @@ jobs:
           python -m pip install -e .
 
       - name: Fetch pinned reference implementations
+        if: matrix.references != ''
         run: python scripts/fetch_oracles.py --dest ~/.cache/pyhazards-oracles ${{ matrix.references }}
 
       - name: Oracle tests
         run: |
           export PYHAZARDS_ORACLE_DIR="$HOME/.cache/pyhazards-oracles"
+          mkdir -p "$PYHAZARDS_ORACLE_DIR"
           export PYHAZARDS_ORACLE_REQUIRED=1
           export DGLBACKEND=pytorch
           export KERAS_BACKEND=torch

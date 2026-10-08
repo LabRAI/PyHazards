@@ -2,7 +2,7 @@ slug: tc_tracks_synthetic
 display_name: Synthetic Storm Histories
 hazard_family: Tropical Cyclone
 source_role: Synthetic Smoke Data
-summary: "Random storm-history features and lat / lon / intensity targets for smoke tests of the generic experimental storm adapters (hurricast, tcif_fusion, graphcast_tc, pangu_tc, fourcastnet_tc)."
+summary: "Random storm-history features and lat / lon / intensity targets for smoke tests of the generic experimental storm adapters (hurricast, tcif_fusion)."
 provider: PyHazards (generated in memory; no real storms)
 geometry: Storm-track history sequences
 spatial_resolution: Not applicable (random numbers)
@@ -37,9 +37,6 @@ pyhazards_usage:
 related_models:
   - hurricast
   - tcif_fusion
-  - graphcast_tc
-  - pangu_tc
-  - fourcastnet_tc
 related_benchmarks:
   - tropical_cyclone_benchmark
 notes:
