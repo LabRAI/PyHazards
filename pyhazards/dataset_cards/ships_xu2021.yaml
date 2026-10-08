@@ -1,0 +1,63 @@
+slug: ships_xu2021
+display_name: SHIPS Predictors (Xu et al. 2021)
+hazard_family: Tropical Cyclone
+source_role: Intensity Benchmark
+summary: The standardised SHIPS predictor table of Xu et al. (2021) with 24-hour intensity-change targets, read into the official leave-one-year-out folds.
+provider: Xu et al. (PNNL), "Supporting data for Xu et al. 2021 - Weather and Forecasting" (Zenodo 4784610, CC BY 4.0), built from the SHIPS developmental data (NHC / CIRA)
+geometry: Tabular feature vectors
+spatial_resolution: One row per storm and forecast time
+temporal_resolution: Six-hourly forecast times
+update_cadence: Static release (2021)
+period_of_record: Reanalysis predictors 1982-2017 (global basins); operational predictors 2010-2018 (Atlantic)
+coverage: Atlantic test basin; global training basins (AL, EP, WP, SH, ...)
+formats: CSV (train_global_fill_REA_na_wo_img_scaled.csv, 392 MB)
+overview:
+  - >
+    Each row holds the SHIPS predictors of one storm at one forecast time, standardised by the reanalysis
+    standard deviation, with ``name``, ``year``, ``basin``, ``type`` (``rea`` reanalysis predictors or
+    ``opr`` operational predictors) and the target ``dvs24``, the 24-hour change of the maximum sustained
+    wind in knots.
+  - >
+    ``ships_xu2021`` selects the 121 predictors of the paper's 24-hour model (``SHIPS_PREDICTORS``) and builds
+    the fold of ``leave_out_year`` as the official ``load_loyo_data`` does for the MLP: training rows are
+    reanalysis rows except Atlantic rows of that year, test rows are that year's operational rows, and a
+    random 10 % of the training rows (seeded) is the validation split.
+data_characteristics:
+  - Inputs (samples, 121) float32 standardised predictors in the official order; targets (samples,) dvs24 in knots.
+  - Split metadata gives each row's year (``groups``), storm name and basin; the benchmark reports MAE per test year.
+  - Rows with a missing predictor or target are dropped (``drop_missing``).
+typical_use_cases:
+  - Training and evaluating the ``tropicalcyclone_mlp`` 24-hour intensity-change model (``tc.intensity`` task).
+access_links:
+  - label: Zenodo record 4784610 (CC BY 4.0)
+    url: https://doi.org/10.5281/zenodo.4784610
+  - label: tropicalcyclone_MLP repository
+    url: https://github.com/wenweixu/tropicalcyclone_MLP
+inspection: null
+registry:
+  name: ships_xu2021
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    fold = load_dataset("ships_xu2021", path="train_global_fill_REA_na_wo_img_scaled.csv", leave_out_year=2018).load()
+    test = fold.get_split("test")
+    print(test.inputs.shape, test.targets.shape)  # (cases, 121), (cases,)
+  notes:
+    - "The paper's leave-one-year-out test averages the folds 2010-2018 (2,464 Atlantic cases)."
+primary_references:
+  - citation: "Xu, W., K. Balaguru, A. August, N. Lalo, N. Hodas, M. DeMaria and D. Judi (2021). Deep Learning Experiments for Tropical Cyclone Intensity Forecasts. Weather and Forecasting 36(4), 1453-1470."
+    url: https://doi.org/10.1175/WAF-D-20-0104.1
+  - citation: "Xu, W., et al. (2021). Supporting data for Xu et al. 2021 - Weather and Forecasting (Version 1). Zenodo."
+    url: https://doi.org/10.5281/zenodo.4784610
+pyhazards_usage:
+  - "Score with the ``tc`` benchmark and ``hazard_task: tc.intensity`` (MAE / RMSE in knots, per test year)."
+related_models:
+  - tropicalcyclone_mlp
+related_benchmarks:
+  - tropical_cyclone_benchmark
+notes:
+  - >
+    The official loyo_testing.py reads a ``..._w2020.csv`` variant that is not in the Zenodo record. The
+    independent 2019 / 2020 operational files of the record are not standardised and are not read.
+  - >
+    PyHazards never redistributes the table; tests use ten real rows cut from it (tests/fixtures/ships_xu2021).

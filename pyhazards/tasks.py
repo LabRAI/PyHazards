@@ -57,6 +57,12 @@ _HAZARD_TASKS: Dict[str, HazardTask] = {
         target="track_intensity",
         description="Storm-track and intensity forecasting over lead-time horizons.",
     ),
+    "tc.intensity": HazardTask(
+        name="tc.intensity",
+        hazard="tc",
+        target="intensity",
+        description="Storm intensity (or intensity-change) forecasting at a single lead time.",
+    ),
 }
 
 

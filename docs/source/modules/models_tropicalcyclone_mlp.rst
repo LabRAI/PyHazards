@@ -6,7 +6,7 @@ Tropical Cyclone MLP
 Overview
 --------
 
-``tropicalcyclone_mlp`` complements ``hurricast`` with a lighter-weight hurricane baseline that uses the same storm-history input contract.
+``tropicalcyclone_mlp`` is the operational 24-hour intensity model of Xu et al. (Weather and Forecasting 2021). It maps one forecast time's 121 standardised SHIPS predictors (initial intensity ``vs0``, 18 GOES PSLV, 21 MTPW and 20 IR00 predictors, 0-24 h averages of the SHIPS environmental predictors and the 12-hour intensity change ``DELV-12``; the order is ``SHIPS_PREDICTORS``) to one number, the 24-hour change of the maximum sustained wind (``dvs24``, knots). It does not forecast tracks.
 
 At a Glance
 -----------
@@ -46,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-note
 
-         Track + Intensity
+         Intensity
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,26 +63,40 @@ At a Glance
 Description
 -----------
 
-``tropicalcyclone_mlp`` complements ``hurricast`` with a lighter-weight hurricane baseline that uses the same storm-history input contract.
+``tropicalcyclone_mlp`` is the operational 24-hour intensity model of Xu et al. (Weather and Forecasting 2021). It maps one forecast time's 121 standardised SHIPS predictors (initial intensity ``vs0``, 18 GOES PSLV, 21 MTPW and 20 IR00 predictors, 0-24 h averages of the SHIPS environmental predictors and the 12-hour intensity change ``DELV-12``; the order is ``SHIPS_PREDICTORS``) to one number, the 24-hour change of the maximum sustained wind (``dvs24``, knots). It does not forecast tracks.
 
-The adapter is useful for practical low-cost intensity and trajectory experiments in basin-filtered settings.
+The network is a port of ``models.mlp`` of the official Keras code (BSD-2-Clause): Dense(2048, sigmoid) -> Dense(2048, ReLU) -> Dense(1, linear), 4,448,257 parameters, with Keras' default glorot-uniform kernels and zero biases. Layers are named ``dense``, ``dense_1`` and ``dense_2`` like the Keras layers, and ``load_keras_weights`` copies a Keras model's ``get_weights()``.
+
+Data: ``ships_xu2021`` reads the authors' predictor table (Zenodo 4784610, CC BY 4.0) and builds the official leave-one-year-out folds; the benchmark scores it with the ``tc.intensity`` task (MAE / RMSE in knots, per test year and their mean).
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`TCBench Alpha </benchmarks/tcbench_alpha>`
+**Mapped benchmark ecosystems:** :doc:`SHIPS Predictors (Xu et al. 2021) </benchmarks/ships_xu2021>`
 
 External References
 -------------------
 
-**Paper:** `Deep Learning Experiments for Tropical Cyclone Intensity Forecasts <https://doi.org/10.1145/3447548.3467351>`_ | **Repo:** `Repository <https://github.com/wenweixu/tropicalcyclone_MLP>`__
+**Paper:** `Deep Learning Experiments for Tropical Cyclone Intensity Forecasts <https://doi.org/10.1175/WAF-D-20-0104.1>`_ | **Repo:** `Repository <https://github.com/wenweixu/tropicalcyclone_MLP>`__
+
+Used In
+-------
+
+- `Xu et al. (2021), Weather and Forecasting 36(4), 1453-1470 (full text: OSTI 1818206) <https://www.osti.gov/biblio/1818206>`_ (`repo <https://github.com/wenweixu/tropicalcyclone_MLP>`__): The paper's own evaluation (Table 5), Atlantic basin, 24-hour intensity change: leave-one-year-out tests on 2010-2018 operational predictors (2,464 six-hourly cases) MAE 8.37 kt, RMSE 11.42 kt, R2 0.75; independent 2019-2020 test (828 cases) MAE 8.22 kt, RMSE 11.07 kt, R2 0.83. NHC references on the same cases (2010-18 / 2019-20 MAE): SHIPS 10.42 / 10.51, DSHP 9.37 / 8.69, LGEM 9.21 / 8.98, HWFI 8.83 / 8.08, OFCL 8.16 / 7.45 kt. Not reproduced by PyHazards.
 
 Reproduction
 ------------
 
-Not yet verified against a reference implementation.
+- **Reference implementation:** `https://github.com/wenweixu/tropicalcyclone_MLP <https://github.com/wenweixu/tropicalcyclone_MLP>`__ at ``7380059`` (BSD-2-Clause (Copyright (c) 2021, Wenwei Xu); ported with the notice kept)
+- **Checked configuration:** models.mlp(input_shape=(121,)) from the pinned models.py, executed with Keras 3.12.4 on the PyTorch backend (the original Keras 2.2.4 / TensorFlow 1.12 stack no longer installs; only Adam(lr=) is mapped to learning_rate=): 4,448,257 parameters, layer activations sigmoid / relu / linear, MAE loss and Adam 1e-4; the official weights copied into the port give the same outputs (rtol 1e-5) on random inputs and on real standardised predictors (tests/fixtures/ships_xu2021); the predictor list equals utils.hand_features.
+- **Parameter count:** 4,448,257
+- **Verified:** parameter count, parameter names and shapes, forward outputs
+- **Oracle test:** ``tests/oracle/test_tropicalcyclone_mlp_oracle.py``
+- **Deviation:** Initialisation has Keras' distribution (glorot-uniform kernels, zero biases; checked against the official model) but not its random draws, which come from TensorFlow's generator; the same seed does not give the official initial weights.
+- **Deviation:** No trained weights were released, so the paper's numbers are not reproduced. Training is not part of the module: the official setup is MAE loss, Adam (learning rate 1e-4), batch 32, up to 1000 epochs with early stopping on a random 10 % validation split (min_delta 0.05 kt, patience 10, best weights restored), 40 seed pairs (randomseed.bat).
+- **Deviation:** ``hidden_dims`` / ``activations`` can build other widths; only the default (the official 24-hour model) is checked. The paper's 6-hour model (9 predictors, ReLU layers 128-256-128-256-256, scikit-learn MLPRegressor) is not in the official repository.
 
 Registry Name
 -------------
@@ -92,7 +106,7 @@ Primary entrypoint: ``tropicalcyclone_mlp``
 Supported Tasks
 ---------------
 
-- Track + Intensity
+- Intensity
 
 Programmatic Use
 ----------------
@@ -101,12 +115,19 @@ Programmatic Use
 
    import torch
    from pyhazards.models import build_model
+   from pyhazards.models.tropicalcyclone_mlp import SHIPS_PREDICTORS
 
-   model = build_model(name="tropicalcyclone_mlp", task="regression", input_dim=8, history=6)
-   preds = model(torch.randn(2, 6, 8))
-   print(preds.shape)
+   model = build_model(name="tropicalcyclone_mlp", task="regression")
+   predictors = torch.randn(4, len(SHIPS_PREDICTORS))  # standardised SHIPS predictors, official order
+   print(model(predictors).shape)  # (4, 1): 24-hour change of the maximum wind (kt)
+
+   # Real data: ships_xu2021 reads train_global_fill_REA_na_wo_img_scaled.csv (Zenodo 4784610).
+   # from pyhazards.datasets import load_dataset
+   # fold = load_dataset("ships_xu2021", path="train_global_fill_REA_na_wo_img_scaled.csv", leave_out_year=2018).load()
 
 Notes
 -----
 
-- Outputs are lead-time sequences of latitude, longitude, and intensity targets.
+- Inputs must be the standardised predictors of the authors' table (train_global_fill_REA_na_wo_img_scaled.csv, standardised by the reanalysis STD); the operational 2019 / 2020 files of the Zenodo record are not standardised.
+- The official loyo_testing.py reads train_global_fill_REA_na_wo_img_scaled_w2020.csv, which is not in the Zenodo record; ships_xu2021 reads the published train_global_fill_REA_na_wo_img_scaled.csv.
+- The dvs24 targets of the table are in knots but not whole numbers (e.g. 5.004258), as published.

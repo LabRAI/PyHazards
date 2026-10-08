@@ -1,26 +1,35 @@
 slug: tropicyclonenet_dataset
-display_name: TropiCycloneNet-Dataset
+display_name: TropiCycloneNet Dataset
 kind: ecosystem
 hazard_family: Tropical Cyclone
 benchmark_key: tc
-support_status: synthetic-backed
+support_status: real-backed
 summary: >
-  TropiCycloneNet-Dataset-backed storm benchmark coverage for the shared tropical cyclone evaluator.
+  TCND (Huang et al. 2025): six-basin best tracks, Env-Data and ERA5 geopotential, read exactly like
+  the official TropiCycloneNet loader and scored with the paper's best-of-6 errors.
 description:
   - >
-    The current TropiCycloneNet-Dataset alignment uses a metadata-backed storm-history adapter
-    over the shared synthetic tropical-cyclone dataset.
+    ``tropicyclonenet_dataset`` reads the TCND files (Zenodo, CC BY 4.0) into TropiCycloneNet's input
+    layout; targets are position, central pressure (hPa) and maximum wind (m/s) at 6, 12, 18 and 24 h.
   - >
-    It exists today to support the public TropiCycloneNet smoke benchmark path.
+    The paper reports best-of-6 errors (per lead time and variable, the smallest error among six sampled
+    forecasts); the evaluator reports those and the errors of the sample mean.
 source:
-  title: TropiCycloneNet-Dataset
-  url: https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset
+  title: Benchmark dataset and deep learning method for global tropical cyclone forecasting
+  url: https://doi.org/10.1038/s41467-025-61087-4
+  repo_url: https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset
 tasks:
   - tc.track_intensity
 metrics:
-  - track_error
+  - track_error_km
   - intensity_mae
+  - pressure_mae
+  - best_of_k_track_error_km
+  - best_of_k_intensity_mae
+  - best_of_k_pressure_mae
 smoke_configs:
   - pyhazards/configs/tc/tropicyclonenet_smoke.yaml
 linked_models:
   - tropicyclonenet
+notes:
+  - "The smoke config uses tropicyclonenet_dataset_synthetic (random data in the TCND layout)."

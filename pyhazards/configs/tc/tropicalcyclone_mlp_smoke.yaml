@@ -1,24 +1,22 @@
 benchmark:
   name: tc
-  hazard_task: tc.track_intensity
+  hazard_task: tc.intensity
   metrics:
-    - track_error
     - intensity_mae
+    - intensity_rmse
+    - intensity_mae_group_mean
   eval_split: test
 dataset:
-  name: tcbench_alpha
+  name: ships_xu2021_synthetic
   params:
     micro: true
 model:
   name: tropicalcyclone_mlp
   task: regression
   params:
-    input_dim: 8
-    history: 6
-    horizon: 5
-    output_dim: 3
+    input_dim: 121
 report:
-  output_dir: reports/tc_mlp
+  output_dir: reports/tropicalcyclone_mlp
   formats:
     - json
 seed: 7

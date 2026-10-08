@@ -6,9 +6,11 @@ Tropical Cyclone Benchmark
 Overview
 --------
 
-The tropical cyclone benchmark family is the single storm evaluator used by the hurricane-specific and all-basin tropical-cyclone smoke configs.
+``tc.track_intensity`` scores forecasts of position, maximum wind and central pressure at the dataset's lead times: great-circle track error (km; ``track_distance: tcn_equirectangular`` gives TropiCycloneNet's 111 km-per-degree formula), wind MAE in the dataset's unit (knots for IBTrACS, m/s for TCND) and pressure MAE (hPa), each per lead time and averaged. Models with several samples per storm are scored on the sample mean and with the best-of-k errors of the TropiCycloneNet paper (per lead time and per variable, the smallest error among the samples).
 
-Current coverage is synthetic-backed, but the same evaluator contract already scores core storm baselines and experimental weather-model adapters.
+``tc.intensity`` scores one intensity (or 24-hour intensity change) per storm and time: MAE and RMSE in the dataset's unit, per test year when the split names years, and their unweighted mean, the way Xu et al. (2021) and SAF-Net report results.
+
+Real data: ``ibtracs_tracks`` (IBTrACS best tracks), ``tropicyclonenet_dataset`` (TCND) and ``ships_xu2021`` (SHIPS predictors). The smoke configs run on synthetic data with the same layouts.
 
 At a Glance
 -----------
@@ -44,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         :bdg-info:`Synthetic-backed`
+         :bdg-success:`Real-backed`
 
       .. container:: catalog-stat-note
 
@@ -72,26 +74,33 @@ Benchmark Mapping
 Mapped benchmark ecosystems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:doc:`IBTrACS </benchmarks/ibtracs>`, :doc:`TCBench Alpha </benchmarks/tcbench_alpha>`, :doc:`TropiCycloneNet-Dataset </benchmarks/tropicyclonenet_dataset>`.
+:doc:`IBTrACS </benchmarks/ibtracs>`, :doc:`SHIPS Predictors (Xu et al. 2021) </benchmarks/ships_xu2021>`, :doc:`TropiCycloneNet Dataset </benchmarks/tropicyclonenet_dataset>`.
 
 .. dropdown:: Supported Tasks
    :class-container: catalog-dropdown
 
    - Track + Intensity
+   - Intensity
 
 .. dropdown:: Key Metrics
    :class-container: catalog-dropdown
 
-   - ``track_error``
+   - ``track_error_km``
    - ``intensity_mae``
+   - ``pressure_mae``
+   - ``best_of_k_track_error_km``
+   - ``best_of_k_intensity_mae``
+   - ``best_of_k_pressure_mae``
+   - ``intensity_rmse``
+   - ``intensity_mae_group_mean``
 
 .. dropdown:: Smoke Configs
    :class-container: catalog-dropdown
 
-   - ``hurricast_smoke.yaml``
    - ``tropicalcyclone_mlp_smoke.yaml``
-   - ``tropicyclonenet_smoke.yaml``
    - ``saf_net_smoke.yaml``
+   - ``tropicyclonenet_smoke.yaml``
+   - ``hurricast_smoke.yaml``
    - ``tcif_fusion_smoke.yaml``
    - ``graphcast_tc_smoke.yaml``
    - ``pangu_tc_smoke.yaml``
@@ -100,9 +109,10 @@ Mapped benchmark ecosystems
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`Hurricast </modules/models_hurricast>`, :doc:`Tropical Cyclone MLP </modules/models_tropicalcyclone_mlp>`, :doc:`TropiCycloneNet </modules/models_tropicyclonenet>`, :doc:`SAF-Net </modules/models_saf_net>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`, :doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`.
+   :doc:`Tropical Cyclone MLP </modules/models_tropicalcyclone_mlp>`, :doc:`SAF-Net </modules/models_saf_net>`, :doc:`TropiCycloneNet </modules/models_tropicyclonenet>`, :doc:`Hurricast </modules/models_hurricast>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`, :doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`.
 
 .. dropdown:: Notes
    :class-container: catalog-dropdown
 
-   - IBTrACS, TCBench Alpha, and TropiCycloneNet-Dataset are surfaced as the public storm benchmark ecosystems.
+   - Smoke configs use synthetic datasets (tc_tracks_synthetic, ships_xu2021_synthetic, safnet_cma_era_interim_synthetic, tropicyclonenet_dataset_synthetic); their scores mean nothing. Benchmark results carry synthetic=True for them.
+   - hurricast, tcif_fusion and the GraphCast / Pangu-Weather / FourCastNet adapters are experimental generic stand-ins, not the published models.

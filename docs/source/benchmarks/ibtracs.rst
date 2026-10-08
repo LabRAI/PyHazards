@@ -6,9 +6,9 @@ IBTrACS
 Overview
 --------
 
-The current IBTrACS alignment uses a metadata-backed storm-history adapter over the shared synthetic tropical-cyclone dataset.
+``ibtracs_tracks`` reads IBTrACS v04 CSV or netCDF files with PyHazards' reader and builds forecasting windows (history of six-hourly observations, targets at the requested lead times) for any agency's winds and pressures.
 
-It is the benchmark ecosystem currently used by Hurricast and the experimental weather-model adapter smoke configs.
+No ported model consumes IBTrACS directly yet: Hurricast (which uses IBTrACS with ERA5) and the weather-model cyclone pipelines (forecast fields, tracker, scoring against IBTrACS) are pending.
 
 At a Glance
 -----------
@@ -44,7 +44,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         :bdg-info:`Synthetic-backed`
+         :bdg-success:`Real-backed`
 
       .. container:: catalog-stat-note
 
@@ -55,11 +55,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         4
+         0
 
       .. container:: catalog-stat-note
 
-         4 models
+         0 models
 
 
 Benchmark Mapping
@@ -87,18 +87,15 @@ Primary Source
 .. dropdown:: Key Metrics
    :class-container: catalog-dropdown
 
-   - ``track_error``
+   - ``track_error_km``
    - ``intensity_mae``
+   - ``pressure_mae``
 
 .. dropdown:: Smoke Configs
    :class-container: catalog-dropdown
 
-   - ``hurricast_smoke.yaml``
-   - ``graphcast_tc_smoke.yaml``
-   - ``pangu_tc_smoke.yaml``
-   - ``fourcastnet_tc_smoke.yaml``
 
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`Hurricast </modules/models_hurricast>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`, :doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`.
+   None.

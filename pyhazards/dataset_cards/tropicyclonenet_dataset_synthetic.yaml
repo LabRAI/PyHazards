@@ -1,0 +1,42 @@
+slug: tropicyclonenet_dataset_synthetic
+display_name: Synthetic TCND Samples
+hazard_family: Tropical Cyclone
+source_role: Synthetic Smoke Data
+summary: "Random inputs in the TropiCycloneNet (TCND) layout with random-walk targets for smoke tests of tropicyclonenet."
+provider: PyHazards (generated in memory; no real storms)
+geometry: Storm-track history sequences
+spatial_resolution: Not applicable (random numbers)
+temporal_resolution: Not applicable (random numbers)
+update_cadence: Generated on every load
+period_of_record: None (synthetic)
+coverage: None (synthetic)
+formats: PyTorch tensors via the dataset registry
+overview:
+  - >
+    Synthetic data. Every value is a random number; nothing in it describes real tropical cyclones and
+    scores on it mean nothing. It exists so that smoke tests and CI can run the models and the cyclone
+    benchmark without downloading data.
+data_characteristics:
+  - "obs_traj / obs_traj_rel (8, N, 4) normalised random walks, image_obs (N, 1, 8, 64, 64) uniform, env_data random one-hot features; targets (N, 4, 4) lat, lon, pressure (hPa) and wind (m/s) continuing the walk."
+typical_use_cases:
+  - Smoke tests and CI runs of the linked models and of the cyclone benchmark.
+access_links: []
+inspection: null
+registry:
+  name: tropicyclonenet_dataset_synthetic
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset("tropicyclonenet_dataset_synthetic", micro=True).load()
+    print(data.metadata["synthetic"])  # True
+primary_references:
+  - citation: PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py)
+    url: https://github.com/LabRAI/PyHazards
+pyhazards_usage:
+  - Use only for smoke tests; real data are ibtracs_tracks, ships_xu2021 and tropicyclonenet_dataset.
+related_models:
+  - tropicyclonenet
+related_benchmarks:
+  - tropical_cyclone_benchmark
+notes:
+  - Bundle metadata carries synthetic=True, and benchmark results report it.

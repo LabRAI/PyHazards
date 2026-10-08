@@ -6,7 +6,7 @@ GraphCast TC Adapter
 Overview
 --------
 
-``graphcast_tc`` is an experimental foundation-weather adapter that keeps the shared storm trajectory interface while remaining lightweight enough for CI.
+GraphCast (Lam et al., Science 2023) is a global medium-range weather model (a graph neural network on a multi-mesh, 0.25 degree ERA5 grid); its cyclone results come from running the model and tracking storms in the forecast fields with a re-implementation of ECMWF's tracker (Science Supplement 8.1), scored against IBTrACS.
 
 At a Glance
 -----------
@@ -46,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-note
 
-         Track + Intensity
+         Forecasting
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,21 +63,19 @@ At a Glance
 Description
 -----------
 
-``graphcast_tc`` is an experimental foundation-weather adapter that keeps the shared storm trajectory interface while remaining lightweight enough for CI.
+GraphCast (Lam et al., Science 2023) is a global medium-range weather model (a graph neural network on a multi-mesh, 0.25 degree ERA5 grid); its cyclone results come from running the model and tracking storms in the forecast fields with a re-implementation of ECMWF's tracker (Science Supplement 8.1), scored against IBTrACS.
 
-The PyHazards version is intentionally wrapper-style and should be treated as an adapter contract rather than a full reproduction of the original weather model.
+The PyHazards ``graphcast_tc`` module is a small transformer over a generic ``(batch, history, features)`` sequence returning ``(batch, horizon, 3)``, scored only on synthetic data. A faithful version is a pipeline (forecast fields, tracker, scoring against ``ibtracs_tracks``), not a module of this shape.
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`IBTrACS </benchmarks/ibtracs>`
-
 External References
 -------------------
 
-**Paper:** `GraphCast: Learning skillful medium-range global weather forecasting <https://www.science.org/doi/10.1126/science.adi2336>`_ | **Repo:** `Repository <https://github.com/google-deepmind/graphcast>`__
+**Paper:** `Learning skillful medium-range global weather forecasting <https://doi.org/10.1126/science.adi2336>`_ | **Repo:** `Repository <https://github.com/google-deepmind/weathernext>`__
 
 Reproduction
 ------------
@@ -92,7 +90,7 @@ Primary entrypoint: ``graphcast_tc``
 Supported Tasks
 ---------------
 
-- Track + Intensity
+- Forecasting
 
 Programmatic Use
 ----------------
@@ -109,4 +107,7 @@ Programmatic Use
 Notes
 -----
 
-- Experimental adapter: intended for shared-evaluator prototyping rather than exact weather-model parity.
+- Not faithful (experimental): no GraphCast forecast fields, weights or tracker are involved.
+- Citation: Lam et al., Learning skillful medium-range global weather forecasting, Science 382(6677), 1416-1421 (2023), doi:10.1126/science.adi2336; preprint arXiv 2212.12794 titled 'GraphCast: Learning skillful medium-range global weather forecasting'.
+- github.com/google-deepmind/graphcast now redirects to google-deepmind/weathernext; the GraphCast code is in weathernext/weathernext1_graph ('WeatherNext 1 Graph'), and git tag v0.1.1 (97d1ad50b0b7af4aaed7790167dffa769bae1f2c) is the last self-contained graphcast package. Code: Apache-2.0. Weights: CC BY-NC-SA 4.0 until 2026-08-06, CC BY 4.0 since per the README (the license string inside the checkpoints still reads CC BY-NC-SA 4.0). GenCast (Price et al., Nature 2024) is a separate model.
+- PyPI 'graphcast' is an unrelated package.

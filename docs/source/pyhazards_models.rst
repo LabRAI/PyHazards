@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         47
+         45
 
       .. container:: catalog-stat-note
 
@@ -40,7 +40,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         3
+         5
 
       .. container:: catalog-stat-note
 
@@ -1169,43 +1169,16 @@ pages and compatible benchmark coverage.
          :gutter: 2
          :class-container: catalog-grid
 
-         .. grid-item-card:: Hurricast
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               A compact multimodal storm baseline for hurricane track and intensity forecasting.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Implemented`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`Hurricast <modules/models_hurricast>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`IBTrACS <benchmarks/ibtracs>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://arxiv.org/abs/2102.01204>`_ | **Repo:** `Repository <https://github.com/leobix/hurricast>`__
-
          .. grid-item-card:: SAF-Net
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A spatiotemporal tropical-cyclone baseline with an intensity-focused head and shared trajectory output.
+               Wide-and-deep typhoon intensity network of Xu et al. (2022): 96 best-track predictors plus 31x31 ERA-Interim u/v winds at four levels and four times, fused by spatial attention, predict the maximum sustained wind 24 hours ahead.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Implemented`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -1215,51 +1188,20 @@ pages and compatible benchmark coverage.
 
                **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
 
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
-
             .. container:: catalog-link-row
 
-               **Paper:** `SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction <https://www.sciencedirect.com/science/article/pii/S1568494623003152>`_ | **Repo:** `Repository <https://github.com/xuguangning1218/TI_Prediction>`__
-
-         .. grid-item-card:: TCIF-fusion
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Implemented`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`TCIF-fusion <modules/models_tcif_fusion>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.5194/egusphere-2024-250>`_ | **Repo:** `Repository <https://github.com/wangchong96/TCIF-fusion>`__
+               **Paper:** `SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction <https://doi.org/10.1016/j.patrec.2021.11.012>`_ | **Repo:** `Repository <https://github.com/xuguangning1218/TI_Prediction>`__
 
          .. grid-item-card:: Tropical Cyclone MLP
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A compact MLP baseline for hurricane track and intensity forecasting.
+               The 24-hour intensity-change MLP of Xu et al. (2021): 121 SHIPS predictors -> two hidden layers of 2048 units (sigmoid, ReLU) -> the change of the maximum sustained wind over the next 24 hours.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Implemented`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Intensity` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -1271,18 +1213,18 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
+               **Benchmark Ecosystems:** :doc:`SHIPS Predictors (Xu et al. 2021) <benchmarks/ships_xu2021>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `Deep Learning Experiments for Tropical Cyclone Intensity Forecasts <https://doi.org/10.1145/3447548.3467351>`_ | **Repo:** `Repository <https://github.com/wenweixu/tropicalcyclone_MLP>`__
+               **Paper:** `Deep Learning Experiments for Tropical Cyclone Intensity Forecasts <https://doi.org/10.1175/WAF-D-20-0104.1>`_ | **Repo:** `Repository <https://github.com/wenweixu/tropicalcyclone_MLP>`__
 
          .. grid-item-card:: TropiCycloneNet
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A GRU plus attention baseline for all-basin tropical cyclone forecasting.
+               The TCN_M generator of Huang et al. (2025): a multimodal GAN with six decoders that samples 6- to 24-hour forecasts of position, central pressure and maximum wind from the best track, 500 hPa geopotential and environmental features; the released checkpoint is verified.
 
             .. container:: catalog-chip-row
 
@@ -1298,11 +1240,11 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`TropiCycloneNet-Dataset <benchmarks/tropicyclonenet_dataset>`
+               **Benchmark Ecosystems:** :doc:`TropiCycloneNet Dataset <benchmarks/tropicyclonenet_dataset>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://www.nature.com/articles/s41597-023-02721-x>`_ | **Repo:** `Repository <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__
+               **Paper:** `Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://doi.org/10.1038/s41467-025-61087-4>`_ | **Repo:** `Repository <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__
 
       .. rubric:: Experimental Adapters
 
@@ -1319,11 +1261,11 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-entry-summary
 
-               An experimental wrapper-style storm adapter inspired by FourCastNet forecast fields.
+               Experimental placeholder for FourCastNet-based cyclone forecasts: a two-layer MLP over generic storm-history features. It contains no FourCastNet component, forecast fields, weights or tracker.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-warning:`Experimental Adapter`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
 
             .. container:: catalog-meta-row
 
@@ -1332,10 +1274,6 @@ pages and compatible benchmark coverage.
             .. container:: catalog-meta-row
 
                **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`IBTrACS <benchmarks/ibtracs>`
 
             .. container:: catalog-link-row
 
@@ -1346,11 +1284,11 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-entry-summary
 
-               An experimental wrapper-style storm adapter inspired by GraphCast/GenCast forecast fields.
+               Experimental placeholder for GraphCast-based cyclone forecasts: a small transformer over generic storm-history features. It contains no GraphCast component, forecast fields, weights or tracker.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-warning:`Experimental Adapter`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
 
             .. container:: catalog-meta-row
 
@@ -1360,24 +1298,43 @@ pages and compatible benchmark coverage.
 
                **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
 
+            .. container:: catalog-link-row
+
+               **Paper:** `Learning skillful medium-range global weather forecasting <https://doi.org/10.1126/science.adi2336>`_ | **Repo:** `Repository <https://github.com/google-deepmind/weathernext>`__
+
+         .. grid-item-card:: Hurricast
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Experimental generic storm-history LSTM registered under the Hurricast name; it is not the Hurricast model of Boussioux et al. (2022) and has not been checked against it.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
+
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`IBTrACS <benchmarks/ibtracs>`
+               **Details:** :doc:`Hurricast <modules/models_hurricast>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `GraphCast: Learning skillful medium-range global weather forecasting <https://www.science.org/doi/10.1126/science.adi2336>`_ | **Repo:** `Repository <https://github.com/google-deepmind/graphcast>`__
+               **Paper:** `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://doi.org/10.1175/WAF-D-21-0091.1>`_ | **Repo:** `Repository <https://github.com/leobix/hurricast>`__
 
          .. grid-item-card:: Pangu TC Adapter
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               An experimental wrapper-style storm adapter inspired by Pangu-Weather forecast fields.
+               Experimental placeholder for Pangu-Weather-based cyclone forecasts: a small network over generic storm-history features. It contains no Pangu-Weather component, forecast fields, weights or tracker.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-warning:`Experimental Adapter`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
 
             .. container:: catalog-meta-row
 
@@ -1387,13 +1344,32 @@ pages and compatible benchmark coverage.
 
                **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
 
+            .. container:: catalog-link-row
+
+               **Paper:** `Accurate medium-range global weather forecasting with 3D neural networks <https://doi.org/10.1038/s41586-023-06185-3>`_ | **Repo:** `Repository <https://github.com/198808xc/Pangu-Weather>`__
+
+         .. grid-item-card:: TCIF-fusion
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Experimental generic storm-history network registered under the TCIF-fusion name; it is not the knowledge-guided intensity model of Wang et al. (2024) and has not been checked against it.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
+
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`IBTrACS <benchmarks/ibtracs>`
+               **Details:** :doc:`TCIF-fusion <modules/models_tcif_fusion>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `Accurate medium-range global weather forecasting with 3D neural networks <https://www.nature.com/articles/s41586-023-06185-3>`_ | **Repo:** `Repository <https://github.com/198808xc/Pangu-Weather>`__
+               **Paper:** `Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.1088/1748-9326/ad1bde>`_ | **Repo:** `Repository <https://github.com/wangchong96/TCIF-fusion>`__
 
 
 
@@ -1437,9 +1413,9 @@ starting point for each hazard family.
    .. grid-item-card:: Tropical Cyclone
       :class-card: catalog-detail-card
 
-      **Start with:** :doc:`Hurricast <modules/models_hurricast>`
+      **Start with:** :doc:`TropiCycloneNet <modules/models_tropicyclonenet>`
 
-      A compact multimodal storm baseline for hurricane track and intensity forecasting.
+      The TCN_M generator of Huang et al. (2025): a multimodal GAN with six decoders that samples 6- to 24-hour forecasts of position, central pressure and maximum wind from the best track, 500 hPa geopotential and environmental features; the released checkpoint is verified.
 
       **Benchmark:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
 

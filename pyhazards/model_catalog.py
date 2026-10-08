@@ -85,6 +85,7 @@ TASK_DISPLAY_LABELS = {
     "flood.streamflow": "Streamflow",
     "flood.inundation": "Inundation",
     "tc.track_intensity": "Track + Intensity",
+    "tc.intensity": "Intensity",
     "classification": "Classification",
     "regression": "Forecasting",
     "segmentation": "Segmentation",
@@ -108,7 +109,7 @@ STARTER_MODELS = {
     "Wildfire": "wildfirespreadts",
     "Earthquake": "phasenet",
     "Flood": "floodcast",
-    "Tropical Cyclone": "hurricast",
+    "Tropical Cyclone": "tropicyclonenet",
 }
 
 

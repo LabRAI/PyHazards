@@ -40,8 +40,13 @@ from .swinlstm import SwinLSTM, SwinLSTMSegmenter, swinlstm_builder
 from .tcif_fusion import TCIFFusion, tcif_fusion_builder
 from .tcn import TCN, TemporalConvNet, tcn_builder
 from .trajgru import TrajGRU, TrajGRUSegmenter, trajgru_builder
-from .tropicalcyclone_mlp import TropicalCycloneMLP, tropicalcyclone_mlp_builder
-from .tropicyclonenet import TropiCycloneNet, tropicyclonenet_builder
+from .tropicalcyclone_mlp import TropicalCycloneMLP, load_keras_weights, tropicalcyclone_mlp_builder
+from .tropicyclonenet import (
+    TrajectoryDiscriminator,
+    TropiCycloneNet,
+    load_tropicyclonenet_checkpoint,
+    tropicyclonenet_builder,
+)
 from .unet import UNet, unet_builder
 from .ts_satfire import TS_SATFIRE_BASELINES, ts_satfire_builder
 from .unet3d import TemporalUNet, UNet, unet3d_builder
@@ -130,8 +135,11 @@ __all__ = [
     "TemporalConvNet",
     "tcn_builder",
     "TropicalCycloneMLP",
+    "load_keras_weights",
     "tropicalcyclone_mlp_builder",
+    "TrajectoryDiscriminator",
     "TropiCycloneNet",
+    "load_tropicyclonenet_checkpoint",
     "tropicyclonenet_builder",
     "UrbanFloodCast",
     "urbanfloodcast_builder",
@@ -640,12 +648,9 @@ register_model(
     "tropicalcyclone_mlp",
     tropicalcyclone_mlp_builder,
     defaults={
-        "input_dim": 8,
-        "history": 6,
-        "hidden_dim": 64,
-        "horizon": 5,
-        "output_dim": 3,
-        "dropout": 0.1,
+        "input_dim": 121,
+        "hidden_dims": (2048, 2048),
+        "activations": ("sigmoid", "relu"),
     },
 )
 
@@ -666,12 +671,8 @@ register_model(
     "tropicyclonenet",
     tropicyclonenet_builder,
     defaults={
-        "input_dim": 8,
-        "hidden_dim": 64,
-        "horizon": 5,
-        "output_dim": 3,
-        "num_layers": 2,
-        "dropout": 0.1,
+        "num_sample": 6,
+        "official_sample_loop": False,
     },
 )
 
@@ -679,10 +680,10 @@ register_model(
     "saf_net",
     saf_net_builder,
     defaults={
-        "input_dim": 8,
-        "hidden_dim": 64,
-        "horizon": 5,
-        "dropout": 0.1,
+        "wide_dim": 96,
+        "num_times": 4,
+        "num_levels": 4,
+        "grid_size": 31,
     },
 )
 

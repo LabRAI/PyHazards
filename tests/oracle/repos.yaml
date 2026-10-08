@@ -75,6 +75,26 @@ repos:
     commit: 57b987bd893bd6910996494c247359ace371d333
     license: MIT
 
+  tropicalcyclone_MLP:
+    # Xu et al., Weather and Forecasting 2021 (24-hour intensity-change MLP, Keras 2.2.4 / TF 1.12).
+    url: https://github.com/wenweixu/tropicalcyclone_MLP.git
+    commit: 73800596fc824c6d3f150fc41af0bdb7b9c3a7dc
+    license: BSD-2-Clause (Copyright (c) 2021, Wenwei Xu)
+  TI_Prediction:
+    # SAF-Net (Xu et al., Pattern Recognition Letters 2022): SAF-Net.ipynb and the released checkpoint
+    # model_saver/SAF_Net.pkl. Read in place by the oracle test; nothing is copied.
+    url: https://github.com/xuguangning1218/TI_Prediction.git
+    commit: 651ccc4ec5d2139c758148778d617583052f2eea
+    license: none (no LICENSE file; test oracle only, never vendored)
+  TropiCycloneNet:
+    # Huang et al., Nature Communications 2025. The GitHub repository has no LICENSE file; its model code
+    # (TCNM/*.py) is identical, up to line endings, to the CC BY 4.0 Zenodo release 10.5281/zenodo.15024028
+    # (TropiCycloneNet.zip, git b4e7101) that pyhazards/models/tropicyclonenet.py ports. The GitHub copy
+    # also holds the evaluation script (scripts/evaluate_model_Me.py) used for the best-of-k metric check.
+    url: https://github.com/xiaochengfuhuo/TropiCycloneNet.git
+    commit: de9cf0e949bdee6e32cadf2605063b7bc6d33115
+    license: none on GitHub; model code released under CC BY 4.0 on Zenodo (test oracle only, never vendored)
+
 assets:
   utae_pastis_weights:
     url: https://zenodo.org/records/5172293/files/UTAE_SemanticSeg_weights.zip
@@ -183,3 +203,8 @@ assets:
     sha256: e3d5e4e59b32f13a74c7ffdc02ae65f9da3362c036b60e73e46dffe8721ae6b2
     license: none stated (Zjut-MultimediaPlus/Rainformer release; test data only, never redistributed)
     large: true
+  tropicyclonenet_checkpoint:
+    # Released TCN_M checkpoint (generator g_state / discriminator d_state, args of the paper model).
+    url: https://zenodo.org/records/15024028/files/checkpoint_with_model_16000.pt?download=1
+    sha256: 68575d1d10fcd2d44eba2d54d0625410f5108cd3bf5d7b3e15df7491ba9f6215
+    license: CC-BY-4.0 (Huang et al., Zenodo 10.5281/zenodo.15024028)

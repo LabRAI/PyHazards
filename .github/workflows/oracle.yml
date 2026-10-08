@@ -10,6 +10,8 @@ on:
     paths:
       - "pyhazards/models/**"
       - "pyhazards/simulators/**"
+      - "pyhazards/datasets/tc/**"
+      - "pyhazards/benchmarks/tc.py"
       - "tests/oracle/**"
       - "scripts/fetch_oracles.py"
       - ".github/workflows/oracle.yml"
@@ -18,6 +20,8 @@ on:
     paths:
       - "pyhazards/models/**"
       - "pyhazards/simulators/**"
+      - "pyhazards/datasets/tc/**"
+      - "pyhazards/benchmarks/tc.py"
       - "tests/oracle/**"
       - "scripts/fetch_oracles.py"
       - ".github/workflows/oracle.yml"
@@ -117,6 +121,18 @@ jobs:
             requirements: tests/oracle/requirements-forefire.txt
             references: forefire forefire_runff_data forefire_runff_reference
             tests: tests/oracle/test_forefire_oracle.py
+          # Tropical cyclone models: the official tropicalcyclone_MLP Keras model runs on Keras 3 with the
+          # PyTorch backend; SAF-Net's notebook network and TropiCycloneNet's generator are plain PyTorch.
+          # The TropiCycloneNet checkpoint (56 MB, Zenodo, CC BY 4.0) is fetched and compared in CI.
+          - suite: tc
+            python: "3.10"
+            torch: torch
+            requirements: tests/oracle/requirements-tc.txt
+            references: tropicalcyclone_MLP TI_Prediction TropiCycloneNet tropicyclonenet_checkpoint
+            tests: >-
+              tests/oracle/test_tropicalcyclone_mlp_oracle.py
+              tests/oracle/test_saf_net_oracle.py
+              tests/oracle/test_tropicyclonenet_oracle.py
           # TerraTorch 0.99.8 (the Prithvi-EO-2.0 BurnScars training stack) needs Python >= 3.12 and
           # torch 2.6. The 1.3 GB checkpoints are not fetched in CI; those tests run locally.
           - suite: prithvi
@@ -159,4 +175,5 @@ jobs:
           export PYHAZARDS_ORACLE_DIR="$HOME/.cache/pyhazards-oracles"
           export PYHAZARDS_ORACLE_REQUIRED=1
           export DGLBACKEND=pytorch
+          export KERAS_BACKEND=torch
           python -m pytest ${{ matrix.tests }} -v -rs

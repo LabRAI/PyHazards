@@ -44,6 +44,7 @@ TASK_DISPLAY_LABELS = {
     "flood.streamflow": "Streamflow",
     "flood.inundation": "Inundation",
     "tc.track_intensity": "Track + Intensity",
+    "tc.intensity": "Intensity",
 }
 
 SUPPORT_STATUS_BADGE_ROLES = {
@@ -72,7 +73,14 @@ METRIC_DISPLAY_LABELS = {
     "burned_area_mae": "Burned-area MAE",
     "average_precision": "Average Precision",
     "track_error": "Track Error",
+    "track_error_km": "Track Error (km)",
     "intensity_mae": "Intensity MAE",
+    "intensity_rmse": "Intensity RMSE",
+    "intensity_mae_group_mean": "Mean Yearly Intensity MAE",
+    "pressure_mae": "Pressure MAE",
+    "best_of_k_track_error_km": "Best-of-k Track Error (km)",
+    "best_of_k_intensity_mae": "Best-of-k Intensity MAE",
+    "best_of_k_pressure_mae": "Best-of-k Pressure MAE",
 }
 
 

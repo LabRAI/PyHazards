@@ -43,12 +43,13 @@ def test_benchmark_page_lists_family_and_ecosystem_tables() -> None:
         ".. grid-item-card:: WaterBench",
         ".. grid-item-card:: FloodCastBench",
         ".. grid-item-card:: HydroBench",
-        ".. grid-item-card:: TCBench Alpha",
+        ".. grid-item-card:: SHIPS Predictors (Xu et al. 2021)",
         ".. grid-item-card:: IBTrACS",
-        ".. grid-item-card:: TropiCycloneNet-Dataset",
+        ".. grid-item-card:: TropiCycloneNet Dataset",
     ]
     for card in ecosystem_cards:
         assert page.count(card) == 1
+    assert ".. grid-item-card:: TCBench Alpha" not in page  # no TCBench loader (the old one was synthetic)
 
     assert "WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction" in page
     assert "7 smoke configs | 29 models | 1 ecosystem" in page
