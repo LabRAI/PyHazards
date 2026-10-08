@@ -30,7 +30,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         32
+         37
 
       .. container:: catalog-stat-note
 
@@ -52,7 +52,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         14
+         18
 
       .. container:: catalog-stat-note
 
@@ -1065,7 +1065,7 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-entry-summary
 
-               Synthetic-backed storm-track adapter aligned to the IBTrACS tropical cyclone archive.
+               NOAA NCEI's International Best Track Archive for Climate Stewardship (v04r01), read from its CSV or netCDF files into best-track forecasting windows.
 
             .. container:: catalog-chip-row
 
@@ -1073,11 +1073,11 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-meta-row
 
-               **Coverage:** Benchmark-aligned tropical cyclone track and intensity samples
+               **Coverage:** All tropical cyclone basins (NA, SA, EP, WP, NI, SI, SP)
 
             .. container:: catalog-meta-row
 
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
+               **Update Cadence:** Updated by NCEI several times a week; PyHazards reads the file the user downloads
 
             .. container:: catalog-meta-row
 
@@ -1093,14 +1093,189 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `IBTrACS <https://www.ncei.noaa.gov/products/international-best-track-archive>`_
+               **Primary Source:** `Knapp, K. R., M. C. Kruk, D. H. Levinson, H. J. Diamond and C. J. Neumann (2010). The International Best Track Archive for Climate Stewardship (IBTrACS): Unifying tropical cyclone best track data. Bulletin of the American Meteorological Society 91, 363-376. <https://doi.org/10.1175/2009BAMS2755.1>`_
+
+         .. grid-item-card:: SHIPS Predictors (Xu et al. 2021)
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The standardised SHIPS predictor table of Xu et al. (2021) with 24-hour intensity-change targets, read into the official leave-one-year-out folds.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Intensity Benchmark` :bdg-info:`Tabular feature vectors`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Atlantic test basin; global training basins (AL, EP, WP, SH, ...)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Static release (2021)
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('ships_xu2021', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`SHIPS Predictors (Xu et al. 2021) <datasets/ships_xu2021>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Xu, W., K. Balaguru, A. August, N. Lalo, N. Hodas, M. DeMaria and D. Judi (2021). Deep Learning Experiments for Tropical Cyclone Intensity Forecasts. Weather and Forecasting 36(4), 1453-1470. <https://doi.org/10.1175/WAF-D-20-0104.1>`_
+
+         .. grid-item-card:: Synthetic SAF-Net Inputs
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random inputs in the SAF-Net layout (96 wide predictors and (2, 4, 31, 31, 4) u/v wind cubes) for smoke tests of saf_net.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Tabular feature vectors`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('safnet_cma_era_interim_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic SAF-Net Inputs <datasets/safnet_cma_era_interim_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py) <https://github.com/LabRAI/PyHazards>`_
+
+         .. grid-item-card:: Synthetic SHIPS Predictors
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random inputs in the layout of ships_xu2021 (121 predictors, 24-hour intensity change in knots) for smoke tests of tropicalcyclone_mlp.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Tabular feature vectors`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('ships_xu2021_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic SHIPS Predictors <datasets/ships_xu2021_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py) <https://github.com/LabRAI/PyHazards>`_
+
+         .. grid-item-card:: Synthetic Storm Histories
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random storm-history features and lat / lon / intensity targets for smoke tests of the generic experimental storm adapters (hurricast, tcif_fusion, graphcast_tc, pangu_tc, fourcastnet_tc).
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Storm-track history sequences`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('tc_tracks_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic Storm Histories <datasets/tc_tracks_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py) <https://github.com/LabRAI/PyHazards>`_
+
+         .. grid-item-card:: Synthetic TCND Samples
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random inputs in the TropiCycloneNet (TCND) layout with random-walk targets for smoke tests of tropicyclonenet.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Storm-track history sequences`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('tropicyclonenet_dataset_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic TCND Samples <datasets/tropicyclonenet_dataset_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py) <https://github.com/LabRAI/PyHazards>`_
 
          .. grid-item-card:: TCBench Alpha
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               Synthetic-backed storm-track benchmark adapter aligned to the TCBench Alpha ecosystem.
+               Benchmark platform matching forecast cyclone tracks from numerical and ML weather models with IBTrACS; documented as an external reference, with no PyHazards loader.
 
             .. container:: catalog-chip-row
 
@@ -1108,19 +1283,15 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-meta-row
 
-               **Coverage:** Benchmark-aligned tropical cyclone track and intensity samples
+               **Coverage:** Global tropical cyclones present in IBTrACS
 
             .. container:: catalog-meta-row
 
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
+               **Update Cadence:** Maintained by the TCBench project
 
             .. container:: catalog-meta-row
 
-               **Registry:** ``load_dataset('tcbench_alpha', ...)``
-
-            .. container:: catalog-meta-row
-
-               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`, :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
 
             .. container:: catalog-link-row
 
@@ -1128,14 +1299,14 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `TCBench Alpha <https://github.com/msgomez06/TCBench_Alpha>`_
+               **Primary Source:** `TCBench Alpha (repository and documentation) <https://github.com/msgomez06/TCBench_Alpha>`_
 
-         .. grid-item-card:: TropiCycloneNet-Dataset
+         .. grid-item-card:: TropiCycloneNet Dataset
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               Synthetic-backed storm-track benchmark adapter aligned to the TropiCycloneNet-Dataset ecosystem.
+               The TropiCycloneNet Dataset (TCND) of Huang et al. (2025) - best tracks, environmental features and ERA5 500 hPa geopotential for 3,630 storms in six basins - read in the layout of the official TropiCycloneNet loader.
 
             .. container:: catalog-chip-row
 
@@ -1143,11 +1314,11 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-meta-row
 
-               **Coverage:** Benchmark-aligned tropical cyclone track and intensity samples
+               **Coverage:** Six basins (EP, NA, NI, SI, SP, WP)
 
             .. container:: catalog-meta-row
 
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
+               **Update Cadence:** Static releases (Zenodo 15009527 dataset, 17104690 training data)
 
             .. container:: catalog-meta-row
 
@@ -1155,15 +1326,15 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-meta-row
 
-               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`, :doc:`TropiCycloneNet-Dataset <benchmarks/tropicyclonenet_dataset>`
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`, :doc:`TropiCycloneNet Dataset <benchmarks/tropicyclonenet_dataset>`
 
             .. container:: catalog-link-row
 
-               **Details:** :doc:`TropiCycloneNet-Dataset <datasets/tropicyclonenet_dataset>`
+               **Details:** :doc:`TropiCycloneNet Dataset <datasets/tropicyclonenet_dataset>`
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `TropiCycloneNet-Dataset <https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset>`_
+               **Primary Source:** `Huang, C., P. Mu, J. Zhang, S. Chan, S. Zhang, H. Yan, S. Chen and C. Bai (2025). Benchmark dataset and deep learning method for global tropical cyclone forecasting. Nature Communications 16, 5923. <https://doi.org/10.1038/s41467-025-61087-4>`_
 
 
 
@@ -1218,7 +1389,7 @@ hazard group before branching into the full catalog.
 
       **Start with:** :doc:`IBTrACS <datasets/ibtracs_tracks>`
 
-      Synthetic-backed storm-track adapter aligned to the IBTrACS tropical cyclone archive.
+      NOAA NCEI's International Best Track Archive for Climate Stewardship (v04r01), read from its CSV or netCDF files into best-track forecasting windows.
 
       **Primary Surface:** Registry: ``load_dataset('ibtracs_tracks', ...)``
 
@@ -1281,5 +1452,10 @@ model and evaluation coverage.
    datasets/pick_benchmark_waveforms
    datasets/seisbench_waveforms
    datasets/ibtracs_tracks
+   datasets/ships_xu2021
+   datasets/safnet_cma_era_interim_synthetic
+   datasets/ships_xu2021_synthetic
+   datasets/tc_tracks_synthetic
+   datasets/tropicyclonenet_dataset_synthetic
    datasets/tcbench_alpha
    datasets/tropicyclonenet_dataset

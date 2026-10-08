@@ -6,7 +6,7 @@ FourCastNet TC Adapter
 Overview
 --------
 
-``fourcastnet_tc`` completes the first wave of experimental foundation-weather storm adapters in the staged roadmap.
+FourCastNet (Pathak et al., arXiv 2202.11214) is an adaptive Fourier neural operator (AFNO) model of 20 global ERA5 fields at 0.25 degrees; storms are followed by tracking pressure minima in its forecast fields (the paper shows Hurricane Michael as a case study).
 
 At a Glance
 -----------
@@ -46,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-note
 
-         Track + Intensity
+         Forecasting
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,16 +63,14 @@ At a Glance
 Description
 -----------
 
-``fourcastnet_tc`` completes the first wave of experimental foundation-weather storm adapters in the staged roadmap.
+FourCastNet (Pathak et al., arXiv 2202.11214) is an adaptive Fourier neural operator (AFNO) model of 20 global ERA5 fields at 0.25 degrees; storms are followed by tracking pressure minima in its forecast fields (the paper shows Hurricane Michael as a case study).
 
-The PyHazards version is intentionally lightweight and uses the same trajectory output contract as the other storm baselines.
+The PyHazards ``fourcastnet_tc`` module is a two-layer MLP over a generic ``(batch, history, features)`` sequence returning ``(batch, horizon, 3)``, scored only on synthetic data. A faithful version is a pipeline (forecast fields, tracker, scoring against ``ibtracs_tracks``).
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
-
-**Mapped benchmark ecosystems:** :doc:`IBTrACS </benchmarks/ibtracs>`
 
 External References
 -------------------
@@ -92,7 +90,7 @@ Primary entrypoint: ``fourcastnet_tc``
 Supported Tasks
 ---------------
 
-- Track + Intensity
+- Forecasting
 
 Programmatic Use
 ----------------
@@ -109,4 +107,5 @@ Programmatic Use
 Notes
 -----
 
-- Experimental adapter: intended for shared-evaluator prototyping rather than exact weather-model parity.
+- Not faithful (experimental): no FourCastNet forecast fields, weights or tracker are involved.
+- The cited paper is an arXiv preprint; the peer-reviewed companion is Kurth et al., PASC '23, doi:10.1145/3592979.3593412. The NVlabs repository (BSD-3-Clause) is frozen; maintained checkpoints and runners are NVIDIA earth2studio / PhysicsNeMo (nvidia/fourcastnet1, Apache-2.0). TCBench evaluates FourCastNet v2 (SFNO), a different model.

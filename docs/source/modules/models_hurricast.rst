@@ -6,7 +6,7 @@ Hurricast
 Overview
 --------
 
-``hurricast`` is the first basin-specific storm baseline in the staged PyHazards roadmap and operates on storm-history sequences.
+Hurricast (Boussioux et al., Weather and Forecasting 2022) forecasts 24-hour track displacement and intensity from three modalities: statistical best-track features, ERA5 reanalysis maps encoded by a CNN / GRU or Transformer encoder-decoder, and XGBoost on the concatenated embeddings and features.
 
 At a Glance
 -----------
@@ -31,7 +31,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         Implemented
+         Experimental Adapter
 
       .. container:: catalog-stat-note
 
@@ -46,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-note
 
-         Track + Intensity
+         Forecasting
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,21 +63,19 @@ At a Glance
 Description
 -----------
 
-``hurricast`` is the first basin-specific storm baseline in the staged PyHazards roadmap and operates on storm-history sequences.
+Hurricast (Boussioux et al., Weather and Forecasting 2022) forecasts 24-hour track displacement and intensity from three modalities: statistical best-track features, ERA5 reanalysis maps encoded by a CNN / GRU or Transformer encoder-decoder, and XGBoost on the concatenated embeddings and features.
 
-This initial adapter focuses on the shared tropical-cyclone forecasting interface and is intended as a reproducible starting point before broader storm-model breadth.
+The PyHazards ``hurricast`` module is a 2-layer LSTM over a generic ``(batch, history, features)`` sequence that returns ``(batch, horizon, 3)``; it has no reanalysis encoder, no XGBoost stage and none of the paper's inputs, and it is scored only on synthetic data (``tc_tracks_synthetic``). It is kept as an experimental adapter until it is replaced by a port of the paper's model.
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`IBTrACS </benchmarks/ibtracs>`
-
 External References
 -------------------
 
-**Paper:** `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://arxiv.org/abs/2102.01204>`_ | **Repo:** `Repository <https://github.com/leobix/hurricast>`__
+**Paper:** `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://doi.org/10.1175/WAF-D-21-0091.1>`_ | **Repo:** `Repository <https://github.com/leobix/hurricast>`__
 
 Reproduction
 ------------
@@ -92,7 +90,7 @@ Primary entrypoint: ``hurricast``
 Supported Tasks
 ---------------
 
-- Track + Intensity
+- Forecasting
 
 Programmatic Use
 ----------------
@@ -116,4 +114,6 @@ Programmatic Use
 Notes
 -----
 
-- Outputs are lead-time sequences of latitude, longitude, and intensity targets.
+- Not faithful (experimental): the original predicts 24-hour track displacement and intensity with XGBoost on statistical features plus CNN/GRU or Transformer embeddings of ERA5 maps; this module is a generic LSTM on synthetic inputs.
+- Citation: Boussioux, Zeng, Guenais and Bertsimas, Weather and Forecasting 37(6), 817-831 (2022), doi:10.1175/WAF-D-21-0091.1; preprint arXiv 2011.06125.
+- The official repository has no LICENSE file (its README claims MIT and links a LICENSE that does not exist); its released GRU decoder preset also differs from the paper's (bidirectional, last state only).

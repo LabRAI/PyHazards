@@ -34,7 +34,7 @@ Earthquake
 Tropical Cyclone
 ~~~~~~~~~~~~~~~~
 
-:doc:`IBTrACS </datasets/ibtracs_tracks>`, :doc:`TCBench Alpha </datasets/tcbench_alpha>`, :doc:`TropiCycloneNet-Dataset </datasets/tropicyclonenet_dataset>`.
+:doc:`IBTrACS </datasets/ibtracs_tracks>`, :doc:`SHIPS Predictors (Xu et al. 2021) </datasets/ships_xu2021>`, :doc:`Synthetic SAF-Net Inputs </datasets/safnet_cma_era_interim_synthetic>`, :doc:`Synthetic SHIPS Predictors </datasets/ships_xu2021_synthetic>`, :doc:`Synthetic Storm Histories </datasets/tc_tracks_synthetic>`, :doc:`Synthetic TCND Samples </datasets/tropicyclonenet_dataset_synthetic>`, :doc:`TCBench Alpha </datasets/tcbench_alpha>`, :doc:`TropiCycloneNet Dataset </datasets/tropicyclonenet_dataset>`.
 
 Developer Dataset Workflow
 --------------------------

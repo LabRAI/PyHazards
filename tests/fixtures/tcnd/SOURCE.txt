@@ -1,0 +1,8 @@
+Real files of one storm (EP 2018 CARLOTTA) from the TropiCycloneNet training data, Zenodo record
+17104690 ("The training data for TCNM", CC BY 4.0, https://creativecommons.org/licenses/by/4.0/), by
+C. Huang, P. Mu, J. Zhang, S. Chan, S. Zhang, H. Yan, S. Chen and C. Bai:
+- BST_data/EP/test/EP2018BSTCARLOTTA.txt from data1d.zip (identical to Data1D/EP/test/ of the TCND release,
+  doi:10.5281/zenodo.15009527);
+- Env_data/EP/2018/CARLOTTA/*.npy from env_data.zip (all_area_correct_location_includeunder15_2023/EP/2018/CARLOTTA).
+The 500 hPa geopotential crops (100 x 100 float64, about 80 kB each) are not vendored; tests write
+random crops of that shape. Extracted with HTTP range requests on 2026-10-07; files unchanged.

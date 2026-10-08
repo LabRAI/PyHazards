@@ -40,7 +40,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         7
+         8
 
       .. container:: catalog-stat-note
 
@@ -155,19 +155,19 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-entry-summary
 
-         Shared PyHazards evaluator family for tropical cyclone and hurricane track-intensity forecasting.
+         Shared PyHazards evaluator for tropical cyclone forecasts: great-circle track error in km and intensity errors in the dataset's units, per lead time, plus single-lead intensity regression.
 
       .. container:: catalog-chip-row
 
-         :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-info:`Synthetic-backed`
+         :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-secondary:`Intensity` :bdg-success:`Real-backed`
 
       .. container:: catalog-meta-row
 
-         **Tasks:** Track + Intensity
+         **Tasks:** Track + Intensity, Intensity
 
       .. container:: catalog-meta-row
 
-         **Key Metrics:** Track Error, Intensity MAE
+         **Key Metrics:** Track Error (km), Intensity MAE, Pressure MAE, Best-of-k Track Error (km), +4 more
 
       .. container:: catalog-meta-row
 
@@ -216,10 +216,10 @@ status without opening the detail pages first.
      - Synthetic-backed
    * - Tropical Cyclone
      - :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-     - Track + Intensity
-     - Track Error, Intensity MAE
+     - Track + Intensity, Intensity
+     - Track Error (km), Intensity MAE, Pressure MAE, Best-of-k Track Error (km), +4 more
      - 8 models
-     - Synthetic-backed
+     - Real-backed
 
 Benchmark Ecosystems
 --------------------
@@ -566,11 +566,11 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-entry-summary
 
-               IBTrACS-backed storm benchmark coverage for the shared tropical cyclone evaluator.
+               Best-track ground truth from NOAA NCEI's IBTrACS v04 for track and intensity forecasts scored by the shared tropical cyclone evaluator.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-info:`Synthetic-backed`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Real-backed`
 
             .. container:: catalog-meta-row
 
@@ -578,11 +578,11 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Key Metrics:** Track Error, Intensity MAE
+               **Key Metrics:** Track Error (km), Intensity MAE, Pressure MAE
 
             .. container:: catalog-meta-row
 
-               **Coverage:** 4 smoke configs | 4 models
+               **Coverage:** 0 smoke configs | 0 models
 
             .. container:: catalog-link-row
 
@@ -592,16 +592,16 @@ and the models currently mapped to that ecosystem.
 
                **Paper:** `IBTrACS <https://www.ncei.noaa.gov/products/international-best-track-archive>`_
 
-         .. grid-item-card:: TCBench Alpha
+         .. grid-item-card:: SHIPS Predictors (Xu et al. 2021)
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               TCBench Alpha-style storm benchmark coverage for the shared tropical cyclone evaluator.
+               The standardised SHIPS predictor table of Xu et al. (2021) with 24-hour intensity-change targets and the official leave-one-year-out folds, scored with the intensity task.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-info:`Synthetic-backed`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Intensity` :bdg-success:`Real-backed`
 
             .. container:: catalog-meta-row
 
@@ -609,38 +609,7 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Key Metrics:** Track Error, Intensity MAE
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** 3 smoke configs | 3 models
-
-            .. container:: catalog-link-row
-
-               **View Details:** :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `TCBench Alpha <https://github.com/msgomez06/TCBench_Alpha>`_
-
-         .. grid-item-card:: TropiCycloneNet-Dataset
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               TropiCycloneNet-Dataset-backed storm benchmark coverage for the shared tropical cyclone evaluator.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-info:`Synthetic-backed`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Key Metrics:** Track Error, Intensity MAE
+               **Key Metrics:** Intensity MAE, Intensity RMSE, Mean Yearly Intensity MAE
 
             .. container:: catalog-meta-row
 
@@ -648,11 +617,42 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-link-row
 
-               **View Details:** :doc:`TropiCycloneNet-Dataset <benchmarks/tropicyclonenet_dataset>`
+               **View Details:** :doc:`SHIPS Predictors (Xu et al. 2021) <benchmarks/ships_xu2021>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `TropiCycloneNet-Dataset <https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset>`_
+               **Paper:** `Deep Learning Experiments for Tropical Cyclone Intensity Forecasts <https://doi.org/10.1175/WAF-D-20-0104.1>`_ | **Repo:** `Repository <https://github.com/wenweixu/tropicalcyclone_MLP>`__
+
+         .. grid-item-card:: TropiCycloneNet Dataset
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               TCND (Huang et al. 2025): six-basin best tracks, Env-Data and ERA5 geopotential, read exactly like the official TropiCycloneNet loader and scored with the paper's best-of-6 errors.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Real-backed`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Key Metrics:** Track Error (km), Intensity MAE, Pressure MAE, Best-of-k Track Error (km), +2 more
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** 1 smoke config | 1 model
+
+            .. container:: catalog-link-row
+
+               **View Details:** :doc:`TropiCycloneNet Dataset <benchmarks/tropicyclonenet_dataset>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://doi.org/10.1038/s41467-025-61087-4>`_ | **Repo:** `Repository <https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset>`__
 
 
 
@@ -686,7 +686,7 @@ and :doc:`pyhazards_reports` for comparable benchmark exports.
    benchmarks/pick_benchmark
    benchmarks/pycsep
    benchmarks/seisbench
-   benchmarks/tcbench_alpha
+   benchmarks/ships_xu2021
    benchmarks/tropical_cyclone_benchmark
    benchmarks/tropicyclonenet_dataset
    benchmarks/waterbench

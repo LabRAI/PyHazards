@@ -3,14 +3,14 @@
 TCBench Alpha
 =============
 
-Synthetic-backed storm-track benchmark adapter aligned to the TCBench Alpha ecosystem.
+Benchmark platform matching forecast cyclone tracks from numerical and ML weather models with IBTrACS; documented as an external reference, with no PyHazards loader.
 
 Overview
 --------
 
-TCBench Alpha is the public storm adapter used by several tropical cyclone baselines on the shared track-intensity evaluator.
+TCBench provides data-processing tools, evaluation protocols and baselines to compare tropical cyclone forecasts: tracks extracted from numerical and data-driven weather models (with TempestExtremes) are matched with IBTrACS best tracks and scored by lead time.
 
-The current implementation is synthetic-backed, but it preserves the task, metric, and reporting surface used by the shared tropical cyclone benchmark.
+PyHazards does not load TCBench. An earlier ``tcbench_alpha`` dataset generated random numbers under this name and was removed; none of the PyHazards cyclone models was evaluated on TCBench in its paper.
 
 At a Glance
 -----------
@@ -20,41 +20,35 @@ At a Glance
    :stub-columns: 1
 
    * - Provider
-     - TCBench Alpha ecosystem surfaced through a PyHazards adapter
+     - TCBench project (Gomez et al.), MIT-licensed code; track files on the Hugging Face Hub
    * - Hazard Family
      - Tropical Cyclone
    * - Source Role
      - Track Benchmark
    * - Coverage
-     - Benchmark-aligned tropical cyclone track and intensity samples
+     - Global tropical cyclones present in IBTrACS
    * - Geometry
      - Storm-track history sequences
    * - Spatial Resolution
-     - Storm-centered best-track sequences
+     - Storm-centre positions extracted from forecast fields
    * - Temporal Resolution
-     - Historical track windows with forecast horizons
+     - Six-hourly forecast tracks
    * - Update Cadence
-     - Generated locally for smoke and benchmark-alignment runs
+     - Maintained by the TCBench project
    * - Period of Record
-     - Synthetic-backed benchmark adapter
+     - Depends on the forecast archive (e.g. 2023 matched tracks)
    * - Formats
-     - PyTorch tensors via the dataset registry
-   * - Registry Entry
-     - ``tcbench_alpha``
+     - CSV track tables (matched_tracks) and Python evaluation tools
 
 Data Characteristics
 --------------------
 
-- Storm-history sequences with future latitude, longitude, and intensity targets.
-- Registry-backed benchmark adapter rather than a raw external benchmark ingestion path.
-- Intended for benchmark-linked track-intensity forecasting runs.
+- Forecast tracks with position, maximum wind and minimum pressure matched to IBTrACS storms.
 
 Typical Use Cases
 ~~~~~~~~~~~~~~~~~
 
-- Tropical Cyclone MLP, SAF-Net, and TCIF-fusion smoke tests.
-- Shared tropical cyclone benchmark runs.
-- Regression checks for storm-track baselines.
+- Comparing weather-model cyclone forecasts (e.g. Pangu-Weather, FourCastNet v2) against best tracks.
 
 Access
 ------
@@ -62,50 +56,30 @@ Access
 Use the links below to access the upstream source or its public documentation.
 
 - `TCBench Alpha repository <https://github.com/msgomez06/TCBench_Alpha>`_
+- `TCBench data on the Hugging Face Hub <https://huggingface.co/datasets/TCBench/TCBench>`_
 
 PyHazards Usage
 ---------------
 
-Use this adapter when you want the public TCBench Alpha-aligned storm surface exposed by the tropical cyclone benchmark.
-
-Registry Workflow
-~~~~~~~~~~~~~~~~~
-
-Primary dataset name: ``tcbench_alpha``
-
-.. code-block:: python
-
-   from pyhazards.datasets import load_dataset
-
-   data = load_dataset(
-       "tcbench_alpha",
-       micro=True,
-       history=6,
-       horizon=5,
-   ).load()
-
-   train = data.get_split("train")
-   print(train.inputs.shape, train.targets.shape)
+Not loadable from PyHazards. Score matched forecast tracks against ``ibtracs_tracks`` with the ``tc`` benchmark instead.
 
 Related Coverage
 ~~~~~~~~~~~~~~~~
 
-**Benchmarks:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`, :doc:`TCBench Alpha </benchmarks/tcbench_alpha>`
-
-**Representative Models:** :doc:`Tropical Cyclone MLP </modules/models_tropicalcyclone_mlp>`, :doc:`SAF-Net </modules/models_saf_net>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`
+**Benchmarks:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
 Inspection Workflow
 -------------------
 
-This dataset is currently surfaced as a registry-backed benchmark adapter,
-so there is no standalone inspection CLI documented for it.
+PyHazards has no inspection command or loader for this source; it is listed
+as an external reference. Use the provider's access links above.
 
 Notes
 -----
 
-- This is a synthetic-backed benchmark adapter rather than a full TCBench Alpha ingestion pipeline.
+- The repository is MIT-licensed (Copyright (c) 2023 Milton Gomez).
 
 Reference
 ---------
 
-- `TCBench Alpha <https://github.com/msgomez06/TCBench_Alpha>`_.
+- `TCBench Alpha (repository and documentation) <https://github.com/msgomez06/TCBench_Alpha>`_.

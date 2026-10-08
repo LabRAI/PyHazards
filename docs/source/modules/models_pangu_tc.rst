@@ -6,7 +6,7 @@ Pangu TC Adapter
 Overview
 --------
 
-``pangu_tc`` adds a second foundation-weather reference path behind the shared tropical-cyclone evaluator.
+Pangu-Weather (Bi et al., Nature 2023) is a 3D Earth-specific transformer for global medium-range forecasts; its cyclone results come from tracking storms in the forecast fields (technical report arXiv 2211.02556, Sec. 4.2.2), compared with ECMWF-HRES.
 
 At a Glance
 -----------
@@ -46,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-note
 
-         Track + Intensity
+         Forecasting
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,21 +63,19 @@ At a Glance
 Description
 -----------
 
-``pangu_tc`` adds a second foundation-weather reference path behind the shared tropical-cyclone evaluator.
+Pangu-Weather (Bi et al., Nature 2023) is a 3D Earth-specific transformer for global medium-range forecasts; its cyclone results come from tracking storms in the forecast fields (technical report arXiv 2211.02556, Sec. 4.2.2), compared with ECMWF-HRES.
 
-The implementation is intentionally lightweight and should be interpreted as an adapter contract for forecast-field driven storm evaluation.
+The PyHazards ``pangu_tc`` module is a small network over a generic ``(batch, history, features)`` sequence returning ``(batch, horizon, 3)``, scored only on synthetic data. A faithful version is a pipeline (ONNX forecasts, tracker, scoring against ``ibtracs_tracks``).
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`IBTrACS </benchmarks/ibtracs>`
-
 External References
 -------------------
 
-**Paper:** `Accurate medium-range global weather forecasting with 3D neural networks <https://www.nature.com/articles/s41586-023-06185-3>`_ | **Repo:** `Repository <https://github.com/198808xc/Pangu-Weather>`__
+**Paper:** `Accurate medium-range global weather forecasting with 3D neural networks <https://doi.org/10.1038/s41586-023-06185-3>`_ | **Repo:** `Repository <https://github.com/198808xc/Pangu-Weather>`__
 
 Reproduction
 ------------
@@ -92,7 +90,7 @@ Primary entrypoint: ``pangu_tc``
 Supported Tasks
 ---------------
 
-- Track + Intensity
+- Forecasting
 
 Programmatic Use
 ----------------
@@ -109,4 +107,6 @@ Programmatic Use
 Notes
 -----
 
-- Experimental adapter: intended for shared-evaluator prototyping rather than exact weather-model parity.
+- Not faithful (experimental): no Pangu-Weather forecast fields, weights or tracker are involved.
+- Licensing: the official repository has no code licence (only ONNX inference scripts and pseudocode are released), and the trained weights are CC BY-NC-SA 4.0 with commercial use forbidden. A PyHazards pipeline would have to download them at runtime, never bundle them, and state the non-commercial terms; Apache-2.0 runners exist (ECMWF ai-models-panguweather, NVIDIA earth2studio).
+- Technical details and the cyclone tracking protocol are in the technical report arXiv 2211.02556.

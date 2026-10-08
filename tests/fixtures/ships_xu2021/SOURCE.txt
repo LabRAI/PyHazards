@@ -1,0 +1,5 @@
+Ten real rows (header and lines unchanged) of train_global_fill_REA_na_wo_img_scaled.csv from
+"Supporting data for Xu et al. 2021 - Weather and Forecasting" (Zenodo, doi:10.5281/zenodo.4784610),
+by W. Xu, K. Balaguru, A. August, N. Lalo, N. Hodas, M. DeMaria and D. Judi, licensed CC BY 4.0
+(https://creativecommons.org/licenses/by/4.0/). Rows: 3 EP 1982 reanalysis, 2 AL 2016 reanalysis,
+2 AL 2011 operational and 3 AL 2018 operational cases, fetched with HTTP range requests on 2026-10-07.

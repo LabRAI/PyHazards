@@ -6,7 +6,7 @@ TropiCycloneNet
 Overview
 --------
 
-``tropicyclonenet`` extends the shared storm benchmark stack beyond the hurricane-only presets.
+``tropicyclonenet`` is the generator of TropiCycloneNet (Nature Communications 2025). It observes 8 six-hourly steps (48 h) of a storm: the best-track longitude, latitude, central pressure and maximum wind (normalised, plus their 6-hourly steps), 500 hPa geopotential crops resized to 64 x 64, and the TCND Env-Data features (wind, intensity class, motion speed, month, location bins, 12/24-hour motion direction and 24-hour intensity change). A 3D U-Net extrapolates the geopotential frames, LSTM encoders combine the track with the frame embeddings, and the Env-T-Net transformer summarises the environment.
 
 At a Glance
 -----------
@@ -63,26 +63,44 @@ At a Glance
 Description
 -----------
 
-``tropicyclonenet`` extends the shared storm benchmark stack beyond the hurricane-only presets.
+``tropicyclonenet`` is the generator of TropiCycloneNet (Nature Communications 2025). It observes 8 six-hourly steps (48 h) of a storm: the best-track longitude, latitude, central pressure and maximum wind (normalised, plus their 6-hourly steps), 500 hPa geopotential crops resized to 64 x 64, and the TCND Env-Data features (wind, intensity class, motion speed, month, location bins, 12/24-hour motion direction and 24-hour intensity change). A 3D U-Net extrapolates the geopotential frames, LSTM encoders combine the track with the frame embeddings, and the Env-T-Net transformer summarises the environment.
 
-The PyHazards adapter keeps a single storm-history to forecast-trajectory interface so it can share the same evaluator as ``hurricast``.
+Six LSTM decoders (generators) roll out the next four steps (6, 12, 18, 24 h) of relative displacements. A chooser network gives logits over the six decoders; every sample draws a decoder from them and a 16-d Gaussian noise vector, so the model outputs a set of samples (6 in the paper). The module keeps the official forward signature and outputs (relative steps, GPH frames, chooser logits, sampled decoder indices); ``forecast(batch)`` adds the official post-processing (cumulative sum from the last observation, de-normalisation) and returns latitude / longitude (degrees), pressure (hPa) and wind (m/s) shaped (storms, samples, 4). ``TrajectoryDiscriminator`` is the paper's discriminator.
+
+Port of the CC BY 4.0 code release (Zenodo 10.5281/zenodo.15024028), with module names unchanged: 4,767,195 generator and 231,009 discriminator parameters, and the released checkpoint loads with ``strict=True`` (``load_tropicyclonenet_checkpoint`` checks its sha256 first). Data: ``tropicyclonenet_dataset`` reads the TCND files in the official loader's layout.
+
+Metric definition: the paper reports, for each lead time, the smallest error among the 6 samples, taken separately for track distance, pressure and wind (so the three minima can come from different samples), averaged over storms; the track distance uses 111 km per degree with the longitude difference scaled by the cosine of the observed latitude. The PyHazards evaluator reports these as ``best_of_k_*`` (``track_distance: tcn_equirectangular`` gives the paper's distance; the default is great-circle, which differs by well under 1 % at these distances) and, for comparison with single-forecast models, the errors of the sample mean.
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`TropiCycloneNet-Dataset </benchmarks/tropicyclonenet_dataset>`
+**Mapped benchmark ecosystems:** :doc:`TropiCycloneNet Dataset </benchmarks/tropicyclonenet_dataset>`
 
 External References
 -------------------
 
-**Paper:** `Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://www.nature.com/articles/s41597-023-02721-x>`_ | **Repo:** `Repository <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__
+**Paper:** `Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://doi.org/10.1038/s41467-025-61087-4>`_ | **Repo:** `Repository <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__
+
+Used In
+-------
+
+- `Huang et al. (2025), Nature Communications 16, 5923, Table 4 <https://doi.org/10.1038/s41467-025-61087-4>`_ (`repo <https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset>`__): The paper's own evaluation on TCND (trained on all six basins, 1950-2016; test 2017-2021): Western Pacific best-of-6 track error 22.98 / 43.83 / 66.41 / 93.76 km and wind error 0.72 / 1.09 / 1.43 / 1.75 m/s at 6 / 12 / 18 / 24 h. Against agency forecasts (12 h / 24 h): North Atlantic 41.79 / 98.22 km and 1.35 / 2.14 m/s (NHC OFCL 39.11 / 58.97 km, 2.97 / 4.42 m/s); Eastern Pacific 29.58 / 70.63 km and 1.22 / 1.97 m/s; Western Pacific 43.83 / 93.76 km (CMA 52.27 / 74.18 km). TCN_M's numbers are best-of-6 errors, the agencies' are single deterministic forecasts. Whether the released 16,000-iteration checkpoint is the one behind Table 4 is not stated; not reproduced by PyHazards.
 
 Reproduction
 ------------
 
-Not yet verified against a reference implementation.
+- **Reference implementation:** `https://github.com/xiaochengfuhuo/TropiCycloneNet <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__ at ``de9cf0e`` (CC BY 4.0 (Zenodo 10.5281/zenodo.15024028, TropiCycloneNet.zip git b4e7101, whose TCNM/*.py are identical to the pinned GitHub commit up to line endings; the GitHub repository itself has no LICENSE file). Checkpoint checkpoint_with_model_16000.pt: CC BY 4.0, sha256 68575d1d10fcd2d44eba2d54d0625410f5108cd3bf5d7b3e15df7491ba9f6215.)
+- **Checked configuration:** TrajectoryGenerator / TrajectoryDiscriminator with the checkpoint's args (obs_len 8, pred_len 4, embedding_dim 32, encoder/decoder h_dim 64, mlp_dim 128, noise_dim (16,), gaussian, noise_mix_type ped, no pooling, pool_every_timestep False, bottleneck_dim 16, batch_norm 0, discriminator h_dim 128), run on the CPU (its .cuda() calls redirected): parameter counts and seeded initial weights equal; the released g_state / d_state load with strict=True; with the same seed the all-decoder outputs, GPH frames, chooser logits, sampled decoder indices and discriminator scores are equal in eval mode, and the all-decoder outputs and BatchNorm statistics in train mode; with official_sample_loop=True the sampled forward pass is equal too; forecast() equals relative_to_abs + toNE; the best-of-k metrics equal evaluate_model_Me.py's per-lead errors; the TCND reader equals TrajectoryDataset + seq_collate.
+- **Parameter count:** 4,767,195
+- **Verified:** parameter count, seeded initialisation, parameter names and shapes, forward outputs, official pretrained weights
+- **Oracle test:** ``tests/oracle/test_tropicyclonenet_oracle.py``
+- **Deviation:** Sampling loop: for each sample the official forward visits decoder indices 0 .. (number of distinct sampled indices - 1) instead of the distinct indices themselves, so storms whose sampled decoder is not visited keep the placeholder value 1 for every step (a 1-unit normalised step = 5 degrees of longitude, 50 hPa, 25 m/s); with the evaluation batch of 96 storms this is rare, with small batches common. PyHazards visits the sampled decoders by default; ``official_sample_loop=True`` reproduces the released code exactly (oracle-tested).
+- **Deviation:** Device-agnostic: the official code calls .cuda() for hidden states and noise; the port allocates them on the input's device. Noise is still drawn from the CPU generator and moved, as the official torch.randn(...).cuda() does, so seeds give the same noise. The sampled decoder indices are returned as a tensor instead of a numpy array.
+- **Deviation:** ``pooling_type`` other than None and ``obs_len`` / ``pred_len`` other than 8 / 4 raise ValueError: the official social-pooling branches are empty (the forward would fail on mismatched sizes), and the GPH U-Net's output length (an 18-step temporal kernel over 28 stacked frames) only fits 8 + 4 steps.
+- **Deviation:** ``forward`` also takes a dict (``obs_traj``, ``obs_traj_rel``, ``image_obs``, ``env_data`` or the nine Env-Data keys at the top level, optional ``seq_start_end``, which defaults to one storm per sequence); ``user_noise`` is honoured with ``all_g_out=True`` (the official forward ignores it).
+- **Deviation:** Training (GAN losses, best-of-k variety loss, chooser training) is not part of the module.
 
 Registry Name
 -------------
@@ -100,13 +118,19 @@ Programmatic Use
 .. code-block:: python
 
    import torch
-   from pyhazards.models import build_model
+   from pyhazards.datasets.tc import synthetic_tcnd_batch
+   from pyhazards.models import build_model, load_tropicyclonenet_checkpoint
 
-   model = build_model(name="tropicyclonenet", task="regression", input_dim=8, horizon=5)
-   preds = model(torch.randn(2, 6, 8))
-   print(preds.shape)
+   model = build_model(name="tropicyclonenet", task="regression").eval()
+   # model = load_tropicyclonenet_checkpoint("checkpoint_with_model_16000.pt").eval()  # Zenodo 15024028
+   batch = synthetic_tcnd_batch(2)["inputs"]  # TCND layout; real data: load_dataset("tropicyclonenet_dataset", root=...)
+   with torch.no_grad():
+       forecast = model.forecast(batch, num_samples=6)
+   print(forecast["lat"].shape, forecast["wind"].shape)  # (2, 6, 4): storms, samples, 6-24 h
 
 Notes
 -----
 
-- Outputs are lead-time sequences of latitude, longitude, and intensity targets.
+- Inputs follow the TCND normalisation: lon = 5 x + 180 (degrees east), lat = 5 y, pressure = 50 p + 960 (hPa), wind = 25 w + 40 (m/s, 2-minute mean); GPH frames are 500 hPa geopotential resized to 64 x 64 and scaled with the range (44490.578125, 58768.4486860389).
+- Unused official modules are kept so the checkpoint loads: a second Env-T-Net (env_net), the time_embedding layers of the encoders and decoders.
+- The released checkpoint (55.7 MB, CC BY 4.0) is downloaded by the user or the oracle workflow and never bundled; its g_state equals g_best_state, and the official evaluation script loads g_state.

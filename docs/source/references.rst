@@ -54,13 +54,13 @@ Flood
 Hurricane and Tropical Cyclone
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- *Hurricane Forecasting: A Novel Multimodal Machine Learning Framework*. `[paper] <https://arxiv.org/abs/2102.01204>`__, `[repo] <https://github.com/leobix/hurricast>`__.
-- *Deep Learning Experiments for Tropical Cyclone Intensity Forecasts*. `[paper] <https://doi.org/10.1145/3447548.3467351>`__, `[repo] <https://github.com/wenweixu/tropicalcyclone_MLP>`__.
-- *Benchmark dataset and deep learning method for global tropical cyclone forecasting*. `[paper] <https://www.nature.com/articles/s41597-023-02721-x>`__, `[repo] <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__.
-- *SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction*. `[paper] <https://www.sciencedirect.com/science/article/pii/S1568494623003152>`__, `[repo] <https://github.com/xuguangning1218/TI_Prediction>`__.
-- *Tropical cyclone intensity forecasting using model knowledge guided deep learning model*. `[paper] <https://doi.org/10.5194/egusphere-2024-250>`__, `[repo] <https://github.com/wangchong96/TCIF-fusion>`__.
-- *GraphCast: Learning skillful medium-range global weather forecasting*. `[paper] <https://www.science.org/doi/10.1126/science.adi2336>`__, `[repo] <https://github.com/google-deepmind/graphcast>`__.
-- *Accurate medium-range global weather forecasting with 3D neural networks*. `[paper] <https://www.nature.com/articles/s41586-023-06185-3>`__, `[repo] <https://github.com/198808xc/Pangu-Weather>`__.
+- *Hurricane Forecasting: A Novel Multimodal Machine Learning Framework*. Weather and Forecasting 37(6), 2022. `[paper] <https://doi.org/10.1175/WAF-D-21-0091.1>`__, `[arXiv] <https://arxiv.org/abs/2011.06125>`__, `[repo] <https://github.com/leobix/hurricast>`__.
+- *Deep Learning Experiments for Tropical Cyclone Intensity Forecasts*. Weather and Forecasting 36(4), 2021. `[paper] <https://doi.org/10.1175/WAF-D-20-0104.1>`__, `[repo] <https://github.com/wenweixu/tropicalcyclone_MLP>`__.
+- *Benchmark dataset and deep learning method for global tropical cyclone forecasting*. Nature Communications 16, 5923, 2025. `[paper] <https://doi.org/10.1038/s41467-025-61087-4>`__, `[repo] <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__, `[code and weights, CC BY 4.0] <https://doi.org/10.5281/zenodo.15024028>`__.
+- *SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction*. Pattern Recognition Letters 155, 2022. `[paper] <https://doi.org/10.1016/j.patrec.2021.11.012>`__, `[repo] <https://github.com/xuguangning1218/TI_Prediction>`__.
+- *Tropical cyclone intensity forecasting using model knowledge guided deep learning model*. Environmental Research Letters 19, 024006, 2024. `[paper] <https://doi.org/10.1088/1748-9326/ad1bde>`__, `[repo] <https://github.com/wangchong96/TCIF-fusion>`__.
+- *Learning skillful medium-range global weather forecasting* (GraphCast). Science 382(6677), 2023. `[paper] <https://doi.org/10.1126/science.adi2336>`__, `[arXiv] <https://arxiv.org/abs/2212.12794>`__, `[repo] <https://github.com/google-deepmind/weathernext>`__ (formerly google-deepmind/graphcast).
+- *Accurate medium-range global weather forecasting with 3D neural networks* (Pangu-Weather). Nature 619, 2023. `[paper] <https://doi.org/10.1038/s41586-023-06185-3>`__, `[technical report] <https://arxiv.org/abs/2211.02556>`__, `[repo] <https://github.com/198808xc/Pangu-Weather>`__ (no code licence; weights CC BY-NC-SA 4.0).
 - *FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators*. `[paper] <https://arxiv.org/abs/2202.11214>`__, `[repo] <https://github.com/NVlabs/FourCastNet>`__.
 
 Benchmark and Data Resources
@@ -75,4 +75,6 @@ Benchmark and Data Resources
 - *FloodCastBench*. `[repo] <https://github.com/HydroPML/FloodCastBench>`__.
 - *HydroBench*. `[repo] <https://github.com/EMscience/HydroBench>`__.
 - *TCBench Alpha*. `[repo] <https://github.com/msgomez06/TCBench_Alpha>`__.
-- *IBTrACS*. `[product page] <https://www.ncei.noaa.gov/products/international-best-track-archive>`__.
+- *The International Best Track Archive for Climate Stewardship (IBTrACS): Unifying tropical cyclone best track data*. Bulletin of the American Meteorological Society 91, 2010. `[paper] <https://doi.org/10.1175/2009BAMS2755.1>`__, `[dataset v04r01] <https://doi.org/10.25921/82ty-9e16>`__, `[product page] <https://www.ncei.noaa.gov/products/international-best-track-archive>`__.
+- *TropiCycloneNet Dataset (TCND)*. `[dataset, CC BY 4.0] <https://doi.org/10.5281/zenodo.15009527>`__, `[repo] <https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset>`__.
+- *Supporting data for Xu et al. 2021 - Weather and Forecasting* (SHIPS predictors). `[dataset, CC BY 4.0] <https://doi.org/10.5281/zenodo.4784610>`__.

@@ -1,21 +1,18 @@
 benchmark:
   name: tc
-  hazard_task: tc.track_intensity
+  hazard_task: tc.intensity
   metrics:
-    - track_error
     - intensity_mae
+    - intensity_rmse
+    - intensity_mae_group_mean
   eval_split: test
 dataset:
-  name: tcbench_alpha
+  name: safnet_cma_era_interim_synthetic
   params:
     micro: true
 model:
   name: saf_net
   task: regression
-  params:
-    input_dim: 8
-    hidden_dim: 64
-    horizon: 5
 report:
   output_dir: reports/saf_net
   formats:

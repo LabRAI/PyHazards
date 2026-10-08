@@ -19,8 +19,11 @@ from .graph import GraphTemporalDataset, graph_collate
 from .registry import available_datasets, load_dataset, register_dataset
 from .tc import (
     IBTrACSTropicalCycloneDataset,
+    SHIPSXu2021Dataset,
+    SyntheticSAFNetDataset,
+    SyntheticSHIPSDataset,
+    SyntheticTCNDDataset,
     SyntheticTropicalCycloneDataset,
-    TCBenchAlphaDataset,
     TropiCycloneNetDataset,
 )
 from .wildfire import (
@@ -58,8 +61,11 @@ __all__ = [
     "GraphTemporalDataset",
     "graph_collate",
     "IBTrACSTropicalCycloneDataset",
+    "SHIPSXu2021Dataset",
+    "SyntheticSAFNetDataset",
+    "SyntheticSHIPSDataset",
+    "SyntheticTCNDDataset",
     "SyntheticTropicalCycloneDataset",
-    "TCBenchAlphaDataset",
     "TropiCycloneNetDataset",
     "SyntheticWildfireDangerDataset",
     "SyntheticWildfireSpreadDataset",
@@ -85,7 +91,10 @@ register_dataset(FPAFODTabularDataset.name, FPAFODTabularDataset)
 register_dataset(FPAFODWeeklyDataset.name, FPAFODWeeklyDataset)
 register_dataset(SyntheticTropicalCycloneDataset.name, SyntheticTropicalCycloneDataset)
 register_dataset(IBTrACSTropicalCycloneDataset.name, IBTrACSTropicalCycloneDataset)
-register_dataset(TCBenchAlphaDataset.name, TCBenchAlphaDataset)
+register_dataset(SHIPSXu2021Dataset.name, SHIPSXu2021Dataset)
+register_dataset(SyntheticSHIPSDataset.name, SyntheticSHIPSDataset)
+register_dataset(SyntheticSAFNetDataset.name, SyntheticSAFNetDataset)
+register_dataset(SyntheticTCNDDataset.name, SyntheticTCNDDataset)
 register_dataset(TropiCycloneNetDataset.name, TropiCycloneNetDataset)
 register_dataset(SyntheticWildfireDangerDataset.name, SyntheticWildfireDangerDataset)
 register_dataset(SyntheticWildfireSpreadDataset.name, SyntheticWildfireSpreadDataset)

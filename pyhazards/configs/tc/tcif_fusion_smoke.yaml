@@ -2,11 +2,11 @@ benchmark:
   name: tc
   hazard_task: tc.track_intensity
   metrics:
-    - track_error
+    - track_error_km
     - intensity_mae
   eval_split: test
 dataset:
-  name: tcbench_alpha
+  name: tc_tracks_synthetic
   params:
     micro: true
 model:

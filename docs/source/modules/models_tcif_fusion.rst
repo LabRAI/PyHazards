@@ -6,7 +6,7 @@ TCIF-fusion
 Overview
 --------
 
-``tcif_fusion`` combines multiple feature streams behind the shared storm forecasting interface used throughout the PyHazards cyclone roadmap.
+TCIF-fusion (Wang, Li and Zheng, Environmental Research Letters 2024) forecasts the 24-hour intensity of Northwest Pacific typhoons by fusing five inputs: ERA5 3D wind fields, sea surface temperature, GridSat-B1 infrared imagery, the best-track history and Grad-CAM "model knowledge" heat maps (about 300 million parameters in the official Keras notebook). It does not forecast tracks.
 
 At a Glance
 -----------
@@ -31,7 +31,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         Implemented
+         Experimental Adapter
 
       .. container:: catalog-stat-note
 
@@ -46,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-note
 
-         Track + Intensity
+         Forecasting
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,21 +63,19 @@ At a Glance
 Description
 -----------
 
-``tcif_fusion`` combines multiple feature streams behind the shared storm forecasting interface used throughout the PyHazards cyclone roadmap.
+TCIF-fusion (Wang, Li and Zheng, Environmental Research Letters 2024) forecasts the 24-hour intensity of Northwest Pacific typhoons by fusing five inputs: ERA5 3D wind fields, sea surface temperature, GridSat-B1 infrared imagery, the best-track history and Grad-CAM "model knowledge" heat maps (about 300 million parameters in the official Keras notebook). It does not forecast tracks.
 
-The adapter focuses on the fusion contract and evaluator compatibility rather than full reproduction of the original training stack.
+The PyHazards ``tcif_fusion`` module splits a generic ``(batch, history, features)`` vector into two halves, fuses two small encoders and returns ``(batch, horizon, 3)`` track-and-intensity values; it has none of the paper's inputs and is scored only on synthetic data (``tc_tracks_synthetic``). It is kept as an experimental adapter until it is replaced by a port of the paper's model.
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`TCBench Alpha </benchmarks/tcbench_alpha>`
-
 External References
 -------------------
 
-**Paper:** `Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.5194/egusphere-2024-250>`_ | **Repo:** `Repository <https://github.com/wangchong96/TCIF-fusion>`__
+**Paper:** `Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.1088/1748-9326/ad1bde>`_ | **Repo:** `Repository <https://github.com/wangchong96/TCIF-fusion>`__
 
 Reproduction
 ------------
@@ -92,7 +90,7 @@ Primary entrypoint: ``tcif_fusion``
 Supported Tasks
 ---------------
 
-- Track + Intensity
+- Forecasting
 
 Programmatic Use
 ----------------
@@ -109,4 +107,6 @@ Programmatic Use
 Notes
 -----
 
-- Outputs are shared storm forecast trajectories over the configured horizon.
+- Not faithful (experimental): the original fuses ERA5 3D winds, SST, infrared imagery, best-track history and Grad-CAM heat maps for 24-hour intensity only; this module is a generic network on synthetic inputs.
+- Citation: Wang, Li and Zheng, Environmental Research Letters 19, 024006 (2024), doi:10.1088/1748-9326/ad1bde (open access, CC BY 4.0).
+- The official notebooks have no LICENSE file and do not run as released (data loading is missing and the validation inputs are mis-specified).

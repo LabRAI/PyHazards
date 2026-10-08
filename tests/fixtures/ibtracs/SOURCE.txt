@@ -1,0 +1,13 @@
+Real IBTrACS v04r01 rows, cut on 2026-10-07 from NOAA NCEI's ibtracs.last3years.list.v04r01.csv and
+IBTrACS.last3years.v04r01.nc (both last modified 2026-10-02):
+https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/
+
+Storms: 2023265N29284 (OPHELIA, NA, all rows), 2026058S18168 (URMIL, SP, crosses the dateline, all rows),
+2023266N16116 (WP, first 24 rows), 2025214N26167 (WP spur track, first 8 rows). The CSV keeps the
+original header, units row and lines byte for byte; the netCDF keeps the original variables used by
+the reader (dimensions, types, fill values and attributes), sliced to these storms (numobs and the
+blanked slots reflect the truncated tracks).
+
+Citation: Knapp et al. (2010), BAMS 91, 363-376, doi:10.1175/2009BAMS2755.1; Gahtan et al. (2024),
+IBTrACS Version 4r01, NOAA NCEI, doi:10.25921/82ty-9e16. Terms: full and open access (World Data
+Center for Meteorology policy; WMO Resolution 40 for commercial use).

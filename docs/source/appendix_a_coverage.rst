@@ -48,10 +48,10 @@ Hazard Summary
      - 0
      - 0
    * - Hurricane / Tropical Cyclone
-     - 8
-     - 3
+     - 5
+     - 5
      - 0
-     - 0
+     - 1
 
 Method and Resource Matrix
 --------------------------
@@ -202,69 +202,69 @@ Method and Resource Matrix
    * - Hurricane / Tropical Cyclone
      - `Hurricast <https://github.com/leobix/hurricast>`_
      - Baseline
-     - ``Implemented``
+     - ``Experimental``
      - :doc:`Hurricast <modules/models_hurricast>`
-     - The model adapter is implemented, but the real TCBench / IBTrACS data path is still missing.
+     - Not the paper's model: a generic storm-history LSTM scored on synthetic data stands in for Hurricast's multimodal encoders plus XGBoost (Boussioux et al. 2022, doi:10.1175/WAF-D-21-0091.1). A port is pending.
    * - Hurricane / Tropical Cyclone
      - `tropicalcyclone_MLP <https://github.com/wenweixu/tropicalcyclone_MLP>`_
      - Baseline
      - ``Implemented``
      - :doc:`Tropical Cyclone MLP <modules/models_tropicalcyclone_mlp>`
-     - The model adapter is implemented as a basin-filtered storm baseline.
+     - The official 24-hour intensity-change MLP (121 SHIPS predictors, BSD-2) is ported and matches the official Keras model; ships_xu2021 reads the authors' predictor table (Zenodo 4784610) with the official leave-one-year-out folds. No trained weights were released.
    * - Hurricane / Tropical Cyclone
      - `TCIF-fusion <https://github.com/wangchong96/TCIF-fusion>`_
      - Baseline
-     - ``Implemented``
+     - ``Experimental``
      - :doc:`TCIF-fusion <modules/models_tcif_fusion>`
-     - The model adapter is implemented behind the shared storm evaluator.
+     - Not the paper's model: a generic storm-history network scored on synthetic data stands in for the five-input knowledge-guided intensity model (Wang et al. 2024, doi:10.1088/1748-9326/ad1bde). A port is pending.
    * - Hurricane / Tropical Cyclone
      - `SAF-Net <https://github.com/xuguangning1218/TI_Prediction>`_
      - Baseline
      - ``Implemented``
      - :doc:`SAF-Net <modules/models_saf_net>`
-     - The model adapter is implemented behind the shared storm evaluator.
+     - Written from the paper (the official code has no licence); the released checkpoint loads strictly and matches the official notebook network. The CMA / ERA-Interim inputs have no PyHazards reader yet (synthetic layout only).
    * - Hurricane / Tropical Cyclone
      - `TropiCycloneNet <https://github.com/xiaochengfuhuo/TropiCycloneNet>`_
      - Baseline
      - ``Implemented``
      - :doc:`TropiCycloneNet <modules/models_tropicyclonenet>`
-     - The model adapter is implemented, but the public benchmark/data track remains synthetic-first.
+     - The six-generator GAN (CC BY 4.0 release) is ported; the released checkpoint loads strictly and matches the official code. The benchmark reports the paper's best-of-6 errors next to sample-mean errors.
    * - Hurricane / Tropical Cyclone
      - `TropiCycloneNet-Dataset <https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset>`_
      - Dataset
      - ``Implemented``
-     - None
-     - A synthetic-backed TropiCycloneNet-Dataset adapter is registered.
+     - :doc:`TropiCycloneNet Dataset <datasets/tropicyclonenet_dataset>`
+     - tropicyclonenet_dataset reads TCND Data1d, Env-Data and 500 hPa GPH files (Zenodo, CC BY 4.0) exactly like the official TropiCycloneNet loader; tropicyclonenet_dataset_synthetic is a random stand-in for smoke tests.
    * - Hurricane / Tropical Cyclone
      - `TCBench Alpha <https://github.com/msgomez06/TCBench_Alpha>`_
      - Benchmark
-     - ``Implemented``
-     - None
-     - A synthetic-backed TCBench Alpha adapter is registered.
+     - ``Missing``
+     - :doc:`TCBench Alpha <datasets/tcbench_alpha>`
+     - No loader. The former tcbench_alpha dataset generated random numbers and was removed; none of the ported models was evaluated on TCBench in its paper.
    * - Hurricane / Tropical Cyclone
      - `IBTrACS <https://www.ncei.noaa.gov/products/international-best-track-archive>`_
      - Dataset
      - ``Implemented``
-     - None
-     - A synthetic-backed IBTrACS adapter is registered.
+     - :doc:`IBTrACS <datasets/ibtracs_tracks>`
+     - ibtracs_tracks reads NOAA NCEI IBTrACS v04 CSV or netCDF files (best-track positions, intensities, agency columns) into forecast windows; the cyclone benchmark scores great-circle track error in km and intensity errors per lead time.
    * - Hurricane / Tropical Cyclone
-     - `GraphCast / GenCast <https://github.com/google-deepmind/graphcast>`_
+     - `GraphCast / GenCast <https://github.com/google-deepmind/weathernext>`_
      - Foundation Adapter
      - ``Experimental``
      - :doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`
-     - The current wrapper is intentionally lightweight and should not be counted as stable core coverage.
+     - Placeholder network without GraphCast forecast fields, weights or tracker (github.com/google-deepmind/graphcast now redirects to weathernext). A faithful version is a forecast-tracker-IBTrACS pipeline.
    * - Hurricane / Tropical Cyclone
      - `Pangu-Weather <https://github.com/198808xc/Pangu-Weather>`_
      - Foundation Adapter
      - ``Experimental``
      - :doc:`Pangu TC Adapter <modules/models_pangu_tc>`
-     - The current wrapper is intentionally lightweight and should not be counted as stable core coverage.
+     - Placeholder network without Pangu-Weather forecast fields, weights or tracker. The official repository has no code licence and the weights are CC BY-NC-SA 4.0 (non-commercial).
    * - Hurricane / Tropical Cyclone
      - `FourCastNet <https://github.com/NVlabs/FourCastNet>`_
      - Foundation Adapter
      - ``Experimental``
      - :doc:`FourCastNet TC Adapter <modules/models_fourcastnet_tc>`
-     - The current wrapper is intentionally lightweight and should not be counted as stable core coverage.
+     - Placeholder network without FourCastNet forecast fields, weights or tracker. A faithful version is a forecast-tracker-IBTrACS pipeline.
 
 Current Public Non-Core Implementations
 ---------------------------------------
@@ -311,7 +311,15 @@ part of the current core method set.
      - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
    * - Tropical Cyclone
      - ``experimental``
+     - :doc:`Hurricast <modules/models_hurricast>`
+     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
+   * - Tropical Cyclone
+     - ``experimental``
      - :doc:`Pangu TC Adapter <modules/models_pangu_tc>`
+     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
+   * - Tropical Cyclone
+     - ``experimental``
+     - :doc:`TCIF-fusion <modules/models_tcif_fusion>`
      - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
 
 Execution Note

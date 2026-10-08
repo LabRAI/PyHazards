@@ -10,9 +10,10 @@ def test_named_adapter_datasets_are_registered_and_loadable():
         "waterbench_streamflow",
         "hydrobench_streamflow",
         "floodcastbench_inundation",
-        "ibtracs_tracks",
-        "tcbench_alpha",
-        "tropicyclonenet_dataset",
+        "tc_tracks_synthetic",
+        "ships_xu2021_synthetic",
+        "safnet_cma_era_interim_synthetic",
+        "tropicyclonenet_dataset_synthetic",
         "wildfire_spread_temporal_synthetic",
         "wildfire_danger_synthetic",
     }
