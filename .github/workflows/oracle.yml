@@ -9,6 +9,8 @@ on:
     branches: [main, master]
     paths:
       - "pyhazards/models/**"
+      - "pyhazards/prompted/**"
+      - "pyhazards/datasets/figlib_smokebench/**"
       - "tests/oracle/**"
       - "scripts/fetch_oracles.py"
       - ".github/workflows/oracle.yml"
@@ -16,6 +18,8 @@ on:
     branches: [main, master]
     paths:
       - "pyhazards/models/**"
+      - "pyhazards/prompted/**"
+      - "pyhazards/datasets/figlib_smokebench/**"
       - "tests/oracle/**"
       - "scripts/fetch_oracles.py"
       - ".github/workflows/oracle.yml"
@@ -107,6 +111,14 @@ jobs:
             requirements: tests/oracle/requirements-trajgru.txt
             references: HKO-7 hko7_movingmnist_weights hko7_hko_weights
             tests: tests/oracle/test_trajgru_oracle.py
+          # SmokeBench authors' evaluation scripts (prompted VLM baselines): OpenCV + torchvision.
+          # The check over all 5,046 SmokeBench images needs the 11.4 GB download and runs locally.
+          - suite: smokebench
+            python: "3.10"
+            torch: torch torchvision
+            requirements: tests/oracle/requirements-smokebench.txt
+            references: SoraLink-MLLM smokeynet_metadata
+            tests: tests/oracle/test_smokebench_oracle.py
           # TerraTorch 0.99.8 (the Prithvi-EO-2.0 BurnScars training stack) needs Python >= 3.12 and
           # torch 2.6. The 1.3 GB checkpoints are not fetched in CI; those tests run locally.
           - suite: prithvi

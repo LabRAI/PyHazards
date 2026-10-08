@@ -1,0 +1,25 @@
+name: gemini_2_5_pro
+order: 5
+display_name: Gemini 2.5 Pro
+model_id: gemini-2.5-pro
+access: API
+install_extra: prompted-gemini
+license: Proprietary (Gemini API terms); no weights
+paper:
+  title: "Gemini 2.5: Pushing the Frontier with Advanced Reasoning, Multimodality, Long Context, and Next Generation Agentic Capabilities (Gemini Team, arXiv:2507.06261, 2025)"
+  url: https://arxiv.org/abs/2507.06261
+model_url: https://ai.google.dev/gemini-api/docs/models
+smokebench_tasks: [classification]
+smokebench_reported:
+  classification:
+    tables: Tables 1-2
+    area: {Very Small: 0.441, Small: 0.608, Medium: 0.713, Large: 0.773, Very Large: 0.882, Overall: 0.683}
+    contrast: {Very Low: 0.588, Low: 0.629, Medium: 0.717, High: 0.696, Very High: 0.786, Overall: 0.683}
+settings:
+  - "Classification only (\"due to cost and resource constraints\", Sec. 4.1), temperature 0.5. SmokeBench released no code for its Gemini runs and does not report smoke-free accuracy for the closed models (Table 3 lists the open models only)."
+deviations:
+  - "Request layout chosen by PyHazards: ``google-genai`` ``generate_content`` with the image as an inline JPEG (quality 95) followed by the prompt, temperature 0.5, no output-token cap (Gemini 2.5 Pro spends output tokens on thinking). The API key is read from ``GEMINI_API_KEY`` or ``GOOGLE_API_KEY``."
+notes:
+  - "The provider-reported model version of every answer is stored in the run records (``served_model``); the model behind ``gemini-2.5-pro`` can change, so results drift over time."
+  - "Google's model page (checked 2026-10-07) limits 2.5-generation access to projects that used it before; new projects may need another model id (``build_backend(\"gemini_2_5_pro\", model_id=...)``), which is then no longer the SmokeBench model."
+  - "Images are sent to Google; FIgLib frames are public HPWREN data."

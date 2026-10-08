@@ -45,7 +45,7 @@ workflows without rebuilding the software stack for each hazard family.
 
       .. container:: catalog-stat-value
 
-         20
+         21
 
       .. container:: catalog-stat-note
 
@@ -287,6 +287,7 @@ for project discussion and coordination.
 
    pyhazards_datasets
    pyhazards_models
+   pyhazards_prompted
    pyhazards_benchmarks
    pyhazards_configs
    pyhazards_reports

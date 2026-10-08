@@ -9,6 +9,7 @@ Subpackages
 
    pyhazards.datasets
    pyhazards.models
+   pyhazards.prompted
    pyhazards.benchmarks
    pyhazards.configs
    pyhazards.reports
