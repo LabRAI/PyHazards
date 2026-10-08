@@ -34,7 +34,7 @@ Earthquake
 Tropical Cyclone
 ~~~~~~~~~~~~~~~~
 
-:doc:`IBTrACS </datasets/ibtracs_tracks>`, :doc:`SHIPS Predictors (Xu et al. 2021) </datasets/ships_xu2021>`, :doc:`Synthetic SAF-Net Inputs </datasets/safnet_cma_era_interim_synthetic>`, :doc:`Synthetic SHIPS Predictors </datasets/ships_xu2021_synthetic>`, :doc:`Synthetic Storm Histories </datasets/tc_tracks_synthetic>`, :doc:`Synthetic TCND Samples </datasets/tropicyclonenet_dataset_synthetic>`, :doc:`TCBench Alpha </datasets/tcbench_alpha>`, :doc:`TropiCycloneNet Dataset </datasets/tropicyclonenet_dataset>`.
+:doc:`Hurricast IBTrACS + ERA5 Inputs </datasets/hurricast_ibtracs_era5>`, :doc:`IBTrACS </datasets/ibtracs_tracks>`, :doc:`SHIPS Predictors (Xu et al. 2021) </datasets/ships_xu2021>`, :doc:`Synthetic Hurricast Inputs </datasets/hurricast_synthetic>`, :doc:`Synthetic SAF-Net Inputs </datasets/safnet_cma_era_interim_synthetic>`, :doc:`Synthetic SHIPS Predictors </datasets/ships_xu2021_synthetic>`, :doc:`Synthetic Storm Histories </datasets/tc_tracks_synthetic>`, :doc:`Synthetic TCIF-fusion Inputs </datasets/tcif_fusion_synthetic>`, :doc:`Synthetic TCND Samples </datasets/tropicyclonenet_dataset_synthetic>`, :doc:`TCBench Alpha </datasets/tcbench_alpha>`, :doc:`TropiCycloneNet Dataset </datasets/tropicyclonenet_dataset>`.
 
 Developer Dataset Workflow
 --------------------------

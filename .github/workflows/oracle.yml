@@ -139,18 +139,21 @@ jobs:
             requirements: tests/oracle/requirements-smokebench.txt
             references: SoraLink-MLLM smokeynet_metadata
             tests: tests/oracle/test_smokebench_oracle.py
-          # Tropical cyclone models: the official tropicalcyclone_MLP Keras model runs on Keras 3 with the
-          # PyTorch backend; SAF-Net's notebook network and TropiCycloneNet's generator are plain PyTorch.
-          # The TropiCycloneNet checkpoint (56 MB, Zenodo, CC BY 4.0) is fetched and compared in CI.
+          # Tropical cyclone models: the official tropicalcyclone_MLP Keras model and the TCIF-fusion notebook graph
+          # (about 300 M parameters, ~3 GB RAM) run on Keras 3 with the PyTorch backend; SAF-Net's notebook network,
+          # TropiCycloneNet's generator and Hurricast's encoder-decoders are plain PyTorch, Hurricast's second stage
+          # is XGBoost. The TropiCycloneNet checkpoint (56 MB, Zenodo, CC BY 4.0) is fetched and compared in CI.
           - suite: tc
             python: "3.10"
             torch: torch
             requirements: tests/oracle/requirements-tc.txt
-            references: tropicalcyclone_MLP TI_Prediction TropiCycloneNet tropicyclonenet_checkpoint
+            references: tropicalcyclone_MLP TI_Prediction TropiCycloneNet tropicyclonenet_checkpoint hurricast TCIF-fusion
             tests: >-
               tests/oracle/test_tropicalcyclone_mlp_oracle.py
               tests/oracle/test_saf_net_oracle.py
               tests/oracle/test_tropicyclonenet_oracle.py
+              tests/oracle/test_hurricast_oracle.py
+              tests/oracle/test_tcif_fusion_oracle.py
           # NeuralHydrology and googlehydrology (Google's flood-forecasting fork) are imported from their pinned
           # checkouts; googlehydrology targets Python 3.12. Both repositories provide real test data (4 CAMELS-US
           # basins, Caravan netCDF files) and the released FloodHub weights; the 939 MB HydroShare archive of the

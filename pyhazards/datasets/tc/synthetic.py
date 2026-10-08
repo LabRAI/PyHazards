@@ -2,8 +2,8 @@
 
 Every dataset here generates random numbers in the input layout of a model; none of them contains
 or imitates real storms, and scores on them mean nothing. Real data: ``ibtracs_tracks`` (IBTrACS
-best tracks), ``ships_xu2021`` (SHIPS predictors of Xu et al. 2021) and ``tropicyclonenet_dataset``
-(TropiCycloneNet Dataset).
+best tracks), ``ships_xu2021`` (SHIPS predictors of Xu et al. 2021), ``tropicyclonenet_dataset``
+(TropiCycloneNet Dataset) and ``hurricast_ibtracs_era5`` (IBTrACS statistics and ERA5 maps).
 """
 
 from __future__ import annotations
@@ -12,6 +12,7 @@ from typing import Dict
 
 import torch
 
+from ...models.hurricast import HURRICAST_STAT_FEATURES
 from ...models.tropicalcyclone_mlp import SHIPS_PREDICTORS
 from ...models.tropicyclonenet import ENV_FEATURES, TCND_NORMALIZATION
 from ..base import DataBundle, DataSplit, Dataset, FeatureSpec, LabelSpec
@@ -254,9 +255,120 @@ class SyntheticTCNDDataset(Dataset):
         )
 
 
+class SyntheticHurricastDataset(Dataset):
+    """Random inputs in the ``hurricast_ibtracs_era5`` layout.
+
+    ``x_stat`` ``(samples, 8, 30)``: standard-normal numerical features, cyclic encodings in [-1, 1],
+    a category value and one-hot basin / nature columns at the positions of
+    :data:`pyhazards.models.hurricast.HURRICAST_STAT_FEATURES`; ``x_viz`` ``(samples, 8, 9, 25, 25)``
+    standard normal; ``position`` random latitude / longitude. Targets: random 24-hour winds (kt) or
+    positions ``(samples, 1, 2)`` (``target="displacement"``).
+    """
+
+    name = "hurricast_synthetic"
+
+    def __init__(self, cache_dir: str | None = None, samples: int = 24, micro: bool = False, target: str = "intensity", window_size: int = 8, seed: int = 0):
+        super().__init__(cache_dir=cache_dir)
+        if target not in ("intensity", "displacement"):
+            raise ValueError("target must be 'intensity' or 'displacement'")
+        self.samples = 8 if micro else int(samples)
+        self.target = target
+        self.window_size = int(window_size)
+        self.seed = int(seed)
+
+    def _load(self) -> DataBundle:
+        g = torch.Generator().manual_seed(self.seed)
+        n, t = self.samples, self.window_size
+        names = list(HURRICAST_STAT_FEATURES)
+        x_stat = torch.randn(n, t, len(names), generator=g)
+        for j, name in enumerate(names):
+            if name.startswith(("COS_", "SIN_", "cat_cos", "cat_sign")):
+                x_stat[..., j] = torch.rand(n, t, generator=g) * 2 - 1
+            elif name == "cat_storm_category":
+                x_stat[..., j] = torch.randint(0, 7, (n, 1), generator=g).float().expand(n, t)
+        for prefix in ("cat_basin_", "cat_nature_"):
+            columns = [j for j, name in enumerate(names) if name.startswith(prefix)]
+            pick = torch.randint(0, len(columns), (n,), generator=g)
+            x_stat[..., columns] = torch.nn.functional.one_hot(pick, len(columns)).float().unsqueeze(1).expand(n, t, len(columns))
+        x_viz = torch.randn(n, t, 9, 25, 25, generator=g)
+        position = torch.stack([torch.rand(n, generator=g) * 30 + 10, torch.rand(n, generator=g) * 60 - 100], dim=1)
+        if self.target == "intensity":
+            y = 30 + 100 * torch.rand(n, generator=g)
+        else:
+            y = (position + torch.randn(n, 2, generator=g)).unsqueeze(1)
+        years = [2016 + (i % 4) for i in range(n)]
+        train_end, val_end = _split_bounds(n)
+        splits = {}
+        for name, (a, b) in {"train": (0, train_end), "val": (train_end, val_end), "test": (val_end, n)}.items():
+            splits[name] = DataSplit({"x_stat": x_stat[a:b], "x_viz": x_viz[a:b], "position": position[a:b]}, y[a:b], metadata={"groups": years[a:b]})
+        metadata = {"dataset": self.name, "source_dataset": self.name, "lead_hours": [24], "window_size": t, "synthetic": True}
+        if self.target == "intensity":
+            metadata.update({"hazard_task": "tc.intensity", "units": {"wind": "kt"}})
+        else:
+            metadata.update({"hazard_task": "tc.track_intensity", "target_variables": ["lat", "lon"], "units": {}})
+        return DataBundle(
+            splits=splits,
+            feature_spec=FeatureSpec(input_dim=len(names), description="Synthetic Hurricast statistics (8 x 30) and ERA5-like maps (8 x 9 x 25 x 25)."),
+            label_spec=LabelSpec(num_targets=1 if self.target == "intensity" else 2, task_type="regression", description="Synthetic 24-hour intensity (kt) or position."),
+            metadata=metadata,
+        )
+
+
+class SyntheticTCIFFusionDataset(Dataset):
+    """Random inputs in the TCIF-fusion layout (channels last): ``u``, ``v``, ``w``
+    ``(samples, grid, grid, times, levels)``, ``sst`` ``(samples, grid, grid, times, 1)``, ``all``
+    ``(samples, grid, grid, 3 * times * levels + times)``, ``his`` ``(samples, 30)``, ``ir``
+    ``(samples, ir_size, ir_size, 5)``; targets uniform 10-70 m/s. The defaults are the paper's sizes;
+    smoke configs use smaller grids together with a small model.
+    """
+
+    name = "tcif_fusion_synthetic"
+
+    def __init__(self, cache_dir: str | None = None, samples: int = 8, micro: bool = False, grid_size: int = 25, time_steps: int = 5, levels: int = 4, his_dim: int = 30, ir_size: int = 224, ir_channels: int = 5, seed: int = 0):
+        super().__init__(cache_dir=cache_dir)
+        self.samples = 4 if micro else int(samples)
+        self.grid_size, self.time_steps, self.levels = int(grid_size), int(time_steps), int(levels)
+        self.his_dim, self.ir_size, self.ir_channels = int(his_dim), int(ir_size), int(ir_channels)
+        self.seed = int(seed)
+
+    def _load(self) -> DataBundle:
+        g = torch.Generator().manual_seed(self.seed)
+        n, s, t, z = self.samples, self.grid_size, self.time_steps, self.levels
+        inputs = {
+            "u": torch.randn(n, s, s, t, z, generator=g),
+            "v": torch.randn(n, s, s, t, z, generator=g),
+            "w": torch.randn(n, s, s, t, z, generator=g),
+            "sst": torch.rand(n, s, s, t, 1, generator=g),
+            "his": torch.rand(n, self.his_dim, generator=g),
+            "ir": torch.rand(n, self.ir_size, self.ir_size, self.ir_channels, generator=g),
+        }
+        inputs["all"] = torch.cat([inputs[k].reshape(n, s, s, -1) for k in ("u", "v", "w", "sst")], dim=-1)
+        y = 10 + 60 * torch.rand(n, generator=g)
+        years = [2020 + (i % 2) for i in range(n)]
+        train_end, val_end = _split_bounds(n)
+        splits = {
+            name: DataSplit({k: v[a:b] for k, v in inputs.items()}, y[a:b], metadata={"groups": years[a:b]})
+            for name, (a, b) in {"train": (0, train_end), "val": (train_end, val_end), "test": (val_end, n)}.items()
+        }
+        return DataBundle(
+            splits=splits,
+            feature_spec=FeatureSpec(description="Synthetic TCIF-fusion inputs (ERA5 U, V, W, SST, ALL, history, IR)."),
+            label_spec=LabelSpec(num_targets=1, task_type="regression", description="Synthetic 24-hour maximum sustained wind (m/s)."),
+            metadata={
+                "dataset": self.name,
+                "source_dataset": self.name,
+                "hazard_task": "tc.intensity",
+                "lead_hours": [24],
+                "units": {"wind": "m/s"},
+                "synthetic": True,
+            },
+        )
+
 __all__ = [
+    "SyntheticHurricastDataset",
     "SyntheticSAFNetDataset",
     "SyntheticSHIPSDataset",
+    "SyntheticTCIFFusionDataset",
     "SyntheticTCNDDataset",
     "SyntheticTropicalCycloneDataset",
     "synthetic_tcnd_batch",

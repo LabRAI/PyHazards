@@ -1,0 +1,15 @@
+Real ERA5 values around Hurricane OPHELIA (IBTrACS 2023265N29284, the storm of tests/fixtures/ibtracs) for the
+Hurricast reader tests: u, v and geopotential z at 225, 500 and 700 hPa, 3-hourly from 2023-09-22 00 UTC to
+2023-09-23 00 UTC (9 times), latitudes 45N-18N and longitudes 89W-63W at whole degrees (the union of the
+25 x 25 one-degree maps centred on the storm at those times).
+
+Values: ERA5 hourly data on pressure levels, read on 2026-10-07 through the NCAR RDA THREDDS server (dataset
+ds633.0, files e5.oper.an.pl.128_{129_z,131_u,132_v}.*.2023092200_2023092223.nc and ...2023092300_2023092323.nc),
+whose 0.25-degree grid was sampled at whole degrees (every 4th point); no interpolation or other change.
+File layout: that of a netCDF download from the current Copernicus Climate Data Store (dimensions valid_time,
+pressure_level, latitude [north to south], longitude [-180, 180); float32 variables z, u, v).
+
+Citation: Hersbach, H. et al. (2023), ERA5 hourly data on pressure levels from 1940 to present, Copernicus
+Climate Change Service (C3S) Climate Data Store, doi:10.24381/cds.bd0915c6. Licence: CC BY 4.0. Contains
+modified Copernicus Climate Change Service information 2026; neither the European Commission nor ECMWF is
+responsible for any use of this information.

@@ -20,8 +20,10 @@ description:
     in the dataset's unit, per test year when the split names years, and their unweighted mean, the way
     Xu et al. (2021) and SAF-Net report results.
   - >
-    Real data: ``ibtracs_tracks`` (IBTrACS best tracks), ``tropicyclonenet_dataset`` (TCND) and
-    ``ships_xu2021`` (SHIPS predictors). The smoke configs run on synthetic data with the same layouts.
+    Real data: ``ibtracs_tracks`` (IBTrACS best tracks), ``tropicyclonenet_dataset`` (TCND),
+    ``ships_xu2021`` (SHIPS predictors) and ``hurricast_ibtracs_era5`` (IBTrACS statistics and ERA5 maps;
+    Hurricast's 24-hour intensity with ``tc.intensity`` and track with ``tc.track_intensity`` at lead 24 h).
+    The smoke configs run on synthetic data with the same layouts.
 tasks:
   - tc.track_intensity
   - tc.intensity
@@ -53,5 +55,5 @@ linked_models:
   - pangu_tc
   - fourcastnet_tc
 notes:
-  - "Smoke configs use synthetic datasets (tc_tracks_synthetic, ships_xu2021_synthetic, safnet_cma_era_interim_synthetic, tropicyclonenet_dataset_synthetic); their scores mean nothing. Benchmark results carry synthetic=True for them."
-  - "hurricast, tcif_fusion and the GraphCast / Pangu-Weather / FourCastNet adapters are experimental generic stand-ins, not the published models."
+  - "Smoke configs use synthetic datasets (tc_tracks_synthetic, ships_xu2021_synthetic, safnet_cma_era_interim_synthetic, tropicyclonenet_dataset_synthetic, hurricast_synthetic, tcif_fusion_synthetic); their scores mean nothing. Benchmark results carry synthetic=True for them. The hurricast smoke config runs the network head (the XGBoost stage needs fitting) and the tcif_fusion one a reduced copy of the network."
+  - "The GraphCast / Pangu-Weather / FourCastNet adapters are experimental generic stand-ins, not the published models."

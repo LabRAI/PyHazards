@@ -8,7 +8,7 @@ Overview
 
 ``ibtracs_tracks`` reads IBTrACS v04 CSV or netCDF files with PyHazards' reader and builds forecasting windows (history of six-hourly observations, targets at the requested lead times) for any agency's winds and pressures.
 
-No ported model consumes IBTrACS directly yet: Hurricast (which uses IBTrACS with ERA5) and the weather-model cyclone pipelines (forecast fields, tracker, scoring against IBTrACS) are pending.
+``hurricast_ibtracs_era5`` builds Hurricast's inputs from IBTrACS (30 statistical features per 3-hour step) and ERA5 maps, with the IBTrACS wind 24 h ahead or position 24 h ahead as targets. The weather-model cyclone pipelines (forecast fields, tracker, scoring against IBTrACS) are pending.
 
 At a Glance
 -----------
@@ -55,11 +55,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         0
+         1
 
       .. container:: catalog-stat-note
 
-         0 models
+         1 model
 
 
 Benchmark Mapping
@@ -83,6 +83,7 @@ Primary Source
    :class-container: catalog-dropdown
 
    - Track + Intensity
+   - Intensity
 
 .. dropdown:: Key Metrics
    :class-container: catalog-dropdown
@@ -98,4 +99,4 @@ Primary Source
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   None.
+   :doc:`Hurricast </modules/models_hurricast>`.

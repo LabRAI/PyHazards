@@ -446,7 +446,7 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Real-backed`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-secondary:`Intensity` :bdg-success:`Real-backed`
 
             .. container:: catalog-meta-row
 
@@ -458,7 +458,7 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Coverage:** 0 smoke configs | 0 models
+               **Coverage:** 0 smoke configs | 1 model
 
             .. container:: catalog-link-row
 

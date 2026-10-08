@@ -101,6 +101,21 @@ repos:
     url: https://github.com/xiaochengfuhuo/TropiCycloneNet.git
     commit: de9cf0e949bdee6e32cadf2605063b7bc6d33115
     license: none on GitHub; model code released under CC BY 4.0 on Zenodo (test oracle only, never vendored)
+  hurricast:
+    # Boussioux et al., Weather and Forecasting 2022 (Hurricast). The repository has no LICENSE file (its README
+    # claims MIT and links a LICENSE that does not exist): pyhazards/models/hurricast.py is written from the paper,
+    # and src/models/experimental_models.py, scripts/config.py, scripts/run_embeddings.py and the Round2
+    # notebooks are read in place by the oracle test only.
+    url: https://github.com/leobix/hurricast.git
+    commit: b1b303a7a62eea89ddfd357fc99cd0787016a3bc
+    license: none (no LICENSE file; README claims MIT; test oracle only, never vendored)
+  TCIF-fusion:
+    # Wang, Li and Zheng, Environmental Research Letters 2024. Two Keras 2 / TF 1.x notebooks without a LICENSE
+    # file; the oracle test rebuilds the notebook's TCIF_fusion() graph in Keras 3 (torch backend) from the
+    # pinned notebook source and compares it with pyhazards/models/tcif_fusion.py.
+    url: https://github.com/wangchong96/TCIF-fusion.git
+    commit: 4b5fafcd8accf288f796d0859f22a7d103f40c24
+    license: none (no LICENSE file; test oracle only, never vendored)
   neuralhydrology:
     # NeuralHydrology (Kratzert et al., JOSS 2022), v1.13.0 + 6 commits. Oracle for the CudaLSTM and
     # EALSTM ports, the hydrological metrics, and the CAMELS-US / Caravan readers. Its test data

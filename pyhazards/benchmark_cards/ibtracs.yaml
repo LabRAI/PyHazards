@@ -13,16 +13,19 @@ description:
     forecasting windows (history of six-hourly observations, targets at the requested lead times) for any
     agency's winds and pressures.
   - >
-    No ported model consumes IBTrACS directly yet: Hurricast (which uses IBTrACS with ERA5) and the
+    ``hurricast_ibtracs_era5`` builds Hurricast's inputs from IBTrACS (30 statistical features per 3-hour
+    step) and ERA5 maps, with the IBTrACS wind 24 h ahead or position 24 h ahead as targets. The
     weather-model cyclone pipelines (forecast fields, tracker, scoring against IBTrACS) are pending.
 source:
   title: IBTrACS
   url: https://www.ncei.noaa.gov/products/international-best-track-archive
 tasks:
   - tc.track_intensity
+  - tc.intensity
 metrics:
   - track_error_km
   - intensity_mae
   - pressure_mae
 smoke_configs: []
-linked_models: []
+linked_models:
+  - hurricast

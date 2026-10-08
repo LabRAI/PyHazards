@@ -123,9 +123,27 @@ def test_tropicyclonenet_validation_and_checkpoint_guard(tmp_path):
 
 def test_experimental_storm_adapters_keep_the_generic_interface():
     x = torch.randn(2, 6, 8)
-    for name in ["hurricast", "tcif_fusion", "graphcast_tc", "pangu_tc", "fourcastnet_tc"]:
+    for name in ["graphcast_tc", "pangu_tc", "fourcastnet_tc"]:
         kwargs = {"input_dim": 8, "horizon": 5, "output_dim": 3}
         if name == "fourcastnet_tc":
             kwargs["history"] = 6
         model = build_model(name=name, task="regression", **kwargs)
         assert model(x).shape == (2, 5, 3)
+
+
+def test_ported_cyclone_models_are_core_and_cite_their_papers():
+    from pyhazards.model_catalog import load_model_cards
+
+    cards = {card.model_name: card for card in load_model_cards()}
+    expected = {
+        "tropicalcyclone_mlp": "10.1175/WAF-D-20-0104.1",
+        "saf_net": "10.1016/j.patrec.2021.11.012",
+        "hurricast": "10.1175/WAF-D-21-0091.1",
+        "tcif_fusion": "10.1088/1748-9326/ad1bde",
+    }
+    for name, doi in expected.items():
+        card = cards[name]
+        assert card.catalog_status == "core" and doi in card.paper.url, name
+        assert card.reproduction is not None and card.reproduction.oracle_test, name
+    assert cards["hurricast"].reproduction.parameter_count == 2_969_771
+    assert cards["tcif_fusion"].reproduction.parameter_count == 299_588_223
