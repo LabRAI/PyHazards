@@ -118,3 +118,14 @@ def test_smoke_fit_spec_validation_and_targets() -> None:
         SmokeFitSpec.model_validate(
             {"inputs": {"shape": [2, 3]}, "targets": {"shape": [2], "dtype": "int64"}, "num_classes": 3}
         )
+
+
+def test_touched_card_names_skips_deleted_cards() -> None:
+    from pyhazards.model_catalog import touched_card_names
+
+    cards = load_model_cards()
+    names = touched_card_names(
+        cards,
+        ["pyhazards/model_cards/utae.yaml", "pyhazards/model_cards/removed_model.yaml"],
+    )
+    assert names == ["utae"]

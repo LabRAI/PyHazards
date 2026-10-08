@@ -1412,7 +1412,12 @@ def touched_card_names(cards: Sequence[ModelCard], changed_files: Iterable[str])
     }
     names: Set[str] = set()
     for path in changed_files:
-        if path.startswith("pyhazards/model_cards/") and path.endswith((".yaml", ".yml")):
+        # A card deleted by the change (a removed model) has nothing left to review.
+        if (
+            path.startswith("pyhazards/model_cards/")
+            and path.endswith((".yaml", ".yml"))
+            and (REPO_ROOT / path).exists()
+        ):
             names.add(Path(path).stem)
         if path in source_to_name:
             names.add(source_to_name[path])

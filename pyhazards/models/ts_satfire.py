@@ -71,7 +71,8 @@ def ts_satfire_builder(
     ``(batch, out_channels, image_size, image_size)`` logits (``time_reduction="none"`` keeps the
     time axis). ``feature_size`` overrides the UNETR (16) or SwinUNETR (36) feature size,
     ``num_heads`` is SwinUNETR's heads per stage (the ``-nh`` argument of the script) and
-    ``unetr_version="v0"`` selects the script's alternative UNETR widths (768 / 3072).
+    ``unetr_version="v0"`` selects the script's alternative UNETR widths (768 / 3072). Each baseline
+    checks its input shape and raises ``ValueError`` for any other layout.
     """
     _ = kwargs
     if task.lower() != "segmentation":
