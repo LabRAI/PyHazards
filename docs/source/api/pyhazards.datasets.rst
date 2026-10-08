@@ -19,7 +19,7 @@ Shared Forcing
 Wildfire
 ~~~~~~~~
 
-:doc:`CAL FIRE FRAP Fire Perimeters </datasets/frap_fire_perimeters>`, :doc:`FIRMS </datasets/firms>`, :doc:`FPA-FOD Tabular </datasets/fpa_fod_tabular>`, :doc:`FPA-FOD Weekly </datasets/fpa_fod_weekly>`, :doc:`GeoMAC Historical Perimeters </datasets/geomac_historical>`, :doc:`GOES-R ABI Fire/Hot Spot Characterization (FDCF) </datasets/goesr_fdcf>`, :doc:`LANDFIRE </datasets/landfire>`, :doc:`MTBS </datasets/mtbs>`, :doc:`NOAA HMS Smoke Polygons </datasets/hms_smoke>`, :doc:`Track-O Wildfire Occurrence </datasets/wildfire_track_o>`, :doc:`WFIGS </datasets/wfigs>`, :doc:`Wildfire Risk to Communities: Housing Density </datasets/wrc_housing_density>`, :doc:`WRF-SFIRE Outputs </datasets/wrf_sfire>`.
+:doc:`CAL FIRE FRAP Fire Perimeters </datasets/frap_fire_perimeters>`, :doc:`FIgLib SmokeBench </datasets/figlib_smokebench>`, :doc:`FIRMS </datasets/firms>`, :doc:`FPA-FOD Tabular </datasets/fpa_fod_tabular>`, :doc:`FPA-FOD Weekly </datasets/fpa_fod_weekly>`, :doc:`GeoMAC Historical Perimeters </datasets/geomac_historical>`, :doc:`GOES-R ABI Fire/Hot Spot Characterization (FDCF) </datasets/goesr_fdcf>`, :doc:`LANDFIRE </datasets/landfire>`, :doc:`MTBS </datasets/mtbs>`, :doc:`NOAA HMS Smoke Polygons </datasets/hms_smoke>`, :doc:`Track-O Wildfire Occurrence </datasets/wildfire_track_o>`, :doc:`WFIGS </datasets/wfigs>`, :doc:`Wildfire Risk to Communities: Housing Density </datasets/wrc_housing_density>`, :doc:`WRF-SFIRE Outputs </datasets/wrf_sfire>`.
 
 Flood
 ~~~~~

@@ -30,7 +30,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         31
+         32
 
       .. container:: catalog-stat-note
 
@@ -41,7 +41,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         11
+         12
 
       .. container:: catalog-stat-note
 
@@ -321,6 +321,37 @@ primary source, and the most relevant inspection or registry surface.
             .. container:: catalog-link-row
 
                **Primary Source:** `CAL FIRE FRAP (2026). Fire Perimeters, release firep25_1 (metadata). <https://www.arcgis.com/sharing/rest/content/items/a31aa1efe1d6466f8530b501c30ab00a/data>`_
+
+         .. grid-item-card:: FIgLib SmokeBench
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The SmokeBench evaluation images -- HPWREN FIgLib camera frames with the SmokeyNet smoke boxes -- for prompting multimodal LLMs to classify and localize early wildfire smoke.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Smoke Detection Benchmark` :bdg-info:`Fixed-camera RGB photographs with smoke bounding boxes`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Southern California (HPWREN camera network)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Static evaluation set (FIgLib itself keeps adding sequences)
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``python -m pyhazards.datasets.figlib_smokebench.inspection --root /path/to/figlib --download``
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`FIgLib SmokeBench <datasets/figlib_smokebench>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Qi, T., Li, W., Barnes, N. (2026). SmokeBench: Evaluating Multimodal Large Language Models for Wildfire Smoke Detection. WACV 2026. <https://arxiv.org/abs/2512.11215>`_
 
          .. grid-item-card:: FIRMS
             :class-card: catalog-entry-card
@@ -1228,6 +1259,7 @@ model and evaluation coverage.
    datasets/ndfd
    datasets/nohrsc_snodas
    datasets/frap_fire_perimeters
+   datasets/figlib_smokebench
    datasets/firms
    datasets/fpa_fod_tabular
    datasets/fpa_fod_weekly

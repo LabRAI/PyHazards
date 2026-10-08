@@ -6,6 +6,10 @@ Models
 Browse PyHazards model implementations across hazard families, compare
 scope and maturity, and navigate to model-specific detail pages.
 
+Prompted multimodal LLMs used as zero-shot wildfire-smoke detectors (SmokeBench: Qwen2.5-VL,
+InternVL3, Idefics2, Gemini 2.5 Pro, GPT-4o) are not ``nn.Module`` models; they are documented
+separately under :doc:`pyhazards_prompted`.
+
 At a Glance
 -----------
 

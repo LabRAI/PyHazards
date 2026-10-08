@@ -1,0 +1,38 @@
+name: idefics2_8b
+order: 1
+display_name: Idefics2-8B
+model_id: HuggingFaceM4/idefics2-8b
+access: open weights
+install_extra: prompted-hf
+license: Apache-2.0
+paper:
+  title: "What matters when building vision-language models? (Laurencon et al., NeurIPS 2024, arXiv:2405.02246)"
+  url: https://arxiv.org/abs/2405.02246
+model_url: https://huggingface.co/HuggingFaceM4/idefics2-8b
+smokebench_tasks: [classification, tile, grid, detection]
+smokebench_reported:
+  classification:
+    tables: Tables 1-3
+    area: {Very Small: 0.482, Small: 0.596, Medium: 0.598, Large: 0.575, Very Large: 0.709, Overall: 0.592}
+    contrast: {Very Low: 0.607, Low: 0.589, Medium: 0.616, High: 0.558, Very High: 0.589, Overall: 0.592}
+    smoke_free: 0.498
+  tile:
+    tables: Tables 4-5
+    area: {Very Small: 0.348, Small: 0.505, Medium: 0.487, Large: 0.530, Very Large: 0.507, Overall: 0.475}
+    contrast: {Very Low: 0.416, Low: 0.440, Medium: 0.480, High: 0.477, Very High: 0.563, Overall: 0.475}
+  grid:
+    tables: Tables 6-7
+    area: {Very Small: 0.029, Small: 0.025, Medium: 0.033, Large: 0.054, Very Large: 0.067, Overall: 0.042}
+    contrast: {Very Low: 0.036, Low: 0.042, Medium: 0.040, High: 0.048, Very High: 0.043, Overall: 0.042}
+  detection:
+    tables: Table 8
+    overall: 0.000
+settings:
+  - "bfloat16 weights, ``do_image_splitting=False``."
+  - "Classification, grid and detection: the raw text ``\"<image>\\n\" + prompt`` without the chat template through the ``image-text-to-text`` pipeline (256 new tokens, the checkpoint's greedy generation config)."
+  - "Tiles: the 12 tiles of an image as one left-padded batch through the chat template, greedy, 16 new tokens."
+deviations:
+  - "Samples at temperature 0.5 as the paper states; ``do_sample=False`` reproduces the greedy decoding of the released script."
+notes:
+  - "``build_backend`` loads Hugging Face revision ``2c42686c57fe21cf0348c9ce1077d094b72e7698`` (2026-10-07) unless ``revision=`` is given (the base checkpoint, not the instruction-tuned ``idefics2-8b-chatty``; the paper says only \"Idefics2\" and the script loads ``idefics2-8b``)."
+  - "SmokeBench notes that Idefics2 answers close to chance on smoke-free images (0.498), which inflates its accuracy on smoke images."

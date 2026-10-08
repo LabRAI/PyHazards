@@ -1,0 +1,35 @@
+name: internvl3_14b
+order: 4
+display_name: InternVL3-14B
+model_id: OpenGVLab/InternVL3-14B-hf
+access: open weights
+install_extra: prompted-hf
+license: "MIT per the model card text; the Hugging Face metadata says 'other' and links the Qwen licence (Qwen2.5 component)"
+paper:
+  title: "InternVL3: Exploring Advanced Training and Test-Time Recipes for Open-Source Multimodal Models (Zhu et al., arXiv:2504.10479, 2025)"
+  url: https://arxiv.org/abs/2504.10479
+  repo_url: https://github.com/OpenGVLab/InternVL
+model_url: https://huggingface.co/OpenGVLab/InternVL3-14B-hf
+smokebench_tasks: [classification, grid, detection]
+smokebench_reported:
+  classification:
+    tables: Tables 1-3
+    area: {Very Small: 0.090, Small: 0.262, Medium: 0.376, Large: 0.432, Very Large: 0.636, Overall: 0.359}
+    contrast: {Very Low: 0.269, Low: 0.304, Medium: 0.368, High: 0.401, Very High: 0.453, Overall: 0.359}
+    smoke_free: 0.985
+  grid:
+    tables: Tables 6-7
+    area: {Very Small: 0.001, Small: 0.017, Medium: 0.057, Large: 0.095, Very Large: 0.114, Overall: 0.057}
+    contrast: {Very Low: 0.042, Low: 0.041, Medium: 0.055, High: 0.062, Very High: 0.084, Overall: 0.057}
+  detection:
+    tables: Table 8
+    overall: 0.000
+settings:
+  - "The authors run the transformers-native checkpoint ``OpenGVLab/InternVL3-14B-hf`` through the ``image-text-to-text`` pipeline with float32 weights (``device_map=\"balanced\"``): chat template with the image before the text, the processor's dynamic 448-pixel tiling at native resolution, 256 new tokens (the pipeline default) and the checkpoint's greedy generation config."
+  - "The tile task was not run with InternVL3 (the paper's Tables 4-5 have no InternVL3 row; the script has no batch path for it)."
+deviations:
+  - "Samples at temperature 0.5 as the paper states; ``do_sample=False`` reproduces the greedy decoding of the released script."
+  - "``device_map=\"auto\"`` by default (pass ``device_map=\"balanced\"`` to match the authors' sharding; it does not change outputs)."
+notes:
+  - "``build_backend`` loads Hugging Face revision ``e22931943e5336f85e06f4e2b38f3e5e6ee4de3b`` (2026-10-07) unless ``revision=`` is given. About 30 GB in bfloat16; the authors' float32 load needs about 60 GB."
+  - "SmokeBench groups InternVL3 with the grounding-trained models; prompted with the SmokeBench detection prompt it still scores 0.000."

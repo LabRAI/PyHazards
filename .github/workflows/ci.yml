@@ -46,5 +46,8 @@ jobs:
       - name: Generated coverage audit docs check
         run: python scripts/render_appendix_a_docs.py --check
 
+      - name: Generated prompted-baseline docs check
+        run: python scripts/render_prompted_docs.py --check
+
       - name: Catalog smoke test
         run: python scripts/verify_table_entries.py

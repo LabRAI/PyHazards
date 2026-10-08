@@ -74,6 +74,13 @@ repos:
     url: https://github.com/sxjscience/HKO-7.git
     commit: 57b987bd893bd6910996494c247359ace371d333
     license: MIT
+  SoraLink-MLLM:
+    # SmokeBench (Qi, Li & Barnes, WACV 2026) evaluation scripts, committed by the first author
+    # (qitianye1104); the paper links no code. Oracle for pyhazards/prompted (geometry, parsing,
+    # metrics, contrast). HEAD of master on 2026-10-07.
+    url: https://github.com/SoraLink/MLLM.git
+    commit: 183cdca488e8c7afa5a254f86ac675cb98951c73
+    license: none (no LICENSE file; test oracle only, never vendored)
 
 assets:
   utae_pastis_weights:
@@ -164,6 +171,13 @@ assets:
     url: https://media.githubusercontent.com/media/forefireAPI/forefire/ca433e01a9f2a146b1709da816a68feafcbfda41/tests/runff/ForeFire.0.nc.ref
     sha256: 45a2b159caad744d15d8cdd1b43d738a6626259ebc8542944d5daa06a2fad42a
     license: GPL-3.0 (ForeFire repository test data; test-time only)
+  # SmokeyNet (Dewangan et al., Remote Sensing 2022) data/metadata.pkl: its bbox_labels are the 5,046
+  # SmokeBench smoke boxes (pyhazards.datasets.figlib_smokebench downloads the same pinned file).
+  smokeynet_metadata:
+    url: https://gitlab.nrp-nautilus.io/anshumand/pytorch-lightning-smoke-detection/-/raw/d8d52b957891de10d4bef08943535fa4f9c3cd43/data/metadata.pkl
+    filename: smokeynet_metadata.pkl
+    sha256: c3465c121669b0f92426451799140b0d30bc7caf7512aff9326fefa698ecb1a6
+    license: Apache-2.0 (anshumand/pytorch-lightning-smoke-detection)
   # Large checkpoints: fetched only when named explicitly (or with --large), never in routine CI.
   prithvi_eo2_300m_burnscars_weights:
     url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars/resolve/a3f2c410e45b8ac7417976614528a872f024d831/Prithvi_EO_V2_300M_BurnScars.pt

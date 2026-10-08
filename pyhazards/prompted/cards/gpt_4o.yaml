@@ -1,0 +1,24 @@
+name: gpt_4o
+order: 6
+display_name: GPT-4o
+model_id: gpt-4o
+access: API
+install_extra: prompted-openai
+license: Proprietary (OpenAI API terms); no weights
+paper:
+  title: GPT-4o System Card (OpenAI, arXiv:2410.21276, 2024)
+  url: https://arxiv.org/abs/2410.21276
+model_url: https://platform.openai.com/docs/models/gpt-4o
+smokebench_tasks: [classification]
+smokebench_reported:
+  classification:
+    tables: Tables 1-2
+    area: {Very Small: 0.529, Small: 0.727, Medium: 0.770, Large: 0.831, Very Large: 0.931, Overall: 0.758}
+    contrast: {Very Low: 0.739, Low: 0.703, Medium: 0.774, High: 0.792, Very High: 0.781, Overall: 0.758}
+settings:
+  - "Classification only (Sec. 4.1), temperature 0.5. The paper does not give the GPT-4o snapshot, and the release has no code for these runs and no smoke-free accuracy for the closed models."
+deviations:
+  - "Request layout from the only GPT-4o call in the authors' repository (an early grid script): Chat Completions with ``[text, image]`` content, the image as a base64 JPEG data URL (quality 95, OpenCV's default there) and ``max_tokens=300``; temperature 0.5 as the paper states. The API key is read from ``OPENAI_API_KEY``."
+notes:
+  - "The snapshot behind the ``gpt-4o`` alias is recorded per answer (``served_model``); pass a dated snapshot as ``model_id`` to pin it."
+  - "Images are sent to OpenAI; FIgLib frames are public HPWREN data."
