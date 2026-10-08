@@ -1,7 +1,5 @@
 from .base import DataBundle, DataSplit, Dataset, FeatureSpec, LabelSpec
 from .earthquake import (
-    AEFADataset,
-    PickBenchmarkWaveformDataset,
     SeisBenchWaveformDataset,
     SyntheticEarthquakeForecastDataset,
     SyntheticEarthquakeWaveformDataset,
@@ -41,8 +39,6 @@ __all__ = [
     "Dataset",
     "FeatureSpec",
     "LabelSpec",
-    "AEFADataset",
-    "PickBenchmarkWaveformDataset",
     "SeisBenchWaveformDataset",
     "SyntheticEarthquakeForecastDataset",
     "SyntheticEarthquakeWaveformDataset",
@@ -77,8 +73,6 @@ __all__ = [
 register_dataset(SyntheticEarthquakeForecastDataset.name, SyntheticEarthquakeForecastDataset)
 register_dataset(SyntheticEarthquakeWaveformDataset.name, SyntheticEarthquakeWaveformDataset)
 register_dataset(SeisBenchWaveformDataset.name, SeisBenchWaveformDataset)
-register_dataset(PickBenchmarkWaveformDataset.name, PickBenchmarkWaveformDataset)
-register_dataset(AEFADataset.name, AEFADataset)
 register_dataset(SyntheticFloodInundationDataset.name, SyntheticFloodInundationDataset)
 register_dataset(SyntheticFloodStreamflowDataset.name, SyntheticFloodStreamflowDataset)
 register_dataset(SyntheticFloodMeshDataset.name, SyntheticFloodMeshDataset)

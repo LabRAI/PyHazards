@@ -872,94 +872,24 @@ primary source, and the most relevant inspection or registry surface.
          :gutter: 2
          :class-container: catalog-grid
 
-         .. grid-item-card:: AEFA Forecast
+         .. grid-item-card:: SeisBench-format Waveforms
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               Synthetic-backed dense-grid forecasting adapter aligned to the AEFA earthquake forecasting workflow.
+               Reader for labelled three-component waveform datasets in the SeisBench format (STEAD, INSTANCE, ETHZ, ... as distributed for SeisBench) and in STEAD's own CSV + HDF5 layout.
 
             .. container:: catalog-chip-row
 
-               :bdg-secondary:`Forecast Benchmark` :bdg-info:`Dense-grid wavefield tensors`
+               :bdg-secondary:`Waveform Benchmark` :bdg-info:`Three-component station waveform windows`
 
             .. container:: catalog-meta-row
 
-               **Coverage:** Benchmark-aligned earthquake forecasting samples
+               **Coverage:** Dataset dependent (STEAD global; INSTANCE Italy)
 
             .. container:: catalog-meta-row
 
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
-
-            .. container:: catalog-meta-row
-
-               **Registry:** ``load_dataset('aefa_forecast', ...)``
-
-            .. container:: catalog-meta-row
-
-               **Related Benchmarks:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`, :doc:`AEFA <benchmarks/aefa>`
-
-            .. container:: catalog-link-row
-
-               **Details:** :doc:`AEFA Forecast <datasets/aefa_forecast>`
-
-            .. container:: catalog-link-row
-
-               **Primary Source:** `AEFA <https://github.com/chenyk1990/aefa>`_
-
-         .. grid-item-card:: pick-benchmark
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Synthetic-backed waveform picking adapter aligned to the pick-benchmark evaluation ecosystem.
-
-            .. container:: catalog-chip-row
-
-               :bdg-secondary:`Waveform Benchmark` :bdg-info:`Multichannel waveform windows`
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** Benchmark-aligned earthquake phase-picking samples
-
-            .. container:: catalog-meta-row
-
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
-
-            .. container:: catalog-meta-row
-
-               **Registry:** ``load_dataset('pick_benchmark_waveforms', ...)``
-
-            .. container:: catalog-meta-row
-
-               **Related Benchmarks:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`, :doc:`pick-benchmark <benchmarks/pick_benchmark>`
-
-            .. container:: catalog-link-row
-
-               **Details:** :doc:`pick-benchmark <datasets/pick_benchmark_waveforms>`
-
-            .. container:: catalog-link-row
-
-               **Primary Source:** `pick-benchmark <https://github.com/seisbench/pick-benchmark>`_
-
-         .. grid-item-card:: SeisBench
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Synthetic-backed waveform picking adapter aligned to the SeisBench ecosystem.
-
-            .. container:: catalog-chip-row
-
-               :bdg-secondary:`Waveform Benchmark` :bdg-info:`Multichannel waveform windows`
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** Benchmark-aligned earthquake phase-picking samples
-
-            .. container:: catalog-meta-row
-
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
+               **Update Cadence:** Static benchmark releases downloaded by the user
 
             .. container:: catalog-meta-row
 
@@ -967,15 +897,85 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-meta-row
 
-               **Related Benchmarks:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`, :doc:`SeisBench <benchmarks/seisbench>`
+               **Related Benchmarks:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`, :doc:`SeisBench <benchmarks/seisbench>`, :doc:`pick-benchmark <benchmarks/pick_benchmark>`
 
             .. container:: catalog-link-row
 
-               **Details:** :doc:`SeisBench <datasets/seisbench_waveforms>`
+               **Details:** :doc:`SeisBench-format Waveforms <datasets/seisbench_waveforms>`
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `SeisBench - A Toolbox for Machine Learning in Seismology <https://joss.theoj.org/papers/10.21105/joss.04418>`_
+               **Primary Source:** `Woollam, J., Münchmeyer, J., Tilmann, F., et al. (2022). SeisBench - A Toolbox for Machine Learning in Seismology. Seismological Research Letters 93(3):1695-1709. <https://doi.org/10.1785/0220210324>`_
+
+         .. grid-item-card:: Synthetic Phase-Picking Waveforms
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Synthetic three-component windows with P and S wavelets for picking smoke runs. Not real data.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Three-component waveform windows`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Not applicable (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on load from a fixed seed
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('earthquake_waveforms_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic Phase-Picking Waveforms <datasets/earthquake_waveforms_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic phase-picking generator (no external source). <https://github.com/LabRAI/PyHazards/blob/main/pyhazards/datasets/earthquake/synthetic.py>`_
+
+         .. grid-item-card:: Synthetic Wavefield Sequences
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Synthetic dense-grid wavefield sequences for wavefield-forecasting smoke runs. Not real data.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Dense-grid wavefield tensors`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Not applicable (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('earthquake_forecast_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic Wavefield Sequences <datasets/earthquake_forecast_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic wavefield generator (no external source). <https://github.com/LabRAI/PyHazards/blob/main/pyhazards/datasets/earthquake/synthetic.py>`_
 
 
    .. tab-item:: Tropical Cyclone
@@ -1308,9 +1308,9 @@ hazard group before branching into the full catalog.
    .. grid-item-card:: Earthquake
       :class-card: catalog-detail-card
 
-      **Start with:** :doc:`SeisBench <datasets/seisbench_waveforms>`
+      **Start with:** :doc:`SeisBench-format Waveforms <datasets/seisbench_waveforms>`
 
-      Synthetic-backed waveform picking adapter aligned to the SeisBench ecosystem.
+      Reader for labelled three-component waveform datasets in the SeisBench format (STEAD, INSTANCE, ETHZ, ... as distributed for SeisBench) and in STEAD's own CSV + HDF5 layout.
 
       **Primary Surface:** Registry: ``load_dataset('seisbench_waveforms', ...)``
 
@@ -1376,9 +1376,9 @@ model and evaluation coverage.
    datasets/camels_us_streamflow
    datasets/caravan_streamflow
    datasets/noaa_flood
-   datasets/aefa_forecast
-   datasets/pick_benchmark_waveforms
    datasets/seisbench_waveforms
+   datasets/earthquake_waveforms_synthetic
+   datasets/earthquake_forecast_synthetic
    datasets/ibtracs_tracks
    datasets/ships_xu2021
    datasets/safnet_cma_era_interim_synthetic

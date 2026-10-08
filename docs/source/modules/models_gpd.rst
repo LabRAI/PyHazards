@@ -6,7 +6,7 @@ GPD
 Overview
 --------
 
-``gpd`` provides a lightweight earthquake picking adapter with the same waveform-to-pick interface used across the PyHazards earthquake benchmarks.
+``gpd`` classifies a 400-sample window (4 s at 100 Hz, channels N, E, Z, scaled by its maximum absolute amplitude) into P, S and noise. The network has four blocks of convolution (32 / 64 / 128 / 256 filters, kernels 21 / 15 / 11 / 9), batch normalisation, ReLU and 2x max pooling, followed by two 200-unit dense layers with batch normalisation and a three-way softmax (1,741,003 parameters).
 
 At a Glance
 -----------
@@ -63,26 +63,41 @@ At a Glance
 Description
 -----------
 
-``gpd`` provides a lightweight earthquake picking adapter with the same waveform-to-pick interface used across the PyHazards earthquake benchmarks.
+``gpd`` classifies a 400-sample window (4 s at 100 Hz, channels N, E, Z, scaled by its maximum absolute amplitude) into P, S and noise. The network has four blocks of convolution (32 / 64 / 128 / 256 filters, kernels 21 / 15 / 11 / 9), batch normalisation, ReLU and 2x max pooling, followed by two 200-unit dense layers with batch normalisation and a three-way softmax (1,741,003 parameters).
 
-This adapter is intended as a reproducible low-cost baseline rather than an exact port of every original training detail.
+``annotate`` slides the classifier over longer traces in steps of 10 samples, as ``gpd_predict.py`` does, and ``extract_picks`` turns the P and S probability sequences into picks: a trigger starts when a probability reaches 0.95 and ends when it falls below 0.1, and the window with the highest probability in the trigger gives the pick at its centre. Module names are the Keras layer names, and the released weights (``model_pol_best.hdf5``, MIT) load with ``pretrained=True``.
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`pick-benchmark </benchmarks/pick_benchmark>`
+**Mapped benchmark ecosystems:** :doc:`pick-benchmark </benchmarks/pick_benchmark>`, :doc:`SeisBench </benchmarks/seisbench>`
 
 External References
 -------------------
 
 **Paper:** `Generalized Seismic Phase Detection with Deep Learning <https://doi.org/10.1785/0120180080>`_ | **Repo:** `Repository <https://github.com/interseismic/generalized-phase-detection>`__
 
+Used In
+-------
+
+- `Earthquake transformer—an attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ (`repo <https://github.com/smousavi05/EQTransformer>`__): Applies the pretrained GPD (trained on 4.5M Southern California windows) to the STEAD test set; a pick counts as a true positive within 0.5 s of the manual pick. Table 2 (P): mean 0.03 s, std 0.10 s, precision 0.81, recall 0.80, F1 0.81, MAE 0.08 s, MAPE 0.01. Table 3 (S): mean 0.03 s, std 0.14 s, precision 0.81, recall 0.83, F1 0.82, MAE 0.10 s, MAPE 0.01.
+- `Which Picker Fits My Data? A Quantitative Evaluation of Deep Learning Based Seismic Pickers <https://doi.org/10.1029/2021JB023499>`_ (`repo <https://github.com/seisbench/pick-benchmark>`__): Muenchmeyer et al., JGR Solid Earth 127:e2021JB023499 (2022). GPD (SeisBench's port, same 1,741,003 parameters) retrained on each dataset; in-domain phase identification MCC (Table 2): ETHZ 0.92, INSTANCE 0.95, Iquique 0.98, SCEDC 0.93, STEAD 0.99, GEOFON 0.67, NEIC 0.84.
+
 Reproduction
 ------------
 
-Not yet verified against a reference implementation.
+- **Reference implementation:** `https://github.com/interseismic/generalized-phase-detection <https://github.com/interseismic/generalized-phase-detection>`__ at ``ea81ef1`` (MIT (code and released weights, Copyright (c) 2018 Zachary E. Ross))
+- **Checked configuration:** The Keras 2.2.2 network of model_pol.json with the released weights model_pol_best.hdf5, run on TensorFlow 2.11 (tf.keras) from the JSON's inner Sequential config, and the gpd_predict.py pipeline (ObsPy linear detrend and 3-20 Hz band-pass, 400-sample windows every 10 samples, per-window max normalisation, trigger_onset(0.95, 0.1), argmax pick) on the shipped Anza 2016 station AZ.TRO data; SeisBench 0.12.6's GPD with its conversion of the same weights as a second reference.
+- **Parameter count:** 1,741,003
+- **Verified:** parameter count, seeded initialisation, parameter names and shapes, forward outputs, official pretrained weights
+- **Oracle test:** ``tests/oracle/test_gpd_oracle.py``
+- **Deviation:** The release wraps the network in Keras multi-GPU Lambda / Concatenate layers (stored as Python 3.6 bytecode). They only split the batch across GPUs and are not ported; the oracle is the inner Sequential network, unchanged.
+- **Deviation:** An all-zero window, which gpd_predict.py divides by zero (NaN probabilities), is left at zero by ``annotate`` and classified normally.
+- **Deviation:** Filtering is not part of ``annotate``: gpd_predict.py band-passes whole traces at 3-20 Hz (and the training data were high-passed at 2 Hz), so callers must filter their traces the same way.
+- **Deviation:** Inputs are ``(batch, channels, samples)`` instead of Keras' ``(batch, samples, channels)``; the feature map is transposed before flattening so that the Keras dense_1 kernel loads unchanged.
+- **Deviation:** Initial weights follow the Keras scheme (Glorot-uniform kernels, zero biases) but cannot match TensorFlow's random draws; the oracle compares their bounds and spread.
 
 Registry Name
 -------------
@@ -102,11 +117,22 @@ Programmatic Use
    import torch
    from pyhazards.models import build_model
 
-   model = build_model(name="gpd", task="regression", in_channels=3)
-   picks = model(torch.randn(4, 3, 256))
-   print(picks.shape)
+   # Window classifier: 4-s windows at 100 Hz, channels N, E, Z -> P / S / noise probabilities.
+   model = build_model(name="gpd", task="classification")  # pretrained=True loads model_pol_best.hdf5
+   model.eval()
+   windows = torch.randn(8, 3, 400)
+   windows = windows / windows.abs().amax(dim=(1, 2), keepdim=True)
+   probabilities = model(windows)  # (8, 3)
+
+   # Picking a 60-s band-passed (3-20 Hz) trace with the official sliding window.
+   with torch.no_grad():
+       annotations = model.annotate(torch.randn(1, 3, 6000), stride=10)  # (1, 3, 561)
+   picks = model.extract_picks(annotations)  # [{"P": [(sample, prob), ...], "S": [...]}]
 
 Notes
 -----
 
-- The adapter keeps a simple two-output pick interface for shared evaluation.
+- Channel order N, E, Z (gpd_predict.py stacks the N, E and Z files in that order). SeisBench's conversion of the same weights takes Z, N, E: it permuted the first convolution's input channels, which the oracle test confirms.
+- Class order P, S, noise. The repository's picker uses a 0.95 trigger threshold (``min_proba``); the paper reports detections above 0.98.
+- Batch normalisation reproduces Keras 2.2.2, which trained the released weights: the moving variance is updated with the factor n / (n - 1 - eps) and a zero-debiased moving average (decay 0.99), checked against TensorFlow's assign_moving_average.
+- On 18 minutes of the shipped Anza 2016 data (08:02-08:20 UTC), the port's picks are identical to the official Keras pipeline and, inside the slice, to the shipped anza2016.out (33 P and 96 S picks).

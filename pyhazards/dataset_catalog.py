@@ -654,7 +654,7 @@ def render_dataset_api_page(cards: Sequence[DatasetCard]) -> str:
             "",
             "    print(available_datasets())",
             "    data = load_dataset(",
-            '        \"seisbench_waveforms\",',
+            '        \"earthquake_waveforms_synthetic\",',
             "        micro=True,",
             "    ).load()",
             "    print(sorted(data.splits.keys()))",

@@ -40,7 +40,9 @@ def test_dataset_page_lists_curated_hazard_tabs() -> None:
     assert ":doc:`ERA5 <datasets/era5>`" in page
     assert ":doc:`WFIGS <datasets/wfigs>`" in page
     assert ":doc:`Caravan <datasets/caravan_streamflow>`" in page
-    assert ":doc:`SeisBench <datasets/seisbench_waveforms>`" in page
+    assert ":doc:`SeisBench-format Waveforms <datasets/seisbench_waveforms>`" in page
+    assert ":doc:`Synthetic Phase-Picking Waveforms <datasets/earthquake_waveforms_synthetic>`" in page
+    assert "datasets/aefa_forecast" not in page and "datasets/pick_benchmark_waveforms" not in page
     assert ":doc:`IBTrACS <datasets/ibtracs_tracks>`" in page
     assert "Registry-loadable Datasets" in page
     assert "Inspection Entry Points" in page

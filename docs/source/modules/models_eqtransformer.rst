@@ -6,7 +6,7 @@ EQTransformer
 Overview
 --------
 
-``eqtransformer`` is the second earthquake picking baseline in the staged roadmap and shares the synthetic waveform contract used by ``phasenet``.
+A deep encoder (seven convolution + max-pooling layers, seven residual CNN blocks, bidirectional LSTM blocks and two transformer blocks with additive self-attention) compresses 6000 samples to 47 time steps. Three decoders read the encoding: the detection decoder directly, the P and S decoders after an LSTM and a local self-attention of width 3; each upsamples back to 6000 samples and ends with a sigmoid. ``forward`` returns ``(batch, 3, 6000)`` probabilities in the order detection, P, S.
 
 At a Glance
 -----------
@@ -63,26 +63,43 @@ At a Glance
 Description
 -----------
 
-``eqtransformer`` is the second earthquake picking baseline in the staged roadmap and shares the synthetic waveform contract used by ``phasenet``.
+A deep encoder (seven convolution + max-pooling layers, seven residual CNN blocks, bidirectional LSTM blocks and two transformer blocks with additive self-attention) compresses 6000 samples to 47 time steps. Three decoders read the encoding: the detection decoder directly, the P and S decoders after an LSTM and a local self-attention of width 3; each upsamples back to 6000 samples and ends with a sigmoid. ``forward`` returns ``(batch, 3, 6000)`` probabilities in the order detection, P, S.
 
-The PyHazards adapter focuses on the shared picking interface rather than a full reproduction of the original multitask training pipeline.
+``variant="original"`` (default) is the paper model ``EqT_original_model.h5`` (two BiLSTM blocks, 371,639 parameters); ``variant="conservative"`` is ``EqT_model_conservative.h5`` (three BiLSTM blocks, 376,423 parameters), which the authors released later for fewer false positives. Both load with ``pretrained=True`` (downloaded from the official repository at a pinned commit and checked by sha256; MIT-licensed weights) and reproduce the official Keras outputs.
+
+``annotate`` applies the official per-trace normalisation (remove the mean, divide by the standard deviation of each component); ``extract_picks`` and ``extract_detections`` port the official tester's ``picker`` (detection triggers of at least 10 samples, the earliest S peak and the most probable P peak associated with each event), which the ``earthquake.picking`` benchmark uses.
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`pick-benchmark </benchmarks/pick_benchmark>`
+**Mapped benchmark ecosystems:** :doc:`pick-benchmark </benchmarks/pick_benchmark>`, :doc:`SeisBench </benchmarks/seisbench>`
 
 External References
 -------------------
 
-**Paper:** `Earthquake Transformer-An attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ | **Repo:** `Repository <https://github.com/smousavi05/EQTransformer>`__
+**Paper:** `Earthquake transformer—an attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ | **Repo:** `Repository <https://github.com/smousavi05/EQTransformer>`__
+
+Used In
+-------
+
+- `Earthquake transformer—an attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ (`repo <https://github.com/smousavi05/EQTransformer>`__): STEAD test set (10% random split, trace names in ModelsAndSampleData/test.npy), paper model, a pick is a true positive when |error| < 0.5 s. Table 1 detection: precision 1.0, recall 1.0, F1 1.0 (detection threshold 0.5). Table 2 P picks: mean error 0.00 s, std 0.03 s, precision 0.99, recall 0.99, F1 0.99, MAE 0.01 s, MAPE 0.00. Table 3 S picks: mean 0.00 s, std 0.11 s, precision 0.99, recall 0.96, F1 0.98, MAE 0.01 s, MAPE 0.00.
+- `Which Picker Fits My Data? A Quantitative Evaluation of Deep Learning Based Seismic Pickers <https://doi.org/10.1029/2021JB023499>`_ (`repo <https://github.com/seisbench/pick-benchmark>`__): Münchmeyer et al., J. Geophys. Res. Solid Earth 127, e2021JB023499 (2022). Retrains SeisBench's PyTorch EQTransformer (the conservative three-BiLSTM architecture, 376,935 parameters because PyTorch LSTMs carry two bias vectors) on each dataset; in-domain phase identification MCC (Table 2): STEAD 1.00, INSTANCE 0.97, ETHZ 0.97, SCEDC 0.96, Iquique 0.99, NEIC 0.96, GEOFON 0.82. These are retrained models, not the released weights.
 
 Reproduction
 ------------
 
-Not yet verified against a reference implementation.
+- **Reference implementation:** `https://github.com/smousavi05/EQTransformer <https://github.com/smousavi05/EQTransformer>`__ at ``a589da6`` (MIT (code and released models))
+- **Checked configuration:** The two released Keras models, EqT_original_model.h5 (paper model, Keras 2.3.0) and EqT_model_conservative.h5 (Keras 2.2.4), loaded with tf.keras.models.load_model and the official custom layers of EQTransformer/core/EqT_utils.py on TensorFlow 2.11, on random input and on the repository's 100 STEAD sample traces (100samples.hdf5); the official ``picker`` on the same probabilities; and SeisBench 0.12.6's EQTransformer with its conversions of both models (GPL-3.0, used only as a second oracle).
+- **Parameter count:** 371,639
+- **Verified:** parameter count, seeded initialisation, parameter names and shapes, forward outputs, official pretrained weights
+- **Oracle test:** ``tests/oracle/test_eqtransformer_oracle.py``
+- **Deviation:** The released graphs call SpatialDropout1D (rate 0.2 in the paper model, 0.1 in the conservative one) with ``training=True``, so the official models are random at inference (Monte Carlo dropout; the paper uses dropout "at training and test time"). The port applies it in train mode and, in eval mode, only with ``mc_dropout=True``: by default ``eval()`` outputs are deterministic and equal the official model with that dropout switched off. ``annotate(x, mc_samples=n)`` averages ``n`` passes with it on, as the official tester does with ``estimate_uncertainty=True``.
+- **Deviation:** Initial weights cannot match the reference for a seed (TensorFlow and PyTorch draw different random numbers). The port uses the Keras initialisers of every layer (Glorot-uniform kernels, Glorot-normal truncated at two standard deviations for the attention and feed-forward weights, orthogonal recurrent kernels, unit forget bias), which the oracle test compares by distribution.
+- **Deviation:** Layout: input ``(batch, 3, 6000)`` and one stacked output ``(batch, 3, 6000)`` instead of Keras' ``(batch, 6000, 3)`` input and three ``(batch, 6000, 1)`` outputs. Other input lengths raise a ``ValueError``; the reference decoder cannot restore them either.
+- **Deviation:** Train-mode dropout masks follow Keras (one mask per sequence for the LSTM inputs and recurrent state, per gate in the conservative model's ``implementation=1``), but cannot reproduce Keras' random draws; train-mode outputs were compared with every dropout switched off.
+- **Deviation:** The official tester also reports MC-dropout uncertainties (standard deviations over passes); ``extract_picks`` reports probabilities only.
 
 Registry Name
 -------------
@@ -102,11 +119,25 @@ Programmatic Use
    import torch
    from pyhazards.models import build_model
 
-   model = build_model(name="eqtransformer", task="regression", in_channels=3)
-   picks = model(torch.randn(4, 3, 256))
-   print(picks.shape)
+   # The paper model with its released weights (MIT), downloaded on first use.
+   model = build_model(name="eqtransformer", task="picking", pretrained=True).eval()
+
+   waveforms = torch.randn(4, 3, 6000)  # 60 s at 100 Hz, components E, N, Z, band-passed 1-45 Hz
+   with torch.no_grad():
+       probabilities = model.annotate(waveforms)  # (4, 3, 6000): detection, P, S
+   picks = model.extract_picks(probabilities)  # [{"P": [(sample, prob)], "S": [...]}, ...]
+   events = model.extract_detections(probabilities)  # [[(on, off, prob)], ...]
+
+   conservative = build_model(name="eqtransformer", task="picking", variant="conservative")
 
 Notes
 -----
 
-- Outputs are P- and S-arrival sample indices.
+- Inputs follow the training data (STEAD): 60-s windows at 100 Hz with components in the order E, N, Z, band-pass filtered between 1 and 45 Hz. ``annotate`` only normalises; filter real data first.
+
+- The released models differ from the defaults of ``cred2`` at the pinned commit (e.g. 96/128 filters there). The port follows the graphs stored in the .h5 files. The paper text gives a dropout rate of 0.1; the stored paper model uses 0.2 (the conservative model 0.1). The paper also names a Xavier-normal initialiser; the stored configurations use Glorot-uniform kernels for convolutions and LSTMs and Glorot-normal ones only for the attention and feed-forward weights.
+
+- The conservative model was saved by Keras 2.2.4, whose LSTMs use ``hard_sigmoid`` gates and ``implementation=1``; the paper model (Keras 2.3.0) uses ``sigmoid`` and ``implementation=2``. The two Keras versions also update BatchNorm's running statistics differently (zero-debiased moving averages in 2.2.4); the port keeps each model's behaviour.
+
+- Default pick thresholds are those of the official ``tester()`` (detection 0.2, P 0.1, S 0.1). As in the tester's output table, ``extract_picks`` reports the first detected event of each window unless ``all_events=True``.
+

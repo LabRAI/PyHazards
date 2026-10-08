@@ -33,10 +33,10 @@ Hazard Summary
      - External
      - Missing
    * - Earthquake
-     - 8
+     - 4
+     - 1
      - 0
-     - 0
-     - 0
+     - 3
    * - Wildfire
      - 4
      - 0
@@ -72,49 +72,49 @@ Method and Resource Matrix
      - Baseline
      - ``Implemented``
      - :doc:`PhaseNet <modules/models_phasenet>`
-     - Model adapter is implemented, but the SeisBench / pick-benchmark data path is still missing.
+     - Port of the official TensorFlow U-Net (268,443 parameters); the released checkpoint 190703-214543 loads without TensorFlow and matches the official graph and SeisBench's port. Scored with the PhaseNet and EQTransformer pick metrics on real SeisBench-format / STEAD data.
    * - Earthquake
      - `EQTransformer <https://github.com/smousavi05/EQTransformer>`_
      - Baseline
      - ``Implemented``
      - :doc:`EQTransformer <modules/models_eqtransformer>`
-     - Model adapter is implemented, but the benchmark stack remains lighter than the PDF target.
+     - Port of the released Keras models (paper model 371,639 parameters, conservative 376,423) with detection, P and S outputs; both official .h5 files load and match Keras and SeisBench.
    * - Earthquake
      - `GPD <https://github.com/interseismic/generalized-phase-detection>`_
      - Baseline
      - ``Implemented``
      - :doc:`GPD <modules/models_gpd>`
-     - Model adapter is implemented behind the shared picking interface.
+     - Port of the released Keras P/S/noise window classifier (1,741,003 parameters) and its sliding-window picker; the official weights match Keras and SeisBench and reproduce the shipped Anza picks.
    * - Earthquake
      - `EQNet <https://github.com/AI4EPS/EQNet>`_
      - Baseline
-     - ``Implemented``
-     - :doc:`EQNet <modules/models_eqnet>`
-     - Model adapter is implemented behind the shared picking interface.
+     - ``Experimental``
+     - :doc:`EQNet (stand-in) <modules/models_eqnet>`
+     - Not faithful: the registered eqnet is a small transformer regressor, not the paper's multi-station ResNet with picking heads and shift-and-stack association. The official repository is under a non-commercial licence and lacks the shift-and-stack model, so EQNet must be rewritten from the paper (Zhu et al. 2022, doi:10.1029/2021JB023283).
    * - Earthquake
      - `SeisBench <https://github.com/seisbench/seisbench>`_
      - Benchmark / Data Ecosystem
      - ``Implemented``
      - None
-     - A synthetic-backed SeisBench-compatible waveform adapter is registered for smoke benchmarking.
+     - seisbench_waveforms reads SeisBench-format datasets (and STEAD's own files) with PyHazards' own reader, checked against SeisBench's writer and reader; SeisBench itself (GPL-3.0) is only a test oracle. Datasets are downloaded by the user.
    * - Earthquake
      - `pick-benchmark <https://github.com/seisbench/pick-benchmark>`_
      - Benchmark
-     - ``Implemented``
+     - ``Missing``
      - None
-     - A synthetic-backed pick-benchmark-compatible waveform adapter is registered for smoke benchmarking.
+     - Its SeisBench-format datasets can be read with seisbench_waveforms, but its three evaluation tasks (event detection AUC, phase identification MCC, onset regression on sampled windows) are not implemented; PyHazards scores pickers with the PhaseNet / EQTransformer pick metrics instead. The former synthetic pick_benchmark_waveforms adapter was removed.
    * - Earthquake
      - `pyCSEP <https://github.com/SCECCode/pycsep>`_
      - Benchmark / Reports
-     - ``Implemented``
+     - ``Missing``
      - None
-     - The forecasting smoke benchmark exports a pyCSEP-style JSON artifact.
+     - pyCSEP tests earthquake-rate forecasts (Savran et al. 2022, doi:10.1785/0220220033); PyHazards has no rate-forecasting task. The former 'pyCSEP-style' JSON export of the wavefield-forecasting benchmark was only a metrics dump and was removed.
    * - Earthquake
      - `AEFA <https://github.com/chenyk1990/aefa>`_
      - Dataset / Forecast Benchmark
-     - ``Implemented``
+     - ``Missing``
      - None
-     - A synthetic-backed AEFA-style forecasting dataset adapter is registered.
+     - AEFA is a weekly earthquake-occurrence forecasting dataset with electromagnetic / geoacoustic features (Chen et al. 2025, doi:10.1016/j.geoai.2025.100022; README states GPL-3.0). No loader exists; the former aefa_forecast adapter generated synthetic wavefields (now earthquake_forecast_synthetic) and was removed.
    * - Wildfire
      - `wildfire_forecasting <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_
      - Baseline
@@ -294,9 +294,13 @@ part of the current core method set.
      - :doc:`XGBoost <modules/models_xgboost>`
      - Implemented outside the current core method set and kept public as an additional model.
    * - Earthquake
-     - ``variant``
+     - ``experimental``
+     - :doc:`EQNet (stand-in) <modules/models_eqnet>`
+     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
+   * - Earthquake
+     - ``experimental``
      - :doc:`WaveCastNet <modules/models_wavecastnet>`
-     - Implemented outside the current core method set and kept public as an additional model.
+     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
    * - Flood
      - ``experimental``
      - :doc:`FloodCast <modules/models_floodcast>`

@@ -1,21 +1,26 @@
+# EQTransformer (paper model, randomly initialised) on synthetic 60-s windows, scored with the
+# EQTransformer protocol (Mousavi et al. 2020: TP if |dt| < 0.5 s) plus detection metrics.
 benchmark:
   name: earthquake
   hazard_task: earthquake.picking
   metrics:
+    - p_f1
+    - s_f1
     - p_pick_mae
     - s_pick_mae
-    - f1
+    - detection_f1
   eval_split: test
+  params:
+    protocol: eqtransformer
 dataset:
-  name: pick_benchmark_waveforms
+  name: earthquake_waveforms_synthetic
   params:
     micro: true
 model:
   name: eqtransformer
-  task: regression
+  task: picking
   params:
     in_channels: 3
-    hidden_dim: 48
 report:
   output_dir: reports/earthquake_eqtransformer
   formats:

@@ -6,9 +6,9 @@ Earthquake Benchmark
 Overview
 --------
 
-The earthquake benchmark family groups the picking and forecasting paths under one registered evaluator and benchmark runner entrypoint.
+``earthquake.picking`` takes three-component windows ``(n, 3, samples)`` and arrival targets ``(n, 2)`` (P, S samples; NaN = none). Each model's own pipeline turns waveforms into picks (``annotate`` = official normalisation + forward; ``extract_picks`` = official post-processing: PhaseNet peaks above 0.5, EQTransformer's detection-and-picking rule, GPD's sliding-window triggers). Picks are matched to the manual arrivals per phase: precision, recall and F1 within a tolerance window and residual mean, standard deviation and MAE in seconds, with ``protocol=phasenet`` (Zhu & Beroza 2019: TP if |dt| < 0.1 s, residual statistics over |dt| < 0.5 s) or ``protocol=eqtransformer`` (Mousavi et al. 2020: TP if |dt| < 0.5 s). Models with a detection output also get trace-level detection precision, recall and F1.
 
-Current public coverage is synthetic-backed but already exposes the same task and report shape used across the earthquake smoke configs.
+Real data comes from ``seisbench_waveforms`` (SeisBench-format datasets and STEAD's own files); the smoke configs run on ``earthquake_waveforms_synthetic``. ``earthquake.forecasting`` (MAE / MSE of future wavefield frames) is exercised by WaveCastNet on synthetic sequences only.
 
 At a Glance
 -----------
@@ -44,7 +44,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         :bdg-info:`Synthetic-backed`
+         :bdg-success:`Real-backed`
 
       .. container:: catalog-stat-note
 
@@ -72,7 +72,7 @@ Benchmark Mapping
 Mapped benchmark ecosystems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:doc:`AEFA </benchmarks/aefa>`, :doc:`pick-benchmark </benchmarks/pick_benchmark>`, :doc:`pyCSEP </benchmarks/pycsep>`, :doc:`SeisBench </benchmarks/seisbench>`.
+:doc:`pick-benchmark </benchmarks/pick_benchmark>`, :doc:`SeisBench </benchmarks/seisbench>`.
 
 .. dropdown:: Supported Tasks
    :class-container: catalog-dropdown
@@ -83,11 +83,21 @@ Mapped benchmark ecosystems
 .. dropdown:: Key Metrics
    :class-container: catalog-dropdown
 
+   - ``p_precision``
+   - ``p_recall``
+   - ``p_f1``
+   - ``p_residual_mean``
+   - ``p_residual_std``
    - ``p_pick_mae``
+   - ``s_precision``
+   - ``s_recall``
+   - ``s_f1``
+   - ``s_residual_mean``
+   - ``s_residual_std``
    - ``s_pick_mae``
-   - ``precision``
-   - ``recall``
-   - ``f1``
+   - ``detection_precision``
+   - ``detection_recall``
+   - ``detection_f1``
    - ``mae``
    - ``mse``
 
@@ -103,9 +113,11 @@ Mapped benchmark ecosystems
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`PhaseNet </modules/models_phasenet>`, :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`, :doc:`EQNet </modules/models_eqnet>`, :doc:`WaveCastNet </modules/models_wavecastnet>`.
+   :doc:`PhaseNet </modules/models_phasenet>`, :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`, :doc:`EQNet (stand-in) </modules/models_eqnet>`, :doc:`WaveCastNet </modules/models_wavecastnet>`.
 
 .. dropdown:: Notes
    :class-container: catalog-dropdown
 
-   - Forecasting runs export a pyCSEP-style report artifact through the shared earthquake benchmark.
+   - Before this release the picking evaluator reported one hit rate (both regressed picks within 8 samples) as precision, recall and F1 alike; those numbers are not comparable with the new ones.
+   - EQTransformer's MAPE is not computed: the paper does not define its denominator.
+   - Smoke configs use randomly initialised models on synthetic data; pass ``pretrained`` in the model params and a real dataset for meaningful numbers.

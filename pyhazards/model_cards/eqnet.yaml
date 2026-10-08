@@ -1,21 +1,28 @@
 model_name: eqnet
-display_name: EQNet
+display_name: EQNet (stand-in)
 hazard: Earthquake
+catalog_status: experimental
 source_file: pyhazards/models/eqnet.py
 builder_name: eqnet_builder
 summary: >
-  A transformer-style earthquake phase-picking baseline for modern sequence
-  modeling comparisons.
+  Experimental stand-in under the EQNet name: a small transformer-encoder regressor of one P and one S
+  arrival sample per trace. It is not the EQNet of Zhu et al. (2022).
 description:
   - >
-    ``eqnet`` extends the PyHazards earthquake benchmark stack with a
-    lightweight attention-based picking model.
+    The paper's EQNet is a multi-station network for joint phase picking, association and event
+    detection: a 1-D ResNet-18 feature extractor per station, P and S picking heads that output
+    activation sequences, and a shift-and-stack module that moves the station features by predicted
+    travel times over a grid of candidate hypocentres before an event detector. It takes gathers of
+    stations with their coordinates.
   - >
-    The implementation keeps the shared waveform input and two-pick output
-    contract so it can be evaluated alongside ``phasenet`` and ``eqtransformer``.
+    ``eqnet`` here is unrelated to that design: a Conv1d projection, a two-layer
+    ``nn.TransformerEncoder`` (48 dimensions, 4 heads), mean pooling and an MLP returning
+    ``(batch, 2)`` regressed arrival samples for a single trace (41,138 parameters). It is kept only so
+    that existing code keeps working until EQNet is rewritten from the paper; the
+    ``earthquake.picking`` benchmark scores its two outputs as one P and one S pick per trace.
 paper:
-  title: An End-To-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning
-  url: https://www.osti.gov/biblio/1978539
+  title: "An End-to-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning"
+  url: https://doi.org/10.1029/2021JB023283
   repo_url: https://github.com/AI4EPS/EQNet
 tasks:
   - regression
@@ -24,10 +31,13 @@ example: |
   from pyhazards.models import build_model
 
   model = build_model(name="eqnet", task="regression", in_channels=3)
-  picks = model(torch.randn(4, 3, 256))
+  picks = model(torch.randn(4, 3, 512))  # (4, 2) regressed P and S arrival samples
   print(picks.shape)
 notes:
-  - "Outputs are P- and S-arrival sample indices."
+  - "Not faithful: none of EQNet's ResNet backbone, picking heads, shift-and-stack association or multi-station input is implemented (audit of 2026-10-07)."
+  - "Zhu, Tai, Mousavi, Bailis & Beroza, J. Geophys. Res. Solid Earth 127(3), e2021JB023283 (2022), arXiv:2109.09911."
+  - "The AI4EPS/EQNet repository (now a toolbox of PhaseNet+ / PhaseNet-DAS models) is under an academic / non-commercial licence and does not contain the paper's shift-and-stack model, so EQNet has to be rewritten from the paper; the repository may serve only as a test oracle."
+  - "Self-attention over every sample makes long windows expensive; the smoke config uses 512-sample synthetic windows."
 smoke_test:
   task: regression
   build_kwargs:

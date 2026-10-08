@@ -29,7 +29,7 @@ Flood
 Earthquake
 ~~~~~~~~~~
 
-:doc:`AEFA Forecast </datasets/aefa_forecast>`, :doc:`pick-benchmark </datasets/pick_benchmark_waveforms>`, :doc:`SeisBench </datasets/seisbench_waveforms>`.
+:doc:`SeisBench-format Waveforms </datasets/seisbench_waveforms>`, :doc:`Synthetic Phase-Picking Waveforms </datasets/earthquake_waveforms_synthetic>`, :doc:`Synthetic Wavefield Sequences </datasets/earthquake_forecast_synthetic>`.
 
 Tropical Cyclone
 ~~~~~~~~~~~~~~~~
@@ -58,7 +58,7 @@ Load a Registered Dataset
 
     print(available_datasets())
     data = load_dataset(
-        "seisbench_waveforms",
+        "earthquake_waveforms_synthetic",
         micro=True,
     ).load()
     print(sorted(data.splits.keys()))

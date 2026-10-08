@@ -1,0 +1,52 @@
+slug: earthquake_waveforms_synthetic
+display_name: Synthetic Phase-Picking Waveforms
+hazard_family: Earthquake
+source_role: Synthetic Smoke Data
+summary: Synthetic three-component windows with P and S wavelets for picking smoke runs. Not real data.
+provider: Generated locally by PyHazards (pyhazards/datasets/earthquake/synthetic.py)
+geometry: Three-component waveform windows
+spatial_resolution: Not applicable (synthetic)
+temporal_resolution: 100 Hz by default
+update_cadence: Generated on load from a fixed seed
+period_of_record: Not applicable (synthetic)
+coverage: Not applicable (synthetic)
+formats: PyTorch tensors via the dataset registry
+overview:
+  - >
+    This dataset is synthetic. Each event window is Gaussian background noise plus two damped
+    sinusoids that start at the P arrival (about 8 Hz, strongest on Z) and at the S arrival (about
+    4 Hz, strongest on N and E); about a quarter of the windows are noise only. It exists to exercise
+    the picking models and the ``earthquake.picking`` benchmark in CI; numbers obtained on it say
+    nothing about real seismic data.
+data_characteristics:
+  - "Inputs ``(n, 3, length)`` in Z, N, E order, 100 Hz, ``length`` 6000 by default (60 s, EQTransformer's window)."
+  - "Targets ``(n, 2)``: P and S arrival samples, NaN for noise windows."
+  - "Deterministic: the same ``seed`` and sizes give the same data; ``micro=True`` makes 24 windows."
+typical_use_cases:
+  - Smoke tests of PhaseNet, EQTransformer, GPD and the picking evaluator.
+access_links:
+  - label: Generator source
+    url: https://github.com/LabRAI/PyHazards/blob/main/pyhazards/datasets/earthquake/synthetic.py
+inspection: null
+registry:
+  name: earthquake_waveforms_synthetic
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset("earthquake_waveforms_synthetic", micro=True).load()
+    test = data.get_split("test")
+    print(test.inputs.shape, test.targets.shape)  # (4, 3, 6000), (4, 2)
+references:
+  - citation: "PyHazards synthetic phase-picking generator (no external source)."
+    url: https://github.com/LabRAI/PyHazards/blob/main/pyhazards/datasets/earthquake/synthetic.py
+pyhazards_usage:
+  - Used by the earthquake picking smoke configs; use ``seisbench_waveforms`` for real data.
+related_models:
+  - phasenet
+  - eqtransformer
+  - gpd
+  - eqnet
+related_benchmarks:
+  - earthquake_benchmark
+notes:
+  - "Renamed from ``earthquake_waveforms``; it also replaces the synthetic data that used to be served as ``seisbench_waveforms`` and ``pick_benchmark_waveforms``."
