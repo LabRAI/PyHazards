@@ -43,8 +43,8 @@ Hazard Summary
      - 2
      - 0
    * - Flood
-     - 3
-     - 2
+     - 4
+     - 1
      - 0
      - 3
    * - Hurricane / Tropical Cyclone
@@ -174,19 +174,19 @@ Method and Resource Matrix
      - Baseline
      - ``Experimental``
      - :doc:`FloodCast <modules/models_floodcast>`
-     - The model under this name is a small CNN, not FloodCast; the official flood-model code was never released, so a port must be written from the paper.
+     - The model under this name is a small CNN, not FloodCast (Xu et al. 2024, doi:10.1016/j.watres.2024.122162). The flood model (sequence-to-sequence GeoPINS, a physics-informed space-time Fourier operator) was never released, and the paper does not report its channel widths, so it cannot be rebuilt faithfully; the repository has no licence.
    * - Flood
      - `FloodCastBench <https://github.com/HydroPML/FloodCastBench>`_
      - Benchmark
      - ``Missing``
      - None
-     - No reader. The former ``floodcastbench_inundation`` adapter generated random numbers and was removed.
+     - No reader for the 21.6 GB release (Zenodo 10.5281/zenodo.14017092); the former ``floodcastbench_inundation`` adapter generated random numbers and was removed. Its FNO / FNO+ baselines (4 layers, 12 modes, width 20) are not provided: only the data-generation code was released (no licence), so there is no model code to check a port against. The ``flood.inundation`` metrics (RMSE, NSE, Pearson r, CSI) cover its scores.
    * - Flood
      - `UrbanFloodCast <https://github.com/HydroPML/UrbanFloodCast>`_
      - Baseline
-     - ``Experimental``
+     - ``Implemented``
      - :doc:`UrbanFloodCast <modules/models_urbanfloodcast>`
-     - The model under this name is a four-layer CNN, not the published deep neural operator (official code has no licence).
+     - The deep neural operator (DNO-3, 4,470,437 parameters, 24 steps at once) written from the paper with U-NO (BSD-2) and FNO (MIT) blocks, since the official code has no licence; parameters, seeded initialisation, outputs, the one-shot input pipeline and the evaluation metrics match the official code. The Berlin GeoTIFFs (Zenodo 10.5281/zenodo.15700880) have no reader yet (urbanfloodcast_synthetic in their layout).
    * - Flood
      - `HydroBench <https://github.com/EMscience/HydroBench>`_
      - Benchmark / Diagnostics
@@ -304,14 +304,6 @@ part of the current core method set.
    * - Flood
      - ``experimental``
      - :doc:`FloodCast <modules/models_floodcast>`
-     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
-   * - Flood
-     - ``experimental``
-     - :doc:`HydroGraphNet <modules/models_hydrographnet>`
-     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
-   * - Flood
-     - ``experimental``
-     - :doc:`UrbanFloodCast <modules/models_urbanfloodcast>`
      - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
    * - Tropical Cyclone
      - ``experimental``

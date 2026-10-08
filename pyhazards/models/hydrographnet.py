@@ -1,379 +1,615 @@
+"""HydroGraphNet (Taghizadeh et al., Computer-Aided Civil and Infrastructure Engineering 2025).
+
+HydroGraphNet is the MeshGraphKAN model of NVIDIA PhysicsNeMo: a MeshGraphNet encoder-processor-decoder
+whose node encoder is a Fourier Kolmogorov-Arnold network, trained on a water-volume continuity loss
+and rolled out autoregressively over an unstructured flood mesh.
+
+Ported from NVIDIA PhysicsNeMo @ eb7a329c246a48b6fb5acd569eaabeac53f915f7
+(https://github.com/NVIDIA/physicsnemo, Apache-2.0, Copyright (c) 2023 - 2026 NVIDIA CORPORATION &
+AFFILIATES): ``physicsnemo/models/meshgraphnet/{meshgraphkan,meshgraphnet}.py``,
+``physicsnemo/nn/module/kan_layers.py``, ``physicsnemo/nn/module/gnn_layers/{mesh_graph_mlp,
+mesh_edge_block,mesh_node_block,utils}.py`` and the HydroGraphNet example
+``examples/weather/flood_modeling/hydrographnet/{utils.py (compute_physics_loss), inference.py
+(rollout)}``. The port is plain PyTorch: PhysicsNeMo's PyTorch Geometric graph and ``torch_scatter``
+aggregation are replaced by an ``edge_index`` tensor and ``index_add_``.
+
+Parameter names, initialisation order and outputs equal PhysicsNeMo's, so PhysicsNeMo state dicts load
+with ``strict=True`` (``tests/oracle/test_hydrographnet_oracle.py``).
+"""
+
 from __future__ import annotations
 
-from typing import Dict, Optional, Tuple
+from typing import Any, Dict, List, Mapping, Optional, Tuple, Union
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+# PhysicsNeMo's ``ACT2FN`` entries without parameters (one module instance is shared by every MLP).
+_ACTIVATIONS = {
+    "relu": lambda: nn.ReLU(),
+    "leaky_relu": lambda: nn.LeakyReLU(negative_slope=0.1),
+    "relu6": lambda: nn.ReLU6(),
+    "elu": lambda: nn.ELU(),
+    "celu": lambda: nn.CELU(alpha=1.0),
+    "selu": lambda: nn.SELU(),
+    "silu": lambda: nn.SiLU(),
+    "gelu": lambda: nn.GELU(),
+    "sigmoid": lambda: nn.Sigmoid(),
+    "logsigmoid": lambda: nn.LogSigmoid(),
+    "softplus": lambda: nn.Softplus(),
+    "softsign": lambda: nn.Softsign(),
+    "tanh": lambda: nn.Tanh(),
+    "tanhshrink": lambda: nn.Tanhshrink(),
+    "hardtanh": lambda: nn.Hardtanh(),
+    "identity": lambda: nn.Identity(),
+}
 
-class MLP(nn.Module):
-    def __init__(self, in_dim: int, out_dim: int, hidden_dim: int = 64, dropout: float = 0.0):
-        super().__init__()
-        self.layers = nn.Sequential(
-            nn.Linear(in_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Dropout(dropout) if dropout > 0 else nn.Identity(),
-            nn.Linear(hidden_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Dropout(dropout) if dropout > 0 else nn.Identity(),
-            nn.Linear(hidden_dim, out_dim),
-        )
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.layers(x)
-
-
-class KAN(nn.Module):
-    """
-    Lightweight KAN-style harmonic basis encoder for node features.
-    """
-
-    def __init__(self, in_dim: int, harmonics: int = 5, hidden_dim: int = 64):
-        super().__init__()
-        self.in_dim = in_dim
-        self.harmonics = harmonics
-        self.feature_proj = nn.ModuleList(
-            [nn.Linear(2 * harmonics + 1, hidden_dim) for _ in range(in_dim)]
-        )
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        # x: (B, N, F)
-        outputs = []
-        for i in range(self.in_dim):
-            xi = x[:, :, i].unsqueeze(-1)
-            basis = [torch.ones_like(xi)]
-            for k in range(1, self.harmonics + 1):
-                basis.append(torch.sin(k * xi))
-                basis.append(torch.cos(k * xi))
-            basis = torch.cat(basis, dim=-1)
-            outputs.append(self.feature_proj[i](basis))
-        return torch.stack(outputs, dim=0).sum(dim=0)
+# HydroGraphNet node features (HydroGraphDataset.create_node_features): 12 static / forcing columns
+# followed by the water-depth and volume windows.
+HYDROGRAPHNET_STATIC_FEATURES = (
+    "x",
+    "y",
+    "area",
+    "elevation",
+    "slope",
+    "aspect",
+    "curvature",
+    "manning",
+    "flow_accumulation",
+    "infiltration",
+    "inflow",
+    "precipitation",
+)
 
 
-class GNBlock(nn.Module):
-    """
-    Message-passing block with residual edge and node updates.
-    """
-
-    def __init__(self, hidden_dim: int, dropout: float = 0.0):
-        super().__init__()
-        self.edge_mlp = MLP(3 * hidden_dim, hidden_dim, hidden_dim, dropout=dropout)
-        self.node_mlp = MLP(2 * hidden_dim, hidden_dim, hidden_dim, dropout=dropout)
-
-    def forward(
-        self,
-        node: torch.Tensor,
-        edge: torch.Tensor,
-        senders: torch.Tensor,
-        receivers: torch.Tensor,
-    ) -> Tuple[torch.Tensor, torch.Tensor]:
-        sender_feat = node[:, senders, :]
-        receiver_feat = node[:, receivers, :]
-
-        edge_input = torch.cat([edge, sender_feat, receiver_feat], dim=-1)
-        edge = edge + self.edge_mlp(edge_input)
-
-        agg = torch.zeros_like(node)
-        agg.index_add_(1, receivers, edge)
-
-        # Degree-normalized aggregation improves stability when graph density changes.
-        deg = torch.zeros(node.size(1), device=node.device, dtype=node.dtype)
-        deg.index_add_(0, receivers, torch.ones_like(receivers, dtype=node.dtype))
-        agg = agg / deg.clamp(min=1.0).view(1, -1, 1)
-
-        node_input = torch.cat([node, agg], dim=-1)
-        node = node + self.node_mlp(node_input)
-        return node, edge
+def _activation(name: str) -> nn.Module:
+    key = str(name).lower()
+    if key not in _ACTIVATIONS:
+        raise ValueError(f"Unknown mlp_activation_fn {name!r}; choose one of {sorted(_ACTIVATIONS)}.")
+    return _ACTIVATIONS[key]()
 
 
-class HydroGraphNet(nn.Module):
-    """
-    PhysicsNeMo-inspired HydroGraphNet:
-    encoder -> message-passing processor -> residual delta-state decoder.
+def _edge_index(graph: Any) -> torch.Tensor:
+    """``(2, num_edges)`` source / destination indices from a tensor or a graph object with ``edge_index``."""
+    edge_index = getattr(graph, "edge_index", graph)
+    if not isinstance(edge_index, torch.Tensor) or edge_index.ndim != 2 or edge_index.shape[0] != 2:
+        shape = tuple(edge_index.shape) if isinstance(edge_index, torch.Tensor) else type(edge_index).__name__
+        raise ValueError(f"edge_index must be a (2, num_edges) tensor of source / destination nodes, got {shape}.")
+    return edge_index.long()
 
-    Supports one-step forward prediction and autoregressive rollout.
+
+class MeshGraphMLP(nn.Module):
+    """Linear layers with a shared activation and an optional LayerNorm after the last layer.
+
+    ``hidden_layers=2``: Linear(in, hidden), act, Linear(hidden, hidden), act, Linear(hidden, out), LayerNorm.
     """
 
     def __init__(
         self,
-        node_in_dim: int,
-        edge_in_dim: int,
-        out_dim: int,
-        hidden_dim: int = 64,
-        harmonics: int = 5,
-        num_gn_blocks: int = 5,
-        state_dim: Optional[int] = None,
-        rollout_steps: int = 1,
-        enforce_nonnegative: bool = False,
-        dropout: float = 0.0,
+        input_dim: int,
+        output_dim: int = 512,
+        hidden_dim: int = 512,
+        hidden_layers: Optional[int] = 1,
+        activation_fn: Optional[nn.Module] = None,
+        norm_type: Optional[str] = "LayerNorm",
     ):
         super().__init__()
-        self.node_in_dim = int(node_in_dim)
-        self.edge_in_dim = int(edge_in_dim)
-        self.out_dim = int(out_dim)
-        self.state_dim = int(state_dim) if state_dim is not None else min(2, self.node_in_dim)
-        self.state_dim = max(1, min(self.state_dim, self.node_in_dim))
-        if self.out_dim > self.state_dim:
-            raise ValueError(
-                f"out_dim={self.out_dim} cannot exceed residual state_dim={self.state_dim}."
-            )
-        self.rollout_steps = max(1, int(rollout_steps))
-        self.enforce_nonnegative = bool(enforce_nonnegative)
-
-        # Encoder
-        self.node_encoder = KAN(
-            in_dim=self.node_in_dim,
-            hidden_dim=hidden_dim,
-            harmonics=harmonics,
-        )
-        self.edge_encoder = MLP(
-            in_dim=self.edge_in_dim,
-            out_dim=hidden_dim,
-            hidden_dim=hidden_dim,
-            dropout=dropout,
-        )
-
-        # Processor
-        self.processor = nn.ModuleList(
-            [GNBlock(hidden_dim=hidden_dim, dropout=dropout) for _ in range(num_gn_blocks)]
-        )
-
-        # Decoder predicts delta of physically meaningful states.
-        self.decoder = MLP(
-            in_dim=hidden_dim,
-            out_dim=self.state_dim,
-            hidden_dim=hidden_dim,
-            dropout=dropout,
-        )
-
-    def _edge_index(self, adj: torch.Tensor, batch_size: int) -> Tuple[torch.Tensor, torch.Tensor]:
-        if adj.dim() == 2:
-            a = adj
-        elif adj.dim() == 3:
-            if adj.size(0) != batch_size:
-                raise ValueError(f"adj batch size mismatch: got {adj.size(0)}, expected {batch_size}")
-            a = adj[0]
-            for i in range(1, batch_size):
-                if not torch.allclose(adj[i], a):
-                    raise ValueError(
-                        "Per-sample varying adjacency is not supported yet. "
-                        "Provide a shared (N, N) adjacency or identical (B, N, N) adjacency."
-                    )
+        activation_fn = nn.SiLU() if activation_fn is None else activation_fn
+        if hidden_layers is not None:
+            layers: List[nn.Module] = [nn.Linear(input_dim, hidden_dim), activation_fn]
+            self.hidden_layers = hidden_layers
+            for _ in range(hidden_layers - 1):
+                layers += [nn.Linear(hidden_dim, hidden_dim), activation_fn]
+            layers.append(nn.Linear(hidden_dim, output_dim))
+            self.norm_type = norm_type
+            if norm_type is not None:
+                if norm_type != "LayerNorm":
+                    raise ValueError(f"norm_type must be 'LayerNorm' or None, got {norm_type!r}.")
+                layers.append(nn.LayerNorm(output_dim))
+            self.model = nn.Sequential(*layers)
         else:
-            raise ValueError("adj must be shaped (N, N) or (B, N, N).")
+            self.model = nn.Identity()
 
-        a = (a > 0).to(dtype=torch.bool)
-        a.fill_diagonal_(True)
-        return a.nonzero(as_tuple=True)
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return self.model(x)
 
-    def _match_edge_dim(self, edge_feat: torch.Tensor) -> torch.Tensor:
-        # edge_feat: (B, E, F_edge_raw)
-        f_raw = edge_feat.size(-1)
-        if f_raw == self.edge_in_dim:
-            return edge_feat
-        if f_raw > self.edge_in_dim:
-            return edge_feat[..., : self.edge_in_dim]
-        pad = torch.zeros(
-            edge_feat.size(0),
-            edge_feat.size(1),
-            self.edge_in_dim - f_raw,
-            device=edge_feat.device,
-            dtype=edge_feat.dtype,
-        )
-        return torch.cat([edge_feat, pad], dim=-1)
 
-    def _prepare_edge_inputs(
+class MeshGraphEdgeMLPConcat(MeshGraphMLP):
+    """Edge MLP on ``cat(edge, source node, destination node)``."""
+
+    def __init__(
         self,
-        batch: Dict[str, torch.Tensor],
-        senders: torch.Tensor,
-        receivers: torch.Tensor,
-        batch_size: int,
-        device: torch.device,
-        dtype: torch.dtype,
-    ) -> torch.Tensor:
-        edge_attr = batch.get("edge_attr")
-        if edge_attr is not None:
-            edge_attr = edge_attr.to(device=device, dtype=dtype)
-            if edge_attr.dim() == 2:
-                edge_attr = edge_attr.unsqueeze(0).expand(batch_size, -1, -1)
-            elif edge_attr.dim() == 3 and edge_attr.size(0) == 1 and batch_size > 1:
-                edge_attr = edge_attr.expand(batch_size, -1, -1)
-            if edge_attr.dim() != 3:
-                raise ValueError("edge_attr must be shaped (E, F_edge) or (B, E, F_edge).")
-            if edge_attr.size(1) != senders.numel():
-                raise ValueError(
-                    f"edge_attr edge count mismatch: got {edge_attr.size(1)}, expected {senders.numel()}."
-                )
-            return self._match_edge_dim(edge_attr)
+        efeat_dim: int = 512,
+        src_dim: int = 512,
+        dst_dim: int = 512,
+        output_dim: int = 512,
+        hidden_dim: int = 512,
+        hidden_layers: int = 2,
+        activation_fn: Optional[nn.Module] = None,
+        norm_type: Optional[str] = "LayerNorm",
+    ):
+        super().__init__(efeat_dim + src_dim + dst_dim, output_dim, hidden_dim, hidden_layers, activation_fn, norm_type)
 
-        # Derive geometric edge features from coords: [dx, dy, distance]
-        coords = batch.get("coords")
-        if coords is None:
-            edge_feat = torch.zeros(batch_size, senders.numel(), 3, device=device, dtype=dtype)
-            return self._match_edge_dim(edge_feat)
+    def forward(self, efeat: torch.Tensor, nfeat: torch.Tensor, edge_index: torch.Tensor) -> torch.Tensor:
+        src, dst = edge_index
+        return self.model(torch.cat((efeat, nfeat[src], nfeat[dst]), dim=1))
 
-        coords = coords.to(device=device, dtype=dtype)
-        if coords.dim() == 2:
-            coords = coords.unsqueeze(0).expand(batch_size, -1, -1)
-        elif coords.dim() == 3 and coords.size(0) == 1 and batch_size > 1:
-            coords = coords.expand(batch_size, -1, -1)
-        if coords.dim() != 3:
-            raise ValueError("coords must be shaped (N, 2) or (B, N, 2).")
 
-        src = coords[:, senders, :]
-        dst = coords[:, receivers, :]
-        delta = src - dst
-        dist = torch.norm(delta, dim=-1, keepdim=True)
-        edge_feat = torch.cat([delta, dist], dim=-1)
-        return self._match_edge_dim(edge_feat)
+class MeshEdgeBlock(nn.Module):
+    """Residual edge update: ``e + MLP(cat(e, n_src, n_dst))``."""
 
-    def _one_step(
+    def __init__(
         self,
-        node_x: torch.Tensor,
-        batch: Dict[str, torch.Tensor],
-    ) -> torch.Tensor:
-        # node_x: (B, N, F)
-        if node_x.ndim != 3:
-            raise ValueError(f"Expected node_x with shape (B,N,F), got {tuple(node_x.shape)}")
-        if node_x.size(-1) < self.state_dim:
-            raise ValueError(
-                f"Input feature dim {node_x.size(-1)} is smaller than state_dim {self.state_dim}."
-            )
-
-        adj = batch.get("adj")
-        if adj is None:
-            raise ValueError("HydroGraphNet requires `adj` in the batch.")
-        adj = adj.to(device=node_x.device)
-
-        senders, receivers = self._edge_index(adj, batch_size=node_x.size(0))
-
-        # ---- encoder ----
-        node = self.node_encoder(node_x)
-        edge_in = self._prepare_edge_inputs(
-            batch=batch,
-            senders=senders,
-            receivers=receivers,
-            batch_size=node.size(0),
-            device=node.device,
-            dtype=node.dtype,
-        )
-        edge = self.edge_encoder(edge_in)
-
-        # ---- processor ----
-        for gn in self.processor:
-            node, edge = gn(node, edge, senders, receivers)
-
-        # ---- decoder: residual state update ----
-        delta_state = self.decoder(node)  # (B, N, state_dim)
-        prev_state = node_x[..., : self.state_dim]
-        next_state = prev_state + delta_state
-        if self.enforce_nonnegative:
-            next_state = next_state.clamp_min(0.0)
-
-        # Return requested targets from the evolved state.
-        return next_state[..., : self.out_dim]
-
-    def rollout(self, batch: Dict[str, torch.Tensor], predict_steps: int) -> torch.Tensor:
-        batch_roll = dict(batch)
-        batch_roll["predict_steps"] = int(predict_steps)
-        out = self.forward(batch_roll)
-        if out.ndim != 4:
-            raise RuntimeError("rollout expected stacked output with shape (B, S, N, out_dim).")
-        return out
-
-    def forward(self, batch: Dict[str, torch.Tensor]) -> torch.Tensor:
-        # batch["x"]: (B, T, N, F)
-        x = batch["x"]
-        if x.ndim != 4:
-            raise ValueError(
-                f"HydroGraphNet expects x shaped (B, T, N, F), got {tuple(x.shape)}"
-            )
-
-        predict_steps = int(batch.get("predict_steps", self.rollout_steps))
-        predict_steps = max(1, predict_steps)
-
-        history = x
-        preds = []
-        for _ in range(predict_steps):
-            node_x = history[:, -1]
-            y_next = self._one_step(node_x=node_x, batch=batch)  # (B, N, out_dim)
-            preds.append(y_next)
-
-            if predict_steps > 1:
-                next_frame = history[:, -1].clone()
-                next_frame[..., : self.out_dim] = y_next
-                history = torch.cat([history[:, 1:], next_frame.unsqueeze(1)], dim=1)
-
-        if predict_steps == 1:
-            return preds[0]
-        return torch.stack(preds, dim=1)
-
-
-class HydroGraphNetLoss(nn.Module):
-    """
-    Supervised regression loss with optional continuity regularization.
-    """
-
-    def __init__(self, supervised_weight: float = 1.0, continuity_weight: float = 0.0):
+        input_dim_nodes: int = 512,
+        input_dim_edges: int = 512,
+        output_dim: int = 512,
+        hidden_dim: int = 512,
+        hidden_layers: int = 1,
+        activation_fn: Optional[nn.Module] = None,
+        norm_type: Optional[str] = "LayerNorm",
+    ):
         super().__init__()
-        self.supervised_weight = float(supervised_weight)
-        self.continuity_weight = float(continuity_weight)
+        self.edge_mlp = MeshGraphEdgeMLPConcat(
+            efeat_dim=input_dim_edges,
+            src_dim=input_dim_nodes,
+            dst_dim=input_dim_nodes,
+            output_dim=output_dim,
+            hidden_dim=hidden_dim,
+            hidden_layers=hidden_layers,
+            activation_fn=activation_fn,
+            norm_type=norm_type,
+        )
+
+    def forward(
+        self, efeat: torch.Tensor, nfeat: torch.Tensor, edge_index: torch.Tensor
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
+        return self.edge_mlp(efeat, nfeat, edge_index) + efeat, nfeat
+
+
+class MeshNodeBlock(nn.Module):
+    """Residual node update: ``n + MLP(cat(aggregate(incoming edges), n))``, summing (or averaging) at the destination."""
+
+    def __init__(
+        self,
+        aggregation: str = "sum",
+        input_dim_nodes: int = 512,
+        input_dim_edges: int = 512,
+        output_dim: int = 512,
+        hidden_dim: int = 512,
+        hidden_layers: int = 1,
+        activation_fn: Optional[nn.Module] = None,
+        norm_type: Optional[str] = "LayerNorm",
+    ):
+        super().__init__()
+        if aggregation not in {"sum", "mean"}:
+            raise ValueError(f"aggregation must be 'sum' or 'mean', got {aggregation!r}.")
+        self.aggregation = aggregation
+        self.node_mlp = MeshGraphMLP(
+            input_dim=input_dim_nodes + input_dim_edges,
+            output_dim=output_dim,
+            hidden_dim=hidden_dim,
+            hidden_layers=hidden_layers,
+            activation_fn=activation_fn,
+            norm_type=norm_type,
+        )
+
+    def forward(
+        self, efeat: torch.Tensor, nfeat: torch.Tensor, edge_index: torch.Tensor
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
+        dst = edge_index[1]
+        # torch_scatter.scatter(efeat, dst, dim=0, dim_size=num_nodes, reduce=aggregation).
+        aggregated = efeat.new_zeros(nfeat.shape[0], efeat.shape[1]).index_add_(0, dst, efeat)
+        if self.aggregation == "mean":
+            count = efeat.new_zeros(nfeat.shape[0]).index_add_(0, dst, efeat.new_ones(dst.shape[0]))
+            aggregated = aggregated / count.clamp(min=1).unsqueeze(-1)
+        return efeat, self.node_mlp(torch.cat((aggregated, nfeat), dim=-1)) + nfeat
+
+
+class MeshGraphNetProcessor(nn.Module):
+    """``processor_size`` alternating edge and node blocks (``processor_layers`` = [edge, node, edge, node, ...])."""
+
+    def __init__(
+        self,
+        processor_size: int = 15,
+        input_dim_node: int = 128,
+        input_dim_edge: int = 128,
+        num_layers_node: int = 2,
+        num_layers_edge: int = 2,
+        aggregation: str = "sum",
+        norm_type: Optional[str] = "LayerNorm",
+        activation_fn: Optional[nn.Module] = None,
+    ):
+        super().__init__()
+        self.processor_size = processor_size
+        self.input_dim_node = input_dim_node
+        self.input_dim_edge = input_dim_edge
+        activation_fn = nn.ReLU() if activation_fn is None else activation_fn
+        # As in PhysicsNeMo, every edge block is created before the node blocks (initialisation order).
+        edge_blocks = [
+            MeshEdgeBlock(input_dim_node, input_dim_edge, input_dim_edge, input_dim_edge, num_layers_edge, activation_fn, norm_type)
+            for _ in range(processor_size)
+        ]
+        node_blocks = [
+            MeshNodeBlock(aggregation, input_dim_node, input_dim_edge, input_dim_edge, input_dim_edge, num_layers_node, activation_fn, norm_type)
+            for _ in range(processor_size)
+        ]
+        self.processor_layers = nn.ModuleList([block for pair in zip(edge_blocks, node_blocks) for block in pair])
+        self.num_processor_layers = len(self.processor_layers)
+
+    def forward(self, node_features: torch.Tensor, edge_features: torch.Tensor, edge_index: torch.Tensor) -> torch.Tensor:
+        if node_features.ndim != 2 or node_features.shape[1] != self.input_dim_node:
+            raise ValueError(
+                f"Expected tensor of shape (N_nodes, {self.input_dim_node}) but got tensor of shape {tuple(node_features.shape)}"
+            )
+        if edge_features.ndim != 2 or edge_features.shape[1] != self.input_dim_edge:
+            raise ValueError(
+                f"Expected tensor of shape (N_edges, {self.input_dim_edge}) but got tensor of shape {tuple(edge_features.shape)}"
+            )
+        for layer in self.processor_layers:
+            edge_features, node_features = layer(edge_features, node_features, edge_index)
+        return node_features
+
+
+class KolmogorovArnoldNetwork(nn.Module):
+    """Fourier KAN layer: ``y_o = sum_i sum_k a_oik cos(k x_i) + b_oik sin(k x_i) + bias_o``, k = 1..num_harmonics."""
+
+    def __init__(self, input_dim: int, output_dim: int, num_harmonics: int = 5, add_bias: bool = True):
+        super().__init__()
+        self.input_dim = input_dim
+        self.output_dim = output_dim
+        self.num_harmonics = num_harmonics
+        self.add_bias = add_bias
+        # [2, output_dim, input_dim, num_harmonics]: cosine and sine coefficients.
+        self.fourier_coeffs = nn.Parameter(
+            torch.randn(2, output_dim, input_dim, num_harmonics) / (np.sqrt(input_dim) * np.sqrt(num_harmonics))
+        )
+        if self.add_bias:
+            self.bias = nn.Parameter(torch.zeros(1, output_dim))
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        batch_size = x.size(0)
+        x = x.view(batch_size, self.input_dim, 1)
+        k = torch.arange(1, self.num_harmonics + 1, device=x.device).view(1, 1, self.num_harmonics)
+        y_cos = torch.einsum("bij,oij->bo", torch.cos(k * x), self.fourier_coeffs[0])
+        y_sin = torch.einsum("bij,oij->bo", torch.sin(k * x), self.fourier_coeffs[1])
+        y = y_cos + y_sin
+        if self.add_bias:
+            y = y + self.bias
+        return y
+
+
+class HydroGraphNet(nn.Module):
+    """HydroGraphNet: PhysicsNeMo's MeshGraphKAN.
+
+    ``forward(node_features (N, input_dim_nodes), edge_features (E, input_dim_edges), edge_index (2, E))``
+    returns ``(N, output_dim)``; for HydroGraphNet the outputs are the normalised changes of water depth
+    and volume over one 20-minute step. ``edge_index`` holds source (row 0) and destination (row 1) node
+    indices; messages are summed at the destination. A PyTorch Geometric ``Data`` (anything with an
+    ``edge_index`` attribute) is accepted in its place, and a single mapping with the keys
+    ``node_features``, ``edge_features`` and ``edge_index`` (the PyHazards mesh batches) as the only
+    argument.
+
+    Defaults are the HydroGraphNet configuration (``conf/config.yaml``): 16 node features, 3 edge
+    features, 2 outputs, hidden width 128, 15 message-passing blocks, 2 hidden layers per MLP, ReLU,
+    LayerNorm, sum aggregation and 5 harmonics (2,318,722 parameters).
+    """
+
+    def __init__(
+        self,
+        input_dim_nodes: int = 16,
+        input_dim_edges: int = 3,
+        output_dim: int = 2,
+        processor_size: int = 15,
+        mlp_activation_fn: str = "relu",
+        num_layers_node_processor: int = 2,
+        num_layers_edge_processor: int = 2,
+        hidden_dim_processor: int = 128,
+        hidden_dim_node_encoder: int = 128,
+        num_layers_node_encoder: Optional[int] = 2,
+        hidden_dim_edge_encoder: int = 128,
+        num_layers_edge_encoder: Optional[int] = 2,
+        hidden_dim_node_decoder: int = 128,
+        num_layers_node_decoder: Optional[int] = 2,
+        aggregation: str = "sum",
+        num_harmonics: int = 5,
+    ):
+        super().__init__()
+        if num_layers_node_encoder is None or num_layers_edge_encoder is None or num_layers_node_decoder is None:
+            raise ValueError("num_layers_node_encoder, num_layers_edge_encoder and num_layers_node_decoder cannot be None")
+        self.input_dim_nodes = input_dim_nodes
+        self.input_dim_edges = input_dim_edges
+        self.output_dim = output_dim
+        activation_fn = _activation(mlp_activation_fn)
+
+        self.edge_encoder = MeshGraphMLP(
+            input_dim_edges,
+            output_dim=hidden_dim_processor,
+            hidden_dim=hidden_dim_edge_encoder,
+            hidden_layers=num_layers_edge_encoder,
+            activation_fn=activation_fn,
+            norm_type="LayerNorm",
+        )
+        # MeshGraphKAN builds MeshGraphNet's MLP node encoder and only then replaces it with the KAN;
+        # creating (and dropping) it keeps the random number stream, and the position of ``node_encoder``
+        # in the state dict, identical to PhysicsNeMo's.
+        self.node_encoder = MeshGraphMLP(
+            input_dim_nodes,
+            output_dim=hidden_dim_processor,
+            hidden_dim=hidden_dim_node_encoder,
+            hidden_layers=num_layers_node_encoder,
+            activation_fn=activation_fn,
+            norm_type="LayerNorm",
+        )
+        self.node_decoder = MeshGraphMLP(
+            hidden_dim_processor,
+            output_dim=output_dim,
+            hidden_dim=hidden_dim_node_decoder,
+            hidden_layers=num_layers_node_decoder,
+            activation_fn=activation_fn,
+            norm_type=None,
+        )
+        self.processor = MeshGraphNetProcessor(
+            processor_size=processor_size,
+            input_dim_node=hidden_dim_processor,
+            input_dim_edge=hidden_dim_processor,
+            num_layers_node=num_layers_node_processor,
+            num_layers_edge=num_layers_edge_processor,
+            aggregation=aggregation,
+            norm_type="LayerNorm",
+            activation_fn=activation_fn,
+        )
+        self.node_encoder = KolmogorovArnoldNetwork(
+            input_dim=input_dim_nodes,
+            output_dim=hidden_dim_processor,
+            num_harmonics=num_harmonics,
+            add_bias=True,
+        )
 
     def forward(
         self,
-        preds: torch.Tensor,
-        targets: torch.Tensor,
-        prev_state: Optional[torch.Tensor] = None,
-        cell_area: Optional[torch.Tensor] = None,
-    ) -> Tuple[torch.Tensor, Dict[str, float]]:
-        supervised = F.mse_loss(preds, targets)
-        total = self.supervised_weight * supervised
-        metrics: Dict[str, float] = {"mse": float(supervised.detach().cpu())}
+        node_features: Union[torch.Tensor, Mapping[str, Any]],
+        edge_features: Optional[torch.Tensor] = None,
+        graph: Any = None,
+    ) -> torch.Tensor:
+        if isinstance(node_features, Mapping):
+            batch = node_features
+            missing = [key for key in ("node_features", "edge_features", "edge_index") if key not in batch]
+            if missing:
+                raise ValueError(f"HydroGraphNet mesh batches need the keys node_features, edge_features and edge_index; missing {missing}.")
+            node_features, edge_features, graph = batch["node_features"], batch["edge_features"], batch["edge_index"]
+        if edge_features is None or graph is None:
+            raise ValueError("HydroGraphNet needs node_features (N, F), edge_features (E, F_edge) and edge_index (2, E).")
+        if node_features.ndim != 2 or node_features.shape[1] != self.input_dim_nodes:
+            raise ValueError(
+                f"Expected tensor of shape (N_nodes, {self.input_dim_nodes}) but got tensor of shape {tuple(node_features.shape)}"
+            )
+        if edge_features.ndim != 2 or edge_features.shape[1] != self.input_dim_edges:
+            raise ValueError(
+                f"Expected tensor of shape (N_edges, {self.input_dim_edges}) but got tensor of shape {tuple(edge_features.shape)}"
+            )
+        edge_index = _edge_index(graph)
+        if edge_index.shape[1] != edge_features.shape[0]:
+            raise ValueError(
+                f"edge_index has {edge_index.shape[1]} edges but edge_features has shape {tuple(edge_features.shape)}."
+            )
+        edge_features = self.edge_encoder(edge_features)
+        node_features = self.node_encoder(node_features)
+        x = self.processor(node_features, edge_features, edge_index)
+        return self.node_decoder(x)
 
-        if (
-            self.continuity_weight > 0
-            and prev_state is not None
-            and cell_area is not None
-            and preds.size(-1) >= 2
-            and prev_state.size(-1) >= 2
-        ):
-            # Approximate local continuity: depth-change * area ~= volume-change
-            depth_delta = preds[..., 0] - prev_state[..., 0]
-            volume_delta = preds[..., 1] - prev_state[..., 1]
-            area = cell_area.to(device=preds.device, dtype=preds.dtype)
-            if area.dim() == 1:
-                area = area.unsqueeze(0)
-            continuity = F.mse_loss(depth_delta * area, volume_delta)
-            total = total + self.continuity_weight * continuity
-            metrics["continuity"] = float(continuity.detach().cpu())
+    @torch.no_grad()
+    def rollout(
+        self,
+        node_features: torch.Tensor,
+        edge_features: torch.Tensor,
+        edge_index: Any,
+        inflow: torch.Tensor,
+        precipitation: torch.Tensor,
+        n_time_steps: int = 2,
+        n_static: int = 12,
+    ) -> Dict[str, torch.Tensor]:
+        """Autoregressive rollout of the HydroGraphNet example (``inference.py``).
 
-        metrics["total"] = float(total.detach().cpu())
-        return total, metrics
+        ``node_features`` (N, 12 + 2 * n_time_steps) is the first window of a test hydrograph; ``inflow``
+        and ``precipitation`` (rollout_length,) are the normalised forcings from step ``n_time_steps`` on.
+        Each step predicts the depth / volume change, appends ``last + change`` to the windows (dropping
+        the oldest), and writes ``inflow[t]`` / ``precipitation[t]`` into columns 10 and 11. Returns the
+        normalised ``water_depth`` and ``volume`` of every step, ``(rollout_length, N)`` each.
+        """
+        if node_features.ndim != 2 or node_features.shape[1] != n_static + 2 * n_time_steps:
+            raise ValueError(
+                f"rollout expects node_features of shape (N_nodes, {n_static + 2 * n_time_steps}), got {tuple(node_features.shape)}."
+            )
+        if inflow.ndim != 1 or precipitation.shape != inflow.shape:
+            raise ValueError(
+                f"inflow and precipitation must be 1-D tensors of equal length, got {tuple(inflow.shape)} and {tuple(precipitation.shape)}."
+            )
+        num_nodes = node_features.size(0)
+        x_iter = node_features.clone()
+        depths, volumes = [], []
+        for t in range(inflow.shape[0]):
+            static_part = x_iter[:, :n_static]
+            water_depth_window = x_iter[:, n_static : n_static + n_time_steps]
+            volume_window = x_iter[:, n_static + n_time_steps : n_static + 2 * n_time_steps]
+            x_input = torch.cat([static_part, water_depth_window, volume_window], dim=1)
+            pred = self(x_input, edge_features, edge_index)
+            new_wd = water_depth_window[:, -1:] + pred[:, 0:1]
+            new_vol = volume_window[:, -1:] + pred[:, 1:2]
+            water_depth_updated = torch.cat([water_depth_window[:, 1:], new_wd], dim=1)
+            volume_updated = torch.cat([volume_window[:, 1:], new_vol], dim=1)
+            new_flow = inflow[t].unsqueeze(0).expand(num_nodes, 1)
+            new_precip = precipitation[t].unsqueeze(0).expand(num_nodes, 1)
+            static_part_updated = static_part.clone()
+            static_part_updated[:, 10:12] = torch.cat([new_flow, new_precip], dim=1)
+            x_iter = torch.cat([static_part_updated, water_depth_updated, volume_updated], dim=1)
+            depths.append(new_wd.squeeze(1))
+            volumes.append(new_vol.squeeze(1))
+        return {"water_depth": torch.stack(depths), "volume": torch.stack(volumes)}
+
+
+MeshGraphKAN = HydroGraphNet
+
+PHYSICS_KEYS = (
+    "past_volume",
+    "future_volume",
+    "avg_inflow",
+    "avg_precipitation",
+    "next_inflow",
+    "next_precip",
+    "volume_mean",
+    "volume_std",
+    "num_nodes",
+    "area_sum",
+    "infiltration_area_sum",
+)
+
+
+def hydrographnet_physics_loss(
+    pred: torch.Tensor,
+    physics_data: Mapping[str, torch.Tensor],
+    batch: Optional[torch.Tensor] = None,
+    delta_t: float = 1200.0,
+) -> torch.Tensor:
+    """Volume-continuity loss of the HydroGraphNet example (``compute_physics_loss``).
+
+    For each graph of the batch (``batch`` gives the graph index of every node; ``None`` means one graph)
+    the predicted total volume ``V_pred = V_past + volume_std * sum(pred[:, 1])`` is compared, in
+    physical units, with the volume entering over ``delta_t`` seconds:
+
+    ``term1 = relu((V_pred - (V_past + delta_t (avg_inflow + avg_precipitation * A_inf))) / A)^2``,
+    ``term2 = relu((V_future - V_pred - delta_t (next_inflow + next_precip * A_inf)) / A)^2``,
+
+    with ``V = volume_norm * volume_std + num_nodes * volume_mean``, ``A`` the total cell area and
+    ``A_inf`` the infiltration-weighted area. Returns the mean of ``term1 + term2`` over graphs.
+    ``physics_data`` holds one value per graph for each of :data:`PHYSICS_KEYS`.
+    """
+    if pred.ndim != 2 or pred.shape[1] < 2:
+        raise ValueError(f"pred must have shape (N_nodes, >=2) with the volume change in column 1, got {tuple(pred.shape)}.")
+    missing = [key for key in PHYSICS_KEYS if key not in physics_data]
+    if missing:
+        raise ValueError(f"physics_data is missing {missing}.")
+    if batch is None:
+        batch = torch.zeros(pred.shape[0], dtype=torch.long, device=pred.device)
+    unique_ids = torch.unique(batch)
+    predicted_diff = pred[:, 1]
+    physics_losses = []
+    for uid in unique_ids:
+        mask = batch == uid
+        pred_diff_sum = predicted_diff[mask].sum()
+        idx = (unique_ids == uid).nonzero(as_tuple=False).item()
+        values = {key: torch.as_tensor(physics_data[key]).reshape(-1)[idx] for key in PHYSICS_KEYS}
+        past_volume_denorm = values["past_volume"] * values["volume_std"] + values["num_nodes"] * values["volume_mean"]
+        future_volume_denorm = values["future_volume"] * values["volume_std"] + values["num_nodes"] * values["volume_mean"]
+        pred_total_volume = past_volume_denorm + values["volume_std"] * pred_diff_sum
+        new_precip_term = values["avg_precipitation"] * values["infiltration_area_sum"]
+        new_next_precip_term = values["next_precip"] * values["infiltration_area_sum"]
+        term1 = (
+            F.relu(
+                (pred_total_volume - (past_volume_denorm + delta_t * (values["avg_inflow"] + new_precip_term)))
+                / values["area_sum"]
+            )
+            ** 2
+        )
+        term2 = (
+            F.relu(
+                (future_volume_denorm - pred_total_volume - delta_t * (values["next_inflow"] + new_next_precip_term))
+                / values["area_sum"]
+            )
+            ** 2
+        )
+        physics_losses.append(term1 + term2)
+    if physics_losses:
+        return torch.stack(physics_losses).mean()
+    return torch.tensor(0.0, device=pred.device)
+
+
+class HydroGraphNetLoss(nn.Module):
+    """Training loss of the HydroGraphNet example (``train.py``, ``noise_type: none``).
+
+    ``MSE(pred, target) + physics_loss_weight * hydrographnet_physics_loss(pred, physics_data, batch)``;
+    the physics term is skipped when ``physics_data`` is ``None`` (``use_physics_loss: false``). Defaults
+    are the example's ``physics_loss_weight=1.0`` and ``delta_t=1200`` s. Returns the total loss and a
+    dict of its parts.
+    """
+
+    def __init__(self, physics_loss_weight: float = 1.0, delta_t: float = 1200.0, use_physics_loss: bool = True):
+        super().__init__()
+        self.physics_loss_weight = float(physics_loss_weight)
+        self.delta_t = float(delta_t)
+        self.use_physics_loss = bool(use_physics_loss)
+
+    def forward(
+        self,
+        pred: torch.Tensor,
+        target: torch.Tensor,
+        physics_data: Optional[Mapping[str, torch.Tensor]] = None,
+        batch: Optional[torch.Tensor] = None,
+    ) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
+        mse_loss = F.mse_loss(pred, target)
+        loss = mse_loss
+        parts = {"total_loss": loss, "mse_loss": mse_loss}
+        if self.use_physics_loss and physics_data is not None:
+            phy_loss = hydrographnet_physics_loss(pred, physics_data, batch, delta_t=self.delta_t)
+            loss = loss + self.physics_loss_weight * phy_loss
+            parts = {"total_loss": loss, "mse_loss": mse_loss, "physics_loss": phy_loss}
+        return loss, parts
 
 
 def hydrographnet_builder(
     task: str,
-    node_in_dim: int,
-    edge_in_dim: int,
-    out_dim: int,
-    **kwargs,
+    input_dim_nodes: int = 16,
+    input_dim_edges: int = 3,
+    output_dim: int = 2,
+    processor_size: int = 15,
+    mlp_activation_fn: str = "relu",
+    num_layers_node_processor: int = 2,
+    num_layers_edge_processor: int = 2,
+    hidden_dim_processor: int = 128,
+    hidden_dim_node_encoder: int = 128,
+    num_layers_node_encoder: int = 2,
+    hidden_dim_edge_encoder: int = 128,
+    num_layers_edge_encoder: int = 2,
+    hidden_dim_node_decoder: int = 128,
+    num_layers_node_decoder: int = 2,
+    aggregation: str = "sum",
+    num_harmonics: int = 5,
+    **kwargs: Any,
 ) -> HydroGraphNet:
-    if task != "regression":
-        raise ValueError("HydroGraphNet only supports regression")
-
+    """HydroGraphNet (MeshGraphKAN) at the HydroGraphNet example configuration by default."""
+    if task.lower() != "regression":
+        raise ValueError(f"HydroGraphNet only supports task='regression', got {task!r}.")
+    kwargs.pop("name", None)
+    if kwargs:
+        raise ValueError(f"Unknown HydroGraphNet arguments: {sorted(kwargs)}.")
     return HydroGraphNet(
-        node_in_dim=node_in_dim,
-        edge_in_dim=edge_in_dim,
-        out_dim=out_dim,
-        hidden_dim=kwargs.get("hidden_dim", 64),
-        harmonics=kwargs.get("harmonics", 5),
-        num_gn_blocks=kwargs.get("num_gn_blocks", 5),
-        state_dim=kwargs.get("state_dim"),
-        rollout_steps=kwargs.get("rollout_steps", 1),
-        enforce_nonnegative=kwargs.get("enforce_nonnegative", False),
-        dropout=kwargs.get("dropout", 0.0),
+        input_dim_nodes=input_dim_nodes,
+        input_dim_edges=input_dim_edges,
+        output_dim=output_dim,
+        processor_size=processor_size,
+        mlp_activation_fn=mlp_activation_fn,
+        num_layers_node_processor=num_layers_node_processor,
+        num_layers_edge_processor=num_layers_edge_processor,
+        hidden_dim_processor=hidden_dim_processor,
+        hidden_dim_node_encoder=hidden_dim_node_encoder,
+        num_layers_node_encoder=num_layers_node_encoder,
+        hidden_dim_edge_encoder=hidden_dim_edge_encoder,
+        num_layers_edge_encoder=num_layers_edge_encoder,
+        hidden_dim_node_decoder=hidden_dim_node_decoder,
+        num_layers_node_decoder=num_layers_node_decoder,
+        aggregation=aggregation,
+        num_harmonics=num_harmonics,
     )
 
 
-__all__ = ["HydroGraphNet", "HydroGraphNetLoss", "hydrographnet_builder"]
+__all__ = [
+    "HYDROGRAPHNET_STATIC_FEATURES",
+    "HydroGraphNet",
+    "HydroGraphNetLoss",
+    "KolmogorovArnoldNetwork",
+    "MeshGraphKAN",
+    "PHYSICS_KEYS",
+    "hydrographnet_builder",
+    "hydrographnet_physics_loss",
+]

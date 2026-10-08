@@ -5,8 +5,8 @@ os.environ["PYHAZARDS_DEVICE"] = "cuda:0"
 import torch
 from torch.utils.data import DataLoader
 
-from pyhazards.data.load_hydrograph_data import load_hydrograph_data
-from pyhazards.datasets import graph_collate
+from pyhazards.datasets import load_dataset
+from pyhazards.datasets.flood import hydrograph_collate
 from pyhazards.engine import Trainer
 from pyhazards.metrics import RegressionMetrics
 from pyhazards.models import build_model
@@ -32,14 +32,14 @@ def main() -> None:
         )
 
     device = torch.device("cuda:0")
-    print("== PyHazards GPU smoke test (ERA5 + HydroGraphNet) ==")
+    print("== PyHazards GPU smoke test (synthetic mesh hydrographs + HydroGraphNet) ==")
     print(f"PyTorch version: {torch.__version__}")
     print(f"CUDA runtime in torch: {torch.version.cuda}")
     print(f"Using device: {device} ({torch.cuda.get_device_name(0)})")
 
-    data = load_hydrograph_data("pyhazards/data/era5_subset", max_nodes=50)
+    data = load_dataset("flood_mesh_synthetic", micro=True).load()
     assert "train" in data.splits, "Expected 'train' split in loaded data."
-    assert data.feature_spec.input_dim == 2, f"Unexpected input_dim: {data.feature_spec.input_dim}"
+    assert data.feature_spec.input_dim == 16, f"Unexpected input_dim: {data.feature_spec.input_dim}"
     assert data.label_spec.task_type == "regression", f"Unexpected task type: {data.label_spec.task_type}"
 
     train_inputs = data.get_split("train").inputs
@@ -48,18 +48,12 @@ def main() -> None:
     print(f"Feature spec: {data.feature_spec}")
     print(f"Label spec: {data.label_spec}")
 
-    model = build_model(
-        name="hydrographnet",
-        task="regression",
-        node_in_dim=2,
-        edge_in_dim=3,
-        out_dim=1,
-    )
+    model = build_model(name="hydrographnet", task="regression")
     model = model.to(device)
     print(f"Model: {type(model).__name__}")
 
     # Forward-pass sanity check on one real batch on GPU.
-    sample_loader = DataLoader(train_inputs, batch_size=1, shuffle=False, collate_fn=graph_collate)
+    sample_loader = DataLoader(train_inputs, batch_size=1, shuffle=False, collate_fn=hydrograph_collate)
     batch_x, batch_y = next(iter(sample_loader))
     batch_x = _to_device(batch_x, device)
     batch_y = _to_device(batch_y, device)
@@ -78,14 +72,14 @@ def main() -> None:
         loss_fn=loss_fn,
         max_epochs=1,
         batch_size=1,
-        collate_fn=graph_collate,
+        collate_fn=hydrograph_collate,
     )
 
     metrics = trainer.evaluate(
         data,
         split="train",
         batch_size=1,
-        collate_fn=graph_collate,
+        collate_fn=hydrograph_collate,
     )
 
     assert "MAE" in metrics and "RMSE" in metrics, f"Missing expected metrics: {metrics}"

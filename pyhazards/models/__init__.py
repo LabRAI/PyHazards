@@ -20,7 +20,7 @@ from .google_flood_forecasting import GoogleFloodForecasting, google_flood_forec
 from .graphcast_tc import GraphCastTC, graphcast_tc_builder
 from .heads import ClassificationHead, RegressionHead, SegmentationHead
 from .hurricast import Hurricast, hurricast_builder
-from .hydrographnet import HydroGraphNet, HydroGraphNetLoss, hydrographnet_builder
+from .hydrographnet import HydroGraphNet, HydroGraphNetLoss, hydrographnet_builder, hydrographnet_physics_loss
 from .logistic_regression import PixelLogisticRegression, logistic_regression_builder
 from .neuralhydrology_ealstm import NeuralHydrologyEALSTM, neuralhydrology_ealstm_builder
 from .neuralhydrology_lstm import NeuralHydrologyLSTM, neuralhydrology_lstm_builder
@@ -114,6 +114,7 @@ __all__ = [
     "HydroGraphNet",
     "HydroGraphNetLoss",
     "hydrographnet_builder",
+    "hydrographnet_physics_loss",
     "NeuralHydrologyEALSTM",
     "neuralhydrology_ealstm_builder",
     "NeuralHydrologyLSTM",
@@ -524,9 +525,13 @@ register_model(
     "hydrographnet",
     hydrographnet_builder,
     defaults={
-        "hidden_dim": 64,
-        "harmonics": 5,
-        "num_gn_blocks": 5,
+        "input_dim_nodes": 16,
+        "input_dim_edges": 3,
+        "output_dim": 2,
+        "processor_size": 15,
+        "hidden_dim_processor": 128,
+        "aggregation": "sum",
+        "num_harmonics": 5,
     },
 )
 
@@ -572,10 +577,9 @@ register_model(
     "urbanfloodcast",
     urbanfloodcast_builder,
     defaults={
-        "in_channels": 3,
-        "history": 4,
-        "base_channels": 32,
-        "out_channels": 1,
+        "num_channels": 5,
+        "width": 10,
+        "initial_step": 1,
     },
 )
 

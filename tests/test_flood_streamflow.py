@@ -197,6 +197,7 @@ def test_caravan_reader_reads_netcdf_and_csv(tmp_path):
 def test_registry_names_are_honest():
     names = set(available_datasets())
     assert {"camels_us_streamflow", "caravan_streamflow", "flood_streamflow_synthetic", "flood_mesh_synthetic"} <= names
+    assert {"hydrographnet_white_river", "urbanfloodcast_synthetic"} <= names
     assert not {"waterbench_streamflow", "hydrobench_streamflow", "floodcastbench_inundation"} & names
     with pytest.raises(ValueError, match="data_dir"):
         load_dataset("caravan_streamflow")

@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         8
+         9
 
       .. container:: catalog-stat-note
 
@@ -128,7 +128,7 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-entry-summary
 
-         Shared PyHazards evaluator for daily streamflow (per-basin NSE, KGE and the other NeuralHydrology metrics) and for inundation depth / extent prediction.
+         Shared PyHazards evaluator for daily streamflow (per-basin NSE, KGE and the other NeuralHydrology metrics) and for inundation depth on rasters and flood meshes (depth errors, CSI, relative L2, NSE, autoregressive mesh rollouts).
 
       .. container:: catalog-chip-row
 
@@ -140,11 +140,11 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-meta-row
 
-         **Key Metrics:** NSE, KGE, Alpha-NSE, Beta-NSE, +8 more
+         **Key Metrics:** NSE, KGE, Alpha-NSE, Beta-NSE, +12 more
 
       .. container:: catalog-meta-row
 
-         **Coverage:** 6 smoke configs | 6 models | 2 ecosystems
+         **Coverage:** 6 smoke configs | 6 models | 3 ecosystems
 
       .. container:: catalog-link-row
 
@@ -211,7 +211,7 @@ status without opening the detail pages first.
    * - Flood
      - :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
      - Streamflow, Inundation
-     - NSE, KGE, Alpha-NSE, Beta-NSE, +8 more
+     - NSE, KGE, Alpha-NSE, Beta-NSE, +12 more
      - 6 models
      - Real-backed
    * - Tropical Cyclone
@@ -424,6 +424,37 @@ and the models currently mapped to that ecosystem.
 
                **Paper:** `Caravan - A global community dataset for large-sample hydrology <https://doi.org/10.1038/s41597-023-01975-w>`_ | **Repo:** `Repository <https://github.com/kratzert/Caravan>`__
 
+         .. grid-item-card:: HydroGraphNet White River
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               HEC-RAS flood simulations on the 4,787-cell White River mesh (HydroGraphNet, Taghizadeh et al. 2025), rolled out autoregressively and scored as water depth in metres.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Flood` :bdg-secondary:`Inundation` :bdg-success:`Real-backed`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Key Metrics:** Rollout Rmse, Pixel MAE, RMSE, Csi 10Cm, +1 more
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** 1 smoke config | 1 model
+
+            .. container:: catalog-link-row
+
+               **View Details:** :doc:`HydroGraphNet White River <benchmarks/hydrographnet_white_river>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Interpretable physics-informed graph neural networks for flood forecasting <https://doi.org/10.1111/mice.13484>`_ | **Repo:** `Repository <https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet>`__
+
 
    .. tab-item:: Tropical Cyclone
 
@@ -556,6 +587,7 @@ and :doc:`pyhazards_reports` for comparable benchmark exports.
    benchmarks/caravan
    benchmarks/earthquake_benchmark
    benchmarks/flood_benchmark
+   benchmarks/hydrographnet_white_river
    benchmarks/ibtracs
    benchmarks/pick_benchmark
    benchmarks/seisbench

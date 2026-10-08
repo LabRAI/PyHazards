@@ -7,9 +7,11 @@ from .earthquake import (
 from .flood import (
     CamelsUSStreamflowDataset,
     CaravanStreamflowDataset,
+    HydroGraphNetWhiteRiverDataset,
     SyntheticFloodInundationDataset,
     SyntheticFloodMeshDataset,
     SyntheticFloodStreamflowDataset,
+    SyntheticUrbanFloodCastDataset,
 )
 from .fpa_fod import FPAFODTabularDataset, FPAFODWeeklyDataset
 from .graph import GraphTemporalDataset, graph_collate
@@ -44,9 +46,11 @@ __all__ = [
     "SyntheticEarthquakeWaveformDataset",
     "CamelsUSStreamflowDataset",
     "CaravanStreamflowDataset",
+    "HydroGraphNetWhiteRiverDataset",
     "SyntheticFloodInundationDataset",
     "SyntheticFloodMeshDataset",
     "SyntheticFloodStreamflowDataset",
+    "SyntheticUrbanFloodCastDataset",
     "FPAFODTabularDataset",
     "FPAFODWeeklyDataset",
     "available_datasets",
@@ -76,6 +80,8 @@ register_dataset(SeisBenchWaveformDataset.name, SeisBenchWaveformDataset)
 register_dataset(SyntheticFloodInundationDataset.name, SyntheticFloodInundationDataset)
 register_dataset(SyntheticFloodStreamflowDataset.name, SyntheticFloodStreamflowDataset)
 register_dataset(SyntheticFloodMeshDataset.name, SyntheticFloodMeshDataset)
+register_dataset(HydroGraphNetWhiteRiverDataset.name, HydroGraphNetWhiteRiverDataset)
+register_dataset(SyntheticUrbanFloodCastDataset.name, SyntheticUrbanFloodCastDataset)
 register_dataset(CamelsUSStreamflowDataset.name, CamelsUSStreamflowDataset)
 register_dataset(CaravanStreamflowDataset.name, CaravanStreamflowDataset)
 register_dataset(FPAFODTabularDataset.name, FPAFODTabularDataset)

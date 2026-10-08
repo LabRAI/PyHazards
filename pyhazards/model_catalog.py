@@ -173,6 +173,8 @@ class ReproductionSpec(BaseModel):
 class SmokeTensorSpec(BaseModel):
     shape: List[int]
     dtype: str = "float32"
+    # Integer tensors (e.g. graph edge indices): values drawn uniformly from [0, high).
+    high: Optional[int] = Field(default=None, ge=1)
 
 
 class SmokeInputSpec(BaseModel):
@@ -1317,7 +1319,10 @@ def _dtype_for_name(dtype_name: str) -> torch.dtype:
 
 
 def _make_tensor(spec: SmokeTensorSpec) -> torch.Tensor:
-    return torch.randn(*spec.shape, dtype=_dtype_for_name(spec.dtype))
+    dtype = _dtype_for_name(spec.dtype)
+    if spec.high is not None:
+        return torch.randint(0, spec.high, tuple(spec.shape), dtype=dtype)
+    return torch.randn(*spec.shape, dtype=dtype)
 
 
 def _prepare_smoke_input(spec: SmokeInputSpec) -> Any:

@@ -1,72 +1,82 @@
 #!/usr/bin/env python3
+"""Train HydroGraphNet as the PhysicsNeMo example does, then score autoregressive rollouts.
+
+Recipe of examples/weather/flood_modeling/hydrographnet (train.py, conf/config.yaml): batch size 1, Adam
+with learning rate 1e-4 (the configured weight decay is not passed to the optimizer), the learning rate
+multiplied by 0.9999979 after every batch, 100 epochs, loss = MSE + 1.0 * physics (volume continuity,
+delta_t 1200 s), noise_type "none"; inference rolls out 30 steps per test hydrograph.
+
+usage:
+  python scripts/train_hydrographnet.py --data-dir /data/HydroGraphNet --test-ids test.txt
+  python scripts/train_hydrographnet.py --synthetic --epochs 1     # smoke run on flood_mesh_synthetic
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
 
 import torch
-import torch.nn.functional as F
+from torch.utils.data import DataLoader
 
-from pyhazards.engine import Trainer
+from pyhazards.benchmarks.flood import evaluate_inundation
+from pyhazards.datasets import load_dataset
+from pyhazards.datasets.flood.hydrograph import hydrograph_collate
 from pyhazards.models import build_model
-from pyhazards.datasets import graph_collate
-from pyhazards.metrics import RegressionMetrics
-
-from pyhazards.data.load_hydrograph_data import load_hydrograph_data
+from pyhazards.models.hydrographnet import HydroGraphNetLoss
 
 
-def main():
-    torch.manual_seed(0)
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--data-dir", help="unzipped HydroGraphNet.zip (Zenodo 14969507)")
+    parser.add_argument("--test-ids", help="file or comma-separated list of test hydrograph ids")
+    parser.add_argument("--synthetic", action="store_true", help="use flood_mesh_synthetic instead of real data")
+    parser.add_argument("--epochs", type=int, default=100)
+    parser.add_argument("--lr", type=float, default=1e-4)
+    parser.add_argument("--lr-decay-rate", type=float, default=0.9999979)
+    parser.add_argument("--physics-loss-weight", type=float, default=1.0)
+    parser.add_argument("--rollout-length", type=int, default=30)
+    parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
+    parser.add_argument("--seed", type=int, default=0)
+    args = parser.parse_args(argv)
 
-    bundle = load_hydrograph_data(
-        era5_path="pyhazards/data/era5_subset",
-    )
+    torch.manual_seed(args.seed)
+    if args.synthetic:
+        data = load_dataset("flood_mesh_synthetic", micro=True).load()
+    else:
+        if not args.data_dir or not args.test_ids:
+            parser.error("--data-dir and --test-ids are required (or pass --synthetic)")
+        test_ids = args.test_ids if args.test_ids.endswith(".txt") else args.test_ids.split(",")
+        data = load_dataset(
+            "hydrographnet_white_river", data_dir=args.data_dir, test_ids=test_ids, rollout_length=args.rollout_length
+        ).load()
 
-    train_split = "train"
+    model = build_model("hydrographnet", task="regression").to(args.device)
+    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+    scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda step: args.lr_decay_rate**step)
+    criterion = HydroGraphNetLoss(physics_loss_weight=args.physics_loss_weight, delta_t=1200.0)
+    loader = DataLoader(data.get_split("train").inputs, batch_size=1, shuffle=True, collate_fn=hydrograph_collate)
 
-    # Infer dimensions from dataset
-    sample_x, sample_y = bundle.splits[train_split].inputs[0]
+    for epoch in range(args.epochs):
+        model.train()
+        total, batches = 0.0, 0
+        for batch, target in loader:
+            physics = {key: value.to(args.device) for key, value in batch.pop("physics").items()}
+            batch = {key: value.to(args.device) for key, value in batch.items()}
+            optimizer.zero_grad()
+            loss, _ = criterion(model(batch), target.to(args.device), physics, batch["batch"])
+            loss.backward()
+            optimizer.step()
+            scheduler.step()
+            total += float(loss.detach())
+            batches += 1
+        print(f"epoch {epoch}: mean loss {total / max(batches, 1):.4e}")
 
-    x_tensor = sample_x["x"]
-
-    node_feats = x_tensor.shape[2]
-    out_dim = 1
-
-    print("Dataset shapes:")
-    print("  x:", x_tensor.shape)
-    print("  y:", sample_y.shape)
-
-    # Model
-    model = build_model(
-        name="hydrographnet",
-        task="regression",
-        node_in_dim=node_feats,
-        edge_in_dim=3,
-        out_dim=out_dim,
-    )
-    # Optimizer + loss
-    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-
-    def loss_fn(pred, target):
-        return F.mse_loss(pred, target)
-
-    # Trainer
-    trainer = Trainer(model=model, metrics=[RegressionMetrics()])
-
-    trainer.fit(
-        bundle,
-        train_split=train_split,
-        val_split=None,
-        optimizer=optimizer,
-        loss_fn=loss_fn,
-        batch_size=1,
-        max_epochs=5,
-        collate_fn=graph_collate,
-    )
-    metrics = trainer.evaluate(
-        bundle,
-        split=train_split,
-        batch_size=1,
-        collate_fn=graph_collate,
-    )
-    print("Evaluation metrics:", metrics)
+    model.eval()
+    metrics, extra = evaluate_inundation(model, data, "test")
+    print(json.dumps({"metrics": metrics, "rollout_rmse_per_step_m": extra.get("rollout_rmse_per_step_m")}, indent=2))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

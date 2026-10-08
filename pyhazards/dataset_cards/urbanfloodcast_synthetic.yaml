@@ -1,0 +1,46 @@
+slug: urbanfloodcast_synthetic
+display_name: Synthetic Urban Flood Events
+hazard_family: Flood
+source_role: Synthetic Smoke Data
+summary: "Random urban flood events in the UrbanFloodCast one-shot layout (current state, rainfall and terrain in; depth and discharges of 24 steps out), for smoke tests of urbanfloodcast."
+provider: PyHazards (generated in memory; no real flood)
+geometry: Raster inundation sequences
+spatial_resolution: Not applicable (32 x 32 synthetic cells)
+temporal_resolution: Not applicable (24 synthetic output steps)
+update_cadence: Generated on every load
+period_of_record: None (synthetic)
+coverage: None (synthetic)
+formats: PyTorch tensors via the dataset registry
+overview:
+  - >
+    Synthetic data. Each event is a random rain pulse on a tilted random terrain with NaN "buildings";
+    scores on it mean nothing. The events go through ``prepare_urbanfloodcast_event``, the official
+    UrbanFloodCast one-shot preparation (checked against the official ``flood_data``), so the inputs
+    ``(n, Sy, Sx, 24, 1, 5)``, targets ``(n, Sy, Sx, 24, 3)`` and NaN mask have the layout of the real
+    benchmark. PyHazards has no reader for the Berlin GeoTIFFs yet (Zenodo 10.5281/zenodo.15700880).
+data_characteristics:
+  - "Inputs per cell and step: depth, x / y unit discharge at the start (repeated), log(1 + rain / 0.01) / 10, terrain L2-normalised along x; targets: depth, x / y unit discharge; the mask is in ``split.metadata['mask']``."
+typical_use_cases:
+  - Smoke tests and CI runs of urbanfloodcast and of the ``flood.inundation`` raster evaluation.
+access_links:
+  - label: UrbanFloodCast benchmark dataset (Zenodo, real data, not read by PyHazards)
+    url: https://doi.org/10.5281/zenodo.15700880
+inspection: null
+registry:
+  name: urbanfloodcast_synthetic
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset("urbanfloodcast_synthetic", micro=True).load()
+    print(data.get_split("train").inputs.shape)  # (2, 32, 32, 24, 1, 5)
+primary_references:
+  - citation: PyHazards synthetic smoke data (pyhazards/datasets/flood/urbanfloodcast.py)
+    url: https://github.com/LabRAI/PyHazards
+pyhazards_usage:
+  - Use only for smoke tests.
+related_models:
+  - urbanfloodcast
+related_benchmarks:
+  - flood_benchmark
+notes:
+  - Bundle metadata carries synthetic=True.

@@ -1,0 +1,27 @@
+# Reference stack for tests/oracle/test_hydrographnet_oracle.py (Python 3.12; the workflow installs CPU torch
+# 2.12.0 and torchvision 0.27.0). NVIDIA PhysicsNeMo @ eb7a329 is imported from its pinned checkout, not
+# installed. Its MeshGraphKAN runs on PyTorch Geometric graphs with torch_scatter aggregation; torch_scatter
+# has CPU wheels up to torch 2.12, so the suite uses torch 2.12 (PhysicsNeMo declares torch>=2.13, but the
+# modules used here run on 2.12, and its stored reference outputs are valid from torch 2.12 on).
+# The rest is what `import physicsnemo`, the MeshGraphKAN module and HydroGraphDataset import: warp (top-level
+# package), s3fs / fsspec (physicsnemo.core.filesystem), timm, einops, tensordict, nvtx, omegaconf, treelib,
+# termcolor and jaxtyping (physicsnemo.nn), scipy (k-d tree graph). The example's training stack (hydra,
+# wandb, mlflow) and transformer-engine are not needed.
+--find-links https://data.pyg.org/whl/torch-2.12.0+cpu.html
+torch-scatter==2.1.2+pt212cpu
+torch-geometric==2.8.0.post1
+warp-lang==1.18.0
+s3fs==2026.9.0
+fsspec==2026.9.0
+timm==1.0.30
+einops==0.8.2
+tensordict==0.14.2
+nvtx==0.2.16
+omegaconf==2.3.1
+treelib==1.8.0
+termcolor==3.3.0
+jaxtyping==0.3.11
+numpy==2.5.3
+scipy==1.18.1
+requests==2.34.2
+tqdm==4.70.1

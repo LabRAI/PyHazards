@@ -1,0 +1,38 @@
+slug: hydrographnet_white_river
+display_name: HydroGraphNet White River
+kind: ecosystem
+hazard_family: Flood
+benchmark_key: flood
+support_status: real-backed
+summary: >
+  HEC-RAS flood simulations on the 4,787-cell White River mesh (HydroGraphNet, Taghizadeh et al. 2025),
+  rolled out autoregressively and scored as water depth in metres.
+description:
+  - >
+    ``hydrographnet_white_river`` reads a local copy of the release exactly like PhysicsNeMo's
+    ``HydroGraphDataset``. The ``flood.inundation`` evaluator rolls every test hydrograph out for 30 steps
+    (10 hours) with the model's ``rollout`` method, as the HydroGraphNet example's inference script does,
+    and reports ``rollout_rmse`` (depth RMSE per step, averaged over steps and hydrographs, in metres; the
+    per-step curve is in the report metadata), depth MAE / RMSE, CSI and NSE.
+  - >
+    The release has no official test split, and the paper's numbers could not be accessed, so no paper
+    result is reproduced. The smoke config runs the contract on ``flood_mesh_synthetic``.
+source:
+  title: "Interpretable physics-informed graph neural networks for flood forecasting"
+  url: https://doi.org/10.1111/mice.13484
+  repo_url: https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet
+tasks:
+  - flood.inundation
+metrics:
+  - rollout_rmse
+  - pixel_mae
+  - rmse
+  - csi_10cm
+  - nse
+smoke_configs:
+  - pyhazards/configs/flood/hydrographnet_smoke.yaml
+linked_models:
+  - hydrographnet
+notes:
+  - >
+    Dataset: Zenodo 14969507 (HydroGraphNet.zip, 8.3 GB, CC BY 4.0). PyHazards downloads nothing.
