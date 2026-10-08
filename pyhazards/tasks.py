@@ -25,7 +25,7 @@ _HAZARD_TASKS: Dict[str, HazardTask] = {
         name="earthquake.forecasting",
         hazard="earthquake",
         target="forecasting",
-        description="Earthquake forecasting over spatial or temporal forecast windows.",
+        description="Ground-motion wavefield forecasting: future frames of gridded velocity wavefields (not earthquake-occurrence forecasting).",
     ),
     "wildfire.danger": HazardTask(
         name="wildfire.danger",

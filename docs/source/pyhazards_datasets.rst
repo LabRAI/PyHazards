@@ -947,11 +947,11 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-entry-summary
 
-               Synthetic dense-grid wavefield sequences for wavefield-forecasting smoke runs. Not real data.
+               Synthetic X / Y / Z ground-velocity wavefields of point sources for wavefield-forecasting smoke runs. Not real data.
 
             .. container:: catalog-chip-row
 
-               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Dense-grid wavefield tensors`
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Regular grid of three-component velocity frames`
 
             .. container:: catalog-meta-row
 
@@ -963,7 +963,7 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-meta-row
 
-               **Registry:** ``load_dataset('earthquake_forecast_synthetic', ...)``
+               **Registry:** ``load_dataset('earthquake_wavefield_synthetic', ...)``
 
             .. container:: catalog-meta-row
 
@@ -971,7 +971,7 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-link-row
 
-               **Details:** :doc:`Synthetic Wavefield Sequences <datasets/earthquake_forecast_synthetic>`
+               **Details:** :doc:`Synthetic Wavefield Sequences <datasets/earthquake_wavefield_synthetic>`
 
             .. container:: catalog-link-row
 
@@ -1378,7 +1378,7 @@ model and evaluation coverage.
    datasets/noaa_flood
    datasets/seisbench_waveforms
    datasets/earthquake_waveforms_synthetic
-   datasets/earthquake_forecast_synthetic
+   datasets/earthquake_wavefield_synthetic
    datasets/ibtracs_tracks
    datasets/ships_xu2021
    datasets/safnet_cma_era_interim_synthetic

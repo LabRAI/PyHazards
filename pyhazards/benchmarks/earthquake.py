@@ -1,4 +1,4 @@
-"""Earthquake benchmark: seismic phase picking and dense-grid wavefield forecasting.
+"""Earthquake benchmark: seismic phase picking and ground-motion wavefield forecasting.
 
 ``earthquake.picking`` scores phase pickers the way the original papers do (see
 :mod:`pyhazards.metrics.picking`):
@@ -23,6 +23,18 @@
 Benchmark ``params``: ``protocol``, ``tolerance_s``, ``residual_window_s``, ``batch_size`` (default
 32), ``pick_params`` (passed to ``extract_picks``), ``detection_params`` (passed to
 ``extract_detections``), and ``threshold`` / ``min_distance_s`` for models without ``extract_picks``.
+
+``earthquake.forecasting`` scores ground-motion wavefield forecasts the way WaveCastNet (Lyu et al.,
+Nat. Commun. 2025) does (see :mod:`pyhazards.metrics.wavefield`): inputs ``(n, channels, T_in, H, W)``
+and targets ``(n, channels, T_out, H, W)`` of velocity wavefields; models with ``rollout`` (WaveCastNet)
+forecast the ``T_out`` frames by repeated calls on their own output, as the official validation does
+(params ``rollout_step``, default the model's ``future_seq``), other models are called once and must
+return the target shape. The model runs in evaluation mode without gradients; ``seed`` (default 0) seeds
+a ``torch.Generator`` passed to models whose forecast is random (WaveCastNet's decoder starts from
+uniform noise). Metrics: ACC, RFNE and RMSE per (sample, channel) over time and space, averaged over all
+pairs (``acc``, ``rfne``, ``rmse``, the official validation numbers) and per channel (``acc_<name>``,
+``rfne_<name>`` with the dataset's ``channel_names``, default ``x``, ``y``, ``z``), plus MAE and MSE.
+This task is not earthquake-occurrence forecasting (AEFA, pyCSEP).
 """
 
 from __future__ import annotations
@@ -38,6 +50,7 @@ import torch.nn as nn
 from ..configs import ExperimentConfig
 from ..datasets.base import DataBundle
 from ..metrics.picking import PICKING_PROTOCOLS, detection_scores, peak_picks, score_picks
+from ..metrics.wavefield import wavefield_metrics
 from .base import Benchmark
 from .registry import register_benchmark
 from .schemas import BenchmarkResult
@@ -58,6 +71,17 @@ PICKING_METRICS = [
     "detection_precision",
     "detection_recall",
     "detection_f1",
+]
+
+DEFAULT_CHANNEL_NAMES = ("x", "y", "z")
+FORECASTING_METRICS = [
+    "acc",
+    "rfne",
+    "rmse",
+    *(f"acc_{name}" for name in DEFAULT_CHANNEL_NAMES),
+    *(f"rfne_{name}" for name in DEFAULT_CHANNEL_NAMES),
+    "mae",
+    "mse",
 ]
 
 
@@ -93,27 +117,66 @@ class EarthquakeBenchmark(Benchmark):
     hazard_task = "earthquake.picking"
     metric_names_by_task = {
         "earthquake.picking": PICKING_METRICS,
-        "earthquake.forecasting": ["mae", "mse"],
+        "earthquake.forecasting": FORECASTING_METRICS,
     }
 
     def evaluate(self, model: nn.Module, data: DataBundle, config: ExperimentConfig) -> BenchmarkResult:
         if config.benchmark.hazard_task == "earthquake.picking":
             return self._evaluate_picking(model, data, config)
+        if config.benchmark.hazard_task == "earthquake.forecasting":
+            return self._evaluate_forecasting(model, data, config)
+        raise ValueError(f"Unknown earthquake task {config.benchmark.hazard_task!r}.")
+
+    def _evaluate_forecasting(self, model: nn.Module, data: DataBundle, config: ExperimentConfig) -> BenchmarkResult:
+        params = dict(config.benchmark.params)
+        batch_size = int(params.get("batch_size", 8))
+        seed = int(params.get("seed", 0))
+        rollout_step = params.get("rollout_step")
         split = data.get_split(config.benchmark.eval_split)
-        preds = model(split.inputs)
-        y = split.targets
-        metrics = {
-            "mae": float(torch.mean(torch.abs(preds - y)).detach().cpu()),
-            "mse": float(torch.mean((preds - y) ** 2).detach().cpu()),
-        }
+        inputs, targets = split.inputs, split.targets
+        if inputs.ndim != 5 or targets.ndim != 5 or len(inputs) != len(targets) or inputs.shape[1] != targets.shape[1]:
+            raise ValueError(
+                "earthquake.forecasting needs inputs shaped (n, channels, T_in, H, W) and targets shaped "
+                f"(n, channels, T_out, H, W); got {tuple(inputs.shape)} and {tuple(targets.shape)}."
+            )
+        steps = int(targets.shape[2])
+        generator = torch.Generator().manual_seed(seed)
+        was_training = model.training
+        model.eval()
+        predictions = []
+        try:
+            with torch.no_grad():
+                for start in range(0, len(inputs), batch_size):
+                    batch = inputs[start : start + batch_size]
+                    if hasattr(model, "rollout"):
+                        step = None if rollout_step is None else int(rollout_step)
+                        predictions.append(model.rollout(batch, steps, step=step, generator=generator))
+                    else:
+                        predictions.append(model(batch))
+        finally:
+            model.train(was_training)
+        preds = torch.cat(predictions).to(targets.dtype)
+        if preds.shape != targets.shape:
+            raise ValueError(f"The model forecast has shape {tuple(preds.shape)}, the targets {tuple(targets.shape)}.")
+        names = data.metadata.get("channel_names") or data.feature_spec.extra.get("channel_names")
+        if not names:
+            names = DEFAULT_CHANNEL_NAMES if targets.shape[1] == len(DEFAULT_CHANNEL_NAMES) else None
+        metrics = wavefield_metrics(preds, targets, names)
+        metrics["mae"] = float(torch.mean(torch.abs(preds - targets)))
+        metrics["mse"] = float(torch.mean((preds - targets) ** 2))
         return BenchmarkResult(
             benchmark_name=self.name,
             hazard_task=config.benchmark.hazard_task,
             metrics=metrics,
             metadata={
                 "split": config.benchmark.eval_split,
+                "n_sequences": len(inputs),
+                "input_steps": int(inputs.shape[2]),
+                "forecast_steps": steps,
+                "seed": seed,
                 "dataset_name": data.metadata.get("dataset"),
                 "source_dataset": data.metadata.get("source_dataset", data.metadata.get("dataset")),
+                "synthetic_data": bool(data.metadata.get("synthetic", False)),
             },
         )
 
@@ -217,4 +280,4 @@ class EarthquakeBenchmark(Benchmark):
 
 register_benchmark(EarthquakeBenchmark.name, EarthquakeBenchmark)
 
-__all__ = ["EarthquakeBenchmark", "PICKING_METRICS"]
+__all__ = ["EarthquakeBenchmark", "FORECASTING_METRICS", "PICKING_METRICS"]

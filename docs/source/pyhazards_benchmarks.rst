@@ -101,7 +101,7 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-entry-summary
 
-         Shared PyHazards evaluator for seismic phase picking (pick metrics of the PhaseNet and EQTransformer papers) and dense-grid wavefield forecasting.
+         Shared PyHazards evaluator for seismic phase picking (pick metrics of the PhaseNet and EQTransformer papers) and ground-motion wavefield forecasting (ACC / RFNE of WaveCastNet).
 
       .. container:: catalog-chip-row
 
@@ -113,7 +113,7 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-meta-row
 
-         **Key Metrics:** P Precision, P Recall, P F1, P Residual Mean, +13 more
+         **Key Metrics:** P Precision, P Recall, P F1, P Residual Mean, +22 more
 
       .. container:: catalog-meta-row
 
@@ -205,7 +205,7 @@ status without opening the detail pages first.
    * - Earthquake
      - :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
      - Phase Picking, Wavefield Forecasting
-     - P Precision, P Recall, P F1, P Residual Mean, +13 more
+     - P Precision, P Recall, P F1, P Residual Mean, +22 more
      - 5 models
      - Real-backed
    * - Flood

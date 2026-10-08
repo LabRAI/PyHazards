@@ -23,12 +23,13 @@ Hazard Summary
 --------------
 
 .. list-table::
-   :widths: 26 16 16 16 16
+   :widths: 26 14 14 14 14 14
    :header-rows: 1
    :class: dataset-list
 
    * - Hazard Family
      - Implemented
+     - Variant only
      - Experimental
      - External
      - Missing
@@ -36,19 +37,23 @@ Hazard Summary
      - 4
      - 1
      - 0
+     - 0
      - 3
    * - Wildfire
      - 4
+     - 0
      - 0
      - 2
      - 0
    * - Flood
      - 3
+     - 0
      - 2
      - 0
      - 3
    * - Hurricane / Tropical Cyclone
      - 5
+     - 0
      - 5
      - 0
      - 1
@@ -88,9 +93,9 @@ Method and Resource Matrix
    * - Earthquake
      - `EQNet <https://github.com/AI4EPS/EQNet>`_
      - Baseline
-     - ``Experimental``
-     - :doc:`EQNet (stand-in) <modules/models_eqnet>`
-     - Not faithful: the registered eqnet is a small transformer regressor, not the paper's multi-station ResNet with picking heads and shift-and-stack association. The official repository is under a non-commercial licence and lacks the shift-and-stack model, so EQNet must be rewritten from the paper (Zhu et al. 2022, doi:10.1029/2021JB023283).
+     - ``Variant only``
+     - :doc:`EQNet <modules/models_eqnet>`
+     - Rebuilt from the paper (Zhu et al. 2022, doi:10.1029/2021JB023283; 1,043,619 parameters): 1-D ResNet-18 feature extractor, P and S picking heads, shift-and-stack over candidate hypocentres and event detection, with a multi-station input (station gathers plus travel times). The official repository (non-commercial licence, no shift-and-stack, no weights) is only a test oracle: the feature extractor and both heads match the author's code; the shift-and-stack module and the end-to-end model are unverified. Its picking heads are scored on the earthquake.picking task.
    * - Earthquake
      - `SeisBench <https://github.com/seisbench/seisbench>`_
      - Benchmark / Data Ecosystem
@@ -114,7 +119,7 @@ Method and Resource Matrix
      - Dataset / Forecast Benchmark
      - ``Missing``
      - None
-     - AEFA is a weekly earthquake-occurrence forecasting dataset with electromagnetic / geoacoustic features (Chen et al. 2025, doi:10.1016/j.geoai.2025.100022; README states GPL-3.0). No loader exists; the former aefa_forecast adapter generated synthetic wavefields (now earthquake_forecast_synthetic) and was removed.
+     - AEFA is a weekly earthquake-occurrence forecasting dataset with electromagnetic / geoacoustic features (Chen et al. 2025, doi:10.1016/j.geoai.2025.100022; README states GPL-3.0). No loader exists; the former aefa_forecast adapter generated synthetic wavefields (now earthquake_wavefield_synthetic, used by WaveCastNet's wavefield-forecasting task) and was removed.
    * - Wildfire
      - `wildfire_forecasting <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_
      - Baseline
@@ -294,13 +299,9 @@ part of the current core method set.
      - :doc:`XGBoost <modules/models_xgboost>`
      - Implemented outside the current core method set and kept public as an additional model.
    * - Earthquake
-     - ``experimental``
-     - :doc:`EQNet (stand-in) <modules/models_eqnet>`
-     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
-   * - Earthquake
-     - ``experimental``
-     - :doc:`WaveCastNet <modules/models_wavecastnet>`
-     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
+     - ``variant``
+     - :doc:`EQNet <modules/models_eqnet>`
+     - Planned method rebuilt from its paper; only the parts covered by a reference implementation are verified against code (see its Reproduction section).
    * - Flood
      - ``experimental``
      - :doc:`FloodCast <modules/models_floodcast>`

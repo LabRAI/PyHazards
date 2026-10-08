@@ -173,6 +173,8 @@ jobs:
             tests: tests/oracle/test_prithvi_oracle.py
           # Earthquake phase pickers: the official PhaseNet (TF1 graph), EQTransformer and GPD (Keras) run on
           # TensorFlow 2.11 with their released weights; SeisBench 0.12.6 (GPL-3.0) is a second oracle.
+          # WaveCastNet's official PyTorch code and both released checkpoints (40 MB, 66 MB, Google Drive),
+          # and EQNet's backbone / heads (AI4EPS/EQNet, non-commercial: oracle only) need only torch and numpy.
           - suite: earthquake
             python: "3.10"
             torch: torch
@@ -180,13 +182,16 @@ jobs:
             references: >-
               PhaseNet EQTransformer generalized-phase-detection seisbench_phasenet_original
               seisbench_eqtransformer_original seisbench_eqtransformer_original_nonconservative
-              seisbench_gpd_original
+              seisbench_gpd_original WaveCastNet wavecastnet_dense_checkpoint wavecastnet_sparse_checkpoint
+              EQNet EQNet-2022
             tests: >-
               tests/oracle/test_picking_metrics_oracle.py
               tests/oracle/test_phasenet_oracle.py
               tests/oracle/test_eqtransformer_oracle.py
               tests/oracle/test_gpd_oracle.py
               tests/oracle/test_seisbench_reader_oracle.py
+              tests/oracle/test_wavecastnet_oracle.py
+              tests/oracle/test_eqnet_oracle.py
     steps:
       - uses: actions/checkout@v4
 

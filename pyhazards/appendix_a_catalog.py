@@ -23,7 +23,7 @@ STATUS_LABELS = {
     "missing": "Missing",
 }
 
-SUMMARY_STATUSES = ("core", "experimental", "external", "missing")
+SUMMARY_STATUSES = ("core", "variant", "experimental", "external", "missing")
 
 
 @dataclass(frozen=True)
@@ -56,11 +56,11 @@ APPENDIX_A_ENTRIES: List[AppendixAEntry] = [
     AppendixAEntry("Earthquake", "PhaseNet", "Baseline", "https://github.com/AI4EPS/PhaseNet", "core", ("phasenet",), "Port of the official TensorFlow U-Net (268,443 parameters); the released checkpoint 190703-214543 loads without TensorFlow and matches the official graph and SeisBench's port. Scored with the PhaseNet and EQTransformer pick metrics on real SeisBench-format / STEAD data."),
     AppendixAEntry("Earthquake", "EQTransformer", "Baseline", "https://github.com/smousavi05/EQTransformer", "core", ("eqtransformer",), "Port of the released Keras models (paper model 371,639 parameters, conservative 376,423) with detection, P and S outputs; both official .h5 files load and match Keras and SeisBench."),
     AppendixAEntry("Earthquake", "GPD", "Baseline", "https://github.com/interseismic/generalized-phase-detection", "core", ("gpd",), "Port of the released Keras P/S/noise window classifier (1,741,003 parameters) and its sliding-window picker; the official weights match Keras and SeisBench and reproduce the shipped Anza picks."),
-    AppendixAEntry("Earthquake", "EQNet", "Baseline", "https://github.com/AI4EPS/EQNet", "experimental", ("eqnet",), "Not faithful: the registered eqnet is a small transformer regressor, not the paper's multi-station ResNet with picking heads and shift-and-stack association. The official repository is under a non-commercial licence and lacks the shift-and-stack model, so EQNet must be rewritten from the paper (Zhu et al. 2022, doi:10.1029/2021JB023283)."),
+    AppendixAEntry("Earthquake", "EQNet", "Baseline", "https://github.com/AI4EPS/EQNet", "variant", ("eqnet",), "Rebuilt from the paper (Zhu et al. 2022, doi:10.1029/2021JB023283; 1,043,619 parameters): 1-D ResNet-18 feature extractor, P and S picking heads, shift-and-stack over candidate hypocentres and event detection, with a multi-station input (station gathers plus travel times). The official repository (non-commercial licence, no shift-and-stack, no weights) is only a test oracle: the feature extractor and both heads match the author's code; the shift-and-stack module and the end-to-end model are unverified. Its picking heads are scored on the earthquake.picking task."),
     AppendixAEntry("Earthquake", "SeisBench", "Benchmark / Data Ecosystem", "https://github.com/seisbench/seisbench", "core", notes="seisbench_waveforms reads SeisBench-format datasets (and STEAD's own files) with PyHazards' own reader, checked against SeisBench's writer and reader; SeisBench itself (GPL-3.0) is only a test oracle. Datasets are downloaded by the user."),
     AppendixAEntry("Earthquake", "pick-benchmark", "Benchmark", "https://github.com/seisbench/pick-benchmark", "missing", notes="Its SeisBench-format datasets can be read with seisbench_waveforms, but its three evaluation tasks (event detection AUC, phase identification MCC, onset regression on sampled windows) are not implemented; PyHazards scores pickers with the PhaseNet / EQTransformer pick metrics instead. The former synthetic pick_benchmark_waveforms adapter was removed."),
     AppendixAEntry("Earthquake", "pyCSEP", "Benchmark / Reports", "https://github.com/SCECCode/pycsep", "missing", notes="pyCSEP tests earthquake-rate forecasts (Savran et al. 2022, doi:10.1785/0220220033); PyHazards has no rate-forecasting task. The former 'pyCSEP-style' JSON export of the wavefield-forecasting benchmark was only a metrics dump and was removed."),
-    AppendixAEntry("Earthquake", "AEFA", "Dataset / Forecast Benchmark", "https://github.com/chenyk1990/aefa", "missing", notes="AEFA is a weekly earthquake-occurrence forecasting dataset with electromagnetic / geoacoustic features (Chen et al. 2025, doi:10.1016/j.geoai.2025.100022; README states GPL-3.0). No loader exists; the former aefa_forecast adapter generated synthetic wavefields (now earthquake_forecast_synthetic) and was removed."),
+    AppendixAEntry("Earthquake", "AEFA", "Dataset / Forecast Benchmark", "https://github.com/chenyk1990/aefa", "missing", notes="AEFA is a weekly earthquake-occurrence forecasting dataset with electromagnetic / geoacoustic features (Chen et al. 2025, doi:10.1016/j.geoai.2025.100022; README states GPL-3.0). No loader exists; the former aefa_forecast adapter generated synthetic wavefields (now earthquake_wavefield_synthetic, used by WaveCastNet's wavefield-forecasting task) and was removed."),
     AppendixAEntry("Wildfire", "wildfire_forecasting", "Baseline", "https://github.com/Orion-AI-Lab/wildfire_forecasting", "core", ("wildfire_forecasting",), "The paper's LSTM (default) and ConvLSTM are ported and checked against the official code; the Greek datacube is not loaded yet (synthetic smoke data). The paper's random forest (random_forest, checked against the official notebook) and XGBoost (xgboost, hyperparameters pending the paper's Supporting Information) are separate entries."),
     AppendixAEntry("Wildfire", "WildfireSpreadTS", "Baseline / Benchmark", "https://github.com/SebastianGer/WildfireSpreadTS", "core", ("wildfirespreadts",)),
     AppendixAEntry("Wildfire", "ASUFM", "Baseline", "https://github.com/bronteee/fire-asufm", "core", ("asufm",), "Next-day fire-mask segmentation on 64x64 NDWS tiles, verified against the official code; the smoke benchmark runs it on synthetic 64x64 spread rasters because no NDWS loader exists yet."),
@@ -215,6 +215,7 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
     card_map = {card.model_name: card for card in cards}
     summary = _summary_rows()
     non_core = _grouped_non_core_cards(cards)
+    planned_models = {name for entry in APPENDIX_A_ENTRIES for name in entry.mapped_models}
 
     lines: List[str] = [
         GENERATED_MARKER,
@@ -242,12 +243,13 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
         "--------------",
         "",
         ".. list-table::",
-        "   :widths: 26 16 16 16 16",
+        "   :widths: 26 14 14 14 14 14",
         "   :header-rows: 1",
         "   :class: dataset-list",
         "",
         "   * - Hazard Family",
         "     - Implemented",
+        "     - Variant only",
         "     - Experimental",
         "     - External",
         "     - Missing",
@@ -258,6 +260,7 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
             [
                 "   * - {hazard}".format(hazard=hazard_family),
                 "     - {count}".format(count=counts["core"]),
+                "     - {count}".format(count=counts["variant"]),
                 "     - {count}".format(count=counts["experimental"]),
                 "     - {count}".format(count=counts["external"]),
                 "     - {count}".format(count=counts["missing"]),
@@ -345,7 +348,13 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
                     name=first.display_name,
                     slug=first.module_doc_name,
                 )
-                reason = "Implemented outside the current core method set and kept public as an additional model."
+                if first.model_name in planned_models:
+                    reason = (
+                        "Planned method rebuilt from its paper; only the parts covered by a reference implementation "
+                        "are verified against code (see its Reproduction section)."
+                    )
+                else:
+                    reason = "Implemented outside the current core method set and kept public as an additional model."
 
             lines.extend(
                 [

@@ -25,7 +25,10 @@ def test_appendix_a_page_lists_missing_and_non_core_entries() -> None:
     assert "models_forefire" not in page
     assert "models_wrf_sfire" not in page
     assert ":doc:`FireCastNet <modules/models_firecastnet>`" in page
-    assert ":doc:`WaveCastNet <modules/models_wavecastnet>`" in page
+    # EQNet is rebuilt from its paper (variant); WaveCastNet is core and not an Appendix A item.
+    assert ":doc:`EQNet <modules/models_eqnet>`" in page
+    assert "``Variant only``" in page and "     - Variant only" in page
+    assert "models_wavecastnet" not in page
 
 
 def test_appendix_a_page_is_linked_from_docs_index() -> None:

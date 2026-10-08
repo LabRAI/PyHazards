@@ -3,6 +3,7 @@ from .earthquake import (
     SeisBenchWaveformDataset,
     SyntheticEarthquakeForecastDataset,
     SyntheticEarthquakeWaveformDataset,
+    SyntheticEarthquakeWavefieldDataset,
 )
 from .flood import (
     CamelsUSStreamflowDataset,
@@ -42,6 +43,7 @@ __all__ = [
     "SeisBenchWaveformDataset",
     "SyntheticEarthquakeForecastDataset",
     "SyntheticEarthquakeWaveformDataset",
+    "SyntheticEarthquakeWavefieldDataset",
     "CamelsUSStreamflowDataset",
     "CaravanStreamflowDataset",
     "SyntheticFloodInundationDataset",
@@ -70,7 +72,9 @@ __all__ = [
     "WildfireTrackOTemporalDataset",
 ]
 
-register_dataset(SyntheticEarthquakeForecastDataset.name, SyntheticEarthquakeForecastDataset)
+register_dataset(SyntheticEarthquakeWavefieldDataset.name, SyntheticEarthquakeWavefieldDataset)
+# Deprecated alias of earthquake_wavefield_synthetic (the former name).
+register_dataset("earthquake_forecast_synthetic", SyntheticEarthquakeWavefieldDataset)
 register_dataset(SyntheticEarthquakeWaveformDataset.name, SyntheticEarthquakeWaveformDataset)
 register_dataset(SeisBenchWaveformDataset.name, SeisBenchWaveformDataset)
 register_dataset(SyntheticFloodInundationDataset.name, SyntheticFloodInundationDataset)

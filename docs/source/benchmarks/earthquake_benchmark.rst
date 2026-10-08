@@ -8,7 +8,9 @@ Overview
 
 ``earthquake.picking`` takes three-component windows ``(n, 3, samples)`` and arrival targets ``(n, 2)`` (P, S samples; NaN = none). Each model's own pipeline turns waveforms into picks (``annotate`` = official normalisation + forward; ``extract_picks`` = official post-processing: PhaseNet peaks above 0.5, EQTransformer's detection-and-picking rule, GPD's sliding-window triggers). Picks are matched to the manual arrivals per phase: precision, recall and F1 within a tolerance window and residual mean, standard deviation and MAE in seconds, with ``protocol=phasenet`` (Zhu & Beroza 2019: TP if |dt| < 0.1 s, residual statistics over |dt| < 0.5 s) or ``protocol=eqtransformer`` (Mousavi et al. 2020: TP if |dt| < 0.5 s). Models with a detection output also get trace-level detection precision, recall and F1.
 
-Real data comes from ``seisbench_waveforms`` (SeisBench-format datasets and STEAD's own files); the smoke configs run on ``earthquake_waveforms_synthetic``. ``earthquake.forecasting`` (MAE / MSE of future wavefield frames) is exercised by WaveCastNet on synthetic sequences only.
+Real data comes from ``seisbench_waveforms`` (SeisBench-format datasets and STEAD's own files); the smoke configs run on ``earthquake_waveforms_synthetic``. EQNet is scored here through its single-station picking heads (the paper's STEAD evaluation); its multi-station event detection has no benchmark task yet.
+
+``earthquake.forecasting`` takes velocity wavefields ``(n, 3, T_in, H, W)`` and future frames ``(n, 3, T_out, H, W)``. Models with ``rollout`` (WaveCastNet) forecast ``T_out`` frames by repeated calls on their own output, as the official validation does, in evaluation mode with a seeded generator for the decoder noise (param ``seed``). Metrics follow WaveCastNet's ``Validation_pixel.py`` (equations 17-18 of Lyu et al. 2025): ACC, RFNE and RMSE per (sequence, channel) over time and space, averaged over all pairs (``acc``, ``rfne``, ``rmse``) and per channel (``acc_x`` ... ``rfne_z``), plus MAE and MSE. It runs on ``earthquake_wavefield_synthetic`` only (synthetic point sources): the paper's SW4 simulations (tens of GB) have no reader yet. This task is not earthquake-occurrence forecasting (AEFA, pyCSEP are not implemented).
 
 At a Glance
 -----------
@@ -98,6 +100,15 @@ Mapped benchmark ecosystems
    - ``detection_precision``
    - ``detection_recall``
    - ``detection_f1``
+   - ``acc``
+   - ``rfne``
+   - ``rmse``
+   - ``acc_x``
+   - ``acc_y``
+   - ``acc_z``
+   - ``rfne_x``
+   - ``rfne_y``
+   - ``rfne_z``
    - ``mae``
    - ``mse``
 
@@ -113,7 +124,7 @@ Mapped benchmark ecosystems
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`PhaseNet </modules/models_phasenet>`, :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`, :doc:`EQNet (stand-in) </modules/models_eqnet>`, :doc:`WaveCastNet </modules/models_wavecastnet>`.
+   :doc:`PhaseNet </modules/models_phasenet>`, :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`, :doc:`EQNet </modules/models_eqnet>`, :doc:`WaveCastNet </modules/models_wavecastnet>`.
 
 .. dropdown:: Notes
    :class-container: catalog-dropdown
@@ -121,3 +132,4 @@ Mapped benchmark ecosystems
    - Before this release the picking evaluator reported one hit rate (both regressed picks within 8 samples) as precision, recall and F1 alike; those numbers are not comparable with the new ones.
    - EQTransformer's MAPE is not computed: the paper does not define its denominator.
    - Smoke configs use randomly initialised models on synthetic data; pass ``pretrained`` in the model params and a real dataset for meaningful numbers.
+   - Before this release ``earthquake.forecasting`` reported only MAE / MSE of a single forward pass on moving Gaussian blobs (``earthquake_forecast_synthetic``); the ACC / RFNE numbers are new.

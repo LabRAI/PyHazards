@@ -6,7 +6,7 @@ WaveCastNet
 Overview
 --------
 
-``wavecastnet`` is the PyHazards entrypoint for dense-grid earthquake wavefield forecasting based on the ConvLEM encoder-decoder design described by Lyu et al. (2025).
+``wavecastnet`` maps a wavefield history ``(batch, 3, time, height, width)`` to the next ``future_seq`` frames ``(batch, 3, future_seq, height, width)``. Every frame is embedded by three stride-2 ``Conv2d -> BatchNorm2d -> LeakyReLU`` layers (3 -> 36 -> 72 -> 144 channels, grid / 8); two stacked ConvLEM cells with reset gate and per-pixel peepholes encode the sequence, two more, started from the encoder states, decode the forecast; each latent frame is reconstructed by a transposed convolution, ``PixelShuffle(4)`` and a 3x3 convolution. ``variant="sparse"`` (``AEConvLEM_sparse``) reads the wavefield at station grid points, zeroes a random subset of the stations (masked-autoencoder training, also applied in evaluation) and embeds the station vector with two fully connected layers and two convolutions.
 
 At a Glance
 -----------
@@ -31,7 +31,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         Experimental Adapter
+         Implemented
 
       .. container:: catalog-stat-note
 
@@ -63,9 +63,9 @@ At a Glance
 Description
 -----------
 
-``wavecastnet`` is the PyHazards entrypoint for dense-grid earthquake wavefield forecasting based on the ConvLEM encoder-decoder design described by Lyu et al. (2025).
+``wavecastnet`` maps a wavefield history ``(batch, 3, time, height, width)`` to the next ``future_seq`` frames ``(batch, 3, future_seq, height, width)``. Every frame is embedded by three stride-2 ``Conv2d -> BatchNorm2d -> LeakyReLU`` layers (3 -> 36 -> 72 -> 144 channels, grid / 8); two stacked ConvLEM cells with reset gate and per-pixel peepholes encode the sequence, two more, started from the encoder states, decode the forecast; each latent frame is reconstructed by a transposed convolution, ``PixelShuffle(4)`` and a 3x3 convolution. ``variant="sparse"`` (``AEConvLEM_sparse``) reads the wavefield at station grid points, zeroes a random subset of the stations (masked-autoencoder training, also applied in evaluation) and embeds the station vector with two fully connected layers and two convolutions.
 
-This implementation focuses on the core dense-grid forecasting path and keeps data loading outside the model so users can adapt it to their own simulation or sensor pipelines.
+It is a port of the official PyTorch code with the official parameter names, creation order and initialisation. The released dense checkpoint ``best_lem_dense_.pt`` loads with ``strict=True`` (``pretrained="dense"``) and reproduces the official outputs. As in the official code, the decoder's first input is uniform random noise in training and evaluation, so forecasts are random: pass ``generator=torch.Generator().manual_seed(...)`` (or ``decoder_noise=``) to ``forward`` / ``rollout`` for repeatable outputs. ``rollout`` repeats the forecast on its own output like the official validation (30 input frames, six calls of 30 frames and one of 15: 101.4 s at 0.52 s per frame). ``WaveCastNetLoss`` is the official training loss and ``pyhazards.metrics.wavefield`` the official ACC / RFNE / RMSE.
 
 Benchmark Compatibility
 -----------------------
@@ -77,10 +77,25 @@ External References
 
 **Paper:** `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_ | **Repo:** `Repository <https://github.com/dwlyu/WaveCastNet>`__
 
+Used In
+-------
+
+- `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning (Lyu et al., Nature Communications 16:10622, 2025; arXiv:2405.20516) <https://doi.org/10.1038/s41467-025-65435-2>`_ (`repo <https://github.com/dwlyu/WaveCastNet>`__): SW4 viscoelastic simulations (<= 0.5 Hz) of 960 point sources (M < 4.5) on the Hayward fault, X / Y / Z velocities on a 344 x 224 grid (300 m), 0.26 s sampling, split by epicentre per depth (README: 300 training, 45 validation, 30 test events). Table 1a, 5.7 s after the onset, ACC / RFNE: dense input 0.98 / 0.20, sparse input (101 ShakeAlert stations) 0.93 / 0.36. Table 1b (finite-fault ruptures): M4.5 0.95 / 0.35 down to M7.0 0.53 / 0.86. The data (all_test.npy 16 GB, all_validation.npy 24 GB, larger training file; shapes (events, 3, 376, 256, 461), cropped to 344 x 224 by the official loader) are on the authors' Google Drive; PyHazards has no reader for them yet.
+
 Reproduction
 ------------
 
-Not yet verified against a reference implementation.
+- **Reference implementation:** `https://github.com/dwlyu/WaveCastNet <https://github.com/dwlyu/WaveCastNet>`__ at ``c859e04`` (MIT (code; Copyright (c) 2023 dwlyu). The Google Drive checkpoints carry no licence statement.)
+- **Checked configuration:** ``AEConvLEM_dense(dt=1, num_channels=3, num_kernels=144, kernel_size=(3, 3), padding=(1, 1), activation="tanh", frame_size=(43, 28))`` and ``AEConvLEM_sparse(..., mask_mode=1, mask_ratio=1 - 101/564)`` from ``src/models_earthquake`` (README and load_pretrained_model.ipynb), ``Huber`` of ``earthquake_train.py`` and ``Validation_pixel.py``. Dense: 10,093,242 parameters (embedding 209,844, reconstruction 331,920, four ConvLEM cells of 2,387,808, output convolution 246); sparse with the 564 stations of filtered_coord.npy: 16,535,430. Checked: names and shapes, seeded initialisation, outputs in evaluation and training mode (exactly equal), batch-norm statistics and gradients, the rolling validation forecast, the two cell variants, the released dense checkpoint (strict load, equal outputs), the released sparse checkpoint (strict load with 558 stations, equal outputs), the loss and the metrics.
+- **Parameter count:** 10,093,242
+- **Verified:** parameter count, seeded initialisation, parameter names and shapes, forward outputs, official pretrained weights
+- **Oracle test:** ``tests/oracle/test_wavecastnet_oracle.py``
+- **Deviation:** The released sparse checkpoint ``best_lem_irr_mask_shakealert_.pt`` was trained on 558 stations, but the repository's ``filtered_coord.npy`` lists 564 (the paper mentions 558), and the 101 ShakeAlert stations (``shakealert_coords.npy``) are not a subset of them; how they were fed to the model is not in the released code. The checkpoint therefore cannot be used for real forecasts and is not offered by ``pretrained``; it is only loaded in the oracle test (with 558 arbitrary stations).
+- **Deviation:** Station masking is one uniform draw per (sample, station) compared with ``mask_ratio`` (the code), not an exact 80 % without replacement (the paper's wording). ``station_mask=`` replaces the draw.
+- **Deviation:** Without masking (``mask_mode=False``) the official ``Encoder1d`` calls a removed attention layer and crashes; the port then uses all stations unmasked.
+- **Deviation:** Station coordinates, the grid size and the horizon are constructor arguments instead of hard-coded NERSC paths and the 344 x 224 grid; the sparse layers scale with the grid (hidden width ``(H/4)(W/4)/4``); only the official sizes are checked. ``num_kernels`` must equal ``48 * channels`` as in the official embedding.
+- **Deviation:** The diagnostic ``return_dt`` output (gate histograms) is not ported; outputs are stacked instead of written into a float32 zero tensor (same values for float32 inputs).
+- **Deviation:** Training is not part of the module: the official script uses Adam (learning rate 5e-4), StepLR (25 epochs, gamma 0.5), 100 epochs, batch 64, 30-frame inputs and targets subsampled by 2 from 461-step sequences, the delta-0.2 Huber variant, and keeps the weights with the lowest validation loss.
 
 Registry Name
 -------------
@@ -100,28 +115,22 @@ Programmatic Use
    import torch
    from pyhazards.models import build_model
 
-   model = build_model(
-       name="wavecastnet",
-       task="regression",
-       in_channels=3,
-       height=32,
-       width=24,
-       temporal_in=6,
-       temporal_out=4,
-       hidden_dim=32,
-       num_layers=1,
-       dropout=0.0,
-   )
+   # Official dense checkpoint (no licence stated), downloaded and checked by sha256 on first use:
+   # model = build_model(name="wavecastnet", task="forecasting", pretrained="dense")
+   model = build_model(name="wavecastnet", task="forecasting", height=64, width=48, future_seq=4).eval()
 
-   x = torch.randn(2, 3, 6, 32, 24)
-   y = model(x)
-   print(y.shape)
+   history = torch.randn(1, 3, 6, 64, 48)  # (batch, X/Y/Z velocity, time, height, width)
+   with torch.no_grad():
+       forecast = model(history, generator=torch.Generator().manual_seed(0))  # (1, 3, 4, 64, 48)
+       long = model.rollout(history, 10, generator=torch.Generator().manual_seed(0))  # (1, 3, 10, 64, 48)
+   print(forecast.shape, long.shape)
 
 Notes
 -----
 
 - Lyu, Nakata, Ren, Mahoney, Pitarka, Nakata & Erichson, Nature Communications 16:10622 (2025); arXiv:2405.20516. Official code: dwlyu/WaveCastNet (MIT).
-- Not yet faithful (audit of 2026-10-07): the core ConvLEM cell pair is there, but the down-sampling embedding, the PixelShuffle reconstruction, the reset gate, the peephole dimensions and the training loss (Huber delta 0.2 in the official training) differ from the official code, so the official checkpoints do not load. Marked experimental until it is ported.
+- Forecasts are random because the decoder starts from uniform noise (official behaviour, also in evaluation); the earthquake.forecasting benchmark passes a seeded generator (param ``seed``).
+- The official model is tied to its grid: height and width must be multiples of 8 and equal the construction values (per-pixel peepholes on the H/8 x W/8 latent grid).
+- ``WaveCastNetLoss()`` is the training loss of the code (Huber variant with delta 0.2: standard Huber / delta + delta / 2); ``variant='paper'`` gives equation (4) of the paper.
 - WaveCastNet forecasts ground-motion wavefields. It is not related to AEFA (an earthquake-occurrence forecasting dataset) or pyCSEP (tests of earthquake-rate forecasts), which earlier versions of the catalog linked to it.
-- The PyHazards version currently targets dense-grid forecasting rather than the paper's sparse-sensor variants.
-- The smoke test uses reduced spatial and temporal sizes so it stays CPU-safe in CI.
+- Breaking change: the former builder arguments ``temporal_in``, ``temporal_out``, ``hidden_dim``, ``num_layers`` and ``dropout`` are gone (any input length, horizon ``future_seq``), the task is ``forecasting`` (``regression`` still accepted) and ``ConvLEMCell`` takes ``frame_size`` and uses the official parameter names.

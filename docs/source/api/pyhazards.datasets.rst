@@ -29,7 +29,7 @@ Flood
 Earthquake
 ~~~~~~~~~~
 
-:doc:`SeisBench-format Waveforms </datasets/seisbench_waveforms>`, :doc:`Synthetic Phase-Picking Waveforms </datasets/earthquake_waveforms_synthetic>`, :doc:`Synthetic Wavefield Sequences </datasets/earthquake_forecast_synthetic>`.
+:doc:`SeisBench-format Waveforms </datasets/seisbench_waveforms>`, :doc:`Synthetic Phase-Picking Waveforms </datasets/earthquake_waveforms_synthetic>`, :doc:`Synthetic Wavefield Sequences </datasets/earthquake_wavefield_synthetic>`.
 
 Tropical Cyclone
 ~~~~~~~~~~~~~~~~

@@ -1,0 +1,53 @@
+slug: earthquake_wavefield_synthetic
+display_name: Synthetic Wavefield Sequences
+hazard_family: Earthquake
+source_role: Synthetic Smoke Data
+summary: Synthetic X / Y / Z ground-velocity wavefields of point sources for wavefield-forecasting smoke runs. Not real data.
+provider: Generated locally by PyHazards (pyhazards/datasets/earthquake/synthetic.py)
+geometry: Regular grid of three-component velocity frames
+spatial_resolution: Not applicable (synthetic grid, default 32 x 24 cells)
+temporal_resolution: Frames (default 6 input and 6 target frames)
+update_cadence: Generated on load
+period_of_record: Not applicable (synthetic)
+coverage: Not applicable (synthetic)
+formats: PyTorch tensors via the dataset registry
+overview:
+  - >
+    This dataset is synthetic. Each sequence is a point source at a random grid position and onset
+    radiating a P and an S wavefront (Ricker pulses at two speeds, amplitudes decaying with distance):
+    P moves particles radially and vertically, S transversally, giving X, Y and Z velocity channels. It
+    mimics only the layout of WaveCastNet's data (three velocity components on a regular grid); it is not
+    an elastic simulation and says nothing about forecasting skill on real or SW4-simulated wavefields.
+  - >
+    It exercises the ``earthquake.forecasting`` task (ACC / RFNE / RMSE of WaveCastNet) in CI. Formerly
+    ``earthquake_forecast_synthetic`` (moving Gaussian blobs; that name is kept as a deprecated alias)
+    and, before that, ``aefa_forecast``: AEFA is an unrelated earthquake-occurrence forecasting dataset.
+  - >
+    WaveCastNet's own data (SW4 simulations of the San Francisco Bay Area, arrays ``(events, 3, 376, 256,
+    461)``, 16-24 GB per file) are on the authors' Google Drive; PyHazards has no reader for them yet.
+data_characteristics:
+  - "Inputs ``(n, 3, temporal_in, height, width)``, targets ``(n, 3, temporal_out, height, width)``; channels X, Y, Z (``channel_names`` metadata)."
+  - "Seeded generator (``seed``); ``vp`` and ``vs`` are wave speeds in grid cells per frame; height and width default to multiples of 8, as WaveCastNet needs."
+typical_use_cases:
+  - WaveCastNet smoke tests of the wavefield-forecasting benchmark.
+access_links:
+  - label: Generator source
+    url: https://github.com/LabRAI/PyHazards/blob/main/pyhazards/datasets/earthquake/synthetic.py
+inspection: null
+registry:
+  name: earthquake_wavefield_synthetic
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset("earthquake_wavefield_synthetic", micro=True, temporal_in=6, temporal_out=6).load()
+    train = data.get_split("train")
+    print(train.inputs.shape, train.targets.shape)  # (4, 3, 6, 32, 24) (4, 3, 6, 32, 24)
+references:
+  - citation: "PyHazards synthetic wavefield generator (no external source)."
+    url: https://github.com/LabRAI/PyHazards/blob/main/pyhazards/datasets/earthquake/synthetic.py
+pyhazards_usage:
+  - Used by ``wavecastnet_benchmark_smoke.yaml``.
+related_models:
+  - wavecastnet
+related_benchmarks:
+  - earthquake_benchmark

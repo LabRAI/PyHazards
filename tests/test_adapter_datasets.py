@@ -4,7 +4,7 @@ from pyhazards.datasets import available_datasets, load_dataset
 def test_named_adapter_datasets_are_registered_and_loadable():
     expected = {
         "earthquake_waveforms_synthetic",
-        "earthquake_forecast_synthetic",
+        "earthquake_wavefield_synthetic",
         "flood_streamflow_synthetic",
         "flood_mesh_synthetic",
         "flood_inundation_synthetic",
@@ -21,6 +21,11 @@ def test_named_adapter_datasets_are_registered_and_loadable():
         bundle = load_dataset(name, micro=True).load()
         assert bundle.splits["test"].inputs is not None
         assert bundle.metadata.get("source_dataset", name) == name or bundle.metadata.get("dataset") == name
+
+
+def test_former_wavefield_name_is_a_deprecated_alias():
+    bundle = load_dataset("earthquake_forecast_synthetic", micro=True).load()
+    assert bundle.metadata["dataset"] == "earthquake_wavefield_synthetic" and bundle.metadata["synthetic"]
 
 
 def test_real_earthquake_reader_is_registered_but_needs_data():
