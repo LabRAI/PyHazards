@@ -1,8 +1,8 @@
-"""Flood datasets: real streamflow readers (CAMELS-US, Caravan) and synthetic smoke-test data.
+"""Flood datasets: real readers (CAMELS-US, Caravan, HydroGraphNet White River) and synthetic smoke-test data.
 
-Only ``camels_us_streamflow`` and ``caravan_streamflow`` read real data (from a local copy of the official
-release). The ``*_synthetic`` datasets generate random numbers in the layout of a task so that models
-and evaluators can be exercised without data; they carry no benchmark's name.
+``camels_us_streamflow``, ``caravan_streamflow`` and ``hydrographnet_white_river`` read real data (from a
+local copy of the official release). The ``*_synthetic`` datasets generate random numbers in the layout
+of a task so that models and evaluators can be exercised without data; they read no benchmark's data.
 """
 
 from __future__ import annotations
@@ -12,7 +12,6 @@ import pandas as pd
 import torch
 
 from ..base import DataBundle, DataSplit, Dataset, FeatureSpec, LabelSpec
-from ..graph import GraphTemporalDataset
 from .camels_us import (
     CAMELS_US_TARGET,
     KRATZERT2019_CHECKPOINT_STATIC_ORDER,
@@ -26,6 +25,21 @@ from .camels_us import (
     load_camels_us_forcings,
 )
 from .caravan import CaravanStreamflowDataset, load_caravan_attributes, load_caravan_timeseries
+from .hydrograph import (
+    HydroGraphNetWhiteRiverDataset,
+    HydrographRollouts,
+    HydrographWindows,
+    SyntheticFloodMeshDataset,
+    build_hydrograph_bundle,
+    hydrograph_collate,
+    read_hydrograph,
+    read_static,
+)
+from .urbanfloodcast import (
+    SyntheticUrbanFloodCastDataset,
+    prepare_urbanfloodcast_event,
+    synthetic_urbanfloodcast_event,
+)
 from .streamflow import (
     StreamflowScaler,
     StreamflowWindows,
@@ -118,65 +132,6 @@ class SyntheticFloodStreamflowDataset(Dataset):
         )
 
 
-class SyntheticFloodMeshDataset(Dataset):
-    """Synthetic graph-temporal node series (water depth on mesh nodes) for mesh-flood smoke runs."""
-
-    name = "flood_mesh_synthetic"
-
-    def __init__(
-        self,
-        cache_dir: str | None = None,
-        samples: int = 40,
-        history: int = 4,
-        nodes: int = 6,
-        features: int = 2,
-        micro: bool = False,
-    ):
-        super().__init__(cache_dir=cache_dir)
-        self.samples = 12 if micro else int(samples)
-        self.history = int(history)
-        self.nodes = int(nodes)
-        self.features = int(features)
-
-    def _make_split(self, x: torch.Tensor, y: torch.Tensor, adj: torch.Tensor) -> DataSplit:
-        dataset = GraphTemporalDataset(x, y, adjacency=adj)
-        return DataSplit(inputs=dataset, targets=None)
-
-    def _load(self) -> DataBundle:
-        x = torch.randn(self.samples, self.history, self.nodes, self.features, dtype=torch.float32)
-        adjacency = torch.eye(self.nodes, dtype=torch.float32)
-        adjacency += torch.diag(torch.ones(self.nodes - 1), diagonal=1)
-        adjacency += torch.diag(torch.ones(self.nodes - 1), diagonal=-1)
-        y = x[:, -1, :, :1] * 0.7 + 0.1
-
-        train_end = max(1, int(0.7 * self.samples))
-        val_end = max(train_end + 1, int(0.85 * self.samples))
-        splits = {
-            "train": self._make_split(x[:train_end], y[:train_end], adjacency),
-            "val": self._make_split(x[train_end:val_end], y[train_end:val_end], adjacency),
-            "test": self._make_split(x[val_end:], y[val_end:], adjacency),
-        }
-        return DataBundle(
-            splits=splits,
-            feature_spec=FeatureSpec(
-                input_dim=self.features,
-                description="Synthetic node features on a line graph (random numbers).",
-                extra={"nodes": self.nodes, "history": self.history},
-            ),
-            label_spec=LabelSpec(
-                num_targets=1,
-                task_type="regression",
-                description="Synthetic next-step nodewise water depth.",
-            ),
-            metadata={
-                "dataset": self.name,
-                "source_dataset": self.name,
-                "hazard_task": "flood.inundation",
-                "synthetic": True,
-            },
-        )
-
-
 class SyntheticFloodInundationDataset(Dataset):
     """Synthetic raster dataset for flood inundation smoke runs."""
 
@@ -257,6 +212,9 @@ __all__ = [
     "CAMELS_US_TARGET",
     "CamelsUSStreamflowDataset",
     "CaravanStreamflowDataset",
+    "HydroGraphNetWhiteRiverDataset",
+    "HydrographRollouts",
+    "HydrographWindows",
     "KRATZERT2019_CHECKPOINT_STATIC_ORDER",
     "KRATZERT2019_DYNAMIC_INPUTS",
     "KRATZERT2019_PERIODS",
@@ -266,13 +224,20 @@ __all__ = [
     "SyntheticFloodInundationDataset",
     "SyntheticFloodMeshDataset",
     "SyntheticFloodStreamflowDataset",
+    "SyntheticUrbanFloodCastDataset",
+    "build_hydrograph_bundle",
     "build_streamflow_bundle",
+    "hydrograph_collate",
     "load_camels_us_attributes",
     "load_camels_us_basin",
     "load_camels_us_discharge",
     "load_camels_us_forcings",
     "load_caravan_attributes",
     "load_caravan_timeseries",
+    "prepare_urbanfloodcast_event",
     "read_basin_list",
+    "read_hydrograph",
+    "read_static",
     "scaler_from_metadata",
+    "synthetic_urbanfloodcast_event",
 ]

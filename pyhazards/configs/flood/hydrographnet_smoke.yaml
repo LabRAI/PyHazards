@@ -1,11 +1,15 @@
-# HydroGraphNet (not yet a faithful port) on synthetic mesh-node water depths, scored per node.
+# HydroGraphNet (PhysicsNeMo MeshGraphKAN, 2,318,722 parameters) rolled out autoregressively over synthetic
+# mesh hydrographs in the White River layout and scored in metres. Real data: dataset hydrographnet_white_river
+# with params {data_dir, test_ids} (rollout_length 30, as in the HydroGraphNet example).
 benchmark:
   name: flood
   hazard_task: flood.inundation
   metrics:
+    - rollout_rmse
     - pixel_mae
-    - iou
-    - f1
+    - rmse
+    - csi_10cm
+    - nse
   eval_split: test
 dataset:
   name: flood_mesh_synthetic
@@ -14,12 +18,9 @@ dataset:
 model:
   name: hydrographnet
   task: regression
-  params:
-    node_in_dim: 2
-    edge_in_dim: 3
-    out_dim: 1
+  params: {}
 report:
-  output_dir: reports/flood
+  output_dir: reports/flood_hydrographnet
   formats:
     - json
 seed: 7

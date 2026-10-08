@@ -42,9 +42,12 @@ Key corrections from the audit:
   stack is still missing.
 - Flood: the NeuralHydrology LSTM / EA-LSTM and Google's released FloodHub
   model are faithful ports, with real CAMELS-US and Caravan readers and per-basin
-  NSE / KGE evaluation. `FloodCast`, `UrbanFloodCast` and `HydroGraphNet` are
-  experimental stand-ins, and WaterBench / FloodCastBench / HydroBench have no
-  readers (their former adapters generated random numbers and were removed).
+  NSE / KGE evaluation. `HydroGraphNet` (PhysicsNeMo MeshGraphKAN, with a real
+  White River mesh reader and rollout evaluation) and `UrbanFloodCast` (the DNO,
+  written from the paper and checked against the unlicensed official code) are
+  faithful too. `FloodCast` stays an experimental stand-in (flood-model code never
+  released, widths not in the paper), and WaterBench / FloodCastBench / HydroBench
+  have no readers (their former adapters generated random numbers and were removed).
 - Storm has the main model adapters, but `TCBench`, `IBTrACS`, and
   `TropiCycloneNet-Dataset` are still missing. `GraphCast`, `Pangu`, and
   `FourCastNet` remain experimental wrappers and must not be counted as

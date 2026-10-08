@@ -90,14 +90,8 @@ python -c "import pyhazards; print(pyhazards.__version__)"
 ```python
 from pyhazards.models import build_model
 
-model = build_model(
-    name="hydrographnet",
-    task="regression",
-    node_in_dim=2,
-    edge_in_dim=3,
-    out_dim=1,
-)
-print(type(model).__name__)
+model = build_model(name="hydrographnet", task="regression")  # PhysicsNeMo's MeshGraphKAN
+print(type(model).__name__, sum(p.numel() for p in model.parameters()))  # HydroGraphNet 2318722
 ```
 
 3. Run a benchmark-aligned smoke configuration:

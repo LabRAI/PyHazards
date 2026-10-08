@@ -33,7 +33,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         44
+         46
 
       .. container:: catalog-stat-note
 
@@ -44,7 +44,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         6
+         4
 
       .. container:: catalog-stat-note
 
@@ -1040,6 +1040,33 @@ pages and compatible benchmark coverage.
 
                **Paper:** `How to deal w___ missing input data <https://doi.org/10.5194/hess-29-6221-2025>`_ | **Repo:** `Repository <https://github.com/google-research/flood-forecasting>`__
 
+         .. grid-item-card:: HydroGraphNet
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The physics-informed graph network of Taghizadeh et al. (CACIE 2025) as released in NVIDIA PhysicsNeMo (MeshGraphKAN): water depth and volume changes on an unstructured flood mesh, rolled out step by step.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Flood` :bdg-secondary:`Inundation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`HydroGraphNet <modules/models_hydrographnet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`HydroGraphNet White River <benchmarks/hydrographnet_white_river>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Interpretable physics-informed graph neural networks for flood forecasting <https://doi.org/10.1111/mice.13484>`_ | **Repo:** `Repository <https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet>`__
+
          .. grid-item-card:: NeuralHydrology LSTM
             :class-card: catalog-entry-card
 
@@ -1067,6 +1094,29 @@ pages and compatible benchmark coverage.
 
                **Paper:** `Rainfall-runoff modelling using Long Short-Term Memory (LSTM) networks <https://doi.org/10.5194/hess-22-6005-2018>`_ | **Repo:** `Repository <https://github.com/neuralhydrology/neuralhydrology>`__
 
+         .. grid-item-card:: UrbanFloodCast
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The deep neural operator (DNO) of UrbanFloodCast (Xu et al., J. Hydrology 2025): a U-shaped Fourier neural operator in space and time that predicts urban water depth and discharge for 24 steps at once.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Flood` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`UrbanFloodCast <modules/models_urbanfloodcast>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Urban flood modeling and forecasting with deep neural operator and transfer learning <https://doi.org/10.1016/j.jhydrol.2025.133705>`_ | **Repo:** `Repository <https://github.com/HydroPML/UrbanFloodCast>`__
+
       .. rubric:: Experimental Adapters
 
       .. container:: catalog-section-note
@@ -1082,7 +1132,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-entry-summary
 
-               A small convolutional inundation baseline under the FloodCast name; not the published model, whose code was never released (experimental).
+               A small convolutional inundation baseline under the FloodCast name; not the published model, whose flood-model code was never released and whose network widths the paper does not report (experimental).
 
             .. container:: catalog-chip-row
 
@@ -1099,52 +1149,6 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Large-scale flood modeling and forecasting with FloodCast <https://doi.org/10.1016/j.watres.2024.122162>`_ | **Repo:** `Repository <https://github.com/HydroPML/FloodCast>`__
-
-         .. grid-item-card:: HydroGraphNet
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               A compact graph network loosely modelled on HydroGraphNet; not yet a port of the published model (experimental).
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Flood` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`HydroGraphNet <modules/models_hydrographnet>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Interpretable physics-informed graph neural networks for flood forecasting <https://doi.org/10.1111/mice.13484>`_ | **Repo:** `Repository <https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet>`__
-
-         .. grid-item-card:: UrbanFloodCast
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               A four-layer convolutional inundation baseline under the UrbanFloodCast name; not the published deep neural operator (experimental).
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Flood` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-warning:`Experimental Adapter`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`UrbanFloodCast <modules/models_urbanfloodcast>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Urban flood modeling and forecasting with deep neural operator and transfer learning <https://doi.org/10.1016/j.jhydrol.2025.133705>`_ | **Repo:** `Repository <https://github.com/HydroPML/UrbanFloodCast>`__
 
 
    .. tab-item:: Tropical Cyclone

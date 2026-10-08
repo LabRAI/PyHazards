@@ -3,7 +3,8 @@
 # (google-research/flood-forecasting cdda28d) are imported from their pinned checkouts, so only their
 # dependencies are installed here: the model, dataset, metric and Tester modules import numba, ruamel.yaml,
 # xarray/netCDF4, scipy, matplotlib and tensorboard (NeuralHydrology), dask, zarr, more-itertools and
-# pydantic (googlehydrology).
+# pydantic (googlehydrology). The official UrbanFloodCast DNO (test_urbanfloodcast_oracle.py; HydroPML/UrbanFloodCast
+# f08846a, no licence, imported from its checkout) needs only torch, numpy, scipy and matplotlib.
 numpy==2.5.3
 pandas==3.0.6
 xarray==2026.9.0

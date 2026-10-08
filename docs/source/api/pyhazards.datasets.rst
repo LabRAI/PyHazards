@@ -24,7 +24,7 @@ Wildfire
 Flood
 ~~~~~
 
-:doc:`CAMELS-US </datasets/camels_us_streamflow>`, :doc:`Caravan </datasets/caravan_streamflow>`, :doc:`NOAA Flood Events </datasets/noaa_flood>`.
+:doc:`CAMELS-US </datasets/camels_us_streamflow>`, :doc:`Caravan </datasets/caravan_streamflow>`, :doc:`HydroGraphNet White River </datasets/hydrographnet_white_river>`, :doc:`NOAA Flood Events </datasets/noaa_flood>`, :doc:`Synthetic Mesh Hydrographs </datasets/flood_mesh_synthetic>`, :doc:`Synthetic Urban Flood Events </datasets/urbanfloodcast_synthetic>`.
 
 Earthquake
 ~~~~~~~~~~

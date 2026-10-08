@@ -6,7 +6,7 @@ HydroGraphNet
 Overview
 --------
 
-``hydrographnet`` is a PyHazards message-passing network with a harmonic (KAN-style) node encoder, residual edge / node updates and a delta-state decoder over ``{"x": (batch, time, nodes, features), "adj", "coords"}`` inputs. It is not the published HydroGraphNet: the official model (MeshGraphKAN in NVIDIA PhysicsNeMo) has LayerNorm in its MLPs, sum aggregation, a different feature and KAN layout and a physics-informed loss (2,318,722 parameters at the official configuration, against 204,802 here).
+``hydrographnet`` is a port of PhysicsNeMo's ``MeshGraphKAN``, the HydroGraphNet model: a Fourier Kolmogorov-Arnold network encodes the 16 node features, an MLP encodes the 3 edge features, 15 residual message-passing blocks update edges (MLP on edge, source and destination) and nodes (MLP on the sum of incoming messages and the node), and an MLP decodes the normalised changes of water depth and volume over one 20-minute step. Every MLP has two hidden layers of 128 and ReLU, and all but the decoder end in LayerNorm (2,318,722 parameters). It takes ``(node_features (N, 16), edge_features (E, 3), edge_index (2, E))`` (or a PyTorch Geometric graph, or a mesh batch mapping) and returns ``(N, 2)``; ``rollout`` runs the example's autoregressive inference, feeding ``last + change`` back into the depth / volume windows and the next inflow and precipitation into the forcing columns.
 
 At a Glance
 -----------
@@ -31,7 +31,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         Experimental Adapter
+         Implemented
 
       .. container:: catalog-stat-note
 
@@ -46,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-note
 
-         Forecasting
+         Inundation
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,14 +63,18 @@ At a Glance
 Description
 -----------
 
-``hydrographnet`` is a PyHazards message-passing network with a harmonic (KAN-style) node encoder, residual edge / node updates and a delta-state decoder over ``{"x": (batch, time, nodes, features), "adj", "coords"}`` inputs. It is not the published HydroGraphNet: the official model (MeshGraphKAN in NVIDIA PhysicsNeMo) has LayerNorm in its MLPs, sum aggregation, a different feature and KAN layout and a physics-informed loss (2,318,722 parameters at the official configuration, against 204,802 here).
+``hydrographnet`` is a port of PhysicsNeMo's ``MeshGraphKAN``, the HydroGraphNet model: a Fourier Kolmogorov-Arnold network encodes the 16 node features, an MLP encodes the 3 edge features, 15 residual message-passing blocks update edges (MLP on edge, source and destination) and nodes (MLP on the sum of incoming messages and the node), and an MLP decodes the normalised changes of water depth and volume over one 20-minute step. Every MLP has two hidden layers of 128 and ReLU, and all but the decoder end in LayerNorm (2,318,722 parameters). It takes ``(node_features (N, 16), edge_features (E, 3), edge_index (2, E))`` (or a PyTorch Geometric graph, or a mesh batch mapping) and returns ``(N, 2)``; ``rollout`` runs the example's autoregressive inference, feeding ``last + change`` back into the depth / volume windows and the next inflow and precipitation into the forcing columns.
 
-The original task is water depth and volume on the 4,787-node HEC-RAS mesh of the White River near Muncie, Indiana (Zenodo 14969507, CC BY 4.0). PyHazards does not load that dataset; the smoke configuration scores the model on ``flood_mesh_synthetic`` (random node series) with the inundation metrics, per mesh node.
+``HydroGraphNetLoss`` / ``hydrographnet_physics_loss`` port the example's training loss: MSE plus a volume-continuity penalty on the total predicted volume against inflow, effective precipitation and the next step's volume (delta_t 1200 s, weight 1). Parameter names, initialisation, outputs, the physics loss and the rollout equal PhysicsNeMo's.
+
+Data: ``hydrographnet_white_river`` reads a local copy of the official White River dataset (HEC-RAS simulations on a 4,787-cell mesh near Muncie, Indiana, Zenodo 14969507, CC BY 4.0) exactly like PhysicsNeMo's ``HydroGraphDataset`` (node features, k=4 nearest-neighbour graph, normalisation, physics data, rollout targets); ``flood_mesh_synthetic`` produces random data in the same layout. The flood benchmark (``flood.inundation``) rolls every test hydrograph out and scores depths in metres.
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Flood Benchmark </benchmarks/flood_benchmark>`
+
+**Mapped benchmark ecosystems:** :doc:`HydroGraphNet White River </benchmarks/hydrographnet_white_river>`
 
 External References
 -------------------
@@ -80,12 +84,20 @@ External References
 Used In
 -------
 
-- `Interpretable physics-informed graph neural networks for flood forecasting <https://doi.org/10.1111/mice.13484>`_ (`repo <https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet>`__): Taghizadeh, Zandsalimi, Nabian, Shafiee-Jood and Alemazkoor, Computer-Aided Civil and Infrastructure Engineering 40(18):2629-2649 (2025). Official code: NVIDIA PhysicsNeMo (Apache-2.0), contributed by the first author.
+- `Interpretable physics-informed graph neural networks for flood forecasting <https://doi.org/10.1111/mice.13484>`_ (`repo <https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet>`__): Taghizadeh, Zandsalimi, Nabian, Shafiee-Jood and Alemazkoor, Computer-Aided Civil and Infrastructure Engineering 40(18):2629-2649 (2025). White River near Muncie, Indiana: 4,787-cell HEC-RAS mesh, boundary inflow hydrographs and rainfall; 30-step (10-hour) rollouts. The abstract reports a 67% lower prediction error than a baseline GNN, near-zero mass-balance error and a 58% higher critical success index for major floods; the full text (and its absolute numbers) could not be accessed, so no paper numbers are reproduced here. The official code is the PhysicsNeMo example, contributed by the first author.
 
 Reproduction
 ------------
 
-Not yet verified against a reference implementation.
+- **Reference implementation:** `https://github.com/NVIDIA/physicsnemo <https://github.com/NVIDIA/physicsnemo>`__ at ``eb7a329`` (Apache-2.0)
+- **Checked configuration:** examples/weather/flood_modeling/hydrographnet (conf/config.yaml, train.py, inference.py, utils.py): MeshGraphKAN(16, 3, 2) with the PhysicsNeMo defaults (processor_size 15, hidden 128, 2 hidden layers per MLP, ReLU, LayerNorm, sum aggregation, 5 harmonics, do_concat_trick False), 2,318,722 parameters; HydroGraphDataset(prefix M80, n_time_steps 2, k 4, noise_type none, return_physics True); physics loss weight 1, delta_t 1200 s; rollout length 30. Oracle: physicsnemo/models/meshgraphnet/meshgraphkan.py (last changed in dcad4372dc166d3d57e7572943a9c5934684c885), torch_geometric + torch_scatter.
+- **Parameter count:** 2,318,722
+- **Verified:** parameter count, seeded initialisation, parameter names and shapes, forward outputs
+- **Oracle test:** ``tests/oracle/test_hydrographnet_oracle.py``
+- **Deviation:** Graphs are an ``edge_index`` tensor (PyTorch Geometric graphs are accepted) and messages are summed with ``index_add_`` instead of ``torch_scatter``; outputs agree to float precision. Batching several meshes is ``hydrograph_collate`` (PyG ``Batch`` layout).
+- **Deviation:** Not ported (unused by the HydroGraphNet configuration): ``do_concat_trick`` (MeshGraphEdgeMLPSum), ``recompute_activation`` (nvFuser SiLU), gradient checkpointing of the processor, Transformer Engine LayerNorm, and the dataset's training noise options (only ``noise_type: none``) including the ``pushforward`` training branch.
+- **Deviation:** The White River release has no test list (the example reads ``Test/test.txt``, which is not published, and ``train.txt`` lists all 500 hydrographs), so ``hydrographnet_white_river`` needs the test hydrographs as ``test_ids`` and drops them from the training list. It does not overwrite the release's normalisation-statistics files as the example's training run does, and does not subsample hydrographs (the example samples 500 at random only when more are listed).
+- **Deviation:** No official weights were released, so no pretrained checkpoint is checked.
 
 Registry Name
 -------------
@@ -95,7 +107,7 @@ Primary entrypoint: ``hydrographnet``
 Supported Tasks
 ---------------
 
-- Forecasting
+- Inundation
 
 Programmatic Use
 ----------------
@@ -103,27 +115,23 @@ Programmatic Use
 .. code-block:: python
 
    import torch
+   from pyhazards.datasets import load_dataset
    from pyhazards.models import build_model
 
-   model = build_model(
-       name="hydrographnet",
-       task="regression",
-       node_in_dim=2,
-       edge_in_dim=3,
-       out_dim=1,
-   )
+   data = load_dataset("flood_mesh_synthetic", micro=True).load()  # or hydrographnet_white_river
+   model = build_model(name="hydrographnet", task="regression")    # PhysicsNeMo MeshGraphKAN(16, 3, 2)
+   inputs, target = data.get_split("train").inputs[0]
+   delta = model(inputs["node_features"], inputs["edge_features"], inputs["edge_index"])
+   print(delta.shape)  # (nodes, 2): change of normalised depth and volume
 
-   batch = {
-       "x": torch.randn(1, 3, 6, 2),
-       "adj": torch.eye(6).unsqueeze(0),
-       "coords": torch.randn(6, 2),
-   }
-   preds = model(batch)
-   print(preds.shape)
+   start, truth = data.get_split("test").inputs[0]
+   out = model.rollout(start["node_features"], start["edge_features"], start["edge_index"], start["inflow"], start["precipitation"])
+   print(out["water_depth"].shape)  # (rollout steps, nodes)
 
 Notes
 -----
 
-- Experimental: kept under its published name only until a faithful port of MeshGraphKAN (checked against PhysicsNeMo) replaces it; do not report its results as HydroGraphNet's.
+- Training recipe of the example (``scripts/train_hydrographnet.py``): batch 1, Adam with learning rate 1e-4 (the configured weight decay 1e-4 is not passed to the optimizer), the learning rate multiplied by 0.9999979 after every batch, 100 epochs, MSE + physics loss.
 
-- The smoke test uses a synthetic graph batch so it stays CPU-safe in CI.
+- Rollout quirk kept from inference.py: after the first step the forcing columns hold the inflow and precipitation of the step being predicted, while training windows hold those of the first window step. The example prints the rollout RMSE of normalised depth; the flood benchmark reports it in metres (``rollout_rmse``) and keeps both per-step curves in the report metadata.
+

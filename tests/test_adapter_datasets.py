@@ -8,6 +8,7 @@ def test_named_adapter_datasets_are_registered_and_loadable():
         "flood_streamflow_synthetic",
         "flood_mesh_synthetic",
         "flood_inundation_synthetic",
+        "urbanfloodcast_synthetic",
         "tc_tracks_synthetic",
         "ships_xu2021_synthetic",
         "safnet_cma_era_interim_synthetic",

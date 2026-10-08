@@ -13,3 +13,11 @@ pyhazards.metrics.hydrology module
    :members:
    :undoc-members:
    :show-inheritance:
+
+pyhazards.metrics.inundation module
+-----------------------------------
+
+.. automodule:: pyhazards.metrics.inundation
+   :members:
+   :undoc-members:
+   :show-inheritance:

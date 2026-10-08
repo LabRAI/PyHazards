@@ -39,6 +39,7 @@ def test_benchmark_page_lists_family_and_ecosystem_tables() -> None:
         ".. grid-item-card:: pick-benchmark",
         ".. grid-item-card:: Caravan",
         ".. grid-item-card:: CAMELS-US",
+        ".. grid-item-card:: HydroGraphNet White River",
         ".. grid-item-card:: SHIPS Predictors (Xu et al. 2021)",
         ".. grid-item-card:: IBTrACS",
         ".. grid-item-card:: TropiCycloneNet Dataset",
@@ -54,7 +55,7 @@ def test_benchmark_page_lists_family_and_ecosystem_tables() -> None:
     assert "5 smoke configs | 5 models | 2 ecosystems" in page
     # AEFA (earthquake-occurrence data) and pyCSEP (rate-forecast tests) are not implemented.
     assert ".. grid-item-card:: pyCSEP" not in page and ".. grid-item-card:: AEFA" not in page
-    assert "6 smoke configs | 6 models | 2 ecosystems" in page
+    assert "6 smoke configs | 6 models | 3 ecosystems" in page
     assert "8 smoke configs | 8 models | 3 ecosystems" in page
 
 

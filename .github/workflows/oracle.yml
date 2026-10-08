@@ -158,14 +158,26 @@ jobs:
           # checkouts; googlehydrology targets Python 3.12. Both repositories provide real test data (4 CAMELS-US
           # basins, Caravan netCDF files) and the released FloodHub weights; the 939 MB HydroShare archive of the
           # Kratzert et al. (2019) runs is not fetched in CI (those tests run locally with PYHAZARDS_ORACLE_LARGE=1).
+          # The official UrbanFloodCast DNO (no licence; test oracle only) needs torch, numpy, scipy and matplotlib,
+          # which this suite has.
           - suite: flood
             python: "3.12"
             torch: torch
             requirements: tests/oracle/requirements-flood.txt
-            references: neuralhydrology ealstm_regional_modeling flood-forecasting floodhub_weights
+            references: neuralhydrology ealstm_regional_modeling flood-forecasting floodhub_weights UrbanFloodCast
             tests: >-
               tests/oracle/test_neuralhydrology_oracle.py
               tests/oracle/test_google_flood_forecasting_oracle.py
+              tests/oracle/test_urbanfloodcast_oracle.py
+          # HydroGraphNet: NVIDIA PhysicsNeMo's MeshGraphKAN, physics loss, rollout and HydroGraphDataset, imported
+          # from the pinned checkout. PyTorch Geometric + torch_scatter (CPU wheels up to torch 2.12) and the
+          # packages `import physicsnemo` needs; see requirements-physicsnemo.txt.
+          - suite: physicsnemo
+            python: "3.12"
+            torch: torch==2.12.0 torchvision==0.27.0
+            requirements: tests/oracle/requirements-physicsnemo.txt
+            references: physicsnemo
+            tests: tests/oracle/test_hydrographnet_oracle.py
           # TerraTorch 0.99.8 (the Prithvi-EO-2.0 BurnScars training stack) needs Python >= 3.12 and
           # torch 2.6. The 1.3 GB checkpoints are not fetched in CI; those tests run locally.
           - suite: prithvi

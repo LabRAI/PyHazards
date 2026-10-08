@@ -9,14 +9,25 @@ period (:mod:`pyhazards.metrics.hydrology`). Reported values are the median over
 ``kge``, ...), the mean over basins (``nse_mean``, ...), ``n_basins`` and ``n_basins_nse_le_0``; the
 per-basin values are in ``metadata["per_basin"]``.
 
-``flood.inundation`` compares predicted and target water depth per cell (raster ``(batch, 1, H, W)``)
-or per mesh node (graph-temporal datasets): ``pixel_mae`` is the mean absolute depth error, ``iou``
-and ``f1`` compare wet masks (prediction >= 0.5, target > 0).
+``flood.inundation`` compares predicted and simulated water depth (:mod:`pyhazards.metrics.inundation`)
+on three kinds of data:
+
+- rasters (``(batch, 1, H, W)`` depth, or channels-last multi-variable outputs such as UrbanFloodCast's
+  ``(batch, Sy, Sx, T, 3)`` depth and discharges with ``metadata["depth_channel"]`` and a NaN mask in the
+  split metadata): the model maps the split inputs to the targets in batches;
+- mesh hydrographs (``hydrographnet_white_river``, ``flood_mesh_synthetic``): every test hydrograph is
+  rolled out autoregressively with the model's ``rollout`` method (HydroGraphNet's ``inference.py``)
+  and the predicted depths are denormalised to metres; ``rollout_rmse`` is the depth RMSE per step
+  averaged over steps and hydrographs (the per-step curve is in the report metadata);
+- graph-temporal node series (``GraphTemporalDataset``), scored per node.
+
+Reported: ``pixel_mae`` and ``rmse`` (depth errors over all cells), ``iou`` / ``f1`` (wet cells: prediction
+>= 0.5 m, target > 0), the depth CSI at 1 / 10 / 50 cm and the per-sample relative L2, NSE and Pearson r
+of the UrbanFloodCast evaluation, averaged over samples (events or hydrographs).
 """
 
 from __future__ import annotations
 
-from collections import defaultdict
 from typing import Any, Dict, List, Tuple
 
 import numpy as np
@@ -26,9 +37,11 @@ from torch.utils.data import DataLoader
 
 from ..configs import ExperimentConfig
 from ..datasets.base import DataBundle
+from ..datasets.flood.hydrograph import HydrographRollouts
 from ..datasets.flood.streamflow import StreamflowWindows, scaler_from_metadata
 from ..datasets.graph import GraphTemporalDataset, graph_collate
 from ..metrics.hydrology import STREAMFLOW_METRICS, aggregate_basin_metrics, calculate_metrics, streamflow_metric_names
+from ..metrics.inundation import INUNDATION_METRICS, inundation_metrics, rollout_rmse
 from .base import Benchmark
 from .registry import register_benchmark
 from .schemas import BenchmarkResult
@@ -145,7 +158,63 @@ def evaluate_streamflow(
     return aggregate_basin_metrics(per_basin), per_basin
 
 
-def _inundation_predictions(model: nn.Module, split) -> Tuple[torch.Tensor, torch.Tensor]:
+def _batched_predictions(model: nn.Module, inputs: torch.Tensor, batch_size: int) -> torch.Tensor:
+    device = _model_device(model)
+    preds = []
+    with torch.no_grad():
+        for start in range(0, inputs.shape[0], batch_size):
+            batch = inputs[start : start + batch_size]
+            preds.append(model(batch if device is None else batch.to(device)).detach().cpu())
+    return torch.cat(preds, dim=0)
+
+
+def evaluate_mesh_rollouts(model: nn.Module, rollouts: HydrographRollouts) -> Tuple[Dict[str, float], Dict[str, Any]]:
+    """Roll out every test hydrograph with ``model.rollout`` and score the depths in metres."""
+    if not hasattr(model, "rollout"):
+        raise ValueError(
+            "flood.inundation on mesh hydrographs rolls models out autoregressively; "
+            f"{type(model).__name__} has no rollout(...) method (see HydroGraphNet)."
+        )
+    device = _model_device(model)
+    stats = rollouts.depth_stats
+    scale = stats["std"] + 1e-8
+    preds, targets, curves = [], [], []
+    with torch.no_grad():
+        for idx in range(len(rollouts)):
+            inputs, target = rollouts[idx]
+            inputs = _to_device(inputs, device)
+            out = model.rollout(
+                inputs["node_features"],
+                inputs["edge_features"],
+                inputs["edge_index"],
+                inputs["inflow"],
+                inputs["precipitation"],
+                n_time_steps=rollouts.n_time_steps,
+            )
+            pred = out["water_depth"].detach().cpu().float()
+            truth = target["water_depth"].float()
+            curves.append(rollout_rmse(pred, truth))
+            preds.append(pred * scale + stats["mean"])
+            targets.append(truth * scale + stats["mean"])
+    metrics = inundation_metrics(torch.stack(preds), torch.stack(targets))
+    curve = torch.stack(curves).mean(dim=0) if curves else torch.zeros(0)
+    metrics["rollout_rmse"] = float(curve.mean() * scale) if curves else float("nan")
+    metadata = {
+        "rollout_rmse_per_step_m": [float(v) * scale for v in curve],
+        "rollout_rmse_per_step_normalized": [float(v) for v in curve],
+        "hydrographs": list(rollouts.hydrograph_ids),
+        "rollout_length": rollouts.rollout_length,
+    }
+    return metrics, metadata
+
+
+def evaluate_inundation(
+    model: nn.Module, data: DataBundle, split_name: str = "test", batch_size: int = 1
+) -> Tuple[Dict[str, float], Dict[str, Any]]:
+    """Inundation metrics of ``model`` on a raster, mesh-rollout or graph-temporal split."""
+    split = data.get_split(split_name)
+    if isinstance(split.inputs, HydrographRollouts):
+        return evaluate_mesh_rollouts(model, split.inputs)
     if isinstance(split.inputs, GraphTemporalDataset):
         loader = DataLoader(split.inputs, batch_size=4, shuffle=False, collate_fn=graph_collate)
         preds, targets = [], []
@@ -153,26 +222,20 @@ def _inundation_predictions(model: nn.Module, split) -> Tuple[torch.Tensor, torc
             for batch, target in loader:
                 preds.append(model(batch))
                 targets.append(target)
-        return torch.cat(preds, dim=0), torch.cat(targets, dim=0)
-    return model(split.inputs), split.targets
-
-
-def inundation_metrics(preds: torch.Tensor, targets: torch.Tensor) -> Dict[str, float]:
-    pred_depth = preds.float()
-    target_depth = targets.float()
-    if tuple(pred_depth.shape) != tuple(target_depth.shape):
+        return inundation_metrics(torch.cat(preds, dim=0), torch.cat(targets, dim=0)), {}
+    if not isinstance(split.inputs, torch.Tensor) or not isinstance(split.targets, torch.Tensor):
         raise ValueError(
-            f"flood.inundation predictions {tuple(pred_depth.shape)} must match targets {tuple(target_depth.shape)}."
+            "flood.inundation needs tensor splits (rasters), mesh hydrographs (HydrographRollouts) or a "
+            f"GraphTemporalDataset; got inputs of type {type(split.inputs).__name__}."
         )
-    pred_mask = (pred_depth >= 0.5).float()
-    target_mask = (target_depth > 0).float()
-    intersection = (pred_mask * target_mask).sum()
-    union = pred_mask.sum() + target_mask.sum() - intersection
-    return {
-        "pixel_mae": float(torch.mean(torch.abs(pred_depth - target_depth)).detach().cpu()),
-        "iou": float((intersection / union.clamp(min=1.0)).detach().cpu()),
-        "f1": float((2 * intersection / (pred_mask.sum() + target_mask.sum()).clamp(min=1.0)).detach().cpu()),
-    }
+    preds = _batched_predictions(model, split.inputs, max(1, int(batch_size)))
+    metrics = inundation_metrics(
+        preds,
+        split.targets,
+        mask=split.metadata.get("mask"),
+        depth_index=data.metadata.get("depth_channel"),
+    )
+    return metrics, {}
 
 
 class FloodBenchmark(Benchmark):
@@ -180,7 +243,7 @@ class FloodBenchmark(Benchmark):
     hazard_task = "flood.streamflow"
     metric_names_by_task = {
         "flood.streamflow": streamflow_metric_names(),
-        "flood.inundation": ["pixel_mae", "iou", "f1"],
+        "flood.inundation": list(INUNDATION_METRICS) + ["rollout_rmse"],
     }
 
     def evaluate(self, model: nn.Module, data: DataBundle, config: ExperimentConfig) -> BenchmarkResult:
@@ -191,8 +254,10 @@ class FloodBenchmark(Benchmark):
             "source_dataset": data.metadata.get("source_dataset", data.metadata.get("dataset")),
         }
         if config.benchmark.hazard_task == "flood.inundation":
-            preds, targets = _inundation_predictions(model, data.get_split(config.benchmark.eval_split))
-            metrics = inundation_metrics(preds, targets)
+            metrics, extra = evaluate_inundation(
+                model, data, split_name=config.benchmark.eval_split, batch_size=int(params.get("batch_size", 1))
+            )
+            metadata.update(extra)
         else:
             metrics, per_basin = evaluate_streamflow(
                 model,
@@ -213,4 +278,12 @@ class FloodBenchmark(Benchmark):
 
 register_benchmark(FloodBenchmark.name, FloodBenchmark)
 
-__all__ = ["FloodBenchmark", "evaluate_streamflow", "inundation_metrics", "point_prediction", "streamflow_predictions"]
+__all__ = [
+    "FloodBenchmark",
+    "evaluate_inundation",
+    "evaluate_mesh_rollouts",
+    "evaluate_streamflow",
+    "inundation_metrics",
+    "point_prediction",
+    "streamflow_predictions",
+]

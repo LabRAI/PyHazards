@@ -78,7 +78,10 @@ Benchmark and Data Resources
 - Kratzert, F., Nearing, G., Addor, N., et al. (2023). *Caravan - A global community dataset for large-sample hydrology*. Scientific Data, 10, 61. `[paper] <https://doi.org/10.1038/s41597-023-01975-w>`__, `[repo] <https://github.com/kratzert/Caravan>`__.
 - Addor, N., Newman, A. J., Mizukami, N., and Clark, M. P. (2017). *The CAMELS data set: catchment attributes and meteorology for large-sample studies*. Hydrology and Earth System Sciences, 21, 5293-5313. `[paper] <https://doi.org/10.5194/hess-21-5293-2017>`__.
 - *WaterBench: A Large-scale Benchmark Dataset for Data-driven Streamflow Forecasting*. `[paper] <https://neurips.cc/virtual/2023/80632>`__, `[repo] <https://github.com/uihilab/WaterBench>`__.
-- *FloodCastBench*. `[repo] <https://github.com/HydroPML/FloodCastBench>`__.
+- Xu, Q., Shi, Y., Zhao, J., and Zhu, X. X. (2025). *FloodCastBench: A Large-Scale Dataset and Foundation Models for Flood Modeling and Forecasting*. Scientific Data, 12, 431. `[paper] <https://doi.org/10.1038/s41597-025-04725-2>`__, `[data] <https://doi.org/10.5281/zenodo.14017092>`__, `[repo] <https://github.com/HydroPML/FloodCastBench>`__. No reader in PyHazards.
+- Rahman, M. A., Ross, Z. E., and Azizzadenesheli, K. (2022). *U-NO: U-shaped Neural Operators*. arXiv:2204.11127. `[paper] <https://arxiv.org/abs/2204.11127>`__, `[repo] <https://github.com/ashiq24/UNO>`__. Operator blocks of the UrbanFloodCast DNO.
+- Taghizadeh, M., et al. (2025). *HydroGraphNet dataset (White River, Indiana, HEC-RAS simulations)*. `[data, CC BY 4.0] <https://zenodo.org/records/14969507>`__.
+- Xu, Q., et al. (2025). *UrbanFloodCast benchmark dataset (Berlin design storms)*. `[data, CC BY 4.0] <https://doi.org/10.5281/zenodo.15700880>`__. No reader in PyHazards.
 - *HydroBench*. `[repo] <https://github.com/EMscience/HydroBench>`__.
 - *TCBench Alpha*. `[repo] <https://github.com/msgomez06/TCBench_Alpha>`__.
 - *The International Best Track Archive for Climate Stewardship (IBTrACS): Unifying tropical cyclone best track data*. Bulletin of the American Meteorological Society 91, 2010. `[paper] <https://doi.org/10.1175/2009BAMS2755.1>`__, `[dataset v04r01] <https://doi.org/10.25921/82ty-9e16>`__, `[product page] <https://www.ncei.noaa.gov/products/international-best-track-archive>`__.

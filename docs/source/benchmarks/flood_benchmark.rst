@@ -8,7 +8,9 @@ Overview
 
 ``flood.streamflow`` follows Kratzert et al. (HESS 2019) and NeuralHydrology: each model predicts the discharge of every day of the evaluation period from the preceding window of daily forcings and the basin's static attributes; predictions go back to mm/day with the training scaler, negative values are set to zero, and NeuralHydrology's metrics (NSE, MSE, RMSE, KGE, alpha-NSE, beta-KGE, beta-NSE, Pearson r, FHV, FMS, FLV, peak timing, missed peaks, peak MAPE) are computed per basin over the period. Reported values are the median over basins (``nse``, ``kge``, ...), the mean over basins (``nse_mean``, ...), ``n_basins`` and ``n_basins_nse_le_0``; per-basin values are in the report metadata. Probabilistic models are scored by their mixture mean.
 
-Real streamflow data come from ``camels_us_streamflow`` and ``caravan_streamflow`` (local copies of the official releases); the smoke configs run the same contract on ``flood_streamflow_synthetic``. ``flood.inundation`` compares depth rasters (or mesh-node depths) cell by cell: mean absolute depth error and IoU / F1 of the wet masks; it has no real-data backing yet.
+Real streamflow data come from ``camels_us_streamflow`` and ``caravan_streamflow`` (local copies of the official releases); the smoke configs run the same contract on ``flood_streamflow_synthetic``.
+
+``flood.inundation`` scores water depth. Rasters: the model maps the split inputs to depth ``(batch, 1, H, W)`` or to several variables channels-last (UrbanFloodCast: depth and x / y unit discharge for 24 steps, with a NaN mask). Meshes: each test hydrograph of ``hydrographnet_white_river`` is rolled out with the model's ``rollout`` method as in the HydroGraphNet example, and depths are scored in metres (``rollout_rmse``: depth RMSE per step averaged over steps and hydrographs). Reported: ``pixel_mae`` / ``rmse`` (depth errors over all cells), ``iou`` / ``f1`` (prediction >= 0.5 m against depth > 0), and, averaged over events / hydrographs as the UrbanFloodCast test loop does, depth CSI at 1 / 10 / 50 cm (``csi_1cm``, ``csi_10cm``, ``csi_50cm``) and the relative L2 error, NSE and Pearson r over all predicted variables. Real mesh data: ``hydrographnet_white_river``; the UrbanFloodCast and FloodCastBench rasters have no reader yet.
 
 At a Glance
 -----------
@@ -72,7 +74,7 @@ Benchmark Mapping
 Mapped benchmark ecosystems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:doc:`CAMELS-US </benchmarks/camels_us>`, :doc:`Caravan </benchmarks/caravan>`.
+:doc:`CAMELS-US </benchmarks/camels_us>`, :doc:`Caravan </benchmarks/caravan>`, :doc:`HydroGraphNet White River </benchmarks/hydrographnet_white_river>`.
 
 .. dropdown:: Supported Tasks
    :class-container: catalog-dropdown
@@ -93,8 +95,12 @@ Mapped benchmark ecosystems
    - ``nse_mean``
    - ``n_basins_nse_le_0``
    - ``pixel_mae``
+   - ``rmse``
    - ``iou``
    - ``f1``
+   - ``csi_10cm``
+   - ``relative_l2``
+   - ``rollout_rmse``
 
 .. dropdown:: Smoke Configs
    :class-container: catalog-dropdown
@@ -115,5 +121,5 @@ Mapped benchmark ecosystems
    :class-container: catalog-dropdown
 
    - The streamflow evaluation (reader, normalisation, rescaling, clipping and per-basin metrics) is checked against NeuralHydrology's Tester on real CAMELS-US basins, and the metric code reproduces Table 2 of Kratzert et al. (2019) from the official stored simulations.
-   - hydrographnet, floodcast and urbanfloodcast are experimental stand-ins (not ports of the published models); their smoke configs only exercise the inundation contract on synthetic data.
+   - hydrographnet (PhysicsNeMo's MeshGraphKAN) and urbanfloodcast (the UrbanFloodCast DNO) match their official code; the inundation metrics, the HydroGraphNet rollout and both input pipelines are checked against the official evaluation code (oracle tests). floodcast is still an experimental stand-in: the published flood model was never released and the paper does not give its widths.
    - WaterBench, HydroBench and FloodCastBench have no PyHazards reader; the former adapters with these names generated random numbers and were removed.

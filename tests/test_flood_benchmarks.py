@@ -19,4 +19,6 @@ def test_flood_mesh_vertical_slice(tmp_path):
     summary = BenchmarkRunner().run(config, output_dir=str(tmp_path))
 
     assert summary.hazard_task == "flood.inundation"
-    assert {"pixel_mae", "iou", "f1"} <= set(summary.metrics)
+    # HydroGraphNet rollouts on synthetic mesh hydrographs, scored in metres.
+    assert {"rollout_rmse", "pixel_mae", "rmse", "iou", "f1", "csi_10cm"} <= set(summary.metrics)
+    assert summary.metadata["rollout_rmse_per_step_m"]

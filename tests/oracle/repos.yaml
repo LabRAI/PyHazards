@@ -136,6 +136,23 @@ repos:
     url: https://github.com/google-research/flood-forecasting.git
     commit: cdda28dda4cc6f1c5e3aaafcc69c6602c9e7cda1
     license: Apache-2.0 (Copyright 2025 Google LLC)
+  physicsnemo:
+    # NVIDIA PhysicsNeMo: MeshGraphKAN (physicsnemo/models/meshgraphnet/meshgraphkan.py, last changed in
+    # dcad437), MeshGraphNet blocks, KolmogorovArnoldNetwork, HydroGraphDataset and the HydroGraphNet example
+    # (examples/weather/flood_modeling/hydrographnet, contributed by Taghizadeh et al.). Oracle for
+    # hydrographnet; test/models/meshgraphnet/data/meshgraphkan_output.pth is PhysicsNeMo's own regression
+    # output for MeshGraphKAN(4, 3, 2) at seed 0.
+    url: https://github.com/NVIDIA/physicsnemo.git
+    commit: eb7a329c246a48b6fb5acd569eaabeac53f915f7
+    license: Apache-2.0 (Copyright (c) 2023 - 2026 NVIDIA CORPORATION & AFFILIATES)
+  UrbanFloodCast:
+    # Xu et al., J. Hydrology 661:133705 (2025): DNO (DNO/models/DNO.py, the default DNO-3), DNO-4, DNO-5,
+    # integral_operators.py (derived from U-NO, BSD-2) and the data pipeline / metrics (DNO/utils25.py).
+    # Oracle for urbanfloodcast. DNO/torch_utils and */training/filtered_networks.py are NVIDIA StyleGAN3
+    # code under the NVIDIA Source Code License (non-commercial); they are never imported or copied.
+    url: https://github.com/HydroPML/UrbanFloodCast.git
+    commit: f08846a1d0ed5a82d9241d2229df8ec8997ebfd5
+    license: none (no LICENSE file; test oracle only, never vendored)
 
   # Earthquake phase pickers (batch 4). Official TensorFlow / Keras code and released weights; the
   # PyTorch ports in pyhazards/models/{phasenet,eqtransformer,gpd}.py are checked against them.

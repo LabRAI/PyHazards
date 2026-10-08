@@ -30,7 +30,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         38
+         41
 
       .. container:: catalog-stat-note
 
@@ -52,7 +52,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         19
+         22
 
       .. container:: catalog-stat-note
 
@@ -824,6 +824,41 @@ primary source, and the most relevant inspection or registry surface.
 
                **Primary Source:** `Kratzert et al. (2023). Caravan - A global community dataset for large-sample hydrology. Scientific Data 10:61. <https://doi.org/10.1038/s41597-023-01975-w>`_
 
+         .. grid-item-card:: HydroGraphNet White River
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Reader for a local copy of the HydroGraphNet dataset (HEC-RAS flood simulations on a 4,787-cell mesh of the White River near Muncie, Indiana), read as PhysicsNeMo's HydroGraphDataset reads it.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Inundation Benchmark` :bdg-info:`Unstructured 2-D mesh cells with a k-nearest-neighbour graph`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** White River near Muncie, Indiana, USA
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Static research dataset (released 2025-03-05)
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('hydrographnet_white_river', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`, :doc:`HydroGraphNet White River <benchmarks/hydrographnet_white_river>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`HydroGraphNet White River <datasets/hydrographnet_white_river>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Taghizadeh, Zandsalimi, Nabian, Shafiee-Jood and Alemazkoor (2025). Interpretable physics-informed graph neural networks for flood forecasting. Computer-Aided Civil and Infrastructure Engineering 40(18):2629-2649. <https://doi.org/10.1111/mice.13484>`_
+
          .. grid-item-card:: NOAA Flood Events
             :class-card: catalog-entry-card
 
@@ -858,6 +893,76 @@ primary source, and the most relevant inspection or registry surface.
             .. container:: catalog-link-row
 
                **Primary Source:** `NOAA National Centers for Environmental Information. Storm Events Database Documentation. <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648>`_
+
+         .. grid-item-card:: Synthetic Mesh Hydrographs
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random mesh fields and toy hydrographs in the HydroGraphNet (White River) layout, for smoke tests of hydrographnet and of mesh inundation rollouts.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Graph-temporal basin or node sequences`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('flood_mesh_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic Mesh Hydrographs <datasets/flood_mesh_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/flood/hydrograph.py) <https://github.com/LabRAI/PyHazards>`_
+
+         .. grid-item-card:: Synthetic Urban Flood Events
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random urban flood events in the UrbanFloodCast one-shot layout (current state, rainfall and terrain in; depth and discharges of 24 steps out), for smoke tests of urbanfloodcast.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Raster inundation sequences`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('urbanfloodcast_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic Urban Flood Events <datasets/urbanfloodcast_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/flood/urbanfloodcast.py) <https://github.com/LabRAI/PyHazards>`_
 
 
    .. tab-item:: Earthquake
@@ -1480,7 +1585,10 @@ model and evaluation coverage.
    datasets/wrf_sfire
    datasets/camels_us_streamflow
    datasets/caravan_streamflow
+   datasets/hydrographnet_white_river
    datasets/noaa_flood
+   datasets/flood_mesh_synthetic
+   datasets/urbanfloodcast_synthetic
    datasets/seisbench_waveforms
    datasets/earthquake_waveforms_synthetic
    datasets/earthquake_wavefield_synthetic

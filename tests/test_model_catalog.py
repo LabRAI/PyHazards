@@ -53,10 +53,12 @@ def test_model_page_lists_generated_hazard_sections() -> None:
     assert "Wildfire Danger Prediction and Understanding With Deep Learning" in page
     assert "`Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_" in page
     assert page.count("Implemented Models") == 5
-    # Flood (hydrographnet, floodcast, urbanfloodcast) and tropical cyclone stand-ins that are not yet faithful,
+    # Flood (floodcast) and tropical cyclone (FourCastNet/GraphCast/Pangu) stand-ins that are not yet faithful,
     # plus the overview section. Earthquake has none left: wavecastnet is core, eqnet a paper rebuild (variant).
     assert page.count("Experimental Adapters") == 3
     assert ":doc:`EQNet <modules/models_eqnet>`" in page and "EQNet (stand-in)" not in page
+    assert ":doc:`HydroGraphNet <modules/models_hydrographnet>`" in page
+    assert ":doc:`UrbanFloodCast <modules/models_urbanfloodcast>`" in page
     assert "Core Baselines" not in page
     assert "Variants and Additional Implementations" not in page
     assert page.count(":doc:`DNN-LSTM-AutoEncoder <modules/models_wildfire_fpa>`") == 1

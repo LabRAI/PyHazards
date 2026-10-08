@@ -13,7 +13,7 @@ coverage: Global
 formats: GRIB and NetCDF
 overview:
   - ERA5 is ECMWF's fifth-generation global reanalysis, combining historical observations with a modern data assimilation system to produce temporally consistent atmospheric fields.
-  - PyHazards uses ERA5 as a shared meteorological baseline for flood, wildfire, and weather-aware graph workflows, including the HydroGraphNet example path.
+  - PyHazards uses ERA5 as a shared meteorological baseline for flood, wildfire, and weather-aware graph workflows.
 data_characteristics:
   - Global hourly fields on a regular latitude-longitude grid.
   - Single-level products with optional pressure-level and model-level variables.
@@ -34,9 +34,8 @@ primary_references:
   - citation: Hersbach et al. (2020). The ERA5 global reanalysis.
     url: https://rmets.onlinelibrary.wiley.com/doi/10.1002/qj.3803
 pyhazards_usage:
-  - Use the inspection command for direct file validation, then feed local ERA5 files into HydroGraphNet-style helper loaders when you need graph-temporal training inputs.
+  - Use the inspection command for direct file validation, then feed local ERA5 files into the graph helper ``pyhazards.data.load_hydrograph_data`` (grid cells as nodes) when you need generic graph-temporal inputs.
 notes:
-  - ERA5 is inspection-first in the public catalog; the downstream HydroGraphNet helper is documented here for convenience but is not a ``load_dataset(...)`` registry entry.
-related_models:
-  - hydrographnet
+  - ERA5 is inspection-first in the public catalog; the graph helper is documented here for convenience but is not a ``load_dataset(...)`` registry entry. It is not HydroGraphNet's data (HydroGraphNet runs on HEC-RAS mesh hydrographs, see ``hydrographnet_white_river``).
+related_models: []
 related_benchmarks: []

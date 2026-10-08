@@ -14,12 +14,15 @@ def test_streamflow_models_forward():
     assert google.point_prediction(google(batch)).shape == (2, 30, 1)
 
 
-def test_inundation_baselines_forward():
-    x = torch.randn(2, 4, 3, 16, 16)
-    for name in ["floodcast", "urbanfloodcast"]:
-        model = build_model(name=name, task="regression", in_channels=3, history=4)
-        preds = model(x)
-        assert preds.shape == (2, 1, 16, 16)
+def test_inundation_models_forward():
+    floodcast = build_model(name="floodcast", task="regression", in_channels=3, history=4)
+    assert floodcast(torch.randn(2, 4, 3, 16, 16)).shape == (2, 1, 16, 16)
+    # UrbanFloodCast: (batch, Sy, Sx, T, T_in, 5) -> depth and discharges at all T steps.
+    urbanfloodcast = build_model(name="urbanfloodcast", task="regression")
+    assert urbanfloodcast(torch.randn(1, 28, 28, 14, 1, 5)).shape == (1, 28, 28, 14, 3)
+    hydrographnet = build_model(name="hydrographnet", task="regression")
+    edge_index = torch.stack([torch.arange(8), (torch.arange(8) + 1) % 8])
+    assert hydrographnet(torch.randn(8, 16), torch.randn(8, 3), edge_index).shape == (8, 2)
 
 
 def test_flood_streamflow_breadth_configs(tmp_path):
@@ -50,5 +53,5 @@ def test_flood_inundation_breadth_configs(tmp_path):
             output_dir=str(tmp_path),
         )
         assert summary.hazard_task == "flood.inundation"
-        assert "iou" in summary.metrics
-        assert "pixel_mae" in summary.metrics
+        for metric in ("iou", "pixel_mae", "rmse", "csi_10cm", "relative_l2", "nse"):
+            assert metric in summary.metrics
