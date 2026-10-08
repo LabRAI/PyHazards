@@ -30,7 +30,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         35
+         38
 
       .. container:: catalog-stat-note
 
@@ -52,7 +52,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         16
+         19
 
       .. container:: catalog-stat-note
 
@@ -990,6 +990,41 @@ primary source, and the most relevant inspection or registry surface.
          :gutter: 2
          :class-container: catalog-grid
 
+         .. grid-item-card:: Hurricast IBTrACS + ERA5 Inputs
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The inputs of Hurricast (Boussioux et al. 2022): 30 IBTrACS statistical features and nine storm-centred ERA5 maps per 3-hour step, 8 steps per sample, with the 24-hour intensity or position as target.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Model Inputs (best track + reanalysis)` :bdg-info:`Storm-centred sequences of feature vectors and 25 x 25 one-degree maps`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** All IBTrACS basins (the paper reports test scores for the North Atlantic and Eastern Pacific)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Follows the user's IBTrACS and ERA5 files
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('hurricast_ibtracs_era5', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`, :doc:`IBTrACS <benchmarks/ibtracs>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Hurricast IBTrACS + ERA5 Inputs <datasets/hurricast_ibtracs_era5>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Boussioux, L., C. Zeng, T. Guenais and D. Bertsimas (2022). Hurricane Forecasting: A Novel Multimodal Machine Learning Framework. Weather and Forecasting 37(6), 817-831. <https://doi.org/10.1175/WAF-D-21-0091.1>`_
+
          .. grid-item-card:: IBTrACS
             :class-card: catalog-entry-card
 
@@ -1059,6 +1094,41 @@ primary source, and the most relevant inspection or registry surface.
             .. container:: catalog-link-row
 
                **Primary Source:** `Xu, W., K. Balaguru, A. August, N. Lalo, N. Hodas, M. DeMaria and D. Judi (2021). Deep Learning Experiments for Tropical Cyclone Intensity Forecasts. Weather and Forecasting 36(4), 1453-1470. <https://doi.org/10.1175/WAF-D-20-0104.1>`_
+
+         .. grid-item-card:: Synthetic Hurricast Inputs
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random inputs in the hurricast_ibtracs_era5 layout (8 steps of 30 statistical features and 9 maps of 25 x 25) for smoke tests of hurricast.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Feature sequences and image sequences`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('hurricast_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic Hurricast Inputs <datasets/hurricast_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py) <https://github.com/LabRAI/PyHazards>`_
 
          .. grid-item-card:: Synthetic SAF-Net Inputs
             :class-card: catalog-entry-card
@@ -1160,6 +1230,41 @@ primary source, and the most relevant inspection or registry surface.
             .. container:: catalog-link-row
 
                **Details:** :doc:`Synthetic Storm Histories <datasets/tc_tracks_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py) <https://github.com/LabRAI/PyHazards>`_
+
+         .. grid-item-card:: Synthetic TCIF-fusion Inputs
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random inputs in the TCIF-fusion layout (ERA5 U, V, W, SST, ALL, 30 history features, infrared images; channels last) for smoke tests of tcif_fusion.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Gridded fields, images and feature vectors`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('tcif_fusion_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic TCIF-fusion Inputs <datasets/tcif_fusion_synthetic>`
 
             .. container:: catalog-link-row
 
@@ -1379,11 +1484,14 @@ model and evaluation coverage.
    datasets/seisbench_waveforms
    datasets/earthquake_waveforms_synthetic
    datasets/earthquake_wavefield_synthetic
+   datasets/hurricast_ibtracs_era5
    datasets/ibtracs_tracks
    datasets/ships_xu2021
+   datasets/hurricast_synthetic
    datasets/safnet_cma_era_interim_synthetic
    datasets/ships_xu2021_synthetic
    datasets/tc_tracks_synthetic
+   datasets/tcif_fusion_synthetic
    datasets/tropicyclonenet_dataset_synthetic
    datasets/tcbench_alpha
    datasets/tropicyclonenet_dataset

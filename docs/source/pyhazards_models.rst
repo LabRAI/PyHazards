@@ -33,7 +33,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         42
+         44
 
       .. container:: catalog-stat-note
 
@@ -44,7 +44,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         8
+         6
 
       .. container:: catalog-stat-note
 
@@ -1163,6 +1163,33 @@ pages and compatible benchmark coverage.
          :gutter: 2
          :class-container: catalog-grid
 
+         .. grid-item-card:: Hurricast
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Hurricast (HUML) of Boussioux et al. (2022): ERA5 maps encoded by a CNN and IBTrACS statistics pass a Transformer encoder-decoder, whose embeddings feed XGBoost for the 24-hour intensity or track.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-secondary:`Intensity` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Hurricast <modules/models_hurricast>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`IBTrACS <benchmarks/ibtracs>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://doi.org/10.1175/WAF-D-21-0091.1>`_ | **Repo:** `Repository <https://github.com/leobix/hurricast>`__
+
          .. grid-item-card:: SAF-Net
             :class-card: catalog-entry-card
 
@@ -1185,6 +1212,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction <https://doi.org/10.1016/j.patrec.2021.11.012>`_ | **Repo:** `Repository <https://github.com/xuguangning1218/TI_Prediction>`__
+
+         .. grid-item-card:: TCIF-fusion
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The model-knowledge-guided intensity network of Wang, Li and Zheng (2024): 3-D CNN branches with a fusion branch over ERA5 winds and SST, a VGG-19 on infrared images and storm history give the 24-hour intensity.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`TCIF-fusion <modules/models_tcif_fusion>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.1088/1748-9326/ad1bde>`_ | **Repo:** `Repository <https://github.com/wangchong96/TCIF-fusion>`__
 
          .. grid-item-card:: Tropical Cyclone MLP
             :class-card: catalog-entry-card
@@ -1296,29 +1346,6 @@ pages and compatible benchmark coverage.
 
                **Paper:** `Learning skillful medium-range global weather forecasting <https://doi.org/10.1126/science.adi2336>`_ | **Repo:** `Repository <https://github.com/google-deepmind/weathernext>`__
 
-         .. grid-item-card:: Hurricast
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Experimental generic storm-history LSTM registered under the Hurricast name; it is not the Hurricast model of Boussioux et al. (2022) and has not been checked against it.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`Hurricast <modules/models_hurricast>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://doi.org/10.1175/WAF-D-21-0091.1>`_ | **Repo:** `Repository <https://github.com/leobix/hurricast>`__
-
          .. grid-item-card:: Pangu TC Adapter
             :class-card: catalog-entry-card
 
@@ -1341,29 +1368,6 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Accurate medium-range global weather forecasting with 3D neural networks <https://doi.org/10.1038/s41586-023-06185-3>`_ | **Repo:** `Repository <https://github.com/198808xc/Pangu-Weather>`__
-
-         .. grid-item-card:: TCIF-fusion
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Experimental generic storm-history network registered under the TCIF-fusion name; it is not the knowledge-guided intensity model of Wang et al. (2024) and has not been checked against it.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`TCIF-fusion <modules/models_tcif_fusion>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.1088/1748-9326/ad1bde>`_ | **Repo:** `Repository <https://github.com/wangchong96/TCIF-fusion>`__
 
 
 

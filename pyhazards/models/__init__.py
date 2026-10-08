@@ -19,7 +19,7 @@ from .gpd import GPD, gpd_builder
 from .google_flood_forecasting import GoogleFloodForecasting, google_flood_forecasting_builder
 from .graphcast_tc import GraphCastTC, graphcast_tc_builder
 from .heads import ClassificationHead, RegressionHead, SegmentationHead
-from .hurricast import Hurricast, hurricast_builder
+from .hurricast import Hurricast, HurricastEncoderDecoder, hurricast_builder
 from .hydrographnet import HydroGraphNet, HydroGraphNetLoss, hydrographnet_builder
 from .logistic_regression import PixelLogisticRegression, logistic_regression_builder
 from .neuralhydrology_ealstm import NeuralHydrologyEALSTM, neuralhydrology_ealstm_builder
@@ -116,6 +116,7 @@ __all__ = [
     "GraphCastTC",
     "graphcast_tc_builder",
     "Hurricast",
+    "HurricastEncoderDecoder",
     "hurricast_builder",
     "HydroGraphNet",
     "HydroGraphNetLoss",
@@ -642,16 +643,16 @@ register_model(
     },
 )
 
+# HUML-(stat/viz, xgb/cnn/transfo) of Boussioux et al. (2022): official CNN + Transformer presets, XGBoost with
+# the defaults of the official run_embeddings.py.
 register_model(
     "hurricast",
     hurricast_builder,
     defaults={
-        "input_dim": 8,
-        "hidden_dim": 64,
-        "num_layers": 2,
-        "horizon": 5,
-        "output_dim": 3,
-        "dropout": 0.1,
+        "target": "intensity",
+        "predictor": "xgboost",
+        "decoder_config": "transformer_config",
+        "encoder_config": "full_encoder_config",
     },
 )
 
@@ -675,17 +676,8 @@ register_model(
     },
 )
 
-register_model(
-    "tcif_fusion",
-    tcif_fusion_builder,
-    defaults={
-        "input_dim": 8,
-        "hidden_dim": 64,
-        "horizon": 5,
-        "output_dim": 3,
-        "dropout": 0.1,
-    },
-)
+# Wang et al. (2024): the notebook graph with the paper's 65-channel ALL input (all_channels=85: the notebook's).
+register_model("tcif_fusion", tcif_fusion_builder, defaults={"all_channels": 65})
 
 register_model(
     "graphcast_tc",

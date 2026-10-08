@@ -46,12 +46,12 @@ Tropical Cyclone
 Implemented Models
 ++++++++++++++++++
 
-:doc:`SAF-Net </modules/models_saf_net>`, :doc:`Tropical Cyclone MLP </modules/models_tropicalcyclone_mlp>`, :doc:`TropiCycloneNet </modules/models_tropicyclonenet>`.
+:doc:`Hurricast </modules/models_hurricast>`, :doc:`SAF-Net </modules/models_saf_net>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`, :doc:`Tropical Cyclone MLP </modules/models_tropicalcyclone_mlp>`, :doc:`TropiCycloneNet </modules/models_tropicyclonenet>`.
 
 Experimental Adapters
 +++++++++++++++++++++
 
-:doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Hurricast </modules/models_hurricast>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`.
+:doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`.
 
 Developer Registry Workflow
 ---------------------------

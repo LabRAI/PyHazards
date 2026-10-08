@@ -52,9 +52,9 @@ Hazard Summary
      - 0
      - 3
    * - Hurricane / Tropical Cyclone
-     - 5
+     - 7
      - 0
-     - 5
+     - 3
      - 0
      - 1
 
@@ -207,9 +207,9 @@ Method and Resource Matrix
    * - Hurricane / Tropical Cyclone
      - `Hurricast <https://github.com/leobix/hurricast>`_
      - Baseline
-     - ``Experimental``
+     - ``Implemented``
      - :doc:`Hurricast <modules/models_hurricast>`
-     - Not the paper's model: a generic storm-history LSTM scored on synthetic data stands in for Hurricast's multimodal encoders plus XGBoost (Boussioux et al. 2022, doi:10.1175/WAF-D-21-0091.1). A port is pending.
+     - Written from the paper (the official code has no licence): the CNN + Transformer encoder-decoder matches the official network for every released preset (seeded weights, outputs, gradients) and XGBoost runs on its embeddings with the official defaults; hurricast_ibtracs_era5 reads IBTrACS and ERA5. The paper's GRU decoder is not in the released code; no weights were released.
    * - Hurricane / Tropical Cyclone
      - `tropicalcyclone_MLP <https://github.com/wenweixu/tropicalcyclone_MLP>`_
      - Baseline
@@ -219,9 +219,9 @@ Method and Resource Matrix
    * - Hurricane / Tropical Cyclone
      - `TCIF-fusion <https://github.com/wangchong96/TCIF-fusion>`_
      - Baseline
-     - ``Experimental``
+     - ``Implemented``
      - :doc:`TCIF-fusion <modules/models_tcif_fusion>`
-     - Not the paper's model: a generic storm-history network scored on synthetic data stands in for the five-input knowledge-guided intensity model (Wang et al. 2024, doi:10.1088/1748-9326/ad1bde). A port is pending.
+     - Written from the paper and the notebook (no licence); the notebook graph rebuilt in Keras 3 gives the same outputs with copied weights and the authors' printed layer counts (299.6 M parameters). The ALL input has the paper's 65 channels (notebook: 85). The CMA / ERA5 / GridSat-B1 inputs have no reader yet (synthetic layout only).
    * - Hurricane / Tropical Cyclone
      - `SAF-Net <https://github.com/xuguangning1218/TI_Prediction>`_
      - Baseline
@@ -324,15 +324,7 @@ part of the current core method set.
      - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
    * - Tropical Cyclone
      - ``experimental``
-     - :doc:`Hurricast <modules/models_hurricast>`
-     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
-   * - Tropical Cyclone
-     - ``experimental``
      - :doc:`Pangu TC Adapter <modules/models_pangu_tc>`
-     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
-   * - Tropical Cyclone
-     - ``experimental``
-     - :doc:`TCIF-fusion <modules/models_tcif_fusion>`
      - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
 
 Execution Note

@@ -1,0 +1,42 @@
+slug: tcif_fusion_synthetic
+display_name: Synthetic TCIF-fusion Inputs
+hazard_family: Tropical Cyclone
+source_role: Synthetic Smoke Data
+summary: "Random inputs in the TCIF-fusion layout (ERA5 U, V, W, SST, ALL, 30 history features, infrared images; channels last) for smoke tests of tcif_fusion."
+provider: PyHazards (generated in memory; no real storms)
+geometry: Gridded fields, images and feature vectors
+spatial_resolution: Not applicable (random numbers)
+temporal_resolution: Not applicable (random numbers)
+update_cadence: Generated on every load
+period_of_record: None (synthetic)
+coverage: None (synthetic)
+formats: PyTorch tensors via the dataset registry
+overview:
+  - >
+    Synthetic data. Every value is a random number; nothing in it describes real tropical cyclones and
+    scores on it mean nothing. It exists so that smoke tests and CI can run tcif_fusion and the cyclone
+    benchmark; the paper's inputs (CMA best track, ERA5, GridSat-B1) have no PyHazards reader yet.
+data_characteristics:
+  - "u, v, w (N, grid, grid, 5, 4), sst (N, grid, grid, 5, 1), all (their concatenation, 65 channels), his (N, 30), ir (N, ir_size, ir_size, 5); targets uniform 10-70 m/s. The defaults are the paper's sizes (grid 25, IR 224); the smoke config uses grid 9 and IR 32 with a small model."
+typical_use_cases:
+  - Smoke tests and CI runs of tcif_fusion and of the cyclone benchmark.
+access_links: []
+inspection: null
+registry:
+  name: tcif_fusion_synthetic
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset("tcif_fusion_synthetic", micro=True, grid_size=9, ir_size=32).load()
+    print(data.metadata["synthetic"])  # True
+primary_references:
+  - citation: PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py)
+    url: https://github.com/LabRAI/PyHazards
+pyhazards_usage:
+  - Use only for smoke tests.
+related_models:
+  - tcif_fusion
+related_benchmarks:
+  - tropical_cyclone_benchmark
+notes:
+  - Bundle metadata carries synthetic=True, and benchmark results report it.

@@ -14,6 +14,7 @@ FIXTURES = Path(__file__).resolve().parent / "fixtures"
 IBTRACS_CSV = FIXTURES / "ibtracs" / "ibtracs.fixture.list.v04r01.csv"
 IBTRACS_NC = FIXTURES / "ibtracs" / "IBTrACS.fixture.v04r01.nc"
 SHIPS_CSV = FIXTURES / "ships_xu2021" / "train_global_fill_REA_na_wo_img_scaled.fixture.csv"
+ERA5_NC = FIXTURES / "era5" / "era5.pressure_levels.ophelia_2023092200_2023092300.fixture.nc"
 TCND = FIXTURES / "tcnd"
 
 
@@ -153,7 +154,14 @@ def test_gph_scaling():
 
 
 def test_synthetic_datasets_are_labelled_synthetic():
-    names = ["tc_tracks_synthetic", "ships_xu2021_synthetic", "safnet_cma_era_interim_synthetic", "tropicyclonenet_dataset_synthetic"]
+    names = [
+        "tc_tracks_synthetic",
+        "ships_xu2021_synthetic",
+        "safnet_cma_era_interim_synthetic",
+        "tropicyclonenet_dataset_synthetic",
+        "hurricast_synthetic",
+        "tcif_fusion_synthetic",
+    ]
     assert set(names) <= set(available_datasets())
     assert not {"tcbench_alpha", "tropicyclonenet_dataset_alias"} & set(available_datasets())
     for name in names:
@@ -161,3 +169,102 @@ def test_synthetic_datasets_are_labelled_synthetic():
         assert bundle.metadata["synthetic"] is True and bundle.metadata["dataset"] == name
     tcnd = load_dataset("tropicyclonenet_dataset_synthetic", micro=True).load().splits["test"]
     assert tcnd.inputs["image_obs"].shape[1:] == (1, 8, 64, 64) and tcnd.targets.shape[1:] == (4, 4)
+
+
+def test_hurricast_statistics_and_windows():
+    from pyhazards.datasets.tc.hurricast import hurricast_storms, hurricast_windows, wind_category
+    from pyhazards.models.hurricast import HURRICAST_STAT_FEATURES as NAMES
+
+    table = read_ibtracs(IBTRACS_CSV)
+    storms = {s["sid"]: s for s in hurricast_storms(table, min_wind=34, min_steps=5)}
+    assert set(storms) == {"2023265N29284", "2026058S18168"}  # the WP storms never reach 34 kt
+    assert hurricast_storms(table) == []  # the paper's selection needs more than 20 steps of 34 kt
+    ophelia = storms["2023265N29284"]
+    times = ophelia["times"].astype("datetime64[m]").astype(str)
+    assert times[0] == "2023-09-22T00:00" and "2023-09-23T10:15" not in times  # first 34 kt; off-grid row dropped
+    assert np.all(np.diff(ophelia["times"]).astype("timedelta64[h]") == np.timedelta64(3, "h"))
+    f = ophelia["features"]
+    assert np.isfinite(f).all() and f.shape == (23, 30)
+    rows = [r for r in _raw_rows("2023265N29284") if r["ISO_TIME"] >= "2023-09-22 00:00:00" and r["ISO_TIME"][14:16] == "00"]
+    np.testing.assert_allclose(f[:, NAMES.index("LAT")], [float(r["LAT"]) for r in rows])
+    np.testing.assert_allclose(f[1, NAMES.index("WMO_WIND")], (35 + 40) / 2)  # interpolated 03 UTC wind
+    np.testing.assert_allclose(f[1:, NAMES.index("STORM_DISPLACEMENT_X")], np.diff(f[:, NAMES.index("LAT")]))
+    assert f[0, NAMES.index("STORM_DISPLACEMENT_X")] == 0
+    assert np.all(f[:, NAMES.index("cat_basin_AN")] == 1) and f[:, NAMES.index("cat_nature_TS")].sum() > 0
+    np.testing.assert_allclose(f[:, NAMES.index("cat_storm_category")], wind_category(f[:, NAMES.index("WMO_WIND")]))
+    assert list(wind_category([33, 34, 64, 83, 96, 113, 137, np.nan])) == [0, 1, 2, 3, 4, 5, 6, 7]
+
+    windows = hurricast_windows([ophelia, storms["2026058S18168"]], window_size=8, predict_at=8)
+    assert windows["x_stat"].shape == (8, 8, 30)  # URMIL's 7 steps are too short
+    first = windows["x_stat"][0]
+    np.testing.assert_allclose(first, f[:8])
+    np.testing.assert_allclose(windows["position"][0], f[7, [0, 1]])
+    np.testing.assert_allclose(windows["intensity"][0], f[15, NAMES.index("WMO_WIND")])
+    np.testing.assert_allclose(windows["displacement"][0], f[15, [0, 1]] - f[7, [0, 1]], atol=1e-9)
+    # Outside the North Atlantic and Eastern Pacific, 10-minute winds become 1-minute winds (/ 0.93).
+    urmil = hurricast_windows([storms["2026058S18168"]], window_size=2, predict_at=2)
+    raw = storms["2026058S18168"]["features"]
+    np.testing.assert_allclose(urmil["x_stat"][0, :, NAMES.index("WMO_WIND")], raw[:2, NAMES.index("WMO_WIND")] / 0.93)
+    np.testing.assert_allclose(urmil["intensity"][0], raw[3, NAMES.index("WMO_WIND")] / 0.93)
+
+
+def _ophelia_bundle(**kwargs):
+    params = dict(path=str(IBTRACS_CSV), era5=str(ERA5_NC), min_steps=5, max_steps=17, train_seasons=[2023], val_seasons=None, test_seasons=None)
+    params.update(kwargs)
+    return load_dataset("hurricast_ibtracs_era5", **params).load()
+
+
+def test_hurricast_dataset_reads_era5_maps():
+    import netCDF4
+
+    bundle = _ophelia_bundle(standardize=False)
+    train = bundle.splits["train"]
+    assert train.inputs["x_viz"].shape == (2, 8, 9, 25, 25) and train.inputs["x_stat"].shape == (2, 8, 30)
+    assert train.metadata["iso_time"] == ["2023-09-22T21:00:00", "2023-09-23T00:00:00"]
+    assert bundle.metadata["map_channels"][:3] == ["u225", "u500", "u700"] and bundle.metadata["hazard_task"] == "tc.intensity"
+    # First step of the first window: OPHELIA at 29.5N 75.3W, 2023-09-22 00 UTC -> centre 30N 75W.
+    with netCDF4.Dataset(ERA5_NC) as nc:
+        lat, lon, levels = nc["latitude"][:], nc["longitude"][:], list(nc["pressure_level"][:])
+        rows = [int(np.flatnonzero(lat == value)[0]) for value in range(42, 17, -1)]
+        cols = [int(np.flatnonzero(lon == value)[0]) for value in range(-87, -62)]
+        for channel, (var, level) in enumerate((v, l) for v in ("u", "v", "z") for l in (225, 500, 700)):
+            expected = nc[var][0, levels.index(level)][np.ix_(rows, cols)]
+            np.testing.assert_array_equal(train.inputs["x_viz"][0, 0, channel].numpy(), expected)
+    torch.testing.assert_close(train.targets, torch.tensor([35.0, 30.0]))  # WMO wind 24 h after 21 and 00 UTC
+
+    standardized = _ophelia_bundle()
+    stats = standardized.metadata["standardization"]
+    maps = standardized.splits["train"].inputs["x_viz"]
+    assert torch.allclose(maps.mean(dim=(0, 1, 3, 4)), torch.zeros(9), atol=1e-4)
+    assert len(stats["map_mean"]) == 9 and stats["stat_std"][2] != 1.0
+    cos_lat = standardized.splits["train"].inputs["x_stat"][..., 10]
+    assert torch.all((cos_lat > 0.8) & (cos_lat < 0.9))  # cyclic encodings are not standardised
+
+    track = _ophelia_bundle(target="displacement", standardize=False)
+    t = track.splits["train"]
+    assert t.targets.shape == (2, 1, 2) and track.metadata["target_variables"] == ["lat", "lon"]
+    stats_only = _ophelia_bundle(era5=None)
+    assert "x_viz" not in stats_only.splits["train"].inputs
+
+
+def test_era5_layouts_and_errors():
+    import xarray as xr
+
+    from pyhazards.datasets.tc.hurricast import era5_maps, open_era5
+
+    cds = open_era5(ERA5_NC)
+    times, lats, lons = [np.datetime64("2023-09-22T06:00")], [30.3], [-75.1]
+    expected = era5_maps(cds, times, lats, lons)
+    # NCAR RDA layout: upper-case variables, "level", "time", longitudes 0-360, levels ascending.
+    with xr.open_dataset(ERA5_NC) as raw:
+        rda = raw.rename({"u": "U", "v": "V", "z": "Z", "pressure_level": "level", "valid_time": "time"}).sortby("level")
+        rda = rda.assign_coords(longitude=(rda.longitude % 360)).load()
+    np.testing.assert_array_equal(era5_maps(rda, times, lats, lons), expected)
+    with pytest.raises(KeyError, match="lacks the maps"):
+        era5_maps(cds, [np.datetime64("2023-09-25T00:00")], lats, lons)
+    with pytest.raises(KeyError, match="lacks the maps"):
+        era5_maps(cds, times, [10.0], lons)  # outside the stored area
+    with pytest.raises(ValueError, match="no z variable"):
+        open_era5(cds.drop_vars("z"))
+    with pytest.raises(ValueError, match="needs path"):
+        load_dataset("hurricast_ibtracs_era5")
