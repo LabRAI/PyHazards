@@ -49,13 +49,15 @@ def test_model_page_lists_generated_hazard_sections() -> None:
     assert "models_wrf_sfire" not in page
     assert ":doc:`FireCastNet <modules/models_firecastnet>`" in page
     assert ":doc:`WaveCastNet <modules/models_wavecastnet>`" in page
-    assert ":doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`" in page
+    assert ":doc:`Hurricast <modules/models_hurricast>`" in page
+    # GraphCast, Pangu-Weather and FourCastNet are foundation-model pipelines (pyhazards.forecasts), not models.
+    assert "models_graphcast_tc" not in page and "models_pangu_tc" not in page and "models_fourcastnet_tc" not in page
     assert "Wildfire Danger Prediction and Understanding With Deep Learning" in page
     assert "`Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_" in page
     assert page.count("Implemented Models") == 5
-    # Flood (floodcast) and tropical cyclone (FourCastNet/GraphCast/Pangu) stand-ins that are not yet faithful,
-    # plus the overview section. Earthquake has none left: wavecastnet is core, eqnet a paper rebuild (variant).
-    assert page.count("Experimental Adapters") == 3
+    # Only flood's floodcast is still a stand-in (no released code or full specification), plus the overview
+    # section. FourCastNet / GraphCast / Pangu-Weather are forecast pipelines (pyhazards.forecasts), not models.
+    assert page.count("Experimental Adapters") == 2
     assert ":doc:`EQNet <modules/models_eqnet>`" in page and "EQNet (stand-in)" not in page
     assert ":doc:`HydroGraphNet <modules/models_hydrographnet>`" in page
     assert ":doc:`UrbanFloodCast <modules/models_urbanfloodcast>`" in page
@@ -74,10 +76,11 @@ def test_hidden_models_are_omitted_from_public_catalog_pages() -> None:
     api_page = render_api_page(cards)
     assert ":doc:`Wildfire Mamba </modules/models_wildfire_mamba>`" not in api_page
     assert api_page.count("Implemented Models") == 4
-    assert api_page.count("Experimental Adapters") == 2
+    assert api_page.count("Experimental Adapters") == 1
     assert "Core Baselines" not in api_page
     assert "Variants and Additional Implementations" not in api_page
-    assert ":doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`" in api_page
+    assert ":doc:`Hurricast </modules/models_hurricast>`" in api_page
+    assert "models_graphcast_tc" not in api_page
     assert "Developer Registry Workflow" in api_page
     assert "Catalog Summary" in api_page
     assert "Hurricane" not in api_page

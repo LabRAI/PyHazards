@@ -9,7 +9,7 @@ Overview
 This page audits the current PyHazards implementation against the
 planned methods, benchmarks, and datasets listed in ``pyhazard_plan.pdf``.
 It separates implemented public entries from variant-only entries,
-experimental wrappers, external simulators, and items that are still missing.
+experimental wrappers, external simulators, foundation-model pipelines, and items that are still missing.
 
 Status meanings:
 
@@ -17,13 +17,17 @@ Status meanings:
 - ``Experimental``: a lightweight wrapper exists, but it should not be counted as stable core coverage.
 - ``External simulator``: PyHazards drives the official simulator, installed separately, or reads
   its outputs. Nothing of the simulator is reimplemented, and it is not counted as a model.
+- ``Foundation model pipeline``: a global weather model whose hazard results come from tracking its
+  forecast fields. PyHazards reads published forecasts or tracks, can run the official model through a
+  separately installed runner, and provides the tracker and the scoring; the model itself is not
+  reimplemented and is not counted as a model.
 - ``Missing``: no aligned adapter or benchmark integration is present yet.
 
 Hazard Summary
 --------------
 
 .. list-table::
-   :widths: 26 14 14 14 14 14
+   :widths: 22 13 13 13 13 13 13
    :header-rows: 1
    :class: dataset-list
 
@@ -32,10 +36,12 @@ Hazard Summary
      - Variant only
      - Experimental
      - External
+     - Pipeline
      - Missing
    * - Earthquake
      - 4
      - 1
+     - 0
      - 0
      - 0
      - 3
@@ -45,18 +51,21 @@ Hazard Summary
      - 0
      - 2
      - 0
+     - 0
    * - Flood
      - 4
      - 0
      - 1
      - 0
+     - 0
      - 3
    * - Hurricane / Tropical Cyclone
-     - 7
+     - 8
+     - 0
+     - 0
      - 0
      - 3
      - 0
-     - 1
 
 Method and Resource Matrix
 --------------------------
@@ -243,9 +252,9 @@ Method and Resource Matrix
    * - Hurricane / Tropical Cyclone
      - `TCBench Alpha <https://github.com/msgomez06/TCBench_Alpha>`_
      - Benchmark
-     - ``Missing``
-     - :doc:`TCBench Alpha <datasets/tcbench_alpha>`
-     - No loader. The former tcbench_alpha dataset generated random numbers and was removed; none of the ported models was evaluated on TCBench in its paper.
+     - ``Implemented``
+     - :doc:`TCBench Alpha <datasets/tcbench_alpha>`, :doc:`Foundation Weather Models <pyhazards_forecasts>`
+     - pyhazards.forecasts reads TCBench's released tracks and raw forecast fields (Hugging Face, pinned revision), re-implements its TempestExtremes tracking (identical tracks) and HuracanPy matching, and scores direct position error and intensity errors exactly as its evaluation does (the DPE values printed in its notebook are reproduced; one only with the IBTrACS position TCBench used, since revised by NCEI). CRPS, along/cross-track errors, rapid-intensification scores and its post-processing models are not implemented.
    * - Hurricane / Tropical Cyclone
      - `IBTrACS <https://www.ncei.noaa.gov/products/international-best-track-archive>`_
      - Dataset
@@ -253,23 +262,23 @@ Method and Resource Matrix
      - :doc:`IBTrACS <datasets/ibtracs_tracks>`
      - ibtracs_tracks reads NOAA NCEI IBTrACS v04 CSV or netCDF files (best-track positions, intensities, agency columns) into forecast windows; the cyclone benchmark scores great-circle track error in km and intensity errors per lead time.
    * - Hurricane / Tropical Cyclone
-     - `GraphCast / GenCast <https://github.com/google-deepmind/weathernext>`_
-     - Foundation Adapter
-     - ``Experimental``
-     - :doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`
-     - Placeholder network without GraphCast forecast fields, weights or tracker (github.com/google-deepmind/graphcast now redirects to weathernext). A faithful version is a forecast-tracker-IBTrACS pipeline.
+     - `GraphCast <https://github.com/google-deepmind/weathernext>`_
+     - Foundation Model Pipeline
+     - ``Foundation model pipeline``
+     - :doc:`Foundation Weather Models <pyhazards_forecasts>`
+     - Not reimplemented: GraphCast (36.3M parameters, JAX) is a global weather model whose cyclone tracks come from a tracker run on its forecasts. PyHazards reads WeatherBench 2's GraphCast forecasts (2018 from the 1979-2017 model, 2020), can run it through earth2studio (user-installed; weights CC BY 4.0 per the README since 2026-08-06), tracks with a re-implementation of the paper's modified ECMWF tracker (the tracker was never released) and scores against IBTrACS. The paper's Fig. 3 numbers are not reproduced. GenCast is a different model and is not covered.
    * - Hurricane / Tropical Cyclone
      - `Pangu-Weather <https://github.com/198808xc/Pangu-Weather>`_
-     - Foundation Adapter
-     - ``Experimental``
-     - :doc:`Pangu TC Adapter <modules/models_pangu_tc>`
-     - Placeholder network without Pangu-Weather forecast fields, weights or tracker. The official repository has no code licence and the weights are CC BY-NC-SA 4.0 (non-commercial).
+     - Foundation Model Pipeline
+     - ``Foundation model pipeline``
+     - :doc:`Foundation Weather Models <pyhazards_forecasts>`
+     - Not reimplemented: PyHazards reads TCBench's released 2023 Pangu-Weather tracks and fields and WeatherBench 2's 2018-2022 forecasts, can run the official ONNX graphs through earth2studio, and tracks with the paper's ECMWF-style rules or TCBench's TempestExtremes rules. TCBench's released tracks are reproduced byte for byte from the raw fields, and its published DPE values exactly. The TC2018 numbers (120.29 / 195.65 km) are not reproduced. Weights CC BY-NC-SA 4.0 (non-commercial); the official repository has no code licence.
    * - Hurricane / Tropical Cyclone
      - `FourCastNet <https://github.com/NVlabs/FourCastNet>`_
-     - Foundation Adapter
-     - ``Experimental``
-     - :doc:`FourCastNet TC Adapter <modules/models_fourcastnet_tc>`
-     - Placeholder network without FourCastNet forecast fields, weights or tracker. A faithful version is a forecast-tracker-IBTrACS pipeline.
+     - Foundation Model Pipeline
+     - ``Foundation model pipeline``
+     - :doc:`Foundation Weather Models <pyhazards_forecasts>`
+     - Not reimplemented: FourCastNet (74.7M-parameter AFNO) can be run through earth2studio (FCN, a 26-variable retrain) and its fields tracked and scored. The paper has only a qualitative cyclone case. TCBench's 'FourCastNet v2' tracks and fields (SFNO small, a different model) can be read and scored.
 
 Current Public Non-Core Implementations
 ---------------------------------------
@@ -305,18 +314,6 @@ part of the current core method set.
    * - Flood
      - ``experimental``
      - :doc:`FloodCast <modules/models_floodcast>`
-     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
-   * - Tropical Cyclone
-     - ``experimental``
-     - :doc:`FourCastNet TC Adapter <modules/models_fourcastnet_tc>`
-     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
-   * - Tropical Cyclone
-     - ``experimental``
-     - :doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`
-     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
-   * - Tropical Cyclone
-     - ``experimental``
-     - :doc:`Pangu TC Adapter <modules/models_pangu_tc>`
      - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
 
 Execution Note

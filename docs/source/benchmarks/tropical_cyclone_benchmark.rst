@@ -10,7 +10,9 @@ Overview
 
 ``tc.intensity`` scores one intensity (or 24-hour intensity change) per storm and time: MAE and RMSE in the dataset's unit, per test year when the split names years, and their unweighted mean, the way Xu et al. (2021) and SAF-Net report results.
 
-Real data: ``ibtracs_tracks`` (IBTrACS best tracks), ``tropicyclonenet_dataset`` (TCND), ``ships_xu2021`` (SHIPS predictors) and ``hurricast_ibtracs_era5`` (IBTrACS statistics and ERA5 maps; Hurricast's 24-hour intensity with ``tc.intensity`` and track with ``tc.track_intensity`` at lead 24 h). The smoke configs run on synthetic data with the same layouts.
+Real data: ``ibtracs_tracks`` (IBTrACS best tracks), ``tropicyclonenet_dataset`` (TCND), ``ships_xu2021`` (SHIPS predictors) and ``hurricast_ibtracs_era5`` (IBTrACS statistics and ERA5 maps; Hurricast's 24-hour intensity with ``tc.intensity`` and track with ``tc.track_intensity`` at lead 24 h). The smoke configs run on synthetic data with the same layouts. Real data: ``ibtracs_tracks`` (IBTrACS best tracks), ``tropicyclonenet_dataset`` (TCND) and ``ships_xu2021`` (SHIPS predictors). The smoke configs run on synthetic data with the same layouts.
+
+Global weather models (FourCastNet, GraphCast, Pangu-Weather) are not models of this benchmark: their cyclone tracks come from a tracker run on their forecast fields. ``pyhazards.forecasts`` builds those tracks (TCBench's TempestExtremes rules or the papers' ECMWF-style tracker) and ``pyhazards.forecasts.score_forecast_tracks`` scores them against IBTrACS with this evaluator's ``track_intensity_metrics`` (same metric names, ``tc`` / ``tc.track_intensity`` results).
 
 At a Glance
 -----------
@@ -57,11 +59,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         8
+         5
 
       .. container:: catalog-stat-note
 
-         8 models
+         5 models
 
 
 Benchmark Mapping
@@ -74,7 +76,7 @@ Benchmark Mapping
 Mapped benchmark ecosystems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:doc:`IBTrACS </benchmarks/ibtracs>`, :doc:`SHIPS Predictors (Xu et al. 2021) </benchmarks/ships_xu2021>`, :doc:`TropiCycloneNet Dataset </benchmarks/tropicyclonenet_dataset>`.
+:doc:`IBTrACS </benchmarks/ibtracs>`, :doc:`SHIPS Predictors (Xu et al. 2021) </benchmarks/ships_xu2021>`, :doc:`TCBench Alpha </benchmarks/tcbench_alpha>`, :doc:`TropiCycloneNet Dataset </benchmarks/tropicyclonenet_dataset>`.
 
 .. dropdown:: Supported Tasks
    :class-container: catalog-dropdown
@@ -102,17 +104,17 @@ Mapped benchmark ecosystems
    - ``tropicyclonenet_smoke.yaml``
    - ``hurricast_smoke.yaml``
    - ``tcif_fusion_smoke.yaml``
-   - ``graphcast_tc_smoke.yaml``
-   - ``pangu_tc_smoke.yaml``
-   - ``fourcastnet_tc_smoke.yaml``
 
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`Tropical Cyclone MLP </modules/models_tropicalcyclone_mlp>`, :doc:`SAF-Net </modules/models_saf_net>`, :doc:`TropiCycloneNet </modules/models_tropicyclonenet>`, :doc:`Hurricast </modules/models_hurricast>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`, :doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`.
+   :doc:`Tropical Cyclone MLP </modules/models_tropicalcyclone_mlp>`, :doc:`SAF-Net </modules/models_saf_net>`, :doc:`TropiCycloneNet </modules/models_tropicyclonenet>`, :doc:`Hurricast </modules/models_hurricast>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`.
 
 .. dropdown:: Notes
    :class-container: catalog-dropdown
 
    - Smoke configs use synthetic datasets (tc_tracks_synthetic, ships_xu2021_synthetic, safnet_cma_era_interim_synthetic, tropicyclonenet_dataset_synthetic, hurricast_synthetic, tcif_fusion_synthetic); their scores mean nothing. Benchmark results carry synthetic=True for them. The hurricast smoke config runs the network head (the XGBoost stage needs fitting) and the tcif_fusion one a reduced copy of the network.
    - The GraphCast / Pangu-Weather / FourCastNet adapters are experimental generic stand-ins, not the published models.
+   - Smoke configs use synthetic datasets (tc_tracks_synthetic, ships_xu2021_synthetic, safnet_cma_era_interim_synthetic, tropicyclonenet_dataset_synthetic); their scores mean nothing. Benchmark results carry synthetic=True for them.
+   - hurricast and tcif_fusion are experimental generic stand-ins, not the published models.
+   - The former graphcast_tc, pangu_tc and fourcastnet_tc entries (small networks without forecast fields, weights or tracker) were removed; see the Foundation Weather Models page (pyhazards.forecasts).

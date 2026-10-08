@@ -1310,7 +1310,7 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-entry-summary
 
-               Random storm-history features and lat / lon / intensity targets for smoke tests of the generic experimental storm adapters (hurricast, tcif_fusion, graphcast_tc, pangu_tc, fourcastnet_tc).
+               Random storm-history features and lat / lon / intensity targets for smoke tests of the generic experimental storm adapters (hurricast, tcif_fusion).
 
             .. container:: catalog-chip-row
 
@@ -1415,11 +1415,11 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-entry-summary
 
-               Benchmark platform matching forecast cyclone tracks from numerical and ML weather models with IBTrACS; documented as an external reference, with no PyHazards loader.
+               Weather-model cyclone tracks (Pangu-Weather, FourCastNet v2, AIFS; 2023) matched to IBTrACS, with the raw forecast fields they were tracked in; read by pyhazards.forecasts at a pinned revision.
 
             .. container:: catalog-chip-row
 
-               :bdg-secondary:`Track Benchmark` :bdg-info:`Storm-track history sequences`
+               :bdg-secondary:`Track Benchmark` :bdg-info:`Storm-track tables and global gridded forecast fields`
 
             .. container:: catalog-meta-row
 
@@ -1427,11 +1427,11 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-meta-row
 
-               **Update Cadence:** Maintained by the TCBench project
+               **Update Cadence:** Static release (PyHazards pins revision 0124d14d)
 
             .. container:: catalog-meta-row
 
-               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`, :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
 
             .. container:: catalog-link-row
 
@@ -1439,7 +1439,7 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `TCBench Alpha (repository and documentation) <https://github.com/msgomez06/TCBench_Alpha>`_
+               **Primary Source:** `Gomez, M. et al. (2026). TCBench: A Benchmark for Tropical Cyclone Track and Intensity Forecasting at the Global Scale. arXiv:2601.23268. <https://arxiv.org/abs/2601.23268>`_
 
          .. grid-item-card:: TropiCycloneNet Dataset
             :class-card: catalog-entry-card

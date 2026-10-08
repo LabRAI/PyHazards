@@ -44,7 +44,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         4
+         1
 
       .. container:: catalog-stat-note
 
@@ -55,7 +55,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         48
+         45
 
       .. container:: catalog-stat-note
 
@@ -1294,85 +1294,6 @@ pages and compatible benchmark coverage.
 
                **Paper:** `Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://doi.org/10.1038/s41467-025-61087-4>`_ | **Repo:** `Repository <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__
 
-      .. rubric:: Experimental Adapters
-
-      .. container:: catalog-section-note
-
-         These entries remain public as lightweight wrapper or prototype integrations and should not be counted as stable implemented methods.
-
-      .. grid:: 1 1 2 2
-         :gutter: 2
-         :class-container: catalog-grid
-
-         .. grid-item-card:: FourCastNet TC Adapter
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Experimental placeholder for FourCastNet-based cyclone forecasts: a two-layer MLP over generic storm-history features. It contains no FourCastNet component, forecast fields, weights or tracker.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`FourCastNet TC Adapter <modules/models_fourcastnet_tc>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators <https://arxiv.org/abs/2202.11214>`_ | **Repo:** `Repository <https://github.com/NVlabs/FourCastNet>`__
-
-         .. grid-item-card:: GraphCast TC Adapter
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Experimental placeholder for GraphCast-based cyclone forecasts: a small transformer over generic storm-history features. It contains no GraphCast component, forecast fields, weights or tracker.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Learning skillful medium-range global weather forecasting <https://doi.org/10.1126/science.adi2336>`_ | **Repo:** `Repository <https://github.com/google-deepmind/weathernext>`__
-
-         .. grid-item-card:: Pangu TC Adapter
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Experimental placeholder for Pangu-Weather-based cyclone forecasts: a small network over generic storm-history features. It contains no Pangu-Weather component, forecast fields, weights or tracker.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`Pangu TC Adapter <modules/models_pangu_tc>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Accurate medium-range global weather forecasting with 3D neural networks <https://doi.org/10.1038/s41586-023-06185-3>`_ | **Repo:** `Repository <https://github.com/198808xc/Pangu-Weather>`__
-
 
 
 Recommended Entry Points
@@ -1446,16 +1367,13 @@ before selecting a model for evaluation.
    modules/models_eqtransformer
    modules/models_firecastnet
    modules/models_floodcast
-   modules/models_fourcastnet_tc
    modules/models_google_flood_forecasting
    modules/models_gpd
-   modules/models_graphcast_tc
    modules/models_hurricast
    modules/models_hydrographnet
    modules/models_logistic_regression
    modules/models_neuralhydrology_ealstm
    modules/models_neuralhydrology_lstm
-   modules/models_pangu_tc
    modules/models_phasenet
    modules/models_prithvi_burnscars
    modules/models_prithvi_eo_2_tl

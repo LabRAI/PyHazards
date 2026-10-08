@@ -19,9 +19,6 @@ TC_CONFIGS = [
     "tropicyclonenet_smoke",
     "saf_net_smoke",
     "tcif_fusion_smoke",
-    "graphcast_tc_smoke",
-    "pangu_tc_smoke",
-    "fourcastnet_tc_smoke",
 ]
 
 

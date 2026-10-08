@@ -195,6 +195,20 @@ repos:
     commit: a9df49a18e05d15c24f98a5e61aa87b0e45cdaeb
     license: none at this commit (all rights reserved; test oracle only, never copied)
 
+  tempestextremes:
+    # TempestExtremes v2.4.2 (tag), the tracker TCBench runs on weather-model output
+    # (dev/TempestExtremes_example.sh). Built from source by tests/oracle/test_tempest_oracle.py (CMake,
+    # netCDF C library) and run as a separate program; pyhazards/forecasts/tempest.py is written from
+    # the published algorithm and copies no code.
+    url: https://github.com/ClimateGlobalChange/tempestextremes.git
+    commit: 02aabcaf375dc48b13b95fdc66af105435a32229
+    license: BSD-2-Clause (repository LICENSE; some source files still carry an older GPL header) - test oracle only
+  TCBench_Alpha:
+    # TCBench evaluation code (Gomez et al., arXiv:2601.23268): dev/metrics_test.py, dev/evaluate_tracks.py,
+    # dev/utils/{toolbox,constants}.py are the oracle of the TCBench scoring protocol.
+    url: https://github.com/msgomez06/TCBench_Alpha.git
+    commit: 93924483baef8f35970c43131b1e2cbc95dee7bd
+    license: MIT
 assets:
   utae_pastis_weights:
     url: https://zenodo.org/records/5172293/files/UTAE_SemanticSeg_weights.zip
@@ -365,3 +379,22 @@ assets:
     filename: best_lem_irr_mask_shakealert_.pt
     sha256: d559717584c27f158fc41995bc7af701b883b6800655bdc39ed249aa6d473cd6
     license: none stated (dwlyu/WaveCastNet release; test data only, never redistributed)
+  # TCBench data (Hugging Face dataset TCBench/TCBench, MIT), pinned revision 0124d14d. Released matched
+  # tracks (winds in m/s, pressures in Pa), TCBench's own 2023 IBTrACS extract, and the TempestExtremes
+  # tracks of the Pangu-Weather forecast initialised 2023-07-16 12 UTC.
+  tcbench_matched_pangu:
+    url: https://huggingface.co/datasets/TCBench/TCBench/resolve/0124d14d7f1f468096f46aec1e79696ab9c880c1/matched_tracks/2023_PANGU.csv
+    sha256: 0b5f7a51531a34c70b190a9e9bbec10bae3a7a009badfd9995d61b882e34e348
+    license: MIT (TCBench)
+  tcbench_matched_fcnet:
+    url: https://huggingface.co/datasets/TCBench/TCBench/resolve/0124d14d7f1f468096f46aec1e79696ab9c880c1/matched_tracks/2023_fcnet.csv
+    sha256: fe4197793b072ce94de6ad0bce4abefa512ba89784f38eb9068e6475fed47323
+    license: MIT (TCBench)
+  tcbench_ibtracs_2023:
+    url: https://huggingface.co/datasets/TCBench/TCBench/resolve/0124d14d7f1f468096f46aec1e79696ab9c880c1/2023_IBTrACS.csv
+    sha256: 0e174e00d29d8f92c2e9bc28732d76ee113bdd7d80037ae265cfd953df6e6439
+    license: MIT (TCBench); IBTrACS data by NOAA NCEI (open access)
+  tcbench_pangu_unmatched_20230716_12:
+    url: https://huggingface.co/datasets/TCBench/TCBench/resolve/0124d14d7f1f468096f46aec1e79696ab9c880c1/unmatched_tracks/2023_pangu/panguweather_2023.07.16-12h00_maxltd-120_timeres-6.csv
+    sha256: 29d58cbbddcdab24e708aeb615c69000efec824ad008b7351a52c7a05e48d8a2
+    license: MIT (TCBench)

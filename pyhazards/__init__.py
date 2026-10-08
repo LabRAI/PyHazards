@@ -66,6 +66,7 @@ _SUBMODULES = {
     "benchmarks": "pyhazards.benchmarks",
     "models": "pyhazards.models",
     "simulators": "pyhazards.simulators",
+    "forecasts": "pyhazards.forecasts",
     "metrics": "pyhazards.metrics",
     "reports": "pyhazards.reports",
     "engine": "pyhazards.engine",
