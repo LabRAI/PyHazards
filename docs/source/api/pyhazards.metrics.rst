@@ -5,3 +5,11 @@ pyhazards.metrics package
    :members:
    :undoc-members:
    :show-inheritance:
+
+pyhazards.metrics.hydrology module
+----------------------------------
+
+.. automodule:: pyhazards.metrics.hydrology
+   :members:
+   :undoc-members:
+   :show-inheritance:

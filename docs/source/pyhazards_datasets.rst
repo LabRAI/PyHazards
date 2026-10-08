@@ -30,7 +30,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         37
+         35
 
       .. container:: catalog-stat-note
 
@@ -52,7 +52,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         18
+         16
 
       .. container:: catalog-stat-note
 
@@ -754,24 +754,59 @@ primary source, and the most relevant inspection or registry surface.
          :gutter: 2
          :class-container: catalog-grid
 
+         .. grid-item-card:: CAMELS-US
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Reader for a local copy of CAMELS-US (671 US catchments, daily forcings, USGS streamflow and catchment attributes) in the setup of Kratzert et al. (2019), as NeuralHydrology reads it.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Streamflow Benchmark` :bdg-info:`Daily basin time series with static attributes`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** 671 catchments in the contiguous United States (531 in the Kratzert et al. 2019 benchmark)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Static research dataset (extended Maurer forcings released separately in 2019)
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('camels_us_streamflow', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`, :doc:`CAMELS-US <benchmarks/camels_us>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`CAMELS-US <datasets/camels_us_streamflow>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Addor, Newman, Mizukami and Clark (2017). The CAMELS data set: catchment attributes and meteorology for large-sample studies. HESS 21:5293-5313. <https://doi.org/10.5194/hess-21-5293-2017>`_
+
          .. grid-item-card:: Caravan
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               Synthetic-backed streamflow benchmark adapter aligned to the Caravan large-sample hydrology ecosystem.
+               Reader for a local copy of Caravan, the global large-sample hydrology dataset (daily ERA5-Land forcings, catchment attributes and observed streamflow), in NeuralHydrology's sample layout.
 
             .. container:: catalog-chip-row
 
-               :bdg-secondary:`Streamflow Benchmark` :bdg-info:`Graph-temporal basin or node sequences`
+               :bdg-secondary:`Streamflow Benchmark` :bdg-info:`Daily basin time series with static attributes`
 
             .. container:: catalog-meta-row
 
-               **Coverage:** Benchmark-aligned streamflow forecasting samples
+               **Coverage:** 6,830 catchments in the original release (Australia, Brazil, Canada, Chile, Great Britain, Central Europe, United States) plus extensions
 
             .. container:: catalog-meta-row
 
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
+               **Update Cadence:** Versioned Zenodo releases (netCDF and CSV editions) plus community extensions
 
             .. container:: catalog-meta-row
 
@@ -787,77 +822,7 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `Caravan - A global community dataset for large-sample hydrology <https://www.nature.com/articles/s41597-023-01975-w>`_
-
-         .. grid-item-card:: FloodCastBench
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Synthetic-backed inundation benchmark adapter aligned to the FloodCastBench evaluation ecosystem.
-
-            .. container:: catalog-chip-row
-
-               :bdg-secondary:`Inundation Benchmark` :bdg-info:`Raster inundation sequences`
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** Benchmark-aligned flood inundation samples
-
-            .. container:: catalog-meta-row
-
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
-
-            .. container:: catalog-meta-row
-
-               **Registry:** ``load_dataset('floodcastbench_inundation', ...)``
-
-            .. container:: catalog-meta-row
-
-               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`, :doc:`FloodCastBench <benchmarks/floodcastbench>`
-
-            .. container:: catalog-link-row
-
-               **Details:** :doc:`FloodCastBench <datasets/floodcastbench_inundation>`
-
-            .. container:: catalog-link-row
-
-               **Primary Source:** `FloodCastBench <https://github.com/HydroPML/FloodCastBench>`_
-
-         .. grid-item-card:: HydroBench
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Synthetic-backed streamflow diagnostics adapter aligned to the HydroBench ecosystem.
-
-            .. container:: catalog-chip-row
-
-               :bdg-secondary:`Streamflow Benchmark` :bdg-info:`Graph-temporal basin or node sequences`
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** Benchmark-aligned streamflow forecasting samples
-
-            .. container:: catalog-meta-row
-
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
-
-            .. container:: catalog-meta-row
-
-               **Registry:** ``load_dataset('hydrobench_streamflow', ...)``
-
-            .. container:: catalog-meta-row
-
-               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`, :doc:`HydroBench <benchmarks/hydrobench>`
-
-            .. container:: catalog-link-row
-
-               **Details:** :doc:`HydroBench <datasets/hydrobench_streamflow>`
-
-            .. container:: catalog-link-row
-
-               **Primary Source:** `HydroBench <https://github.com/EMscience/HydroBench>`_
+               **Primary Source:** `Kratzert et al. (2023). Caravan - A global community dataset for large-sample hydrology. Scientific Data 10:61. <https://doi.org/10.1038/s41597-023-01975-w>`_
 
          .. grid-item-card:: NOAA Flood Events
             :class-card: catalog-entry-card
@@ -893,41 +858,6 @@ primary source, and the most relevant inspection or registry surface.
             .. container:: catalog-link-row
 
                **Primary Source:** `NOAA National Centers for Environmental Information. Storm Events Database Documentation. <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648>`_
-
-         .. grid-item-card:: WaterBench
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Synthetic-backed streamflow benchmark adapter aligned to the WaterBench ecosystem.
-
-            .. container:: catalog-chip-row
-
-               :bdg-secondary:`Streamflow Benchmark` :bdg-info:`Graph-temporal basin or node sequences`
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** Benchmark-aligned streamflow forecasting samples
-
-            .. container:: catalog-meta-row
-
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
-
-            .. container:: catalog-meta-row
-
-               **Registry:** ``load_dataset('waterbench_streamflow', ...)``
-
-            .. container:: catalog-meta-row
-
-               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`, :doc:`WaterBench <benchmarks/waterbench>`
-
-            .. container:: catalog-link-row
-
-               **Details:** :doc:`WaterBench <datasets/waterbench_streamflow>`
-
-            .. container:: catalog-link-row
-
-               **Primary Source:** `WaterBench: A Large-scale Benchmark Dataset for Data-driven Streamflow Forecasting <https://neurips.cc/virtual/2023/80632>`_
 
 
    .. tab-item:: Earthquake
@@ -1371,7 +1301,7 @@ hazard group before branching into the full catalog.
 
       **Start with:** :doc:`Caravan <datasets/caravan_streamflow>`
 
-      Synthetic-backed streamflow benchmark adapter aligned to the Caravan large-sample hydrology ecosystem.
+      Reader for a local copy of Caravan, the global large-sample hydrology dataset (daily ERA5-Land forcings, catchment attributes and observed streamflow), in NeuralHydrology's sample layout.
 
       **Primary Surface:** Registry: ``load_dataset('caravan_streamflow', ...)``
 
@@ -1443,11 +1373,9 @@ model and evaluation coverage.
    datasets/wfigs
    datasets/wrc_housing_density
    datasets/wrf_sfire
+   datasets/camels_us_streamflow
    datasets/caravan_streamflow
-   datasets/floodcastbench_inundation
-   datasets/hydrobench_streamflow
    datasets/noaa_flood
-   datasets/waterbench_streamflow
    datasets/aefa_forecast
    datasets/pick_benchmark_waveforms
    datasets/seisbench_waveforms

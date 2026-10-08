@@ -6,9 +6,9 @@ Caravan
 Overview
 --------
 
-The current Caravan alignment is a metadata-backed streamflow adapter layered on top of the shared synthetic graph-temporal flood dataset.
+``caravan_streamflow`` reads the official Caravan layout (per-basin netCDF or CSV time series and attribute CSVs) into NeuralHydrology-style samples; the ``flood.streamflow`` evaluator then reports per-basin NSE, KGE and the other NeuralHydrology metrics, summarised by the median and mean over basins.
 
-It currently drives the public smoke runs for NeuralHydrology LSTM and Google Flood Forecasting.
+Caravan has no fixed benchmark split: choose inputs, basins and periods for the experiment. Google's FloodHub model was trained on Caravan with the MultiMet forecast products (not read by PyHazards). The smoke configs exercise the same contract on synthetic basins.
 
 At a Glance
 -----------
@@ -44,7 +44,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         :bdg-info:`Synthetic-backed`
+         :bdg-success:`Real-backed`
 
       .. container:: catalog-stat-note
 
@@ -55,11 +55,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         2
+         3
 
       .. container:: catalog-stat-note
 
-         2 models
+         3 models
 
 
 Benchmark Mapping
@@ -77,7 +77,7 @@ Mapped benchmark family
 Primary Source
 ~~~~~~~~~~~~~~
 
-`Caravan - A global community dataset for large-sample hydrology <https://www.nature.com/articles/s41597-023-01975-w>`_ (`repo <https://github.com/kratzert/Caravan>`__).
+`Caravan - A global community dataset for large-sample hydrology <https://doi.org/10.1038/s41597-023-01975-w>`_ (`repo <https://github.com/kratzert/Caravan>`__).
 
 .. dropdown:: Supported Tasks
    :class-container: catalog-dropdown
@@ -87,10 +87,9 @@ Primary Source
 .. dropdown:: Key Metrics
    :class-container: catalog-dropdown
 
-   - ``mae``
-   - ``rmse``
    - ``nse``
    - ``kge``
+   - ``nse_mean``
 
 .. dropdown:: Smoke Configs
    :class-container: catalog-dropdown
@@ -101,4 +100,9 @@ Primary Source
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`.
+   :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`.
+
+.. dropdown:: Notes
+   :class-container: catalog-dropdown
+
+   - The reader is checked against NeuralHydrology's Caravan dataset on real Caravan basin files.

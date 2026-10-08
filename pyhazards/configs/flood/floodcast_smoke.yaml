@@ -7,7 +7,7 @@ benchmark:
     - f1
   eval_split: test
 dataset:
-  name: floodcastbench_inundation
+  name: flood_inundation_synthetic
   params:
     micro: true
 model:

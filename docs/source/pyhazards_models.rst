@@ -33,7 +33,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         45
+         42
 
       .. container:: catalog-stat-note
 
@@ -44,7 +44,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         5
+         8
 
       .. container:: catalog-stat-note
 
@@ -999,7 +999,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-entry-summary
 
-               An entity-aware hydrology baseline with static-feature gating over streamflow histories.
+               The Entity-Aware LSTM of Kratzert et al. (HESS 2019): static catchment attributes set the input gate, daily forcings drive the other gates; ported from NeuralHydrology.
 
             .. container:: catalog-chip-row
 
@@ -1015,45 +1015,18 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`WaterBench <benchmarks/waterbench>`
+               **Benchmark Ecosystems:** :doc:`CAMELS-US <benchmarks/camels_us>`, :doc:`Caravan <benchmarks/caravan>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ | **Repo:** `Repository <https://github.com/neuralhydrology/neuralhydrology>`__
-
-         .. grid-item-card:: FloodCast
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               A compact spatiotemporal flood-inundation baseline for raster forecast experiments.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Flood` :bdg-secondary:`Inundation` :bdg-success:`Implemented`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`FloodCast <modules/models_floodcast>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`FloodCastBench <benchmarks/floodcastbench>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Large-scale flood modeling and forecasting with FloodCast <https://doi.org/10.1038/s41586-024-08028-8>`_ | **Repo:** `Repository <https://github.com/HydroPML/FloodCast>`__
+               **Paper:** `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ | **Repo:** `Repository <https://github.com/kratzert/ealstm_regional_modeling>`__
 
          .. grid-item-card:: Google Flood Forecasting
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A transformer-style sequence baseline for nodewise streamflow forecasting.
+               Google's operational streamflow model (FloodHub): hindcast and forecast LSTMs over masked-mean embeddings of several weather products, with a probabilistic CMAL head; released weights load.
 
             .. container:: catalog-chip-row
 
@@ -1073,14 +1046,14 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-link-row
 
-               **Paper:** `Global Flood Forecasting at a Fine Catchment Resolution using Machine Learning <https://research.google/pubs/global-flood-forecasting-at-a-fine-catchment-resolution-using-machine-learning/>`_ | **Repo:** `Repository <https://github.com/google-research/flood-forecasting>`__
+               **Paper:** `How to deal w___ missing input data <https://doi.org/10.5194/hess-29-6221-2025>`_ | **Repo:** `Repository <https://github.com/google-research/flood-forecasting>`__
 
          .. grid-item-card:: NeuralHydrology LSTM
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs.
+               The regional rainfall-runoff LSTM of Kratzert et al. (HESS 2019) as NeuralHydrology implements it (CudaLSTM): daily forcings plus static catchment attributes to daily discharge.
 
             .. container:: catalog-chip-row
 
@@ -1096,49 +1069,55 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`Caravan <benchmarks/caravan>`
+               **Benchmark Ecosystems:** :doc:`CAMELS-US <benchmarks/camels_us>`, :doc:`Caravan <benchmarks/caravan>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ | **Repo:** `Repository <https://github.com/neuralhydrology/neuralhydrology>`__
+               **Paper:** `Rainfall-runoff modelling using Long Short-Term Memory (LSTM) networks <https://doi.org/10.5194/hess-22-6005-2018>`_ | **Repo:** `Repository <https://github.com/neuralhydrology/neuralhydrology>`__
 
-         .. grid-item-card:: UrbanFloodCast
+      .. rubric:: Experimental Adapters
+
+      .. container:: catalog-section-note
+
+         These entries remain public as lightweight wrapper or prototype integrations and should not be counted as stable implemented methods.
+
+      .. grid:: 1 1 2 2
+         :gutter: 2
+         :class-container: catalog-grid
+
+         .. grid-item-card:: FloodCast
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A U-Net style urban inundation baseline for dense-grid flood prediction.
+               A small convolutional inundation baseline under the FloodCast name; not the published model, whose code was never released (experimental).
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Flood` :bdg-secondary:`Inundation` :bdg-success:`Implemented`
+               :bdg-primary:`Flood` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-warning:`Experimental Adapter`
 
             .. container:: catalog-meta-row
 
-               **Details:** :doc:`UrbanFloodCast <modules/models_urbanfloodcast>`
+               **Details:** :doc:`FloodCast <modules/models_floodcast>`
 
             .. container:: catalog-meta-row
 
                **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
 
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`FloodCastBench <benchmarks/floodcastbench>`
-
             .. container:: catalog-link-row
 
-               **Paper:** `UrbanFloodCast: WMO Urban Flooding Forecasting Challenge <https://arxiv.org/abs/2405.21179>`_ | **Repo:** `Repository <https://github.com/HydroPML/UrbanFloodCast>`__
+               **Paper:** `Large-scale flood modeling and forecasting with FloodCast <https://doi.org/10.1016/j.watres.2024.122162>`_ | **Repo:** `Repository <https://github.com/HydroPML/FloodCast>`__
 
          .. grid-item-card:: HydroGraphNet
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A physics-informed graph neural network for flood forecasting with interpretable KAN-style components, residual message passing, and delta-state decoding.
+               A compact graph network loosely modelled on HydroGraphNet; not yet a port of the published model (experimental).
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-success:`Implemented`
+               :bdg-primary:`Flood` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
 
             .. container:: catalog-meta-row
 
@@ -1148,13 +1127,32 @@ pages and compatible benchmark coverage.
 
                **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
 
+            .. container:: catalog-link-row
+
+               **Paper:** `Interpretable physics-informed graph neural networks for flood forecasting <https://doi.org/10.1111/mice.13484>`_ | **Repo:** `Repository <https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet>`__
+
+         .. grid-item-card:: UrbanFloodCast
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               A four-layer convolutional inundation baseline under the UrbanFloodCast name; not the published deep neural operator (experimental).
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Flood` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-warning:`Experimental Adapter`
+
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`HydroBench <benchmarks/hydrobench>`
+               **Details:** :doc:`UrbanFloodCast <modules/models_urbanfloodcast>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_
+               **Paper:** `Urban flood modeling and forecasting with deep neural operator and transfer learning <https://doi.org/10.1016/j.jhydrol.2025.133705>`_ | **Repo:** `Repository <https://github.com/HydroPML/UrbanFloodCast>`__
 
 
    .. tab-item:: Tropical Cyclone
@@ -1408,9 +1406,9 @@ starting point for each hazard family.
    .. grid-item-card:: Flood
       :class-card: catalog-detail-card
 
-      **Start with:** :doc:`FloodCast <modules/models_floodcast>`
+      **Start with:** :doc:`NeuralHydrology LSTM <modules/models_neuralhydrology_lstm>`
 
-      A compact spatiotemporal flood-inundation baseline for raster forecast experiments.
+      The regional rainfall-runoff LSTM of Kratzert et al. (HESS 2019) as NeuralHydrology implements it (CudaLSTM): daily forcings plus static catchment attributes to daily discharge.
 
       **Benchmark:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
 

@@ -1,0 +1,44 @@
+slug: camels_us
+display_name: CAMELS-US
+kind: ecosystem
+hazard_family: Flood
+benchmark_key: flood
+support_status: real-backed
+summary: >
+  The CAMELS-US benchmark of Kratzert et al. (2019): 531 basins, extended Maurer forcings, 27 attributes,
+  test 1989-1999, scored per basin with NSE and the FDC metrics.
+description:
+  - >
+    ``camels_us_streamflow`` reads a local CAMELS-US copy with the paper's defaults (forcings, the 27
+    attributes, 270-day windows, train 1999-10-01 to 2008-09-30, test 1989-10-01 to 1999-09-30). The
+    ``flood.streamflow`` evaluator reports the median and mean NSE over basins and the number of basins
+    with NSE <= 0, as in Table 2 of the paper, plus KGE, alpha-NSE, beta-NSE, FHV, FMS and FLV.
+  - >
+    Applied to the official stored simulations of the 2019 runs, the PyHazards metrics give the paper's
+    Table 2 values (e.g. EA-LSTM NSE* median 0.71 single / 0.74 ensemble; LSTM with static inputs 0.73 /
+    0.76). The smoke configs exercise the contract on synthetic basins.
+source:
+  title: "Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets"
+  url: https://doi.org/10.5194/hess-23-5089-2019
+  repo_url: https://github.com/kratzert/ealstm_regional_modeling
+tasks:
+  - flood.streamflow
+metrics:
+  - nse
+  - nse_mean
+  - n_basins_nse_le_0
+  - alpha_nse
+  - beta_nse
+  - fhv
+  - fms
+  - flv
+smoke_configs:
+  - pyhazards/configs/flood/neuralhydrology_lstm_smoke.yaml
+  - pyhazards/configs/flood/neuralhydrology_ealstm_smoke.yaml
+linked_models:
+  - neuralhydrology_lstm
+  - neuralhydrology_ealstm
+notes:
+  - >
+    Dataset: Addor et al. (HESS 2017), CC BY 4.0; extended Maurer forcings on HydroShare
+    (doi 10.4211/hs.17c896843cf940339c3c3496d0c1c077). PyHazards downloads nothing.

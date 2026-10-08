@@ -7,12 +7,11 @@ from .earthquake import (
     SyntheticEarthquakeWaveformDataset,
 )
 from .flood import (
+    CamelsUSStreamflowDataset,
     CaravanStreamflowDataset,
-    FloodCastBenchInundationDataset,
-    HydroBenchStreamflowDataset,
     SyntheticFloodInundationDataset,
+    SyntheticFloodMeshDataset,
     SyntheticFloodStreamflowDataset,
-    WaterBenchStreamflowDataset,
 )
 from .fpa_fod import FPAFODTabularDataset, FPAFODWeeklyDataset
 from .graph import GraphTemporalDataset, graph_collate
@@ -47,12 +46,11 @@ __all__ = [
     "SeisBenchWaveformDataset",
     "SyntheticEarthquakeForecastDataset",
     "SyntheticEarthquakeWaveformDataset",
+    "CamelsUSStreamflowDataset",
     "CaravanStreamflowDataset",
-    "FloodCastBenchInundationDataset",
-    "HydroBenchStreamflowDataset",
     "SyntheticFloodInundationDataset",
+    "SyntheticFloodMeshDataset",
     "SyntheticFloodStreamflowDataset",
-    "WaterBenchStreamflowDataset",
     "FPAFODTabularDataset",
     "FPAFODWeeklyDataset",
     "available_datasets",
@@ -83,10 +81,9 @@ register_dataset(PickBenchmarkWaveformDataset.name, PickBenchmarkWaveformDataset
 register_dataset(AEFADataset.name, AEFADataset)
 register_dataset(SyntheticFloodInundationDataset.name, SyntheticFloodInundationDataset)
 register_dataset(SyntheticFloodStreamflowDataset.name, SyntheticFloodStreamflowDataset)
+register_dataset(SyntheticFloodMeshDataset.name, SyntheticFloodMeshDataset)
+register_dataset(CamelsUSStreamflowDataset.name, CamelsUSStreamflowDataset)
 register_dataset(CaravanStreamflowDataset.name, CaravanStreamflowDataset)
-register_dataset(WaterBenchStreamflowDataset.name, WaterBenchStreamflowDataset)
-register_dataset(HydroBenchStreamflowDataset.name, HydroBenchStreamflowDataset)
-register_dataset(FloodCastBenchInundationDataset.name, FloodCastBenchInundationDataset)
 register_dataset(FPAFODTabularDataset.name, FPAFODTabularDataset)
 register_dataset(FPAFODWeeklyDataset.name, FPAFODWeeklyDataset)
 register_dataset(SyntheticTropicalCycloneDataset.name, SyntheticTropicalCycloneDataset)

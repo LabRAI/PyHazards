@@ -45,11 +45,14 @@ Earthquake
 Flood
 ~~~~~
 
-- *Interpretable physics-informed graph neural networks for flood forecasting*. `[paper] <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`__.
-- *Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets*. `[paper] <https://doi.org/10.5194/hess-23-5089-2019>`__, `[repo] <https://github.com/neuralhydrology/neuralhydrology>`__.
-- *Large-scale flood modeling and forecasting with FloodCast*. `[paper] <https://doi.org/10.1038/s41586-024-08028-8>`__, `[repo] <https://github.com/HydroPML/FloodCast>`__.
-- *UrbanFloodCast: WMO Urban Flooding Forecasting Challenge*. `[paper] <https://arxiv.org/abs/2405.21179>`__, `[repo] <https://github.com/HydroPML/UrbanFloodCast>`__.
-- *Global Flood Forecasting at a Fine Catchment Resolution using Machine Learning*. `[paper] <https://research.google/pubs/global-flood-forecasting-at-a-fine-catchment-resolution-using-machine-learning/>`__, `[repo] <https://github.com/google-research/flood-forecasting>`__.
+- Kratzert, F., Klotz, D., Brenner, C., Schulz, K., and Herrnegger, M. (2018). *Rainfall-runoff modelling using Long Short-Term Memory (LSTM) networks*. Hydrology and Earth System Sciences, 22, 6005-6022. `[paper] <https://doi.org/10.5194/hess-22-6005-2018>`__.
+- Kratzert, F., Klotz, D., Shalev, G., Klambauer, G., Hochreiter, S., and Nearing, G. (2019). *Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets*. Hydrology and Earth System Sciences, 23, 5089-5110. `[paper] <https://doi.org/10.5194/hess-23-5089-2019>`__, `[repo] <https://github.com/kratzert/ealstm_regional_modeling>`__, `[weights] <https://doi.org/10.4211/hs.83ea5312635e44dc824eeb99eda12f06>`__.
+- Kratzert, F., Gauch, M., Nearing, G., and Klotz, D. (2022). *NeuralHydrology - A Python library for Deep Learning research in hydrology*. Journal of Open Source Software, 7(71), 4050. `[paper] <https://doi.org/10.21105/joss.04050>`__, `[repo] <https://github.com/neuralhydrology/neuralhydrology>`__.
+- Nearing, G., Cohen, D., Dube, V., Gauch, M., Gilon, O., Harrigan, S., et al. (2024). *Global prediction of extreme floods in ungauged watersheds*. Nature, 627, 559-563. `[paper] <https://doi.org/10.1038/s41586-024-07145-1>`__, `[repo] <https://github.com/google-research/flood-forecasting>`__.
+- Gauch, M., Kratzert, F., Klotz, D., Nearing, G., Cohen, D., and Gilon, O. (2025). *How to deal w___ missing input data*. Hydrology and Earth System Sciences, 29, 6221-6235. `[paper] <https://doi.org/10.5194/hess-29-6221-2025>`__, `[repo] <https://github.com/google-research/flood-forecasting>`__.
+- Taghizadeh, M., Zandsalimi, Z., Nabian, M. A., Shafiee-Jood, M., and Alemazkoor, N. (2025). *Interpretable physics-informed graph neural networks for flood forecasting*. Computer-Aided Civil and Infrastructure Engineering, 40(18), 2629-2649. `[paper] <https://doi.org/10.1111/mice.13484>`__, `[repo] <https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet>`__.
+- Xu, Q., Shi, Y., Bamber, J., Ouyang, C., and Zhu, X. X. (2024). *Large-scale flood modeling and forecasting with FloodCast*. Water Research, 264, 122162. `[paper] <https://doi.org/10.1016/j.watres.2024.122162>`__, `[repo] <https://github.com/HydroPML/FloodCast>`__.
+- Xu, Q., De Vos, L. F., Shi, Y., Rüther, N., Bronstert, A., and Zhu, X. X. (2025). *Urban flood modeling and forecasting with deep neural operator and transfer learning*. Journal of Hydrology, 661, 133705. `[paper] <https://doi.org/10.1016/j.jhydrol.2025.133705>`__, `[repo] <https://github.com/HydroPML/UrbanFloodCast>`__.
 
 Hurricane and Tropical Cyclone
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,7 +73,8 @@ Benchmark and Data Resources
 - *pick-benchmark*. `[repo] <https://github.com/seisbench/pick-benchmark>`__.
 - *pyCSEP*. `[repo] <https://github.com/SCECCode/pycsep>`__.
 - *AEFA*. `[repo] <https://github.com/chenyk1990/aefa>`__.
-- *Caravan - A global community dataset for large-sample hydrology*. `[paper] <https://www.nature.com/articles/s41597-023-01975-w>`__, `[repo] <https://github.com/kratzert/Caravan>`__.
+- Kratzert, F., Nearing, G., Addor, N., et al. (2023). *Caravan - A global community dataset for large-sample hydrology*. Scientific Data, 10, 61. `[paper] <https://doi.org/10.1038/s41597-023-01975-w>`__, `[repo] <https://github.com/kratzert/Caravan>`__.
+- Addor, N., Newman, A. J., Mizukami, N., and Clark, M. P. (2017). *The CAMELS data set: catchment attributes and meteorology for large-sample studies*. Hydrology and Earth System Sciences, 21, 5293-5313. `[paper] <https://doi.org/10.5194/hess-21-5293-2017>`__.
 - *WaterBench: A Large-scale Benchmark Dataset for Data-driven Streamflow Forecasting*. `[paper] <https://neurips.cc/virtual/2023/80632>`__, `[repo] <https://github.com/uihilab/WaterBench>`__.
 - *FloodCastBench*. `[repo] <https://github.com/HydroPML/FloodCastBench>`__.
 - *HydroBench*. `[repo] <https://github.com/EMscience/HydroBench>`__.

@@ -1,21 +1,34 @@
 model_name: floodcast
 display_name: FloodCast
 hazard: Flood
+catalog_status: experimental
 source_file: pyhazards/models/floodcast.py
 builder_name: floodcast_builder
 summary: >
-  A compact spatiotemporal flood-inundation baseline for raster forecast experiments.
+  A small convolutional inundation baseline under the FloodCast name; not the published model, whose
+  code was never released (experimental).
 description:
   - >
-    ``floodcast`` is the first public inundation model in the staged PyHazards
-    flood roadmap.
+    ``floodcast`` is a compact PyHazards spatiotemporal network that maps ``(batch, history, channels, H,
+    W)`` rasters to a next-step depth raster ``(batch, 1, H, W)``. It is not FloodCast: the published
+    model is a physics-constrained Fourier-neural-operator solver of the shallow-water equations
+    (GeoPINS), trained per event without labels and rolled out over sequences, and its flood-model code
+    was never released (the official repository holds toy PDE examples and empty placeholders).
   - >
-    The adapter uses shared raster tensors so it can be benchmarked through the
-    ``flood.inundation`` evaluator without dataset-specific glue code.
+    The smoke configuration scores it on ``flood_inundation_synthetic`` (random rasters). FloodCastBench
+    (the benchmark of the FloodCast paper) is not loaded by PyHazards.
 paper:
-  title: Large-scale flood modeling and forecasting with FloodCast
-  url: https://doi.org/10.1038/s41586-024-08028-8
+  title: "Large-scale flood modeling and forecasting with FloodCast"
+  url: https://doi.org/10.1016/j.watres.2024.122162
   repo_url: https://github.com/HydroPML/FloodCast
+references:
+  - title: "Large-scale flood modeling and forecasting with FloodCast"
+    url: https://doi.org/10.1016/j.watres.2024.122162
+    repo_url: https://github.com/HydroPML/FloodCast
+    note: >
+      Xu, Shi, Bamber, Ouyang and Zhu, Water Research 264:122162 (2024); arXiv 2403.12226. The
+      repository has no licence and does not contain the flood model (only GeoPINS toy examples), so a
+      port has to be written from the paper.
 tasks:
   - regression
   - segmentation
@@ -28,6 +41,9 @@ example: |
   print(preds.shape)
 notes:
   - "Outputs are next-horizon inundation depth rasters."
+  - >
+    Experimental: kept under its published name only until a reimplementation from the paper replaces
+    it; do not report its results as FloodCast's.
 smoke_test:
   task: regression
   build_kwargs:

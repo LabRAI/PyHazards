@@ -33,7 +33,12 @@ Flood
 Implemented Models
 ++++++++++++++++++
 
-:doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`, :doc:`FloodCast </modules/models_floodcast>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`, :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`UrbanFloodCast </modules/models_urbanfloodcast>`, :doc:`HydroGraphNet </modules/models_hydrographnet>`.
+:doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`, :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`.
+
+Experimental Adapters
++++++++++++++++++++++
+
+:doc:`FloodCast </modules/models_floodcast>`, :doc:`HydroGraphNet </modules/models_hydrographnet>`, :doc:`UrbanFloodCast </modules/models_urbanfloodcast>`.
 
 Tropical Cyclone
 ~~~~~~~~~~~~~~~~

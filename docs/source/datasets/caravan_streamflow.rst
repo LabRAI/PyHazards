@@ -3,14 +3,14 @@
 Caravan
 =======
 
-Synthetic-backed streamflow benchmark adapter aligned to the Caravan large-sample hydrology ecosystem.
+Reader for a local copy of Caravan, the global large-sample hydrology dataset (daily ERA5-Land forcings, catchment attributes and observed streamflow), in NeuralHydrology's sample layout.
 
 Overview
 --------
 
-Caravan is the public flood streamflow adapter used to align PyHazards with a large-sample hydrology benchmark surface.
+Caravan (Kratzert et al., Scientific Data 10:61, 2023) harmonises the CAMELS-style datasets of several countries: every basin has daily ERA5-Land forcings and states (precipitation, temperature, radiation, pressure, wind, soil water, evaporation, ...) aggregated over the catchment in local time, observed streamflow in mm/day, and HydroATLAS / ERA5-Land climate attributes. The Zenodo records are licensed CC BY 4.0, with per-source licence notes in the dataset's ``licenses/`` folder.
 
-The current implementation is synthetic-backed, but it preserves the streamflow forecasting contract used by the shared flood benchmark.
+``caravan_streamflow`` reads that layout (as NeuralHydrology's ``Caravan`` dataset does) and builds streamflow samples: ``seq_length``-day windows of the chosen dynamic inputs ``x_d``, the basin's static attributes ``x_s`` and the discharge series ``y``, normalised with training-period statistics, split into the train / val / test periods you pass. PyHazards downloads nothing.
 
 At a Glance
 -----------
@@ -20,54 +20,57 @@ At a Glance
    :stub-columns: 1
 
    * - Provider
-     - Caravan community dataset surfaced through a PyHazards adapter
+     - Caravan community dataset (Kratzert et al. 2023), read by PyHazards from a local copy
    * - Hazard Family
      - Flood
    * - Source Role
      - Streamflow Benchmark
    * - Coverage
-     - Benchmark-aligned streamflow forecasting samples
+     - 6,830 catchments in the original release (Australia, Brazil, Canada, Chile, Great Britain, Central Europe, United States) plus extensions
    * - Geometry
-     - Graph-temporal basin or node sequences
+     - Daily basin time series with static attributes
    * - Spatial Resolution
-     - Basin or gauge nodes represented as graph elements
+     - Catchment averages (one series per gauge)
    * - Temporal Resolution
-     - Rolling history windows for streamflow prediction
+     - Daily
    * - Update Cadence
-     - Generated locally for smoke and benchmark-alignment runs
+     - Versioned Zenodo releases (netCDF and CSV editions) plus community extensions
    * - Period of Record
-     - Synthetic-backed benchmark adapter
+     - 1981-2020 in the original release (later versions extend it)
    * - Formats
-     - PyTorch graph-temporal dataset objects via the dataset registry
+     - Per-basin netCDF or CSV time series; per-source attribute CSV files
    * - Registry Entry
      - ``caravan_streamflow``
 
 Data Characteristics
 --------------------
 
-- Graph-temporal sequences with node-level targets for next-step streamflow prediction.
-- Registry-backed benchmark adapter instead of a raw Caravan ingestion pipeline.
-- Supports the public streamflow smoke path for NeuralHydrology LSTM and Google Flood Forecasting.
+- Layout: ``attributes/<source>/attributes_{caravan,hydroatlas,other}_<source>.csv`` (column ``gauge_id``) and ``timeseries/{netcdf,csv}/<source>/<source>_<id>.{nc,csv}``; basin ids are ``<source>_<id>``.
+- Inputs and target are standardised with the mean and population standard deviation over all training basins and days; static attributes with their mean and standard deviation over the training basins, sorted alphabetically (NeuralHydrology's order).
+- Training samples with a missing input in the window or a missing target on the last day are dropped; validation and test keep one sample per basin and day so that metrics cover the whole period.
+- Caravan publishes no single input set or split, so ``dynamic_inputs`` and ``periods`` are required.
 
 Typical Use Cases
 ~~~~~~~~~~~~~~~~~
 
-- Streamflow smoke tests for benchmark-linked flood models.
-- Shared flood benchmark runs with streamflow metrics such as NSE and KGE.
-- Regression checks for graph-temporal basin workflows.
+- Regional or global LSTM streamflow models (``neuralhydrology_lstm``, ``neuralhydrology_ealstm``, ``google_flood_forecasting``).
+- Per-basin NSE / KGE evaluation with the flood benchmark (``flood.streamflow``).
 
 Access
 ------
 
 Use the links below to access the upstream source or its public documentation.
 
-- `Caravan paper <https://www.nature.com/articles/s41597-023-01975-w>`_
+- `Caravan paper (Scientific Data 2023) <https://doi.org/10.1038/s41597-023-01975-w>`_
 - `Caravan repository <https://github.com/kratzert/Caravan>`_
+- `Caravan netCDF release (Zenodo) <https://doi.org/10.5281/zenodo.6522634>`_
 
 PyHazards Usage
 ---------------
 
-Use this adapter when you want the public Caravan-aligned streamflow surface exposed by the flood benchmark.
+Point ``data_dir`` at an extracted Caravan release and pass basin ids (or a basin file), dynamic inputs and periods.
+
+Score models with ``BenchmarkRunner`` on the ``flood`` benchmark (task ``flood.streamflow``).
 
 Registry Workflow
 ~~~~~~~~~~~~~~~~~
@@ -80,20 +83,22 @@ Primary dataset name: ``caravan_streamflow``
 
    data = load_dataset(
        "caravan_streamflow",
-       micro=True,
-       history=4,
-       nodes=6,
+       data_dir="/data/Caravan",
+       basins=["camelsgb_28015", "lamah_215"],
+       dynamic_inputs=["total_precipitation_sum", "temperature_2m_mean", "potential_evaporation_sum"],
+       static_attributes=["p_mean", "aridity", "area"],
+       periods={"train": ("1981-10-01", "1990-09-30"), "test": ("2000-10-01", "2010-09-30")},  # your split
+       seq_length=365,
    ).load()
-
-   train = data.get_split("train")
-   print(len(train.inputs), train.inputs[0].x.shape)
+   inputs, y = data.get_split("test").inputs[0]
+   print(inputs["x_d"].shape, inputs["x_s"].shape, y.shape)
 
 Related Coverage
 ~~~~~~~~~~~~~~~~
 
 **Benchmarks:** :doc:`Flood Benchmark </benchmarks/flood_benchmark>`, :doc:`Caravan </benchmarks/caravan>`
 
-**Representative Models:** :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`
+**Representative Models:** :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`
 
 Inspection Workflow
 -------------------
@@ -104,9 +109,10 @@ so there is no standalone inspection CLI documented for it.
 Notes
 -----
 
-- This is a synthetic-backed benchmark adapter rather than a full Caravan downloader.
+- The reader is checked against NeuralHydrology's Caravan dataset on real Caravan basin files (oracle test).
+- Until 2026-10 this registry name generated random numbers; it now reads only real Caravan files (synthetic data is ``flood_streamflow_synthetic``).
 
 Reference
 ---------
 
-- `Caravan - A global community dataset for large-sample hydrology <https://www.nature.com/articles/s41597-023-01975-w>`_ (`repo <https://github.com/kratzert/Caravan>`__).
+- `Kratzert et al. (2023). Caravan - A global community dataset for large-sample hydrology. Scientific Data 10:61. <https://doi.org/10.1038/s41597-023-01975-w>`_ (`repo <https://github.com/kratzert/Caravan>`__).
