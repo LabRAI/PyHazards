@@ -9,6 +9,7 @@ from pyhazards.configs import load_experiment_config
 from pyhazards.datasets import load_dataset
 from pyhazards.datasets.base import DataBundle, DataSplit, FeatureSpec, LabelSpec
 from pyhazards.engine.runner import BenchmarkRunner
+from pyhazards.models import build_model
 
 
 def test_earthquake_vertical_slice(tmp_path):
@@ -23,13 +24,57 @@ def test_earthquake_vertical_slice(tmp_path):
     assert summary.metadata["protocol"] == "phasenet"
 
 
-def test_earthquake_forecasting_still_runs(tmp_path):
+def test_earthquake_forecasting_reports_the_wavecastnet_metrics(tmp_path):
     config = load_experiment_config("pyhazards/configs/earthquake/wavecastnet_benchmark_smoke.yaml")
     summary = BenchmarkRunner().run(config, output_dir=str(tmp_path))
 
     assert summary.hazard_task == "earthquake.forecasting"
-    assert set(summary.metrics) == {"mae", "mse"}
+    expected = {"acc", "rfne", "rmse", "mae", "mse"} | {f"{m}_{c}" for m in ("acc", "rfne") for c in "xyz"}
+    assert set(summary.metrics) == expected
     assert "pycsep" not in summary.report_paths  # the mislabelled "pyCSEP-style" export was removed
+    # WaveCastNet's decoder starts from noise; the benchmark draws it from a generator seeded by `seed`.
+    model = build_model(config.model.name, task=config.model.task, **config.model.params)
+    first = BenchmarkRunner().run(config, model=model, output_dir=str(tmp_path))
+    assert BenchmarkRunner().run(config, model=model, output_dir=str(tmp_path)).metrics == first.metrics
+    config.benchmark.params = {**config.benchmark.params, "seed": 1}
+    assert BenchmarkRunner().run(config, model=model, output_dir=str(tmp_path)).metrics != first.metrics
+
+
+class _Persistence(nn.Module):
+    """Repeats the last input frame (a forecast without ``rollout``)."""
+
+    def __init__(self, steps):
+        super().__init__()
+        self.steps = steps
+
+    def forward(self, x):
+        return x[:, :, -1:].expand(-1, -1, self.steps, -1, -1)
+
+
+def _wavefield_bundle(targets, inputs=None):
+    inputs = targets[:, :, :1] if inputs is None else inputs
+    split = DataSplit(inputs, targets)
+    return DataBundle(
+        splits={"train": split, "val": split, "test": split},
+        feature_spec=FeatureSpec(channels=targets.shape[1]),
+        label_spec=LabelSpec(num_targets=1, task_type="regression"),
+        metadata={"dataset": "fixture", "channel_names": ["e", "n"]},
+    )
+
+
+def test_forecasting_metrics_follow_the_official_definitions(tmp_path):
+    config = load_experiment_config("pyhazards/configs/earthquake/wavecastnet_benchmark_smoke.yaml")
+    targets = torch.randn(3, 2, 4, 4, 4)
+    perfect = _wavefield_bundle(targets, inputs=targets[:, :, -1:].clone())
+    constant = targets[:, :, -1:].expand(-1, -1, 4, -1, -1).clone()
+    summary = run_benchmark("earthquake", _Persistence(4), _wavefield_bundle(constant, constant[:, :, :1]), config, output_dir=str(tmp_path))
+    assert summary.metrics["acc"] == pytest.approx(1.0) and summary.metrics["rfne"] == pytest.approx(0.0, abs=1e-6)
+    assert {"acc_e", "rfne_n"} <= set(summary.metrics)
+    flipped = _wavefield_bundle(-constant, constant[:, :, :1])
+    summary = run_benchmark("earthquake", _Persistence(4), flipped, config, output_dir=str(tmp_path))
+    assert summary.metrics["acc"] == pytest.approx(-1.0) and summary.metrics["rfne"] == pytest.approx(2.0)
+    with pytest.raises(ValueError, match="forecast has shape"):
+        run_benchmark("earthquake", _Persistence(2), perfect, config, output_dir=str(tmp_path))
 
 
 class _OraclePicker(nn.Module):

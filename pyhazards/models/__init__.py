@@ -10,7 +10,7 @@ from .convlstm import ConvLSTM, ConvLSTMCell, ConvLSTMSegmenter, convlstm_builde
 from .earthformer import CuboidTransformerModel, Earthformer, EarthformerSegmenter, earthformer_builder
 from .deeplabv3 import DeepLabV3, deeplabv3_builder
 from .deep_ensemble import DeepEnsemble, deep_ensemble_builder
-from .eqnet import EQNet, eqnet_builder
+from .eqnet import EQNet, EQNetLoss, eqnet_builder, eqnet_candidate_grid, eqnet_travel_times, shift_and_stack
 from .eqtransformer import EQTransformer, eqtransformer_builder
 from .firecastnet import FireCastNet, firecastnet_builder
 from .floodcast import FloodCast, floodcast_builder
@@ -57,8 +57,10 @@ from .wavecastnet import (
     ConvLEMCell,
     WaveCastNet,
     WaveCastNetLoss,
+    WaveCastNetSparse,
     WavefieldMetrics,
     wavecastnet_builder,
+    wavecastnet_station_coords,
 )
 from .wildfire_forecasting import (
     WILDFIRE_FORECASTING_VARIANTS,
@@ -94,7 +96,11 @@ __all__ = [
     "RegressionHead",
     "SegmentationHead",
     "EQNet",
+    "EQNetLoss",
     "eqnet_builder",
+    "eqnet_candidate_grid",
+    "eqnet_travel_times",
+    "shift_and_stack",
     "EQTransformer",
     "eqtransformer_builder",
     "FireCastNet",
@@ -210,8 +216,10 @@ __all__ = [
     "ConvLEMCell",
     "WaveCastNet",
     "WaveCastNetLoss",
+    "WaveCastNetSparse",
     "WavefieldMetrics",
     "wavecastnet_builder",
+    "wavecastnet_station_coords",
 ]
 
 
@@ -606,25 +614,21 @@ register_model(
 register_model(
     "eqnet",
     eqnet_builder,
-    defaults={
-        "in_channels": 3,
-        "hidden_dim": 48,
-        "num_heads": 4,
-        "num_layers": 2,
-        "dropout": 0.1,
-    },
+    defaults={"in_channels": 3, "sampling_rate": 100.0},
 )
 
 register_model(
     "wavecastnet",
     wavecastnet_builder,
     defaults={
-        "hidden_dim": 144,
-        "num_layers": 2,
+        "variant": "dense",
+        "in_channels": 3,
+        "height": 344,
+        "width": 224,
+        "future_seq": 30,
         "kernel_size": 3,
         "dt": 1.0,
         "activation": "tanh",
-        "dropout": 0.1,
     },
 )
 

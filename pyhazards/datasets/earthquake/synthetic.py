@@ -107,78 +107,81 @@ class SyntheticEarthquakeWaveformDataset(Dataset):
         )
 
 
-class SyntheticEarthquakeForecastDataset(Dataset):
-    """Synthetic dense-grid wavefield sequences for earthquake forecasting smoke runs (not real data)."""
+class SyntheticEarthquakeWavefieldDataset(Dataset):
+    """Synthetic ground-motion wavefields for wavefield-forecasting smoke runs (not real data).
 
-    name = "earthquake_forecast_synthetic"
+    Each sequence is a point source at a random grid position and onset time radiating a P and an S
+    wavefront (Ricker pulses travelling at ``vp`` and ``vs`` grid cells per frame, amplitudes decaying as
+    ``1 / sqrt(1 + r)``) on a ``height x width`` grid. The three channels are the X, Y and Z particle
+    velocities: P moves particles radially (and vertically, half amplitude), S transversally. This only
+    mimics the layout of WaveCastNet's data (three velocity components on a regular grid, Lyu et al.
+    2025); it is not an elastic simulation. Values come from a seeded generator.
+
+    Inputs ``(n, 3, temporal_in, height, width)`` and targets ``(n, 3, temporal_out, height, width)``,
+    the layout of the ``earthquake.forecasting`` task; ``height`` and ``width`` default to multiples of 8
+    (WaveCastNet's latent grid is 1/8 of the input).
+    """
+
+    name = "earthquake_wavefield_synthetic"
+    channel_names = ("x", "y", "z")
 
     def __init__(
         self,
         cache_dir: str | None = None,
-        samples: int = 40,
-        channels: int = 3,
-        temporal_in: int = 5,
-        temporal_out: int = 4,
-        height: int = 12,
-        width: int = 10,
+        samples: int = 24,
+        temporal_in: int = 6,
+        temporal_out: int = 6,
+        height: int = 32,
+        width: int = 24,
+        vp: float = 2.0,
+        vs: float = 1.2,
+        seed: int = 0,
         micro: bool = False,
     ):
         super().__init__(cache_dir=cache_dir)
-        self.samples = 10 if micro else int(samples)
-        self.channels = int(channels)
+        self.samples = 6 if micro else int(samples)
         self.temporal_in = int(temporal_in)
         self.temporal_out = int(temporal_out)
         self.height = int(height)
         self.width = int(width)
+        self.vp = float(vp)
+        self.vs = float(vs)
+        self.seed = int(seed)
+        if self.samples < 3:
+            raise ValueError(f"samples must be at least 3 (one per split), got {self.samples}.")
+        if min(self.temporal_in, self.temporal_out, self.height, self.width) < 1:
+            raise ValueError("temporal_in, temporal_out, height and width must be positive.")
+        if not self.vp > self.vs > 0:
+            raise ValueError(f"Need vp > vs > 0, got vp={self.vp}, vs={self.vs}.")
+
+    @staticmethod
+    def _ricker(t: torch.Tensor, width: float) -> torch.Tensor:
+        a = (t / width) ** 2
+        return (1.0 - 2.0 * a) * torch.exp(-a)
 
     def _load(self) -> DataBundle:
-        grid_y = torch.linspace(-1.0, 1.0, steps=self.height, dtype=torch.float32).view(self.height, 1)
-        grid_x = torch.linspace(-1.0, 1.0, steps=self.width, dtype=torch.float32).view(1, self.width)
-        total_steps = self.temporal_in + self.temporal_out
-
-        x = torch.zeros(
-            self.samples,
-            self.channels,
-            self.temporal_in,
-            self.height,
-            self.width,
-            dtype=torch.float32,
-        )
-        y = torch.zeros(
-            self.samples,
-            self.channels,
-            self.temporal_out,
-            self.height,
-            self.width,
-            dtype=torch.float32,
-        )
-
-        row_index = torch.arange(self.height, dtype=torch.float32).view(self.height, 1)
-        col_index = torch.arange(self.width, dtype=torch.float32).view(1, self.width)
-
+        generator = torch.Generator().manual_seed(self.seed)
+        steps = self.temporal_in + self.temporal_out
+        rows = torch.arange(self.height, dtype=torch.float64).view(self.height, 1)
+        cols = torch.arange(self.width, dtype=torch.float64).view(1, self.width)
+        frames = torch.arange(steps, dtype=torch.float64).view(steps, 1, 1)
+        data = torch.zeros(self.samples, 3, steps, self.height, self.width, dtype=torch.float64)
         for idx in range(self.samples):
-            sequence = torch.zeros(
-                self.channels,
-                total_steps,
-                self.height,
-                self.width,
-                dtype=torch.float32,
-            )
-            for step in range(total_steps):
-                center_r = 2.0 + ((idx + step) % max(3, self.height - 2))
-                center_c = 1.0 + ((2 * idx + step) % max(2, self.width - 1))
-                gaussian = torch.exp(
-                    -0.18 * ((row_index - center_r) ** 2 + (col_index - center_c) ** 2)
-                )
-                for channel in range(self.channels):
-                    phase = 0.5 * channel + 0.2 * step
-                    base = torch.sin(
-                        math.pi * (channel + 1) * grid_y + phase
-                    ) + torch.cos(math.pi * (channel + 1) * grid_x - phase)
-                    sequence[channel, step] = base + (0.6 + 0.1 * channel) * gaussian
-
-            x[idx] = sequence[:, : self.temporal_in]
-            y[idx] = sequence[:, self.temporal_in :]
+            u = torch.rand(4, generator=generator, dtype=torch.float64)
+            row, col = u[0] * (self.height - 1), u[1] * (self.width - 1)
+            onset = -2.0 + 3.0 * float(u[2])
+            amplitude = 0.5 + 1.5 * float(u[3])
+            dy, dx = rows - row, cols - col
+            r = torch.sqrt(dx**2 + dy**2)
+            radial_x, radial_y = dx / r.clamp_min(1e-6), dy / r.clamp_min(1e-6)
+            spreading = amplitude / torch.sqrt(1.0 + r)
+            p_wave = spreading * self._ricker(frames - onset - r / self.vp, 1.0)
+            s_wave = 1.5 * spreading * self._ricker(frames - onset - r / self.vs, 1.5)
+            data[idx, 0] = radial_x * p_wave - radial_y * s_wave
+            data[idx, 1] = radial_y * p_wave + radial_x * s_wave
+            data[idx, 2] = 0.5 * p_wave
+        data = data.float()
+        x, y = data[:, :, : self.temporal_in], data[:, :, self.temporal_in :]
 
         train_end = max(1, int(0.7 * self.samples))
         val_end = max(train_end + 1, int(0.85 * self.samples))
@@ -190,29 +193,37 @@ class SyntheticEarthquakeForecastDataset(Dataset):
         return DataBundle(
             splits=splits,
             feature_spec=FeatureSpec(
-                channels=self.channels,
-                description="Synthetic dense-grid wavefield history tensors for forecasting benchmarks.",
+                channels=3,
+                description="Synthetic X, Y, Z velocity wavefields of point sources (P and S Ricker wavefronts); not real data.",
                 extra={
                     "temporal_in": self.temporal_in,
                     "temporal_out": self.temporal_out,
                     "height": self.height,
                     "width": self.width,
+                    "channel_names": list(self.channel_names),
                 },
             ),
             label_spec=LabelSpec(
-                num_targets=self.channels * self.temporal_out,
+                num_targets=3 * self.temporal_out,
                 task_type="regression",
-                description="Future dense-grid wavefield frames over the forecast horizon.",
+                description="Future wavefield frames (n, 3, temporal_out, height, width).",
             ),
             metadata={
                 "dataset": self.name,
                 "source_dataset": self.name,
                 "hazard_task": "earthquake.forecasting",
+                "synthetic": True,
+                "channel_names": list(self.channel_names),
             },
         )
+
+
+# Deprecated name of the synthetic wavefield generator (kept for existing imports).
+SyntheticEarthquakeForecastDataset = SyntheticEarthquakeWavefieldDataset
 
 
 __all__ = [
     "SyntheticEarthquakeForecastDataset",
     "SyntheticEarthquakeWaveformDataset",
+    "SyntheticEarthquakeWavefieldDataset",
 ]

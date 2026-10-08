@@ -82,7 +82,7 @@ Related Coverage
 
 **Benchmarks:** :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
 
-**Representative Models:** :doc:`PhaseNet </modules/models_phasenet>`, :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`, :doc:`EQNet (stand-in) </modules/models_eqnet>`
+**Representative Models:** :doc:`PhaseNet </modules/models_phasenet>`, :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`, :doc:`EQNet </modules/models_eqnet>`
 
 Inspection Workflow
 -------------------

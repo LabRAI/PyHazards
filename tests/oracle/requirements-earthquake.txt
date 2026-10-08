@@ -3,7 +3,8 @@
 # (EQTransformer, GPD): TensorFlow 2.11 is the release in PhaseNet's env.yaml and still loads the Keras
 # 2.2/2.3 HDF5 models; it needs numpy < 1.24 and protobuf < 3.20. SeisBench (GPL-3.0) is a second oracle
 # for the three models and for the data format; ObsPy (LGPL) is the reference for trigger_onset and
-# reads the GPD example's miniSEED files. None of these is a PyHazards dependency.
+# reads the GPD example's miniSEED files. None of these is a PyHazards dependency. The WaveCastNet and EQNet
+# oracles (official PyTorch code, fetched by scripts/fetch_oracles.py) need nothing beyond torch and numpy.
 tensorflow-cpu==2.11.0
 numpy==1.23.5
 seisbench==0.12.6

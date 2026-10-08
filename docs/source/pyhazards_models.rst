@@ -33,7 +33,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         40
+         42
 
       .. container:: catalog-stat-note
 
@@ -44,7 +44,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         10
+         8
 
       .. container:: catalog-stat-note
 
@@ -923,49 +923,16 @@ pages and compatible benchmark coverage.
 
                **Paper:** `PhaseNet: a deep-neural-network-based seismic arrival-time picking method <https://doi.org/10.1093/gji/ggy423>`_ | **Repo:** `Repository <https://github.com/AI4EPS/PhaseNet>`__
 
-      .. rubric:: Experimental Adapters
-
-      .. container:: catalog-section-note
-
-         These entries remain public as lightweight wrapper or prototype integrations and should not be counted as stable implemented methods.
-
-      .. grid:: 1 1 2 2
-         :gutter: 2
-         :class-container: catalog-grid
-
-         .. grid-item-card:: EQNet (stand-in)
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Experimental stand-in under the EQNet name: a small transformer-encoder regressor of one P and one S arrival sample per trace. It is not the EQNet of Zhu et al. (2022).
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Earthquake` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`EQNet (stand-in) <modules/models_eqnet>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `An End-to-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning <https://doi.org/10.1029/2021JB023283>`_ | **Repo:** `Repository <https://github.com/AI4EPS/EQNet>`__
-
          .. grid-item-card:: WaveCastNet
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield forecasting and early-warning style rollout experiments.
+               ConvLEM sequence-to-sequence network that forecasts ground-motion wavefields (three velocity components on a regular grid) for earthquake early warning (Lyu et al., Nat. Commun. 2025), with dense-grid and sparse-station inputs.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Earthquake` :bdg-secondary:`Forecasting` :bdg-warning:`Experimental Adapter`
+               :bdg-primary:`Earthquake` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -978,6 +945,29 @@ pages and compatible benchmark coverage.
             .. container:: catalog-link-row
 
                **Paper:** `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_ | **Repo:** `Repository <https://github.com/dwlyu/WaveCastNet>`__
+
+         .. grid-item-card:: EQNet
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               End-to-end multi-station earthquake detector (Zhu et al., JGR Solid Earth 2022): a 1-D ResNet feature extractor, P and S picking heads, and a shift-and-stack module that aligns station features on candidate hypocentres before an event detection network. Rebuilt from the paper.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Earthquake` :bdg-secondary:`Picking` :bdg-secondary:`Detection` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`EQNet <modules/models_eqnet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `An End-to-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning <https://doi.org/10.1029/2021JB023283>`_ | **Repo:** `Repository <https://github.com/AI4EPS/EQNet>`__
 
 
    .. tab-item:: Flood

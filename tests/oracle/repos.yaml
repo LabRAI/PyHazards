@@ -143,6 +143,25 @@ repos:
     url: https://github.com/interseismic/generalized-phase-detection.git
     commit: ea81ef17d204797de6a99d277fd2b9407fc77df7
     license: MIT (Copyright (c) 2018 Zachary E. Ross)
+  WaveCastNet:
+    # Lyu et al., Nat. Commun. 16:10622 (2025). Official PyTorch code (src/models_earthquake: AEConvLEM_dense,
+    # AEConvLEM_sparse, ConvLEMCell, EncoderDecoder, EncodingSparse, Validation_pixel; earthquake_train.py Huber),
+    # station grid indices filtered_coord.npy / shakealert_coords.npy.
+    url: https://github.com/dwlyu/WaveCastNet.git
+    commit: c859e04c85acd6657306f08bce8c6f9129ba1480
+    license: MIT (Copyright (c) 2023 dwlyu)
+  EQNet:
+    # Zhu et al., JGR Solid Earth 2022. Academic / non-commercial licence: used only as a test oracle for the
+    # feature extractor (eqnet/models/resnet1d.py ResNet(BasicBlock, [2, 2, 2, 2])), never copied.
+    url: https://github.com/AI4EPS/EQNet.git
+    commit: af94a08a85de4b2c917a1b9429b044e7f38e4c28
+    license: Academic and Commercial License (Copyright (c) 2023 Weiqiang Zhu, Zhongwen Zhan; non-commercial use only)
+  EQNet-2022:
+    # The author's first EQNet version ("basic version of eqnet", 2022-07-27, before any LICENSE file): its
+    # PhasePicker / EventDetector at the paper's channel widths are the oracle for the picking and detection heads.
+    url: https://github.com/AI4EPS/EQNet.git
+    commit: a9df49a18e05d15c24f98a5e61aa87b0e45cdaeb
+    license: none at this commit (all rights reserved; test oracle only, never copied)
 
 assets:
   utae_pastis_weights:
@@ -301,3 +320,16 @@ assets:
     url: https://hifis-storage.desy.de/Helmholtz/HelmholtzAI/SeisBench/models/v3/gpd/original.pt
     sha256: 4bb54c3728095e6dc4f7f16f4483c7f6dcb47a794bb5f110725680c16591d46c
     license: MIT (original GPD weights; SeisBench conversion)
+  # Released WaveCastNet checkpoints (authors' Google Drive folder 10pe6Zc1NEzIunwJv80214dB9fmb-X8yw named in the
+  # README). No licence is stated for them; used as test data only.
+  wavecastnet_dense_checkpoint:
+    url: https://drive.usercontent.google.com/download?id=1vFoo1eqO2WoZH0R6kkRZJ8XhNG3zF8nO&export=download&confirm=t
+    filename: best_lem_dense_.pt
+    sha256: cccadaa7ae02736eb1835c0dc2b04a6291cdd348c901128fb03c92f4c7647acc
+    license: none stated (dwlyu/WaveCastNet release; test data only, never redistributed)
+  wavecastnet_sparse_checkpoint:
+    # Trained on 558 stations; the repository's filtered_coord.npy lists 564, so its station list is unknown.
+    url: https://drive.usercontent.google.com/download?id=17ZvAt5f5nVuJuZFUli2FJz1wGQImq8y4&export=download&confirm=t
+    filename: best_lem_irr_mask_shakealert_.pt
+    sha256: d559717584c27f158fc41995bc7af701b883b6800655bdc39ed249aa6d473cd6
+    license: none stated (dwlyu/WaveCastNet release; test data only, never redistributed)
