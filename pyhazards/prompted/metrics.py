@@ -143,7 +143,7 @@ def opencv_gray(image: np.ndarray) -> np.ndarray:
     array = np.asarray(image)
     if array.ndim != 3 or array.shape[2] != 3 or array.dtype != np.uint8:
         raise ValueError(f"expected an RGB uint8 image of shape (H, W, 3), got {array.shape} {array.dtype}")
-    rgb = array.astype(np.int64)
+    rgb = array.astype(np.int32)  # at most 255 * 2**15 + 2**14, well inside int32
     gray = (rgb[..., 0] * 9798 + rgb[..., 1] * 19235 + rgb[..., 2] * 3735 + (1 << 14)) >> 15
     return gray.astype(np.uint8)
 
@@ -155,14 +155,20 @@ def weber_contrast(image: np.ndarray, boxes: Sequence[Sequence[int]], pad: int =
     pixels are excluded from it. Boxes with an empty frame or a zero frame mean are skipped; 0 if
     none is left. Box coordinates are integer pixel indices.
     """
-    gray = opencv_gray(image)
-    height, width = gray.shape
+    array = np.asarray(image)
+    if array.ndim != 3 or array.shape[2] != 3:
+        raise ValueError(f"expected an RGB image of shape (H, W, 3), got {array.shape}")
+    height, width = array.shape[:2]
     ratios: List[float] = []
     for x1, y1, x2, y2 in (tuple(int(v) for v in box) for box in boxes):
-        smoke_mean = float(np.mean(gray[y1:y2, x1:x2]))
         bx1, by1 = max(0, x1 - pad), max(0, y1 - pad)
         bx2, by2 = min(width, x2 + pad), min(height, y2 + pad)
-        frame = gray[by1:by2, bx1:bx2].copy()
+        if min(x1, y1, x2, y2) < 0:  # keep numpy's negative-index slicing of the whole image
+            gray, ox, oy = opencv_gray(array), 0, 0
+        else:  # only the grey levels of the box and its frame are needed
+            gray, ox, oy = opencv_gray(array[by1:max(by2, y2), bx1:max(bx2, x2)]), bx1, by1
+        smoke_mean = float(np.mean(gray[y1 - oy:y2 - oy, x1 - ox:x2 - ox]))
+        frame = gray[by1 - oy:by2 - oy, bx1 - ox:bx2 - ox].copy()
         frame[(y1 - by1):(y2 - by1), (x1 - bx1):(x2 - bx1)] = 0
         pixels = frame[frame > 0]
         if len(pixels) == 0:

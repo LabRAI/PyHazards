@@ -381,6 +381,7 @@ SmokeBench smoke detection (Table 8): mIoU 0.000.
 
 **Notes:**
 
+- PyHazards run (2026-10-07; this revision, transformers 5.19, one RTX 6000 Ada, temperature 0.5, seed 0, ``protocol="paper"``, 22 min): accuracy on the 5,046 smoke images 0.375 (paper 0.380); by smoke area 0.088 / 0.249 / 0.408 / 0.463 / 0.666 (paper 0.098 / 0.232 / 0.423 / 0.463 / 0.686); by contrast 0.294 / 0.329 / 0.392 / 0.412 / 0.446 (paper 0.289 / 0.327 / 0.395 / 0.417 / 0.473); 0.975 on 1,000 seeded smoke-free frames (paper 0.982 on its unreleased sample). On a stratified subset (120 smoke images per area bin + 200 smoke-free) greedy decoding gave 0.382 / 0.985 against 0.363 / 0.975 at temperature 0.5. In the full run every answer was exactly ``True`` or ``False``.
 - ``build_backend`` loads Hugging Face revision ``cc594898137f460bfe9f0759e9844b3ce807cfb5`` (2026-10-07) unless ``revision=`` is given. The SmokeBench runs did not pin a revision.
 - Section 5.2 of the paper says Qwen2.5-VL-7B underperforms the 32B model on tiles, but Table 4 gives 0.456 (7B) against 0.435 (32B); the numbers above are the tables'.
 
