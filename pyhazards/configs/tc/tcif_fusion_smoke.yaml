@@ -1,22 +1,28 @@
+# Smoke run of a reduced TCIF-fusion (same graph, small grids and widths) on random inputs in its layout; the
+# paper's model has 25 x 25 ERA5 grids, 224 x 224 IR images and about 300 M parameters.
 benchmark:
   name: tc
-  hazard_task: tc.track_intensity
+  hazard_task: tc.intensity
   metrics:
-    - track_error
     - intensity_mae
+    - intensity_rmse
+    - intensity_mae_group_mean
   eval_split: test
 dataset:
-  name: tcbench_alpha
+  name: tcif_fusion_synthetic
   params:
     micro: true
+    grid_size: 9
+    ir_size: 32
 model:
   name: tcif_fusion
   task: regression
   params:
-    input_dim: 8
-    hidden_dim: 64
-    horizon: 5
-    output_dim: 3
+    grid_size: 9
+    ir_size: 32
+    widths: [4, 8, 8]
+    vgg_filters: [4, 4, 8, 8, 8]
+    vgg_fc: 16
 report:
   output_dir: reports/tcif_fusion
   formats:

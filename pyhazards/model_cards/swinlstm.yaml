@@ -1,0 +1,154 @@
+model_name: swinlstm
+display_name: SwinLSTM
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/swinlstm.py
+builder_name: swinlstm_builder
+summary: >
+  Recurrent cell built from Swin Transformer blocks (Tang et al., ICCV 2023): a frames-to-frames
+  forecaster with the official Moving-MNIST weights, one of the forecasters Sim2Real-Fire compares
+  for fire-area forecasting.
+description:
+  - >
+    ``swinlstm`` replaces the convolutions of ConvLSTM with Swin Transformer blocks. Each frame is
+    cut into 2x2 patches and embedded. In a SwinLSTM cell the patch tokens and the previous hidden
+    state are layer-normalised, concatenated and projected back to the token width, passed through
+    (shifted-)window attention blocks, and the result F updates a simplified LSTM:
+    ``C_t = sigmoid(F) * (tanh(F) + C_{t-1})``, ``H_t = sigmoid(F) * tanh(C_t)``. A 3x3 transposed
+    convolution with stride 2 and a sigmoid reconstruct the next frame. SwinLSTM-D
+    (``variant="d"``, the default) has four cells joined by patch merging and patch expanding
+    (embedding 128, window 4, heads 4 and 8); SwinLSTM-B (``variant="b"``) has cells at a single
+    resolution.
+  - >
+    ``forward`` runs the official rollout: a warm-up phase over the first ``T_in - 1`` frames, then
+    autoregressive prediction starting from the last input frame, each predicted frame being the
+    next input. ``include_warmup=True`` also returns the warm-up predictions, which the official
+    L2 loss compares with the shifted input frames; ``step`` is the official single-step forward.
+    The port matches the official code in eval and train mode (stochastic depth), and the released
+    Moving-MNIST SwinLSTM-D weights load with ``strict=True``.
+  - >
+    Sim2Real-Fire compares SwinLSTM with other forecasters for fire-area forecasting and
+    backtracking but published no configuration for it. ``task="segmentation"`` is a PyHazards
+    adaptation that predicts one next-step fire mask from a sequence of rasters.
+paper:
+  title: "SwinLSTM: Improving Spatiotemporal Prediction Accuracy using Swin Transformer and LSTM"
+  url: https://arxiv.org/abs/2308.09891
+  repo_url: https://github.com/SongTang-x/SwinLSTM
+references:
+  - title: "Sim2Real-Fire: A Multi-modal Simulation Dataset for Forecast and Backtracking of Real-world Forest Fire"
+    url: https://proceedings.neurips.cc/paper_files/paper/2024/hash/02e978a2cc9a1d0d4376a7deb01db612-Abstract-Datasets_and_Benchmarks_Track.html
+    repo_url: https://github.com/TJU-IDVLab/Sim2Real-Fire
+    note: >
+      Configuration not published: the paper lists SwinLSTM among "commonly used AI models that can
+      be easily adapted" but gives no hyperparameters, input stacking, loss or output head, and the
+      repository contains only S2R-FireTr. Trained on 1M simulated scenarios and tested on simulated
+      and about 1K real fires (binary fire-area sequences with satellite, topography, vegetation,
+      fuel and weather inputs). Table 2, AUPRC / F1 / IoU (%): forecast 77.1 / 71.2 / 56.2
+      (simulation) and 62.5 / 60.3 / 48.9 (real); backtracking 72.5 / 65.3 / 52.4 (simulation) and
+      53.8 / 49.5 / 40.3 (real). Modality ablations in Tables 4 and 6. Not reproduced here.
+  - title: "A Nationwide Benchmark for Wildfire Initial Attack Failure Prediction with Public Environmental Data (WildfireIA)"
+    url: https://arxiv.org/abs/2606.15529
+    repo_url: https://github.com/LabRAI/WildfireIA
+    note: >
+      Not this model. WildfireIA's "SwinLSTM" baseline (train.py SwinLSTMClassifier at aba9be9,
+      MIT) is a ConvLSTM cell between two window-attention blocks (48 channels, a strided
+      convolutional stem with BatchNorm, ``nn.MultiheadAttention`` in 5x5 windows without shifts or
+      relative position bias) with global pooling and an MLP to one score, on 29x29 event patches.
+      Initial-attack failure prediction: AUPRC 51.7 +/- 1.2, AUROC 85.7 +/- 0.9 (Table 3);
+      containment duration: MAE 36.3 h (Table 6).
+reproduction:
+  reference_code: https://github.com/SongTang-x/SwinLSTM
+  reference_commit: 4425bcfefbebfac85c9fc6c6659361b8154d5ca3
+  reference_license: MIT (code and the released weights in Pretrained/)
+  reference_config: >
+    configs.py defaults, which are the Moving-MNIST setting of paper Table 1: SwinLSTM-D, 64x64x1
+    frames, patch 2, embedding 128, depths_down [2, 6], depths_up [6, 2], heads [4, 8], window 4,
+    drop-path rate 0.1, 10 -> 10 frames. Checked with the released weights
+    Pretrained/trained_model_state_dict (functions.model_forward_multi_layer rollout, single steps
+    and the segmentation adaptation), with seeded initialisation and a train-mode rollout
+    (stochastic depth); SwinLSTM-B with the configs.py defaults (depths [12], 2,778,417
+    parameters) and the Human3.6m setting (128x128x3, 2,781,747), a two-cell SwinLSTM-B and a
+    two-level SwinLSTM-D with two input channels, each with seeded initialisation and eval and
+    train rollouts (functions.model_forward_single_layer / model_forward_multi_layer).
+  parameter_count: 20191969
+  checks: [parameter_count, initialization, state_dict, forward, pretrained_weights]
+  oracle_test: tests/oracle/test_swinlstm_oracle.py
+  deviations:
+    - >
+      ``patch_size`` must be 2. The reference reconstruction layer (3x3 transposed convolution,
+      stride 2) restores the input size only for 2x2 patches, so the released code cannot run the
+      paper's patch-4 settings (KTH, TaxiBJ) either; other patch sizes raise ``ValueError``.
+    - >
+      The model's ``forward`` takes the whole sequence ``(batch, T_in, C, H, W)`` and runs the
+      rollout of the official ``functions.py`` (warm-up, then autoregressive prediction); the
+      reference model's ``forward`` is one time step, available here as ``step`` with the same
+      arguments and return values.
+    - >
+      The reference SwinLSTM-D constructor passes no dropout or drop-path arguments (dropout 0,
+      attention dropout 0 and drop-path rate 0.1 are fixed); here they are arguments with those
+      defaults. Zero initial states take the input's dtype (the reference creates float32 zeros).
+    - >
+      ``task="segmentation"`` (SwinLSTMSegmenter) is a PyHazards adaptation, not from
+      Sim2Real-Fire: the reconstruction layer has one output channel (``out_chans``; every other
+      parameter has the shape of the forecasting model), the input frames go through the reference
+      rollout with one prediction step, and that frame is returned before the final sigmoid, as
+      logits ``(batch, 1, H, W)``. Its state dict keys are those of the forecasting model (no
+      prefix).
+tasks:
+  - forecasting
+  - segmentation
+example: |
+  import torch
+  import torch.nn.functional as F
+  from pyhazards.models import build_model
+
+  # Official Moving-MNIST SwinLSTM-D: 10 frames of 64x64x1 in [0, 1] -> the next 10 frames.
+  model = build_model(name="swinlstm", task="forecasting")  # 20,191,969 parameters
+  # Released weights: model.load_state_dict(torch.load("Pretrained/trained_model_state_dict"))
+  inputs, targets = torch.rand(2, 10, 1, 64, 64), torch.rand(2, 10, 1, 64, 64)
+  future = model(inputs)  # (2, 10, 1, 64, 64)
+
+  # Official training objective: L2 over the 9 warm-up and 10 predicted frames.
+  outputs = model(inputs, include_warmup=True)  # (2, 19, 1, 64, 64)
+  loss = F.mse_loss(outputs, torch.cat([inputs[:, 1:], targets], dim=1))
+
+  # PyHazards adaptation: next-day fire-mask logits from 3 daily rasters with 6 channels.
+  seg = build_model(name="swinlstm", task="segmentation", in_channels=6, img_size=64)
+  logits = seg(torch.randn(2, 3, 6, 64, 64))  # (2, 1, 64, 64)
+notes:
+  - >
+    With the official ``depths_up`` [6, 2] the decoder runs 2 Swin blocks at the deepest level and
+    6 at the next, because the reference indexes ``depths_up`` (and the head counts) from the
+    deepest level: the network has 2 + 6 blocks on the way down and 2 + 6 on the way up, where
+    paper Table 1 lists (2, 6, 6, 2). Decoder cells also take their level's stochastic-depth
+    rates in reverse block order. Both are kept, since the released weights follow them.
+  - >
+    ``Upsample.patch_embed`` is created by the reference but never used in its forward pass; it is
+    kept (896 parameters) so that the official checkpoint loads with ``strict=True``.
+  - >
+    Frames are expected in [0, 1] (pixels / 255 for Moving MNIST); predictions are sigmoid outputs.
+    Any frame size whose token grid (size / 2) can be halved once per level and split into whole
+    windows works; Sim2Real-Fire's 256x256 frames give 128, 64 and 32 tokens per side.
+  - >
+    Sanity check of the released weights through this port: MSE 18.8 per frame (squared error
+    summed over the 64x64 pixels, averaged over the 10 predicted frames) on 32 sequences generated
+    by the official Moving_MNIST class from MNIST digits 10000-13000. The paper reports 17.7 on the
+    standard Moving MNIST test set, which was not re-evaluated here.
+smoke_test:
+  task: forecasting
+  build_kwargs:
+    in_channels: 2
+    img_size: 16
+    embed_dim: 16
+    depths_downsample: [2, 2]
+    depths_upsample: [2, 2]
+    num_heads: [2, 4]
+    window_size: 2
+    num_output_frames: 2
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 3, 2, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 2, 2, 16, 16]

@@ -1,0 +1,42 @@
+name: qwen2_5_vl_7b
+order: 2
+display_name: Qwen2.5-VL-7B-Instruct
+model_id: Qwen/Qwen2.5-VL-7B-Instruct
+access: open weights
+install_extra: prompted-hf
+license: Apache-2.0
+paper:
+  title: Qwen2.5-VL Technical Report (Bai et al., arXiv:2502.13923, 2025)
+  url: https://arxiv.org/abs/2502.13923
+  repo_url: https://github.com/QwenLM/Qwen2.5-VL
+model_url: https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct
+smokebench_tasks: [classification, tile, grid, detection]
+smokebench_reported:
+  classification:
+    tables: Tables 1-3
+    area: {Very Small: 0.098, Small: 0.232, Medium: 0.423, Large: 0.463, Very Large: 0.686, Overall: 0.380}
+    contrast: {Very Low: 0.289, Low: 0.327, Medium: 0.395, High: 0.417, Very High: 0.473, Overall: 0.380}
+    smoke_free: 0.982
+  tile:
+    tables: Tables 4-5
+    area: {Very Small: 0.311, Small: 0.479, Medium: 0.485, Large: 0.485, Very Large: 0.520, Overall: 0.456}
+    contrast: {Very Low: 0.376, Low: 0.458, Medium: 0.482, High: 0.478, Very High: 0.485, Overall: 0.456}
+  grid:
+    tables: Tables 6-7
+    area: {Very Small: 0.000, Small: 0.000, Medium: 0.000, Large: 0.000, Very Large: 0.000, Overall: 0.000}
+    contrast: {Very Low: 0.000, Low: 0.000, Medium: 0.000, High: 0.000, Very High: 0.000, Overall: 0.000}
+  detection:
+    tables: Table 8
+    overall: 0.000
+settings:
+  - "Every image (whole frame, grid overlay or tile) is resized to 448 x 448 with ``PIL.Image.resize`` before the processor, as in the authors' ``QwenVL.predict``; the paper does not mention it. ``image_size=None`` keeps the native resolution."
+  - "Chat template with the image before the text; up to 128 new tokens; a Markdown ``json`` fence is stripped from the answer."
+  - "The authors' script loads the weights with ``torch_dtype=\"auto\"`` (bfloat16) and ``device_map=\"auto\"`` and never sets a temperature, so its runs used the checkpoint's generation config (``do_sample=True``, temperature 1e-6, repetition penalty 1.05: effectively greedy)."
+deviations:
+  - "Samples at temperature 0.5 as the paper states (other sampling parameters from the checkpoint's generation config); ``do_sample=False`` reproduces the effectively greedy decoding of the released script."
+  - "The 12 tiles of an image are generated as one left-padded batch (the authors also batch them; their padding side is the processor default)."
+  - "Detection boxes are scored in the pixel frame of the original image, as in the authors' script, although the model answers in the frame of its 448 x 448 input, so a box placed correctly on that input generally misses the ground-truth box of the 2048 x 1536 or 3072 x 2048 frame (Table 8: 0.000)."
+notes:
+  - "PyHazards run (2026-10-07; this revision, transformers 5.19, one RTX 6000 Ada, temperature 0.5, seed 0, ``protocol=\"paper\"``, 22 min): accuracy on the 5,046 smoke images 0.375 (paper 0.380); by smoke area 0.088 / 0.249 / 0.408 / 0.463 / 0.666 (paper 0.098 / 0.232 / 0.423 / 0.463 / 0.686); by contrast 0.294 / 0.329 / 0.392 / 0.412 / 0.446 (paper 0.289 / 0.327 / 0.395 / 0.417 / 0.473); 0.975 on 1,000 seeded smoke-free frames (paper 0.982 on its unreleased sample). On a stratified subset (120 smoke images per area bin + 200 smoke-free) greedy decoding gave 0.382 / 0.985 against 0.363 / 0.975 at temperature 0.5. In the full run every answer was exactly ``True`` or ``False``."
+  - "``build_backend`` loads Hugging Face revision ``cc594898137f460bfe9f0759e9844b3ce807cfb5`` (2026-10-07) unless ``revision=`` is given. The SmokeBench runs did not pin a revision."
+  - "Section 5.2 of the paper says Qwen2.5-VL-7B underperforms the 32B model on tiles, but Table 4 gives 0.456 (7B) against 0.435 (32B); the numbers above are the tables'."

@@ -6,6 +6,10 @@ Models
 Browse PyHazards model implementations across hazard families, compare
 scope and maturity, and navigate to model-specific detail pages.
 
+Prompted multimodal LLMs used as zero-shot wildfire-smoke detectors (SmokeBench: Qwen2.5-VL,
+InternVL3, Idefics2, Gemini 2.5 Pro, GPT-4o) are not ``nn.Module`` models; they are documented
+separately under :doc:`pyhazards_prompted`.
+
 At a Glance
 -----------
 
@@ -29,7 +33,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         24
+         46
 
       .. container:: catalog-stat-note
 
@@ -40,7 +44,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         3
+         1
 
       .. container:: catalog-stat-note
 
@@ -51,7 +55,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         27
+         45
 
       .. container:: catalog-stat-note
 
@@ -89,11 +93,11 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-entry-summary
 
-               A temporal convolution baseline for weekly wildfire activity forecasting.
+               Attention Swin U-Net with Focal Modulation for next-day wildfire spread (fire-mask segmentation of 64x64 Next Day Wildfire Spread tiles).
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -105,7 +109,126 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-link-row
 
-               **Paper:** `Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer <https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278>`_ | **Repo:** `Repository <https://github.com/bronteee/fire-asufm>`__
+               **Paper:** `Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer <https://doi.org/10.1109/CAI59869.2024.00278>`_ | **Repo:** `Repository <https://github.com/bronteee/fire-asufm>`__
+
+         .. grid-item-card:: Attention U-Net
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               U-Net with additive attention gates on its skip connections, in MONAI's implementation, configured by default as the TS-SatFire spatio-temporal (3D) baseline.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Attention U-Net <modules/models_attention_unet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Attention U-Net: Learning Where to Look for the Pancreas <https://arxiv.org/abs/1804.03999>`_ | **Repo:** `Repository <https://github.com/ozan-oktay/Attention-Gated-Networks>`__
+
+         .. grid-item-card:: ConvGRU
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Convolutional GRU (Ballas et al., ICLR 2016) with a convolutional head on the last hidden state: the Conv-GRU baseline that FireCastNet trained for seasonal burned-area prediction.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`ConvGRU <modules/models_convgru>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Delving Deeper into Convolutional Networks for Learning Video Representations <https://arxiv.org/abs/1511.06432>`_
+
+         .. grid-item-card:: ConvLSTM
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Convolutional LSTM over daily raster sequences with a convolutional head on the final cell state, as used by the WildfireSpreadTS benchmark.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`ConvLSTM <modules/models_convlstm>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Convolutional LSTM Network: A Machine Learning Approach for Precipitation Nowcasting <https://arxiv.org/abs/1506.04214>`_ | **Repo:** `Repository <https://github.com/VSainteuf/utae-paps>`__
+
+         .. grid-item-card:: Deep Ensemble
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Deep ensembles (Lakshminarayanan et al., 2017) of any registered PyHazards model, with the uncertainty terms of the ten-LSTM wildfire-danger ensemble of Kondylatos et al. (2025).
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-secondary:`Segmentation` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Deep Ensemble <modules/models_deep_ensemble>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles <https://arxiv.org/abs/1612.01474>`_
+
+         .. grid-item-card:: DeepLabV3
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               DeepLabV3 (Chen et al., 2017) as implemented by segmentation_models_pytorch: a dilated ResNet encoder, atrous spatial pyramid pooling with image-level features, and bilinear up-sampling, configured as the DeepLabV3 baseline of Shadrin et al. (2024) for multi-day wildfire spread.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`DeepLabV3 <modules/models_deeplabv3>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Rethinking Atrous Convolution for Semantic Image Segmentation <https://arxiv.org/abs/1706.05587>`_ | **Repo:** `Repository <https://github.com/tensorflow/models/tree/master/research/deeplab>`__
 
          .. grid-item-card:: DNN-LSTM-AutoEncoder
             :class-card: catalog-entry-card
@@ -130,16 +253,62 @@ pages and compatible benchmark coverage.
 
                **Paper:** `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_
 
+         .. grid-item-card:: Earthfarseer
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Spatio-temporal forecaster that combines a local CNN branch with a global Fourier transformer (FoTF) and a SimVP-style temporal block with Fourier mixing (TeDev); a Sim2Real-Fire fire-forecasting baseline.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Earthfarseer <modules/models_earthfarseer>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Earthfarseer: Versatile Spatio-Temporal Dynamical Systems Modeling in One Model <https://arxiv.org/abs/2312.08403>`_ | **Repo:** `Repository <https://github.com/easylearningscores/EarthFarseer>`__
+
+         .. grid-item-card:: Earthformer
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Space-time Transformer built from cuboid attention with global vectors, a hierarchical encoder-decoder for frame sequences; one of the Sim2Real-Fire forecasting baselines.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Earthformer <modules/models_earthformer>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Earthformer: Exploring Space-Time Transformers for Earth System Forecasting <https://arxiv.org/abs/2207.05833>`_ | **Repo:** `Repository <https://github.com/amazon-science/earth-forecasting-transformer>`__
+
          .. grid-item-card:: FireCastNet
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A compact encoder-decoder baseline for wildfire spread mask prediction.
+               GraphCast on an icosahedral multi-mesh for global seasonal burned-area forecasting on the SeasFire datacube, with the official pretrained weights.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -149,20 +318,16 @@ pages and compatible benchmark coverage.
 
                **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
 
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
-
             .. container:: catalog-link-row
 
                **Paper:** `FireCastNet: Earth-as-a-Graph for Seasonal Fire Prediction <https://doi.org/10.1038/s41598-025-30645-7>`_ | **Repo:** `Repository <https://github.com/SeasFire/firecastnet>`__
 
-         .. grid-item-card:: ForeFire Adapter
+         .. grid-item-card:: Logistic Regression (pixel)
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A lightweight simulator-style wildfire spread adapter inspired by front-propagation systems.
+               Per-pixel logistic regression over a 3x3 neighbourhood, the linear baseline of WildfireSpreadTS and Next Day Wildfire Spread.
 
             .. container:: catalog-chip-row
 
@@ -170,7 +335,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Details:** :doc:`ForeFire Adapter <modules/models_forefire>`
+               **Details:** :doc:`Logistic Regression (pixel) <modules/models_logistic_regression>`
 
             .. container:: catalog-meta-row
 
@@ -182,18 +347,371 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-link-row
 
-               **Paper:** `ForeFire: A Modular, Scriptable C++ Simulation Engine and Library for Wildland-Fire Spread <https://doi.org/10.21105/joss.08680>`_ | **Repo:** `Repository <https://github.com/forefireAPI/forefire>`__
+               **Paper:** `WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ | **Repo:** `Repository <https://github.com/SebastianGer/WildfireSpreadTS>`__
+
+         .. grid-item-card:: Prithvi-EO-2.0 BurnScars
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The IBM/NASA Prithvi-EO-2.0-300M foundation model fine-tuned to segment burn scars in single HLS scenes (post-fire burned-area mapping), with the official weights.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Prithvi-EO-2.0 BurnScars <modules/models_prithvi_burnscars>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Prithvi-EO-2.0: A Versatile Multi-Temporal Foundation Model for Earth Observation Applications <https://arxiv.org/abs/2412.02732>`_ | **Repo:** `Repository <https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars>`__
+
+         .. grid-item-card:: Prithvi-EO-2.0-TL
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Prithvi-EO-2.0 Earth-observation foundation-model encoder with time and location embeddings (300M or 600M, official pretrained weights), wrapped in the official burn-scar segmentation head for fine-tuning.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Prithvi-EO-2.0-TL <modules/models_prithvi_eo_2_tl>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Prithvi-EO-2.0: A Versatile Multi-Temporal Foundation Model for Earth Observation Applications <https://arxiv.org/abs/2412.02732>`_ | **Repo:** `Repository <https://github.com/NASA-IMPACT/Prithvi-EO-2.0>`__
+
+         .. grid-item-card:: Rainformer
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               U-shaped radar-nowcasting network whose stages fuse shifted-window self-attention (global) and CNN + CBAM attention (local) features through a gate; the strongest Sim2Real-Fire baseline, with the official KNMI weights verified.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Rainformer <modules/models_rainformer>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Rainformer: Features Extraction Balanced Network for Radar-Based Precipitation Nowcasting <https://doi.org/10.1109/LGRS.2022.3162882>`_ | **Repo:** `Repository <https://github.com/Zjut-MultimediaPlus/Rainformer>`__
+
+         .. grid-item-card:: Random Forest
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The random-forest baseline of Kondylatos et al. (2022) for next-day wildfire danger: a scikit-learn forest of 100 trees of depth 10 on 35 instance features built from ten days of covariates.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Random Forest <modules/models_random_forest>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Random Forests <https://doi.org/10.1023/A:1010933404324>`_ | **Repo:** `Repository <https://github.com/scikit-learn/scikit-learn>`__
+
+         .. grid-item-card:: ResNet-18 U-Net
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               U-Net with a ResNet-18 encoder, equivalent to segmentation_models_pytorch's Unet and used as the U-Net baseline of WildfireSpreadTS.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`ResNet-18 U-Net <modules/models_resnet18_unet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `U-Net: Convolutional Networks for Biomedical Image Segmentation <https://arxiv.org/abs/1505.04597>`_ | **Repo:** `Repository <https://github.com/qubvel-org/segmentation_models.pytorch>`__
+
+         .. grid-item-card:: SegFormer
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Hierarchical Mix Transformer encoder with a lightweight all-MLP decoder (SegFormer-B0 to B5), used as a Transformer baseline for next-day wildfire spread on WildfireSpreadTS.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`SegFormer <modules/models_segformer>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `SegFormer: Simple and Efficient Design for Semantic Segmentation with Transformers <https://arxiv.org/abs/2105.15203>`_ | **Repo:** `Repository <https://github.com/NVlabs/SegFormer>`__
+
+         .. grid-item-card:: Swin-Unet
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               U-shaped pure Swin Transformer (Swin-Unet-Tiny), the attention-based spread baseline of the WSTS+ wildfire benchmark.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`Swin-Unet <modules/models_swin_unet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Swin-Unet: Unet-like Pure Transformer for Medical Image Segmentation <https://arxiv.org/abs/2105.05537>`_ | **Repo:** `Repository <https://github.com/HuCaoFighting/Swin-Unet>`__
+
+         .. grid-item-card:: SwinLSTM
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Recurrent cell built from Swin Transformer blocks (Tang et al., ICCV 2023): a frames-to-frames forecaster with the official Moving-MNIST weights, one of the forecasters Sim2Real-Fire compares for fire-area forecasting.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`SwinLSTM <modules/models_swinlstm>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `SwinLSTM: Improving Spatiotemporal Prediction Accuracy using Swin Transformer and LSTM <https://arxiv.org/abs/2308.09891>`_ | **Repo:** `Repository <https://github.com/SongTang-x/SwinLSTM>`__
+
+         .. grid-item-card:: SwinUNETR
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Swin-Transformer encoder with a convolutional U-Net decoder (MONAI's SwinUNETR), configured by default as TS-SatFire's spatio-temporal (3D) reference model for next-day fire progression.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`SwinUNETR <modules/models_swin_unetr>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Swin UNETR: Swin Transformers for Semantic Segmentation of Brain Tumors in MRI Images <https://arxiv.org/abs/2201.01266>`_ | **Repo:** `Repository <https://github.com/Project-MONAI/research-contributions>`__
+
+         .. grid-item-card:: TCN
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Generic temporal convolutional network of Bai et al. (2018): causal dilated residual convolutions with weight normalisation and a linear head, for per-step feature sequences.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`TCN <modules/models_tcn>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling <https://arxiv.org/abs/1803.01271>`_ | **Repo:** `Repository <https://github.com/locuslab/TCN>`__
+
+         .. grid-item-card:: TrajGRU
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Trajectory GRU encoder-forecaster for precipitation nowcasting (Shi et al., NeurIPS 2017): a frames-to-frames forecaster whose recurrent connections follow learned flow fields, ported from the official MXNet code with its HKO-7 and MovingMNIST++ weights.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`TrajGRU <modules/models_trajgru>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Deep Learning for Precipitation Nowcasting: A Benchmark and A New Model <https://arxiv.org/abs/1706.03458>`_ | **Repo:** `Repository <https://github.com/sxjscience/HKO-7>`__
+
+         .. grid-item-card:: TS-SatFire Baselines
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The four spatio-temporal TS-SatFire prediction baselines (U-Net-3D, Attention-U-Net-3D, UNETR-3D, SwinUNETR-3D) with the benchmark's own configurations.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`TS-SatFire Baselines <modules/models_ts_satfire>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `TS-SatFire: A Multi-Task Satellite Image Time-Series Dataset for Wildfire Detection and Prediction <https://doi.org/10.1038/s41597-025-06271-3>`_ | **Repo:** `Repository <https://github.com/zhaoyutim/TS-SatFire>`__
+
+         .. grid-item-card:: U-Net-3D (MONAI)
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               MONAI's strided-convolution U-Net, configured by default as the TS-SatFire spatio-temporal (3D) baseline for next-day fire progression.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`U-Net-3D (MONAI) <modules/models_unet3d>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Left-Ventricle Quantification Using Residual U-Net <https://doi.org/10.1007/978-3-030-12029-0_40>`_ | **Repo:** `Repository <https://github.com/Project-MONAI/MONAI>`__
+
+         .. grid-item-card:: U-TAE
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               U-Net whose temporal dimension is collapsed by a lightweight temporal attention encoder, the strongest WildfireSpreadTS baseline.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`U-TAE <modules/models_utae>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Panoptic Segmentation of Satellite Image Time Series with Convolutional Temporal Attention Networks <https://arxiv.org/abs/2107.07933>`_ | **Repo:** `Repository <https://github.com/VSainteuf/utae-paps>`__
+
+         .. grid-item-card:: UNETR
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Vision-Transformer encoder with a convolutional U-Net decoder (MONAI's UNETR), configured by default as the TS-SatFire spatio-temporal (3D) baseline for next-day fire progression.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`UNETR <modules/models_unetr>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `UNETR: Transformers for 3D Medical Image Segmentation <https://arxiv.org/abs/2103.10504>`_ | **Repo:** `Repository <https://github.com/Project-MONAI/research-contributions>`__
 
          .. grid-item-card:: Wildfire Forecasting
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A sequence forecasting baseline for next-window wildfire activity across weekly count features.
+               The LSTM and ConvLSTM of Kondylatos et al. (2022) that classify next-day wildfire danger of a 1 km cell from ten days of weather, vegetation, terrain, human and land-cover covariates.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Wildfire` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -205,14 +723,14 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-link-row
 
-               **Paper:** `Wildfire Danger Prediction and Understanding with Deep Learning <https://doi.org/10.1029/2022GL099368>`_ | **Repo:** `Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__
+               **Paper:** `Wildfire Danger Prediction and Understanding With Deep Learning <https://doi.org/10.1029/2022GL099368>`_ | **Repo:** `Repository <https://github.com/Orion-AI-Lab/wildfire_forecasting>`__
 
-         .. grid-item-card:: WildfireSpreadTS
+         .. grid-item-card:: WildfireSpreadTS Baselines
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A temporal convolution wildfire spread baseline over short raster history windows.
+               The four learned WildfireSpreadTS baselines (logistic regression, ResNet-18 U-Net, ConvLSTM, U-TAE) with the benchmark's own configurations.
 
             .. container:: catalog-chip-row
 
@@ -220,7 +738,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Details:** :doc:`WildfireSpreadTS <modules/models_wildfirespreadts>`
+               **Details:** :doc:`WildfireSpreadTS Baselines <modules/models_wildfirespreadts>`
 
             .. container:: catalog-meta-row
 
@@ -232,41 +750,14 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-link-row
 
-               **Paper:** `WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ | **Repo:** `Repository <https://github.com/SebastianGer/WildfireSpreadTS>`__
-
-         .. grid-item-card:: WRF-SFIRE Adapter
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               A lightweight raster wildfire spread adapter inspired by WRF-SFIRE style transport.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Wildfire` :bdg-secondary:`Spread` :bdg-success:`Implemented`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`WildfireSpreadTS <benchmarks/wildfirespreadts_ecosystem>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011 <https://doi.org/10.5194/gmd-4-591-2011>`_ | **Repo:** `Repository <https://github.com/openwfm/WRF-SFIRE>`__
+               **Paper:** `WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction <https://openreview.net/forum?id=RgdGkPRQ03>`_ | **Repo:** `Repository <https://github.com/SebastianGer/WildfireSpreadTS>`__
 
          .. grid-item-card:: CNN-ASPP
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               An explainable CNN segmentation model with an ASPP mechanism for next-day wildfire spread prediction.
+               A fully convolutional network with an atrous spatial pyramid of four dilation rates for next-day wildfire spread on Next Day Wildfire Spread tiles.
 
             .. container:: catalog-chip-row
 
@@ -286,7 +777,53 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-link-row
 
-               **Paper:** `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_
+               **Paper:** `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread: An ASPP-Enabled CNN Approach <https://doi.org/10.1109/LGRS.2024.3417624>`_
+
+         .. grid-item-card:: U-Net
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The original U-Net of Ronneberger et al. (MICCAI 2015): a contracting and an expansive path of unpadded 3x3 convolutions joined by centre-cropped skip connections, without batch normalisation.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Segmentation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`U-Net <modules/models_unet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `U-Net: Convolutional Networks for Biomedical Image Segmentation <https://arxiv.org/abs/1505.04597>`_ | **Repo:** `Repository <https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/>`__
+
+         .. grid-item-card:: XGBoost
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Gradient-boosted trees (XGBoost) on the 35 instance features of Kondylatos et al. (2022) for next-day wildfire danger, with library-default hyperparameters until the paper's are known.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Wildfire` :bdg-secondary:`Classification` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`XGBoost <modules/models_xgboost>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `XGBoost: A Scalable Tree Boosting System <https://doi.org/10.1145/2939672.2939785>`_ | **Repo:** `Repository <https://github.com/dmlc/xgboost>`__
 
 
    .. tab-item:: Earthquake
@@ -305,39 +842,12 @@ pages and compatible benchmark coverage.
          :gutter: 2
          :class-container: catalog-grid
 
-         .. grid-item-card:: EQNet
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               A transformer-style earthquake phase-picking baseline for modern sequence modeling comparisons.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-success:`Implemented`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`EQNet <modules/models_eqnet>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`SeisBench <benchmarks/seisbench>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `An End-To-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning <https://www.osti.gov/biblio/1978539>`_ | **Repo:** `Repository <https://github.com/AI4EPS/EQNet>`__
-
          .. grid-item-card:: EQTransformer
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A bidirectional sequence encoder for joint earthquake phase picking with attention pooling over waveform windows.
+               Earthquake Transformer (Mousavi et al., Nature Communications 2020): a multi-task network that turns a 60-s three-component seismogram into per-sample earthquake-detection, P-arrival and S-arrival probabilities, ported from the official Keras code with its two released models.
 
             .. container:: catalog-chip-row
 
@@ -353,18 +863,18 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`pick-benchmark <benchmarks/pick_benchmark>`
+               **Benchmark Ecosystems:** :doc:`pick-benchmark <benchmarks/pick_benchmark>`, :doc:`SeisBench <benchmarks/seisbench>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `Earthquake Transformer-An attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ | **Repo:** `Repository <https://github.com/smousavi05/EQTransformer>`__
+               **Paper:** `Earthquake transformer—an attentive deep-learning model for simultaneous earthquake detection and phase picking <https://doi.org/10.1038/s41467-020-17591-w>`_ | **Repo:** `Repository <https://github.com/smousavi05/EQTransformer>`__
 
          .. grid-item-card:: GPD
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A compact CNN baseline for generalized phase detection and historical earthquake picking comparisons.
+               Generalized Phase Detection (Ross et al., BSSA 2018): a convolutional classifier that labels 4-s three-component windows as P, S or noise, and picks continuous data with a sliding window. Ported from the official Keras release, whose weights load and reproduce the official picks.
 
             .. container:: catalog-chip-row
 
@@ -380,7 +890,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`pick-benchmark <benchmarks/pick_benchmark>`
+               **Benchmark Ecosystems:** :doc:`pick-benchmark <benchmarks/pick_benchmark>`, :doc:`SeisBench <benchmarks/seisbench>`
 
             .. container:: catalog-link-row
 
@@ -391,7 +901,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-entry-summary
 
-               A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows.
+               1-D U-Net that turns three-component waveforms into per-sample probabilities of noise, P and S arrivals (Zhu & Beroza, GJI 2019); picks are the peaks of the P and S traces.
 
             .. container:: catalog-chip-row
 
@@ -407,22 +917,22 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`SeisBench <benchmarks/seisbench>`
+               **Benchmark Ecosystems:** :doc:`pick-benchmark <benchmarks/pick_benchmark>`, :doc:`SeisBench <benchmarks/seisbench>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `PhaseNet: A Deep-Neural-Network-Based Seismic Arrival Time Picking Method <https://arxiv.org/abs/1803.03211>`_ | **Repo:** `Repository <https://github.com/AI4EPS/PhaseNet>`__
+               **Paper:** `PhaseNet: a deep-neural-network-based seismic arrival-time picking method <https://doi.org/10.1093/gji/ggy423>`_ | **Repo:** `Repository <https://github.com/AI4EPS/PhaseNet>`__
 
          .. grid-item-card:: WaveCastNet
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A ConvLEM-based sequence-to-sequence model for dense-grid earthquake wavefield forecasting and early-warning style rollout experiments.
+               ConvLEM sequence-to-sequence network that forecasts ground-motion wavefields (three velocity components on a regular grid) for earthquake early warning (Lyu et al., Nat. Commun. 2025), with dense-grid and sparse-station inputs.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Earthquake` :bdg-secondary:`Wavefield Forecasting` :bdg-success:`Implemented`
+               :bdg-primary:`Earthquake` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -432,13 +942,32 @@ pages and compatible benchmark coverage.
 
                **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
 
+            .. container:: catalog-link-row
+
+               **Paper:** `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_ | **Repo:** `Repository <https://github.com/dwlyu/WaveCastNet>`__
+
+         .. grid-item-card:: EQNet
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               End-to-end multi-station earthquake detector (Zhu et al., JGR Solid Earth 2022): a 1-D ResNet feature extractor, P and S picking heads, and a shift-and-stack module that aligns station features on candidate hypocentres before an event detection network. Rebuilt from the paper.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Earthquake` :bdg-secondary:`Picking` :bdg-secondary:`Detection` :bdg-success:`Implemented`
+
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`AEFA <benchmarks/aefa>`, :doc:`pyCSEP <benchmarks/pycsep>`
+               **Details:** :doc:`EQNet <modules/models_eqnet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `Rapid wavefield forecasting for earthquake early warning via deep sequence to sequence learning <https://doi.org/10.1038/s41467-025-65435-2>`_
+               **Paper:** `An End-to-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning <https://doi.org/10.1029/2021JB023283>`_ | **Repo:** `Repository <https://github.com/AI4EPS/EQNet>`__
 
 
    .. tab-item:: Flood
@@ -462,7 +991,7 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-entry-summary
 
-               An entity-aware hydrology baseline with static-feature gating over streamflow histories.
+               The Entity-Aware LSTM of Kratzert et al. (HESS 2019): static catchment attributes set the input gate, daily forcings drive the other gates; ported from NeuralHydrology.
 
             .. container:: catalog-chip-row
 
@@ -478,45 +1007,18 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`WaterBench <benchmarks/waterbench>`
+               **Benchmark Ecosystems:** :doc:`CAMELS-US <benchmarks/camels_us>`, :doc:`Caravan <benchmarks/caravan>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ | **Repo:** `Repository <https://github.com/neuralhydrology/neuralhydrology>`__
-
-         .. grid-item-card:: FloodCast
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               A compact spatiotemporal flood-inundation baseline for raster forecast experiments.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Flood` :bdg-secondary:`Inundation` :bdg-success:`Implemented`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`FloodCast <modules/models_floodcast>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`FloodCastBench <benchmarks/floodcastbench>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Large-scale flood modeling and forecasting with FloodCast <https://doi.org/10.1038/s41586-024-08028-8>`_ | **Repo:** `Repository <https://github.com/HydroPML/FloodCast>`__
+               **Paper:** `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ | **Repo:** `Repository <https://github.com/kratzert/ealstm_regional_modeling>`__
 
          .. grid-item-card:: Google Flood Forecasting
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A transformer-style sequence baseline for nodewise streamflow forecasting.
+               Google's operational streamflow model (FloodHub): hindcast and forecast LSTMs over masked-mean embeddings of several weather products, with a probabilistic CMAL head; released weights load.
 
             .. container:: catalog-chip-row
 
@@ -536,14 +1038,41 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-link-row
 
-               **Paper:** `Global Flood Forecasting at a Fine Catchment Resolution using Machine Learning <https://research.google/pubs/global-flood-forecasting-at-a-fine-catchment-resolution-using-machine-learning/>`_ | **Repo:** `Repository <https://github.com/google-research/flood-forecasting>`__
+               **Paper:** `How to deal w___ missing input data <https://doi.org/10.5194/hess-29-6221-2025>`_ | **Repo:** `Repository <https://github.com/google-research/flood-forecasting>`__
+
+         .. grid-item-card:: HydroGraphNet
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The physics-informed graph network of Taghizadeh et al. (CACIE 2025) as released in NVIDIA PhysicsNeMo (MeshGraphKAN): water depth and volume changes on an unstructured flood mesh, rolled out step by step.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Flood` :bdg-secondary:`Inundation` :bdg-success:`Implemented`
+
+            .. container:: catalog-meta-row
+
+               **Details:** :doc:`HydroGraphNet <modules/models_hydrographnet>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Ecosystems:** :doc:`HydroGraphNet White River <benchmarks/hydrographnet_white_river>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Interpretable physics-informed graph neural networks for flood forecasting <https://doi.org/10.1111/mice.13484>`_ | **Repo:** `Repository <https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet>`__
 
          .. grid-item-card:: NeuralHydrology LSTM
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               An adapter-style LSTM baseline for nodewise streamflow forecasting on graph-temporal inputs.
+               The regional rainfall-runoff LSTM of Kratzert et al. (HESS 2019) as NeuralHydrology implements it (CudaLSTM): daily forcings plus static catchment attributes to daily discharge.
 
             .. container:: catalog-chip-row
 
@@ -559,22 +1088,22 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`Caravan <benchmarks/caravan>`
+               **Benchmark Ecosystems:** :doc:`CAMELS-US <benchmarks/camels_us>`, :doc:`Caravan <benchmarks/caravan>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ | **Repo:** `Repository <https://github.com/neuralhydrology/neuralhydrology>`__
+               **Paper:** `Rainfall-runoff modelling using Long Short-Term Memory (LSTM) networks <https://doi.org/10.5194/hess-22-6005-2018>`_ | **Repo:** `Repository <https://github.com/neuralhydrology/neuralhydrology>`__
 
          .. grid-item-card:: UrbanFloodCast
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A U-Net style urban inundation baseline for dense-grid flood prediction.
+               The deep neural operator (DNO) of UrbanFloodCast (Xu et al., J. Hydrology 2025): a U-shaped Fourier neural operator in space and time that predicts urban water depth and discharge for 24 steps at once.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Flood` :bdg-secondary:`Inundation` :bdg-success:`Implemented`
+               :bdg-primary:`Flood` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -584,40 +1113,42 @@ pages and compatible benchmark coverage.
 
                **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
 
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`FloodCastBench <benchmarks/floodcastbench>`
-
             .. container:: catalog-link-row
 
-               **Paper:** `UrbanFloodCast: WMO Urban Flooding Forecasting Challenge <https://arxiv.org/abs/2405.21179>`_ | **Repo:** `Repository <https://github.com/HydroPML/UrbanFloodCast>`__
+               **Paper:** `Urban flood modeling and forecasting with deep neural operator and transfer learning <https://doi.org/10.1016/j.jhydrol.2025.133705>`_ | **Repo:** `Repository <https://github.com/HydroPML/UrbanFloodCast>`__
 
-         .. grid-item-card:: HydroGraphNet
+      .. rubric:: Experimental Adapters
+
+      .. container:: catalog-section-note
+
+         These entries remain public as lightweight wrapper or prototype integrations and should not be counted as stable implemented methods.
+
+      .. grid:: 1 1 2 2
+         :gutter: 2
+         :class-container: catalog-grid
+
+         .. grid-item-card:: FloodCast
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A physics-informed graph neural network for flood forecasting with interpretable KAN-style components, residual message passing, and delta-state decoding.
+               A small convolutional inundation baseline under the FloodCast name; not the published model, whose flood-model code was never released and whose network widths the paper does not report (experimental).
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-success:`Implemented`
+               :bdg-primary:`Flood` :bdg-secondary:`Forecasting` :bdg-secondary:`Segmentation` :bdg-warning:`Experimental Adapter`
 
             .. container:: catalog-meta-row
 
-               **Details:** :doc:`HydroGraphNet <modules/models_hydrographnet>`
+               **Details:** :doc:`FloodCast <modules/models_floodcast>`
 
             .. container:: catalog-meta-row
 
                **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
 
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`HydroBench <benchmarks/hydrobench>`
-
             .. container:: catalog-link-row
 
-               **Paper:** `Interpretable physics-informed graph neural networks for flood forecasting <https://onlinelibrary.wiley.com/doi/10.1111/mice.13484>`_
+               **Paper:** `Large-scale flood modeling and forecasting with FloodCast <https://doi.org/10.1016/j.watres.2024.122162>`_ | **Repo:** `Repository <https://github.com/HydroPML/FloodCast>`__
 
 
    .. tab-item:: Tropical Cyclone
@@ -641,11 +1172,11 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-entry-summary
 
-               A compact multimodal storm baseline for hurricane track and intensity forecasting.
+               Hurricast (HUML) of Boussioux et al. (2022): ERA5 maps encoded by a CNN and IBTrACS statistics pass a Transformer encoder-decoder, whose embeddings feed XGBoost for the 24-hour intensity or track.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Implemented`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-secondary:`Intensity` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -661,18 +1192,18 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-link-row
 
-               **Paper:** `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://arxiv.org/abs/2102.01204>`_ | **Repo:** `Repository <https://github.com/leobix/hurricast>`__
+               **Paper:** `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://doi.org/10.1175/WAF-D-21-0091.1>`_ | **Repo:** `Repository <https://github.com/leobix/hurricast>`__
 
          .. grid-item-card:: SAF-Net
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A spatiotemporal tropical-cyclone baseline with an intensity-focused head and shared trajectory output.
+               Wide-and-deep typhoon intensity network of Xu et al. (2022): 96 best-track predictors plus 31x31 ERA-Interim u/v winds at four levels and four times, fused by spatial attention, predict the maximum sustained wind 24 hours ahead.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Implemented`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -682,24 +1213,20 @@ pages and compatible benchmark coverage.
 
                **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
 
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
-
             .. container:: catalog-link-row
 
-               **Paper:** `SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction <https://www.sciencedirect.com/science/article/pii/S1568494623003152>`_ | **Repo:** `Repository <https://github.com/xuguangning1218/TI_Prediction>`__
+               **Paper:** `SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction <https://doi.org/10.1016/j.patrec.2021.11.012>`_ | **Repo:** `Repository <https://github.com/xuguangning1218/TI_Prediction>`__
 
          .. grid-item-card:: TCIF-fusion
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting.
+               The model-knowledge-guided intensity network of Wang, Li and Zheng (2024): 3-D CNN branches with a fusion branch over ERA5 winds and SST, a VGG-19 on infrared images and storm history give the 24-hour intensity.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Implemented`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Forecasting` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -709,24 +1236,20 @@ pages and compatible benchmark coverage.
 
                **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
 
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
-
             .. container:: catalog-link-row
 
-               **Paper:** `Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.5194/egusphere-2024-250>`_ | **Repo:** `Repository <https://github.com/wangchong96/TCIF-fusion>`__
+               **Paper:** `Tropical cyclone intensity forecasting using model knowledge guided deep learning model <https://doi.org/10.1088/1748-9326/ad1bde>`_ | **Repo:** `Repository <https://github.com/wangchong96/TCIF-fusion>`__
 
          .. grid-item-card:: Tropical Cyclone MLP
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A compact MLP baseline for hurricane track and intensity forecasting.
+               The 24-hour intensity-change MLP of Xu et al. (2021): 121 SHIPS predictors -> two hidden layers of 2048 units (sigmoid, ReLU) -> the change of the maximum sustained wind over the next 24 hours.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Implemented`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Intensity` :bdg-success:`Implemented`
 
             .. container:: catalog-meta-row
 
@@ -738,18 +1261,18 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
+               **Benchmark Ecosystems:** :doc:`SHIPS Predictors (Xu et al. 2021) <benchmarks/ships_xu2021>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `Deep Learning Experiments for Tropical Cyclone Intensity Forecasts <https://doi.org/10.1145/3447548.3467351>`_ | **Repo:** `Repository <https://github.com/wenweixu/tropicalcyclone_MLP>`__
+               **Paper:** `Deep Learning Experiments for Tropical Cyclone Intensity Forecasts <https://doi.org/10.1175/WAF-D-20-0104.1>`_ | **Repo:** `Repository <https://github.com/wenweixu/tropicalcyclone_MLP>`__
 
          .. grid-item-card:: TropiCycloneNet
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               A GRU plus attention baseline for all-basin tropical cyclone forecasting.
+               The TCN_M generator of Huang et al. (2025): a multimodal GAN with six decoders that samples 6- to 24-hour forecasts of position, central pressure and maximum wind from the best track, 500 hPa geopotential and environmental features; the released checkpoint is verified.
 
             .. container:: catalog-chip-row
 
@@ -765,102 +1288,11 @@ pages and compatible benchmark coverage.
 
             .. container:: catalog-meta-row
 
-               **Benchmark Ecosystems:** :doc:`TropiCycloneNet-Dataset <benchmarks/tropicyclonenet_dataset>`
+               **Benchmark Ecosystems:** :doc:`TropiCycloneNet Dataset <benchmarks/tropicyclonenet_dataset>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://www.nature.com/articles/s41597-023-02721-x>`_ | **Repo:** `Repository <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__
-
-      .. rubric:: Experimental Adapters
-
-      .. container:: catalog-section-note
-
-         These entries remain public as lightweight wrapper or prototype integrations and should not be counted as stable implemented methods.
-
-      .. grid:: 1 1 2 2
-         :gutter: 2
-         :class-container: catalog-grid
-
-         .. grid-item-card:: FourCastNet TC Adapter
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               An experimental wrapper-style storm adapter inspired by FourCastNet forecast fields.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-warning:`Experimental Adapter`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`FourCastNet TC Adapter <modules/models_fourcastnet_tc>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`IBTrACS <benchmarks/ibtracs>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators <https://arxiv.org/abs/2202.11214>`_ | **Repo:** `Repository <https://github.com/NVlabs/FourCastNet>`__
-
-         .. grid-item-card:: GraphCast TC Adapter
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               An experimental wrapper-style storm adapter inspired by GraphCast/GenCast forecast fields.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-warning:`Experimental Adapter`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`IBTrACS <benchmarks/ibtracs>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `GraphCast: Learning skillful medium-range global weather forecasting <https://www.science.org/doi/10.1126/science.adi2336>`_ | **Repo:** `Repository <https://github.com/google-deepmind/graphcast>`__
-
-         .. grid-item-card:: Pangu TC Adapter
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               An experimental wrapper-style storm adapter inspired by Pangu-Weather forecast fields.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-warning:`Experimental Adapter`
-
-            .. container:: catalog-meta-row
-
-               **Details:** :doc:`Pangu TC Adapter <modules/models_pangu_tc>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Ecosystems:** :doc:`IBTrACS <benchmarks/ibtracs>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `Accurate medium-range global weather forecasting with 3D neural networks <https://www.nature.com/articles/s41586-023-06185-3>`_ | **Repo:** `Repository <https://github.com/198808xc/Pangu-Weather>`__
+               **Paper:** `Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://doi.org/10.1038/s41467-025-61087-4>`_ | **Repo:** `Repository <https://github.com/xiaochengfuhuo/TropiCycloneNet>`__
 
 
 
@@ -877,9 +1309,9 @@ starting point for each hazard family.
    .. grid-item-card:: Wildfire
       :class-card: catalog-detail-card
 
-      **Start with:** :doc:`FireCastNet <modules/models_firecastnet>`
+      **Start with:** :doc:`WildfireSpreadTS Baselines <modules/models_wildfirespreadts>`
 
-      A compact encoder-decoder baseline for wildfire spread mask prediction.
+      The four learned WildfireSpreadTS baselines (logistic regression, ResNet-18 U-Net, ConvLSTM, U-TAE) with the benchmark's own configurations.
 
       **Benchmark:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
 
@@ -888,25 +1320,25 @@ starting point for each hazard family.
 
       **Start with:** :doc:`PhaseNet <modules/models_phasenet>`
 
-      A lightweight phase-picking baseline that predicts P- and S-arrival indices from multichannel waveform windows.
+      1-D U-Net that turns three-component waveforms into per-sample probabilities of noise, P and S arrivals (Zhu & Beroza, GJI 2019); picks are the peaks of the P and S traces.
 
       **Benchmark:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
 
    .. grid-item-card:: Flood
       :class-card: catalog-detail-card
 
-      **Start with:** :doc:`FloodCast <modules/models_floodcast>`
+      **Start with:** :doc:`NeuralHydrology LSTM <modules/models_neuralhydrology_lstm>`
 
-      A compact spatiotemporal flood-inundation baseline for raster forecast experiments.
+      The regional rainfall-runoff LSTM of Kratzert et al. (HESS 2019) as NeuralHydrology implements it (CudaLSTM): daily forcings plus static catchment attributes to daily discharge.
 
       **Benchmark:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
 
    .. grid-item-card:: Tropical Cyclone
       :class-card: catalog-detail-card
 
-      **Start with:** :doc:`Hurricast <modules/models_hurricast>`
+      **Start with:** :doc:`TropiCycloneNet <modules/models_tropicyclonenet>`
 
-      A compact multimodal storm baseline for hurricane track and intensity forecasting.
+      The TCN_M generator of Huang et al. (2025): a multimodal GAN with six decoders that samples 6- to 24-hour forecasts of position, central pressure and maximum wind from the best track, 500 hPa geopotential and environmental features; the released checkpoint is verified.
 
       **Benchmark:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
 
@@ -924,29 +1356,49 @@ before selecting a model for evaluation.
    :hidden:
 
    modules/models_asufm
+   modules/models_attention_unet
+   modules/models_convgru
+   modules/models_convlstm
+   modules/models_deep_ensemble
+   modules/models_deeplabv3
+   modules/models_earthfarseer
+   modules/models_earthformer
    modules/models_eqnet
    modules/models_eqtransformer
    modules/models_firecastnet
    modules/models_floodcast
-   modules/models_forefire
-   modules/models_fourcastnet_tc
    modules/models_google_flood_forecasting
    modules/models_gpd
-   modules/models_graphcast_tc
    modules/models_hurricast
    modules/models_hydrographnet
+   modules/models_logistic_regression
    modules/models_neuralhydrology_ealstm
    modules/models_neuralhydrology_lstm
-   modules/models_pangu_tc
    modules/models_phasenet
+   modules/models_prithvi_burnscars
+   modules/models_prithvi_eo_2_tl
+   modules/models_rainformer
+   modules/models_random_forest
+   modules/models_resnet18_unet
    modules/models_saf_net
+   modules/models_segformer
+   modules/models_swin_unet
+   modules/models_swin_unetr
+   modules/models_swinlstm
    modules/models_tcif_fusion
+   modules/models_tcn
+   modules/models_trajgru
    modules/models_tropicalcyclone_mlp
    modules/models_tropicyclonenet
+   modules/models_ts_satfire
+   modules/models_unet
+   modules/models_unet3d
+   modules/models_unetr
    modules/models_urbanfloodcast
+   modules/models_utae
    modules/models_wavecastnet
    modules/models_wildfire_aspp
    modules/models_wildfire_forecasting
    modules/models_wildfire_fpa
    modules/models_wildfirespreadts
-   modules/models_wrf_sfire
+   modules/models_xgboost

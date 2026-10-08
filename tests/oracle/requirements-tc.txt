@@ -1,0 +1,11 @@
+# Reference stack for the tropical cyclone oracle tests (CPU torch is installed by the workflow).
+# The official tropicalcyclone_MLP model is Keras 2.2.4 / TensorFlow 1.12 code; its models.mlp is run with
+# Keras 3 on the PyTorch backend (KERAS_BACKEND=torch). 3.12.4 is the last Keras release for Python 3.10.
+# The TCIF-fusion notebook graph (Keras 2 / TensorFlow 1.x) is rebuilt the same way.
+keras==3.12.4
+# SAF-Net (TI_Prediction notebook) and TropiCycloneNet's model code (TCNM/*.py) need only torch and numpy;
+# TropiCycloneNet's data loader (TCNM/data/trajectoriesWithMe_unet.py) resizes GPH crops with OpenCV.
+opencv-python-headless==5.0.0.93
+# Hurricast's XGBoost stage is compared with xgboost.XGBRegressor fitted the official way (the CPU-only build of
+# the same library; 3.2.0 is the last release supporting Python 3.10, as in requirements.txt).
+xgboost-cpu==3.2.0

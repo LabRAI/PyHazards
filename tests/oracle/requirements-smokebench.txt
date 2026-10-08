@@ -1,0 +1,6 @@
+# Reference stack for tests/oracle/test_smokebench_oracle.py: the SmokeBench authors' scripts
+# (SoraLink/MLLM) use OpenCV for image I/O, the grid overlay and the grey conversion, and
+# torchvision.ops.box_iou for detection (torchvision is installed by the workflow next to torch).
+# Pillow reads frames on the PyHazards side (the `prompted` extra).
+opencv-python-headless==4.10.0.84
+pillow==12.3.0

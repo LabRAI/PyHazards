@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Union
 
+import torch
 import torch.nn as nn
 
 from ..configs import ExperimentConfig
@@ -25,7 +26,14 @@ def run_benchmark(
     output_dir: str | None = None,
 ) -> BenchmarkRunSummary:
     benchmark_obj = resolve_benchmark(benchmark)
-    result = benchmark_obj.evaluate(model=model, data=data, config=config)
+    # Score in inference mode (dropout off, BatchNorm running statistics) and restore the mode after.
+    was_training = model.training
+    model.eval()
+    try:
+        with torch.no_grad():
+            result = benchmark_obj.evaluate(model=model, data=data, config=config)
+    finally:
+        model.train(was_training)
     metrics = benchmark_obj.aggregate_metrics([result])
     result.metrics = metrics
     report_dir = output_dir or config.report.output_dir

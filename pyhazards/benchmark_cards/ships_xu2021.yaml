@@ -1,0 +1,30 @@
+slug: ships_xu2021
+display_name: SHIPS Predictors (Xu et al. 2021)
+kind: ecosystem
+hazard_family: Tropical Cyclone
+benchmark_key: tc
+support_status: real-backed
+summary: >
+  The standardised SHIPS predictor table of Xu et al. (2021) with 24-hour intensity-change targets and
+  the official leave-one-year-out folds, scored with the intensity task.
+description:
+  - >
+    ``ships_xu2021`` reads the authors' table (Zenodo 4784610, CC BY 4.0): 121 SHIPS predictors per
+    storm and forecast time and the 24-hour change of the maximum wind in knots. Test rows are a year's
+    Atlantic operational cases; the paper averages the folds 2010-2018.
+source:
+  title: Deep Learning Experiments for Tropical Cyclone Intensity Forecasts
+  url: https://doi.org/10.1175/WAF-D-20-0104.1
+  repo_url: https://github.com/wenweixu/tropicalcyclone_MLP
+tasks:
+  - tc.intensity
+metrics:
+  - intensity_mae
+  - intensity_rmse
+  - intensity_mae_group_mean
+smoke_configs:
+  - pyhazards/configs/tc/tropicalcyclone_mlp_smoke.yaml
+linked_models:
+  - tropicalcyclone_mlp
+notes:
+  - "The smoke config uses ships_xu2021_synthetic (random data in the same layout)."

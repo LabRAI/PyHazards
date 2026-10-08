@@ -19,18 +19,19 @@ source:
 tasks:
   - wildfire.spread
 metrics:
+  - average_precision
   - iou
   - f1
   - burned_area_mae
 smoke_configs:
   - pyhazards/configs/wildfire/wildfire_spread_smoke.yaml
   - pyhazards/configs/wildfire/wildfirespreadts_smoke.yaml
-  - pyhazards/configs/wildfire/forefire_smoke.yaml
-  - pyhazards/configs/wildfire/wrf_sfire_smoke.yaml
-  - pyhazards/configs/wildfire/firecastnet_smoke.yaml
 linked_models:
   - wildfire_aspp
   - wildfirespreadts
-  - forefire
-  - wrf_sfire
-  - firecastnet
+  - logistic_regression
+  - resnet18_unet
+  - convlstm
+  - utae
+  - segformer
+  - swin_unet

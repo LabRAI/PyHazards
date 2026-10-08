@@ -1,0 +1,50 @@
+slug: figlib_smokebench
+display_name: FIgLib SmokeBench
+hazard_family: Wildfire
+source_role: Smoke Detection Benchmark
+summary: The SmokeBench evaluation images -- HPWREN FIgLib camera frames with the SmokeyNet smoke boxes -- for prompting multimodal LLMs to classify and localize early wildfire smoke.
+provider: HPWREN (UC San Diego) FIgLib images; SmokeyNet (Dewangan et al. 2022) boxes; SmokeBench (Qi, Li & Barnes, WACV 2026) protocol
+geometry: Fixed-camera RGB photographs with smoke bounding boxes
+spatial_resolution: 1600 x 1200 to 3072 x 2048 pixel frames from mountain-top cameras
+temporal_resolution: Sequences of up to 81 frames, usually one minute apart, from 40 minutes before to 40 minutes after the first visible plume
+update_cadence: Static evaluation set (FIgLib itself keeps adding sequences)
+period_of_record: Fires of 2016-2020 (the 145 annotated sequences)
+coverage: Southern California (HPWREN camera network)
+formats: JPEG frames in per-sequence tgz archives; boxes in a Python pickle (SmokeyNet metadata.pkl)
+overview:
+  - "SmokeBench (Qi, Li & Barnes, WACV 2026) evaluates multimodal LLMs on 5,046 smoke images with ground-truth boxes and 1,000 smoke-free images from FIgLib, the HPWREN Fire Ignition images Library of fixed-view camera sequences around wildfire ignitions."
+  - "SmokeBench released no data or image lists. The 5,046 boxes are the bbox_labels of SmokeyNet's metadata.pkl (Apache-2.0 repository, pinned and checksummed): one box per frame on 145 sequences, whose area quintiles are exactly the SmokeBench area bins (42, 4356, 11232, 28565, 83157, 2232020 pixels)."
+  - "The frames are downloaded from the official HPWREN CDN on demand; PyHazards redistributes no images."
+data_characteristics:
+  - "Smoke images are frames at or after the first visible plume (file names <timestamp>_+<seconds>.jpg) that SmokeyNet's annotators boxed; smoke-free images are frames before it (<timestamp>_-<seconds>.jpg)."
+  - "Frame sizes: 2,846 at 2048 x 1536, 1,994 at 3072 x 2048, 172 at 1600 x 1200 and 34 at 2560 x 1920 among the smoke images."
+  - "Boxes are [x1, y1, x2, y2] integer pixel coordinates of the original frame (extremes of the annotated polygon); smoke areas range from 42 to 2,232,020 pixels."
+  - "SmokeBench's 1,000 smoke-free frames were an unseeded random draw over all FIgLib sequences and were not released; the adapter draws a seeded sample from the pre-ignition frames of the 145 annotated sequences (5,666 candidates)."
+typical_use_cases:
+  - Zero-shot evaluation of multimodal LLMs on smoke classification, tile and grid localization and box detection (SmokeBench).
+  - Studying how smoke size and contrast limit early wildfire smoke detection.
+access_links:
+  - label: HPWREN FIgLib
+    url: https://www.hpwren.ucsd.edu/FIgLib/
+  - label: FIgLib sequence archives (HPWREN CDN)
+    url: https://cdn.hpwren.ucsd.edu/HPWREN-FIgLib-Data/Tar/index.html
+  - label: SmokeyNet repository (boxes in data/metadata.pkl)
+    url: https://gitlab.nrp-nautilus.io/anshumand/pytorch-lightning-smoke-detection
+inspection:
+  command: python -m pyhazards.datasets.figlib_smokebench.inspection --root /path/to/figlib --download
+  notes:
+    - "--download fetches the pinned SmokeyNet metadata.pkl (sha256-checked) and streams the 145 FIgLib archives (about 11.4 GB), keeping only the JPEG frames."
+primary_references:
+  - citation: "Qi, T., Li, W., Barnes, N. (2026). SmokeBench: Evaluating Multimodal Large Language Models for Wildfire Smoke Detection. WACV 2026."
+    url: https://arxiv.org/abs/2512.11215
+  - citation: "Dewangan, A. et al. (2022). FIgLib & SmokeyNet: Dataset and Deep Learning Model for Real-Time Wildland Fire Smoke Detection. Remote Sensing 14(4):1007."
+    url: https://doi.org/10.3390/rs14041007
+    repo_url: https://gitlab.nrp-nautilus.io/anshumand/pytorch-lightning-smoke-detection
+pyhazards_usage:
+  - "pyhazards.datasets.figlib_smokebench.FIgLibSmokeBench(root) yields SmokeSample(image_id, path, label, boxes) and decodes frames to RGB arrays; download_smokebench(root) fetches the boxes and frames."
+  - "pyhazards.prompted.evaluate_smokebench runs the SmokeBench tasks on it with a prompted multimodal-LLM backend (see the Prompted VLM Baselines page)."
+related_models: []
+related_benchmarks: []
+notes:
+  - "Licence: HPWREN publishes FIgLib as public data and asks that derivative work credit https://www.hpwren.ucsd.edu/; no licence file accompanies the images. The SmokeyNet repository (boxes) is Apache-2.0."
+  - "Smoke-free accuracy on the seeded sample is not the same sample as SmokeBench Table 3."

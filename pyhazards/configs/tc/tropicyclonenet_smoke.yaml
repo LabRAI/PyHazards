@@ -2,21 +2,20 @@ benchmark:
   name: tc
   hazard_task: tc.track_intensity
   metrics:
-    - track_error
+    - track_error_km
     - intensity_mae
+    - pressure_mae
+    - best_of_k_track_error_km
+    - best_of_k_intensity_mae
+    - best_of_k_pressure_mae
   eval_split: test
 dataset:
-  name: tropicyclonenet_dataset
+  name: tropicyclonenet_dataset_synthetic
   params:
     micro: true
 model:
   name: tropicyclonenet
   task: regression
-  params:
-    input_dim: 8
-    hidden_dim: 64
-    horizon: 5
-    output_dim: 3
 report:
   output_dir: reports/tropicyclonenet
   formats:

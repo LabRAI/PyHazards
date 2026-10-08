@@ -3,31 +3,34 @@ display_name: IBTrACS
 kind: ecosystem
 hazard_family: Tropical Cyclone
 benchmark_key: tc
-support_status: synthetic-backed
+support_status: real-backed
 summary: >
-  IBTrACS-backed storm benchmark coverage for the shared tropical cyclone evaluator.
+  Best-track ground truth from NOAA NCEI's IBTrACS v04 for track and intensity forecasts scored by
+  the shared tropical cyclone evaluator.
 description:
   - >
-    The current IBTrACS alignment uses a metadata-backed storm-history adapter over the
-    shared synthetic tropical-cyclone dataset.
+    ``ibtracs_tracks`` reads IBTrACS v04 CSV or netCDF files with PyHazards' reader and builds
+    forecasting windows (history of six-hourly observations, targets at the requested lead times) for any
+    agency's winds and pressures.
   - >
-    It is the benchmark ecosystem currently used by Hurricast and the experimental
-    weather-model adapter smoke configs.
+    ``hurricast_ibtracs_era5`` builds Hurricast's inputs from IBTrACS (30 statistical features per 3-hour
+    step) and ERA5 maps, with the IBTrACS wind 24 h ahead or position 24 h ahead as targets. The
+    weather-model cyclone pipelines (forecast fields, tracker, scoring against IBTrACS) are pending.
+    IBTrACS is also the reference of the weather-model cyclone pipelines in ``pyhazards.forecasts``:
+    forecast tracks of FourCastNet, GraphCast and Pangu-Weather (tracked in their forecast fields) are
+    matched to IBTrACS storms and scored by great-circle track error and intensity errors per lead time.
+    No ported neural network consumes IBTrACS directly yet (Hurricast, which uses IBTrACS with ERA5, is
+    pending).
 source:
   title: IBTrACS
   url: https://www.ncei.noaa.gov/products/international-best-track-archive
 tasks:
   - tc.track_intensity
+  - tc.intensity
 metrics:
-  - track_error
+  - track_error_km
   - intensity_mae
-smoke_configs:
-  - pyhazards/configs/tc/hurricast_smoke.yaml
-  - pyhazards/configs/tc/graphcast_tc_smoke.yaml
-  - pyhazards/configs/tc/pangu_tc_smoke.yaml
-  - pyhazards/configs/tc/fourcastnet_tc_smoke.yaml
+  - pressure_mae
+smoke_configs: []
 linked_models:
   - hurricast
-  - graphcast_tc
-  - pangu_tc
-  - fourcastnet_tc

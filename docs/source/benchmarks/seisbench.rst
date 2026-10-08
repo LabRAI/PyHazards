@@ -6,9 +6,9 @@ SeisBench
 Overview
 --------
 
-The current SeisBench path uses a synthetic waveform adapter that preserves the same picking task shape expected by the shared earthquake benchmark.
+SeisBench (Woollam et al. 2022) distributes seismic machine-learning benchmark datasets in a common format (metadata CSV + waveform HDF5). PyHazards reads that format without importing SeisBench, whose GPL-3.0 code is used only as a test oracle (the reader, and the PhaseNet, EQTransformer and GPD ports, are compared with SeisBench in ``tests/oracle``).
 
-It exists today as a benchmark-compatible smoke path rather than a full external SeisBench ingestion pipeline.
+The datasets are not redistributed; download them with SeisBench or from their providers.
 
 At a Glance
 -----------
@@ -44,7 +44,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         :bdg-info:`Synthetic-backed`
+         :bdg-success:`Real-backed`
 
       .. container:: catalog-stat-note
 
@@ -55,11 +55,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         2
+         3
 
       .. container:: catalog-stat-note
 
-         2 models
+         3 models
 
 
 Benchmark Mapping
@@ -77,7 +77,7 @@ Mapped benchmark family
 Primary Source
 ~~~~~~~~~~~~~~
 
-`SeisBench - A Toolbox for Machine Learning in Seismology <https://joss.theoj.org/papers/10.21105/joss.04418>`_ (`repo <https://github.com/seisbench/seisbench>`__).
+`SeisBench - A Toolbox for Machine Learning in Seismology (Woollam et al., Seismological Research Letters 93(3):1695-1709, 2022) <https://doi.org/10.1785/0220210324>`_ (`repo <https://github.com/seisbench/seisbench>`__).
 
 .. dropdown:: Supported Tasks
    :class-container: catalog-dropdown
@@ -87,19 +87,27 @@ Primary Source
 .. dropdown:: Key Metrics
    :class-container: catalog-dropdown
 
+   - ``p_precision``
+   - ``p_recall``
+   - ``p_f1``
    - ``p_pick_mae``
+   - ``s_precision``
+   - ``s_recall``
+   - ``s_f1``
    - ``s_pick_mae``
-   - ``precision``
-   - ``recall``
-   - ``f1``
 
 .. dropdown:: Smoke Configs
    :class-container: catalog-dropdown
 
    - ``phasenet_smoke.yaml``
-   - ``eqnet_smoke.yaml``
 
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`PhaseNet </modules/models_phasenet>`, :doc:`EQNet </modules/models_eqnet>`.
+   :doc:`PhaseNet </modules/models_phasenet>`, :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`.
+
+.. dropdown:: Notes
+   :class-container: catalog-dropdown
+
+   - SeisBench is GPL-3.0; PyHazards (MIT) neither vendors nor imports it.
+   - The smoke config runs on synthetic windows; point ``seisbench_waveforms`` at a downloaded dataset for real numbers.

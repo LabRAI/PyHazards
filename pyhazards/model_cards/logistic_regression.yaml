@@ -1,0 +1,61 @@
+model_name: logistic_regression
+display_name: Logistic Regression (pixel)
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/logistic_regression.py
+builder_name: logistic_regression_builder
+summary: >
+  Per-pixel logistic regression over a 3x3 neighbourhood, the linear baseline of
+  WildfireSpreadTS and Next Day Wildfire Spread.
+description:
+  - >
+    ``logistic_regression`` scores every pixel with a linear function of the
+    ``kernel_size x kernel_size`` window of input features around it, implemented as one
+    ``Conv2d`` with ``kernel_size // 2`` padding; the sigmoid is applied by the loss.
+  - >
+    This is exactly the WildfireSpreadTS logistic-regression baseline
+    (``Conv2d(C, 1, kernel_size=3, padding=1)``, 361 parameters for 40 channels). Next Day
+    Wildfire Spread fits the same model on 3x3 neighbourhoods with scikit-learn instead of
+    gradient descent. Multi-day input ``(batch, time, channels, height, width)`` is flattened
+    to ``time * channels`` channels.
+paper:
+  title: "WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction"
+  url: https://openreview.net/forum?id=RgdGkPRQ03
+  repo_url: https://github.com/SebastianGer/WildfireSpreadTS
+references:
+  - title: "Next Day Wildfire Spread: A Machine Learning Dataset to Predict Wildfire Spreading From Remote-Sensing Data"
+    url: https://arxiv.org/abs/2112.02447
+    repo_url: https://github.com/google-research/google-research/tree/master/simulation_research/next_day_wildfire_spread
+    note: >
+      Same model on 12 features x 3x3 neighbourhoods (109 parameters), fitted with scikit-learn
+      LogisticRegression and a no-fire class weight; reported test AUC-PR 19.8%.
+reproduction:
+  reference_code: https://github.com/SebastianGer/WildfireSpreadTS
+  reference_commit: f62dc49f2c2a6d249c071533ae5340c0d01bfb95
+  reference_license: MIT
+  reference_config: "src/models/LogisticRegression.py with n_channels=40 (all features, one day)."
+  parameter_count: 361
+  checks: [parameter_count, state_dict, forward]
+  oracle_test: tests/oracle/test_wildfirespreadts_oracle.py
+tasks:
+  - segmentation
+example: |
+  import torch
+  from pyhazards.models import build_model
+
+  model = build_model(name="logistic_regression", task="segmentation", in_channels=40)
+  logits = model(torch.randn(2, 40, 128, 128))
+  print(logits.shape)  # (2, 1, 128, 128)
+notes:
+  - "WildfireSpreadTS trains it with Dice loss and AdamW (lr 0.1)."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 12
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 12, 32, 32]
+  expected_output:
+    kind: tensor
+    shape: [2, 1, 32, 32]

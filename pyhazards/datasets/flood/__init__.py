@@ -1,66 +1,134 @@
+"""Flood datasets: real readers (CAMELS-US, Caravan, HydroGraphNet White River) and synthetic smoke-test data.
+
+``camels_us_streamflow``, ``caravan_streamflow`` and ``hydrographnet_white_river`` read real data (from a
+local copy of the official release). The ``*_synthetic`` datasets generate random numbers in the layout
+of a task so that models and evaluators can be exercised without data; they read no benchmark's data.
+"""
+
 from __future__ import annotations
 
+import numpy as np
+import pandas as pd
 import torch
 
 from ..base import DataBundle, DataSplit, Dataset, FeatureSpec, LabelSpec
-from ..graph import GraphTemporalDataset
+from .camels_us import (
+    CAMELS_US_TARGET,
+    KRATZERT2019_CHECKPOINT_STATIC_ORDER,
+    KRATZERT2019_DYNAMIC_INPUTS,
+    KRATZERT2019_PERIODS,
+    KRATZERT2019_STATIC_ATTRIBUTES,
+    CamelsUSStreamflowDataset,
+    load_camels_us_attributes,
+    load_camels_us_basin,
+    load_camels_us_discharge,
+    load_camels_us_forcings,
+)
+from .caravan import CaravanStreamflowDataset, load_caravan_attributes, load_caravan_timeseries
+from .hydrograph import (
+    HydroGraphNetWhiteRiverDataset,
+    HydrographRollouts,
+    HydrographWindows,
+    SyntheticFloodMeshDataset,
+    build_hydrograph_bundle,
+    hydrograph_collate,
+    read_hydrograph,
+    read_static,
+)
+from .urbanfloodcast import (
+    SyntheticUrbanFloodCastDataset,
+    prepare_urbanfloodcast_event,
+    synthetic_urbanfloodcast_event,
+)
+from .streamflow import (
+    StreamflowScaler,
+    StreamflowWindows,
+    build_streamflow_bundle,
+    read_basin_list,
+    scaler_from_metadata,
+)
 
 
 class SyntheticFloodStreamflowDataset(Dataset):
-    """Synthetic graph-temporal flood dataset for streamflow smoke runs."""
+    """Synthetic daily basins in the streamflow layout (random forcings, toy linear-reservoir discharge).
+
+    Same structure as the real readers (``x_d`` windows, static attributes, per-basin dates, train /
+    val / test periods, NeuralHydrology-style normalisation), so streamflow models and the flood
+    benchmark run without data. The numbers mean nothing hydrologically.
+    """
 
     name = "flood_streamflow_synthetic"
 
     def __init__(
         self,
         cache_dir: str | None = None,
-        samples: int = 40,
-        history: int = 4,
-        nodes: int = 6,
-        features: int = 2,
+        basins: int = 6,
+        days: int = 730,
+        n_dynamic: int = 5,
+        n_static: int = 27,
+        seq_length: int = 30,
+        predict_last_n: int = 1,
+        seed: int = 0,
         micro: bool = False,
     ):
         super().__init__(cache_dir=cache_dir)
-        self.samples = 12 if micro else int(samples)
-        self.history = int(history)
-        self.nodes = int(nodes)
-        self.features = int(features)
-
-    def _make_split(self, x: torch.Tensor, y: torch.Tensor, adj: torch.Tensor) -> DataSplit:
-        dataset = GraphTemporalDataset(x, y, adjacency=adj)
-        return DataSplit(inputs=dataset, targets=None)
+        self.n_basins = 3 if micro else int(basins)
+        self.days = 300 if micro else int(days)
+        self.n_dynamic = int(n_dynamic)
+        self.n_static = int(n_static)
+        self.seq_length = int(seq_length)
+        self.predict_last_n = int(predict_last_n)
+        self.seed = int(seed)
+        if self.n_basins < 2:
+            raise ValueError("flood_streamflow_synthetic needs at least 2 basins (static attributes are standardised).")
+        if self.n_dynamic < 1:
+            raise ValueError("n_dynamic must be positive.")
+        if self.days < 3 * self.seq_length:
+            raise ValueError(f"days ({self.days}) must be at least 3 * seq_length ({3 * self.seq_length}).")
 
     def _load(self) -> DataBundle:
-        x = torch.randn(self.samples, self.history, self.nodes, self.features, dtype=torch.float32)
-        adjacency = torch.eye(self.nodes, dtype=torch.float32)
-        adjacency += torch.diag(torch.ones(self.nodes - 1), diagonal=1)
-        adjacency += torch.diag(torch.ones(self.nodes - 1), diagonal=-1)
-        y = x[:, -1, :, :1] * 0.7 + 0.1
-
-        train_end = max(1, int(0.7 * self.samples))
-        val_end = max(train_end + 1, int(0.85 * self.samples))
-        splits = {
-            "train": self._make_split(x[:train_end], y[:train_end], adjacency),
-            "val": self._make_split(x[train_end:val_end], y[train_end:val_end], adjacency),
-            "test": self._make_split(x[val_end:], y[val_end:], adjacency),
+        rng = np.random.default_rng(self.seed)
+        dates = pd.date_range("2000-01-01", periods=self.days, freq="1D")
+        dynamic = [f"synthetic_forcing_{i}" for i in range(self.n_dynamic)]
+        static = [f"synthetic_attribute_{i:02d}" for i in range(self.n_static)]
+        target = "discharge"
+        attributes = pd.DataFrame(
+            rng.normal(size=(self.n_basins, self.n_static)),
+            index=[f"synthetic_{i:03d}" for i in range(self.n_basins)],
+            columns=static,
+        )
+        frames = {}
+        season = np.sin(2 * np.pi * np.arange(self.days) / 365.25)
+        for b, basin in enumerate(attributes.index):
+            rain = rng.gamma(0.8, 6.0, size=self.days) * (rng.random(self.days) < 0.35)
+            forcings = {dynamic[0]: rain}
+            for i in range(1, self.n_dynamic):
+                forcings[dynamic[i]] = 10 * season * (1 + 0.1 * i) + rng.normal(scale=2.0, size=self.days)
+            k = 0.05 + 0.2 / (1 + np.exp(-attributes.iloc[b, 0])) if self.n_static else 0.1
+            storage, discharge = 0.0, np.empty(self.days)
+            for t in range(self.days):
+                storage = storage * (1 - k) + rain[t]
+                discharge[t] = k * storage
+            discharge[rng.choice(self.days, size=max(1, self.days // 50), replace=False)] = np.nan
+            frames[basin] = pd.DataFrame({**forcings, target: discharge}, index=pd.DatetimeIndex(dates, name="date"))
+        train_end = dates[int(0.5 * self.days)]
+        val_end = dates[int(0.7 * self.days)]
+        periods = {
+            "train": (dates[self.seq_length], train_end),
+            "val": (train_end + pd.Timedelta(days=1), val_end),
+            "test": (val_end + pd.Timedelta(days=1), dates[-1]),
         }
-        return DataBundle(
-            splits=splits,
-            feature_spec=FeatureSpec(
-                input_dim=self.features,
-                description="Synthetic node features for streamflow forecasting on a line graph.",
-                extra={"nodes": self.nodes, "history": self.history},
-            ),
-            label_spec=LabelSpec(
-                num_targets=1,
-                task_type="regression",
-                description="Next-step nodewise streamflow target.",
-            ),
-            metadata={
-                "dataset": self.name,
-                "source_dataset": self.name,
-                "hazard_task": "flood.streamflow",
-            },
+        return build_streamflow_bundle(
+            frames,
+            attributes if static else None,
+            dynamic,
+            static,
+            [target],
+            periods,
+            self.seq_length,
+            self.predict_last_n,
+            dataset_name=self.name,
+            metadata={"synthetic": True},
         )
 
 
@@ -135,59 +203,41 @@ class SyntheticFloodInundationDataset(Dataset):
                 "dataset": self.name,
                 "source_dataset": self.name,
                 "hazard_task": "flood.inundation",
+                "synthetic": True,
             },
         )
 
 
-class CaravanStreamflowDataset(SyntheticFloodStreamflowDataset):
-    """Synthetic-backed streamflow adapter for Caravan-style smoke runs."""
-
-    name = "caravan_streamflow"
-
-    def _load(self) -> DataBundle:
-        bundle = super()._load()
-        bundle.metadata.update({"adapter": "Caravan", "source_dataset": self.name})
-        return bundle
-
-
-class WaterBenchStreamflowDataset(SyntheticFloodStreamflowDataset):
-    """Synthetic-backed streamflow adapter for WaterBench-style smoke runs."""
-
-    name = "waterbench_streamflow"
-
-    def _load(self) -> DataBundle:
-        bundle = super()._load()
-        bundle.metadata.update({"adapter": "WaterBench", "source_dataset": self.name})
-        return bundle
-
-
-class HydroBenchStreamflowDataset(SyntheticFloodStreamflowDataset):
-    """Synthetic-backed streamflow adapter for HydroBench diagnostics."""
-
-    name = "hydrobench_streamflow"
-
-    def _load(self) -> DataBundle:
-        bundle = super()._load()
-        bundle.metadata.update({"adapter": "HydroBench", "source_dataset": self.name})
-        return bundle
-
-
-class FloodCastBenchInundationDataset(SyntheticFloodInundationDataset):
-    """Synthetic-backed inundation adapter for FloodCastBench-style smoke runs."""
-
-    name = "floodcastbench_inundation"
-
-    def _load(self) -> DataBundle:
-        bundle = super()._load()
-        bundle.metadata.update({"adapter": "FloodCastBench", "source_dataset": self.name})
-        return bundle
-
-
 __all__ = [
+    "CAMELS_US_TARGET",
+    "CamelsUSStreamflowDataset",
     "CaravanStreamflowDataset",
-    "FloodCastBenchInundationDataset",
-    "HydroBenchStreamflowDataset",
+    "HydroGraphNetWhiteRiverDataset",
+    "HydrographRollouts",
+    "HydrographWindows",
+    "KRATZERT2019_CHECKPOINT_STATIC_ORDER",
+    "KRATZERT2019_DYNAMIC_INPUTS",
+    "KRATZERT2019_PERIODS",
+    "KRATZERT2019_STATIC_ATTRIBUTES",
+    "StreamflowScaler",
+    "StreamflowWindows",
     "SyntheticFloodInundationDataset",
+    "SyntheticFloodMeshDataset",
     "SyntheticFloodStreamflowDataset",
-    "WaterBenchStreamflowDataset",
+    "SyntheticUrbanFloodCastDataset",
+    "build_hydrograph_bundle",
+    "build_streamflow_bundle",
+    "hydrograph_collate",
+    "load_camels_us_attributes",
+    "load_camels_us_basin",
+    "load_camels_us_discharge",
+    "load_camels_us_forcings",
+    "load_caravan_attributes",
+    "load_caravan_timeseries",
+    "prepare_urbanfloodcast_event",
+    "read_basin_list",
+    "read_hydrograph",
+    "read_static",
+    "scaler_from_metadata",
+    "synthetic_urbanfloodcast_event",
 ]

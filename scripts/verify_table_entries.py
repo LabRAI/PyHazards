@@ -65,6 +65,9 @@ def verify_models() -> bool:
     print("\n=== Model Table Verification ===")
     for card in load_model_cards():
         result = run_smoke_test(card)
+        if result.get("skipped"):
+            print(f"[model] {card.model_name}: skipped ({result['skipped']})")
+            continue
         print(
             f"[model] {card.model_name}: expected={result['expected_shape']} "
             f"actual={result['actual_shape']}"

@@ -1,43 +1,104 @@
 model_name: urbanfloodcast
 display_name: UrbanFloodCast
 hazard: Flood
+catalog_status: core
 source_file: pyhazards/models/urbanfloodcast.py
 builder_name: urbanfloodcast_builder
 summary: >
-  A U-Net style urban inundation baseline for dense-grid flood prediction.
+  The deep neural operator (DNO) of UrbanFloodCast (Xu et al., J. Hydrology 2025): a U-shaped Fourier
+  neural operator in space and time that predicts urban water depth and discharge for 24 steps at once.
 description:
   - >
-    ``urbanfloodcast`` adds an urban-focused raster baseline to the PyHazards
-    inundation benchmark stack.
+    ``urbanfloodcast`` is the DNO of the paper (DNO-3, the default of the official code): the 5 inputs per
+    cell and output step (current depth and x / y unit discharge, the rainfall of that step and the
+    terrain) plus a (y, x, t) grid are lifted to width 10, passed through three U-NO operator blocks
+    (spectral convolution + point-wise MLP + point-wise linear branch, InstanceNorm, GELU) that go to 3/4
+    of the spatial grid, then to twice the time steps, then back to the input grid with concatenated
+    skips, and projected to depth and the two discharges: ``(batch, Sy, Sx, T, 1, 5)`` ->
+    ``(batch, Sy, Sx, T, 3)``, all ``T`` (24, i.e. 2 hours) steps in one shot. 4,470,437 parameters
+    (complex Fourier weights counted once; 8,937,637 real numbers). Like any Fourier operator it accepts
+    other grid sizes (``Sy, Sx >= 27``, ``T >= 14`` for its fixed modes).
   - >
-    The implementation keeps the shared spatiotemporal tensor contract used by
-    the synthetic inundation smoke dataset.
+    The official repository has no licence, so the model is written from the paper and from U-NO (BSD-2)
+    and FNO (MIT) building blocks; parameter names follow the official model, whose state dicts load with
+    ``strict=True``, and parameters, seeded initialisation, outputs and gradients equal the official code.
+  - >
+    Data: :func:`pyhazards.datasets.flood.urbanfloodcast.prepare_urbanfloodcast_event` builds the official
+    one-shot inputs from an event tensor (checked against the official ``flood_data``). PyHazards does not
+    read the Berlin benchmark rasters yet (Zenodo 10.5281/zenodo.15700880, 7.3 GB GeoTIFF, CC BY 4.0);
+    ``urbanfloodcast_synthetic`` generates random events in the same layout. The flood benchmark scores
+    relative L2, NSE, Pearson r and depth CSI at 1 / 10 / 50 cm as the official test loop does.
 paper:
-  title: "UrbanFloodCast: WMO Urban Flooding Forecasting Challenge"
-  url: https://arxiv.org/abs/2405.21179
+  title: "Urban flood modeling and forecasting with deep neural operator and transfer learning"
+  url: https://doi.org/10.1016/j.jhydrol.2025.133705
   repo_url: https://github.com/HydroPML/UrbanFloodCast
+references:
+  - title: "Urban flood modeling and forecasting with deep neural operator and transfer learning"
+    url: https://doi.org/10.1016/j.jhydrol.2025.133705
+    repo_url: https://github.com/HydroPML/UrbanFloodCast
+    note: >
+      Xu, De Vos, Shi, Rüther, Bronstert and Zhu, Journal of Hydrology 661:133705 (2025). UrbanFloodCast
+      benchmark: hydrodynamic simulations of 125 design storms over two areas of Berlin (seen regions /
+      unseen rainfall events, unseen rainfall distributions, zero-shot downscaling), 24 future 5-minute
+      steps from the current state. Official training (DNO_main.py): batch 1, 100 epochs, Adam 1e-3 with
+      weight decay 1e-4, cosine annealing per step, relative L2 loss on the masked outputs. The paper is
+      paywalled and was not read, so its numbers (and which DNO variant it headlines) are not reproduced.
+  - title: "U-NO: U-shaped Neural Operators"
+    url: https://arxiv.org/abs/2204.11127
+    repo_url: https://github.com/ashiq24/UNO
+    note: >
+      Rahman, Ross and Azizzadenesheli, arXiv:2204.11127 (2022). Source of the operator blocks (integral_operators.py,
+      BSD-2-Clause) that the DNO extends with a point-wise MLP branch.
+reproduction:
+  source: paper
+  reference_code: https://github.com/HydroPML/UrbanFloodCast
+  reference_commit: f08846a1d0ed5a82d9241d2229df8ec8997ebfd5
+  reference_license: none (no licence; used only as a test oracle, never vendored)
+  reference_config: >
+    DNO/models/DNO.py (DNO-3) as DNO_main.py builds it: DNO(num_channels=5, width=10, initial_step=1,
+    pad=False, factor=1) after torch.manual_seed(1); inputs (batch, 433, 692, 24, 1, 5) for Berlin, T=24,
+    strategy oneshot. Data pipeline and metrics: DNO/utils25.py (flood_data, LpLoss, nse, corr,
+    critical_success_index).
+  parameter_count: 4470437
+  checks: [parameter_count, initialization, state_dict, forward]
+  oracle_test: tests/oracle/test_urbanfloodcast_oracle.py
+  deviations:
+    - >
+      Only ``pad=0`` (the default) is supported: the official ``--time_pad`` option overwrites the padding
+      on every call and crops twice the padded length, so the output no longer has T steps and the
+      official training script fails with it.
+    - >
+      The deeper DNO-4 and DNO-5 variants of the repository and the transfer-learning models (fine-tuning
+      and domain-adaptation TL-DNO with its discriminator) are not provided.
+    - >
+      The point-wise branch of each operator block is a 1x1x1 convolution plus trilinear resampling, as in
+      the DNO; the current U-NO code additionally low-pass filters it.
+    - >
+      No official weights were released, so no pretrained checkpoint is checked.
 tasks:
   - regression
-  - segmentation
 example: |
   import torch
   from pyhazards.models import build_model
 
-  model = build_model(name="urbanfloodcast", task="regression", in_channels=3, history=4)
-  preds = model(torch.randn(2, 4, 3, 16, 16))
-  print(preds.shape)
+  model = build_model(name="urbanfloodcast", task="regression")  # DNO-3, 4,470,437 parameters
+  x = torch.randn(1, 32, 32, 24, 1, 5)  # (batch, Sy, Sx, T, T_in, depth / qx / qy / rainfall / terrain)
+  print(model(x).shape)  # (1, 32, 32, 24, 3): depth, qx, qy at every future step
 notes:
-  - "Outputs are next-horizon inundation depth rasters."
+  - >
+    Input quirks of the official pipeline, kept by ``prepare_urbanfloodcast_event``: the terrain is
+    L2-normalised along the x axis (``F.normalize`` over dimension 1); missing terrain is meant to be set
+    to ``max + 30`` but ``torch.max`` propagates NaN, so a missing terrain cell turns the whole terrain
+    channel to NaN (the official TIFF conversion fills the DEM first).
+  - >
+    Pearson r of the official evaluation divides the population covariance by the product of sample
+    standard deviations; the benchmark reproduces it.
 smoke_test:
   task: regression
-  build_kwargs:
-    in_channels: 3
-    history: 4
-    base_channels: 32
   input:
     kind: tensor
     tensor:
-      shape: [2, 4, 3, 16, 16]
+      shape: [1, 28, 28, 14, 1, 5]
   expected_output:
     kind: tensor
-    shape: [2, 1, 16, 16]
+    shape: [1, 28, 28, 14, 3]

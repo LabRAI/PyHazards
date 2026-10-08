@@ -77,6 +77,11 @@ External References
 
 **Paper:** `Developing risk assessment framework for wildfire in the United States <https://www.sciencedirect.com/science/article/pii/S2949926723000033>`_
 
+Reproduction
+------------
+
+Not yet verified against a reference implementation.
+
 Registry Name
 -------------
 

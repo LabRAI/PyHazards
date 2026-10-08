@@ -1,22 +1,28 @@
+# UrbanFloodCast deep neural operator (DNO-3, 4,470,437 parameters): 24 future steps of depth and unit
+# discharge at once on synthetic events in the UrbanFloodCast one-shot layout, scored with relative L2,
+# NSE, Pearson r and depth CSI as in the official evaluation.
 benchmark:
   name: flood
   hazard_task: flood.inundation
   metrics:
+    - relative_l2
+    - nse
+    - pearson_r
+    - csi_1cm
+    - csi_10cm
+    - csi_50cm
     - pixel_mae
-    - iou
-    - f1
   eval_split: test
+  params:
+    batch_size: 1
 dataset:
-  name: floodcastbench_inundation
+  name: urbanfloodcast_synthetic
   params:
     micro: true
 model:
   name: urbanfloodcast
   task: regression
-  params:
-    in_channels: 3
-    history: 4
-    base_channels: 32
+  params: {}
 report:
   output_dir: reports/flood_urbanfloodcast
   formats:

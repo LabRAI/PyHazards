@@ -1,21 +1,28 @@
+# EQNet (randomly initialised) used as a single-station picker: backbone + P / S picking heads on synthetic
+# windows (not real data), scored like the paper's STEAD benchmark (Table 1: a pick is a true positive within
+# 0.5 s of the manual pick, the "eqtransformer" protocol). The multi-station shift-and-stack / event detection
+# path takes station gathers and travel times (see the model card) and has no benchmark task yet.
 benchmark:
   name: earthquake
   hazard_task: earthquake.picking
   metrics:
+    - p_f1
+    - s_f1
     - p_pick_mae
     - s_pick_mae
-    - f1
   eval_split: test
+  params:
+    protocol: eqtransformer
 dataset:
-  name: seisbench_waveforms
+  name: earthquake_waveforms_synthetic
   params:
     micro: true
+    length: 3072
 model:
   name: eqnet
-  task: regression
+  task: picking
   params:
     in_channels: 3
-    hidden_dim: 48
 report:
   output_dir: reports/earthquake_eqnet
   formats:

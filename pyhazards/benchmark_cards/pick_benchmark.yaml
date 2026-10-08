@@ -3,29 +3,35 @@ display_name: pick-benchmark
 kind: ecosystem
 hazard_family: Earthquake
 benchmark_key: earthquake
-support_status: synthetic-backed
+support_status: experimental
 summary: >
-  pick-benchmark-compatible waveform picking support routed through the shared earthquake evaluator.
+  The SeisBench picking benchmark of Münchmeyer et al. (2022). Its datasets can be read with
+  ``seisbench_waveforms``; its own three evaluation tasks are not implemented in PyHazards.
 description:
   - >
-    The current pick-benchmark path reuses the synthetic waveform picking bundle and tags
-    it as a pick-benchmark-style benchmark adapter.
+    pick-benchmark compares deep-learning pickers on eight SeisBench datasets with three tasks: event
+    detection (ROC-AUC), phase identification (Matthews correlation) and onset-time regression
+    (residual distributions), on windows cut around the picks. PyHazards scores pickers with the pick
+    metrics of the PhaseNet and EQTransformer papers instead; pick-benchmark's tasks, window sampling
+    and MCC / AUC metrics are not reproduced.
   - >
-    It supports the earthquake picking smoke path for the transformer and CNN picking baselines.
+    Its numbers for PhaseNet were obtained with SeisBench's pre-0.3 PhaseNet (23,305 parameters), not
+    the original architecture that PyHazards ports.
 source:
-  title: pick-benchmark
-  url: https://github.com/seisbench/pick-benchmark
+  title: "Which Picker Fits My Data? A Quantitative Evaluation of Deep Learning Based Seismic Pickers (Münchmeyer et al., J. Geophys. Res. Solid Earth 127, e2021JB023499, 2022)"
+  url: https://doi.org/10.1029/2021JB023499
+  repo_url: https://github.com/seisbench/pick-benchmark
 tasks:
   - earthquake.picking
 metrics:
-  - p_pick_mae
-  - s_pick_mae
-  - precision
-  - recall
-  - f1
+  - p_f1
+  - s_f1
 smoke_configs:
   - pyhazards/configs/earthquake/eqtransformer_smoke.yaml
   - pyhazards/configs/earthquake/gpd_smoke.yaml
 linked_models:
+  - phasenet
   - eqtransformer
   - gpd
+notes:
+  - "pick-benchmark is GPL-3.0; it is not vendored or imported."

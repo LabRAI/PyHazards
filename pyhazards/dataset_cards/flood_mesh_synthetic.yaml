@@ -1,0 +1,44 @@
+slug: flood_mesh_synthetic
+display_name: Synthetic Mesh Hydrographs
+hazard_family: Flood
+source_role: Synthetic Smoke Data
+summary: "Random mesh fields and toy hydrographs in the HydroGraphNet (White River) layout, for smoke tests of hydrographnet and of mesh inundation rollouts."
+provider: PyHazards (generated in memory; no real flood)
+geometry: Graph-temporal basin or node sequences
+spatial_resolution: Not applicable (random points)
+temporal_resolution: Not applicable (synthetic steps)
+update_cadence: Generated on every load
+period_of_record: None (synthetic)
+coverage: None (synthetic)
+formats: PyTorch tensors via the dataset registry
+overview:
+  - >
+    Synthetic data. Static fields are random and the depth series is a toy function of a random inflow
+    curve and the terrain; scores on it mean nothing. It runs the same pipeline as
+    ``hydrographnet_white_river`` (normalisation, 4-nearest-neighbour graph, 16 node features, training
+    windows with physics data, rollout test split), so models and the flood benchmark can be exercised
+    without the 8.3 GB release. ``write_hydrograph_files`` writes such data in the release's file layout.
+data_characteristics:
+  - "Default: 64 nodes, 4 training and 2 test hydrographs of 48 steps, rollouts of 30 steps; ``micro=True``: 24 nodes, 2 + 1 hydrographs of 16 steps, rollouts of 6 steps."
+typical_use_cases:
+  - Smoke tests and CI runs of hydrographnet and of the ``flood.inundation`` mesh rollouts.
+access_links: []
+inspection: null
+registry:
+  name: flood_mesh_synthetic
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset("flood_mesh_synthetic", micro=True).load()
+    print(data.metadata["synthetic"])  # True
+primary_references:
+  - citation: PyHazards synthetic smoke data (pyhazards/datasets/flood/hydrograph.py)
+    url: https://github.com/LabRAI/PyHazards
+pyhazards_usage:
+  - Use only for smoke tests; the real data are ``hydrographnet_white_river``.
+related_models:
+  - hydrographnet
+related_benchmarks:
+  - flood_benchmark
+notes:
+  - Bundle metadata carries synthetic=True. Until this release the name held random node series on a line graph.

@@ -6,7 +6,7 @@ PhaseNet
 Overview
 --------
 
-``phasenet`` is the first earthquake picking baseline in the staged PyHazards roadmap and is paired with the synthetic waveform dataset for smoke validation.
+``phasenet`` maps waveforms ``(batch, 3, samples)`` (E, N, Z at 100 Hz, any length) to softmax probabilities ``(batch, 3, samples)`` of noise, P and S. The network is a U-Net: an input convolution and five depths (8, 16, 32, 64, 128 channels) of kernel-7 convolutions with batch normalisation and ReLU, stride-4 convolutions on the way down, stride-4 transposed convolutions with cropped skip connections on the way up, and a 1x1 output convolution.
 
 At a Glance
 -----------
@@ -63,21 +63,41 @@ At a Glance
 Description
 -----------
 
-``phasenet`` is the first earthquake picking baseline in the staged PyHazards roadmap and is paired with the synthetic waveform dataset for smoke validation.
+``phasenet`` maps waveforms ``(batch, 3, samples)`` (E, N, Z at 100 Hz, any length) to softmax probabilities ``(batch, 3, samples)`` of noise, P and S. The network is a U-Net: an input convolution and five depths (8, 16, 32, 64, 128 channels) of kernel-7 convolutions with batch normalisation and ReLU, stride-4 convolutions on the way down, stride-4 transposed convolutions with cropped skip connections on the way up, and a 1x1 output convolution.
 
-This initial adapter focuses on the shared waveform-to-pick interface and does not claim exact reproduction of the original PhaseNet training stack.
+It is a port of the official TensorFlow code (``phasenet/model.py``) with the released configuration, including TensorFlow's asymmetric "same" padding, so the official checkpoint ``model/190703-214543`` loads with ``strict=True`` (``pretrained="original"``, read without TensorFlow) and reproduces the official outputs. ``annotate`` applies the official per-window normalisation and ``extract_picks`` the official peak picking (probability above 0.5, peaks at least 0.5 s apart).
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Earthquake Benchmark </benchmarks/earthquake_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`SeisBench </benchmarks/seisbench>`
+**Mapped benchmark ecosystems:** :doc:`pick-benchmark </benchmarks/pick_benchmark>`, :doc:`SeisBench </benchmarks/seisbench>`
 
 External References
 -------------------
 
-**Paper:** `PhaseNet: A Deep-Neural-Network-Based Seismic Arrival Time Picking Method <https://arxiv.org/abs/1803.03211>`_ | **Repo:** `Repository <https://github.com/AI4EPS/PhaseNet>`__
+**Paper:** `PhaseNet: a deep-neural-network-based seismic arrival-time picking method <https://doi.org/10.1093/gji/ggy423>`_ | **Repo:** `Repository <https://github.com/AI4EPS/PhaseNet>`__
+
+Used In
+-------
+
+- `PhaseNet: a deep-neural-network-based seismic arrival-time picking method (Zhu & Beroza, GJI 216(1):261-273, 2019) <https://doi.org/10.1093/gji/ggy423>`_ (`repo <https://github.com/AI4EPS/PhaseNet>`__): Table 1, NCEDC test set (78,592 three-component 30-s recordings, 100 Hz), picks = probability peaks above 0.5, true positive if |dt| < 0.1 s: P precision 0.939, recall 0.857, F1 0.896; S precision 0.853, recall 0.755, F1 0.801; residual mean / standard deviation over |dt| < 0.5 s: P 2.068 / 51.530 ms, S 3.311 / 82.858 ms. Reproduce the scoring with protocol "phasenet".
+- `Earthquake transformer—an attentive deep-learning model for simultaneous earthquake detection and phase picking (Mousavi et al., Nat. Commun. 11:3952, 2020) <https://doi.org/10.1038/s41467-020-17591-w>`_ (`repo <https://github.com/smousavi05/EQTransformer>`__): Tables 2-3, STEAD test set, the released PhaseNet, true positive if |dt| < 0.5 s: P precision 0.96, recall 0.96, F1 0.96, MAE 0.07 s; S precision 0.96, recall 0.93, F1 0.94, MAE 0.09 s (protocol "eqtransformer").
+- `Which Picker Fits My Data? A Quantitative Evaluation of Deep Learning Based Seismic Pickers (Münchmeyer et al., JGR Solid Earth 127, e2021JB023499, 2022) <https://doi.org/10.1029/2021JB023499>`_ (`repo <https://github.com/seisbench/pick-benchmark>`__): In-domain phase-identification MCC (Table 2): STEAD 0.99, INSTANCE 0.94, ETHZ 0.91, SCEDC 0.91, Iquique 0.96, NEIC 0.81, GEOFON 0.51. These were obtained with SeisBench's earlier 23,305-parameter PhaseNet variant retrained per dataset, not with this architecture or the original weights, and with pick-benchmark's own tasks, which PyHazards does not implement.
+
+Reproduction
+------------
+
+- **Reference implementation:** `https://github.com/AI4EPS/PhaseNet <https://github.com/AI4EPS/PhaseNet>`__ at ``62005c6`` (MIT (code and released checkpoint; Copyright (c) 2021 Weiqiang Zhu))
+- **Checked configuration:** ``UNet(ModelConfig(), mode="pred")`` from ``phasenet/model.py`` (depths 5, filters_root 8, kernel 7, pool 4, 3 classes; the graph-building fields of ``model/190703-214543/config.log``) on TensorFlow 2.11 (the release in the repository's env.yaml), restored from ``model/190703-214543/model_95.ckpt`` as ``phasenet/predict.py`` does; also SeisBench 0.12.6's PhaseNet with its conversion of the same checkpoint (second oracle).
+- **Parameter count:** 268,443
+- **Verified:** parameter count, seeded initialisation, parameter names and shapes, forward outputs, official pretrained weights
+- **Oracle test:** ``tests/oracle/test_phasenet_oracle.py``
+- **Deviation:** The paper's Figure 5 shows channel widths 8, 11, 16, 22, 32 and no batch normalisation; the released code and checkpoint use 8, 16, 32, 64, 128 with batch normalisation (268,443 parameters). The port follows the code and the checkpoint; the figure's variant is not provided.
+- **Deviation:** Layout ``(batch, channels, samples)`` instead of TensorFlow's ``(batch, samples, 1, channels)``; TensorFlow variable ``Scope/layer/kernel`` is the PyTorch parameter ``Scope.layer.weight`` (kernels transposed). The checkpoint is read by a pure-Python TensorBundle reader, checked against ``tf.train.load_checkpoint``.
+- **Deviation:** Initial values follow the reference scheme (Glorot-uniform kernels, zero biases) but cannot equal TensorFlow's random draws; the oracle compares bounds and spread.
+- **Deviation:** Not ported: the training pipeline (data readers, label generation, augmentation) and the continuous-data predictor (``normalize_long`` sliding normalisation, overlapping windows, amplitude extraction). ``annotate`` normalises each window as a whole, as the reader does for 30-s training and test windows.
 
 Registry Name
 -------------
@@ -97,16 +117,18 @@ Programmatic Use
    import torch
    from pyhazards.models import build_model
 
-   model = build_model(
-       name="phasenet",
-       task="regression",
-       in_channels=3,
-   )
+   # Official weights (MIT), downloaded from the pinned repository commit on first use:
+   # model = build_model(name="phasenet", task="picking", pretrained="original")
+   model = build_model(name="phasenet", task="picking").eval()
 
-   picks = model(torch.randn(4, 3, 256))
-   print(picks.shape)
+   waveforms = torch.randn(4, 3, 3000)  # 30 s at 100 Hz, channels E, N, Z
+   with torch.no_grad():
+       probabilities = model.annotate(waveforms)  # (4, 3, 3000): noise, P, S
+   picks = model.extract_picks(probabilities)  # [{"P": [(sample, prob), ...], "S": [...]}, ...]
 
 Notes
 -----
 
-- Outputs are P- and S-arrival sample indices in the current smoke-test adapter.
+- Inputs are three components in E, N, Z order at 100 Hz; ``forward`` expects normalised windows, ``annotate`` normalises raw ones (mean removed, divided by the standard deviation per channel).
+- ``forward(x, logits=True)`` returns the pre-softmax output used by the official cross-entropy loss.
+- The released checkpoint (trained 2019-07-03) post-dates the paper; whether it is the model behind GJI Table 1, and which data it was trained on, is not documented.

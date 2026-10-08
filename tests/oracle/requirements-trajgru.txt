@@ -1,0 +1,13 @@
+# Reference stack for tests/oracle/test_trajgru_oracle.py. The official TrajGRU code (sxjscience/HKO-7)
+# is MXNet; its authors tested it on MXNet 0.12, and it runs unchanged on MXNet 1.9.1, the last release
+# of the retired Apache MXNet project. MXNet 1.9.1 needs numpy < 1.24, so numpy and the PyHazards
+# dependencies that would otherwise pull a newer numpy are pinned to releases that support 1.23.5.
+mxnet==1.9.1
+numpy==1.23.5
+scipy==1.15.3
+pandas==2.3.3
+xarray==2024.7.0
+scikit-learn==1.7.2
+h5py==3.16.0
+netCDF4==1.7.4
+pyyaml

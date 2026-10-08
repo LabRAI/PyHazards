@@ -6,7 +6,7 @@ Google Flood Forecasting
 Overview
 --------
 
-``google_flood_forecasting`` is a compact sequence-to-node forecasting baseline for flood streamflow prediction.
+``google_flood_forecasting`` is a port of ``MeanEmbeddingForecastLSTM`` from google-research/flood-forecasting (googlehydrology). Static attributes are embedded by an FC network; each weather product (input group) is embedded with the static embedding by its own FC network, and the group embeddings are averaged with a NaN-aware mean so that a product that is missing on a day is skipped. A hindcast LSTM runs over the averaged hindcast embeddings, and a forecast LSTM over the averaged forecast embeddings and the hindcast LSTM's outputs. The CMAL head returns, for every day, a mixture of three asymmetric Laplace distributions (``mu``, ``b``, ``tau``, ``pi``); ``point_prediction`` gives the mixture mean.
 
 At a Glance
 -----------
@@ -63,9 +63,11 @@ At a Glance
 Description
 -----------
 
-``google_flood_forecasting`` is a compact sequence-to-node forecasting baseline for flood streamflow prediction.
+``google_flood_forecasting`` is a port of ``MeanEmbeddingForecastLSTM`` from google-research/flood-forecasting (googlehydrology). Static attributes are embedded by an FC network; each weather product (input group) is embedded with the static embedding by its own FC network, and the group embeddings are averaged with a NaN-aware mean so that a product that is missing on a day is skipped. A hindcast LSTM runs over the averaged hindcast embeddings, and a forecast LSTM over the averaged forecast embeddings and the hindcast LSTM's outputs. The CMAL head returns, for every day, a mixture of three asymmetric Laplace distributions (``mu``, ``b``, ``tau``, ``pi``); ``point_prediction`` gives the mixture mean.
 
-The PyHazards implementation uses a transformer encoder over per-node history windows and returns one forecast value per node.
+``config="floodhub"`` (default) is the released FloodHub model (Gauch et al. 2025 architecture): 84 Caravan / HydroATLAS attributes, hindcast products HRES, GraphCast, IMERG and CPC over 365 days, forecast products HRES and GraphCast over the 365 days plus 7 lead days, hidden size 512 (3,402,832 parameters). ``pretrained=True`` downloads and loads the released weights (13.6 MB, Apache-2.0 repository). Inputs are ``x_s`` (batch, 84), ``x_d_hindcast`` (batch, 365, 9) and ``x_d_forecast`` (batch, 372, 7), as tensors in the configured feature order or as googlehydrology's per-feature dicts.
+
+``config="streamflow"`` keeps the architecture but uses one input group of ``n_dynamic`` daily forcings, ``n_static`` attributes and no lead time, so that the model reads the PyHazards streamflow layout ``{"x_d", "x_s"}`` (``camels_us_streamflow``, ``caravan_streamflow``) and is scored by the flood benchmark from the mixture mean. This is a PyHazards adaptation, not a Google configuration.
 
 Benchmark Compatibility
 -----------------------
@@ -77,7 +79,27 @@ Benchmark Compatibility
 External References
 -------------------
 
-**Paper:** `Global Flood Forecasting at a Fine Catchment Resolution using Machine Learning <https://research.google/pubs/global-flood-forecasting-at-a-fine-catchment-resolution-using-machine-learning/>`_ | **Repo:** `Repository <https://github.com/google-research/flood-forecasting>`__
+**Paper:** `How to deal w___ missing input data <https://doi.org/10.5194/hess-29-6221-2025>`_ | **Repo:** `Repository <https://github.com/google-research/flood-forecasting>`__
+
+Used In
+-------
+
+- `Global prediction of extreme floods in ungauged watersheds <https://doi.org/10.1038/s41586-024-07145-1>`_ (`repo <https://github.com/google-research-datasets/global_streamflow_model_paper>`__): Nearing, Cohen, Dube, Gauch, Gilon, Harrigan, Hassidim, Klotz, Kratzert, Metzger, Nevo, Pappenberger, Prudhomme, Shalev, Shenzis, Tekalign, Weitzner and Matias, Nature 627:559-563 (2024). The earlier FloodHub model, a hindcast/forecast LSTM with a state handoff (hidden size 256, one asymmetric Laplacian output, 0-7 day lead times, ensemble of 3) trained on 5,680 gauges. Forecasts for extreme events (1- to 10-year return periods) at up to 5 days lead time in ungauged basins had precision and recall similar to or better than GloFAS nowcasts; medians are given in figures only. That handoff model is not ported here.
+- `How to deal w___ missing input data <https://doi.org/10.5194/hess-29-6221-2025>`_: Gauch, Kratzert, Klotz, Nearing, Cohen and Gilon, HESS 29:6221-6235 (2025). Introduces the masked-mean input embedding of this model and compares it with input replacing and attention on 531 CAMELS-US basins (three forcing products, hidden size 256, 365-day inputs, NSE* loss); the masked mean performs best by a small margin. Results are reported as figures (median NSE and KGE versus the fraction of missing inputs).
+- `google-research/flood-forecasting: released FloodHub model <https://github.com/google-research/flood-forecasting/tree/cdda28dda4cc6f1c5e3aaafcc69c6602c9e7cda1/pretrained-models/google-floodhub-settings-110-epochs>`_: The released run was trained on 1982-2023 for all 15,955 listed Caravan + MultiMet basins (no temporal hold-out). Its test_metrics.csv (median NSE 0.688, median KGE 0.659 over 10,137 basins) is therefore in-sample, and Google states it must not be used as a benchmark.
+
+Reproduction
+------------
+
+- **Reference implementation:** `https://github.com/google-research/flood-forecasting <https://github.com/google-research/flood-forecasting>`__ at ``cdda28d`` (Apache-2.0)
+- **Checked configuration:** googlehydrology/modelzoo/mean_embedding_forecast_lstm.py built from pretrained-models/google-floodhub-settings-110-epochs/config.yml (84 statics; hindcast groups hres, graphcast, imerg, cpc; forecast groups hres, graphcast; seq_length 365, lead_time 7, hidden_size 512, CMAL with 3 components, output_dropout 0.4, initial_forget_bias 3, Xavier / orthogonal initialisation; 3,402,832 parameters) and the released model_epoch110.pt (sha256 90280f06...3fdba, strict load after removing the ``_orig_mod.`` prefix).
+- **Parameter count:** 3,402,832
+- **Verified:** parameter count, seeded initialisation, parameter names and shapes, forward outputs, official pretrained weights
+- **Oracle test:** ``tests/oracle/test_google_flood_forecasting_oracle.py``
+- **Deviation:** Constructor arguments replace the googlehydrology Config; group order follows the configuration, as in the reference.
+- **Deviation:** Not ported: the data-assimilation hooks of ``forward`` (``assimilation_overrides``, ``assimilation_slice``, ``return_embeddings``) and the hot-start state files (``save_state``, ``load_state_from_disk``). Without them the forward pass is the reference's.
+- **Deviation:** The release normalises inputs with its scaler.zarr, which PyHazards does not read; the googlehydrology tester also reduces 7,500 samples of the mixture to their median, whereas the PyHazards flood benchmark scores the closed-form mixture mean (``point_prediction``).
+- **Deviation:** ``config="streamflow"`` (one shared input group, ``lead_time=0``) is a PyHazards adaptation for the streamflow layout; the oracle test checks that it equals googlehydrology with the same settings.
 
 Registry Name
 -------------
@@ -97,17 +119,17 @@ Programmatic Use
    import torch
    from pyhazards.models import build_model
 
-   model = build_model(
-       name="google_flood_forecasting",
-       task="regression",
-       input_dim=2,
-       out_dim=1,
-       history=4,
-   )
-   preds = model({"x": torch.randn(2, 4, 6, 2)})
-   print(preds.shape)
+   model = build_model(name="google_flood_forecasting", task="regression", pretrained=False)
+   out = model({
+       "x_s": torch.randn(2, 84),
+       "x_d_hindcast": torch.randn(2, 365, 9),   # hres (5), graphcast (2), imerg, cpc
+       "x_d_forecast": torch.randn(2, 372, 7),   # hres (5), graphcast (2) incl. 7 lead days
+   })
+   print(out["mu"].shape, model.point_prediction(out).shape)  # (2, 372, 3) (2, 372, 1)
 
 Notes
 -----
 
-- The smoke path uses the same streamflow-style graph fixture as the other flood baselines.
+- Missing data: a NaN anywhere in a product's features on a day removes that product from the mean of that day; a day where all products are missing makes every later output NaN (the LSTM state is undefined), exactly as in the reference.
+
+- The smoke configuration runs ``config="streamflow"`` on ``flood_streamflow_synthetic``.

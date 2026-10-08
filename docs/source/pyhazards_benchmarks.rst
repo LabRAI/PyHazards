@@ -29,7 +29,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         12
+         10
 
       .. container:: catalog-stat-note
 
@@ -40,7 +40,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         7
+         8
 
       .. container:: catalog-stat-note
 
@@ -51,7 +51,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         27
+         23
 
       .. container:: catalog-stat-note
 
@@ -86,11 +86,11 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-meta-row
 
-         **Key Metrics:** Accuracy, Macro F1, AUC, PR-AUC, +5 more
+         **Key Metrics:** Accuracy, Macro F1, AUC, PR-AUC, +6 more
 
       .. container:: catalog-meta-row
 
-         **Coverage:** 8 smoke configs | 8 models | 1 ecosystem
+         **Coverage:** 7 smoke configs | 29 models | 1 ecosystem
 
       .. container:: catalog-link-row
 
@@ -101,11 +101,11 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-entry-summary
 
-         Shared PyHazards evaluator family for earthquake phase-picking and wavefield-forecasting runs.
+         Shared PyHazards evaluator for seismic phase picking (pick metrics of the PhaseNet and EQTransformer papers) and ground-motion wavefield forecasting (ACC / RFNE of WaveCastNet).
 
       .. container:: catalog-chip-row
 
-         :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-secondary:`Wavefield Forecasting` :bdg-info:`Synthetic-backed`
+         :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-secondary:`Wavefield Forecasting` :bdg-success:`Real-backed`
 
       .. container:: catalog-meta-row
 
@@ -113,11 +113,11 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-meta-row
 
-         **Key Metrics:** P-pick MAE, S-pick MAE, Precision, Recall, +3 more
+         **Key Metrics:** P Precision, P Recall, P F1, P Residual Mean, +22 more
 
       .. container:: catalog-meta-row
 
-         **Coverage:** 5 smoke configs | 5 models | 4 ecosystems
+         **Coverage:** 5 smoke configs | 5 models | 2 ecosystems
 
       .. container:: catalog-link-row
 
@@ -128,11 +128,11 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-entry-summary
 
-         Shared PyHazards evaluator family for streamflow forecasting and inundation prediction.
+         Shared PyHazards evaluator for daily streamflow (per-basin NSE, KGE and the other NeuralHydrology metrics) and for inundation depth on rasters and flood meshes (depth errors, CSI, relative L2, NSE, autoregressive mesh rollouts).
 
       .. container:: catalog-chip-row
 
-         :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-secondary:`Inundation` :bdg-info:`Synthetic-backed`
+         :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-secondary:`Inundation` :bdg-success:`Real-backed`
 
       .. container:: catalog-meta-row
 
@@ -140,11 +140,11 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-meta-row
 
-         **Key Metrics:** MAE, RMSE, NSE, KGE, +3 more
+         **Key Metrics:** NSE, KGE, Alpha-NSE, Beta-NSE, +12 more
 
       .. container:: catalog-meta-row
 
-         **Coverage:** 6 smoke configs | 6 models | 4 ecosystems
+         **Coverage:** 6 smoke configs | 6 models | 3 ecosystems
 
       .. container:: catalog-link-row
 
@@ -155,23 +155,23 @@ coverage counts into a scan-friendly catalog.
 
       .. container:: catalog-entry-summary
 
-         Shared PyHazards evaluator family for tropical cyclone and hurricane track-intensity forecasting.
+         Shared PyHazards evaluator for tropical cyclone forecasts: great-circle track error in km and intensity errors in the dataset's units, per lead time, plus single-lead intensity regression.
 
       .. container:: catalog-chip-row
 
-         :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-info:`Synthetic-backed`
+         :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-secondary:`Intensity` :bdg-success:`Real-backed`
 
       .. container:: catalog-meta-row
 
-         **Tasks:** Track + Intensity
+         **Tasks:** Track + Intensity, Intensity
 
       .. container:: catalog-meta-row
 
-         **Key Metrics:** Track Error, Intensity MAE
+         **Key Metrics:** Track Error (km), Intensity MAE, Pressure MAE, Best-of-k Track Error (km), +4 more
 
       .. container:: catalog-meta-row
 
-         **Coverage:** 8 smoke configs | 8 models | 3 ecosystems
+         **Coverage:** 5 smoke configs | 5 models | 4 ecosystems
 
       .. container:: catalog-link-row
 
@@ -199,27 +199,27 @@ status without opening the detail pages first.
    * - Wildfire
      - :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
      - Danger, Spread
-     - Accuracy, Macro F1, AUC, PR-AUC, +5 more
-     - 8 models
+     - Accuracy, Macro F1, AUC, PR-AUC, +6 more
+     - 29 models
      - Synthetic-backed
    * - Earthquake
      - :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
      - Phase Picking, Wavefield Forecasting
-     - P-pick MAE, S-pick MAE, Precision, Recall, +3 more
+     - P Precision, P Recall, P F1, P Residual Mean, +22 more
      - 5 models
-     - Synthetic-backed
+     - Real-backed
    * - Flood
      - :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
      - Streamflow, Inundation
-     - MAE, RMSE, NSE, KGE, +3 more
+     - NSE, KGE, Alpha-NSE, Beta-NSE, +12 more
      - 6 models
-     - Synthetic-backed
+     - Real-backed
    * - Tropical Cyclone
      - :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-     - Track + Intensity
-     - Track Error, Intensity MAE
-     - 8 models
-     - Synthetic-backed
+     - Track + Intensity, Intensity
+     - Track Error (km), Intensity MAE, Pressure MAE, Best-of-k Track Error (km), +4 more
+     - 5 models
+     - Real-backed
 
 Benchmark Ecosystems
 --------------------
@@ -260,11 +260,11 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Key Metrics:** IoU, F1, Burned-area MAE
+               **Key Metrics:** Average Precision, IoU, F1, Burned-area MAE
 
             .. container:: catalog-meta-row
 
-               **Coverage:** 5 smoke configs | 5 models
+               **Coverage:** 2 smoke configs | 8 models
 
             .. container:: catalog-link-row
 
@@ -287,47 +287,16 @@ and the models currently mapped to that ecosystem.
          :gutter: 2
          :class-container: catalog-grid
 
-         .. grid-item-card:: AEFA
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               AEFA-style forecasting dataset support for the shared earthquake forecasting path.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Earthquake` :bdg-secondary:`Wavefield Forecasting` :bdg-info:`Synthetic-backed`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Key Metrics:** MAE, MSE
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** 1 smoke config | 1 model
-
-            .. container:: catalog-link-row
-
-               **View Details:** :doc:`AEFA <benchmarks/aefa>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `AEFA <https://github.com/chenyk1990/aefa>`_
-
          .. grid-item-card:: pick-benchmark
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               pick-benchmark-compatible waveform picking support routed through the shared earthquake evaluator.
+               The SeisBench picking benchmark of Münchmeyer et al. (2022). Its datasets can be read with ``seisbench_waveforms``; its own three evaluation tasks are not implemented in PyHazards.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-info:`Synthetic-backed`
+               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-warning:`Experimental`
 
             .. container:: catalog-meta-row
 
@@ -335,11 +304,11 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Key Metrics:** P-pick MAE, S-pick MAE, Precision, Recall, +1 more
+               **Key Metrics:** P F1, S F1
 
             .. container:: catalog-meta-row
 
-               **Coverage:** 2 smoke configs | 2 models
+               **Coverage:** 2 smoke configs | 3 models
 
             .. container:: catalog-link-row
 
@@ -347,49 +316,18 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-link-row
 
-               **Paper:** `pick-benchmark <https://github.com/seisbench/pick-benchmark>`_
-
-         .. grid-item-card:: pyCSEP
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               pyCSEP-style forecasting report export for the earthquake forecasting smoke path.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Earthquake` :bdg-secondary:`Wavefield Forecasting` :bdg-info:`Synthetic-backed`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Key Metrics:** MAE, MSE
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** 1 smoke config | 1 model
-
-            .. container:: catalog-link-row
-
-               **View Details:** :doc:`pyCSEP <benchmarks/pycsep>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `pyCSEP <https://github.com/SCECCode/pycsep>`_
+               **Paper:** `Which Picker Fits My Data? A Quantitative Evaluation of Deep Learning Based Seismic Pickers (Münchmeyer et al., J. Geophys. Res. Solid Earth 127, e2021JB023499, 2022) <https://doi.org/10.1029/2021JB023499>`_ | **Repo:** `Repository <https://github.com/seisbench/pick-benchmark>`__
 
          .. grid-item-card:: SeisBench
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               SeisBench-shaped waveform picking support for the shared earthquake benchmark family.
+               SeisBench-format waveform datasets (STEAD, INSTANCE, ETHZ, ...) read by PyHazards' own ``seisbench_waveforms`` reader and scored by the earthquake picking evaluator.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-info:`Synthetic-backed`
+               :bdg-primary:`Earthquake` :bdg-secondary:`Phase Picking` :bdg-success:`Real-backed`
 
             .. container:: catalog-meta-row
 
@@ -397,11 +335,11 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Key Metrics:** P-pick MAE, S-pick MAE, Precision, Recall, +1 more
+               **Key Metrics:** P Precision, P Recall, P F1, P-pick MAE, +4 more
 
             .. container:: catalog-meta-row
 
-               **Coverage:** 2 smoke configs | 2 models
+               **Coverage:** 1 smoke config | 3 models
 
             .. container:: catalog-link-row
 
@@ -409,7 +347,7 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-link-row
 
-               **Paper:** `SeisBench - A Toolbox for Machine Learning in Seismology <https://joss.theoj.org/papers/10.21105/joss.04418>`_ | **Repo:** `Repository <https://github.com/seisbench/seisbench>`__
+               **Paper:** `SeisBench - A Toolbox for Machine Learning in Seismology (Woollam et al., Seismological Research Letters 93(3):1695-1709, 2022) <https://doi.org/10.1785/0220210324>`_ | **Repo:** `Repository <https://github.com/seisbench/seisbench>`__
 
 
    .. tab-item:: Flood
@@ -424,16 +362,16 @@ and the models currently mapped to that ecosystem.
          :gutter: 2
          :class-container: catalog-grid
 
-         .. grid-item-card:: Caravan
+         .. grid-item-card:: CAMELS-US
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               Caravan-style streamflow benchmark coverage for the shared flood streamflow evaluator.
+               The CAMELS-US benchmark of Kratzert et al. (2019): 531 basins, extended Maurer forcings, 27 attributes, test 1989-1999, scored per basin with NSE and the FDC metrics.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-info:`Synthetic-backed`
+               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-success:`Real-backed`
 
             .. container:: catalog-meta-row
 
@@ -441,11 +379,42 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Key Metrics:** MAE, RMSE, NSE, KGE
+               **Key Metrics:** NSE, Mean NSE, Basins with NSE <= 0, Alpha-NSE, +4 more
 
             .. container:: catalog-meta-row
 
                **Coverage:** 2 smoke configs | 2 models
+
+            .. container:: catalog-link-row
+
+               **View Details:** :doc:`CAMELS-US <benchmarks/camels_us>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets <https://doi.org/10.5194/hess-23-5089-2019>`_ | **Repo:** `Repository <https://github.com/kratzert/ealstm_regional_modeling>`__
+
+         .. grid-item-card:: Caravan
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Caravan, the global large-sample hydrology dataset, read from a local copy and scored with the per-basin streamflow metrics.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-success:`Real-backed`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Key Metrics:** NSE, KGE, Mean NSE
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** 2 smoke configs | 3 models
 
             .. container:: catalog-link-row
 
@@ -453,18 +422,18 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-link-row
 
-               **Paper:** `Caravan - A global community dataset for large-sample hydrology <https://www.nature.com/articles/s41597-023-01975-w>`_ | **Repo:** `Repository <https://github.com/kratzert/Caravan>`__
+               **Paper:** `Caravan - A global community dataset for large-sample hydrology <https://doi.org/10.1038/s41597-023-01975-w>`_ | **Repo:** `Repository <https://github.com/kratzert/Caravan>`__
 
-         .. grid-item-card:: FloodCastBench
+         .. grid-item-card:: HydroGraphNet White River
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               FloodCastBench-style inundation benchmark coverage for the shared flood inundation evaluator.
+               HEC-RAS flood simulations on the 4,787-cell White River mesh (HydroGraphNet, Taghizadeh et al. 2025), rolled out autoregressively and scored as water depth in metres.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Flood` :bdg-secondary:`Inundation` :bdg-info:`Synthetic-backed`
+               :bdg-primary:`Flood` :bdg-secondary:`Inundation` :bdg-success:`Real-backed`
 
             .. container:: catalog-meta-row
 
@@ -472,38 +441,7 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Key Metrics:** Pixel MAE, IoU, F1
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** 2 smoke configs | 2 models
-
-            .. container:: catalog-link-row
-
-               **View Details:** :doc:`FloodCastBench <benchmarks/floodcastbench>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `FloodCastBench <https://github.com/HydroPML/FloodCastBench>`_
-
-         .. grid-item-card:: HydroBench
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               HydroBench-style streamflow diagnostics coverage for the shared flood streamflow evaluator.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-info:`Synthetic-backed`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Key Metrics:** MAE, RMSE, NSE, KGE
+               **Key Metrics:** Rollout Rmse, Pixel MAE, RMSE, Csi 10Cm, +1 more
 
             .. container:: catalog-meta-row
 
@@ -511,42 +449,11 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-link-row
 
-               **View Details:** :doc:`HydroBench <benchmarks/hydrobench>`
+               **View Details:** :doc:`HydroGraphNet White River <benchmarks/hydrographnet_white_river>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `HydroBench <https://github.com/EMscience/HydroBench>`_
-
-         .. grid-item-card:: WaterBench
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               WaterBench-style streamflow benchmark coverage for the shared flood evaluator.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Flood` :bdg-secondary:`Streamflow` :bdg-info:`Synthetic-backed`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Key Metrics:** MAE, RMSE, NSE, KGE
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** 1 smoke config | 1 model
-
-            .. container:: catalog-link-row
-
-               **View Details:** :doc:`WaterBench <benchmarks/waterbench>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `WaterBench: A Large-scale Benchmark Dataset for Data-driven Streamflow Forecasting <https://neurips.cc/virtual/2023/80632>`_ | **Repo:** `Repository <https://github.com/uihilab/WaterBench>`__
+               **Paper:** `Interpretable physics-informed graph neural networks for flood forecasting <https://doi.org/10.1111/mice.13484>`_ | **Repo:** `Repository <https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet>`__
 
 
    .. tab-item:: Tropical Cyclone
@@ -566,11 +473,11 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-entry-summary
 
-               IBTrACS-backed storm benchmark coverage for the shared tropical cyclone evaluator.
+               Best-track ground truth from NOAA NCEI's IBTrACS v04 for track and intensity forecasts scored by the shared tropical cyclone evaluator.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-info:`Synthetic-backed`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-secondary:`Intensity` :bdg-success:`Real-backed`
 
             .. container:: catalog-meta-row
 
@@ -578,11 +485,11 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Key Metrics:** Track Error, Intensity MAE
+               **Key Metrics:** Track Error (km), Intensity MAE, Pressure MAE
 
             .. container:: catalog-meta-row
 
-               **Coverage:** 4 smoke configs | 4 models
+               **Coverage:** 0 smoke configs | 1 model
 
             .. container:: catalog-link-row
 
@@ -592,16 +499,16 @@ and the models currently mapped to that ecosystem.
 
                **Paper:** `IBTrACS <https://www.ncei.noaa.gov/products/international-best-track-archive>`_
 
-         .. grid-item-card:: TCBench Alpha
+         .. grid-item-card:: SHIPS Predictors (Xu et al. 2021)
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               TCBench Alpha-style storm benchmark coverage for the shared tropical cyclone evaluator.
+               The standardised SHIPS predictor table of Xu et al. (2021) with 24-hour intensity-change targets and the official leave-one-year-out folds, scored with the intensity task.
 
             .. container:: catalog-chip-row
 
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-info:`Synthetic-backed`
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Intensity` :bdg-success:`Real-backed`
 
             .. container:: catalog-meta-row
 
@@ -609,38 +516,7 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-meta-row
 
-               **Key Metrics:** Track Error, Intensity MAE
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** 3 smoke configs | 3 models
-
-            .. container:: catalog-link-row
-
-               **View Details:** :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
-
-            .. container:: catalog-link-row
-
-               **Paper:** `TCBench Alpha <https://github.com/msgomez06/TCBench_Alpha>`_
-
-         .. grid-item-card:: TropiCycloneNet-Dataset
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               TropiCycloneNet-Dataset-backed storm benchmark coverage for the shared tropical cyclone evaluator.
-
-            .. container:: catalog-chip-row
-
-               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-info:`Synthetic-backed`
-
-            .. container:: catalog-meta-row
-
-               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
-
-            .. container:: catalog-meta-row
-
-               **Key Metrics:** Track Error, Intensity MAE
+               **Key Metrics:** Intensity MAE, Intensity RMSE, Mean Yearly Intensity MAE
 
             .. container:: catalog-meta-row
 
@@ -648,11 +524,73 @@ and the models currently mapped to that ecosystem.
 
             .. container:: catalog-link-row
 
-               **View Details:** :doc:`TropiCycloneNet-Dataset <benchmarks/tropicyclonenet_dataset>`
+               **View Details:** :doc:`SHIPS Predictors (Xu et al. 2021) <benchmarks/ships_xu2021>`
 
             .. container:: catalog-link-row
 
-               **Paper:** `TropiCycloneNet-Dataset <https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset>`_
+               **Paper:** `Deep Learning Experiments for Tropical Cyclone Intensity Forecasts <https://doi.org/10.1175/WAF-D-20-0104.1>`_ | **Repo:** `Repository <https://github.com/wenweixu/tropicalcyclone_MLP>`__
+
+         .. grid-item-card:: TCBench Alpha
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               TCBench (Gomez et al. 2026): 2023 cyclone tracks of Pangu-Weather, FourCastNet v2 and AIFS extracted with TempestExtremes, matched to IBTrACS and scored by direct position error and intensity errors.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Real-backed`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Key Metrics:** Track Error (km), Intensity MAE, Pressure MAE
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** 0 smoke configs | 0 models
+
+            .. container:: catalog-link-row
+
+               **View Details:** :doc:`TCBench Alpha <benchmarks/tcbench_alpha>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `TCBench: A Benchmark for Tropical Cyclone Track and Intensity Forecasting at the Global Scale <https://arxiv.org/abs/2601.23268>`_ | **Repo:** `Repository <https://github.com/msgomez06/TCBench_Alpha>`__
+
+         .. grid-item-card:: TropiCycloneNet Dataset
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               TCND (Huang et al. 2025): six-basin best tracks, Env-Data and ERA5 geopotential, read exactly like the official TropiCycloneNet loader and scored with the paper's best-of-6 errors.
+
+            .. container:: catalog-chip-row
+
+               :bdg-primary:`Tropical Cyclone` :bdg-secondary:`Track + Intensity` :bdg-success:`Real-backed`
+
+            .. container:: catalog-meta-row
+
+               **Benchmark Family:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-meta-row
+
+               **Key Metrics:** Track Error (km), Intensity MAE, Pressure MAE, Best-of-k Track Error (km), +2 more
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** 1 smoke config | 1 model
+
+            .. container:: catalog-link-row
+
+               **View Details:** :doc:`TropiCycloneNet Dataset <benchmarks/tropicyclonenet_dataset>`
+
+            .. container:: catalog-link-row
+
+               **Paper:** `Benchmark dataset and deep learning method for global tropical cyclone forecasting <https://doi.org/10.1038/s41467-025-61087-4>`_ | **Repo:** `Repository <https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset>`__
 
 
 
@@ -676,19 +614,17 @@ and :doc:`pyhazards_reports` for comparable benchmark exports.
    :maxdepth: 1
    :hidden:
 
-   benchmarks/aefa
+   benchmarks/camels_us
    benchmarks/caravan
    benchmarks/earthquake_benchmark
    benchmarks/flood_benchmark
-   benchmarks/floodcastbench
-   benchmarks/hydrobench
+   benchmarks/hydrographnet_white_river
    benchmarks/ibtracs
    benchmarks/pick_benchmark
-   benchmarks/pycsep
    benchmarks/seisbench
+   benchmarks/ships_xu2021
    benchmarks/tcbench_alpha
    benchmarks/tropical_cyclone_benchmark
    benchmarks/tropicyclonenet_dataset
-   benchmarks/waterbench
    benchmarks/wildfire_benchmark
    benchmarks/wildfirespreadts_ecosystem

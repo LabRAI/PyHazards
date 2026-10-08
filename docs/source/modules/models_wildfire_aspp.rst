@@ -6,7 +6,7 @@ CNN-ASPP
 Overview
 --------
 
-``wildfire_aspp`` is the backward-compatible public PyHazards entrypoint for the CNN + ASPP wildfire spread model.
+``wildfire_aspp`` reimplements CNN-ASPP (Marjani et al., IEEE GRSL 2024): two 3x3 convolutions with 64 and 128 filters, four parallel 3x3 atrous convolutions with 32 filters and dilation rates 1, 3, 6 and 12, two 3x3 convolutions with 32 filters, batch normalisation and a 1x1 output convolution, all at full 64x64 resolution with ReLU activations (paper Section II-C and Fig. 2).
 
 At a Glance
 -----------
@@ -63,9 +63,9 @@ At a Glance
 Description
 -----------
 
-``wildfire_aspp`` is the backward-compatible public PyHazards entrypoint for the CNN + ASPP wildfire spread model.
+``wildfire_aspp`` reimplements CNN-ASPP (Marjani et al., IEEE GRSL 2024): two 3x3 convolutions with 64 and 128 filters, four parallel 3x3 atrous convolutions with 32 filters and dilation rates 1, 3, 6 and 12, two 3x3 convolutions with 32 filters, batch normalisation and a 1x1 output convolution, all at full 64x64 resolution with ReLU activations (paper Section II-C and Fig. 2).
 
-PyHazards keeps the alias for compatibility while the implementation delegates to the native ``wildfire_cnn_aspp`` builder under the hood.
+The authors did not release code, so the network is rebuilt from the paper; it has 274,657 parameters for the 12 Next Day Wildfire Spread input channels. The paper's final sigmoid is left to the loss, and Keras defaults are used where the paper is silent (Glorot-uniform initialisation, BatchNorm epsilon 1e-3 and momentum 0.99).
 
 Benchmark Compatibility
 -----------------------
@@ -77,7 +77,21 @@ Benchmark Compatibility
 External References
 -------------------
 
-**Paper:** `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread <https://ieeexplore.ieee.org/document/10568207>`_
+**Paper:** `Application of Explainable Artificial Intelligence in Predicting Wildfire Spread: An ASPP-Enabled CNN Approach <https://doi.org/10.1109/LGRS.2024.3417624>`_
+
+Used In
+-------
+
+- `Next Day Wildfire Spread: A Machine Learning Dataset to Predict Wildfire Spreading From Remote-Sensing Data <https://arxiv.org/abs/2112.02447>`_: Training and evaluation data in the CNN-ASPP paper (64x64 tiles, 12 channels; 8,616 training and 685 validation samples), with the Tversky loss (0.7 on false negatives, 0.3 on false positives), batch size 8, learning rate 4e-4; reported OA 96.46, recall 99.37, precision 93.51, F1 96.35 (paper Table I).
+
+Reproduction
+------------
+
+- **Reference implementation:** none released; rebuilt from the paper.
+- **Paper configuration:** Section II-C and Fig. 2 of the paper: 12 x 64 x 64 input, conv 64 and 128, atrous branches of 32 filters at dilation 1, 3, 6, 12, conv 32, conv 32, BatchNorm, 1x1 conv.
+- **Parameter count:** 274,657
+- **Deviation:** Returns logits; the paper's last layer applies the sigmoid.
+- **Deviation:** The paper does not state the concatenation order of the atrous branches, the padding or the initialisation; PyHazards concatenates in dilation order 1, 3, 6, 12, uses zero padding that keeps the 64x64 size (as in Fig. 2), and Keras default initialisation.
 
 Registry Name
 -------------
@@ -98,18 +112,16 @@ Programmatic Use
 
    import torch
    from pyhazards.models import build_model
+   from pyhazards.models.wildfire_aspp import TverskyLoss
 
-   model = build_model(
-       name="wildfire_aspp",
-       task="segmentation",
-       in_channels=12,
-   )
-
-   x = torch.randn(2, 12, 64, 64)
-   logits = model(x)
-   print(logits.shape)
+   model = build_model(name="wildfire_aspp", task="segmentation", in_channels=12)
+   logits = model(torch.randn(2, 12, 64, 64))
+   loss = TverskyLoss(alpha=0.3, beta=0.7)(logits, torch.randint(0, 2, (2, 1, 64, 64)))
+   print(logits.shape, float(loss))
 
 Notes
 -----
 
-- ``wildfire_cnn_aspp`` remains available as an alias for the same public model.
+- No reference implementation was released; this is a reimplementation from the paper text and Fig. 2.
+- TverskyLoss weights false positives with alpha and false negatives with beta; the paper's setting is alpha=0.3, beta=0.7.
+- ``wildfire_cnn_aspp`` is an alias for the same model.

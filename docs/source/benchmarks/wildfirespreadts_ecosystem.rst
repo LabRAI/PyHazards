@@ -55,11 +55,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         5
+         8
 
       .. container:: catalog-stat-note
 
-         5 models
+         8 models
 
 
 Benchmark Mapping
@@ -87,6 +87,7 @@ Primary Source
 .. dropdown:: Key Metrics
    :class-container: catalog-dropdown
 
+   - ``average_precision``
    - ``iou``
    - ``f1``
    - ``burned_area_mae``
@@ -96,11 +97,8 @@ Primary Source
 
    - ``wildfire_spread_smoke.yaml``
    - ``wildfirespreadts_smoke.yaml``
-   - ``forefire_smoke.yaml``
-   - ``wrf_sfire_smoke.yaml``
-   - ``firecastnet_smoke.yaml``
 
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS </modules/models_wildfirespreadts>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`FireCastNet </modules/models_firecastnet>`.
+   :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS Baselines </modules/models_wildfirespreadts>`, :doc:`Logistic Regression (pixel) </modules/models_logistic_regression>`, :doc:`ResNet-18 U-Net </modules/models_resnet18_unet>`, :doc:`ConvLSTM </modules/models_convlstm>`, :doc:`U-TAE </modules/models_utae>`, :doc:`SegFormer </modules/models_segformer>`, :doc:`Swin-Unet </modules/models_swin_unet>`.

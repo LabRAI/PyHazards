@@ -6,9 +6,9 @@ IBTrACS
 Overview
 --------
 
-The current IBTrACS alignment uses a metadata-backed storm-history adapter over the shared synthetic tropical-cyclone dataset.
+``ibtracs_tracks`` reads IBTrACS v04 CSV or netCDF files with PyHazards' reader and builds forecasting windows (history of six-hourly observations, targets at the requested lead times) for any agency's winds and pressures.
 
-It is the benchmark ecosystem currently used by Hurricast and the experimental weather-model adapter smoke configs.
+``hurricast_ibtracs_era5`` builds Hurricast's inputs from IBTrACS (30 statistical features per 3-hour step) and ERA5 maps, with the IBTrACS wind 24 h ahead or position 24 h ahead as targets. The weather-model cyclone pipelines (forecast fields, tracker, scoring against IBTrACS) are pending. IBTrACS is also the reference of the weather-model cyclone pipelines in ``pyhazards.forecasts``: forecast tracks of FourCastNet, GraphCast and Pangu-Weather (tracked in their forecast fields) are matched to IBTrACS storms and scored by great-circle track error and intensity errors per lead time. No ported neural network consumes IBTrACS directly yet (Hurricast, which uses IBTrACS with ERA5, is pending).
 
 At a Glance
 -----------
@@ -44,7 +44,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         :bdg-info:`Synthetic-backed`
+         :bdg-success:`Real-backed`
 
       .. container:: catalog-stat-note
 
@@ -55,11 +55,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         4
+         1
 
       .. container:: catalog-stat-note
 
-         4 models
+         1 model
 
 
 Benchmark Mapping
@@ -83,22 +83,20 @@ Primary Source
    :class-container: catalog-dropdown
 
    - Track + Intensity
+   - Intensity
 
 .. dropdown:: Key Metrics
    :class-container: catalog-dropdown
 
-   - ``track_error``
+   - ``track_error_km``
    - ``intensity_mae``
+   - ``pressure_mae``
 
 .. dropdown:: Smoke Configs
    :class-container: catalog-dropdown
 
-   - ``hurricast_smoke.yaml``
-   - ``graphcast_tc_smoke.yaml``
-   - ``pangu_tc_smoke.yaml``
-   - ``fourcastnet_tc_smoke.yaml``
 
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`Hurricast </modules/models_hurricast>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`, :doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`.
+   :doc:`Hurricast </modules/models_hurricast>`.

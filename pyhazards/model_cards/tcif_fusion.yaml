@@ -1,42 +1,139 @@
 model_name: tcif_fusion
 display_name: TCIF-fusion
 hazard: Tropical Cyclone
+catalog_status: core
 source_file: pyhazards/models/tcif_fusion.py
 builder_name: tcif_fusion_builder
 summary: >
-  A knowledge-guided fusion baseline for tropical cyclone track and intensity forecasting.
+  The model-knowledge-guided intensity network of Wang, Li and Zheng (2024): 3-D CNN branches with a fusion
+  branch over ERA5 winds and SST, a VGG-19 on infrared images and storm history give the 24-hour intensity.
 description:
   - >
-    ``tcif_fusion`` combines multiple feature streams behind the shared storm
-    forecasting interface used throughout the PyHazards cyclone roadmap.
+    ``tcif_fusion`` predicts one number per storm and time, the maximum sustained wind (2-minute, m/s)
+    24 hours ahead, for Northwest Pacific typhoons; it does not forecast tracks. Inputs (a mapping, channels
+    last as in the official notebook): ERA5 ``u``, ``v``, ``w`` ``(batch, 25, 25, 5, 4)`` - 25 x 25 one-degree
+    grid, 5 six-hourly times, 200 / 500 / 850 / 1000 hPa - and ``sst`` ``(batch, 25, 25, 5, 1)``; ``all``, the
+    four fields concatenated to ``(batch, 25, 25, 65)`` (built by ``era5_all`` when absent); ``his``, 30
+    history features; ``ir``, GridSat-B1 infrared images ``(batch, 224, 224, 5)``.
   - >
-    The adapter focuses on the fusion contract and evaluator compatibility
-    rather than full reproduction of the original training stack.
+    Each ERA5 field runs through three 3-D blocks (three 3 x 3 x 5 convolutions with 128 / 256 / 512 filters,
+    2 x 2 x 2 max pooling with stride (2, 2, 1)); a fusion branch adds the four fields' features after every
+    block and runs blocks 2 and 3 on the sums; ALL runs through three 2-D blocks. The flattened maps (212,992
+    values) go through Dense 256 and 15, the history through Dense 32 and 64, the IR images through a VGG-19
+    (64-128-256-512-512 filters, Dense 1024-1024-15); two residual blocks of three dense layers (256, 128) and a
+    linear output follow. 299,588,223 parameters (``all_channels=85``, the notebook's graph: 299,611,263).
+  - >
+    The model-knowledge (MK) step of the paper is provided as functions: ``model_knowledge_heatmaps`` computes
+    Grad-CAM heatmaps of a trained model's inputs and ``apply_model_knowledge`` multiplies the inputs by their
+    absolute values; a second TCIF-fusion trained on the guided inputs is the MK-guided model the paper
+    evaluates. The benchmark scores the model with ``tc.intensity``.
 paper:
   title: Tropical cyclone intensity forecasting using model knowledge guided deep learning model
-  url: https://doi.org/10.5194/egusphere-2024-250
+  url: https://doi.org/10.1088/1748-9326/ad1bde
   repo_url: https://github.com/wangchong96/TCIF-fusion
+references:
+  - title: "Wang, Li and Zheng, Environmental Research Letters 19, 024006 (2024), open access (CC BY 4.0)"
+    url: https://doi.org/10.1088/1748-9326/ad1bde
+    repo_url: https://github.com/wangchong96/TCIF-fusion
+    note: >
+      Northwest Pacific, CMA/STI best track 1979-2019 (90 % training, 10 % validation; 20,533 samples
+      1979-2021 with ERA5 and GridSat-B1), independent test 2020-2021, 24-hour intensity MAE: MK-guided
+      TCIF-fusion 3.56 m/s (2020 3.64, 2021 3.51). Input ablation (Table 1, MK-guided): HIS+U+V+W 3.87,
+      +SST 3.74, +IR 3.69, +IR+SST 3.56 m/s. Official forecasts 2020 / 2021 (Table 2): CMA 4.50 / 4.30,
+      JMA 4.50 / 4.30, JTWC 4.90 / 4.60, ECMWF-IFS 6.70 / 8.00, NCEP-GFS 4.70 / 5.90 m/s; landfalling TCs 2020
+      4.55 m/s. Not reproduced by PyHazards (no reader for the CMA / ERA5 / GridSat-B1 inputs yet).
+reproduction:
+  source: paper
+  reference_code: https://github.com/wangchong96/TCIF-fusion
+  reference_commit: 4b5fafcd8accf288f796d0859f22a7d103f40c24
+  reference_license: none (no LICENSE file; the notebooks are used only as a test oracle, never copied)
+  reference_config: >
+    TCIF_fusion() of TCIF-fusion.ipynb. The notebooks do not run as published (TensorFlow 1 session code, no
+    data loading, a validation list with one input too many); the graph functions (F3d, F2d, VGG192d,
+    TCIF_fusion) are executed unchanged with Keras 3.12.4 on the PyTorch backend. The parameter count of every
+    layer and the total, 299,611,263, equal the summary the authors' own run printed in
+    "obtain model knowledge.ipynb" (Keras 2 / TensorFlow 1.14); with the Keras weights copied (layer by layer,
+    names of that summary) the outputs equal the Keras graph for the notebook's 85-channel ALL input and for the
+    paper's 65 channels (299,588,223 parameters, the input shape substituted). The training settings equal the
+    notebook's compile / fit call, and the gradient the MK example starts from (forecast w.r.t. the SST input,
+    averaged over the batch and the horizontal axes) equals the Keras model's.
+  parameter_count: 299588223
+  checks: [parameter_count, state_dict, forward]
+  oracle_test: tests/oracle/test_tcif_fusion_oracle.py
+  deviations:
+    - >
+      ALL channels: the notebook's graph has an 85-channel ALL input; the paper's Figure 1 draws it as 25 x 25 x
+      65, exactly U, V, W (5 times x 4 levels each) and SST (5 times) concatenated, and the notebook's MK example
+      allocates 65 channels. The default follows the paper (65; ALL = U, V, W, SST flattened over time and level,
+      time-major - the order is not documented); all_channels=85 rebuilds the notebook graph, whose extra 20
+      channels are not described anywhere.
+    - >
+      Figure 1 draws a Flatten + Dense(15) per branch and a 90-d concatenation before Dense 256 and 15, and a
+      single Flatten + Dense(15) after the IR VGG; the notebook concatenates the six flattened maps (212,992
+      values) into one Dense(256) -> Dense(15) and gives the VGG Dense 1024-1024-15. The notebook (which the
+      printed summary confirms) is followed.
+    - >
+      Initialisation has Keras' distributions (glorot-uniform kernels, zero biases; checked) but not its random
+      draws, which come from TensorFlow's generator. No trained weights were released (the notebook saves
+      ./CMA/TCIF-fusion-best-uvwssthsat-1.h5, which is not in the repository); load_keras_weights maps such a
+      file's layers by their names.
+    - >
+      Model knowledge: the paper multiplies the inputs by the absolute Grad-CAM heatmaps of a first model; the
+      notebook's example only takes the gradient w.r.t. one input (SST), averages it over the batch and the
+      horizontal axes and then stores the raw input (it also passes the SST array as the IR input). PyHazards
+      completes the Grad-CAM recipe the example follows (heatmap = channel mean of the input weighted by the
+      averaged gradient), applies no normalisation (none is described), guides U, V, W, SST and IR (the inputs of
+      the paper's Figure 2), rebuilds ALL from the guided fields and leaves the history unchanged.
+    - >
+      Training is not part of the module: the notebook uses the MAE loss, Adam (learning rate 1e-4), batch 512,
+      100 epochs, ReduceLROnPlateau (factor 0.5, patience 10, minimum 1e-6) and keeps the best validation
+      checkpoint (TCIF_TRAINING). The input-ablation models of Table 1 (TCIF-1 to TCIF-3) are not provided, and
+      the notebook's unused (and broken) attention helpers are not ported.
 tasks:
   - regression
 example: |
   import torch
   from pyhazards.models import build_model
+  from pyhazards.models.tcif_fusion import apply_model_knowledge, model_knowledge_heatmaps
 
-  model = build_model(name="tcif_fusion", task="regression", input_dim=8, horizon=5)
-  preds = model(torch.randn(2, 6, 8))
-  print(preds.shape)
+  model = build_model(name="tcif_fusion", task="regression")   # 299,588,223 parameters (about 1.2 GB)
+  inputs = {
+      "u": torch.randn(1, 25, 25, 5, 4), "v": torch.randn(1, 25, 25, 5, 4), "w": torch.randn(1, 25, 25, 5, 4),
+      "sst": torch.rand(1, 25, 25, 5, 1),                      # ALL (25, 25, 65) is built from these
+      "his": torch.rand(1, 30),
+      "ir": torch.rand(1, 224, 224, 5),
+  }
+  print(model(inputs).shape)                                   # (1, 1): 24-hour intensity
+
+  # MK-guided training: train a first model, then train a second one on the guided inputs.
+  guided = apply_model_knowledge(inputs, model_knowledge_heatmaps(model, inputs))
 notes:
-  - "Outputs are shared storm forecast trajectories over the configured horizon."
+  - "The ALL input is not a heat-map input: Figure 1 labels it ALL and builds it from U, V, W and SST (the inventory had read inputs_h as the model-knowledge heatmaps). Model knowledge enters by multiplying the inputs."
+  - "The 30 history features (left_input; Figure 1: historical wind speed and pressure) are defined only in the paper's supplementary material, which could not be retrieved; the CMA best track, ERA5 and GridSat-B1 crops have no PyHazards reader yet, and tcif_fusion_synthetic gives random inputs in their layout for smoke tests."
+  - "The full model needs about 1.2 GB for its weights and roughly 10^11 multiply-adds per sample; the size arguments of the builder (grid_size, ir_size, widths, vgg_filters, vgg_fc) only exist to build small copies for smoke tests."
 smoke_test:
   task: regression
   build_kwargs:
-    input_dim: 8
-    horizon: 5
-    output_dim: 3
+    grid_size: 9
+    ir_size: 32
+    widths: [4, 8, 8]
+    vgg_filters: [4, 4, 8, 8, 8]
+    vgg_fc: 16
   input:
-    kind: tensor
-    tensor:
-      shape: [2, 6, 8]
+    kind: mapping
+    mapping:
+      u:
+        shape: [2, 9, 9, 5, 4]
+      v:
+        shape: [2, 9, 9, 5, 4]
+      w:
+        shape: [2, 9, 9, 5, 4]
+      sst:
+        shape: [2, 9, 9, 5, 1]
+      his:
+        shape: [2, 30]
+      ir:
+        shape: [2, 32, 32, 5]
   expected_output:
     kind: tensor
-    shape: [2, 5, 3]
+    shape: [2, 1]

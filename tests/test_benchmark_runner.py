@@ -96,3 +96,21 @@ def test_experiment_config_roundtrip(tmp_path):
     assert loaded.model.params["out_dim"] == 5
     assert loaded.report.formats == ["json", "csv"]
     assert loaded.seed == 7
+
+
+def test_benchmark_scores_in_eval_mode_and_restores_training(monkeypatch, tmp_path):
+    monkeypatch.setattr("pyhazards.benchmarks.registry._BENCHMARK_REGISTRY", {})
+    register_benchmark("dummy_regression", DummyRegressionBenchmark)
+    experiment = ExperimentConfig(
+        benchmark=BenchmarkConfig(name="dummy_regression", hazard_task="flood.streamflow", eval_split="test"),
+        dataset=DatasetRef(name="unused"),
+        model=ModelRef(name="mlp", task="regression"),
+        report=ReportConfig(output_dir=str(tmp_path), formats=["json"]),
+    )
+    model = nn.Sequential(nn.Linear(4, 32), nn.Dropout(0.9), nn.Linear(32, 1))
+    model.train()
+    bundle = _dummy_bundle()
+    first = BenchmarkRunner().run(experiment, model=model, data=bundle, output_dir=str(tmp_path))
+    second = BenchmarkRunner().run(experiment, model=model, data=bundle, output_dir=str(tmp_path))
+    assert first.metrics["mae"] == second.metrics["mae"]
+    assert model.training

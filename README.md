@@ -57,7 +57,7 @@ Intended users:
 - **Wildfire**: danger forecasting, weekly forecasting, spread baselines, fuels, burn products, and active-fire sources.
 - **Earthquake**: waveform picking, dense-grid forecasting adapters, and linked benchmark ecosystems for picking and forecasting.
 - **Flood**: streamflow and inundation baselines with benchmark-backed evaluation paths.
-- **Tropical Cyclone**: track-and-intensity forecasting baselines plus shared benchmark ecosystems and adapters.
+- **Tropical Cyclone**: track-and-intensity forecasting baselines, IBTrACS / TCND / SHIPS readers, and cyclone tracks from global weather models (FourCastNet, GraphCast, Pangu-Weather) via trackers and published forecasts (`pyhazards.forecasts`).
 
 ## Installation
 
@@ -90,14 +90,8 @@ python -c "import pyhazards; print(pyhazards.__version__)"
 ```python
 from pyhazards.models import build_model
 
-model = build_model(
-    name="hydrographnet",
-    task="regression",
-    node_in_dim=2,
-    edge_in_dim=3,
-    out_dim=1,
-)
-print(type(model).__name__)
+model = build_model(name="hydrographnet", task="regression")  # PhysicsNeMo's MeshGraphKAN
+print(type(model).__name__, sum(p.numel() for p in model.parameters()))  # HydroGraphNet 2318722
 ```
 
 3. Run a benchmark-aligned smoke configuration:

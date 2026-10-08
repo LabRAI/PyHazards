@@ -1,0 +1,400 @@
+# Reference implementations that the oracle tests compare PyHazards models against.
+# Each entry is pinned to an exact commit or checksum. They are fetched only for testing
+# (scripts/fetch_oracles.py) and are never copied into the pyhazards package.
+repos:
+  utae-paps:
+    url: https://github.com/VSainteuf/utae-paps.git
+    commit: 987874e27a98bb399277f2d55eb010744d26f881
+    license: MIT
+  WildfireSpreadTS:
+    url: https://github.com/SebastianGer/WildfireSpreadTS.git
+    commit: f62dc49f2c2a6d249c071533ae5340c0d01bfb95
+    license: MIT
+  wildfire_forecasting:
+    # Kondylatos et al., GRL 2022. Model code is identical to the v0.1-alpha release
+    # (ee4f168, archived as Zenodo 10.5281/zenodo.6524771) that the paper cites.
+    url: https://github.com/Orion-AI-Lab/wildfire_forecasting.git
+    commit: 2b18bcf194284d56bd4e1774f7d5315db94cba34
+    license: MIT
+  Swin-Unet:
+    url: https://github.com/HuCaoFighting/Swin-Unet.git
+    commit: f48f623e226e25b6e395c37207915c50aaa9c776
+    license: none (no LICENSE file; used only as a test oracle, never vendored)
+  fire-asufm:
+    url: https://github.com/bronteee/fire-asufm.git
+    commit: 688dda94dec9e3b22f149f2b9335d3b38fd2277f
+    license: Apache-2.0
+  TS-SatFire:
+    url: https://github.com/zhaoyutim/TS-SatFire.git
+    commit: da7573219967edfe17e317310b66fd8a913f4a2e
+    license: none (no LICENSE file; test-time oracle only, never vendored)
+  TCN:
+    url: https://github.com/locuslab/TCN.git
+    commit: 2f8c2b817050206397458dfd1f5a25ce8a32fe65
+    license: MIT
+  forefire:
+    # ForeFire v2.5.0, the tag of the PyPI 2.5.0 wheel used by tests/oracle/test_forefire_oracle.py
+    # (official example scripts and the tests/runff regression case).
+    url: https://github.com/forefireAPI/forefire.git
+    commit: ca433e01a9f2a146b1709da816a68feafcbfda41
+    license: GPL-3.0 (test oracle only; never vendored, copied or imported by the pyhazards package)
+  firecastnet:
+    url: https://github.com/SeasFire/firecastnet.git
+    commit: dc0d131be7f0638e3a84c16817e7bc9be454e53e
+    license: none at repo level; seasfire/backbones/graphcast/* carry NVIDIA SPDX Apache-2.0 headers (test oracle only, never vendored)
+  earth-forecasting-transformer:
+    # Earthformer (Gao et al., NeurIPS 2022), official code; pyhazards/models/earthformer.py is a port of it.
+    url: https://github.com/amazon-science/earth-forecasting-transformer.git
+    commit: 7732b03bdb366110563516c3502315deab4c2026
+    license: Apache-2.0 (Copyright Amazon.com, Inc. or its affiliates)
+  EarthFarseer:
+    # Wu et al., AAAI 2024. The paper links easylearningscores/EarthFarseer, which now redirects here.
+    url: https://github.com/Alexander-wu/EarthFarseer.git
+    commit: 258d4bb56497a6fb4022a5c37dec1e05ab1bedb1
+    license: none (no LICENSE file; the README's Apache-2.0 badge links to OpenSTL's licence; test oracle only, never vendored)
+  Rainformer:
+    url: https://github.com/Zjut-MultimediaPlus/Rainformer.git
+    commit: c4e04e9011b7bbc1201a781fe5e0e56530126120
+    license: none (no LICENSE file; test oracle only, never vendored)
+
+  uncertainty-wildfires:
+    # Kondylatos et al., "Uncertainty-Aware Deep Learning for Wildfire Danger Forecasting"
+    # (arXiv 2509.25017). The repository holds the paper's checkpoints, including the ten
+    # deep-ensemble LSTMs in trained_models/ensembles/no-noisy (deep_ensemble oracle).
+    url: https://github.com/Orion-AI-Lab/uncertainty-wildfires.git
+    commit: fcfbfb894926d173e2f4cafc95b08f02cefe6e00
+  SwinLSTM:
+    # Tang et al., ICCV 2023. The repository also holds the Moving-MNIST SwinLSTM-D weights
+    # (Pretrained/trained_model_state_dict).
+    url: https://github.com/SongTang-x/SwinLSTM.git
+    commit: 4425bcfefbebfac85c9fc6c6659361b8154d5ca3
+    license: MIT
+  HKO-7:
+    # Shi et al., NeurIPS 2017 (TrajGRU), MXNet code.
+    url: https://github.com/sxjscience/HKO-7.git
+    commit: 57b987bd893bd6910996494c247359ace371d333
+    license: MIT
+  SoraLink-MLLM:
+    # SmokeBench (Qi, Li & Barnes, WACV 2026) evaluation scripts, committed by the first author
+    # (qitianye1104); the paper links no code. Oracle for pyhazards/prompted (geometry, parsing,
+    # metrics, contrast). HEAD of master on 2026-10-07.
+    url: https://github.com/SoraLink/MLLM.git
+    commit: 183cdca488e8c7afa5a254f86ac675cb98951c73
+    license: none (no LICENSE file; test oracle only, never vendored)
+
+  tropicalcyclone_MLP:
+    # Xu et al., Weather and Forecasting 2021 (24-hour intensity-change MLP, Keras 2.2.4 / TF 1.12).
+    url: https://github.com/wenweixu/tropicalcyclone_MLP.git
+    commit: 73800596fc824c6d3f150fc41af0bdb7b9c3a7dc
+    license: BSD-2-Clause (Copyright (c) 2021, Wenwei Xu)
+  TI_Prediction:
+    # SAF-Net (Xu et al., Pattern Recognition Letters 2022): SAF-Net.ipynb and the released checkpoint
+    # model_saver/SAF_Net.pkl. Read in place by the oracle test; nothing is copied.
+    url: https://github.com/xuguangning1218/TI_Prediction.git
+    commit: 651ccc4ec5d2139c758148778d617583052f2eea
+    license: none (no LICENSE file; test oracle only, never vendored)
+  TropiCycloneNet:
+    # Huang et al., Nature Communications 2025. The GitHub repository has no LICENSE file; its model code
+    # (TCNM/*.py) is identical, up to line endings, to the CC BY 4.0 Zenodo release 10.5281/zenodo.15024028
+    # (TropiCycloneNet.zip, git b4e7101) that pyhazards/models/tropicyclonenet.py ports. The GitHub copy
+    # also holds the evaluation script (scripts/evaluate_model_Me.py) used for the best-of-k metric check.
+    url: https://github.com/xiaochengfuhuo/TropiCycloneNet.git
+    commit: de9cf0e949bdee6e32cadf2605063b7bc6d33115
+    license: none on GitHub; model code released under CC BY 4.0 on Zenodo (test oracle only, never vendored)
+  hurricast:
+    # Boussioux et al., Weather and Forecasting 2022 (Hurricast). The repository has no LICENSE file (its README
+    # claims MIT and links a LICENSE that does not exist): pyhazards/models/hurricast.py is written from the paper,
+    # and src/models/experimental_models.py, scripts/config.py, scripts/run_embeddings.py and the Round2
+    # notebooks are read in place by the oracle test only.
+    url: https://github.com/leobix/hurricast.git
+    commit: b1b303a7a62eea89ddfd357fc99cd0787016a3bc
+    license: none (no LICENSE file; README claims MIT; test oracle only, never vendored)
+  TCIF-fusion:
+    # Wang, Li and Zheng, Environmental Research Letters 2024. Two Keras 2 / TF 1.x notebooks without a LICENSE
+    # file; the oracle test rebuilds the notebook's TCIF_fusion() graph in Keras 3 (torch backend) from the
+    # pinned notebook source and compares it with pyhazards/models/tcif_fusion.py.
+    url: https://github.com/wangchong96/TCIF-fusion.git
+    commit: 4b5fafcd8accf288f796d0859f22a7d103f40c24
+    license: none (no LICENSE file; test oracle only, never vendored)
+  neuralhydrology:
+    # NeuralHydrology (Kratzert et al., JOSS 2022), v1.13.0 + 6 commits. Oracle for the CudaLSTM and
+    # EALSTM ports, the hydrological metrics, and the CAMELS-US / Caravan readers. Its test data
+    # (test/test_data/camels_us: 4 real CAMELS-US basins, 2000-2002) feed the reader comparison.
+    url: https://github.com/neuralhydrology/neuralhydrology.git
+    commit: ea94a40d2f271994e33baa70f5ca1dd82e0e539d
+    license: BSD-3-Clause (Copyright (c) 2021, NeuralHydrology)
+  ealstm_regional_modeling:
+    # Code of Kratzert et al., HESS 2019 (papercode/lstm.py, papercode/ealstm.py, main.py Model):
+    # the layout of the official HydroShare checkpoints (kratzert2019_hydroshare_runs).
+    url: https://github.com/kratzert/ealstm_regional_modeling.git
+    commit: d11815824793737f28f125d55477e42f8900a78e
+    license: Apache-2.0
+  flood-forecasting:
+    # google-research/flood-forecasting (googlehydrology 1.13.0, a NeuralHydrology fork). Oracle for
+    # google_flood_forecasting; holds the released FloodHub model (pretrained-models/
+    # google-floodhub-settings-110-epochs) and a real Caravan netCDF file in test/test_data/multimet.
+    url: https://github.com/google-research/flood-forecasting.git
+    commit: cdda28dda4cc6f1c5e3aaafcc69c6602c9e7cda1
+    license: Apache-2.0 (Copyright 2025 Google LLC)
+  physicsnemo:
+    # NVIDIA PhysicsNeMo: MeshGraphKAN (physicsnemo/models/meshgraphnet/meshgraphkan.py, last changed in
+    # dcad437), MeshGraphNet blocks, KolmogorovArnoldNetwork, HydroGraphDataset and the HydroGraphNet example
+    # (examples/weather/flood_modeling/hydrographnet, contributed by Taghizadeh et al.). Oracle for
+    # hydrographnet; test/models/meshgraphnet/data/meshgraphkan_output.pth is PhysicsNeMo's own regression
+    # output for MeshGraphKAN(4, 3, 2) at seed 0.
+    url: https://github.com/NVIDIA/physicsnemo.git
+    commit: eb7a329c246a48b6fb5acd569eaabeac53f915f7
+    license: Apache-2.0 (Copyright (c) 2023 - 2026 NVIDIA CORPORATION & AFFILIATES)
+  UrbanFloodCast:
+    # Xu et al., J. Hydrology 661:133705 (2025): DNO (DNO/models/DNO.py, the default DNO-3), DNO-4, DNO-5,
+    # integral_operators.py (derived from U-NO, BSD-2) and the data pipeline / metrics (DNO/utils25.py).
+    # Oracle for urbanfloodcast. DNO/torch_utils and */training/filtered_networks.py are NVIDIA StyleGAN3
+    # code under the NVIDIA Source Code License (non-commercial); they are never imported or copied.
+    url: https://github.com/HydroPML/UrbanFloodCast.git
+    commit: f08846a1d0ed5a82d9241d2229df8ec8997ebfd5
+    license: none (no LICENSE file; test oracle only, never vendored)
+
+  # Earthquake phase pickers (batch 4). Official TensorFlow / Keras code and released weights; the
+  # PyTorch ports in pyhazards/models/{phasenet,eqtransformer,gpd}.py are checked against them.
+  PhaseNet:
+    # Zhu & Beroza, GJI 2019. TF1 graph code (phasenet/model.py) and the released checkpoint
+    # model/190703-214543 (model_95.ckpt.*).
+    url: https://github.com/AI4EPS/PhaseNet.git
+    commit: 62005c6195638f88d077f8870ea895971062715a
+    license: MIT (Copyright (c) 2021 Weiqiang Zhu)
+  EQTransformer:
+    # Mousavi et al., Nat. Commun. 2020. Keras code (EQTransformer/core/EqT_utils.py), the paper model
+    # (ModelsAndSampleData/EqT_original_model.h5), the conservative model and 100 STEAD sample traces
+    # (100samples.hdf5/.csv, STEAD layout, CC BY 4.0 data).
+    url: https://github.com/smousavi05/EQTransformer.git
+    commit: a589da6504b11df8341fe1dc859a025f49955409
+    license: MIT (Copyright (c) 2020-2025 S. Mostafa Mousavi)
+  generalized-phase-detection:
+    # Ross et al., BSSA 2018. Keras 2.2.2 model (model_pol.json + model_pol_best.hdf5), gpd_predict.py and
+    # the Anza 2016 example (three mseed files and the expected picks anza2016.out).
+    url: https://github.com/interseismic/generalized-phase-detection.git
+    commit: ea81ef17d204797de6a99d277fd2b9407fc77df7
+    license: MIT (Copyright (c) 2018 Zachary E. Ross)
+  WaveCastNet:
+    # Lyu et al., Nat. Commun. 16:10622 (2025). Official PyTorch code (src/models_earthquake: AEConvLEM_dense,
+    # AEConvLEM_sparse, ConvLEMCell, EncoderDecoder, EncodingSparse, Validation_pixel; earthquake_train.py Huber),
+    # station grid indices filtered_coord.npy / shakealert_coords.npy.
+    url: https://github.com/dwlyu/WaveCastNet.git
+    commit: c859e04c85acd6657306f08bce8c6f9129ba1480
+    license: MIT (Copyright (c) 2023 dwlyu)
+  EQNet:
+    # Zhu et al., JGR Solid Earth 2022. Academic / non-commercial licence: used only as a test oracle for the
+    # feature extractor (eqnet/models/resnet1d.py ResNet(BasicBlock, [2, 2, 2, 2])), never copied.
+    url: https://github.com/AI4EPS/EQNet.git
+    commit: af94a08a85de4b2c917a1b9429b044e7f38e4c28
+    license: Academic and Commercial License (Copyright (c) 2023 Weiqiang Zhu, Zhongwen Zhan; non-commercial use only)
+  EQNet-2022:
+    # The author's first EQNet version ("basic version of eqnet", 2022-07-27, before any LICENSE file): its
+    # PhasePicker / EventDetector at the paper's channel widths are the oracle for the picking and detection heads.
+    url: https://github.com/AI4EPS/EQNet.git
+    commit: a9df49a18e05d15c24f98a5e61aa87b0e45cdaeb
+    license: none at this commit (all rights reserved; test oracle only, never copied)
+
+  tempestextremes:
+    # TempestExtremes v2.4.2 (tag), the tracker TCBench runs on weather-model output
+    # (dev/TempestExtremes_example.sh). Built from source by tests/oracle/test_tempest_oracle.py (CMake,
+    # netCDF C library) and run as a separate program; pyhazards/forecasts/tempest.py is written from
+    # the published algorithm and copies no code.
+    url: https://github.com/ClimateGlobalChange/tempestextremes.git
+    commit: 02aabcaf375dc48b13b95fdc66af105435a32229
+    license: BSD-2-Clause (repository LICENSE; some source files still carry an older GPL header) - test oracle only
+  TCBench_Alpha:
+    # TCBench evaluation code (Gomez et al., arXiv:2601.23268): dev/metrics_test.py, dev/evaluate_tracks.py,
+    # dev/utils/{toolbox,constants}.py are the oracle of the TCBench scoring protocol.
+    url: https://github.com/msgomez06/TCBench_Alpha.git
+    commit: 93924483baef8f35970c43131b1e2cbc95dee7bd
+    license: MIT
+assets:
+  utae_pastis_weights:
+    url: https://zenodo.org/records/5172293/files/UTAE_SemanticSeg_weights.zip
+    sha256: 43a9db40ca002d9feac3a6b387838f24c3a7191b4257065d83206379f8ef957a
+    license: CC-BY-4.0
+    extract: true
+  # SegFormer checkpoints from the Hugging Face Hub, pinned to a revision. NVIDIA licenses them for
+  # non-commercial use only (NVIDIA Source Code License for SegFormer); used here only as test data.
+  segformer_mit_b0:
+    url: https://huggingface.co/nvidia/mit-b0/resolve/80983a413c30d36a39c20203974ae7807835e2b4/pytorch_model.bin
+    sha256: 4af8348c2a802bf76115d34797ff5ce1d9f110bb8593c22d9b66d8bd7fa227fc
+    license: NVIDIA Source Code License for SegFormer (non-commercial)
+  segformer_b0_ade:
+    url: https://huggingface.co/nvidia/segformer-b0-finetuned-ade-512-512/resolve/489d5cd81a0b59fab9b7ea758d3548ebe99677da/model.safetensors
+    sha256: 6ae39addd01de6b1b8bde2cf677d43a5cd733424b8d186de3f95d1c51fee23f9
+    license: NVIDIA Source Code License for SegFormer (non-commercial)
+  swin_tiny_imagenet:
+    url: https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_tiny_patch4_window7_224.pth
+    sha256: 9f71c168d837d1b99dd1dc29e14990a7a9e8bdc5f673d46b04fe36fe15590ad3
+    license: MIT (microsoft/Swin-Transformer)
+  firecastnet_global_cls_ts24_h1:
+    # FireCastNet global classification checkpoint (24 x 8-day input, 1-step horizon), Lightning format.
+    url: https://huggingface.co/datasets/d-michail/firecastnet-artifacts/resolve/f0bd28428d36b933ef4fb581189c741bf4ed1a10/model_ckpts/firecastnet-cls-ts24-h1.ckpt
+    sha256: c1e525d8b726f9c725c755da3edeab6f310db82689d4c57a22d001baab724916
+    license: Apache-2.0
+  firecastnet_global_regr_ts24_h1:
+    # The same network trained for burned-area regression (log-transformed target, Huber loss).
+    url: https://huggingface.co/datasets/d-michail/firecastnet-artifacts/resolve/f0bd28428d36b933ef4fb581189c741bf4ed1a10/model_ckpts/firecastnet-regr-ts24-h1.ckpt
+    sha256: 2b3bcf43fe853bee04b6bf2250facf10184ec9eaa2114633b74b71eec5b6ccb2
+    license: Apache-2.0
+  firecastnet_lam_aust_cls_ts24_h1:
+    # FireCastNet local-area model for the GFED AUST region (single 2002-vertex LAM mesh).
+    url: https://huggingface.co/datasets/d-michail/firecastnet-artifacts/resolve/f0bd28428d36b933ef4fb581189c741bf4ed1a10/lam_model_ckpts/firecastnet-cls-AUST-ts24-h1.ckpt
+    sha256: 4fea29fb69a4e6e171ae159001129167879424c489ba649ffc1f2017d3e6b126
+    license: Apache-2.0
+  # Prithvi-EO-2.0 (Hugging Face ibm-nasa-geospatial, Apache-2.0), pinned to a repo revision.
+  prithvi_eo2_tl_model_code:
+    url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL/resolve/63adbd39c271da4c42f447e69b1a7c91a338cdc9/prithvi_mae.py
+    sha256: 9cee9a8cb17c3859d6365a7e58f723e0f4c08e3e29aa4b8e6523506db70321da
+    license: Apache-2.0
+  prithvi_burnscars_config:
+    url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars/resolve/a3f2c410e45b8ac7417976614528a872f024d831/burn_scars_config.yaml
+    sha256: 9b40e6d8c6369b863d29fb1d69b6185aa366f8ee4c2de955bbad28d3ee32f466
+    license: Apache-2.0
+  prithvi_burnscars_example:
+    url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars/resolve/a3f2c410e45b8ac7417976614528a872f024d831/examples/subsetted_512x512_HLS.S30.T10SEH.2018190.v1.4_merged.tif
+    sha256: 13bc592a5e569d837bd8bb3524bb0d2f28418830bcc7b0750e74033078f8b17e
+    license: Apache-2.0
+  # Official Earthformer checkpoints (README "Pretrained Weights"). The S3 bucket answered HTTP 403
+  # on 2026-10-07; these are the Internet Archive captures of 2025-05-17 (payload SHA-1 identical to the
+  # archived originals, S3 Last-Modified 2023-07-14). State dicts of CuboidTransformerModel.
+  earthformer_sevir:
+    url: https://web.archive.org/web/20250517094035id_/https://earthformer.s3.amazonaws.com/pretrained_checkpoints/earthformer_sevir.pt
+    sha256: 2795b23a32cc03ebd77a6c6b57ebbe133070ff9cae1b365d82bb363fd6967215
+    license: Apache-2.0
+  earthformer_icarenso2021:
+    url: https://web.archive.org/web/20250517094035id_/https://earthformer.s3.amazonaws.com/pretrained_checkpoints/earthformer_icarenso2021.pt
+    sha256: 3428356328ec02291461f737684ea597a3126af86a09fe173b75ed54ffe1511f
+    license: Apache-2.0
+  unet_release:
+    # Ronneberger et al.'s U-Net release (Caffe/MATLAB, 185 MB): phseg_v5 network definition,
+    # trained weights, modified Caffe sources and two sample images. No license is stated; it is
+    # fetched at test time only and nothing from it is vendored (read in place with tarfile).
+    url: https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-release-2015-10-02.tar.gz
+    sha256: 260c51948e9e0f3fe1f1282dbedaf2ca69bea38b8392ef8df6d751e58b234740
+    license: none stated (test-time oracle only, never vendored)
+  # Official HKO-7 (TrajGRU, NIPS 2017) checkpoints in MXNet format, linked from
+  # experiments/movingmnist/download_pretrained.sh and experiments/hko/download_pretrained.sh of the
+  # MIT repository. Dropbox serves each shared folder as a zip that is byte-identical across downloads.
+  hko7_movingmnist_weights:
+    url: https://www.dropbox.com/sh/n7gxfdd1pdasoio/AAC8uC4yto5Uam_7f3BEl-3La?dl=1
+    sha256: 0e7741208adb720c271bee69e38bbe16f7c673554e254c60433e3cd066958aba
+    license: MIT (sxjscience/HKO-7)
+    extract: true
+  hko7_hko_weights:
+    url: https://www.dropbox.com/sh/cp8zpi08umfiyha/AAAS6HJSsDQPjpKlxnBHtHvga?dl=1
+    sha256: 6441a1fd07ec4672603b34448357e2b21f7ee0f0107790a7df0f3ff86a306a81
+    license: MIT (sxjscience/HKO-7)
+    extract: true
+  # Git LFS files of ForeFire's tests/runff regression case at v2.5.0 (sha256 = the LFS object ids):
+  # the landscape (fuel, altitude, wind) and the reference arrival-time map written by save[].
+  forefire_runff_data:
+    url: https://media.githubusercontent.com/media/forefireAPI/forefire/ca433e01a9f2a146b1709da816a68feafcbfda41/tests/runff/data.nc
+    sha256: a6c756c4dfeb1f1a5838b1cfdc2ee130d300aa5d09d0a73475e8d30cd73490fb
+    license: GPL-3.0 (ForeFire repository test data; test-time only)
+  forefire_runff_reference:
+    url: https://media.githubusercontent.com/media/forefireAPI/forefire/ca433e01a9f2a146b1709da816a68feafcbfda41/tests/runff/ForeFire.0.nc.ref
+    sha256: 45a2b159caad744d15d8cdd1b43d738a6626259ebc8542944d5daa06a2fad42a
+    license: GPL-3.0 (ForeFire repository test data; test-time only)
+  # SmokeyNet (Dewangan et al., Remote Sensing 2022) data/metadata.pkl: its bbox_labels are the 5,046
+  # SmokeBench smoke boxes (pyhazards.datasets.figlib_smokebench downloads the same pinned file).
+  smokeynet_metadata:
+    url: https://gitlab.nrp-nautilus.io/anshumand/pytorch-lightning-smoke-detection/-/raw/d8d52b957891de10d4bef08943535fa4f9c3cd43/data/metadata.pkl
+    filename: smokeynet_metadata.pkl
+    sha256: c3465c121669b0f92426451799140b0d30bc7caf7512aff9326fefa698ecb1a6
+    license: Apache-2.0 (anshumand/pytorch-lightning-smoke-detection)
+  # Released FloodHub model of google-research/flood-forecasting (MeanEmbeddingForecastLSTM, Gauch et
+  # al. 2025 architecture, trained 1982-2023 on Caravan + MultiMet). The repository's Apache-2.0 LICENSE
+  # is the only licence statement covering it. The flood-forecasting checkout holds the same file.
+  floodhub_weights:
+    url: https://raw.githubusercontent.com/google-research/flood-forecasting/cdda28dda4cc6f1c5e3aaafcc69c6602c9e7cda1/pretrained-models/google-floodhub-settings-110-epochs/model_epoch110.pt
+    sha256: 90280f0687a5a95006580164c243be6f8551580f772be26247c8b0ef3d53fdba
+    license: Apache-2.0 (google-research/flood-forecasting repository licence)
+  # Large checkpoints: fetched only when named explicitly (or with --large), never in routine CI.
+  prithvi_eo2_300m_burnscars_weights:
+    url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars/resolve/a3f2c410e45b8ac7417976614528a872f024d831/Prithvi_EO_V2_300M_BurnScars.pt
+    sha256: 0c5f9334be9a75c9006387ab8f3dc05a55ea7fb5ef7956717316be57c62954d3
+    license: Apache-2.0
+    large: true
+  prithvi_eo2_300m_tl_weights:
+    url: https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL/resolve/63adbd39c271da4c42f447e69b1a7c91a338cdc9/Prithvi_EO_V2_300M_TL.pt
+    sha256: 3629cedfbb350faafcb0dac902ae0d3c927e25ce8d9e0024aa1276ec66956ddb
+    license: Apache-2.0
+    large: true
+  # Official Rainformer KNMI checkpoint (train.py configuration, 288x288, 9 -> 9 frames), from the
+  # Google Drive link in PreTrainModel/address.txt. No licence is stated: used only as test data.
+  rainformer_knmi_weights:
+    url: https://drive.usercontent.google.com/download?id=1LyLOJI9sf1sdZE1FwyTLPEGEcUuvXQc3&export=download&confirm=t
+    filename: model1_1_100.pt
+    sha256: e3d5e4e59b32f13a74c7ffdc02ae65f9da3362c036b60e73e46dffe8721ae6b2
+    license: none stated (Zjut-MultimediaPlus/Rainformer release; test data only, never redistributed)
+    large: true
+  tropicyclonenet_checkpoint:
+    # Released TCN_M checkpoint (generator g_state / discriminator d_state, args of the paper model).
+    url: https://zenodo.org/records/15024028/files/checkpoint_with_model_16000.pt?download=1
+    sha256: 68575d1d10fcd2d44eba2d54d0625410f5108cd3bf5d7b3e15df7491ba9f6215
+    license: CC-BY-4.0 (Huang et al., Zenodo 10.5281/zenodo.15024028)
+  # Official runs of Kratzert et al., HESS 2019 (HydroShare resource 83ea5312635e44dc824eeb99eda12f06,
+  # doi 10.4211/hs.83ea5312635e44dc824eeb99eda12f06, CC BY 4.0): 48 runs (EA-LSTM, LSTM with and without
+  # static inputs; NSE* and MSE loss; 8 seeds), each with model_epoch30.pt, cfg.json and the stored
+  # 1989-1999 test simulations of the 531 basins. Read in place from the zip (not extracted).
+  kratzert2019_hydroshare_runs:
+    url: https://www.hydroshare.org/resource/83ea5312635e44dc824eeb99eda12f06/data/contents/Kratzert_et_al_2019_HESSD_LSTM_4_REGIONAL_MODELING.zip
+    sha256: 864be7a84256314b04f872cc8eca8382825ed0fdf07c3e3dd4fdb0cef3353f3d
+    license: CC-BY-4.0
+    large: true
+  # SeisBench conversions of the official picker weights (SeisBench is GPL-3.0: its package and these
+  # files are used only as a second oracle, never vendored). The weights are the authors' MIT-licensed
+  # releases converted to SeisBench's PyTorch layout.
+  seisbench_phasenet_original:
+    url: https://hifis-storage.desy.de/Helmholtz/HelmholtzAI/SeisBench/models/v3/phasenet/original.pt.v2
+    sha256: 184dd85b896eebf8d5967ee15a722a477fa2e4ce479a3b113ecbcb8a6419113f
+    license: MIT (original PhaseNet weights; SeisBench conversion)
+  seisbench_eqtransformer_original:
+    # SeisBench "original" = the conservative Keras model (EqT_model_conservative.h5).
+    url: https://hifis-storage.desy.de/Helmholtz/HelmholtzAI/SeisBench/models/v3/eqtransformer/original.pt.v3
+    sha256: c363c59dfb4562ba3b1356fb03dc9c776bbcfe3384b5db22e5ee3689de0a4df9
+    license: MIT (original EQTransformer weights; SeisBench conversion)
+  seisbench_eqtransformer_original_nonconservative:
+    # SeisBench "original_nonconservative" = the paper model (EqT_original_model.h5).
+    url: https://hifis-storage.desy.de/Helmholtz/HelmholtzAI/SeisBench/models/v3/eqtransformer/original_nonconservative.pt.v1
+    sha256: 2b9d843994429f73ce6eb5c94d40c75972032d4cdb660d29a1fa8ead6ac357d0
+    license: MIT (original EQTransformer weights; SeisBench conversion)
+  seisbench_gpd_original:
+    url: https://hifis-storage.desy.de/Helmholtz/HelmholtzAI/SeisBench/models/v3/gpd/original.pt
+    sha256: 4bb54c3728095e6dc4f7f16f4483c7f6dcb47a794bb5f110725680c16591d46c
+    license: MIT (original GPD weights; SeisBench conversion)
+  # Released WaveCastNet checkpoints (authors' Google Drive folder 10pe6Zc1NEzIunwJv80214dB9fmb-X8yw named in the
+  # README). No licence is stated for them; used as test data only.
+  wavecastnet_dense_checkpoint:
+    url: https://drive.usercontent.google.com/download?id=1vFoo1eqO2WoZH0R6kkRZJ8XhNG3zF8nO&export=download&confirm=t
+    filename: best_lem_dense_.pt
+    sha256: cccadaa7ae02736eb1835c0dc2b04a6291cdd348c901128fb03c92f4c7647acc
+    license: none stated (dwlyu/WaveCastNet release; test data only, never redistributed)
+  wavecastnet_sparse_checkpoint:
+    # Trained on 558 stations; the repository's filtered_coord.npy lists 564, so its station list is unknown.
+    url: https://drive.usercontent.google.com/download?id=17ZvAt5f5nVuJuZFUli2FJz1wGQImq8y4&export=download&confirm=t
+    filename: best_lem_irr_mask_shakealert_.pt
+    sha256: d559717584c27f158fc41995bc7af701b883b6800655bdc39ed249aa6d473cd6
+    license: none stated (dwlyu/WaveCastNet release; test data only, never redistributed)
+  # TCBench data (Hugging Face dataset TCBench/TCBench, MIT), pinned revision 0124d14d. Released matched
+  # tracks (winds in m/s, pressures in Pa), TCBench's own 2023 IBTrACS extract, and the TempestExtremes
+  # tracks of the Pangu-Weather forecast initialised 2023-07-16 12 UTC.
+  tcbench_matched_pangu:
+    url: https://huggingface.co/datasets/TCBench/TCBench/resolve/0124d14d7f1f468096f46aec1e79696ab9c880c1/matched_tracks/2023_PANGU.csv
+    sha256: 0b5f7a51531a34c70b190a9e9bbec10bae3a7a009badfd9995d61b882e34e348
+    license: MIT (TCBench)
+  tcbench_matched_fcnet:
+    url: https://huggingface.co/datasets/TCBench/TCBench/resolve/0124d14d7f1f468096f46aec1e79696ab9c880c1/matched_tracks/2023_fcnet.csv
+    sha256: fe4197793b072ce94de6ad0bce4abefa512ba89784f38eb9068e6475fed47323
+    license: MIT (TCBench)
+  tcbench_ibtracs_2023:
+    url: https://huggingface.co/datasets/TCBench/TCBench/resolve/0124d14d7f1f468096f46aec1e79696ab9c880c1/2023_IBTrACS.csv
+    sha256: 0e174e00d29d8f92c2e9bc28732d76ee113bdd7d80037ae265cfd953df6e6439
+    license: MIT (TCBench); IBTrACS data by NOAA NCEI (open access)
+  tcbench_pangu_unmatched_20230716_12:
+    url: https://huggingface.co/datasets/TCBench/TCBench/resolve/0124d14d7f1f468096f46aec1e79696ab9c880c1/unmatched_tracks/2023_pangu/panguweather_2023.07.16-12h00_maxltd-120_timeres-6.csv
+    sha256: 29d58cbbddcdab24e708aeb615c69000efec824ad008b7351a52c7a05e48d8a2
+    license: MIT (TCBench)

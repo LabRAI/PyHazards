@@ -6,7 +6,7 @@ SAF-Net
 Overview
 --------
 
-``saf_net`` adds an intensity-oriented storm baseline to the shared ``tc.track_intensity`` evaluator.
+``saf_net`` predicts one number per storm and time: the (MinMax-scaled) maximum sustained wind 24 hours ahead, in the Northwest Pacific (CMA best track). It does not forecast tracks. The wide input is 96 CLIPER-style predictors from the best track (current and past positions, pressures and winds, their changes and climatology factors); the deep input is ERA-Interim u and v wind on a 31 x 31 storm-centred grid at 1000, 750, 500 and 250 hPa for t, t-6, t-12 and t-18 h, as a tensor ``(batch, 2, 4, 31, 31, 4)``.
 
 At a Glance
 -----------
@@ -46,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-note
 
-         Track + Intensity
+         Forecasting
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,21 +63,38 @@ At a Glance
 Description
 -----------
 
-``saf_net`` adds an intensity-oriented storm baseline to the shared ``tc.track_intensity`` evaluator.
+``saf_net`` predicts one number per storm and time: the (MinMax-scaled) maximum sustained wind 24 hours ahead, in the Northwest Pacific (CMA best track). It does not forecast tracks. The wide input is 96 CLIPER-style predictors from the best track (current and past positions, pressures and winds, their changes and climatology factors); the deep input is ERA-Interim u and v wind on a 31 x 31 storm-centred grid at 1000, 750, 500 and 250 hPa for t, t-6, t-12 and t-18 h, as a tensor ``(batch, 2, 4, 31, 31, 4)``.
 
-The adapter keeps full trajectory outputs so it can use the same report format as the other PyHazards storm models.
+For every time step, three convolution stages (64, 128, 256 channels, 2x2 max pooling), shared by a u branch, a v branch and a fused branch, are each followed by a spatial-attention block; learnable cross weights mix u and v and fuse weights merge the result into the fused branch. The four 128-d time features and the 96 wide predictors go through two fully connected layers with ReLU. 880,233 parameters.
+
+The official code has no license, so the module is written from the paper; the official notebook network and checkpoint are used only as test oracle. Parameter names follow the official state dict, so the released checkpoint (``model_saver/SAF_Net.pkl``) loads with ``strict=True``. ``forward(wide, deep)`` also accepts ``{"wide": ..., "deep": ...}``; the benchmark scores it with ``tc.intensity``, mapping the scaled output back to m/s with the dataset's ``prediction_transform``.
 
 Benchmark Compatibility
 -----------------------
 
 **Primary benchmark family:** :doc:`Tropical Cyclone Benchmark </benchmarks/tropical_cyclone_benchmark>`
 
-**Mapped benchmark ecosystems:** :doc:`TCBench Alpha </benchmarks/tcbench_alpha>`
-
 External References
 -------------------
 
-**Paper:** `SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction <https://www.sciencedirect.com/science/article/pii/S1568494623003152>`_ | **Repo:** `Repository <https://github.com/xuguangning1218/TI_Prediction>`__
+**Paper:** `SAF-Net: A spatio-temporal deep learning method for typhoon intensity prediction <https://doi.org/10.1016/j.patrec.2021.11.012>`_ | **Repo:** `Repository <https://github.com/xuguangning1218/TI_Prediction>`__
+
+Used In
+-------
+
+- `Official notebook outputs (SAF-Net.ipynb, released checkpoint) <https://github.com/xuguangning1218/TI_Prediction/blob/651ccc4ec5d2139c758148778d617583052f2eea/SAF-Net.ipynb>`_ (`repo <https://github.com/xuguangning1218/TI_Prediction>`__): 24-hour intensity MAE on the CMA Northwest Pacific test years with the released weights: 2015 4.38, 2016 4.90, 2017 3.91, 2018 4.02 m/s (mean of the years 4.30 m/s); trained on 2000-2014 (8,406 cases, 2,747 test cases). The paper's own tables (Elsevier) were not read; not reproduced by PyHazards, because the ERA-Interim crops are only on the authors' Google Drive.
+- `Tropical cyclone intensity forecasting using model knowledge guided deep learning model (TCIF-fusion) <https://doi.org/10.1088/1748-9326/ad1bde>`_ (`repo <https://github.com/wangchong96/TCIF-fusion>`__): Wang, Li and Zheng, Environmental Research Letters 19, 024006 (2024), Table 2: SAF-Net 24-hour intensity MAE 4.30 m/s on 2015-2018 Northwest Pacific cases, as a comparison baseline.
+
+Reproduction
+------------
+
+- **Reference implementation:** `https://github.com/xuguangning1218/TI_Prediction <https://github.com/xuguangning1218/TI_Prediction>`__ (``651ccc4``, none (no LICENSE file; the notebook network and checkpoint are used only as a test oracle, never copied)); not ported, the model is rebuilt from the paper and the release serves as a test oracle.
+- **Paper configuration:** The Net class of SAF-Net.ipynb (ahead_times = [0, 1, 2, 3], 24-hour lead): 880,233 parameters; the same seed gives identical initial weights; outputs equal in eval mode and in train mode (BatchNorm batch statistics, updated running statistics, gradients); the released model_saver/SAF_Net.pkl loads with strict=True into both and gives the same outputs on real 2015-2018 wide predictors from the repository's CMA_test_24h.csv (with random deep inputs, since the ERA-Interim crops are not public).
+- **Parameter count:** 880,233
+- **Verified:** parameter count, seeded initialisation, parameter names and shapes, forward outputs, official pretrained weights
+- **Oracle test:** ``tests/oracle/test_saf_net_oracle.py``
+- **Deviation:** The official network reads the number of time steps from the notebook global ``ahead_times``; here it is the ``num_times`` argument (default 4). ``wide_dim``, ``num_levels`` and ``grid_size`` are arguments too; only the defaults are checked.
+- **Deviation:** Training is not part of the module: the notebook uses L1 loss, Adam (learning rate 7e-4), batch 128, 128 epochs, a new random 10 % validation split every epoch and keeps the weights with the lowest validation loss.
 
 Registry Name
 -------------
@@ -87,7 +104,7 @@ Primary entrypoint: ``saf_net``
 Supported Tasks
 ---------------
 
-- Track + Intensity
+- Forecasting
 
 Programmatic Use
 ----------------
@@ -97,11 +114,16 @@ Programmatic Use
    import torch
    from pyhazards.models import build_model
 
-   model = build_model(name="saf_net", task="regression", input_dim=8, horizon=5)
-   preds = model(torch.randn(2, 6, 8))
-   print(preds.shape)
+   model = build_model(name="saf_net", task="regression")
+   wide = torch.rand(2, 96)                   # MinMax-scaled best-track predictors
+   deep = torch.rand(2, 2, 4, 31, 31, 4)      # (batch, [u, v], level, lat, lon, time)
+   print(model(wide, deep).shape)             # (2, 1): scaled 24-hour maximum wind
+   # model.load_state_dict(torch.load("SAF_Net.pkl", map_location="cpu"))  # official checkpoint (no licence)
 
 Notes
 -----
 
-- Track channels are retained so the shared storm evaluator can score all baselines consistently.
+- Kept from the official network because it changes outputs: the fused stage-3 features pass through the stage-3 attention block twice; fc1 has no activation; the output ReLU keeps scaled predictions non-negative.
+- The notebook fits the MinMax scalers of the inputs and the target on the training and test years together (test-set information leaks into the scaling); a reproduction of its numbers has to do the same.
+- The official checkpoint and the CMA data in the repository have no licence; PyHazards does not redistribute them. ERA-Interim is a retired ECMWF product.
+- No PyHazards loader reads the official CMA / ERA-Interim preprocessed files yet; safnet_cma_era_interim_synthetic gives random inputs in their layout for smoke tests.

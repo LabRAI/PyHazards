@@ -1,21 +1,62 @@
 model_name: floodcast
 display_name: FloodCast
 hazard: Flood
+catalog_status: experimental
 source_file: pyhazards/models/floodcast.py
 builder_name: floodcast_builder
 summary: >
-  A compact spatiotemporal flood-inundation baseline for raster forecast experiments.
+  A small convolutional inundation baseline under the FloodCast name; not the published model, whose
+  flood-model code was never released and whose network widths the paper does not report (experimental).
 description:
   - >
-    ``floodcast`` is the first public inundation model in the staged PyHazards
-    flood roadmap.
+    ``floodcast`` is a compact PyHazards spatiotemporal network that maps ``(batch, history, channels, H,
+    W)`` rasters to a next-step depth raster ``(batch, 1, H, W)``. It is not FloodCast. FloodCast's
+    hydrodynamic module is the sequence-to-sequence GeoPINS: a physics-informed Fourier neural operator
+    solving the 2-D shallow-water equations without training labels, trained per 16-step sequence and
+    marched in time, with hard-encoded inflow boundaries.
   - >
-    The adapter uses shared raster tensors so it can be benchmarked through the
-    ``flood.inundation`` evaluator without dataset-specific glue code.
+    Why it is not rebuilt from the paper (arXiv 2403.12226v1, the only open version; read in full): the
+    paper gives the GeoPINS layout (MLP lift, FNO layers, MLP projection; GELU and a layer normalisation
+    after each FNO layer in its PDE experiments), four space-time FNO layers with spatial modes 32 and
+    temporal modes 4 for the flood model, the GeoPC loss (continuity and
+    momentum residuals with Manning friction, initial-condition weight 10, finite differences) and the
+    training schedule, but not the channel widths of the flood model (only the toy PDE experiments list
+    widths 16 / 24 / 24 / 32 / 32), not the lifting / projection widths, and only "3 input channels:
+    coordinate x, time t and initial condition" for a 2-D problem with three state variables. The
+    released repository holds toy PDE examples and empty placeholders for the flood model and has no
+    licence. A rebuild would therefore guess its size; it would be neither the paper's model nor
+    checkable.
+  - >
+    FloodCastBench's supervised FNO baseline (Xu et al., Scientific Data 12:431, 2025: 4 Fourier layers,
+    the 12 lowest modes, width 20, one-shot over 19 steps from the initial depth plus coordinates and
+    time; FNO+ adds terrain and rainfall) is not added either: FloodCastBench released only its
+    data-generation code (no model code, no licence), so there is nothing to verify a port against, and
+    the paper leaves the temporal modes open. The smoke configuration scores this stand-in on
+    ``flood_inundation_synthetic`` (random rasters).
 paper:
-  title: Large-scale flood modeling and forecasting with FloodCast
-  url: https://doi.org/10.1038/s41586-024-08028-8
+  title: "Large-scale flood modeling and forecasting with FloodCast"
+  url: https://doi.org/10.1016/j.watres.2024.122162
   repo_url: https://github.com/HydroPML/FloodCast
+references:
+  - title: "Large-scale flood modeling and forecasting with FloodCast"
+    url: https://doi.org/10.1016/j.watres.2024.122162
+    repo_url: https://github.com/HydroPML/FloodCast
+    note: >
+      Xu, Shi, Bamber, Ouyang and Zhu, Water Research 264:122162 (2024); arXiv 2403.12226. 2022 Pakistan
+      flood (85,616.5 km2, 18-31 August), 480 m grid, 300 s steps, 14-day simulation against a
+      finite-difference hydrodynamic benchmark: average MAPE 14.93% and MAE 0.0610 m (depth >= 0 m),
+      MAE 0.0589 m (>= 0.1 m), 0.0452 m (>= 0.5 m) (Table 5); MAE 0.3615 m against SAR-derived depths
+      on 30 August (hydrodynamics 0.4203 m). The repository has no licence and does not contain the flood
+      model.
+  - title: "FloodCastBench: A Large-Scale Dataset and Foundation Models for Flood Modeling and Forecasting"
+    url: https://doi.org/10.1038/s41597-025-04725-2
+    repo_url: https://github.com/HydroPML/FloodCastBench
+    note: >
+      Xu, Shi, Zhao and Zhu, Scientific Data 12:431 (2025); data Zenodo 10.5281/zenodo.14017092 (21.6 GB,
+      CC BY 4.0). Table 4 (RMSE / NSE), low-fidelity 480 m (Pakistan): U-Net 0.079399 / 0.991705, FNO
+      0.002232 / 0.999993, FNO+ 0.002107 / 0.999994; high-fidelity 60 m (Australia): U-Net 0.566626 /
+      0.560984, FNO 0.004258 / 0.999975, FNO+ 0.003941 / 0.999979. Only the data-generation code is
+      released.
 tasks:
   - regression
   - segmentation
@@ -28,6 +69,9 @@ example: |
   print(preds.shape)
 notes:
   - "Outputs are next-horizon inundation depth rasters."
+  - >
+    Experimental: kept under its published name only as a placeholder; do not report its results as
+    FloodCast's. A faithful entry needs the flood-model code (or the widths) from the authors.
 smoke_test:
   task: regression
   build_kwargs:

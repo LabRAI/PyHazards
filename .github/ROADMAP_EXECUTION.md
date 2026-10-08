@@ -40,9 +40,14 @@ Key corrections from the audit:
 - Earthquake has the main model adapters (`PhaseNet`, `EQTransformer`, `GPD`,
   `EQNet`), but the SeisBench / pick-benchmark / pyCSEP / AEFA benchmark-data
   stack is still missing.
-- Flood has the main model adapters (`NeuralHydrology`, `FloodCast`,
-  `UrbanFloodCast`), but the Caravan / WaterBench / FloodCastBench /
-  HydroBench benchmark-data stack is still missing.
+- Flood: the NeuralHydrology LSTM / EA-LSTM and Google's released FloodHub
+  model are faithful ports, with real CAMELS-US and Caravan readers and per-basin
+  NSE / KGE evaluation. `HydroGraphNet` (PhysicsNeMo MeshGraphKAN, with a real
+  White River mesh reader and rollout evaluation) and `UrbanFloodCast` (the DNO,
+  written from the paper and checked against the unlicensed official code) are
+  faithful too. `FloodCast` stays an experimental stand-in (flood-model code never
+  released, widths not in the paper), and WaterBench / FloodCastBench / HydroBench
+  have no readers (their former adapters generated random numbers and were removed).
 - Storm has the main model adapters, but `TCBench`, `IBTrACS`, and
   `TropiCycloneNet-Dataset` are still missing. `GraphCast`, `Pangu`, and
   `FourCastNet` remain experimental wrappers and must not be counted as
@@ -251,17 +256,12 @@ Own:
 - `pyhazards/models/tropicyclonenet.py`
 - `pyhazards/models/saf_net.py`
 - `pyhazards/models/tcif_fusion.py`
-- `pyhazards/models/graphcast_tc.py`
-- `pyhazards/models/pangu_tc.py`
-- `pyhazards/models/fourcastnet_tc.py`
+- `pyhazards/forecasts/**` (FourCastNet / GraphCast / Pangu-Weather cyclone pipelines; the former graphcast_tc, pangu_tc and fourcastnet_tc placeholders were removed)
 - `pyhazards/model_cards/hurricast.yaml`
 - `pyhazards/model_cards/tropicalcyclone_mlp.yaml`
 - `pyhazards/model_cards/tropicyclonenet.yaml`
 - `pyhazards/model_cards/saf_net.yaml`
 - `pyhazards/model_cards/tcif_fusion.yaml`
-- `pyhazards/model_cards/graphcast_tc.yaml`
-- `pyhazards/model_cards/pangu_tc.yaml`
-- `pyhazards/model_cards/fourcastnet_tc.yaml`
 - `tests/test_tc_*.py`
 
 Do not edit:
@@ -537,17 +537,12 @@ You own:
 - pyhazards/models/tropicyclonenet.py
 - pyhazards/models/saf_net.py
 - pyhazards/models/tcif_fusion.py
-- pyhazards/models/graphcast_tc.py
-- pyhazards/models/pangu_tc.py
-- pyhazards/models/fourcastnet_tc.py
+- pyhazards/forecasts/** (FourCastNet / GraphCast / Pangu-Weather cyclone pipelines; the former graphcast_tc, pangu_tc and fourcastnet_tc placeholders were removed)
 - pyhazards/model_cards/hurricast.yaml
 - pyhazards/model_cards/tropicalcyclone_mlp.yaml
 - pyhazards/model_cards/tropicyclonenet.yaml
 - pyhazards/model_cards/saf_net.yaml
 - pyhazards/model_cards/tcif_fusion.yaml
-- pyhazards/model_cards/graphcast_tc.yaml
-- pyhazards/model_cards/pangu_tc.yaml
-- pyhazards/model_cards/fourcastnet_tc.yaml
 - tests/test_tc_*.py
 
 Do not edit:

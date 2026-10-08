@@ -1,20 +1,28 @@
+# PhaseNet (randomly initialised) on synthetic windows, scored with the PhaseNet protocol
+# (Zhu & Beroza 2019: TP if |dt| < 0.1 s). Add `pretrained: original` under model.params for the
+# official weights, and a real dataset (seisbench_waveforms) for meaningful numbers.
 benchmark:
   name: earthquake
   hazard_task: earthquake.picking
   metrics:
+    - p_precision
+    - p_recall
+    - p_f1
+    - s_f1
     - p_pick_mae
     - s_pick_mae
   eval_split: test
+  params:
+    protocol: phasenet
 dataset:
-  name: seisbench_waveforms
+  name: earthquake_waveforms_synthetic
   params:
     micro: true
 model:
   name: phasenet
-  task: regression
+  task: picking
   params:
     in_channels: 3
-    hidden_dim: 32
 report:
   output_dir: reports/earthquake
   formats:

@@ -17,7 +17,7 @@ Wildfire
 Implemented Models
 ++++++++++++++++++
 
-:doc:`ASUFM </modules/models_asufm>`, :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`FireCastNet </modules/models_firecastnet>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`WildfireSpreadTS </modules/models_wildfirespreadts>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`.
+:doc:`ASUFM </modules/models_asufm>`, :doc:`Attention U-Net </modules/models_attention_unet>`, :doc:`ConvGRU </modules/models_convgru>`, :doc:`ConvLSTM </modules/models_convlstm>`, :doc:`Deep Ensemble </modules/models_deep_ensemble>`, :doc:`DeepLabV3 </modules/models_deeplabv3>`, :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`Earthfarseer </modules/models_earthfarseer>`, :doc:`Earthformer </modules/models_earthformer>`, :doc:`FireCastNet </modules/models_firecastnet>`, :doc:`Logistic Regression (pixel) </modules/models_logistic_regression>`, :doc:`Prithvi-EO-2.0 BurnScars </modules/models_prithvi_burnscars>`, :doc:`Prithvi-EO-2.0-TL </modules/models_prithvi_eo_2_tl>`, :doc:`Rainformer </modules/models_rainformer>`, :doc:`Random Forest </modules/models_random_forest>`, :doc:`ResNet-18 U-Net </modules/models_resnet18_unet>`, :doc:`SegFormer </modules/models_segformer>`, :doc:`Swin-Unet </modules/models_swin_unet>`, :doc:`SwinLSTM </modules/models_swinlstm>`, :doc:`SwinUNETR </modules/models_swin_unetr>`, :doc:`TCN </modules/models_tcn>`, :doc:`TrajGRU </modules/models_trajgru>`, :doc:`TS-SatFire Baselines </modules/models_ts_satfire>`, :doc:`U-Net-3D (MONAI) </modules/models_unet3d>`, :doc:`U-TAE </modules/models_utae>`, :doc:`UNETR </modules/models_unetr>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`WildfireSpreadTS Baselines </modules/models_wildfirespreadts>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`U-Net </modules/models_unet>`, :doc:`XGBoost </modules/models_xgboost>`.
 
 Earthquake
 ~~~~~~~~~~
@@ -25,7 +25,7 @@ Earthquake
 Implemented Models
 ++++++++++++++++++
 
-:doc:`EQNet </modules/models_eqnet>`, :doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`, :doc:`PhaseNet </modules/models_phasenet>`, :doc:`WaveCastNet </modules/models_wavecastnet>`.
+:doc:`EQTransformer </modules/models_eqtransformer>`, :doc:`GPD </modules/models_gpd>`, :doc:`PhaseNet </modules/models_phasenet>`, :doc:`WaveCastNet </modules/models_wavecastnet>`, :doc:`EQNet </modules/models_eqnet>`.
 
 Flood
 ~~~~~
@@ -33,7 +33,12 @@ Flood
 Implemented Models
 ++++++++++++++++++
 
-:doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`, :doc:`FloodCast </modules/models_floodcast>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`, :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`UrbanFloodCast </modules/models_urbanfloodcast>`, :doc:`HydroGraphNet </modules/models_hydrographnet>`.
+:doc:`EA-LSTM </modules/models_neuralhydrology_ealstm>`, :doc:`Google Flood Forecasting </modules/models_google_flood_forecasting>`, :doc:`HydroGraphNet </modules/models_hydrographnet>`, :doc:`NeuralHydrology LSTM </modules/models_neuralhydrology_lstm>`, :doc:`UrbanFloodCast </modules/models_urbanfloodcast>`.
+
+Experimental Adapters
++++++++++++++++++++++
+
+:doc:`FloodCast </modules/models_floodcast>`.
 
 Tropical Cyclone
 ~~~~~~~~~~~~~~~~
@@ -42,11 +47,6 @@ Implemented Models
 ++++++++++++++++++
 
 :doc:`Hurricast </modules/models_hurricast>`, :doc:`SAF-Net </modules/models_saf_net>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`, :doc:`Tropical Cyclone MLP </modules/models_tropicalcyclone_mlp>`, :doc:`TropiCycloneNet </modules/models_tropicyclonenet>`.
-
-Experimental Adapters
-+++++++++++++++++++++
-
-:doc:`FourCastNet TC Adapter </modules/models_fourcastnet_tc>`, :doc:`GraphCast TC Adapter </modules/models_graphcast_tc>`, :doc:`Pangu TC Adapter </modules/models_pangu_tc>`.
 
 Developer Registry Workflow
 ---------------------------
@@ -63,7 +63,7 @@ Build a Registered Model
 
     model = build_model(
         name="phasenet",
-        task="regression",
+        task="picking",
         in_channels=3,
     )
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Sequence
+from typing import Dict, List, Sequence, Tuple
 
 from .model_catalog import ModelCard, group_cards_by_hazard, load_model_cards, public_catalog_cards
 
@@ -19,8 +19,15 @@ STATUS_LABELS = {
     "core": "Implemented",
     "variant": "Variant only",
     "experimental": "Experimental",
+    "external": "External simulator",
+    "pipeline": "Foundation model pipeline",
     "missing": "Missing",
 }
+
+SUMMARY_STATUSES = ("core", "variant", "experimental", "external", "pipeline", "missing")
+
+# Statuses for resources that are not PyHazards models: they must link documentation, not model cards.
+NON_MODEL_STATUSES = {"external": "an external simulator", "pipeline": "a foundation model pipeline"}
 
 
 @dataclass(frozen=True)
@@ -32,49 +39,128 @@ class AppendixAEntry:
     status: str
     mapped_models: Sequence[str] = ()
     notes: str = ""
+    # (label, Sphinx docname) links for entries that are not models, e.g. an external simulator or a
+    # foundation-model pipeline.
+    mapped_docs: Sequence[Tuple[str, str]] = ()
 
+
+FOREFIRE_NOTE = (
+    "ForeFireSimulator runs the official ForeFire engine (GPL-3.0; installed separately with "
+    "``pip install forefire``, never vendored) on PyHazards rasters and returns arrival-time and "
+    "burned-mask rasters. It reproduces ForeFire's own regression reference (tests/runff) and the "
+    "official idealized-wind example. It is a physics simulator, not a trainable model."
+)
+WRF_SFIRE_NOTE = (
+    "PyHazards does not run WRF-SFIRE (an MPI Fortran model). The ``wrf_sfire_spread`` dataset reads "
+    "the fire grid (TIGN_G, LFN, FIRE_AREA, FGRNHFX, ROS, ...) of wrfout files written by the official "
+    "model into spread rasters. Variable names and layout follow the official Registry and were "
+    "checked on a real output of the official hill ideal case."
+)
+
+FOUNDATION_PIPELINE_DOCS = (("Foundation Weather Models", "pyhazards_forecasts"),)
+GRAPHCAST_NOTE = (
+    "Not reimplemented: GraphCast (36.3M parameters, JAX) is a global weather model whose cyclone tracks come "
+    "from a tracker run on its forecasts. PyHazards reads WeatherBench 2's GraphCast forecasts (2018 from the "
+    "1979-2017 model, 2020), can run it through earth2studio (user-installed; weights CC BY 4.0 per the README "
+    "since 2026-08-06), tracks with a re-implementation of the paper's modified ECMWF tracker (the tracker was "
+    "never released) and scores against IBTrACS. The paper's Fig. 3 numbers are not reproduced. GenCast is a "
+    "different model and is not covered."
+)
+PANGU_NOTE = (
+    "Not reimplemented: PyHazards reads TCBench's released 2023 Pangu-Weather tracks and fields and WeatherBench "
+    "2's 2018-2022 forecasts, can run the official ONNX graphs through earth2studio, and tracks with the paper's "
+    "ECMWF-style rules or TCBench's TempestExtremes rules. TCBench's released tracks are reproduced byte for byte "
+    "from the raw fields, and its published DPE values exactly. The TC2018 numbers (120.29 / 195.65 km) are not "
+    "reproduced. Weights CC BY-NC-SA 4.0 (non-commercial); the official repository has no code licence."
+)
+FOURCASTNET_NOTE = (
+    "Not reimplemented: FourCastNet (74.7M-parameter AFNO) can be run through earth2studio (FCN, a 26-variable "
+    "retrain) and its fields tracked and scored. The paper has only a qualitative cyclone case. TCBench's "
+    "'FourCastNet v2' tracks and fields (SFNO small, a different model) can be read and scored."
+)
 
 APPENDIX_A_ENTRIES: List[AppendixAEntry] = [
-    AppendixAEntry("Earthquake", "PhaseNet", "Baseline", "https://github.com/AI4EPS/PhaseNet", "core", ("phasenet",), "Model adapter is implemented, but the SeisBench / pick-benchmark data path is still missing."),
-    AppendixAEntry("Earthquake", "EQTransformer", "Baseline", "https://github.com/smousavi05/EQTransformer", "core", ("eqtransformer",), "Model adapter is implemented, but the benchmark stack remains lighter than the PDF target."),
-    AppendixAEntry("Earthquake", "GPD", "Baseline", "https://github.com/interseismic/generalized-phase-detection", "core", ("gpd",), "Model adapter is implemented behind the shared picking interface."),
-    AppendixAEntry("Earthquake", "EQNet", "Baseline", "https://github.com/AI4EPS/EQNet", "core", ("eqnet",), "Model adapter is implemented behind the shared picking interface."),
-    AppendixAEntry("Earthquake", "SeisBench", "Benchmark / Data Ecosystem", "https://github.com/seisbench/seisbench", "core", notes="A synthetic-backed SeisBench-compatible waveform adapter is registered for smoke benchmarking."),
-    AppendixAEntry("Earthquake", "pick-benchmark", "Benchmark", "https://github.com/seisbench/pick-benchmark", "core", notes="A synthetic-backed pick-benchmark-compatible waveform adapter is registered for smoke benchmarking."),
-    AppendixAEntry("Earthquake", "pyCSEP", "Benchmark / Reports", "https://github.com/SCECCode/pycsep", "core", notes="The forecasting smoke benchmark exports a pyCSEP-style JSON artifact."),
-    AppendixAEntry("Earthquake", "AEFA", "Dataset / Forecast Benchmark", "https://github.com/chenyk1990/aefa", "core", notes="A synthetic-backed AEFA-style forecasting dataset adapter is registered."),
-    AppendixAEntry("Wildfire", "wildfire_forecasting", "Baseline", "https://github.com/Orion-AI-Lab/wildfire_forecasting", "core", ("wildfire_forecasting",)),
+    AppendixAEntry("Earthquake", "PhaseNet", "Baseline", "https://github.com/AI4EPS/PhaseNet", "core", ("phasenet",), "Port of the official TensorFlow U-Net (268,443 parameters); the released checkpoint 190703-214543 loads without TensorFlow and matches the official graph and SeisBench's port. Scored with the PhaseNet and EQTransformer pick metrics on real SeisBench-format / STEAD data."),
+    AppendixAEntry("Earthquake", "EQTransformer", "Baseline", "https://github.com/smousavi05/EQTransformer", "core", ("eqtransformer",), "Port of the released Keras models (paper model 371,639 parameters, conservative 376,423) with detection, P and S outputs; both official .h5 files load and match Keras and SeisBench."),
+    AppendixAEntry("Earthquake", "GPD", "Baseline", "https://github.com/interseismic/generalized-phase-detection", "core", ("gpd",), "Port of the released Keras P/S/noise window classifier (1,741,003 parameters) and its sliding-window picker; the official weights match Keras and SeisBench and reproduce the shipped Anza picks."),
+    AppendixAEntry("Earthquake", "EQNet", "Baseline", "https://github.com/AI4EPS/EQNet", "variant", ("eqnet",), "Rebuilt from the paper (Zhu et al. 2022, doi:10.1029/2021JB023283; 1,043,619 parameters): 1-D ResNet-18 feature extractor, P and S picking heads, shift-and-stack over candidate hypocentres and event detection, with a multi-station input (station gathers plus travel times). The official repository (non-commercial licence, no shift-and-stack, no weights) is only a test oracle: the feature extractor and both heads match the author's code; the shift-and-stack module and the end-to-end model are unverified. Its picking heads are scored on the earthquake.picking task."),
+    AppendixAEntry("Earthquake", "SeisBench", "Benchmark / Data Ecosystem", "https://github.com/seisbench/seisbench", "core", notes="seisbench_waveforms reads SeisBench-format datasets (and STEAD's own files) with PyHazards' own reader, checked against SeisBench's writer and reader; SeisBench itself (GPL-3.0) is only a test oracle. Datasets are downloaded by the user."),
+    AppendixAEntry("Earthquake", "pick-benchmark", "Benchmark", "https://github.com/seisbench/pick-benchmark", "missing", notes="Its SeisBench-format datasets can be read with seisbench_waveforms, but its three evaluation tasks (event detection AUC, phase identification MCC, onset regression on sampled windows) are not implemented; PyHazards scores pickers with the PhaseNet / EQTransformer pick metrics instead. The former synthetic pick_benchmark_waveforms adapter was removed."),
+    AppendixAEntry("Earthquake", "pyCSEP", "Benchmark / Reports", "https://github.com/SCECCode/pycsep", "missing", notes="pyCSEP tests earthquake-rate forecasts (Savran et al. 2022, doi:10.1785/0220220033); PyHazards has no rate-forecasting task. The former 'pyCSEP-style' JSON export of the wavefield-forecasting benchmark was only a metrics dump and was removed."),
+    AppendixAEntry("Earthquake", "AEFA", "Dataset / Forecast Benchmark", "https://github.com/chenyk1990/aefa", "missing", notes="AEFA is a weekly earthquake-occurrence forecasting dataset with electromagnetic / geoacoustic features (Chen et al. 2025, doi:10.1016/j.geoai.2025.100022; README states GPL-3.0). No loader exists; the former aefa_forecast adapter generated synthetic wavefields (now earthquake_wavefield_synthetic, used by WaveCastNet's wavefield-forecasting task) and was removed."),
+    AppendixAEntry("Wildfire", "wildfire_forecasting", "Baseline", "https://github.com/Orion-AI-Lab/wildfire_forecasting", "core", ("wildfire_forecasting",), "The paper's LSTM (default) and ConvLSTM are ported and checked against the official code; the Greek datacube is not loaded yet (synthetic smoke data). The paper's random forest (random_forest, checked against the official notebook) and XGBoost (xgboost, hyperparameters pending the paper's Supporting Information) are separate entries."),
     AppendixAEntry("Wildfire", "WildfireSpreadTS", "Baseline / Benchmark", "https://github.com/SebastianGer/WildfireSpreadTS", "core", ("wildfirespreadts",)),
-    AppendixAEntry("Wildfire", "ASUFM", "Baseline", "https://github.com/bronteee/fire-asufm", "core", ("asufm",)),
-    AppendixAEntry("Wildfire", "WRF-SFIRE", "Simulator Adapter", "https://github.com/openwfm/WRF-SFIRE", "core", ("wrf_sfire",), "The current adapter is lightweight and synthetic-backed rather than a full external simulator binding."),
-    AppendixAEntry("Wildfire", "ForeFire", "Simulator Adapter", "https://github.com/forefireAPI/forefire", "core", ("forefire",), "The current adapter is lightweight and synthetic-backed rather than a full external simulator binding."),
-    AppendixAEntry("Wildfire", "FireCastNet", "Optional Baseline", "https://github.com/SeasFire/firecastnet", "core", ("firecastnet",)),
-    AppendixAEntry("Flood", "NeuralHydrology", "Baseline Family", "https://github.com/neuralhydrology/neuralhydrology", "core", ("neuralhydrology_lstm", "neuralhydrology_ealstm"), "The LSTM and EA-LSTM adapters are implemented, but Caravan / WaterBench benchmark backing is still missing."),
-    AppendixAEntry("Flood", "Caravan", "Dataset", "https://github.com/kratzert/Caravan", "core", notes="A synthetic-backed Caravan adapter is registered for streamflow smoke benchmarking."),
-    AppendixAEntry("Flood", "WaterBench", "Dataset", "https://github.com/uihilab/WaterBench", "core", notes="A synthetic-backed WaterBench adapter is registered for streamflow smoke benchmarking."),
-    AppendixAEntry("Flood", "FloodCast", "Baseline", "https://github.com/HydroPML/FloodCast", "core", ("floodcast",), "The model adapter is implemented, but FloodCastBench-backed evaluation is not wired yet."),
-    AppendixAEntry("Flood", "FloodCastBench", "Benchmark", "https://github.com/HydroPML/FloodCastBench", "core", notes="A synthetic-backed FloodCastBench-style inundation adapter is registered."),
-    AppendixAEntry("Flood", "UrbanFloodCast", "Baseline", "https://github.com/HydroPML/UrbanFloodCast", "core", ("urbanfloodcast",), "The model adapter is implemented on synthetic inundation fixtures today."),
-    AppendixAEntry("Flood", "HydroBench", "Benchmark / Diagnostics", "https://github.com/EMscience/HydroBench", "core", notes="A synthetic-backed HydroBench adapter is registered for streamflow smoke benchmarking."),
-    AppendixAEntry("Flood", "google-research/flood-forecasting", "Reference Baseline", "https://github.com/google-research/flood-forecasting", "core", ("google_flood_forecasting",)),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "Hurricast", "Baseline", "https://github.com/leobix/hurricast", "core", ("hurricast",), "The model adapter is implemented, but the real TCBench / IBTrACS data path is still missing."),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "tropicalcyclone_MLP", "Baseline", "https://github.com/wenweixu/tropicalcyclone_MLP", "core", ("tropicalcyclone_mlp",), "The model adapter is implemented as a basin-filtered storm baseline."),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "TCIF-fusion", "Baseline", "https://github.com/wangchong96/TCIF-fusion", "core", ("tcif_fusion",), "The model adapter is implemented behind the shared storm evaluator."),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "SAF-Net", "Baseline", "https://github.com/xuguangning1218/TI_Prediction", "core", ("saf_net",), "The model adapter is implemented behind the shared storm evaluator."),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "TropiCycloneNet", "Baseline", "https://github.com/xiaochengfuhuo/TropiCycloneNet", "core", ("tropicyclonenet",), "The model adapter is implemented, but the public benchmark/data track remains synthetic-first."),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "TropiCycloneNet-Dataset", "Dataset", "https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset", "core", notes="A synthetic-backed TropiCycloneNet-Dataset adapter is registered."),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "TCBench Alpha", "Benchmark", "https://github.com/msgomez06/TCBench_Alpha", "core", notes="A synthetic-backed TCBench Alpha adapter is registered."),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "IBTrACS", "Dataset", "https://www.ncei.noaa.gov/products/international-best-track-archive", "core", notes="A synthetic-backed IBTrACS adapter is registered."),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "GraphCast / GenCast", "Foundation Adapter", "https://github.com/google-deepmind/graphcast", "experimental", ("graphcast_tc",), "The current wrapper is intentionally lightweight and should not be counted as stable core coverage."),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "Pangu-Weather", "Foundation Adapter", "https://github.com/198808xc/Pangu-Weather", "experimental", ("pangu_tc",), "The current wrapper is intentionally lightweight and should not be counted as stable core coverage."),
-    AppendixAEntry("Hurricane / Tropical Cyclone", "FourCastNet", "Foundation Adapter", "https://github.com/NVlabs/FourCastNet", "experimental", ("fourcastnet_tc",), "The current wrapper is intentionally lightweight and should not be counted as stable core coverage."),
+    AppendixAEntry("Wildfire", "ASUFM", "Baseline", "https://github.com/bronteee/fire-asufm", "core", ("asufm",), "Next-day fire-mask segmentation on 64x64 NDWS tiles, verified against the official code; the smoke benchmark runs it on synthetic 64x64 spread rasters because no NDWS loader exists yet."),
+    AppendixAEntry("Wildfire", "WRF-SFIRE", "Simulator Output Reader", "https://github.com/openwfm/WRF-SFIRE", "external", notes=WRF_SFIRE_NOTE, mapped_docs=(("WRF-SFIRE Outputs", "datasets/wrf_sfire"), ("Simulators", "pyhazards_simulators"))),
+    AppendixAEntry("Wildfire", "ForeFire", "Simulator Adapter", "https://github.com/forefireAPI/forefire", "external", notes=FOREFIRE_NOTE, mapped_docs=(("Simulators", "pyhazards_simulators"),)),
+    AppendixAEntry("Wildfire", "FireCastNet", "Optional Baseline", "https://github.com/SeasFire/firecastnet", "core", ("firecastnet",), "Pure PyTorch port of the official model; the released SeasFire checkpoints load and match the official DGL implementation. SeasFire datacube backing is still missing."),
+    AppendixAEntry("Flood", "NeuralHydrology", "Baseline Family", "https://github.com/neuralhydrology/neuralhydrology", "core", ("neuralhydrology_lstm", "neuralhydrology_ealstm"), "Ports of NeuralHydrology's CudaLSTM and EA-LSTM at the Kratzert et al. (2019) configuration, checked against NeuralHydrology and the official 2019 checkpoints; CAMELS-US and Caravan readers and the per-basin NSE / KGE evaluation are checked against NeuralHydrology's datasets and Tester."),
+    AppendixAEntry("Flood", "Caravan", "Dataset", "https://github.com/kratzert/Caravan", "core", notes="``caravan_streamflow`` reads a local copy of the official release (netCDF or CSV) into NeuralHydrology-style samples; checked against NeuralHydrology's reader on real Caravan files.", mapped_docs=(("Caravan", "datasets/caravan_streamflow"),)),
+    AppendixAEntry("Flood", "WaterBench", "Dataset", "https://github.com/uihilab/WaterBench", "missing", notes="No reader. The former ``waterbench_streamflow`` adapter generated random numbers and was removed."),
+    AppendixAEntry("Flood", "FloodCast", "Baseline", "https://github.com/HydroPML/FloodCast", "experimental", ("floodcast",), "The model under this name is a small CNN, not FloodCast (Xu et al. 2024, doi:10.1016/j.watres.2024.122162). The flood model (sequence-to-sequence GeoPINS, a physics-informed space-time Fourier operator) was never released, and the paper does not report its channel widths, so it cannot be rebuilt faithfully; the repository has no licence."),
+    AppendixAEntry("Flood", "FloodCastBench", "Benchmark", "https://github.com/HydroPML/FloodCastBench", "missing", notes="No reader for the 21.6 GB release (Zenodo 10.5281/zenodo.14017092); the former ``floodcastbench_inundation`` adapter generated random numbers and was removed. Its FNO / FNO+ baselines (4 layers, 12 modes, width 20) are not provided: only the data-generation code was released (no licence), so there is no model code to check a port against. The ``flood.inundation`` metrics (RMSE, NSE, Pearson r, CSI) cover its scores."),
+    AppendixAEntry("Flood", "UrbanFloodCast", "Baseline", "https://github.com/HydroPML/UrbanFloodCast", "core", ("urbanfloodcast",), "The deep neural operator (DNO-3, 4,470,437 parameters, 24 steps at once) written from the paper with U-NO (BSD-2) and FNO (MIT) blocks, since the official code has no licence; parameters, seeded initialisation, outputs, the one-shot input pipeline and the evaluation metrics match the official code. The Berlin GeoTIFFs (Zenodo 10.5281/zenodo.15700880) have no reader yet (urbanfloodcast_synthetic in their layout)."),
+    AppendixAEntry("Flood", "HydroBench", "Benchmark / Diagnostics", "https://github.com/EMscience/HydroBench", "missing", notes="No integration. The former ``hydrobench_streamflow`` adapter generated random numbers and was removed; the flood benchmark computes NeuralHydrology's hydrograph metrics instead."),
+    AppendixAEntry("Flood", "google-research/flood-forecasting", "Reference Baseline", "https://github.com/google-research/flood-forecasting", "core", ("google_flood_forecasting",), "Port of the released FloodHub model (MeanEmbeddingForecastLSTM, Gauch et al. 2025); the released weights load and match googlehydrology. Caravan MultiMet forecast inputs are not read yet."),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "Hurricast", "Baseline", "https://github.com/leobix/hurricast", "core", ("hurricast",), "Written from the paper (the official code has no licence): the CNN + Transformer encoder-decoder matches the official network for every released preset (seeded weights, outputs, gradients) and XGBoost runs on its embeddings with the official defaults; hurricast_ibtracs_era5 reads IBTrACS and ERA5. The paper's GRU decoder is not in the released code; no weights were released."),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "tropicalcyclone_MLP", "Baseline", "https://github.com/wenweixu/tropicalcyclone_MLP", "core", ("tropicalcyclone_mlp",), "The official 24-hour intensity-change MLP (121 SHIPS predictors, BSD-2) is ported and matches the official Keras model; ships_xu2021 reads the authors' predictor table (Zenodo 4784610) with the official leave-one-year-out folds. No trained weights were released."),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "TCIF-fusion", "Baseline", "https://github.com/wangchong96/TCIF-fusion", "core", ("tcif_fusion",), "Written from the paper and the notebook (no licence); the notebook graph rebuilt in Keras 3 gives the same outputs with copied weights and the authors' printed layer counts (299.6 M parameters). The ALL input has the paper's 65 channels (notebook: 85). The CMA / ERA5 / GridSat-B1 inputs have no reader yet (synthetic layout only)."),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "SAF-Net", "Baseline", "https://github.com/xuguangning1218/TI_Prediction", "core", ("saf_net",), "Written from the paper (the official code has no licence); the released checkpoint loads strictly and matches the official notebook network. The CMA / ERA-Interim inputs have no PyHazards reader yet (synthetic layout only)."),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "TropiCycloneNet", "Baseline", "https://github.com/xiaochengfuhuo/TropiCycloneNet", "core", ("tropicyclonenet",), "The six-generator GAN (CC BY 4.0 release) is ported; the released checkpoint loads strictly and matches the official code. The benchmark reports the paper's best-of-6 errors next to sample-mean errors."),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "TropiCycloneNet-Dataset", "Dataset", "https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset", "core", notes="tropicyclonenet_dataset reads TCND Data1d, Env-Data and 500 hPa GPH files (Zenodo, CC BY 4.0) exactly like the official TropiCycloneNet loader; tropicyclonenet_dataset_synthetic is a random stand-in for smoke tests.", mapped_docs=(("TropiCycloneNet Dataset", "datasets/tropicyclonenet_dataset"),)),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "TCBench Alpha", "Benchmark", "https://github.com/msgomez06/TCBench_Alpha", "core", notes="pyhazards.forecasts reads TCBench's released tracks and raw forecast fields (Hugging Face, pinned revision), re-implements its TempestExtremes tracking (identical tracks) and HuracanPy matching, and scores direct position error and intensity errors exactly as its evaluation does (the DPE values printed in its notebook are reproduced; one only with the IBTrACS position TCBench used, since revised by NCEI). CRPS, along/cross-track errors, rapid-intensification scores and its post-processing models are not implemented.", mapped_docs=(("TCBench Alpha", "datasets/tcbench_alpha"), ("Foundation Weather Models", "pyhazards_forecasts"))),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "IBTrACS", "Dataset", "https://www.ncei.noaa.gov/products/international-best-track-archive", "core", notes="ibtracs_tracks reads NOAA NCEI IBTrACS v04 CSV or netCDF files (best-track positions, intensities, agency columns) into forecast windows; the cyclone benchmark scores great-circle track error in km and intensity errors per lead time.", mapped_docs=(("IBTrACS", "datasets/ibtracs_tracks"),)),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "GraphCast", "Foundation Model Pipeline", "https://github.com/google-deepmind/weathernext", "pipeline", notes=GRAPHCAST_NOTE, mapped_docs=FOUNDATION_PIPELINE_DOCS),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "Pangu-Weather", "Foundation Model Pipeline", "https://github.com/198808xc/Pangu-Weather", "pipeline", notes=PANGU_NOTE, mapped_docs=FOUNDATION_PIPELINE_DOCS),
+    AppendixAEntry("Hurricane / Tropical Cyclone", "FourCastNet", "Foundation Model Pipeline", "https://github.com/NVlabs/FourCastNet", "pipeline", notes=FOURCASTNET_NOTE, mapped_docs=FOUNDATION_PIPELINE_DOCS),
 ]
 
 
-def appendix_a_alignment_issues(cards: Sequence[ModelCard]) -> List[str]:
+def _doc_exists(docname: str) -> bool:
+    if docname.startswith("datasets/"):
+        from .dataset_catalog import load_dataset_cards
+
+        return docname.split("/", 1)[1] in {card.slug for card in load_dataset_cards()}
+    return (DOCS_SOURCE_DIR / f"{docname}.rst").exists()
+
+
+def appendix_a_alignment_issues(
+    cards: Sequence[ModelCard],
+    entries: Sequence[AppendixAEntry] | None = None,
+) -> List[str]:
     issues: List[str] = []
     mapping = {card.model_name: card for card in cards}
-    for entry in APPENDIX_A_ENTRIES:
+    for entry in APPENDIX_A_ENTRIES if entries is None else entries:
+        if entry.status not in STATUS_LABELS:
+            issues.append(
+                "Coverage entry '{name}' has unknown status '{status}'.".format(
+                    name=entry.source_name,
+                    status=entry.status,
+                )
+            )
+        kind = NON_MODEL_STATUSES.get(entry.status)
+        if kind and entry.mapped_models:
+            issues.append(
+                "Coverage entry '{name}' is {kind} and must not map to model cards.".format(
+                    name=entry.source_name,
+                    kind=kind,
+                )
+            )
+        if kind and not entry.mapped_docs:
+            issues.append(
+                "Coverage entry '{name}' is {kind} but links no documentation.".format(
+                    name=entry.source_name,
+                    kind=kind,
+                )
+            )
+        for _, docname in entry.mapped_docs:
+            if not _doc_exists(docname):
+                issues.append(
+                    "Coverage entry '{name}' links missing doc '{doc}'.".format(
+                        name=entry.source_name,
+                        doc=docname,
+                    )
+                )
         for model_name in entry.mapped_models:
             card = mapping.get(model_name)
             if card is None:
@@ -109,7 +195,7 @@ def _summary_rows() -> Dict[str, Dict[str, int]]:
     for entry in APPENDIX_A_ENTRIES:
         bucket = summary.setdefault(
             entry.hazard_family,
-            {"core": 0, "experimental": 0, "missing": 0},
+            {status: 0 for status in SUMMARY_STATUSES},
         )
         if entry.status in bucket:
             bucket[entry.status] += 1
@@ -135,6 +221,12 @@ def _grouped_non_core_cards(cards: Sequence[ModelCard]) -> Dict[str, List[List[M
     return grouped
 
 
+def _mapping_cell(entry: AppendixAEntry, cards: Sequence[ModelCard]) -> str:
+    links = [_linked_models(cards)] if cards else []
+    links.extend(":doc:`{label} <{doc}>`".format(label=label, doc=doc) for label, doc in entry.mapped_docs)
+    return ", ".join(links) if links else "None"
+
+
 def _linked_models(cards: Sequence[ModelCard]) -> str:
     if not cards:
         return "None"
@@ -153,6 +245,7 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
     card_map = {card.model_name: card for card in cards}
     summary = _summary_rows()
     non_core = _grouped_non_core_cards(cards)
+    planned_models = {name for entry in APPENDIX_A_ENTRIES for name in entry.mapped_models}
 
     lines: List[str] = [
         GENERATED_MARKER,
@@ -166,25 +259,34 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
         "This page audits the current PyHazards implementation against the",
         "planned methods, benchmarks, and datasets listed in ``pyhazard_plan.pdf``.",
         "It separates implemented public entries from variant-only entries,",
-        "experimental wrappers, and items that are still missing.",
+        "experimental wrappers, external simulators, foundation-model pipelines, and items that are still missing.",
         "",
         "Status meanings:",
         "",
         "- ``Implemented``: a public PyHazards adapter exists for the named method or resource.",
         "- ``Experimental``: a lightweight wrapper exists, but it should not be counted as stable core coverage.",
+        "- ``External simulator``: PyHazards drives the official simulator, installed separately, or reads",
+        "  its outputs. Nothing of the simulator is reimplemented, and it is not counted as a model.",
+        "- ``Foundation model pipeline``: a global weather model whose hazard results come from tracking its",
+        "  forecast fields. PyHazards reads published forecasts or tracks, can run the official model through a",
+        "  separately installed runner, and provides the tracker and the scoring; the model itself is not",
+        "  reimplemented and is not counted as a model.",
         "- ``Missing``: no aligned adapter or benchmark integration is present yet.",
         "",
         "Hazard Summary",
         "--------------",
         "",
         ".. list-table::",
-        "   :widths: 26 18 18 18",
+        "   :widths: 22 13 13 13 13 13 13",
         "   :header-rows: 1",
         "   :class: dataset-list",
         "",
         "   * - Hazard Family",
         "     - Implemented",
+        "     - Variant only",
         "     - Experimental",
+        "     - External",
+        "     - Pipeline",
         "     - Missing",
     ]
 
@@ -193,7 +295,10 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
             [
                 "   * - {hazard}".format(hazard=hazard_family),
                 "     - {count}".format(count=counts["core"]),
+                "     - {count}".format(count=counts["variant"]),
                 "     - {count}".format(count=counts["experimental"]),
+                "     - {count}".format(count=counts["external"]),
+                "     - {count}".format(count=counts["pipeline"]),
                 "     - {count}".format(count=counts["missing"]),
             ]
         )
@@ -226,7 +331,7 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
                 "     - `{name} <{url}>`_".format(name=entry.source_name, url=entry.source_url),
                 "     - {item_type}".format(item_type=entry.item_type),
                 "     - ``{status}``".format(status=STATUS_LABELS[entry.status]),
-                "     - {mapping}".format(mapping=_linked_models(mapped_cards)),
+                "     - {mapping}".format(mapping=_mapping_cell(entry, mapped_cards)),
                 "     - {notes}".format(notes=entry.notes or " "),
             ]
         )
@@ -279,7 +384,13 @@ def render_appendix_a_page(cards: Sequence[ModelCard] | None = None) -> str:
                     name=first.display_name,
                     slug=first.module_doc_name,
                 )
-                reason = "Implemented outside the current core method set and kept public as an additional model."
+                if first.model_name in planned_models:
+                    reason = (
+                        "Planned method rebuilt from its paper; only the parts covered by a reference implementation "
+                        "are verified against code (see its Reproduction section)."
+                    )
+                else:
+                    reason = "Implemented outside the current core method set and kept public as an additional model."
 
             lines.extend(
                 [
@@ -319,6 +430,9 @@ def sync_generated_appendix_a_docs(check: bool = False) -> List[Path]:
 __all__ = [
     "APPENDIX_A_ENTRIES",
     "APPENDIX_A_PAGE_PATH",
+    "AppendixAEntry",
+    "NON_MODEL_STATUSES",
+    "STATUS_LABELS",
     "appendix_a_alignment_issues",
     "render_appendix_a_page",
     "sync_generated_appendix_a_docs",

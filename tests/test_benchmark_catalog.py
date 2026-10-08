@@ -37,24 +37,28 @@ def test_benchmark_page_lists_family_and_ecosystem_tables() -> None:
         ".. grid-item-card:: WildfireSpreadTS",
         ".. grid-item-card:: SeisBench",
         ".. grid-item-card:: pick-benchmark",
-        ".. grid-item-card:: pyCSEP",
-        ".. grid-item-card:: AEFA",
         ".. grid-item-card:: Caravan",
-        ".. grid-item-card:: WaterBench",
-        ".. grid-item-card:: FloodCastBench",
-        ".. grid-item-card:: HydroBench",
-        ".. grid-item-card:: TCBench Alpha",
+        ".. grid-item-card:: CAMELS-US",
+        ".. grid-item-card:: HydroGraphNet White River",
+        ".. grid-item-card:: SHIPS Predictors (Xu et al. 2021)",
         ".. grid-item-card:: IBTrACS",
-        ".. grid-item-card:: TropiCycloneNet-Dataset",
+        ".. grid-item-card:: TropiCycloneNet Dataset",
     ]
     for card in ecosystem_cards:
         assert page.count(card) == 1
+    # TCBench is read and scored by pyhazards.forecasts (the old synthetic tcbench_alpha dataset was removed).
+    assert page.count(".. grid-item-card:: TCBench Alpha") == 1
+    for removed in ("WaterBench", "FloodCastBench", "HydroBench"):  # synthetic adapters removed
+        assert f".. grid-item-card:: {removed}" not in page
 
     assert "WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction" in page
-    assert "8 smoke configs | 8 models | 1 ecosystem" in page
+    assert "7 smoke configs | 29 models | 1 ecosystem" in page
+    assert "5 smoke configs | 5 models | 2 ecosystems" in page
+    # AEFA (earthquake-occurrence data) and pyCSEP (rate-forecast tests) are not implemented.
+    assert ".. grid-item-card:: pyCSEP" not in page and ".. grid-item-card:: AEFA" not in page
+    assert "6 smoke configs | 6 models | 3 ecosystems" in page
+    # FourCastNet / GraphCast / Pangu-Weather are pipelines, not models: 5 TC configs and models.
     assert "5 smoke configs | 5 models | 4 ecosystems" in page
-    assert "6 smoke configs | 6 models | 4 ecosystems" in page
-    assert "8 smoke configs | 8 models | 3 ecosystems" in page
 
 
 def test_rendered_docs_include_detail_pages_with_absolute_cross_links() -> None:

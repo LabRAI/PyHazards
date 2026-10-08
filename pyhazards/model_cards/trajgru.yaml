@@ -1,0 +1,145 @@
+model_name: trajgru
+display_name: TrajGRU
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/trajgru.py
+builder_name: trajgru_builder
+summary: >
+  Trajectory GRU encoder-forecaster for precipitation nowcasting (Shi et al., NeurIPS 2017): a
+  frames-to-frames forecaster whose recurrent connections follow learned flow fields, ported from
+  the official MXNet code with its HKO-7 and MovingMNIST++ weights.
+description:
+  - >
+    TrajGRU replaces the fixed state-to-state convolution of ConvGRU with L learned links: a small
+    convolutional network predicts L flow fields from the current input and the previous state, the
+    state is bilinearly warped along each field, and a 1x1 convolution mixes the warped copies into
+    the reset gate, update gate and candidate. ``trajgru`` is the paper's encoder-forecaster: each
+    frame (with x/y coordinates and a constant channel appended) is embedded by a strided
+    convolution and encoded by three RNN blocks joined by strided convolutions; the forecaster
+    blocks start from the encoder's final states, the top one runs without input, transposed
+    convolutions pass outputs down, and a transposed convolution, a 3x3 convolution and a 1x1
+    convolution produce each frame. Activations are leaky ReLUs (slope 0.2).
+  - >
+    ``config="hko7"`` (default) is the HKO-7 benchmark model (480x480 radar maps, 5 -> 20 frames,
+    blocks of 64 / 192 / 192 channels with 13 / 13 / 9 links); ``config="movingmnist"`` is the
+    TrajGRU-L13 of the MovingMNIST++ experiments (64x64, 10 -> 10, 64 / 96 / 96 channels, 13 links).
+    ``layer_type="ConvGRU"`` gives the paper's ConvGRU baseline in the same encoder-forecaster.
+    Parameter names map one-to-one to the MXNet names, so the released checkpoints load with
+    ``load_hko7_params``, and outputs match the official code on them.
+  - >
+    No wildfire study using TrajGRU was found. Its inventory entry had been merged with the Conv-GRU
+    baseline of FireCastNet, which is a different model (``convgru``); WildfireIA names TrajGRU only
+    among spatiotemporal templates in its related work. It is offered as a sequence architecture
+    for fire-spread rasters; ``task="segmentation"`` is a PyHazards adaptation for next-step fire
+    masks.
+paper:
+  title: "Deep Learning for Precipitation Nowcasting: A Benchmark and A New Model"
+  url: https://arxiv.org/abs/1706.03458
+  repo_url: https://github.com/sxjscience/HKO-7
+reproduction:
+  reference_code: https://github.com/sxjscience/HKO-7
+  reference_commit: 57b987bd893bd6910996494c247359ace371d333
+  reference_license: MIT (code and released checkpoints)
+  reference_config: >
+    The official encoder and forecaster networks, built by encoder_forecaster_build_networks from
+    the official configuration files and run on MXNet 1.9.1: HKO-7 TrajGRU
+    (trajgru_55_55_33_1_64_1_192_1_192_13_13_9_b4.yml) and ConvGRU with their released checkpoints
+    (480x480, 5 -> 20 frames); the seven MovingMNIST++ models of paper Table 1 (TrajGRU L5 / L9 /
+    L13 / L17, ConvGRU K3-D2 / K5 / K7) with their released checkpoints (64x64, 10 -> 10); parameter
+    names and shapes of all nine; random non-zero flow layers; stacked cells (encoder);
+    encoder states carried over between batches; the warp against MXNet's GridGenerator and
+    BilinearSampler; and the initialisation scheme.
+  parameter_count: 12150053
+  checks: [parameter_count, state_dict, forward, pretrained_weights]
+  oracle_test: tests/oracle/test_trajgru_oracle.py
+  deviations:
+    - >
+      The reference is symbolic MXNet code that its authors tested on MXNet 0.12. It was run on
+      MXNet 1.9.1, the last release of the retired project, not on 0.12.
+    - >
+      Initial weights cannot match for a seed, since MXNet and PyTorch draw different random
+      numbers. The port applies the reference scheme (``MSRAPrelu(slope=0.2)``: Gaussian weights
+      with std ``sqrt(2 / 1.04 / fan_avg)``, zero biases, zero flow output layers so that every
+      link starts as the identity warp), which the oracle test compares by distribution.
+    - >
+      Inputs are ``(batch, T, C, H, W)`` and outputs ``(batch, T_out, out_channels, H, W)``; the
+      reference uses ``(T, batch, ...)``. ``in_channels`` and ``out_channels`` (1 and 1 in the
+      reference) are arguments.
+    - >
+      Not ported: the dynamic-filter (DFN) output of the ConvGRU-K5-DFN MovingMNIST++ experiment,
+      zoneout and the GAN blocks (``dbrnn``), none of which a TrajGRU configuration or released
+      checkpoint uses.
+    - >
+      Several cells per block (``stack_num`` > 1, with residual connections and reversed
+      forecaster states) follow the reference code, but only the encoder could be checked: the
+      reference forecaster fails to bind such networks on MXNet 1.9.1. Every released
+      configuration uses one cell per block.
+    - >
+      Frame sizes must let the decoder restore every encoder feature map (480x480 for ``hko7``,
+      multiples of 4 for ``movingmnist``); other sizes raise a ``ValueError`` that names the
+      mismatch, where the reference fails in shape inference.
+    - >
+      ``task="segmentation"`` (TrajGRUSegmenter) is a PyHazards adaptation, not from any wildfire
+      paper: the encoder-forecaster predicts one frame and its linear output is returned as logits
+      ``(batch, out_channels, H, W)``. Its state dict keys are those of the forecasting model.
+tasks:
+  - forecasting
+  - segmentation
+example: |
+  import torch
+  from pyhazards.models import build_model
+  from pyhazards.models.trajgru import load_hko7_params
+
+  # HKO-7 TrajGRU: 5 radar frames of 480x480 (pixel / 255) -> the next 20 frames.
+  model = build_model(name="trajgru", task="forecasting")  # 12,150,053 parameters
+  # Released checkpoints (MXNet .params), e.g. with mxnet installed:
+  # params = {**mx.nd.load("encoder_net-79999.params"), **mx.nd.load("forecaster_net-79999.params")}
+  # load_hko7_params(model, params)
+  future = model(torch.rand(1, 5, 1, 480, 480))  # (1, 20, 1, 480, 480)
+
+  # MovingMNIST++ TrajGRU-L13 (64x64, 10 -> 10) and the paper's ConvGRU baseline.
+  l13 = build_model(name="trajgru", task="forecasting", config="movingmnist")  # 4,000,397
+  convgru = build_model(name="trajgru", task="forecasting", config="movingmnist",
+                        layer_type="ConvGRU", h2h_kernel=5)  # 4,767,505
+
+  # PyHazards adaptation: next-day fire-mask logits from 5 daily 64x64 rasters with 6 channels.
+  seg = build_model(name="trajgru", task="segmentation", config="movingmnist", in_channels=6)
+  logits = seg(torch.randn(2, 5, 6, 64, 64))  # (2, 1, 64, 64)
+notes:
+  - >
+    Paper Table 1 lists the MovingMNIST++ parameter counts. The code reproduces 3.42M (Traj-L9),
+    4.00M (Traj-L13), 4.77M (Conv-K5-D1) and 8.01M (Conv-K7-D1); it gives 2.60M for Conv-K3-D2
+    and 2.84M for Traj-L5, the two values swapped in the table, and 4.58M for Traj-L17, which the
+    table lists as 4.77M.
+  - >
+    Warp direction: the code samples the previous state at the position minus the flow
+    (``GridGenerator(-flow)``), the paper's Eq. 5 at the position plus the flow. The flows are
+    learned, so the two only differ in the sign of the flow layer; the port follows the code, which
+    the released weights need.
+  - >
+    The model appends normalised x and y coordinates and a channel of ones to every frame (the
+    reference ``_pre_encode_frame``), so ``econv1`` sees ``in_channels + 3`` channels. The
+    reference feeds pixel values / 255; outputs have no activation.
+  - >
+    Training (outside the model): HKO-7 uses balanced MSE + MAE weighted by rain-rate thresholds
+    and masks, Adam (lr 1e-4, beta1 0.5), gradient clipping 50, batch 4, 100k iterations;
+    MovingMNIST++ uses MSE, clipping 1 and 200k iterations. The MovingMNIST++ script resets the
+    encoder states once and then starts every batch from the previous batch's final encoder states;
+    ``forward(x, initial_states=..., return_states=True)`` reproduces this (checked against the
+    reference).
+smoke_test:
+  task: forecasting
+  build_kwargs:
+    config: movingmnist
+    num_filter: [8, 12, 12]
+    L: 3
+    first_conv: [4, 3, 1, 1]
+    last_deconv: [4, 3, 1, 1]
+    num_output_frames: 2
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 3, 1, 16, 16]
+  expected_output:
+    kind: tensor
+    shape: [2, 2, 1, 16, 16]

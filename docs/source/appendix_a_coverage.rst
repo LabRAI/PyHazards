@@ -9,40 +9,61 @@ Overview
 This page audits the current PyHazards implementation against the
 planned methods, benchmarks, and datasets listed in ``pyhazard_plan.pdf``.
 It separates implemented public entries from variant-only entries,
-experimental wrappers, and items that are still missing.
+experimental wrappers, external simulators, foundation-model pipelines, and items that are still missing.
 
 Status meanings:
 
 - ``Implemented``: a public PyHazards adapter exists for the named method or resource.
 - ``Experimental``: a lightweight wrapper exists, but it should not be counted as stable core coverage.
+- ``External simulator``: PyHazards drives the official simulator, installed separately, or reads
+  its outputs. Nothing of the simulator is reimplemented, and it is not counted as a model.
+- ``Foundation model pipeline``: a global weather model whose hazard results come from tracking its
+  forecast fields. PyHazards reads published forecasts or tracks, can run the official model through a
+  separately installed runner, and provides the tracker and the scoring; the model itself is not
+  reimplemented and is not counted as a model.
 - ``Missing``: no aligned adapter or benchmark integration is present yet.
 
 Hazard Summary
 --------------
 
 .. list-table::
-   :widths: 26 18 18 18
+   :widths: 22 13 13 13 13 13 13
    :header-rows: 1
    :class: dataset-list
 
    * - Hazard Family
      - Implemented
+     - Variant only
      - Experimental
+     - External
+     - Pipeline
      - Missing
    * - Earthquake
-     - 8
+     - 4
+     - 1
      - 0
      - 0
+     - 0
+     - 3
    * - Wildfire
-     - 6
+     - 4
+     - 0
+     - 0
+     - 2
      - 0
      - 0
    * - Flood
-     - 8
+     - 4
+     - 0
+     - 1
      - 0
      - 0
+     - 3
    * - Hurricane / Tropical Cyclone
      - 8
+     - 0
+     - 0
+     - 0
      - 3
      - 0
 
@@ -65,199 +86,199 @@ Method and Resource Matrix
      - Baseline
      - ``Implemented``
      - :doc:`PhaseNet <modules/models_phasenet>`
-     - Model adapter is implemented, but the SeisBench / pick-benchmark data path is still missing.
+     - Port of the official TensorFlow U-Net (268,443 parameters); the released checkpoint 190703-214543 loads without TensorFlow and matches the official graph and SeisBench's port. Scored with the PhaseNet and EQTransformer pick metrics on real SeisBench-format / STEAD data.
    * - Earthquake
      - `EQTransformer <https://github.com/smousavi05/EQTransformer>`_
      - Baseline
      - ``Implemented``
      - :doc:`EQTransformer <modules/models_eqtransformer>`
-     - Model adapter is implemented, but the benchmark stack remains lighter than the PDF target.
+     - Port of the released Keras models (paper model 371,639 parameters, conservative 376,423) with detection, P and S outputs; both official .h5 files load and match Keras and SeisBench.
    * - Earthquake
      - `GPD <https://github.com/interseismic/generalized-phase-detection>`_
      - Baseline
      - ``Implemented``
      - :doc:`GPD <modules/models_gpd>`
-     - Model adapter is implemented behind the shared picking interface.
+     - Port of the released Keras P/S/noise window classifier (1,741,003 parameters) and its sliding-window picker; the official weights match Keras and SeisBench and reproduce the shipped Anza picks.
    * - Earthquake
      - `EQNet <https://github.com/AI4EPS/EQNet>`_
      - Baseline
-     - ``Implemented``
+     - ``Variant only``
      - :doc:`EQNet <modules/models_eqnet>`
-     - Model adapter is implemented behind the shared picking interface.
+     - Rebuilt from the paper (Zhu et al. 2022, doi:10.1029/2021JB023283; 1,043,619 parameters): 1-D ResNet-18 feature extractor, P and S picking heads, shift-and-stack over candidate hypocentres and event detection, with a multi-station input (station gathers plus travel times). The official repository (non-commercial licence, no shift-and-stack, no weights) is only a test oracle: the feature extractor and both heads match the author's code; the shift-and-stack module and the end-to-end model are unverified. Its picking heads are scored on the earthquake.picking task.
    * - Earthquake
      - `SeisBench <https://github.com/seisbench/seisbench>`_
      - Benchmark / Data Ecosystem
      - ``Implemented``
      - None
-     - A synthetic-backed SeisBench-compatible waveform adapter is registered for smoke benchmarking.
+     - seisbench_waveforms reads SeisBench-format datasets (and STEAD's own files) with PyHazards' own reader, checked against SeisBench's writer and reader; SeisBench itself (GPL-3.0) is only a test oracle. Datasets are downloaded by the user.
    * - Earthquake
      - `pick-benchmark <https://github.com/seisbench/pick-benchmark>`_
      - Benchmark
-     - ``Implemented``
+     - ``Missing``
      - None
-     - A synthetic-backed pick-benchmark-compatible waveform adapter is registered for smoke benchmarking.
+     - Its SeisBench-format datasets can be read with seisbench_waveforms, but its three evaluation tasks (event detection AUC, phase identification MCC, onset regression on sampled windows) are not implemented; PyHazards scores pickers with the PhaseNet / EQTransformer pick metrics instead. The former synthetic pick_benchmark_waveforms adapter was removed.
    * - Earthquake
      - `pyCSEP <https://github.com/SCECCode/pycsep>`_
      - Benchmark / Reports
-     - ``Implemented``
+     - ``Missing``
      - None
-     - The forecasting smoke benchmark exports a pyCSEP-style JSON artifact.
+     - pyCSEP tests earthquake-rate forecasts (Savran et al. 2022, doi:10.1785/0220220033); PyHazards has no rate-forecasting task. The former 'pyCSEP-style' JSON export of the wavefield-forecasting benchmark was only a metrics dump and was removed.
    * - Earthquake
      - `AEFA <https://github.com/chenyk1990/aefa>`_
      - Dataset / Forecast Benchmark
-     - ``Implemented``
+     - ``Missing``
      - None
-     - A synthetic-backed AEFA-style forecasting dataset adapter is registered.
+     - AEFA is a weekly earthquake-occurrence forecasting dataset with electromagnetic / geoacoustic features (Chen et al. 2025, doi:10.1016/j.geoai.2025.100022; README states GPL-3.0). No loader exists; the former aefa_forecast adapter generated synthetic wavefields (now earthquake_wavefield_synthetic, used by WaveCastNet's wavefield-forecasting task) and was removed.
    * - Wildfire
      - `wildfire_forecasting <https://github.com/Orion-AI-Lab/wildfire_forecasting>`_
      - Baseline
      - ``Implemented``
      - :doc:`Wildfire Forecasting <modules/models_wildfire_forecasting>`
-     -  
+     - The paper's LSTM (default) and ConvLSTM are ported and checked against the official code; the Greek datacube is not loaded yet (synthetic smoke data). The paper's random forest (random_forest, checked against the official notebook) and XGBoost (xgboost, hyperparameters pending the paper's Supporting Information) are separate entries.
    * - Wildfire
      - `WildfireSpreadTS <https://github.com/SebastianGer/WildfireSpreadTS>`_
      - Baseline / Benchmark
      - ``Implemented``
-     - :doc:`WildfireSpreadTS <modules/models_wildfirespreadts>`
+     - :doc:`WildfireSpreadTS Baselines <modules/models_wildfirespreadts>`
      -  
    * - Wildfire
      - `ASUFM <https://github.com/bronteee/fire-asufm>`_
      - Baseline
      - ``Implemented``
      - :doc:`ASUFM <modules/models_asufm>`
-     -  
+     - Next-day fire-mask segmentation on 64x64 NDWS tiles, verified against the official code; the smoke benchmark runs it on synthetic 64x64 spread rasters because no NDWS loader exists yet.
    * - Wildfire
      - `WRF-SFIRE <https://github.com/openwfm/WRF-SFIRE>`_
-     - Simulator Adapter
-     - ``Implemented``
-     - :doc:`WRF-SFIRE Adapter <modules/models_wrf_sfire>`
-     - The current adapter is lightweight and synthetic-backed rather than a full external simulator binding.
+     - Simulator Output Reader
+     - ``External simulator``
+     - :doc:`WRF-SFIRE Outputs <datasets/wrf_sfire>`, :doc:`Simulators <pyhazards_simulators>`
+     - PyHazards does not run WRF-SFIRE (an MPI Fortran model). The ``wrf_sfire_spread`` dataset reads the fire grid (TIGN_G, LFN, FIRE_AREA, FGRNHFX, ROS, ...) of wrfout files written by the official model into spread rasters. Variable names and layout follow the official Registry and were checked on a real output of the official hill ideal case.
    * - Wildfire
      - `ForeFire <https://github.com/forefireAPI/forefire>`_
      - Simulator Adapter
-     - ``Implemented``
-     - :doc:`ForeFire Adapter <modules/models_forefire>`
-     - The current adapter is lightweight and synthetic-backed rather than a full external simulator binding.
+     - ``External simulator``
+     - :doc:`Simulators <pyhazards_simulators>`
+     - ForeFireSimulator runs the official ForeFire engine (GPL-3.0; installed separately with ``pip install forefire``, never vendored) on PyHazards rasters and returns arrival-time and burned-mask rasters. It reproduces ForeFire's own regression reference (tests/runff) and the official idealized-wind example. It is a physics simulator, not a trainable model.
    * - Wildfire
      - `FireCastNet <https://github.com/SeasFire/firecastnet>`_
      - Optional Baseline
      - ``Implemented``
      - :doc:`FireCastNet <modules/models_firecastnet>`
-     -  
+     - Pure PyTorch port of the official model; the released SeasFire checkpoints load and match the official DGL implementation. SeasFire datacube backing is still missing.
    * - Flood
      - `NeuralHydrology <https://github.com/neuralhydrology/neuralhydrology>`_
      - Baseline Family
      - ``Implemented``
      - :doc:`NeuralHydrology LSTM <modules/models_neuralhydrology_lstm>`, :doc:`EA-LSTM <modules/models_neuralhydrology_ealstm>`
-     - The LSTM and EA-LSTM adapters are implemented, but Caravan / WaterBench benchmark backing is still missing.
+     - Ports of NeuralHydrology's CudaLSTM and EA-LSTM at the Kratzert et al. (2019) configuration, checked against NeuralHydrology and the official 2019 checkpoints; CAMELS-US and Caravan readers and the per-basin NSE / KGE evaluation are checked against NeuralHydrology's datasets and Tester.
    * - Flood
      - `Caravan <https://github.com/kratzert/Caravan>`_
      - Dataset
      - ``Implemented``
-     - None
-     - A synthetic-backed Caravan adapter is registered for streamflow smoke benchmarking.
+     - :doc:`Caravan <datasets/caravan_streamflow>`
+     - ``caravan_streamflow`` reads a local copy of the official release (netCDF or CSV) into NeuralHydrology-style samples; checked against NeuralHydrology's reader on real Caravan files.
    * - Flood
      - `WaterBench <https://github.com/uihilab/WaterBench>`_
      - Dataset
-     - ``Implemented``
+     - ``Missing``
      - None
-     - A synthetic-backed WaterBench adapter is registered for streamflow smoke benchmarking.
+     - No reader. The former ``waterbench_streamflow`` adapter generated random numbers and was removed.
    * - Flood
      - `FloodCast <https://github.com/HydroPML/FloodCast>`_
      - Baseline
-     - ``Implemented``
+     - ``Experimental``
      - :doc:`FloodCast <modules/models_floodcast>`
-     - The model adapter is implemented, but FloodCastBench-backed evaluation is not wired yet.
+     - The model under this name is a small CNN, not FloodCast (Xu et al. 2024, doi:10.1016/j.watres.2024.122162). The flood model (sequence-to-sequence GeoPINS, a physics-informed space-time Fourier operator) was never released, and the paper does not report its channel widths, so it cannot be rebuilt faithfully; the repository has no licence.
    * - Flood
      - `FloodCastBench <https://github.com/HydroPML/FloodCastBench>`_
      - Benchmark
-     - ``Implemented``
+     - ``Missing``
      - None
-     - A synthetic-backed FloodCastBench-style inundation adapter is registered.
+     - No reader for the 21.6 GB release (Zenodo 10.5281/zenodo.14017092); the former ``floodcastbench_inundation`` adapter generated random numbers and was removed. Its FNO / FNO+ baselines (4 layers, 12 modes, width 20) are not provided: only the data-generation code was released (no licence), so there is no model code to check a port against. The ``flood.inundation`` metrics (RMSE, NSE, Pearson r, CSI) cover its scores.
    * - Flood
      - `UrbanFloodCast <https://github.com/HydroPML/UrbanFloodCast>`_
      - Baseline
      - ``Implemented``
      - :doc:`UrbanFloodCast <modules/models_urbanfloodcast>`
-     - The model adapter is implemented on synthetic inundation fixtures today.
+     - The deep neural operator (DNO-3, 4,470,437 parameters, 24 steps at once) written from the paper with U-NO (BSD-2) and FNO (MIT) blocks, since the official code has no licence; parameters, seeded initialisation, outputs, the one-shot input pipeline and the evaluation metrics match the official code. The Berlin GeoTIFFs (Zenodo 10.5281/zenodo.15700880) have no reader yet (urbanfloodcast_synthetic in their layout).
    * - Flood
      - `HydroBench <https://github.com/EMscience/HydroBench>`_
      - Benchmark / Diagnostics
-     - ``Implemented``
+     - ``Missing``
      - None
-     - A synthetic-backed HydroBench adapter is registered for streamflow smoke benchmarking.
+     - No integration. The former ``hydrobench_streamflow`` adapter generated random numbers and was removed; the flood benchmark computes NeuralHydrology's hydrograph metrics instead.
    * - Flood
      - `google-research/flood-forecasting <https://github.com/google-research/flood-forecasting>`_
      - Reference Baseline
      - ``Implemented``
      - :doc:`Google Flood Forecasting <modules/models_google_flood_forecasting>`
-     -  
+     - Port of the released FloodHub model (MeanEmbeddingForecastLSTM, Gauch et al. 2025); the released weights load and match googlehydrology. Caravan MultiMet forecast inputs are not read yet.
    * - Hurricane / Tropical Cyclone
      - `Hurricast <https://github.com/leobix/hurricast>`_
      - Baseline
      - ``Implemented``
      - :doc:`Hurricast <modules/models_hurricast>`
-     - The model adapter is implemented, but the real TCBench / IBTrACS data path is still missing.
+     - Written from the paper (the official code has no licence): the CNN + Transformer encoder-decoder matches the official network for every released preset (seeded weights, outputs, gradients) and XGBoost runs on its embeddings with the official defaults; hurricast_ibtracs_era5 reads IBTrACS and ERA5. The paper's GRU decoder is not in the released code; no weights were released.
    * - Hurricane / Tropical Cyclone
      - `tropicalcyclone_MLP <https://github.com/wenweixu/tropicalcyclone_MLP>`_
      - Baseline
      - ``Implemented``
      - :doc:`Tropical Cyclone MLP <modules/models_tropicalcyclone_mlp>`
-     - The model adapter is implemented as a basin-filtered storm baseline.
+     - The official 24-hour intensity-change MLP (121 SHIPS predictors, BSD-2) is ported and matches the official Keras model; ships_xu2021 reads the authors' predictor table (Zenodo 4784610) with the official leave-one-year-out folds. No trained weights were released.
    * - Hurricane / Tropical Cyclone
      - `TCIF-fusion <https://github.com/wangchong96/TCIF-fusion>`_
      - Baseline
      - ``Implemented``
      - :doc:`TCIF-fusion <modules/models_tcif_fusion>`
-     - The model adapter is implemented behind the shared storm evaluator.
+     - Written from the paper and the notebook (no licence); the notebook graph rebuilt in Keras 3 gives the same outputs with copied weights and the authors' printed layer counts (299.6 M parameters). The ALL input has the paper's 65 channels (notebook: 85). The CMA / ERA5 / GridSat-B1 inputs have no reader yet (synthetic layout only).
    * - Hurricane / Tropical Cyclone
      - `SAF-Net <https://github.com/xuguangning1218/TI_Prediction>`_
      - Baseline
      - ``Implemented``
      - :doc:`SAF-Net <modules/models_saf_net>`
-     - The model adapter is implemented behind the shared storm evaluator.
+     - Written from the paper (the official code has no licence); the released checkpoint loads strictly and matches the official notebook network. The CMA / ERA-Interim inputs have no PyHazards reader yet (synthetic layout only).
    * - Hurricane / Tropical Cyclone
      - `TropiCycloneNet <https://github.com/xiaochengfuhuo/TropiCycloneNet>`_
      - Baseline
      - ``Implemented``
      - :doc:`TropiCycloneNet <modules/models_tropicyclonenet>`
-     - The model adapter is implemented, but the public benchmark/data track remains synthetic-first.
+     - The six-generator GAN (CC BY 4.0 release) is ported; the released checkpoint loads strictly and matches the official code. The benchmark reports the paper's best-of-6 errors next to sample-mean errors.
    * - Hurricane / Tropical Cyclone
      - `TropiCycloneNet-Dataset <https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset>`_
      - Dataset
      - ``Implemented``
-     - None
-     - A synthetic-backed TropiCycloneNet-Dataset adapter is registered.
+     - :doc:`TropiCycloneNet Dataset <datasets/tropicyclonenet_dataset>`
+     - tropicyclonenet_dataset reads TCND Data1d, Env-Data and 500 hPa GPH files (Zenodo, CC BY 4.0) exactly like the official TropiCycloneNet loader; tropicyclonenet_dataset_synthetic is a random stand-in for smoke tests.
    * - Hurricane / Tropical Cyclone
      - `TCBench Alpha <https://github.com/msgomez06/TCBench_Alpha>`_
      - Benchmark
      - ``Implemented``
-     - None
-     - A synthetic-backed TCBench Alpha adapter is registered.
+     - :doc:`TCBench Alpha <datasets/tcbench_alpha>`, :doc:`Foundation Weather Models <pyhazards_forecasts>`
+     - pyhazards.forecasts reads TCBench's released tracks and raw forecast fields (Hugging Face, pinned revision), re-implements its TempestExtremes tracking (identical tracks) and HuracanPy matching, and scores direct position error and intensity errors exactly as its evaluation does (the DPE values printed in its notebook are reproduced; one only with the IBTrACS position TCBench used, since revised by NCEI). CRPS, along/cross-track errors, rapid-intensification scores and its post-processing models are not implemented.
    * - Hurricane / Tropical Cyclone
      - `IBTrACS <https://www.ncei.noaa.gov/products/international-best-track-archive>`_
      - Dataset
      - ``Implemented``
-     - None
-     - A synthetic-backed IBTrACS adapter is registered.
+     - :doc:`IBTrACS <datasets/ibtracs_tracks>`
+     - ibtracs_tracks reads NOAA NCEI IBTrACS v04 CSV or netCDF files (best-track positions, intensities, agency columns) into forecast windows; the cyclone benchmark scores great-circle track error in km and intensity errors per lead time.
    * - Hurricane / Tropical Cyclone
-     - `GraphCast / GenCast <https://github.com/google-deepmind/graphcast>`_
-     - Foundation Adapter
-     - ``Experimental``
-     - :doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`
-     - The current wrapper is intentionally lightweight and should not be counted as stable core coverage.
+     - `GraphCast <https://github.com/google-deepmind/weathernext>`_
+     - Foundation Model Pipeline
+     - ``Foundation model pipeline``
+     - :doc:`Foundation Weather Models <pyhazards_forecasts>`
+     - Not reimplemented: GraphCast (36.3M parameters, JAX) is a global weather model whose cyclone tracks come from a tracker run on its forecasts. PyHazards reads WeatherBench 2's GraphCast forecasts (2018 from the 1979-2017 model, 2020), can run it through earth2studio (user-installed; weights CC BY 4.0 per the README since 2026-08-06), tracks with a re-implementation of the paper's modified ECMWF tracker (the tracker was never released) and scores against IBTrACS. The paper's Fig. 3 numbers are not reproduced. GenCast is a different model and is not covered.
    * - Hurricane / Tropical Cyclone
      - `Pangu-Weather <https://github.com/198808xc/Pangu-Weather>`_
-     - Foundation Adapter
-     - ``Experimental``
-     - :doc:`Pangu TC Adapter <modules/models_pangu_tc>`
-     - The current wrapper is intentionally lightweight and should not be counted as stable core coverage.
+     - Foundation Model Pipeline
+     - ``Foundation model pipeline``
+     - :doc:`Foundation Weather Models <pyhazards_forecasts>`
+     - Not reimplemented: PyHazards reads TCBench's released 2023 Pangu-Weather tracks and fields and WeatherBench 2's 2018-2022 forecasts, can run the official ONNX graphs through earth2studio, and tracks with the paper's ECMWF-style rules or TCBench's TempestExtremes rules. TCBench's released tracks are reproduced byte for byte from the raw fields, and its published DPE values exactly. The TC2018 numbers (120.29 / 195.65 km) are not reproduced. Weights CC BY-NC-SA 4.0 (non-commercial); the official repository has no code licence.
    * - Hurricane / Tropical Cyclone
      - `FourCastNet <https://github.com/NVlabs/FourCastNet>`_
-     - Foundation Adapter
-     - ``Experimental``
-     - :doc:`FourCastNet TC Adapter <modules/models_fourcastnet_tc>`
-     - The current wrapper is intentionally lightweight and should not be counted as stable core coverage.
+     - Foundation Model Pipeline
+     - ``Foundation model pipeline``
+     - :doc:`Foundation Weather Models <pyhazards_forecasts>`
+     - Not reimplemented: FourCastNet (74.7M-parameter AFNO) can be run through earth2studio (FCN, a 26-variable retrain) and its fields tracked and scored. The paper has only a qualitative cyclone case. TCBench's 'FourCastNet v2' tracks and fields (SFNO small, a different model) can be read and scored.
 
 Current Public Non-Core Implementations
 ---------------------------------------
@@ -278,25 +299,21 @@ part of the current core method set.
      - ``variant``
      - :doc:`CNN-ASPP <modules/models_wildfire_aspp>`
      - Implemented outside the current core method set and kept public as an additional model.
+   * - Wildfire
+     - ``variant``
+     - :doc:`U-Net <modules/models_unet>`
+     - Implemented outside the current core method set and kept public as an additional model.
+   * - Wildfire
+     - ``variant``
+     - :doc:`XGBoost <modules/models_xgboost>`
+     - Implemented outside the current core method set and kept public as an additional model.
    * - Earthquake
      - ``variant``
-     - :doc:`WaveCastNet <modules/models_wavecastnet>`
-     - Implemented outside the current core method set and kept public as an additional model.
+     - :doc:`EQNet <modules/models_eqnet>`
+     - Planned method rebuilt from its paper; only the parts covered by a reference implementation are verified against code (see its Reproduction section).
    * - Flood
-     - ``variant``
-     - :doc:`HydroGraphNet <modules/models_hydrographnet>`
-     - Implemented outside the current core method set and kept public as an additional model.
-   * - Tropical Cyclone
      - ``experimental``
-     - :doc:`FourCastNet TC Adapter <modules/models_fourcastnet_tc>`
-     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
-   * - Tropical Cyclone
-     - ``experimental``
-     - :doc:`GraphCast TC Adapter <modules/models_graphcast_tc>`
-     - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
-   * - Tropical Cyclone
-     - ``experimental``
-     - :doc:`Pangu TC Adapter <modules/models_pangu_tc>`
+     - :doc:`FloodCast <modules/models_floodcast>`
      - Wrapper-style experimental adapter pending stronger benchmark and dataset support.
 
 Execution Note

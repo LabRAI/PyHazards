@@ -1,25 +1,25 @@
+# Smoke run of Hurricast's encoder-decoder head on random inputs in the hurricast_ibtracs_era5 layout. The full
+# model (XGBoost on the embeddings) must be fitted first (Hurricast.fit); scores on synthetic data mean nothing.
 benchmark:
   name: tc
-  hazard_task: tc.track_intensity
+  hazard_task: tc.intensity
   metrics:
-    - track_error
     - intensity_mae
+    - intensity_rmse
+    - intensity_mae_group_mean
   eval_split: test
 dataset:
-  name: ibtracs_tracks
+  name: hurricast_synthetic
   params:
     micro: true
 model:
   name: hurricast
   task: regression
   params:
-    input_dim: 8
-    hidden_dim: 64
-    num_layers: 2
-    horizon: 5
-    output_dim: 3
+    target: intensity
+    predictor: network
 report:
-  output_dir: reports/tc
+  output_dir: reports/hurricast
   formats:
     - json
 seed: 7

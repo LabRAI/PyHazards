@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import inspect
 from collections import defaultdict
 from pathlib import Path
@@ -84,6 +85,7 @@ TASK_DISPLAY_LABELS = {
     "flood.streamflow": "Streamflow",
     "flood.inundation": "Inundation",
     "tc.track_intensity": "Track + Intensity",
+    "tc.intensity": "Intensity",
     "classification": "Classification",
     "regression": "Forecasting",
     "segmentation": "Segmentation",
@@ -104,10 +106,10 @@ MATURITY_BADGE_ROLES = {
 }
 
 STARTER_MODELS = {
-    "Wildfire": "firecastnet",
+    "Wildfire": "wildfirespreadts",
     "Earthquake": "phasenet",
-    "Flood": "floodcast",
-    "Tropical Cyclone": "hurricast",
+    "Flood": "neuralhydrology_lstm",
+    "Tropical Cyclone": "tropicyclonenet",
 }
 
 
@@ -117,9 +119,62 @@ class PaperReference(BaseModel):
     repo_url: Optional[str] = None
 
 
+class UsageReference(PaperReference):
+    """A paper or benchmark that used this model, and how."""
+
+    note: Optional[str] = None
+
+
+REPRODUCTION_CHECKS = {
+    "parameter_count": "parameter count",
+    "initialization": "seeded initialisation",
+    "state_dict": "parameter names and shapes",
+    "forward": "forward outputs",
+    "pretrained_weights": "official pretrained weights",
+}
+
+
+class ReproductionSpec(BaseModel):
+    """How the PyHazards implementation was checked against its source.
+
+    ``source: code`` means it was compared with a pinned reference implementation by an oracle
+    test; ``source: paper`` means the model was rebuilt from the paper, either because no code was
+    released or because the released code may not be copied (it may still serve as an oracle).
+    """
+
+    source: Literal["code", "paper"] = "code"
+    reference_code: Optional[str] = None
+    reference_commit: Optional[str] = None
+    reference_license: Optional[str] = None
+    reference_config: str
+    parameter_count: Optional[int] = None
+    checks: List[Literal["parameter_count", "initialization", "state_dict", "forward", "pretrained_weights"]] = Field(
+        default_factory=list
+    )
+    oracle_test: Optional[str] = None
+    deviations: List[str] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def validate_source(self) -> "ReproductionSpec":
+        if self.source == "code":
+            missing = [
+                name
+                for name in ("reference_code", "reference_commit", "reference_license", "oracle_test")
+                if not getattr(self, name)
+            ]
+            if missing or not self.checks:
+                raise ValueError(
+                    "reproduction with source 'code' needs reference_code, reference_commit, "
+                    "reference_license, oracle_test and checks"
+                )
+        return self
+
+
 class SmokeTensorSpec(BaseModel):
     shape: List[int]
     dtype: str = "float32"
+    # Integer tensors (e.g. graph edge indices): values drawn uniformly from [0, high).
+    high: Optional[int] = Field(default=None, ge=1)
 
 
 class SmokeInputSpec(BaseModel):
@@ -143,9 +198,12 @@ class SmokeInputSpec(BaseModel):
 
 
 class SmokeOutputSpec(BaseModel):
+    """Expected output: one tensor (``shape``), a tuple/list (``shapes``) or a dict of tensors (``mapping``)."""
+
     kind: str = "tensor"
     shape: Optional[List[int]] = None
     shapes: List[List[int]] = Field(default_factory=list)
+    mapping: Dict[str, List[int]] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def validate_payload(self) -> "SmokeOutputSpec":
@@ -154,14 +212,49 @@ class SmokeOutputSpec(BaseModel):
             raise ValueError("tensor smoke outputs require the 'shape' field")
         if kind == "sequence" and not self.shapes:
             raise ValueError("sequence smoke outputs require the 'shapes' field")
-        if kind not in {"tensor", "sequence"}:
-            raise ValueError("smoke output kind must be one of: tensor, sequence")
+        if kind == "mapping" and not self.mapping:
+            raise ValueError("mapping smoke outputs require the 'mapping' field")
+        if kind not in {"tensor", "sequence", "mapping"}:
+            raise ValueError("smoke output kind must be one of: tensor, sequence, mapping")
+        return self
+
+    @property
+    def expected(self) -> Any:
+        kind = self.kind.lower()
+        if kind == "tensor":
+            return self.shape
+        if kind == "sequence":
+            return self.shapes
+        return dict(self.mapping)
+
+
+class SmokeFitSpec(BaseModel):
+    """Random training data for models fitted before the forward call (``model.fit(inputs, targets)``).
+
+    Estimator models (e.g. scikit-learn wrappers) cannot predict before they are fitted. Inputs are
+    standard normal; with ``num_classes`` the targets are integer labels covering every class (the
+    first ``num_classes`` samples get one of each), otherwise standard normal values.
+    """
+
+    inputs: SmokeTensorSpec
+    targets: SmokeTensorSpec
+    num_classes: Optional[int] = Field(default=None, ge=1)
+
+    @model_validator(mode="after")
+    def validate_payload(self) -> "SmokeFitSpec":
+        if not self.inputs.shape or not self.targets.shape or self.inputs.shape[0] != self.targets.shape[0]:
+            raise ValueError("smoke fit inputs and targets need the same leading (sample) dimension")
+        if self.num_classes is not None and self.targets.shape[0] < self.num_classes:
+            raise ValueError("smoke fit targets need at least one sample per class")
         return self
 
 
 class SmokeTestSpec(BaseModel):
     task: str
     build_kwargs: Dict[str, Any] = Field(default_factory=dict)
+    # Optional packages the model needs; the smoke test is skipped when one is not installed.
+    requires: List[str] = Field(default_factory=list)
+    fit: Optional[SmokeFitSpec] = None
     input: SmokeInputSpec
     expected_output: SmokeOutputSpec
 
@@ -179,6 +272,8 @@ class ModelCard(BaseModel):
     summary: str
     description: List[str]
     paper: PaperReference
+    references: List[UsageReference] = Field(default_factory=list)
+    reproduction: Optional[ReproductionSpec] = None
     tasks: List[str]
     example: str
     notes: List[str] = Field(default_factory=list)
@@ -621,6 +716,10 @@ def render_model_page(cards: Sequence[ModelCard]) -> str:
         "Browse PyHazards model implementations across hazard families, compare",
         "scope and maturity, and navigate to model-specific detail pages.",
         "",
+        "Prompted multimodal LLMs used as zero-shot wildfire-smoke detectors (SmokeBench: Qwen2.5-VL,",
+        "InternVL3, Idefics2, Gemini 2.5 Pro, GPT-4o) are not ``nn.Module`` models; they are documented",
+        "separately under :doc:`pyhazards_prompted`.",
+        "",
         "At a Glance",
         "-----------",
         "",
@@ -818,7 +917,7 @@ def render_api_page(cards: Sequence[ModelCard]) -> str:
             "",
             "    model = build_model(",
             '        name="phasenet",',
-            '        task="regression",',
+            '        task="picking",',
             "        in_channels=3,",
             "    )",
             "",
@@ -991,6 +1090,21 @@ def render_module_page(card: ModelCard) -> str:
             "",
             _paper_links(card),
             "",
+        ]
+    )
+    if card.references:
+        lines.extend(["Used In", "-------", ""])
+        for reference in card.references:
+            entry = "- `{title} <{url}>`_".format(title=reference.title, url=reference.url)
+            if reference.repo_url:
+                entry += " (`repo <{url}>`__)".format(url=reference.repo_url)
+            if reference.note:
+                entry += ": " + _single_line(reference.note)
+            lines.append(entry)
+        lines.append("")
+    lines.extend(_render_reproduction(card))
+    lines.extend(
+        [
             "Registry Name",
             "-------------",
             "",
@@ -1038,6 +1152,59 @@ def render_module_page(card: ModelCard) -> str:
         lines.append("")
 
     return "\n".join(lines)
+
+
+def _short_commit(ref: str) -> str:
+    is_sha = len(ref) == 40 and all(char in "0123456789abcdef" for char in ref)
+    return ref[:7] if is_sha else ref
+
+
+def _render_reproduction(card: ModelCard) -> List[str]:
+    lines = ["Reproduction", "------------", ""]
+    spec = card.reproduction
+    if spec is None:
+        lines.extend(
+            [
+                "Not yet verified against a reference implementation.",
+                "",
+            ]
+        )
+        return lines
+    if spec.source == "paper" and spec.reference_code:
+        lines.append(
+            "- **Reference implementation:** `{url} <{url}>`__ (``{commit}``, {license}); "
+            "not ported, the model is rebuilt from the paper and the release serves as a test oracle.".format(
+                url=spec.reference_code,
+                commit=_short_commit(spec.reference_commit or "unversioned"),
+                license=spec.reference_license or "license unknown",
+            )
+        )
+    elif spec.source == "paper":
+        lines.append("- **Reference implementation:** none released; rebuilt from the paper.")
+    else:
+        lines.append(
+            "- **Reference implementation:** `{url} <{url}>`__ at ``{commit}`` ({license})".format(
+                url=spec.reference_code,
+                commit=_short_commit(spec.reference_commit),
+                license=spec.reference_license,
+            )
+        )
+    label = "Paper configuration" if spec.source == "paper" else "Checked configuration"
+    lines.append("- **{label}:** {config}".format(label=label, config=_single_line(spec.reference_config)))
+    if spec.parameter_count is not None:
+        lines.append("- **Parameter count:** {count:,}".format(count=spec.parameter_count))
+    if spec.checks:
+        lines.append(
+            "- **Verified:** {checks}".format(
+                checks=", ".join(REPRODUCTION_CHECKS[check] for check in spec.checks)
+            )
+        )
+    if spec.oracle_test:
+        lines.append("- **Oracle test:** ``{path}``".format(path=spec.oracle_test))
+    for deviation in spec.deviations:
+        lines.append("- **Deviation:** {text}".format(text=_single_line(deviation)))
+    lines.append("")
+    return lines
 
 
 def rendered_docs(cards: Sequence[ModelCard]) -> Dict[Path, str]:
@@ -1152,7 +1319,10 @@ def _dtype_for_name(dtype_name: str) -> torch.dtype:
 
 
 def _make_tensor(spec: SmokeTensorSpec) -> torch.Tensor:
-    return torch.randn(*spec.shape, dtype=_dtype_for_name(spec.dtype))
+    dtype = _dtype_for_name(spec.dtype)
+    if spec.high is not None:
+        return torch.randint(0, spec.high, tuple(spec.shape), dtype=dtype)
+    return torch.randn(*spec.shape, dtype=dtype)
 
 
 def _prepare_smoke_input(spec: SmokeInputSpec) -> Any:
@@ -1169,11 +1339,42 @@ def _shape_of_output(output: Any) -> Any:
         return list(output.shape)
     if isinstance(output, (list, tuple)):
         return [_shape_of_output(item) for item in output]
+    if isinstance(output, Mapping):
+        return {key: _shape_of_output(value) for key, value in output.items()}
     return type(output).__name__
+
+
+def _make_fit_targets(spec: SmokeFitSpec) -> torch.Tensor:
+    if spec.num_classes is None:
+        return _make_tensor(spec.targets)
+    count = 1
+    for size in spec.targets.shape:
+        count *= size
+    labels = torch.arange(count) % spec.num_classes
+    rest = labels[spec.num_classes :]
+    labels[spec.num_classes :] = rest[torch.randperm(rest.numel())]
+    return labels.reshape(spec.targets.shape).to(_dtype_for_name(spec.targets.dtype))
+
+
+def missing_smoke_requirements(card: ModelCard) -> List[str]:
+    """Optional packages of ``card.smoke_test.requires`` that are not installed."""
+    return [name for name in card.smoke_test.requires if importlib.util.find_spec(name) is None]
 
 
 def run_smoke_test(card: ModelCard) -> Dict[str, Any]:
     from pyhazards.models import build_model
+
+    expected_shape = card.smoke_test.expected_output.expected
+    missing = missing_smoke_requirements(card)
+    if missing:
+        reason = "optional package(s) not installed: {names}".format(names=", ".join(missing))
+        return {
+            "ok": True,
+            "skipped": reason,
+            "actual_shape": None,
+            "expected_shape": expected_shape,
+            "summary": "{name}: skipped ({reason})".format(name=card.model_name, reason=reason),
+        }
 
     torch.manual_seed(0)
     model = build_model(
@@ -1181,6 +1382,9 @@ def run_smoke_test(card: ModelCard) -> Dict[str, Any]:
         task=card.smoke_test.task,
         **card.smoke_test.build_kwargs
     )
+    fit_spec = card.smoke_test.fit
+    if fit_spec is not None:
+        model.fit(_make_tensor(fit_spec.inputs), _make_fit_targets(fit_spec))
     model.eval()
     prepared = _prepare_smoke_input(card.smoke_test.input)
     with torch.no_grad():
@@ -1192,16 +1396,13 @@ def run_smoke_test(card: ModelCard) -> Dict[str, Any]:
             output = model(**prepared)
 
     actual_shape = _shape_of_output(output)
-    expected = card.smoke_test.expected_output
-    if expected.kind.lower() == "tensor":
-        ok = actual_shape == expected.shape
-    else:
-        ok = actual_shape == expected.shapes
+    ok = actual_shape == expected_shape
 
     return {
         "ok": ok,
+        "skipped": None,
         "actual_shape": actual_shape,
-        "expected_shape": expected.shape if expected.kind.lower() == "tensor" else expected.shapes,
+        "expected_shape": expected_shape,
         "summary": "{name}: output shape {actual}".format(
             name=card.model_name,
             actual=actual_shape,
@@ -1216,7 +1417,12 @@ def touched_card_names(cards: Sequence[ModelCard], changed_files: Iterable[str])
     }
     names: Set[str] = set()
     for path in changed_files:
-        if path.startswith("pyhazards/model_cards/") and path.endswith((".yaml", ".yml")):
+        # A card deleted by the change (a removed model) has nothing left to review.
+        if (
+            path.startswith("pyhazards/model_cards/")
+            and path.endswith((".yaml", ".yml"))
+            and (REPO_ROOT / path).exists()
+        ):
             names.add(Path(path).stem)
         if path in source_to_name:
             names.add(source_to_name[path])

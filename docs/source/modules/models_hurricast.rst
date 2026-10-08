@@ -6,7 +6,7 @@ Hurricast
 Overview
 --------
 
-``hurricast`` is the first basin-specific storm baseline in the staged PyHazards roadmap and operates on storm-history sequences.
+``hurricast`` forecasts one lead time, 24 hours, from the last 8 three-hourly steps (t-21 h ... t) of a storm: ``target="intensity"`` the maximum sustained wind (1-minute, kt) and ``target="displacement"`` the latitude / longitude change (degrees; ``forecast()`` adds it to the current position). Inputs are a mapping with ``x_stat`` ``(batch, 8, 30)``, the 30 statistical features per step of the official feature tables (``HURRICAST_STAT_FEATURES``), ``x_viz`` ``(batch, 8, 9, 25, 25)``, ERA5 u, v and geopotential at 225, 500 and 700 hPa on 25 x 25 one-degree maps around the storm, and ``position`` for track forecasts. ``hurricast_ibtracs_era5`` builds them from IBTrACS and the user's ERA5 data.
 
 At a Glance
 -----------
@@ -42,11 +42,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         1
+         2
 
       .. container:: catalog-stat-note
 
-         Track + Intensity
+         Track + Intensity, Intensity
 
    .. grid-item-card:: Benchmark Family
       :class-card: catalog-stat-card
@@ -63,9 +63,11 @@ At a Glance
 Description
 -----------
 
-``hurricast`` is the first basin-specific storm baseline in the staged PyHazards roadmap and operates on storm-history sequences.
+``hurricast`` forecasts one lead time, 24 hours, from the last 8 three-hourly steps (t-21 h ... t) of a storm: ``target="intensity"`` the maximum sustained wind (1-minute, kt) and ``target="displacement"`` the latitude / longitude change (degrees; ``forecast()`` adds it to the current position). Inputs are a mapping with ``x_stat`` ``(batch, 8, 30)``, the 30 statistical features per step of the official feature tables (``HURRICAST_STAT_FEATURES``), ``x_viz`` ``(batch, 8, 9, 25, 25)``, ERA5 u, v and geopotential at 225, 500 and 700 hPa on 25 x 25 one-degree maps around the storm, and ``position`` for track forecasts. ``hurricast_ibtracs_era5`` builds them from IBTrACS and the user's ERA5 data.
 
-This initial adapter focuses on the shared tropical-cyclone forecasting interface and is intended as a reproducible starting point before broader storm-model breadth.
+Stage 1 (the official ``ExperimentalHurricast``, written from the paper): per step a CNN (three 3 x 3 convolutions with BatchNorm and ReLU, two max poolings, dense layers 4096-576-256-128) embeds the maps; the first 14 statistical features are prepended and a Transformer decoder (2 layers, 2 heads, width 142, feed-forward 128, sinusoidal positions, mean pooling, tanh) reads the sequence; a linear layer predicts the standardised target. 2,969,771 parameters for intensity, 2,969,914 for displacement; the released code's other presets (``transformer_config_4`` / ``_68`` / ``_noviz``, recurrent ``lstm_config*``, ``split_encoder_config``) are available through ``decoder_config`` / ``encoder_config``.
+
+Stage 2: XGBoost (one regressor per target) on the flattened statistics (every numerical feature of the 8 steps and the categorical ones of the first step, 128 values) followed by the 142-d decoder output of the frozen network, with the defaults of the official ``train_xgb_*`` functions (depth 8, 140 trees, learning rate 0.15, subsample 0.7, minimum child weight 5). ``Hurricast.fit`` standardises the targets, trains the network (MSE + L2, Adam, batch 64) and then XGBoost; ``predictor="network"`` predicts with the network's head instead, ``use_embeddings=False`` is HUML-(stat, xgb).
 
 Benchmark Compatibility
 -----------------------
@@ -77,7 +79,26 @@ Benchmark Compatibility
 External References
 -------------------
 
-**Paper:** `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://arxiv.org/abs/2102.01204>`_ | **Repo:** `Repository <https://github.com/leobix/hurricast>`__
+**Paper:** `Hurricane Forecasting: A Novel Multimodal Machine Learning Framework <https://doi.org/10.1175/WAF-D-21-0091.1>`_ | **Repo:** `Repository <https://github.com/leobix/hurricast>`__
+
+Used In
+-------
+
+- `Boussioux, Zeng, Guenais and Bertsimas, Weather and Forecasting 37(6), 817-831 (2022); preprint arXiv 2011.06125v4 <https://arxiv.org/abs/2011.06125>`_ (`repo <https://github.com/leobix/hurricast>`__): 24-hour forecasts on 2016-2019 North Atlantic (NA) and Eastern Pacific (EP) cases with concurrent ATCF operational forecasts, models trained on all basins 1980-2011 (validation 2012-2015). Track MAE (Table 5, EP 837 / NA 899 cases): HUML-(stat/viz, xgb/cnn/transfo) 72 / 109 km, HUML-(stat/viz, xgb/cnn/gru) 72 / 111 km, HUML-(stat, xgb) 81 / 144 km; HWRF 67 / 75 km, CLP5 121 / 201 km. Intensity MAE (Table 6, EP 877 / NA 899 cases): 10.3 / 10.4 kt (cnn/transfo), 10.3 / 10.8 kt (cnn/gru), 10.6 / 10.7 kt (stat, xgb); Decay-SHIPS 11.7 / 10.2 kt, HWRF 10.6 / 9.7 kt. Not reproduced by PyHazards (the ERA5 maps of the ~134,000 training cases are not part of the tests).
+
+Reproduction
+------------
+
+- **Reference implementation:** `https://github.com/leobix/hurricast <https://github.com/leobix/hurricast>`__ (``b1b303a``, none (no LICENSE file; the README claims MIT and links a LICENSE that does not exist). Used only as a test oracle, never copied.); not ported, the model is rebuilt from the paper and the release serves as a test oracle.
+- **Paper configuration:** ExperimentalHurricast(encoder full_encoder_config, decoder ExpTRANSFORMER transformer_config) from src/models/experimental_models.py and scripts/config.py: 2,969,771 (intensity) / 2,969,914 (displacement) parameters; for every preset of scripts/config.py (8 decoders x full / split encoders, both targets) the same state-dict keys, identical initial weights for the same seed, equal outputs and embeddings in eval and train mode (BatchNorm statistics, dropout) and equal gradients; official state dicts load with strict=True into Hurricast.network. The L2 term equals src/utils/run.py compute_l2 and a training step of fit_network equals src/run.py train_epoch (displacement target); the XGBoost feature columns equal the rule of notebooks/Compute_results_*_Round2.ipynb, its defaults those of scripts/run_embeddings.py, and the XGBoost stage predicts exactly as XGBRegressor (xgboost 3.2.0) fitted the official way. The storm cut, interpolated WMO wind / pressure, wind category and displacements of hurricast_ibtracs_era5 equal src/utils/data_processing.py on real IBTrACS rows.
+- **Parameter count:** 2,969,771
+- **Verified:** parameter count, seeded initialisation, parameter names and shapes, forward outputs
+- **Oracle test:** ``tests/oracle/test_hurricast_oracle.py``
+- **Deviation:** Paper and released code differ; the code is followed where it is the executable reference: the CNN's dense layers are 4096-576-256-128 (paper Fig. A1: 576-128), the decoder input is [statistics, embedding] (paper text: [embedding, statistics]), and the network reads 14 statistical features (the paper's text says 31; its d_model = 142 = 128 + 14 agrees with the code).
+- **Deviation:** The paper's GRU decoder (two unidirectional GRU layers, all 8 hidden states concatenated, dense 1024-512-128-c, embedding = second dense output) is not in the released code and is not provided (the activations of its dense layers are not specified). The released recurrent presets (bidirectional LSTM / GRU / RNN reading the last hidden state: lstm_config, lstm_config_4layers, lstm_config_best_dis, lstm_config_test_dis) are.
+- **Deviation:** Training is reimplemented from the paper and src/run.py: MSE plus 2 / batch * 0.01 * sum of squared weights, Adam (1e-3 intensity, 4e-4 track), batch 64, 30 epochs, the epoch with the lowest validation MSE kept. The official loop compared (batch, 1) intensity outputs with (batch,) targets, which nn.MSELoss broadcasts to all (batch x batch) pairs; PyHazards compares matching shapes.
+- **Deviation:** The XGBoost hyperparameters are given in the paper only as ranges (depth 6-9, 100-300 trees, learning rate 0.03-0.15, subsample 0.6-0.9, column sampling 0.7-1, minimum child weight 1-5) and varied per task and basin in the Round2 notebooks; the defaults of the official train_xgb_* functions are used. Library defaults of xgboost >= 2 (histogram trees, estimated base score) differ from the 2020-21 xgboost 1.x.
+- **Deviation:** Not provided: the tensor-decomposition embeddings (HUML-(stat/viz, xgb/td)), the ElasticNet ensemble and the consensus with operational forecasts (HUML-ensemble, HUML/OP-average), and the code's intensity-category classifier. The official ExpTRANSFORMER's "unroll" pooling (unused by every preset) gives the predictor the wrong width; here it gets n_out_unroll. Official forward(..., xgb=True) fails (a tuple reaches the predictor); here only get_embeddings takes xgb.
 
 Registry Name
 -------------
@@ -88,6 +109,7 @@ Supported Tasks
 ---------------
 
 - Track + Intensity
+- Intensity
 
 Programmatic Use
 ----------------
@@ -97,18 +119,23 @@ Programmatic Use
    import torch
    from pyhazards.models import build_model
 
-   model = build_model(
-       name="hurricast",
-       task="regression",
-       input_dim=8,
-       horizon=5,
-       output_dim=3,
-   )
+   # The paper's best model: CNN + Transformer embeddings, then XGBoost (needs pyhazards[xgboost]).
+   model = build_model(name="hurricast", task="regression", target="intensity")
+   inputs = {
+       "x_stat": torch.randn(64, 8, 30),           # 8 three-hourly steps x 30 IBTrACS features
+       "x_viz": torch.randn(64, 8, 9, 25, 25),     # u, v, z at 225 / 500 / 700 hPa, 25 x 25 degrees
+   }
+   model.fit(inputs, 60 + 20 * torch.randn(64), epochs=1)  # network, then XGBoost on its embeddings
+   print(model(inputs).shape)                      # (64, 1): wind 24 h ahead
 
-   preds = model(torch.randn(2, 6, 8))
-   print(preds.shape)
+   # Real data: IBTrACS + ERA5 maps around the storms (user-provided netCDF / zarr).
+   # from pyhazards.datasets import load_dataset
+   # data = load_dataset("hurricast_ibtracs_era5", path="ibtracs.ALL.list.v04r01.csv", era5="era5_pl.nc").load()
 
 Notes
 -----
 
-- Outputs are lead-time sequences of latitude, longitude, and intensity targets.
+- The official repository has no LICENSE file; nothing is copied from it. Its released configuration values (scripts/config.py presets, XGBoost defaults) are used as data.
+- Inputs must be standardised as for training: hurricast_ibtracs_era5 standardises LAT, LON, WMO wind and pressure, distance to land, speed and the displacements with training statistics (paper Table 2) and leaves cyclic encodings and categories as they are, so the network's 14 features are standardised as in the official run_embeddings.py; each map channel is standardised over samples, steps and pixels.
+- The XGBoost stage is not in state_dict(); use Hurricast.save / Hurricast.load (joblib). Embeddings are always computed with the network in eval mode.
+- No trained weights were released, and the ERA5 tensors (> 30 GB) are not hosted.

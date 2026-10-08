@@ -14,27 +14,27 @@ For the curated browsing experience, use :doc:`/pyhazards_datasets`.
 Shared Forcing
 ~~~~~~~~~~~~~~
 
-:doc:`ERA5 </datasets/era5>`, :doc:`GOES-R </datasets/goesr>`, :doc:`MERRA-2 </datasets/merra2>`.
+:doc:`ERA5 </datasets/era5>`, :doc:`GOES-R </datasets/goesr>`, :doc:`HRRR </datasets/hrrr>`, :doc:`LandScan Global </datasets/landscan_population>`, :doc:`MERRA-2 </datasets/merra2>`, :doc:`NDFD </datasets/ndfd>`, :doc:`SNODAS </datasets/nohrsc_snodas>`.
 
 Wildfire
 ~~~~~~~~
 
-:doc:`FIRMS </datasets/firms>`, :doc:`FPA-FOD Tabular </datasets/fpa_fod_tabular>`, :doc:`FPA-FOD Weekly </datasets/fpa_fod_weekly>`, :doc:`LANDFIRE </datasets/landfire>`, :doc:`MTBS </datasets/mtbs>`, :doc:`WFIGS </datasets/wfigs>`.
+:doc:`CAL FIRE FRAP Fire Perimeters </datasets/frap_fire_perimeters>`, :doc:`FIgLib SmokeBench </datasets/figlib_smokebench>`, :doc:`FIRMS </datasets/firms>`, :doc:`FPA-FOD Tabular </datasets/fpa_fod_tabular>`, :doc:`FPA-FOD Weekly </datasets/fpa_fod_weekly>`, :doc:`GeoMAC Historical Perimeters </datasets/geomac_historical>`, :doc:`GOES-R ABI Fire/Hot Spot Characterization (FDCF) </datasets/goesr_fdcf>`, :doc:`LANDFIRE </datasets/landfire>`, :doc:`MTBS </datasets/mtbs>`, :doc:`NOAA HMS Smoke Polygons </datasets/hms_smoke>`, :doc:`Track-O Wildfire Occurrence </datasets/wildfire_track_o>`, :doc:`WFIGS </datasets/wfigs>`, :doc:`Wildfire Risk to Communities: Housing Density </datasets/wrc_housing_density>`, :doc:`WRF-SFIRE Outputs </datasets/wrf_sfire>`.
 
 Flood
 ~~~~~
 
-:doc:`Caravan </datasets/caravan_streamflow>`, :doc:`FloodCastBench </datasets/floodcastbench_inundation>`, :doc:`HydroBench </datasets/hydrobench_streamflow>`, :doc:`NOAA Flood Events </datasets/noaa_flood>`, :doc:`WaterBench </datasets/waterbench_streamflow>`.
+:doc:`CAMELS-US </datasets/camels_us_streamflow>`, :doc:`Caravan </datasets/caravan_streamflow>`, :doc:`HydroGraphNet White River </datasets/hydrographnet_white_river>`, :doc:`NOAA Flood Events </datasets/noaa_flood>`, :doc:`Synthetic Mesh Hydrographs </datasets/flood_mesh_synthetic>`, :doc:`Synthetic Urban Flood Events </datasets/urbanfloodcast_synthetic>`.
 
 Earthquake
 ~~~~~~~~~~
 
-:doc:`AEFA Forecast </datasets/aefa_forecast>`, :doc:`pick-benchmark </datasets/pick_benchmark_waveforms>`, :doc:`SeisBench </datasets/seisbench_waveforms>`.
+:doc:`SeisBench-format Waveforms </datasets/seisbench_waveforms>`, :doc:`Synthetic Phase-Picking Waveforms </datasets/earthquake_waveforms_synthetic>`, :doc:`Synthetic Wavefield Sequences </datasets/earthquake_wavefield_synthetic>`.
 
 Tropical Cyclone
 ~~~~~~~~~~~~~~~~
 
-:doc:`IBTrACS </datasets/ibtracs_tracks>`, :doc:`TCBench Alpha </datasets/tcbench_alpha>`, :doc:`TropiCycloneNet-Dataset </datasets/tropicyclonenet_dataset>`.
+:doc:`Hurricast IBTrACS + ERA5 Inputs </datasets/hurricast_ibtracs_era5>`, :doc:`IBTrACS </datasets/ibtracs_tracks>`, :doc:`SHIPS Predictors (Xu et al. 2021) </datasets/ships_xu2021>`, :doc:`Synthetic Hurricast Inputs </datasets/hurricast_synthetic>`, :doc:`Synthetic SAF-Net Inputs </datasets/safnet_cma_era_interim_synthetic>`, :doc:`Synthetic SHIPS Predictors </datasets/ships_xu2021_synthetic>`, :doc:`Synthetic Storm Histories </datasets/tc_tracks_synthetic>`, :doc:`Synthetic TCIF-fusion Inputs </datasets/tcif_fusion_synthetic>`, :doc:`Synthetic TCND Samples </datasets/tropicyclonenet_dataset_synthetic>`, :doc:`TCBench Alpha </datasets/tcbench_alpha>`, :doc:`TropiCycloneNet Dataset </datasets/tropicyclonenet_dataset>`.
 
 Developer Dataset Workflow
 --------------------------
@@ -58,7 +58,7 @@ Load a Registered Dataset
 
     print(available_datasets())
     data = load_dataset(
-        "seisbench_waveforms",
+        "earthquake_waveforms_synthetic",
         micro=True,
     ).load()
     print(sorted(data.splits.keys()))

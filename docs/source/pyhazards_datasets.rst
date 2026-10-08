@@ -30,7 +30,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         20
+         41
 
       .. container:: catalog-stat-note
 
@@ -41,7 +41,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         10
+         12
 
       .. container:: catalog-stat-note
 
@@ -52,7 +52,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         12
+         22
 
       .. container:: catalog-stat-note
 
@@ -73,7 +73,7 @@ primary source, and the most relevant inspection or registry surface.
 
       .. container:: catalog-section-note
 
-         Cross-hazard meteorology and imagery sources that support multiple PyHazards workflows, inspections, and forcing pipelines.
+         Cross-hazard meteorology, imagery, snow and population sources: some feed PyHazards inspections and forcing pipelines, others are external references.
 
       .. rubric:: Implemented Datasets
 
@@ -143,6 +143,60 @@ primary source, and the most relevant inspection or registry surface.
 
                **Primary Source:** `Schmit et al. (2017). A closer look at the ABI on the GOES-R series. <https://doi.org/10.1175/BAMS-D-15-00230.1>`_
 
+         .. grid-item-card:: HRRR
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               NOAA's 3 km, hourly updated, convection-allowing forecast model for the United States, archived on AWS since July 2014.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Weather Forecast` :bdg-info:`Gridded forecast fields`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Conterminous United States; an Alaska domain from July 2018
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Every hour for CONUS; every 3 hours for Alaska
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`HRRR <datasets/hrrr>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Dowell et al. (2022). The High-Resolution Rapid Refresh (HRRR): An Hourly Updating Convection-Allowing Forecast Model. Part I: Motivation and System Description. Weather and Forecasting 37(8), 1371-1395. <https://doi.org/10.1175/WAF-D-21-0151.1>`_
+
+         .. grid-item-card:: LandScan Global
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               ORNL's annual 30 arc-second global grid of ambient (24-hour average) population, an exposure layer for hazard impact studies.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Population Exposure` :bdg-info:`Gridded population rasters (WGS84 geographic)`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Global
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Annual releases (LandScan Global 2024 was published in August 2025)
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`LandScan Global <datasets/landscan_population>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Lebakula et al. (2025). LandScan Global 2024. Oak Ridge National Laboratory. <https://doi.org/10.48690/1532445>`_
+
          .. grid-item-card:: MERRA-2
             :class-card: catalog-entry-card
 
@@ -174,18 +228,130 @@ primary source, and the most relevant inspection or registry surface.
 
                **Primary Source:** `Gelaro et al. (2017). The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA-2). <https://journals.ametsoc.org/view/journals/clim/30/14/jcli-d-16-0758.1.xml>`_
 
+         .. grid-item-card:: NDFD
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The National Weather Service's gridded official forecasts, including relative humidity, wind, Red Flag Warnings and SPC fire-weather outlook grids, archived since 2004.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Weather Forecast` :bdg-info:`Gridded forecast fields`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** United States and territories
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** As often as every 30 minutes, depending on the element
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`NDFD <datasets/ndfd>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Glahn and Ruth (2003). The New Digital Forecast Database of the National Weather Service. Bulletin of the American Meteorological Society 84(2), 195-202. <https://doi.org/10.1175/BAMS-84-2-195>`_
+
+         .. grid-item-card:: SNODAS
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               NOAA NOHRSC's daily 1 km snow analysis (snow water equivalent, depth, melt, sublimation) for the conterminous United States, distributed by NSIDC since 2003.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Snow Analysis` :bdg-info:`Regular latitude-longitude grid`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Masked version, conterminous United States and some Canadian basins (24.95-52.875 N, 124.733-66.942 W); unmasked version extends into Canada and Mexico
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Daily
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`SNODAS <datasets/nohrsc_snodas>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `National Operational Hydrologic Remote Sensing Center (2004). Snow Data Assimilation System (SNODAS) Data Products at NSIDC, Version 1. NSIDC. <https://doi.org/10.7265/N5TB14TC>`_
+
 
    .. tab-item:: Wildfire
 
       .. container:: catalog-section-note
 
-         Wildfire datasets span authoritative incident records, active-fire detections, fuels, burn severity, and forecast-ready benchmark adapters.
+         Wildfire datasets span authoritative incident records, perimeters, active-fire detections, smoke, fuels, burn severity, exposure, and forecast-ready benchmark adapters.
 
       .. rubric:: Implemented Datasets
 
       .. grid:: 1 1 2 2
          :gutter: 2
          :class-container: catalog-grid
+
+         .. grid-item-card:: CAL FIRE FRAP Fire Perimeters
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               California's historical wildfire perimeter archive, maintained by CAL FIRE's Fire and Resource Assessment Program, with fires back to 1878.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Historical Perimeters` :bdg-info:`Fire perimeter polygons`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** California
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Annual, each spring, adding the previous fire season (release firep25_1, April 2026)
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`CAL FIRE FRAP Fire Perimeters <datasets/frap_fire_perimeters>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `CAL FIRE FRAP (2026). Fire Perimeters, release firep25_1 (metadata). <https://www.arcgis.com/sharing/rest/content/items/a31aa1efe1d6466f8530b501c30ab00a/data>`_
+
+         .. grid-item-card:: FIgLib SmokeBench
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The SmokeBench evaluation images -- HPWREN FIgLib camera frames with the SmokeyNet smoke boxes -- for prompting multimodal LLMs to classify and localize early wildfire smoke.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Smoke Detection Benchmark` :bdg-info:`Fixed-camera RGB photographs with smoke bounding boxes`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Southern California (HPWREN camera network)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Static evaluation set (FIgLib itself keeps adding sequences)
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``python -m pyhazards.datasets.figlib_smokebench.inspection --root /path/to/figlib --download``
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`FIgLib SmokeBench <datasets/figlib_smokebench>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Qi, T., Li, W., Barnes, N. (2026). SmokeBench: Evaluating Multimodal Large Language Models for Wildfire Smoke Detection. WACV 2026. <https://arxiv.org/abs/2512.11215>`_
 
          .. grid-item-card:: FIRMS
             :class-card: catalog-entry-card
@@ -220,7 +386,7 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `Schroeder et al. (2014). The New VIIRS 375 m active fire detection data product. <https://doi.org/10.1016/j.rse.2013.08.008>`_
+               **Primary Source:** `Schroeder et al. (2014). The New VIIRS 375 m active fire detection data product. <https://doi.org/10.1016/j.rse.2013.12.008>`_
 
          .. grid-item-card:: FPA-FOD Tabular
             :class-card: catalog-entry-card
@@ -292,6 +458,60 @@ primary source, and the most relevant inspection or registry surface.
 
                **Primary Source:** `PyHazards FPA-FOD weekly adaptation for the wildfire forecasting path. <https://github.com/LabRAI/PyHazards>`_
 
+         .. grid-item-card:: GeoMAC Historical Perimeters
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Wildfire perimeters processed by the USGS GeoMAC service from 2000 to 2019, now distributed by the National Interagency Fire Center.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Historical Perimeters` :bdg-info:`Fire perimeter polygons`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** United States (the 2019 layer covers the conterminous 48 states and Alaska)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Static archive (GeoMAC was retired on 30 April 2020)
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`GeoMAC Historical Perimeters <datasets/geomac_historical>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `National Interagency Fire Center. Historic Perimeters Combined 2000-2018 GeoMAC (NIFC Open Data). <https://data-nifc.opendata.arcgis.com/datasets/nifc::historic-perimeters-combined-2000-2018-geomac/about>`_
+
+         .. grid-item-card:: GOES-R ABI Fire/Hot Spot Characterization (FDCF)
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               NOAA's GOES-R ABI Level-2 fire detection and characterization product on the full-disk scan, every 10 minutes since April 2019, openly distributed on AWS.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Active Fire Detections` :bdg-info:`Raster imagery time series on the ABI fixed grid`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** The full disk of each GOES satellite (GOES-East and GOES-West positions over the Americas)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Continuous operational production
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`GOES-R ABI Fire/Hot Spot Characterization (FDCF) <datasets/goesr_fdcf>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Schmidt (2020). Monitoring Fires with the GOES-R Series. In The GOES-R Series, Elsevier, 145-163. <https://doi.org/10.1016/B978-0-12-814327-8.00013-5>`_
+
          .. grid-item-card:: LANDFIRE
             :class-card: catalog-entry-card
 
@@ -362,6 +582,68 @@ primary source, and the most relevant inspection or registry surface.
 
                **Primary Source:** `Eidenshink et al. (2007). A project for monitoring trends in burn severity. <https://doi.org/10.4996/fireecology.0301003>`_
 
+         .. grid-item-card:: NOAA HMS Smoke Polygons
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Analyst-drawn smoke plume outlines from NOAA's Hazard Mapping System, produced daily since August 2005.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Smoke Plumes` :bdg-info:`Analyst-drawn smoke polygons`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** North America, Hawaii and the Caribbean
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Daily
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`NOAA HMS Smoke Polygons <datasets/hms_smoke>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Ruminski and Kondragunta (2006). Monitoring fire and smoke emissions with the hazard mapping system. Proc. SPIE 6412. <https://doi.org/10.1117/12.694183>`_
+
+         .. grid-item-card:: Track-O Wildfire Occurrence
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Daily fire / no-fire grids from NASA FIRMS detections with gridded weather and LANDFIRE fuel covariates, built locally for gridded wildfire-danger experiments.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Occurrence Benchmark` :bdg-info:`Daily latitude-longitude grids`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** The weather grid's extent (global for MERRA-2); the LANDFIRE fuel layer covers the conterminous United States only
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Built by the user from downloaded source files; PyHazards downloads nothing for it
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('wildfire_track_o_raster', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Track-O Wildfire Occurrence <datasets/wildfire_track_o>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Schroeder et al. (2014). The New VIIRS 375 m active fire detection data product: Algorithm description and initial assessment. <https://doi.org/10.1016/j.rse.2013.12.008>`_
+
          .. grid-item-card:: WFIGS
             :class-card: catalog-entry-card
 
@@ -397,6 +679,68 @@ primary source, and the most relevant inspection or registry surface.
 
                **Primary Source:** `National Interagency Fire Center. Wildland Fire Incident Geospatial Services (WFIGS). <https://data-nifc.opendata.arcgis.com/>`_
 
+         .. grid-item-card:: Wildfire Risk to Communities: Housing Density
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               USDA Forest Service 30 m rasters of housing-unit density, exposure and wildfire risk for populated areas of the United States (2nd edition, 2024).
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Exposure and Risk` :bdg-info:`Gridded raster layers`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Conterminous United States, Alaska and Hawaii (per-state files and CONUS mosaics)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Edition-based (2nd edition published June 2024, metadata corrected September 2024)
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Wildfire Risk to Communities: Housing Density <datasets/wrc_housing_density>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Jaffe, Scott, Callahan, Dillon, Karau and Lazarz (2024). Wildfire Risk to Communities: Spatial datasets of wildfire risk for populated areas in the United States. 2nd Edition. Forest Service Research Data Archive. <https://doi.org/10.2737/RDS-2020-0060-2>`_
+
+         .. grid-item-card:: WRF-SFIRE Outputs
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Fire-grid outputs of the coupled WRF-SFIRE atmosphere-fire model, read from wrfout files into spread rasters.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Simulator Outputs` :bdg-info:`Fire-grid raster time series`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Any WRF domain the user configures
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated by the user's own WRF-SFIRE runs
+
+            .. container:: catalog-meta-row
+
+               **Inspection:** ``python -m pyhazards.datasets.wrf_sfire.inspection --path /path/to/wrfout_d01_*``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Wildfire Benchmark <benchmarks/wildfire_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`WRF-SFIRE Outputs <datasets/wrf_sfire>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Mandel, Beezley and Kochanski (2011). Coupled atmosphere-wildland fire modeling with WRF 3.3 and SFIRE 2011. Geoscientific Model Development 4:591-610. <https://doi.org/10.5194/gmd-4-591-2011>`_
+
 
    .. tab-item:: Flood
 
@@ -410,24 +754,59 @@ primary source, and the most relevant inspection or registry surface.
          :gutter: 2
          :class-container: catalog-grid
 
+         .. grid-item-card:: CAMELS-US
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Reader for a local copy of CAMELS-US (671 US catchments, daily forcings, USGS streamflow and catchment attributes) in the setup of Kratzert et al. (2019), as NeuralHydrology reads it.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Streamflow Benchmark` :bdg-info:`Daily basin time series with static attributes`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** 671 catchments in the contiguous United States (531 in the Kratzert et al. 2019 benchmark)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Static research dataset (extended Maurer forcings released separately in 2019)
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('camels_us_streamflow', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`, :doc:`CAMELS-US <benchmarks/camels_us>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`CAMELS-US <datasets/camels_us_streamflow>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Addor, Newman, Mizukami and Clark (2017). The CAMELS data set: catchment attributes and meteorology for large-sample studies. HESS 21:5293-5313. <https://doi.org/10.5194/hess-21-5293-2017>`_
+
          .. grid-item-card:: Caravan
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               Synthetic-backed streamflow benchmark adapter aligned to the Caravan large-sample hydrology ecosystem.
+               Reader for a local copy of Caravan, the global large-sample hydrology dataset (daily ERA5-Land forcings, catchment attributes and observed streamflow), in NeuralHydrology's sample layout.
 
             .. container:: catalog-chip-row
 
-               :bdg-secondary:`Streamflow Benchmark` :bdg-info:`Graph-temporal basin or node sequences`
+               :bdg-secondary:`Streamflow Benchmark` :bdg-info:`Daily basin time series with static attributes`
 
             .. container:: catalog-meta-row
 
-               **Coverage:** Benchmark-aligned streamflow forecasting samples
+               **Coverage:** 6,830 catchments in the original release (Australia, Brazil, Canada, Chile, Great Britain, Central Europe, United States) plus extensions
 
             .. container:: catalog-meta-row
 
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
+               **Update Cadence:** Versioned Zenodo releases (netCDF and CSV editions) plus community extensions
 
             .. container:: catalog-meta-row
 
@@ -443,77 +822,42 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `Caravan - A global community dataset for large-sample hydrology <https://www.nature.com/articles/s41597-023-01975-w>`_
+               **Primary Source:** `Kratzert et al. (2023). Caravan - A global community dataset for large-sample hydrology. Scientific Data 10:61. <https://doi.org/10.1038/s41597-023-01975-w>`_
 
-         .. grid-item-card:: FloodCastBench
+         .. grid-item-card:: HydroGraphNet White River
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               Synthetic-backed inundation benchmark adapter aligned to the FloodCastBench evaluation ecosystem.
+               Reader for a local copy of the HydroGraphNet dataset (HEC-RAS flood simulations on a 4,787-cell mesh of the White River near Muncie, Indiana), read as PhysicsNeMo's HydroGraphDataset reads it.
 
             .. container:: catalog-chip-row
 
-               :bdg-secondary:`Inundation Benchmark` :bdg-info:`Raster inundation sequences`
+               :bdg-secondary:`Inundation Benchmark` :bdg-info:`Unstructured 2-D mesh cells with a k-nearest-neighbour graph`
 
             .. container:: catalog-meta-row
 
-               **Coverage:** Benchmark-aligned flood inundation samples
+               **Coverage:** White River near Muncie, Indiana, USA
 
             .. container:: catalog-meta-row
 
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
+               **Update Cadence:** Static research dataset (released 2025-03-05)
 
             .. container:: catalog-meta-row
 
-               **Registry:** ``load_dataset('floodcastbench_inundation', ...)``
+               **Registry:** ``load_dataset('hydrographnet_white_river', ...)``
 
             .. container:: catalog-meta-row
 
-               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`, :doc:`FloodCastBench <benchmarks/floodcastbench>`
+               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`, :doc:`HydroGraphNet White River <benchmarks/hydrographnet_white_river>`
 
             .. container:: catalog-link-row
 
-               **Details:** :doc:`FloodCastBench <datasets/floodcastbench_inundation>`
+               **Details:** :doc:`HydroGraphNet White River <datasets/hydrographnet_white_river>`
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `FloodCastBench <https://github.com/HydroPML/FloodCastBench>`_
-
-         .. grid-item-card:: HydroBench
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Synthetic-backed streamflow diagnostics adapter aligned to the HydroBench ecosystem.
-
-            .. container:: catalog-chip-row
-
-               :bdg-secondary:`Streamflow Benchmark` :bdg-info:`Graph-temporal basin or node sequences`
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** Benchmark-aligned streamflow forecasting samples
-
-            .. container:: catalog-meta-row
-
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
-
-            .. container:: catalog-meta-row
-
-               **Registry:** ``load_dataset('hydrobench_streamflow', ...)``
-
-            .. container:: catalog-meta-row
-
-               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`, :doc:`HydroBench <benchmarks/hydrobench>`
-
-            .. container:: catalog-link-row
-
-               **Details:** :doc:`HydroBench <datasets/hydrobench_streamflow>`
-
-            .. container:: catalog-link-row
-
-               **Primary Source:** `HydroBench <https://github.com/EMscience/HydroBench>`_
+               **Primary Source:** `Taghizadeh, Zandsalimi, Nabian, Shafiee-Jood and Alemazkoor (2025). Interpretable physics-informed graph neural networks for flood forecasting. Computer-Aided Civil and Infrastructure Engineering 40(18):2629-2649. <https://doi.org/10.1111/mice.13484>`_
 
          .. grid-item-card:: NOAA Flood Events
             :class-card: catalog-entry-card
@@ -550,40 +894,75 @@ primary source, and the most relevant inspection or registry surface.
 
                **Primary Source:** `NOAA National Centers for Environmental Information. Storm Events Database Documentation. <https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc:C00648>`_
 
-         .. grid-item-card:: WaterBench
+         .. grid-item-card:: Synthetic Mesh Hydrographs
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               Synthetic-backed streamflow benchmark adapter aligned to the WaterBench ecosystem.
+               Random mesh fields and toy hydrographs in the HydroGraphNet (White River) layout, for smoke tests of hydrographnet and of mesh inundation rollouts.
 
             .. container:: catalog-chip-row
 
-               :bdg-secondary:`Streamflow Benchmark` :bdg-info:`Graph-temporal basin or node sequences`
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Graph-temporal basin or node sequences`
 
             .. container:: catalog-meta-row
 
-               **Coverage:** Benchmark-aligned streamflow forecasting samples
+               **Coverage:** None (synthetic)
 
             .. container:: catalog-meta-row
 
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
+               **Update Cadence:** Generated on every load
 
             .. container:: catalog-meta-row
 
-               **Registry:** ``load_dataset('waterbench_streamflow', ...)``
+               **Registry:** ``load_dataset('flood_mesh_synthetic', ...)``
 
             .. container:: catalog-meta-row
 
-               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`, :doc:`WaterBench <benchmarks/waterbench>`
+               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
 
             .. container:: catalog-link-row
 
-               **Details:** :doc:`WaterBench <datasets/waterbench_streamflow>`
+               **Details:** :doc:`Synthetic Mesh Hydrographs <datasets/flood_mesh_synthetic>`
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `WaterBench: A Large-scale Benchmark Dataset for Data-driven Streamflow Forecasting <https://neurips.cc/virtual/2023/80632>`_
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/flood/hydrograph.py) <https://github.com/LabRAI/PyHazards>`_
+
+         .. grid-item-card:: Synthetic Urban Flood Events
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random urban flood events in the UrbanFloodCast one-shot layout (current state, rainfall and terrain in; depth and discharges of 24 steps out), for smoke tests of urbanfloodcast.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Raster inundation sequences`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('urbanfloodcast_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Flood Benchmark <benchmarks/flood_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic Urban Flood Events <datasets/urbanfloodcast_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/flood/urbanfloodcast.py) <https://github.com/LabRAI/PyHazards>`_
 
 
    .. tab-item:: Earthquake
@@ -598,94 +977,24 @@ primary source, and the most relevant inspection or registry surface.
          :gutter: 2
          :class-container: catalog-grid
 
-         .. grid-item-card:: AEFA Forecast
+         .. grid-item-card:: SeisBench-format Waveforms
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               Synthetic-backed dense-grid forecasting adapter aligned to the AEFA earthquake forecasting workflow.
+               Reader for labelled three-component waveform datasets in the SeisBench format (STEAD, INSTANCE, ETHZ, ... as distributed for SeisBench) and in STEAD's own CSV + HDF5 layout.
 
             .. container:: catalog-chip-row
 
-               :bdg-secondary:`Forecast Benchmark` :bdg-info:`Dense-grid wavefield tensors`
+               :bdg-secondary:`Waveform Benchmark` :bdg-info:`Three-component station waveform windows`
 
             .. container:: catalog-meta-row
 
-               **Coverage:** Benchmark-aligned earthquake forecasting samples
+               **Coverage:** Dataset dependent (STEAD global; INSTANCE Italy)
 
             .. container:: catalog-meta-row
 
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
-
-            .. container:: catalog-meta-row
-
-               **Registry:** ``load_dataset('aefa_forecast', ...)``
-
-            .. container:: catalog-meta-row
-
-               **Related Benchmarks:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`, :doc:`AEFA <benchmarks/aefa>`
-
-            .. container:: catalog-link-row
-
-               **Details:** :doc:`AEFA Forecast <datasets/aefa_forecast>`
-
-            .. container:: catalog-link-row
-
-               **Primary Source:** `AEFA <https://github.com/chenyk1990/aefa>`_
-
-         .. grid-item-card:: pick-benchmark
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Synthetic-backed waveform picking adapter aligned to the pick-benchmark evaluation ecosystem.
-
-            .. container:: catalog-chip-row
-
-               :bdg-secondary:`Waveform Benchmark` :bdg-info:`Multichannel waveform windows`
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** Benchmark-aligned earthquake phase-picking samples
-
-            .. container:: catalog-meta-row
-
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
-
-            .. container:: catalog-meta-row
-
-               **Registry:** ``load_dataset('pick_benchmark_waveforms', ...)``
-
-            .. container:: catalog-meta-row
-
-               **Related Benchmarks:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`, :doc:`pick-benchmark <benchmarks/pick_benchmark>`
-
-            .. container:: catalog-link-row
-
-               **Details:** :doc:`pick-benchmark <datasets/pick_benchmark_waveforms>`
-
-            .. container:: catalog-link-row
-
-               **Primary Source:** `pick-benchmark <https://github.com/seisbench/pick-benchmark>`_
-
-         .. grid-item-card:: SeisBench
-            :class-card: catalog-entry-card
-
-            .. container:: catalog-entry-summary
-
-               Synthetic-backed waveform picking adapter aligned to the SeisBench ecosystem.
-
-            .. container:: catalog-chip-row
-
-               :bdg-secondary:`Waveform Benchmark` :bdg-info:`Multichannel waveform windows`
-
-            .. container:: catalog-meta-row
-
-               **Coverage:** Benchmark-aligned earthquake phase-picking samples
-
-            .. container:: catalog-meta-row
-
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
+               **Update Cadence:** Static benchmark releases downloaded by the user
 
             .. container:: catalog-meta-row
 
@@ -693,15 +1002,85 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-meta-row
 
-               **Related Benchmarks:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`, :doc:`SeisBench <benchmarks/seisbench>`
+               **Related Benchmarks:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`, :doc:`SeisBench <benchmarks/seisbench>`, :doc:`pick-benchmark <benchmarks/pick_benchmark>`
 
             .. container:: catalog-link-row
 
-               **Details:** :doc:`SeisBench <datasets/seisbench_waveforms>`
+               **Details:** :doc:`SeisBench-format Waveforms <datasets/seisbench_waveforms>`
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `SeisBench - A Toolbox for Machine Learning in Seismology <https://joss.theoj.org/papers/10.21105/joss.04418>`_
+               **Primary Source:** `Woollam, J., Münchmeyer, J., Tilmann, F., et al. (2022). SeisBench - A Toolbox for Machine Learning in Seismology. Seismological Research Letters 93(3):1695-1709. <https://doi.org/10.1785/0220210324>`_
+
+         .. grid-item-card:: Synthetic Phase-Picking Waveforms
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Synthetic three-component windows with P and S wavelets for picking smoke runs. Not real data.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Three-component waveform windows`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Not applicable (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on load from a fixed seed
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('earthquake_waveforms_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic Phase-Picking Waveforms <datasets/earthquake_waveforms_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic phase-picking generator (no external source). <https://github.com/LabRAI/PyHazards/blob/main/pyhazards/datasets/earthquake/synthetic.py>`_
+
+         .. grid-item-card:: Synthetic Wavefield Sequences
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Synthetic X / Y / Z ground-velocity wavefields of point sources for wavefield-forecasting smoke runs. Not real data.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Regular grid of three-component velocity frames`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Not applicable (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('earthquake_wavefield_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Earthquake Benchmark <benchmarks/earthquake_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic Wavefield Sequences <datasets/earthquake_wavefield_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic wavefield generator (no external source). <https://github.com/LabRAI/PyHazards/blob/main/pyhazards/datasets/earthquake/synthetic.py>`_
 
 
    .. tab-item:: Tropical Cyclone
@@ -716,12 +1095,47 @@ primary source, and the most relevant inspection or registry surface.
          :gutter: 2
          :class-container: catalog-grid
 
+         .. grid-item-card:: Hurricast IBTrACS + ERA5 Inputs
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The inputs of Hurricast (Boussioux et al. 2022): 30 IBTrACS statistical features and nine storm-centred ERA5 maps per 3-hour step, 8 steps per sample, with the 24-hour intensity or position as target.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Model Inputs (best track + reanalysis)` :bdg-info:`Storm-centred sequences of feature vectors and 25 x 25 one-degree maps`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** All IBTrACS basins (the paper reports test scores for the North Atlantic and Eastern Pacific)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Follows the user's IBTrACS and ERA5 files
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('hurricast_ibtracs_era5', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`, :doc:`IBTrACS <benchmarks/ibtracs>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Hurricast IBTrACS + ERA5 Inputs <datasets/hurricast_ibtracs_era5>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Boussioux, L., C. Zeng, T. Guenais and D. Bertsimas (2022). Hurricane Forecasting: A Novel Multimodal Machine Learning Framework. Weather and Forecasting 37(6), 817-831. <https://doi.org/10.1175/WAF-D-21-0091.1>`_
+
          .. grid-item-card:: IBTrACS
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               Synthetic-backed storm-track adapter aligned to the IBTrACS tropical cyclone archive.
+               NOAA NCEI's International Best Track Archive for Climate Stewardship (v04r01), read from its CSV or netCDF files into best-track forecasting windows.
 
             .. container:: catalog-chip-row
 
@@ -729,11 +1143,11 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-meta-row
 
-               **Coverage:** Benchmark-aligned tropical cyclone track and intensity samples
+               **Coverage:** All tropical cyclone basins (NA, SA, EP, WP, NI, SI, SP)
 
             .. container:: catalog-meta-row
 
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
+               **Update Cadence:** Updated by NCEI several times a week; PyHazards reads the file the user downloads
 
             .. container:: catalog-meta-row
 
@@ -749,30 +1163,271 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `IBTrACS <https://www.ncei.noaa.gov/products/international-best-track-archive>`_
+               **Primary Source:** `Knapp, K. R., M. C. Kruk, D. H. Levinson, H. J. Diamond and C. J. Neumann (2010). The International Best Track Archive for Climate Stewardship (IBTrACS): Unifying tropical cyclone best track data. Bulletin of the American Meteorological Society 91, 363-376. <https://doi.org/10.1175/2009BAMS2755.1>`_
+
+         .. grid-item-card:: SHIPS Predictors (Xu et al. 2021)
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               The standardised SHIPS predictor table of Xu et al. (2021) with 24-hour intensity-change targets, read into the official leave-one-year-out folds.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Intensity Benchmark` :bdg-info:`Tabular feature vectors`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** Atlantic test basin; global training basins (AL, EP, WP, SH, ...)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Static release (2021)
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('ships_xu2021', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`SHIPS Predictors (Xu et al. 2021) <datasets/ships_xu2021>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `Xu, W., K. Balaguru, A. August, N. Lalo, N. Hodas, M. DeMaria and D. Judi (2021). Deep Learning Experiments for Tropical Cyclone Intensity Forecasts. Weather and Forecasting 36(4), 1453-1470. <https://doi.org/10.1175/WAF-D-20-0104.1>`_
+
+         .. grid-item-card:: Synthetic Hurricast Inputs
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random inputs in the hurricast_ibtracs_era5 layout (8 steps of 30 statistical features and 9 maps of 25 x 25) for smoke tests of hurricast.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Feature sequences and image sequences`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('hurricast_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic Hurricast Inputs <datasets/hurricast_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py) <https://github.com/LabRAI/PyHazards>`_
+
+         .. grid-item-card:: Synthetic SAF-Net Inputs
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random inputs in the SAF-Net layout (96 wide predictors and (2, 4, 31, 31, 4) u/v wind cubes) for smoke tests of saf_net.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Tabular feature vectors`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('safnet_cma_era_interim_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic SAF-Net Inputs <datasets/safnet_cma_era_interim_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py) <https://github.com/LabRAI/PyHazards>`_
+
+         .. grid-item-card:: Synthetic SHIPS Predictors
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random inputs in the layout of ships_xu2021 (121 predictors, 24-hour intensity change in knots) for smoke tests of tropicalcyclone_mlp.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Tabular feature vectors`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('ships_xu2021_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic SHIPS Predictors <datasets/ships_xu2021_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py) <https://github.com/LabRAI/PyHazards>`_
+
+         .. grid-item-card:: Synthetic Storm Histories
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random storm-history features and lat / lon / intensity targets for smoke tests of the generic experimental storm adapters (hurricast, tcif_fusion).
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Storm-track history sequences`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('tc_tracks_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic Storm Histories <datasets/tc_tracks_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py) <https://github.com/LabRAI/PyHazards>`_
+
+         .. grid-item-card:: Synthetic TCIF-fusion Inputs
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random inputs in the TCIF-fusion layout (ERA5 U, V, W, SST, ALL, 30 history features, infrared images; channels last) for smoke tests of tcif_fusion.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Gridded fields, images and feature vectors`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('tcif_fusion_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic TCIF-fusion Inputs <datasets/tcif_fusion_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py) <https://github.com/LabRAI/PyHazards>`_
+
+         .. grid-item-card:: Synthetic TCND Samples
+            :class-card: catalog-entry-card
+
+            .. container:: catalog-entry-summary
+
+               Random inputs in the TropiCycloneNet (TCND) layout with random-walk targets for smoke tests of tropicyclonenet.
+
+            .. container:: catalog-chip-row
+
+               :bdg-secondary:`Synthetic Smoke Data` :bdg-info:`Storm-track history sequences`
+
+            .. container:: catalog-meta-row
+
+               **Coverage:** None (synthetic)
+
+            .. container:: catalog-meta-row
+
+               **Update Cadence:** Generated on every load
+
+            .. container:: catalog-meta-row
+
+               **Registry:** ``load_dataset('tropicyclonenet_dataset_synthetic', ...)``
+
+            .. container:: catalog-meta-row
+
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`
+
+            .. container:: catalog-link-row
+
+               **Details:** :doc:`Synthetic TCND Samples <datasets/tropicyclonenet_dataset_synthetic>`
+
+            .. container:: catalog-link-row
+
+               **Primary Source:** `PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py) <https://github.com/LabRAI/PyHazards>`_
 
          .. grid-item-card:: TCBench Alpha
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               Synthetic-backed storm-track benchmark adapter aligned to the TCBench Alpha ecosystem.
+               Weather-model cyclone tracks (Pangu-Weather, FourCastNet v2, AIFS; 2023) matched to IBTrACS, with the raw forecast fields they were tracked in; read by pyhazards.forecasts at a pinned revision.
 
             .. container:: catalog-chip-row
 
-               :bdg-secondary:`Track Benchmark` :bdg-info:`Storm-track history sequences`
+               :bdg-secondary:`Track Benchmark` :bdg-info:`Storm-track tables and global gridded forecast fields`
 
             .. container:: catalog-meta-row
 
-               **Coverage:** Benchmark-aligned tropical cyclone track and intensity samples
+               **Coverage:** Global tropical cyclones present in IBTrACS
 
             .. container:: catalog-meta-row
 
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
-
-            .. container:: catalog-meta-row
-
-               **Registry:** ``load_dataset('tcbench_alpha', ...)``
+               **Update Cadence:** Static release (PyHazards pins revision 0124d14d)
 
             .. container:: catalog-meta-row
 
@@ -784,14 +1439,14 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `TCBench Alpha <https://github.com/msgomez06/TCBench_Alpha>`_
+               **Primary Source:** `Gomez, M. et al. (2026). TCBench: A Benchmark for Tropical Cyclone Track and Intensity Forecasting at the Global Scale. arXiv:2601.23268. <https://arxiv.org/abs/2601.23268>`_
 
-         .. grid-item-card:: TropiCycloneNet-Dataset
+         .. grid-item-card:: TropiCycloneNet Dataset
             :class-card: catalog-entry-card
 
             .. container:: catalog-entry-summary
 
-               Synthetic-backed storm-track benchmark adapter aligned to the TropiCycloneNet-Dataset ecosystem.
+               The TropiCycloneNet Dataset (TCND) of Huang et al. (2025) - best tracks, environmental features and ERA5 500 hPa geopotential for 3,630 storms in six basins - read in the layout of the official TropiCycloneNet loader.
 
             .. container:: catalog-chip-row
 
@@ -799,11 +1454,11 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-meta-row
 
-               **Coverage:** Benchmark-aligned tropical cyclone track and intensity samples
+               **Coverage:** Six basins (EP, NA, NI, SI, SP, WP)
 
             .. container:: catalog-meta-row
 
-               **Update Cadence:** Generated locally for smoke and benchmark-alignment runs
+               **Update Cadence:** Static releases (Zenodo 15009527 dataset, 17104690 training data)
 
             .. container:: catalog-meta-row
 
@@ -811,15 +1466,15 @@ primary source, and the most relevant inspection or registry surface.
 
             .. container:: catalog-meta-row
 
-               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`, :doc:`TropiCycloneNet-Dataset <benchmarks/tropicyclonenet_dataset>`
+               **Related Benchmarks:** :doc:`Tropical Cyclone Benchmark <benchmarks/tropical_cyclone_benchmark>`, :doc:`TropiCycloneNet Dataset <benchmarks/tropicyclonenet_dataset>`
 
             .. container:: catalog-link-row
 
-               **Details:** :doc:`TropiCycloneNet-Dataset <datasets/tropicyclonenet_dataset>`
+               **Details:** :doc:`TropiCycloneNet Dataset <datasets/tropicyclonenet_dataset>`
 
             .. container:: catalog-link-row
 
-               **Primary Source:** `TropiCycloneNet-Dataset <https://github.com/xiaochengfuhuo/TropiCycloneNet-Dataset>`_
+               **Primary Source:** `Huang, C., P. Mu, J. Zhang, S. Chan, S. Zhang, H. Yan, S. Chen and C. Bai (2025). Benchmark dataset and deep learning method for global tropical cyclone forecasting. Nature Communications 16, 5923. <https://doi.org/10.1038/s41467-025-61087-4>`_
 
 
 
@@ -856,16 +1511,16 @@ hazard group before branching into the full catalog.
 
       **Start with:** :doc:`Caravan <datasets/caravan_streamflow>`
 
-      Synthetic-backed streamflow benchmark adapter aligned to the Caravan large-sample hydrology ecosystem.
+      Reader for a local copy of Caravan, the global large-sample hydrology dataset (daily ERA5-Land forcings, catchment attributes and observed streamflow), in NeuralHydrology's sample layout.
 
       **Primary Surface:** Registry: ``load_dataset('caravan_streamflow', ...)``
 
    .. grid-item-card:: Earthquake
       :class-card: catalog-detail-card
 
-      **Start with:** :doc:`SeisBench <datasets/seisbench_waveforms>`
+      **Start with:** :doc:`SeisBench-format Waveforms <datasets/seisbench_waveforms>`
 
-      Synthetic-backed waveform picking adapter aligned to the SeisBench ecosystem.
+      Reader for labelled three-component waveform datasets in the SeisBench format (STEAD, INSTANCE, ETHZ, ... as distributed for SeisBench) and in STEAD's own CSV + HDF5 layout.
 
       **Primary Surface:** Registry: ``load_dataset('seisbench_waveforms', ...)``
 
@@ -874,7 +1529,7 @@ hazard group before branching into the full catalog.
 
       **Start with:** :doc:`IBTrACS <datasets/ibtracs_tracks>`
 
-      Synthetic-backed storm-track adapter aligned to the IBTrACS tropical cyclone archive.
+      NOAA NCEI's International Best Track Archive for Climate Stewardship (v04r01), read from its CSV or netCDF files into best-track forecasting windows.
 
       **Primary Surface:** Registry: ``load_dataset('ibtracs_tracks', ...)``
 
@@ -909,21 +1564,42 @@ model and evaluation coverage.
 
    datasets/era5
    datasets/goesr
+   datasets/hrrr
+   datasets/landscan_population
    datasets/merra2
+   datasets/ndfd
+   datasets/nohrsc_snodas
+   datasets/frap_fire_perimeters
+   datasets/figlib_smokebench
    datasets/firms
    datasets/fpa_fod_tabular
    datasets/fpa_fod_weekly
+   datasets/geomac_historical
+   datasets/goesr_fdcf
    datasets/landfire
    datasets/mtbs
+   datasets/hms_smoke
+   datasets/wildfire_track_o
    datasets/wfigs
+   datasets/wrc_housing_density
+   datasets/wrf_sfire
+   datasets/camels_us_streamflow
    datasets/caravan_streamflow
-   datasets/floodcastbench_inundation
-   datasets/hydrobench_streamflow
+   datasets/hydrographnet_white_river
    datasets/noaa_flood
-   datasets/waterbench_streamflow
-   datasets/aefa_forecast
-   datasets/pick_benchmark_waveforms
+   datasets/flood_mesh_synthetic
+   datasets/urbanfloodcast_synthetic
    datasets/seisbench_waveforms
+   datasets/earthquake_waveforms_synthetic
+   datasets/earthquake_wavefield_synthetic
+   datasets/hurricast_ibtracs_era5
    datasets/ibtracs_tracks
+   datasets/ships_xu2021
+   datasets/hurricast_synthetic
+   datasets/safnet_cma_era_interim_synthetic
+   datasets/ships_xu2021_synthetic
+   datasets/tc_tracks_synthetic
+   datasets/tcif_fusion_synthetic
+   datasets/tropicyclonenet_dataset_synthetic
    datasets/tcbench_alpha
    datasets/tropicyclonenet_dataset

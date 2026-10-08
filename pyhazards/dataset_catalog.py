@@ -30,12 +30,12 @@ HAZARD_DISPLAY_ORDER = [
 
 HAZARD_SECTION_SUMMARIES = {
     "Shared Forcing": (
-        "Cross-hazard meteorology and imagery sources that support multiple "
-        "PyHazards workflows, inspections, and forcing pipelines."
+        "Cross-hazard meteorology, imagery, snow and population sources: some feed "
+        "PyHazards inspections and forcing pipelines, others are external references."
     ),
     "Wildfire": (
-        "Wildfire datasets span authoritative incident records, active-fire "
-        "detections, fuels, burn severity, and forecast-ready benchmark adapters."
+        "Wildfire datasets span authoritative incident records, perimeters, active-fire "
+        "detections, smoke, fuels, burn severity, exposure, and forecast-ready benchmark adapters."
     ),
     "Flood": (
         "Flood datasets combine event records with streamflow and inundation "
@@ -75,6 +75,7 @@ SOURCE_ROLE_BADGE_ROLES = {
     "Inundation Benchmark": "secondary",
     "Track Archive": "secondary",
     "Track Benchmark": "secondary",
+    "Occurrence Benchmark": "secondary",
 }
 
 GEOMETRY_BADGE_ROLES = {
@@ -92,6 +93,7 @@ GEOMETRY_BADGE_ROLES = {
     "Graph-temporal basin or node sequences": "info",
     "Raster inundation sequences": "info",
     "Storm-track history sequences": "info",
+    "Daily latitude-longitude grids": "info",
 }
 
 
@@ -652,7 +654,7 @@ def render_dataset_api_page(cards: Sequence[DatasetCard]) -> str:
             "",
             "    print(available_datasets())",
             "    data = load_dataset(",
-            '        \"seisbench_waveforms\",',
+            '        \"earthquake_waveforms_synthetic\",',
             "        micro=True,",
             "    ).load()",
             "    print(sorted(data.splits.keys()))",
@@ -843,7 +845,7 @@ def render_dataset_detail_page(card: DatasetCard) -> str:
             lines.append(f"- {_single_line(note)}")
         if card.registry.notes:
             lines.append("")
-    else:
+    elif card.inspection is not None:
         lines.extend(
             [
                 "This dataset is currently documented as an external or inspection-first",
@@ -875,11 +877,19 @@ def render_dataset_detail_page(card: DatasetCard) -> str:
             lines.append(f"- {_single_line(note)}")
         if card.inspection.notes:
             lines.append("")
-    else:
+    elif card.registry is not None:
         lines.extend(
             [
                 "This dataset is currently surfaced as a registry-backed benchmark adapter,",
                 "so there is no standalone inspection CLI documented for it.",
+                "",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "PyHazards has no inspection command or loader for this source; it is listed",
+                "as an external reference. Use the provider's access links above.",
                 "",
             ]
         )

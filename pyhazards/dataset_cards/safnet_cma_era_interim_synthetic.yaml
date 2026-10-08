@@ -1,0 +1,42 @@
+slug: safnet_cma_era_interim_synthetic
+display_name: Synthetic SAF-Net Inputs
+hazard_family: Tropical Cyclone
+source_role: Synthetic Smoke Data
+summary: "Random inputs in the SAF-Net layout (96 wide predictors and (2, 4, 31, 31, 4) u/v wind cubes) for smoke tests of saf_net."
+provider: PyHazards (generated in memory; no real storms)
+geometry: Tabular feature vectors
+spatial_resolution: Not applicable (random numbers)
+temporal_resolution: Not applicable (random numbers)
+update_cadence: Generated on every load
+period_of_record: None (synthetic)
+coverage: None (synthetic)
+formats: PyTorch tensors via the dataset registry
+overview:
+  - >
+    Synthetic data. Every value is a random number; nothing in it describes real tropical cyclones and
+    scores on it mean nothing. It exists so that smoke tests and CI can run the models and the cyclone
+    benchmark without downloading data.
+data_characteristics:
+  - "Inputs uniform in [0, 1] like the MinMax-scaled official inputs; targets uniform in 10-70 m/s with a prediction_transform that maps the model's scaled output to m/s."
+typical_use_cases:
+  - Smoke tests and CI runs of the linked models and of the cyclone benchmark.
+access_links: []
+inspection: null
+registry:
+  name: safnet_cma_era_interim_synthetic
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    data = load_dataset("safnet_cma_era_interim_synthetic", micro=True).load()
+    print(data.metadata["synthetic"])  # True
+primary_references:
+  - citation: PyHazards synthetic smoke data (pyhazards/datasets/tc/synthetic.py)
+    url: https://github.com/LabRAI/PyHazards
+pyhazards_usage:
+  - Use only for smoke tests; real data are ibtracs_tracks, ships_xu2021 and tropicyclonenet_dataset.
+related_models:
+  - saf_net
+related_benchmarks:
+  - tropical_cyclone_benchmark
+notes:
+  - Bundle metadata carries synthetic=True, and benchmark results report it.

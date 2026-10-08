@@ -6,7 +6,7 @@ Wildfire Benchmark
 Overview
 --------
 
-The wildfire benchmark family is the single scoring layer for tabular danger tasks, weekly forecasting tasks, and raster spread tasks.
+The wildfire benchmark family is the single scoring layer for tabular, daily-sequence and gridded (per-cell) danger tasks, weekly forecasting tasks, and raster spread tasks.
 
 Current coverage is synthetic-backed, but it already exposes a single hazard-level evaluator contract across wildfire danger and wildfire spread smoke configs.
 
@@ -55,11 +55,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         8
+         29
 
       .. container:: catalog-stat-note
 
-         8 models
+         29 models
 
 
 Benchmark Mapping
@@ -89,6 +89,7 @@ Mapped benchmark ecosystems
    - ``pr_auc``
    - ``mae``
    - ``rmse``
+   - ``average_precision``
    - ``iou``
    - ``f1``
    - ``burned_area_mae``
@@ -101,16 +102,21 @@ Mapped benchmark ecosystems
    - ``asufm_smoke.yaml``
    - ``wildfire_spread_smoke.yaml``
    - ``wildfirespreadts_smoke.yaml``
-   - ``forefire_smoke.yaml``
-   - ``wrf_sfire_smoke.yaml``
    - ``firecastnet_smoke.yaml``
+   - ``track_o_convlstm_smoke.yaml``
 
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`ASUFM </modules/models_asufm>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS </modules/models_wildfirespreadts>`, :doc:`ForeFire Adapter </modules/models_forefire>`, :doc:`WRF-SFIRE Adapter </modules/models_wrf_sfire>`, :doc:`FireCastNet </modules/models_firecastnet>`.
+   :doc:`DNN-LSTM-AutoEncoder </modules/models_wildfire_fpa>`, :doc:`Wildfire Forecasting </modules/models_wildfire_forecasting>`, :doc:`Random Forest </modules/models_random_forest>`, :doc:`XGBoost </modules/models_xgboost>`, :doc:`Deep Ensemble </modules/models_deep_ensemble>`, :doc:`ASUFM </modules/models_asufm>`, :doc:`CNN-ASPP </modules/models_wildfire_aspp>`, :doc:`WildfireSpreadTS Baselines </modules/models_wildfirespreadts>`, :doc:`Logistic Regression (pixel) </modules/models_logistic_regression>`, :doc:`ResNet-18 U-Net </modules/models_resnet18_unet>`, :doc:`ConvLSTM </modules/models_convlstm>`, :doc:`ConvGRU </modules/models_convgru>`, :doc:`U-TAE </modules/models_utae>`, :doc:`SegFormer </modules/models_segformer>`, :doc:`Swin-Unet </modules/models_swin_unet>`, :doc:`SwinLSTM </modules/models_swinlstm>`, :doc:`TrajGRU </modules/models_trajgru>`, :doc:`Attention U-Net </modules/models_attention_unet>`, :doc:`TS-SatFire Baselines </modules/models_ts_satfire>`, :doc:`U-Net-3D (MONAI) </modules/models_unet3d>`, :doc:`UNETR </modules/models_unetr>`, :doc:`SwinUNETR </modules/models_swin_unetr>`, :doc:`TCN </modules/models_tcn>`, :doc:`Earthformer </modules/models_earthformer>`, :doc:`U-Net </modules/models_unet>`, :doc:`DeepLabV3 </modules/models_deeplabv3>`, :doc:`Earthfarseer </modules/models_earthfarseer>`, :doc:`Rainformer </modules/models_rainformer>`, :doc:`FireCastNet </modules/models_firecastnet>`.
 
 .. dropdown:: Notes
    :class-container: catalog-dropdown
 
    - WildfireSpreadTS is the public Appendix-A benchmark ecosystem surfaced on this page.
+   - Track-O (from PR #33 by runyangxu) scores ``wildfire.danger`` as daily fire occurrence on a latitude-longitude grid: whether a cell has a NASA FIRMS detection on a day, from that day's weather (MERRA-2 surface variables or any NetCDF files on a regular grid) and LANDFIRE fuels. Build the cache with ``scripts/build_wildfire_track_o_cache.py``, load it with the ``wildfire_track_o_raster`` / ``_temporal`` / ``_tabular`` datasets, and train and score registry models with ``scripts/run_wildfire_track_o_baselines.py``. Raster and temporal layouts are scored per cell (one logit per cell; accuracy and macro F1 at probability 0.5, ROC AUC, PR AUC). The smoke config ``track_o_convlstm_smoke.yaml`` runs on the synthetic ``micro`` cache; no real-data Track-O results are published with PyHazards.
+   - The Kondylatos et al. (2022) tree baselines ``random_forest`` and ``xgboost`` read the same daily danger tensors as ``wildfire_forecasting`` but must be fitted (``model.fit``) before they are scored, so they have no smoke config; pass the fitted model to ``BenchmarkRunner.run(model=...)``. ``deep_ensemble`` wraps any of the linked models (the ten-LSTM danger ensemble of Kondylatos et al. 2025, or U-TAE members for spread).
+   - FireCastNet forecasts seasonal burned-area presence on the SeasFire datacube (AUPRC in its paper); without a SeasFire adapter its smoke config runs on synthetic rasters and is scored with the spread-mask metrics.
+   - Earthfarseer and Rainformer are frame-sequence forecasters (Sim2Real-Fire baselines); their task="segmentation" adaptation maps the first predicted frame to fire-mask logits, which is a PyHazards convention, not a published Sim2Real-Fire configuration.
+   - Prithvi-EO-2.0 BurnScars and Prithvi-EO-2.0-TL segment burn scars after a fire (post-fire burned-area mapping). They are wildfire models but are not linked here, because this family scores danger and spread prediction, not post-fire mapping.
+   - ForeFire and WRF-SFIRE are physics simulators, not trainable models, so they are not linked models. ``pyhazards.simulators.ForeFireSimulator`` runs the official ForeFire (installed separately) on spread rasters, and the ``wrf_sfire_spread`` dataset turns WRF-SFIRE ``wrfout`` files into spread samples for this family's ``wildfire.spread`` task.

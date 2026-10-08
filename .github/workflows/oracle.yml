@@ -1,0 +1,274 @@
+name: Oracle
+
+# Compares PyHazards models with their pinned reference implementations (tests/oracle).
+# Reference stacks that cannot share one environment run as separate matrix entries; every
+# tests/oracle/test_*.py file must be listed in exactly one entry (checked by the CI test suite).
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "pyhazards/models/**"
+      - "pyhazards/simulators/**"
+      - "pyhazards/prompted/**"
+      - "pyhazards/datasets/figlib_smokebench/**"
+      - "pyhazards/datasets/tc/**"
+      - "pyhazards/benchmarks/tc.py"
+      - "pyhazards/forecasts/**"
+      - "pyhazards/datasets/flood/**"
+      - "pyhazards/metrics/**"
+      - "pyhazards/benchmarks/flood.py"
+      - "tests/oracle/**"
+      - "scripts/fetch_oracles.py"
+      - ".github/workflows/oracle.yml"
+  pull_request:
+    branches: [main, master]
+    paths:
+      - "pyhazards/models/**"
+      - "pyhazards/simulators/**"
+      - "pyhazards/prompted/**"
+      - "pyhazards/datasets/figlib_smokebench/**"
+      - "pyhazards/datasets/tc/**"
+      - "pyhazards/benchmarks/tc.py"
+      - "pyhazards/forecasts/**"
+      - "pyhazards/datasets/flood/**"
+      - "pyhazards/metrics/**"
+      - "pyhazards/benchmarks/flood.py"
+      - "tests/oracle/**"
+      - "scripts/fetch_oracles.py"
+      - ".github/workflows/oracle.yml"
+  workflow_dispatch:
+
+jobs:
+  oracle:
+    name: oracle (${{ matrix.suite }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - suite: default
+            python: "3.10"
+            torch: torch torchvision
+            requirements: tests/oracle/requirements.txt
+            references: >-
+              utae-paps WildfireSpreadTS utae_pastis_weights wildfire_forecasting
+              segformer_mit_b0 segformer_b0_ade TS-SatFire TCN uncertainty-wildfires firecastnet
+            tests: >-
+              tests/oracle/test_wildfirespreadts_oracle.py
+              tests/oracle/test_wildfire_forecasting_oracle.py
+              tests/oracle/test_classical_oracle.py
+              tests/oracle/test_deep_ensemble_oracle.py
+              tests/oracle/test_segformer_oracle.py
+              tests/oracle/test_attention_unet_oracle.py
+              tests/oracle/test_tcn_oracle.py
+              tests/oracle/test_deeplabv3_oracle.py
+              tests/oracle/test_convgru_oracle.py
+          # The original U-Net release is Caffe; OpenCV 4.x's Caffe importer runs it (OpenCV 5 dropped it).
+          - suite: unet
+            python: "3.10"
+            torch: torch
+            requirements: tests/oracle/requirements-unet.txt
+            references: unet_release
+            tests: tests/oracle/test_unet_oracle.py
+          # timm 0.4.12 (fire-asufm) conflicts with the timm 0.6.12 pin of smp 0.3.2.
+          - suite: swin
+            python: "3.10"
+            torch: torch torchvision
+            requirements: tests/oracle/requirements-swin.txt
+            references: Swin-Unet fire-asufm swin_tiny_imagenet SwinLSTM
+            tests: tests/oracle/test_swin_oracle.py tests/oracle/test_swinlstm_oracle.py
+          # EarthFarseer pins timm 0.9.16 (smp 0.3.2 needs 0.6.12, fire-asufm 0.4.12); Rainformer needs
+          # einops. Default-size models and the 751 MB Rainformer KNMI checkpoint are compared locally
+          # (PYHAZARDS_ORACLE_LARGE=1); CI compares reduced models.
+          - suite: farseer-rainformer
+            python: "3.10"
+            torch: torch torchvision
+            requirements: tests/oracle/requirements-farseer-rainformer.txt
+            references: EarthFarseer Rainformer
+            tests: >-
+              tests/oracle/test_earthfarseer_oracle.py
+              tests/oracle/test_rainformer_oracle.py
+          # MONAI's UNETR / SwinUNETR need einops, and TS-SatFire's SwinUNETR copy imports torchinfo.
+          - suite: tssatfire
+            python: "3.10"
+            torch: torch
+            requirements: tests/oracle/requirements-tssatfire.txt
+            references: TS-SatFire
+            tests: >-
+              tests/oracle/test_unet3d_oracle.py
+              tests/oracle/test_unetr_oracle.py
+              tests/oracle/test_swin_unetr_oracle.py
+              tests/oracle/test_ts_satfire_oracle.py
+          # The official FireCastNet code runs on DGL, whose CPU wheels need torch 2.4 (pinned in the
+          # requirements file). The comparison on the full global grid peaks at about 8 GB of RAM.
+          - suite: firecastnet
+            python: "3.10"
+            torch: ""
+            requirements: tests/oracle/requirements-firecastnet.txt
+            references: >-
+              firecastnet firecastnet_global_cls_ts24_h1 firecastnet_global_regr_ts24_h1
+              firecastnet_lam_aust_cls_ts24_h1
+            tests: tests/oracle/test_firecastnet_oracle.py
+          # The official Earthformer model file needs einops, which no other suite installs. The SEVIR
+          # and ICAR-ENSO checkpoints (35 MB and 6 MB) are fetched and compared in CI.
+          - suite: earthformer
+            python: "3.10"
+            torch: torch
+            requirements: tests/oracle/requirements-earthformer.txt
+            references: earth-forecasting-transformer earthformer_sevir earthformer_icarenso2021
+            tests: tests/oracle/test_earthformer_oracle.py
+          # The official TrajGRU code (HKO-7) is MXNet; MXNet 1.9.1 runs it and needs numpy < 1.24.
+          - suite: trajgru
+            python: "3.10"
+            torch: torch
+            requirements: tests/oracle/requirements-trajgru.txt
+            references: HKO-7 hko7_movingmnist_weights hko7_hko_weights
+            tests: tests/oracle/test_trajgru_oracle.py
+          # ForeFire (GPL-3.0) is installed from its official 2.5.0 wheel in this job only; the pinned
+          # repository and its Git LFS test files provide the official inputs and reference output.
+          - suite: forefire
+            python: "3.10"
+            torch: torch
+            requirements: tests/oracle/requirements-forefire.txt
+            references: forefire forefire_runff_data forefire_runff_reference
+            tests: tests/oracle/test_forefire_oracle.py
+          # SmokeBench authors' evaluation scripts (prompted VLM baselines): OpenCV + torchvision.
+          # The check over all 5,046 SmokeBench images needs the 11.4 GB download and runs locally.
+          - suite: smokebench
+            python: "3.10"
+            torch: torch torchvision
+            requirements: tests/oracle/requirements-smokebench.txt
+            references: SoraLink-MLLM smokeynet_metadata
+            tests: tests/oracle/test_smokebench_oracle.py
+          # Tropical cyclone models: the official tropicalcyclone_MLP Keras model and the TCIF-fusion notebook graph
+          # (about 300 M parameters, ~3 GB RAM) run on Keras 3 with the PyTorch backend; SAF-Net's notebook network,
+          # TropiCycloneNet's generator and Hurricast's encoder-decoders are plain PyTorch, Hurricast's second stage
+          # is XGBoost. The TropiCycloneNet checkpoint (56 MB, Zenodo, CC BY 4.0) is fetched and compared in CI.
+          - suite: tc
+            python: "3.10"
+            torch: torch
+            requirements: tests/oracle/requirements-tc.txt
+            references: tropicalcyclone_MLP TI_Prediction TropiCycloneNet tropicyclonenet_checkpoint hurricast TCIF-fusion
+            tests: >-
+              tests/oracle/test_tropicalcyclone_mlp_oracle.py
+              tests/oracle/test_saf_net_oracle.py
+              tests/oracle/test_tropicyclonenet_oracle.py
+              tests/oracle/test_hurricast_oracle.py
+              tests/oracle/test_tcif_fusion_oracle.py
+          # Cyclone trackers and TCBench scoring: TempestExtremes v2.4.2 is built from its pinned source
+          # (needs cmake and the netCDF C library) and compared with pyhazards.forecasts.tempest on synthetic
+          # fields; TCBench's own metric functions score its released 2023 tracks. The check on TCBench's
+          # raw Pangu-Weather fields reads ~200 MB over HTTP and runs locally (PYHAZARDS_ORACLE_LARGE=1).
+          - suite: tc-tracking
+            python: "3.10"
+            torch: torch
+            apt: cmake libnetcdf-dev
+            requirements: tests/oracle/requirements-tc-tracking.txt
+            references: >-
+              tempestextremes TCBench_Alpha tcbench_matched_pangu tcbench_matched_fcnet tcbench_ibtracs_2023
+              tcbench_pangu_unmatched_20230716_12
+            tests: tests/oracle/test_tempest_oracle.py tests/oracle/test_tcbench_evaluation_oracle.py
+          # Weather-model sources: earth2studio 0.19.0 (Python >= 3.11) drives its Persistence model through
+          # the PyHazards runner; zarr + gcsfs read small slices of the public WeatherBench 2 stores.
+          - suite: weather
+            python: "3.12"
+            torch: torch
+            requirements: tests/oracle/requirements-weather.txt
+            references: ""
+            tests: tests/oracle/test_forecasts_weather_oracle.py
+          # NeuralHydrology and googlehydrology (Google's flood-forecasting fork) are imported from their pinned
+          # checkouts; googlehydrology targets Python 3.12. Both repositories provide real test data (4 CAMELS-US
+          # basins, Caravan netCDF files) and the released FloodHub weights; the 939 MB HydroShare archive of the
+          # Kratzert et al. (2019) runs is not fetched in CI (those tests run locally with PYHAZARDS_ORACLE_LARGE=1).
+          # The official UrbanFloodCast DNO (no licence; test oracle only) needs torch, numpy, scipy and matplotlib,
+          # which this suite has.
+          - suite: flood
+            python: "3.12"
+            torch: torch
+            requirements: tests/oracle/requirements-flood.txt
+            references: neuralhydrology ealstm_regional_modeling flood-forecasting floodhub_weights UrbanFloodCast
+            tests: >-
+              tests/oracle/test_neuralhydrology_oracle.py
+              tests/oracle/test_google_flood_forecasting_oracle.py
+              tests/oracle/test_urbanfloodcast_oracle.py
+          # HydroGraphNet: NVIDIA PhysicsNeMo's MeshGraphKAN, physics loss, rollout and HydroGraphDataset, imported
+          # from the pinned checkout. PyTorch Geometric + torch_scatter (CPU wheels up to torch 2.12) and the
+          # packages `import physicsnemo` needs; see requirements-physicsnemo.txt.
+          - suite: physicsnemo
+            python: "3.12"
+            torch: torch==2.12.0 torchvision==0.27.0
+            requirements: tests/oracle/requirements-physicsnemo.txt
+            references: physicsnemo
+            tests: tests/oracle/test_hydrographnet_oracle.py
+          # TerraTorch 0.99.8 (the Prithvi-EO-2.0 BurnScars training stack) needs Python >= 3.12 and
+          # torch 2.6. The 1.3 GB checkpoints are not fetched in CI; those tests run locally.
+          - suite: prithvi
+            python: "3.12"
+            torch: torch==2.6.0 torchvision==0.21.0
+            requirements: tests/oracle/requirements-prithvi.txt
+            references: prithvi_eo2_tl_model_code prithvi_burnscars_config prithvi_burnscars_example
+            tests: tests/oracle/test_prithvi_oracle.py
+          # Earthquake phase pickers: the official PhaseNet (TF1 graph), EQTransformer and GPD (Keras) run on
+          # TensorFlow 2.11 with their released weights; SeisBench 0.12.6 (GPL-3.0) is a second oracle.
+          # WaveCastNet's official PyTorch code and both released checkpoints (40 MB, 66 MB, Google Drive),
+          # and EQNet's backbone / heads (AI4EPS/EQNet, non-commercial: oracle only) need only torch and numpy.
+          - suite: earthquake
+            python: "3.10"
+            torch: torch
+            requirements: tests/oracle/requirements-earthquake.txt
+            references: >-
+              PhaseNet EQTransformer generalized-phase-detection seisbench_phasenet_original
+              seisbench_eqtransformer_original seisbench_eqtransformer_original_nonconservative
+              seisbench_gpd_original WaveCastNet wavecastnet_dense_checkpoint wavecastnet_sparse_checkpoint
+              EQNet EQNet-2022
+            tests: >-
+              tests/oracle/test_picking_metrics_oracle.py
+              tests/oracle/test_phasenet_oracle.py
+              tests/oracle/test_eqtransformer_oracle.py
+              tests/oracle/test_gpd_oracle.py
+              tests/oracle/test_seisbench_reader_oracle.py
+              tests/oracle/test_wavecastnet_oracle.py
+              tests/oracle/test_eqnet_oracle.py
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Cache reference implementations and weights
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pyhazards-oracles
+            ~/.cache/torch/hub
+          key: oracles-${{ matrix.suite }}-${{ hashFiles('tests/oracle/repos.yaml') }}
+
+      - name: Install system packages
+        if: matrix.apt != ''
+        run: sudo apt-get update && sudo apt-get install -y ${{ matrix.apt }}
+
+      - name: Install dependencies (CPU Torch + reference packages)
+        run: |
+          python -m pip install --upgrade pip
+          if [ -n "${{ matrix.torch }}" ]; then
+            python -m pip install ${{ matrix.torch }} --index-url https://download.pytorch.org/whl/cpu
+          fi
+          python -m pip install pytest
+          python -m pip install -r ${{ matrix.requirements }}
+          python -m pip install -e .
+
+      - name: Fetch pinned reference implementations
+        if: matrix.references != ''
+        run: python scripts/fetch_oracles.py --dest ~/.cache/pyhazards-oracles ${{ matrix.references }}
+
+      - name: Oracle tests
+        run: |
+          export PYHAZARDS_ORACLE_DIR="$HOME/.cache/pyhazards-oracles"
+          mkdir -p "$PYHAZARDS_ORACLE_DIR"
+          export PYHAZARDS_ORACLE_REQUIRED=1
+          export DGLBACKEND=pytorch
+          export KERAS_BACKEND=torch
+          python -m pytest ${{ matrix.tests }} -v -rs

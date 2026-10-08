@@ -1,0 +1,69 @@
+slug: hydrographnet_white_river
+display_name: HydroGraphNet White River
+hazard_family: Flood
+source_role: Inundation Benchmark
+summary: Reader for a local copy of the HydroGraphNet dataset (HEC-RAS flood simulations on a 4,787-cell mesh of the White River near Muncie, Indiana), read as PhysicsNeMo's HydroGraphDataset reads it.
+provider: Taghizadeh et al. (University of Virginia), Zenodo record 14969507; read by PyHazards from a local copy
+geometry: Unstructured 2-D mesh cells with a k-nearest-neighbour graph
+spatial_resolution: Mesh cells of about 80 m (4,787 cells)
+temporal_resolution: 20-minute steps
+update_cadence: Static research dataset (released 2025-03-05)
+period_of_record: 500 simulated inflow / rainfall events (hydrographs)
+coverage: White River near Muncie, Indiana, USA
+formats: Tab-separated text files (HydroGraphNet.zip, 8.3 GB)
+overview:
+  - >
+    The dataset of HydroGraphNet (Taghizadeh et al., Computer-Aided Civil and Infrastructure Engineering
+    2025): HEC-RAS 2-D simulations of 500 boundary-inflow hydrographs with rainfall on the White River
+    mesh, with per-cell terrain attributes (area, elevation, slope, aspect, curvature, Manning's n, flow
+    accumulation, infiltration) and per-step water depth and volume. CC BY 4.0, Zenodo 14969507.
+  - >
+    ``hydrographnet_white_river`` reproduces PhysicsNeMo's ``HydroGraphDataset``: it drops the first 72
+    steps of every hydrograph and cuts it 25 steps after the inflow peak, converts precipitation, builds
+    the 4-nearest-neighbour graph with standardised (dx, dy, distance) edge features, standardises
+    static features per column and the dynamic series with statistics of the training hydrographs, and
+    yields the 16 node features, the next depth / volume change and the physics data of the continuity
+    loss for every two-step window; test hydrographs are whole rollouts. PyHazards downloads nothing.
+data_characteristics:
+  - "Layout: ``M80_XY.txt``, ``M80_{CA,CE,CS,A,CU,N,FA,IP}.txt`` (static), ``M80_{WD,V,US_InF,Pr}_<id>.txt`` per hydrograph ``H1`` ... ``H500``, ``train.txt``, ``static_norm_stats.json``, ``dynamic_norm_stats.json``."
+  - "Training split: sliding windows (``n_time_steps=2``) with ``(node_features (N, 16), edge_features (E, 3), edge_index (2, E), physics)`` and the target (N, 2); batch them with ``hydrograph_collate``."
+  - "Test split: one item per hydrograph with the first window, the normalised inflow / precipitation and the true depth / volume of the next ``rollout_length`` (30) steps."
+  - "The release ships no test list: ``train.txt`` names all 500 hydrographs and the example's ``Test/test.txt`` is not published, so ``test_ids`` must be given (they are removed from the training list)."
+typical_use_cases:
+  - Training and evaluating HydroGraphNet as in the PhysicsNeMo example.
+  - Mesh inundation rollouts scored in metres with the flood benchmark (``flood.inundation``).
+access_links:
+  - label: HydroGraphNet dataset (Zenodo 14969507)
+    url: https://zenodo.org/records/14969507
+  - label: PhysicsNeMo HydroGraphNet example
+    url: https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet
+inspection: null
+registry:
+  name: hydrographnet_white_river
+  example: |
+    from pyhazards.datasets import load_dataset
+
+    # Unzipped HydroGraphNet.zip; hold out e.g. the last 50 hydrographs for rollouts.
+    data = load_dataset(
+        "hydrographnet_white_river",
+        data_dir="/data/HydroGraphNet",
+        test_ids=[f"H{i}" for i in range(451, 501)],
+    ).load()
+    inputs, target = data.get_split("train").inputs[0]
+    print(inputs["node_features"].shape, target.shape)  # (4787, 16) (4787, 2)
+  notes:
+    - "``norm_stats='files'`` uses the released normalisation statistics instead of recomputing them."
+primary_references:
+  - citation: "Taghizadeh, Zandsalimi, Nabian, Shafiee-Jood and Alemazkoor (2025). Interpretable physics-informed graph neural networks for flood forecasting. Computer-Aided Civil and Infrastructure Engineering 40(18):2629-2649."
+    url: https://doi.org/10.1111/mice.13484
+    repo_url: https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/flood_modeling/hydrographnet
+pyhazards_usage:
+  - Point ``data_dir`` at the unzipped release and pass the test hydrographs as ``test_ids``.
+  - Score models that provide ``rollout(...)`` (HydroGraphNet) with ``BenchmarkRunner`` on the ``flood`` benchmark (task ``flood.inundation``).
+related_models:
+  - hydrographnet
+related_benchmarks:
+  - flood_benchmark
+  - hydrographnet_white_river
+notes:
+  - "Every training window, physics value and rollout target equals PhysicsNeMo's HydroGraphDataset on fixtures in the release layout (oracle test); a local check on real hydrographs of the release (H1, H2) matched as well."

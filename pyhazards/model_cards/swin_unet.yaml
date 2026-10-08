@@ -1,0 +1,93 @@
+model_name: swin_unet
+display_name: Swin-Unet
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/swin_unet.py
+builder_name: swin_unet_builder
+summary: >
+  U-shaped pure Swin Transformer (Swin-Unet-Tiny), the attention-based spread baseline of the
+  WSTS+ wildfire benchmark.
+description:
+  - >
+    ``swin_unet`` encodes the input with four Swin Transformer stages joined by patch merging,
+    decodes it with mirrored Swin stages joined by patch-expanding layers and skip connections,
+    and upsamples the last decoder tokens 4x into per-pixel logits (Cao et al., ECCV Workshops
+    2022). The default is Swin-Unet-Tiny: patch 4, embedding 96, depths (2, 2, 2, 2), heads
+    (3, 6, 12, 24), window 7, input 224x224, drop-path rate 0.2.
+  - >
+    The implementation is written from the paper and from the MIT-licensed Swin Transformer
+    code, because the official Swin-Unet repository has no license. Parameter names and creation
+    order match the official ``SwinTransformerSys``, so its state dicts load with
+    ``strict=True`` and seeded initialisation is identical. ``pretrained="imagenet"``
+    reproduces the official initialisation: the Swin-T ImageNet-1k checkpoint fills the encoder
+    and, mirrored, the decoder. Multi-day input ``(batch, time, channels, height, width)`` is
+    flattened to ``time * channels`` channels, as WSTS+ does for its 5-day models.
+paper:
+  title: "Swin-Unet: Unet-like Pure Transformer for Medical Image Segmentation"
+  url: https://arxiv.org/abs/2105.05537
+  repo_url: https://github.com/HuCaoFighting/Swin-Unet
+references:
+  - title: "Improved Wildfire Spread Prediction with Time-Series Data and the WSTS+ Benchmark"
+    url: https://arxiv.org/abs/2502.12003
+    note: >
+      Lahrichi, Bova, Johnson and Malof (WACV 2026). SwinUnet-Tiny with in_chans set to 7, 33
+      or 40 (Veg, Multi, All feature sets; times 5 for 5-day input), 128x128 WildfireSpreadTS
+      tiles zero-padded to 224x224, Swin-T ImageNet initialisation (Hugging Face
+      swin-tiny-patch4-window7-224), focal loss, AdamW, batch 64, 10k iterations. Mean test AP
+      over 12 leave-one-year-out folds: 0.432 / 0.437 / 0.424 (1 day) and 0.447 / 0.453 /
+      0.435 (5 days) for Veg / Multi / All; 27.2M parameters (1 day).
+  - title: "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows"
+    url: https://arxiv.org/abs/2103.14030
+    repo_url: https://github.com/microsoft/Swin-Transformer
+    note: Swin-T blocks and the ImageNet-1k checkpoint used for initialisation (MIT).
+reproduction:
+  reference_code: https://github.com/HuCaoFighting/Swin-Unet
+  reference_commit: f48f623e226e25b6e395c37207915c50aaa9c776
+  reference_license: none (no LICENSE file; used only as a test oracle, not copied)
+  reference_config: >
+    SwinUnet(config) from configs/swin_tiny_patch4_window7_224_lite.yaml with IN_CHANS 40 and one
+    class (the WSTS+ All-features setting) and with IN_CHANS 3 and nine classes (Synapse,
+    27,168,900 parameters), plus SwinUnet.load_from with the Swin-T ImageNet-1k checkpoint
+    (swin_tiny_patch4_window7_224.pth, microsoft/Swin-Transformer release v1.0.0, MIT, sha256
+    pinned) for 40 and 3 input channels.
+  parameter_count: 27224964
+  checks: [parameter_count, initialization, state_dict, forward, pretrained_weights]
+  oracle_test: tests/oracle/test_swin_oracle.py
+  deviations:
+    - >
+      The official wrapper repeats a one-channel input to three channels. Here that happens only
+      when the model has three input channels; for other channel counts the official code
+      would fail.
+    - >
+      Only the ImageNet branch of the official load_from is provided. Its other branch
+      (fine-tuning from a saved Swin-Unet checkpoint, dropping the output layer) is covered by
+      load_state_dict, since parameter names match.
+tasks:
+  - segmentation
+example: |
+  import torch
+  import torch.nn.functional as F
+  from pyhazards.models import build_model
+
+  # WSTS+ "All" features (40 channels); pretrained="imagenet" loads the Swin-T initialisation.
+  model = build_model(name="swin_unet", task="segmentation", in_channels=40)
+  x = torch.randn(2, 40, 128, 128)
+  logits = model(F.pad(x, (0, 96, 0, 96)))[..., :128, :128]  # zero-pad 128 -> 224 as WSTS+
+  print(logits.shape)  # (2, 1, 128, 128)
+notes:
+  - "Inputs must be img_size x img_size (224 by default); WSTS+ zero-pads its 128x128 tiles. The padding layout is not stated in the paper."
+  - "The decoder mirrors the encoder depths. The official DECODER_DEPTHS option and the depths_decoder argument have no effect in the official code, so they are not exposed."
+  - "Decoder blocks reuse the stochastic-depth rates of the matching encoder stage, as in the official code."
+  - "With pretrained weights, tensors whose shape differs from Swin-T (the patch embedding when in_channels != 3) keep their random initialisation, as in the official load_from."
+  - "WSTS+ loaded the Hugging Face release of Swin-T (microsoft/swin-tiny-patch4-window7-224, a conversion of the ImageNet-1k model); PyHazards loads the original microsoft/Swin-Transformer checkpoint with the official Swin-Unet key mapping."
+smoke_test:
+  task: segmentation
+  build_kwargs:
+    in_channels: 7
+  input:
+    kind: tensor
+    tensor:
+      shape: [1, 7, 224, 224]
+  expected_output:
+    kind: tensor
+    shape: [1, 1, 224, 224]

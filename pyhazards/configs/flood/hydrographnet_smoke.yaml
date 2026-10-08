@@ -1,25 +1,26 @@
+# HydroGraphNet (PhysicsNeMo MeshGraphKAN, 2,318,722 parameters) rolled out autoregressively over synthetic
+# mesh hydrographs in the White River layout and scored in metres. Real data: dataset hydrographnet_white_river
+# with params {data_dir, test_ids} (rollout_length 30, as in the HydroGraphNet example).
 benchmark:
   name: flood
-  hazard_task: flood.streamflow
+  hazard_task: flood.inundation
   metrics:
-    - mae
+    - rollout_rmse
+    - pixel_mae
     - rmse
+    - csi_10cm
     - nse
-    - kge
   eval_split: test
 dataset:
-  name: hydrobench_streamflow
+  name: flood_mesh_synthetic
   params:
     micro: true
 model:
   name: hydrographnet
   task: regression
-  params:
-    node_in_dim: 2
-    edge_in_dim: 3
-    out_dim: 1
+  params: {}
 report:
-  output_dir: reports/flood
+  output_dir: reports/flood_hydrographnet
   formats:
     - json
 seed: 7

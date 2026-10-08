@@ -27,48 +27,37 @@ training:
 Step 3: Build a Model
 ---------------------
 
-Instantiate ``hydrographnet`` through the unified model registry:
+Instantiate ``hydrographnet`` (PhysicsNeMo's MeshGraphKAN, the HydroGraphNet flood model) through the
+unified model registry:
 
 .. code-block:: python
 
     from pyhazards.models import build_model
 
-    model = build_model(
-        name="hydrographnet",
-        task="regression",
-        node_in_dim=2,
-        edge_in_dim=3,
-        out_dim=1,
-    )
-    print(type(model).__name__)
+    model = build_model(name="hydrographnet", task="regression")
+    print(type(model).__name__, sum(p.numel() for p in model.parameters()))  # HydroGraphNet 2318722
 
 Step 4: Run a Short Train/Evaluate Loop
 ---------------------------------------
 
-This example pairs the ERA5 subset with ``hydrographnet`` to confirm that the
-dataset, model, and training engine work together in one workflow.
+This example trains ``hydrographnet`` for one epoch on synthetic mesh hydrographs (the layout of the
+HydroGraphNet White River data; use ``hydrographnet_white_river`` with a local copy of the release for
+real data) to confirm that the dataset, model, and training engine work together.
 
 .. code-block:: python
 
     import torch
-    from pyhazards.data.load_hydrograph_data import load_hydrograph_data
-    from pyhazards.datasets import graph_collate
+    from pyhazards.datasets import load_dataset
+    from pyhazards.datasets.flood import hydrograph_collate
     from pyhazards.engine import Trainer
     from pyhazards.metrics import RegressionMetrics
     from pyhazards.models import build_model
 
-    data = load_hydrograph_data("pyhazards/data/era5_subset", max_nodes=50)
-
-    model = build_model(
-        name="hydrographnet",
-        task="regression",
-        node_in_dim=2,
-        edge_in_dim=3,
-        out_dim=1,
-    )
+    data = load_dataset("flood_mesh_synthetic", micro=True).load()
+    model = build_model(name="hydrographnet", task="regression")
 
     trainer = Trainer(model=model, metrics=[RegressionMetrics()], mixed_precision=False)
-    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
     loss_fn = torch.nn.MSELoss()
 
     trainer.fit(
@@ -77,16 +66,19 @@ dataset, model, and training engine work together in one workflow.
         loss_fn=loss_fn,
         max_epochs=1,
         batch_size=1,
-        collate_fn=graph_collate,
+        collate_fn=hydrograph_collate,
     )
 
     metrics = trainer.evaluate(
         data,
         split="train",
         batch_size=1,
-        collate_fn=graph_collate,
+        collate_fn=hydrograph_collate,
     )
     print(metrics)
+
+The flood benchmark scores the test hydrographs with autoregressive rollouts:
+``python scripts/run_benchmark.py --config pyhazards/configs/flood/hydrographnet_smoke.yaml``.
 
 Step 5: Next Steps
 ------------------

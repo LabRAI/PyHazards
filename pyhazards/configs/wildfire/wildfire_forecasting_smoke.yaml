@@ -2,25 +2,24 @@ benchmark:
   name: wildfire
   hazard_task: wildfire.danger
   metrics:
-    - mae
-    - rmse
+    - accuracy
+    - macro_f1
+    - auc
+    - pr_auc
   eval_split: test
 dataset:
-  name: fpa_fod_weekly
+  name: wildfire_danger_synthetic
   params:
     micro: true
-    lookback_weeks: 12
-    features: counts+time
+    access_mode: temporal
+    history: 10
+    channels: 25
 model:
   name: wildfire_forecasting
-  task: forecasting
+  task: classification
   params:
-    input_dim: 7
-    hidden_dim: 32
-    output_dim: 5
-    lookback: 12
-    num_layers: 2
-    dropout: 0.0
+    variant: lstm
+    input_dim: 25
 report:
   output_dir: reports/wildfire_forecasting
   formats:

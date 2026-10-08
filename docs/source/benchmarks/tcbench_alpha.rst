@@ -6,9 +6,11 @@ TCBench Alpha
 Overview
 --------
 
-The current TCBench Alpha alignment uses a metadata-backed storm-history adapter over the shared synthetic tropical-cyclone dataset.
+``pyhazards.forecasts`` reads TCBench's released tracks and raw forecast fields from the Hugging Face dataset (pinned revision), re-implements its TempestExtremes tracking and HuracanPy matching, and scores tracks with ``score_forecast_tracks(..., protocol="tcbench")``, which reproduces TCBench's ``evaluate_tracks.py`` exactly (including its float16 reading of IBTrACS positions).
 
-It currently drives the tropicalcyclone_MLP, SAF-Net, and TCIF-fusion smoke configs.
+Verified: on TCBench's raw Pangu-Weather fields the tracker writes TCBench's released track files byte for byte (and the official TempestExtremes binaries agree), every row of the released Pangu-Weather and FourCastNet v2 matched tracks scores exactly as TCBench's own metric code, and the DPE / AE values printed in TCBench's notebook are reproduced.
+
+Not implemented: CRPS, along/cross-track errors, rapid-intensification scores and TCBench's post-processing models. TCBench's "FourCastNet v2" is SFNO-small, not the FourCastNet of Pathak et al.
 
 At a Glance
 -----------
@@ -44,7 +46,7 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         :bdg-info:`Synthetic-backed`
+         :bdg-success:`Real-backed`
 
       .. container:: catalog-stat-note
 
@@ -55,11 +57,11 @@ At a Glance
 
       .. container:: catalog-stat-value
 
-         3
+         0
 
       .. container:: catalog-stat-note
 
-         3 models
+         0 models
 
 
 Benchmark Mapping
@@ -77,7 +79,7 @@ Mapped benchmark family
 Primary Source
 ~~~~~~~~~~~~~~
 
-`TCBench Alpha <https://github.com/msgomez06/TCBench_Alpha>`_.
+`TCBench: A Benchmark for Tropical Cyclone Track and Intensity Forecasting at the Global Scale <https://arxiv.org/abs/2601.23268>`_ (`repo <https://github.com/msgomez06/TCBench_Alpha>`__).
 
 .. dropdown:: Supported Tasks
    :class-container: catalog-dropdown
@@ -87,17 +89,21 @@ Primary Source
 .. dropdown:: Key Metrics
    :class-container: catalog-dropdown
 
-   - ``track_error``
+   - ``track_error_km``
    - ``intensity_mae``
+   - ``pressure_mae``
 
 .. dropdown:: Smoke Configs
    :class-container: catalog-dropdown
 
-   - ``tropicalcyclone_mlp_smoke.yaml``
-   - ``saf_net_smoke.yaml``
-   - ``tcif_fusion_smoke.yaml``
 
 .. dropdown:: Linked Models
    :class-container: catalog-dropdown
 
-   :doc:`Tropical Cyclone MLP </modules/models_tropicalcyclone_mlp>`, :doc:`SAF-Net </modules/models_saf_net>`, :doc:`TCIF-fusion </modules/models_tcif_fusion>`.
+   None.
+
+.. dropdown:: Notes
+   :class-container: catalog-dropdown
+
+   - TCBench code and data are MIT-licensed; the Pangu-Weather forecasts derive from CC BY-NC-SA 4.0 weights (non-commercial).
+   - Weather models are pipelines, not PyHazards models, so no model is linked here; see the Foundation Weather Models page.

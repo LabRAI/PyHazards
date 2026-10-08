@@ -1,29 +1,43 @@
 from .base import DataBundle, DataSplit, Dataset, FeatureSpec, LabelSpec
 from .earthquake import (
-    AEFADataset,
-    PickBenchmarkWaveformDataset,
     SeisBenchWaveformDataset,
     SyntheticEarthquakeForecastDataset,
     SyntheticEarthquakeWaveformDataset,
+    SyntheticEarthquakeWavefieldDataset,
 )
 from .flood import (
+    CamelsUSStreamflowDataset,
     CaravanStreamflowDataset,
-    FloodCastBenchInundationDataset,
-    HydroBenchStreamflowDataset,
+    HydroGraphNetWhiteRiverDataset,
     SyntheticFloodInundationDataset,
+    SyntheticFloodMeshDataset,
     SyntheticFloodStreamflowDataset,
-    WaterBenchStreamflowDataset,
+    SyntheticUrbanFloodCastDataset,
 )
 from .fpa_fod import FPAFODTabularDataset, FPAFODWeeklyDataset
 from .graph import GraphTemporalDataset, graph_collate
 from .registry import available_datasets, load_dataset, register_dataset
 from .tc import (
+    HurricastDataset,
     IBTrACSTropicalCycloneDataset,
+    SHIPSXu2021Dataset,
+    SyntheticHurricastDataset,
+    SyntheticSAFNetDataset,
+    SyntheticSHIPSDataset,
+    SyntheticTCIFFusionDataset,
+    SyntheticTCNDDataset,
     SyntheticTropicalCycloneDataset,
-    TCBenchAlphaDataset,
     TropiCycloneNetDataset,
 )
-from .wildfire import SyntheticWildfireSpreadDataset, SyntheticWildfireSpreadTemporalDataset
+from .wildfire import (
+    SyntheticWildfireDangerDataset,
+    SyntheticWildfireSpreadDataset,
+    SyntheticWildfireSpreadTemporalDataset,
+    WildfireTrackORasterDataset,
+    WildfireTrackOTabularDataset,
+    WildfireTrackOTemporalDataset,
+)
+from .wrf_sfire import WRFSFireSpreadDataset
 
 __all__ = [
     "DataBundle",
@@ -31,17 +45,17 @@ __all__ = [
     "Dataset",
     "FeatureSpec",
     "LabelSpec",
-    "AEFADataset",
-    "PickBenchmarkWaveformDataset",
     "SeisBenchWaveformDataset",
     "SyntheticEarthquakeForecastDataset",
     "SyntheticEarthquakeWaveformDataset",
+    "SyntheticEarthquakeWavefieldDataset",
+    "CamelsUSStreamflowDataset",
     "CaravanStreamflowDataset",
-    "FloodCastBenchInundationDataset",
-    "HydroBenchStreamflowDataset",
+    "HydroGraphNetWhiteRiverDataset",
     "SyntheticFloodInundationDataset",
+    "SyntheticFloodMeshDataset",
     "SyntheticFloodStreamflowDataset",
-    "WaterBenchStreamflowDataset",
+    "SyntheticUrbanFloodCastDataset",
     "FPAFODTabularDataset",
     "FPAFODWeeklyDataset",
     "available_datasets",
@@ -49,30 +63,53 @@ __all__ = [
     "register_dataset",
     "GraphTemporalDataset",
     "graph_collate",
+    "HurricastDataset",
     "IBTrACSTropicalCycloneDataset",
+    "SHIPSXu2021Dataset",
+    "SyntheticHurricastDataset",
+    "SyntheticSAFNetDataset",
+    "SyntheticSHIPSDataset",
+    "SyntheticTCIFFusionDataset",
+    "SyntheticTCNDDataset",
     "SyntheticTropicalCycloneDataset",
-    "TCBenchAlphaDataset",
     "TropiCycloneNetDataset",
+    "SyntheticWildfireDangerDataset",
     "SyntheticWildfireSpreadDataset",
     "SyntheticWildfireSpreadTemporalDataset",
+    "WRFSFireSpreadDataset",
+    "WildfireTrackORasterDataset",
+    "WildfireTrackOTabularDataset",
+    "WildfireTrackOTemporalDataset",
 ]
 
-register_dataset(SyntheticEarthquakeForecastDataset.name, SyntheticEarthquakeForecastDataset)
+register_dataset(SyntheticEarthquakeWavefieldDataset.name, SyntheticEarthquakeWavefieldDataset)
+# Deprecated alias of earthquake_wavefield_synthetic (the former name).
+register_dataset("earthquake_forecast_synthetic", SyntheticEarthquakeWavefieldDataset)
 register_dataset(SyntheticEarthquakeWaveformDataset.name, SyntheticEarthquakeWaveformDataset)
 register_dataset(SeisBenchWaveformDataset.name, SeisBenchWaveformDataset)
-register_dataset(PickBenchmarkWaveformDataset.name, PickBenchmarkWaveformDataset)
-register_dataset(AEFADataset.name, AEFADataset)
 register_dataset(SyntheticFloodInundationDataset.name, SyntheticFloodInundationDataset)
 register_dataset(SyntheticFloodStreamflowDataset.name, SyntheticFloodStreamflowDataset)
+register_dataset(SyntheticFloodMeshDataset.name, SyntheticFloodMeshDataset)
+register_dataset(HydroGraphNetWhiteRiverDataset.name, HydroGraphNetWhiteRiverDataset)
+register_dataset(SyntheticUrbanFloodCastDataset.name, SyntheticUrbanFloodCastDataset)
+register_dataset(CamelsUSStreamflowDataset.name, CamelsUSStreamflowDataset)
 register_dataset(CaravanStreamflowDataset.name, CaravanStreamflowDataset)
-register_dataset(WaterBenchStreamflowDataset.name, WaterBenchStreamflowDataset)
-register_dataset(HydroBenchStreamflowDataset.name, HydroBenchStreamflowDataset)
-register_dataset(FloodCastBenchInundationDataset.name, FloodCastBenchInundationDataset)
 register_dataset(FPAFODTabularDataset.name, FPAFODTabularDataset)
 register_dataset(FPAFODWeeklyDataset.name, FPAFODWeeklyDataset)
 register_dataset(SyntheticTropicalCycloneDataset.name, SyntheticTropicalCycloneDataset)
 register_dataset(IBTrACSTropicalCycloneDataset.name, IBTrACSTropicalCycloneDataset)
-register_dataset(TCBenchAlphaDataset.name, TCBenchAlphaDataset)
+register_dataset(SHIPSXu2021Dataset.name, SHIPSXu2021Dataset)
+register_dataset(SyntheticSHIPSDataset.name, SyntheticSHIPSDataset)
+register_dataset(SyntheticSAFNetDataset.name, SyntheticSAFNetDataset)
+register_dataset(SyntheticTCNDDataset.name, SyntheticTCNDDataset)
+register_dataset(HurricastDataset.name, HurricastDataset)
+register_dataset(SyntheticHurricastDataset.name, SyntheticHurricastDataset)
+register_dataset(SyntheticTCIFFusionDataset.name, SyntheticTCIFFusionDataset)
 register_dataset(TropiCycloneNetDataset.name, TropiCycloneNetDataset)
+register_dataset(SyntheticWildfireDangerDataset.name, SyntheticWildfireDangerDataset)
 register_dataset(SyntheticWildfireSpreadDataset.name, SyntheticWildfireSpreadDataset)
 register_dataset(SyntheticWildfireSpreadTemporalDataset.name, SyntheticWildfireSpreadTemporalDataset)
+register_dataset(WRFSFireSpreadDataset.name, WRFSFireSpreadDataset)
+register_dataset(WildfireTrackORasterDataset.name, WildfireTrackORasterDataset)
+register_dataset(WildfireTrackOTemporalDataset.name, WildfireTrackOTemporalDataset)
+register_dataset(WildfireTrackOTabularDataset.name, WildfireTrackOTabularDataset)

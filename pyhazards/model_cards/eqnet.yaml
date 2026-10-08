@@ -1,41 +1,132 @@
 model_name: eqnet
 display_name: EQNet
 hazard: Earthquake
+catalog_status: variant
 source_file: pyhazards/models/eqnet.py
 builder_name: eqnet_builder
 summary: >
-  A transformer-style earthquake phase-picking baseline for modern sequence
-  modeling comparisons.
+  End-to-end multi-station earthquake detector (Zhu et al., JGR Solid Earth 2022): a 1-D ResNet feature
+  extractor, P and S picking heads, and a shift-and-stack module that aligns station features on candidate
+  hypocentres before an event detection network. Rebuilt from the paper.
 description:
   - >
-    ``eqnet`` extends the PyHazards earthquake benchmark stack with a
-    lightweight attention-based picking model.
+    ``eqnet`` takes station gathers ``(batch, stations, 3, samples)`` (E, N, Z at 100 Hz) and, for
+    detection, travel times ``(batch, stations, candidates, 2)`` (P and S, seconds) from every station to
+    every candidate hypocentre; ``eqnet_travel_times`` computes them for a uniform velocity model (the
+    paper's 6 km/s and 3.4 km/s) from station and candidate coordinates in km (``eqnet_candidate_grid``:
+    the paper's ~4 km grid), any travel-time table can be passed instead, and ``station_mask`` marks
+    padded stations. It returns ``{"phase": (batch, stations, 2, samples / 2), "event": (batch,
+    candidates, samples / 32)}`` probabilities (logits with ``logits=True``).
   - >
-    The implementation keeps the shared waveform input and two-pick output
-    contract so it can be evaluated alongside ``phasenet`` and ``eqtransformer``.
+    Feature extraction (Figure 3a, 996,960 parameters): a 1-D ResNet-18 with 32 / 64 / 128 / 256 channels
+    and a final 1x1 convolution to 128 features at 1/32 of the sampling rate, applied to every station.
+    Phase picking (Figure 3b): one sub-network for P on feature channels 0-63 and one for S on 64-127,
+    each two convolution / batch-norm / ReLU layers with x4 upsampling and an output convolution. The
+    shift-and-stack module reads the P features ``t_P`` and the S features ``t_S`` later at every station,
+    so that an event's features align on its origin time at its true location, and averages over
+    stations; the event detection network (Figure 3c) turns the aligned features into an activation over
+    origin time for every candidate. ``extract_picks`` keeps activation peaks above 0.5,
+    ``extract_events`` takes origin times from the peaks of the maximum over candidates and the location
+    as the geometric median of the 20 most activated candidates (Section 2.2). ``EQNetLoss`` is the sum
+    of the three binary cross-entropies (equation 1).
+  - >
+    For single-station picking (the paper's STEAD evaluation) ``annotate`` takes ``(n, 3, samples)``
+    windows and the ``earthquake.picking`` benchmark scores the P / S picks. There is no multi-station
+    detection benchmark task yet, and no weights exist: EQNet must be trained before use.
 paper:
-  title: An End-To-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning
-  url: https://www.osti.gov/biblio/1978539
+  title: "An End-to-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning"
+  url: https://doi.org/10.1029/2021JB023283
   repo_url: https://github.com/AI4EPS/EQNet
+references:
+  - title: "An End-to-End Earthquake Detection Method for Joint Phase Picking and Association Using Deep Learning (Zhu, Tai, Mousavi, Bailis & Beroza, JGR Solid Earth 127(3), e2021JB023283, 2022; arXiv:2109.09911)"
+    url: https://doi.org/10.1029/2021JB023283
+    note: >
+      Trained on 99,465 NCEDC events with manual picks at more than 3 stations (AdamW, learning rate 3e-4,
+      weight decay 1e-4, cosine decay; Gaussian targets 1 s wide for picks, 2 s for origin times;
+      negative sampling of candidate locations). Table 1, STEAD test set (~120,000 waveforms, the
+      EQTransformer split), picks = peaks above 0.5, true positive within 0.5 s (protocol
+      "eqtransformer"): P precision 0.96, recall 0.95, F1 0.95, residual mean -0.01 s, std 0.08 s, MAE
+      0.04 s; S 0.92 / 0.92 / 0.92, 0.01 / 0.11 / 0.07 s. Table 2, Ridgecrest 4-8 July 2019 (stations within 1 degree
+      of the sequence, 6 / 3.4 km/s, 4 km grid): 11,765 events at threshold 0.5; with the SCSN catalogue
+      (8,044 events) as benchmark, precision 0.55, recall 0.83, F1 0.66.
+reproduction:
+  source: paper
+  reference_code: https://github.com/AI4EPS/EQNet
+  reference_commit: af94a08a85de4b2c917a1b9429b044e7f38e4c28
+  reference_license: >-
+    Academic and Commercial License (Copyright (c) 2023 Weiqiang Zhu, Zhongwen Zhan): academic and
+    non-commercial use only; no licence before 2023-10-26. Not ported; used only as a test oracle. No
+    EQNet weights were released.
+  reference_config: >
+    Paper Figure 3 and Sections 2.1-2.2 (arXiv 2109.09911): 1,043,619 parameters (feature extractor
+    996,960, two picking heads of 7,825, event detector 31,009). Verified against code: the feature
+    extractor equals ``ResNet(BasicBlock, [2, 2, 2, 2])`` of ``eqnet/models/resnet1d.py`` at af94a08
+    (996,960 parameters, same names, same seeded initialisation, equal outputs in evaluation and training
+    mode, batch-norm statistics, gradients); the picking and detection heads equal the author's first
+    ``PhasePicker`` / ``EventDetector`` (``eqnet/models/eqnet.py`` at a9df49a, 2022-07-27, unlicensed)
+    instantiated at the paper's widths ``[64, 32, 16]`` and ``[128, 64, 32]`` (equal outputs with copied
+    weights, same seeded convolution weights). Not verifiable against code: the shift-and-stack module,
+    the P / S feature split and the end-to-end model (tested from the paper's description: synthetic
+    arrivals from a known hypocentre peak at the true candidate and origin time); no numbers of the paper
+    are reproduced (no weights, retraining needed).
+  parameter_count: 1043619
+  checks: [parameter_count, initialization, state_dict, forward]
+  oracle_test: tests/oracle/test_eqnet_oracle.py
+  deviations:
+    - >
+      Choices the paper leaves open, taken from the author's code: reflect padding, bias-free
+      convolutions before batch normalisation and a biased output convolution, linear x4 interpolation
+      (``align_corners=False``), Kaiming-normal initialisation of the extractor, and no ReLU after its last
+      batch normalisation (the figure caption puts batch normalisation and ReLU after every convolution).
+    - >
+      PyHazards choices (paper silent, not in any code): the shift-and-stack averages over stations
+      (``station_mask`` excludes padded ones), reads fractional shifts by linear interpolation and treats
+      features outside the window as zero; output sample ``j`` of the picking heads is input sample
+      ``2 j`` and feature sample ``t`` is input sample ``32 t``; peaks of one phase must be 0.5 s apart
+      and events 2 s apart; candidate chunks of ``candidate_chunk`` in evaluation mode bound memory.
+    - >
+      ``annotate`` standardises each station's window per channel (mean removed, divided by the standard
+      deviation), as the official data reader does; the paper does not describe its normalisation. The
+      component order (E, N, Z) and the 100 Hz rate are assumptions (NCEDC data).
+    - >
+      The loss sums binary cross-entropies over time as in equations (2)-(4) and averages over stations,
+      candidates and the batch; target generation (Gaussian labels, negative sampling) is not part of the
+      module.
 tasks:
-  - regression
+  - picking
+  - detection
 example: |
   import torch
   from pyhazards.models import build_model
+  from pyhazards.models.eqnet import eqnet_candidate_grid, eqnet_travel_times
 
-  model = build_model(name="eqnet", task="regression", in_channels=3)
-  picks = model(torch.randn(4, 3, 256))
-  print(picks.shape)
+  model = build_model(name="eqnet", task="detection").eval()  # no released weights: train first
+
+  waveforms = torch.randn(1, 6, 3, 3072)  # (batch, stations, E/N/Z, samples) at 100 Hz
+  stations = torch.rand(6, 3) * torch.tensor([40.0, 40.0, 0.0])  # station x, y, z in km
+  candidates = eqnet_candidate_grid((0.0, 40.0), (0.0, 40.0), spacing=4.0, depth=8.0)
+  travel_times = eqnet_travel_times(stations, candidates)  # (1, 6, 121, 2), 6 and 3.4 km/s
+  with torch.no_grad():
+      out = model(waveforms, travel_times)  # phase: (1, 6, 2, 1536), event: (1, 121, 96)
+  events = model.extract_events(out["event"], candidates)
+  picks = model.extract_picks(out["phase"][0])  # one dict of P / S picks per station
 notes:
-  - "Outputs are P- and S-arrival sample indices."
+  - "Zhu, Tai, Mousavi, Bailis & Beroza, J. Geophys. Res. Solid Earth 127(3), e2021JB023283 (2022), arXiv:2109.09911. Not the GaMMA association paper (doi:10.1029/2021JB023249) that earlier versions of this card linked."
+  - "The AI4EPS/EQNet repository is now a toolbox of PhaseNet+ / PhaseNet-DAS models; its current picking and detection heads are different networks from the paper's, and it has no shift-and-stack module."
+  - "Breaking change: ``eqnet`` used to be a small transformer regressor returning one (P, S) pair per trace (task ``regression``, arguments ``hidden_dim``, ``num_heads``, ``num_layers``, ``dropout``); it now takes ``task='picking'`` or ``'detection'`` and returns the paper's activation sequences."
 smoke_test:
-  task: regression
+  task: detection
   build_kwargs:
     in_channels: 3
   input:
-    kind: tensor
-    tensor:
-      shape: [4, 3, 256]
+    kind: kwargs
+    kwargs:
+      waveforms:
+        shape: [1, 4, 3, 1024]
+      travel_times:
+        shape: [1, 4, 6, 2]
   expected_output:
-    kind: tensor
-    shape: [4, 2]
+    kind: mapping
+    mapping:
+      phase: [1, 4, 2, 512]
+      event: [1, 6, 32]

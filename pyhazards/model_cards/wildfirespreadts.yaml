@@ -1,50 +1,61 @@
 model_name: wildfirespreadts
-display_name: WildfireSpreadTS
+display_name: WildfireSpreadTS Baselines
 hazard: Wildfire
 catalog_status: core
 source_file: pyhazards/models/wildfirespreadts.py
 builder_name: wildfirespreadts_builder
 summary: >
-  A temporal convolution wildfire spread baseline over short raster history windows.
+  The four learned WildfireSpreadTS baselines (logistic regression, ResNet-18 U-Net, ConvLSTM,
+  U-TAE) with the benchmark's own configurations.
 description:
   - >
-    ``wildfirespreadts`` models wildfire spread as a sequence-to-mask prediction task.
+    ``wildfirespreadts`` builds one of the learned baselines of the WildfireSpreadTS benchmark
+    for next-day active-fire segmentation, configured exactly as in the benchmark code.
+    ``baseline`` selects ``logistic_regression``, ``resnet18_unet``, ``convlstm`` or ``utae``
+    (default).
   - >
-    The PyHazards adapter uses a compact 3D convolution stack that consumes short
-    raster history windows and predicts the next spread mask.
+    Each baseline is also available on its own (``logistic_regression``, ``resnet18_unet``,
+    ``convlstm``, ``utae``) with configurable hyperparameters; this entry fixes them to the
+    benchmark values. ``in_channels`` is the number of features per day (40 with all features)
+    and ``history`` the number of days that the U-Net and logistic regression flatten into
+    channels.
 paper:
-  title: "WildfireSpreadTS: A Dataset of Multi-Modal Time Series for Wildfire Spread Prediction"
+  title: "WildfireSpreadTS: A dataset of multi-modal time series for wildfire spread prediction"
   url: https://openreview.net/forum?id=RgdGkPRQ03
   repo_url: https://github.com/SebastianGer/WildfireSpreadTS
+reproduction:
+  reference_code: https://github.com/SebastianGer/WildfireSpreadTS
+  reference_commit: f62dc49f2c2a6d249c071533ae5340c0d01bfb95
+  reference_license: MIT
+  reference_config: >
+    src/models (LogisticRegression, SMPModel, ConvLSTMLightning, UTAELightning) with 40 input
+    channels; parameter counts 361 / 14,444,241 / 240,449 / 1,099,011 match paper Table 5.
+  checks: [parameter_count, initialization, state_dict, forward]
+  oracle_test: tests/oracle/test_wildfirespreadts_oracle.py
 tasks:
   - segmentation
-  - regression
 example: |
   import torch
   from pyhazards.models import build_model
 
-  model = build_model(
-      name="wildfirespreadts",
-      task="segmentation",
-      history=4,
-      in_channels=6,
-  )
-  logits = model(torch.randn(2, 4, 6, 16, 16))
-  print(logits.shape)
+  model = build_model(name="wildfirespreadts", task="segmentation", baseline="utae", in_channels=40)
+  x = torch.randn(2, 5, 40, 128, 128)
+  day_of_year = torch.tensor([[150, 151, 152, 153, 154]] * 2, dtype=torch.float32)
+  print(model(x, batch_positions=day_of_year).shape)  # (2, 1, 128, 128)
 notes:
-  - "The smoke dataset uses temporal wildfire spread tensors rather than single-frame rasters."
+  - "The benchmark trains on random 128x128 crops; ConvLSTM is evaluated by tiling 128x128 crops."
+  - "For the multi-day U-Net, the 20 static features (topography, land-cover one-hot) are kept for the last day only, as in the benchmark (remove_duplicate_features): 120 input channels and 14,695,121 parameters for 5 days."
+  - "Training losses differ per baseline: Dice (logistic regression, U-Net), Jaccard (ConvLSTM), weighted BCE (U-TAE)."
 smoke_test:
   task: segmentation
   build_kwargs:
-    history: 4
+    baseline: utae
     in_channels: 6
-    hidden_dim: 24
-    out_channels: 1
-    dropout: 0.0
+    history: 4
   input:
     kind: tensor
     tensor:
-      shape: [2, 4, 6, 16, 16]
+      shape: [2, 4, 6, 32, 32]
   expected_output:
     kind: tensor
-    shape: [2, 1, 16, 16]
+    shape: [2, 1, 32, 32]

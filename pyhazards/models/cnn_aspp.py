@@ -1,172 +1,86 @@
+"""CNN-ASPP for next-day wildfire spread (Marjani et al., IEEE GRSL 2024).
+
+Reimplementation of the network described in Marjani, Mahdianpari, Ahmadi, Hemmati,
+Mohammadimanesh & Mesgari, "Application of Explainable Artificial Intelligence in Predicting
+Wildfire Spread: An ASPP-Enabled CNN Approach", IEEE Geoscience and Remote Sensing Letters 21
+(2024) 2504005, doi:10.1109/LGRS.2024.3417624 (Section II-C and Fig. 2). No code was released.
+
+Architecture (all convolutions keep the 64 x 64 resolution of Next Day Wildfire Spread tiles):
+two 3x3 convolutions with 64 and 128 filters; four parallel 3x3 atrous convolutions with 32
+filters and dilation rates 1, 3, 6 and 12, concatenated (128 channels); two 3x3 convolutions
+with 32 filters; batch normalisation; a 1x1 convolution to one output. Every convolution
+except the last uses ReLU. The paper applies a sigmoid in the last layer; this module returns
+the logits and leaves the sigmoid to the loss. The paper trains with the Tversky loss
+(alpha = 0.7 on false negatives, beta = 0.3 on false positives), batch size 8 and learning
+rate 4e-4 in TensorFlow; Keras defaults (Glorot-uniform kernels, zero biases, BatchNorm
+epsilon 1e-3 and momentum 0.99) are used for what the paper does not state.
+"""
+
 from __future__ import annotations
 
 from typing import Sequence
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
-
-# ---------------------------------------------------------------------
-# Basic blocks
-# ---------------------------------------------------------------------
-
-class ConvBNReLU(nn.Module):
-    def __init__(
-        self,
-        in_ch: int,
-        out_ch: int,
-        k: int = 3,
-        s: int = 1,
-        p: int = 1,
-        d: int = 1,
-    ):
-        super().__init__()
-        self.conv = nn.Conv2d(
-            in_ch,
-            out_ch,
-            kernel_size=k,
-            stride=s,
-            padding=p,
-            dilation=d,
-            bias=False,
-        )
-        self.bn = nn.BatchNorm2d(out_ch)
-        self.act = nn.ReLU(inplace=True)
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.act(self.bn(self.conv(x)))
-
-
-# ---------------------------------------------------------------------
-# ASPP
-# ---------------------------------------------------------------------
-
-class ASPP(nn.Module):
-    """
-    Atrous Spatial Pyramid Pooling (ASPP).
-
-    Parallel atrous convolutions + image pooling branch,
-    followed by projection.
-    """
-
-    def __init__(
-        self,
-        in_ch: int,
-        out_ch: int,
-        dilations: Sequence[int] = (1, 3, 6, 12),
-    ):
-        super().__init__()
-
-        if len(dilations) != 4:
-            raise ValueError("ASPP expects exactly 4 dilation rates")
-
-        d1, d2, d3, d4 = dilations
-
-        self.b1 = ConvBNReLU(in_ch, out_ch, k=1, p=0, d=d1)
-        self.b2 = ConvBNReLU(in_ch, out_ch, k=3, p=d2, d=d2)
-        self.b3 = ConvBNReLU(in_ch, out_ch, k=3, p=d3, d=d3)
-        self.b4 = ConvBNReLU(in_ch, out_ch, k=3, p=d4, d=d4)
-
-        self.pool = nn.Sequential(
-            nn.AdaptiveAvgPool2d(1),
-            ConvBNReLU(in_ch, out_ch, k=1, p=0),
-        )
-
-        self.proj = ConvBNReLU(out_ch * 5, out_ch, k=1, p=0)
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        b, c, h, w = x.shape
-
-        p = self.pool(x)
-        p = F.interpolate(p, size=(h, w), mode="bilinear", align_corners=False)
-
-        y = torch.cat(
-            [self.b1(x), self.b2(x), self.b3(x), self.b4(x), p],
-            dim=1,
-        )
-        return self.proj(y)
-
-
-# ---------------------------------------------------------------------
-# CNN + ASPP model
-# ---------------------------------------------------------------------
 
 class WildfireCNNASPP(nn.Module):
-    """
-    CNN + ASPP wildfire segmentation model.
+    """CNN-ASPP: input ``(batch, channels, height, width)``, output ``(batch, 1, height, width)`` logits."""
 
-    Input:
-        x : (B, C, H, W) float tensor
-
-    Output:
-        logits : (B, 1, H, W) float tensor
-        (sigmoid applied externally)
-    """
-
-    def __init__(
-        self,
-        in_channels: int = 12,
-        base_channels: int = 32,
-        aspp_channels: int = 32,
-        dilations: Sequence[int] = (1, 3, 6, 12),
-        dropout: float = 0.0,
-    ):
+    def __init__(self, in_channels: int = 12, dilations: Sequence[int] = (1, 3, 6, 12)):
         super().__init__()
-
-        self.stem = nn.Sequential(
-            ConvBNReLU(in_channels, base_channels, k=3, p=1),
-            ConvBNReLU(base_channels, base_channels, k=3, p=1),
+        if in_channels <= 0:
+            raise ValueError(f"in_channels must be positive, got {in_channels}")
+        dilations = tuple(int(d) for d in dilations)
+        if len(dilations) != 4 or min(dilations) <= 0:
+            raise ValueError(f"dilations must be four positive integers, got {dilations}")
+        self.in_channels = int(in_channels)
+        self.encoder = nn.Sequential(
+            nn.Conv2d(in_channels, 64, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
         )
-
-        self.aspp = ASPP(
-            in_ch=base_channels,
-            out_ch=aspp_channels,
-            dilations=dilations,
+        self.aspp = nn.ModuleList(
+            nn.Sequential(nn.Conv2d(128, 32, kernel_size=3, padding=d, dilation=d), nn.ReLU())
+            for d in dilations
         )
-
-        self.drop = nn.Dropout2d(dropout) if dropout > 0 else nn.Identity()
-        self.head = nn.Conv2d(aspp_channels, 1, kernel_size=1)
+        self.decoder = nn.Sequential(
+            nn.Conv2d(32 * len(dilations), 32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(32, 32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            # Keras BatchNormalization defaults: epsilon 1e-3, moving-average momentum 0.99.
+            nn.BatchNorm2d(32, eps=1e-3, momentum=0.01),
+        )
+        self.head = nn.Conv2d(32, 1, kernel_size=1)
+        for module in self.modules():
+            if isinstance(module, nn.Conv2d):
+                nn.init.xavier_uniform_(module.weight)
+                nn.init.zeros_(module.bias)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         if x.ndim != 4:
             raise ValueError(
-                f"Expected input of shape (B,C,H,W), got {tuple(x.shape)}"
+                f"WildfireCNNASPP expects input shape (batch, channels, height, width), got {tuple(x.shape)}."
             )
+        if x.size(1) != self.in_channels:
+            raise ValueError(f"WildfireCNNASPP expected {self.in_channels} channels, got {x.size(1)}.")
+        features = self.encoder(x)
+        features = torch.cat([branch(features) for branch in self.aspp], dim=1)
+        return self.head(self.decoder(features))
 
-        f = self.stem(x)
-        y = self.aspp(f)
-        y = self.drop(y)
-        return self.head(y)
-
-
-# ---------------------------------------------------------------------
-# PyHazards model builder
-# ---------------------------------------------------------------------
 
 def cnn_aspp_builder(
     task: str,
     in_channels: int = 12,
-    base_channels: int = 32,
-    aspp_channels: int = 32,
     dilations: Sequence[int] = (1, 3, 6, 12),
-    dropout: float = 0.0,
     **kwargs,
 ) -> nn.Module:
-    """
-    PyHazards-style model builder.
-    """
-    _ = kwargs  # explicitly ignore unused builder args
+    _ = kwargs
+    if task.lower() != "segmentation":
+        raise ValueError(f"wildfire_aspp supports task='segmentation', got {task!r}.")
+    return WildfireCNNASPP(in_channels=in_channels, dilations=dilations)
 
-    if "segmentation" not in task:
-        raise ValueError(
-            f"WildfireCNNASPP is segmentation-only. Got task='{task}'"
-        )
 
-    return WildfireCNNASPP(
-        in_channels=in_channels,
-        base_channels=base_channels,
-        aspp_channels=aspp_channels,
-        dilations=dilations,
-        dropout=dropout,
-    )
+__all__ = ["WildfireCNNASPP", "cnn_aspp_builder"]

@@ -5,47 +5,89 @@ catalog_status: core
 source_file: pyhazards/models/asufm.py
 builder_name: asufm_builder
 summary: >
-  A temporal convolution baseline for weekly wildfire activity forecasting.
+  Attention Swin U-Net with Focal Modulation for next-day wildfire spread (fire-mask
+  segmentation of 64x64 Next Day Wildfire Spread tiles).
 description:
   - >
-    ``asufm`` is a compact temporal convolution baseline for next-window wildfire
-    activity prediction.
+    ``asufm`` is a Swin U-Net (patch 4, embedding 96, depths (2, 2, 2, 2), heads
+    (3, 6, 12, 24), window 8) whose encoder blocks apply focal modulation before window
+    attention, with patch-expanding decoder stages and skip connections. It maps one day of
+    Next Day Wildfire Spread (NDWS) features, 64x64 at 1 km, to logits for the next day's fire
+    mask (Li & Rad, IEEE CAI 2024).
   - >
-    PyHazards exposes it through the shared wildfire benchmark and config workflow.
+    The implementation reproduces the official fire-asufm code (``get_asfum_6_configs`` with six
+    features by default, ``get_asufm_12_configs`` with all twelve) with the same parameter names
+    and initialisation, so official checkpoints load with ``strict=True``. It is assembled from
+    MIT-licensed Swin Transformer and FocalNet blocks rather than copied, because the official
+    model package derives from the unlicensed Attention Swin U-Net code.
 paper:
   title: Wildfire Spread Prediction in North America Using Satellite Imagery and Vision Transformer
-  url: https://doi.ieeecomputersociety.org/10.1109/CAI59869.2024.00278
+  url: https://doi.org/10.1109/CAI59869.2024.00278
   repo_url: https://github.com/bronteee/fire-asufm
+references:
+  - title: "Next Day Wildfire Spread: A Machine Learning Dataset to Predict Wildfire Spreading From Remote-Sensing Data"
+    url: https://doi.org/10.1109/TGRS.2022.3192974
+    repo_url: https://github.com/google-research/google-research/tree/master/simulation_research/next_day_wildfire_spread
+    note: >
+      Dataset used by ASUFM (64x64 tiles, 12 input features). The official training script uses
+      six features (elevation, th, sph, pr, NDVI, PrevFireMask), BCE with pos_weight 3, AdamW (amsgrad)
+      lr 1e-4 with cosine annealing and linear warm-up, batch 16 and mixed precision; the authors also release a
+      2012-2023 North America extension on Kaggle. The paper reports, on NDWS (Table I), PR-AUC
+      0.3728, precision 0.4301, recall 0.4050 and Dice 0.4109, and on the extended dataset
+      (Table IV, 35M parameters) PR-AUC 0.3974 and Dice 0.4066, trained with weighted BCE
+      (positive weight 3.0), Adam with weight decay 0.05, cosine annealing with warm-up and batch 16.
+  - title: "Focal Modulation Networks"
+    url: https://arxiv.org/abs/2203.11926
+    repo_url: https://github.com/microsoft/FocalNet
+    note: Focal modulation in the encoder blocks (focal level 1, window 3).
+  - title: "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows"
+    url: https://arxiv.org/abs/2103.14030
+    repo_url: https://github.com/microsoft/Swin-Transformer
+    note: Window-attention blocks, patch merging and patch embedding.
+reproduction:
+  reference_code: https://github.com/bronteee/fire-asufm
+  reference_commit: 688dda94dec9e3b22f149f2b9335d3b38fd2277f
+  reference_license: Apache-2.0
+  reference_config: >
+    ASUFM(get_asfum_6_configs(), num_classes=1) and ASUFM(get_asufm_12_configs(), num_classes=1)
+    from configs/asufm.py (35,047,840 and 35,057,056 parameters), plus the focal=False variant
+    get_swin_unet_attention_configs, on (batch, 6 or 12, 64, 64) inputs.
+  parameter_count: 35047840
+  checks: [parameter_count, initialization, state_dict, forward]
+  oracle_test: tests/oracle/test_swin_oracle.py
+  deviations:
+    - >
+      The official blocks return their window-attention maps and the decoder adds the encoder's
+      maps to them ("spatial attention"), but the sums are discarded and never reach the output.
+      They are not computed here; outputs are identical.
+    - >
+      The configuration's cross-contextual-attention mode (CrossViT skips) is not part of ASUFM
+      and is not implemented.
 tasks:
-  - forecasting
-  - regression
+  - segmentation
 example: |
   import torch
   from pyhazards.models import build_model
 
-  model = build_model(
-      name="asufm",
-      task="forecasting",
-      input_dim=7,
-      output_dim=5,
-      lookback=12,
-  )
-  preds = model(torch.randn(2, 12, 7))
-  print(preds.shape)
+  # Six NDWS features: elevation, th, sph, pr, NDVI, PrevFireMask.
+  model = build_model(name="asufm", task="segmentation", in_channels=6)
+  logits = model(torch.randn(2, 6, 64, 64))
+  print(logits.shape)  # (2, 1, 64, 64)
 notes:
-  - "The smoke path uses weekly wildfire count windows with seasonal time features."
+  - "Inputs must be 64x64 (img_size); the architecture is tied to the token grid it was built for."
+  - "Decoder stages fuse each skip connection twice through the same concat_back_dim layer, because the configured spatial-attention branch concatenates and projects again. This is the official behaviour and is kept."
+  - "Decoder blocks contain focal-modulation weights that the official code never applies; the top-level patch_embed (4 input channels) and decoder.norm are also unused. All are kept so official state dicts load."
+  - "The official model ignores the config's drop_path_rate, attn_drop_rate, ape and patch_size (fixed at 0.1, 0, False and 4)."
+  - "The paper (Section III-A) describes spatial attention carried along the skip connections; in the official code those maps never reach the output (see the first deviation), so the released network is a Swin U-Net with focal modulation. The paper's 35M parameter count (Table IV) matches."
+  - "The authors' Kaggle checkpoint link (bronteli/attention-swin-u-net-with-focal-modulation-asufm) returned HTTP 404 on 2026-10-07, so no trained weights are checked."
 smoke_test:
-  task: forecasting
+  task: segmentation
   build_kwargs:
-    input_dim: 7
-    hidden_dim: 32
-    output_dim: 5
-    lookback: 12
-    dropout: 0.0
+    in_channels: 6
   input:
     kind: tensor
     tensor:
-      shape: [2, 12, 7]
+      shape: [2, 6, 64, 64]
   expected_output:
     kind: tensor
-    shape: [2, 5]
+    shape: [2, 1, 64, 64]

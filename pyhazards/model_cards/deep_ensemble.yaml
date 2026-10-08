@@ -1,0 +1,159 @@
+model_name: deep_ensemble
+display_name: Deep Ensemble
+hazard: Wildfire
+catalog_status: core
+source_file: pyhazards/models/deep_ensemble.py
+builder_name: deep_ensemble_builder
+summary: >
+  Deep ensembles (Lakshminarayanan et al., 2017) of any registered PyHazards model, with the
+  uncertainty terms of the ten-LSTM wildfire-danger ensemble of Kondylatos et al. (2025).
+description:
+  - >
+    ``deep_ensemble`` builds ``num_members`` (default 5) copies of a registered model
+    (``base_model``, ``base_kwargs``), member ``m`` initialised right after
+    ``torch.manual_seed(seeds[m])`` (default seeds ``0 .. M-1``), and predicts with their uniform
+    mixture: classification and segmentation average the member probabilities (softmax over the
+    channel dimension, or a sigmoid for one-channel binary logits), regression moment-matches the
+    Gaussian mixture of mean/variance members.
+  - >
+    ``forward`` returns the log of the mixture probability for multi-class outputs (``(batch,
+    2)`` for ``wildfire_forecasting`` members), the logit of the mixture probability for
+    one-channel binary outputs, and a ``(mean, variance)`` tuple for regression.
+    ``predict_uncertainty`` adds the epistemic variance, aleatoric term, predictive entropy and
+    mutual information of Kondylatos et al. (2025), or the epistemic and aleatoric variances of
+    the Gaussian mixture.
+  - >
+    Members are trained independently (Algorithm 1): ``ensemble.fit`` trains each with its own
+    optimizer and its own data order, optionally with fast-gradient-sign adversarial examples
+    (``fgsm_example``, step ``input_range_epsilon`` = 1% of each input dimension's range).
+    ``mc_dropout_passes`` keeps the members' dropout active at prediction and pools several
+    passes per member, as in Chakravarty (2025).
+paper:
+  title: "Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles"
+  url: https://arxiv.org/abs/1612.01474
+references:
+  - title: "Uncertainty-Aware Deep Learning for Wildfire Danger Forecasting"
+    url: https://arxiv.org/abs/2509.25017
+    repo_url: https://github.com/Orion-AI-Lab/uncertainty-wildfires
+    note: >
+      Kondylatos, Papadopoulos, Camps-Valls & Papoutsis (arXiv 2509.25017). Next-day danger on
+      Mesogeos (1 km, Mediterranean; train 2006-2019, validation 2020, test 2021-2022; two
+      negatives per ignition): deep ensemble of 10 LSTMs (LayerNorm, LSTM 128, linear 128 and 64
+      with ReLU and dropout 0.5, two outputs) on 45-day windows of 25 features (13 dynamic, 12
+      static), each trained from its own seed (1, 12, 17, 123, 1234, 2222, 12345, 54321, 77777,
+      87877 in the released checkpoints) with Adam (lr 0.004, weight decay 0.0063),
+      StepLR(15, 0.1), 30 epochs, batch 256 and an NLL loss scaled by the log burned area.
+      Table 1: precision 0.794, recall 0.760, F1 0.777, AUPRC 0.852, ECE 0.019 (with the
+      aleatoric head: 0.787, 0.768, 0.777, 0.854, 0.022), against F1 0.762, AUPRC 0.840 and ECE
+      0.031 for one deterministic LSTM. In PyHazards: ``base_model="wildfire_forecasting"``,
+      ``base_kwargs={"hidden_size": 128}``, ``num_members=10``.
+  - title: "Spatial Uncertainty Quantification in Wildfire Forecasting for Climate-Resilient Emergency Planning"
+    url: https://arxiv.org/abs/2510.09666
+    note: >
+      Chakravarty, NeurIPS 2025 workshop Tackling Climate Change with Machine Learning. Deep
+      ensemble of U-TAE models (about 1.1M parameters, dropout 0.1 after the temporal attention)
+      trained with distinct random seeds, each run with MC dropout (20 forward passes) at
+      inference, on WildfireSpreadTS (5-day inputs, vegetation and active-fire features, 128 x 128
+      crops, AdamW lr 0.01 and weight decay 0.01, weighted BCE, 10,000 steps, batch 32, 12-fold
+      cross-validation). The ensemble size is not stated and no code was released. Calibration,
+      12-fold mean (Table 2): ECE 0.512 +- 0.018, Brier score 0.265 +- 0.009, NLL 0.731 +- 0.023
+      (MC dropout 0.536 / 0.294 / 0.805, BNN 0.525 / 0.283 / 0.794). In PyHazards:
+      ``base_model="utae"``, ``task="segmentation"``, ``mc_dropout_passes=20``.
+reproduction:
+  reference_code: https://github.com/Orion-AI-Lab/uncertainty-wildfires
+  reference_commit: fcfbfb894926d173e2f4cafc95b08f02cefe6e00
+  reference_license: MIT
+  reference_config: >
+    The deep ensemble of Kondylatos et al. (2025): ten SimpleLSTM members (models/model.py,
+    output_lstm 128, dropout 0.5, 25 features; configs/config_det.json) seeded as in the released
+    checkpoints trained_models/ensembles/no-noisy/ensembles-<seed>-checkpoint.pth, aggregated by
+    utils/train_functions.py ``uncertainties`` as in test.py (configs_test/config_des.json,
+    num_models 10), also with test-time dropout and several passes per member. PyHazards members
+    are ``wildfire_forecasting`` LSTMs with hidden_size 128 (104,308 parameters each).
+  parameter_count: 1043080
+  checks: [parameter_count, initialization, state_dict, forward, pretrained_weights]
+  oracle_test: tests/oracle/test_deep_ensemble_oracle.py
+  deviations:
+    - >
+      Lakshminarayanan et al. released no code. The mean/variance regression path (softplus
+      variance plus 1e-6, Gaussian NLL, moment-matched mixture) and the FGSM adversarial training
+      are rebuilt from the paper's Section 2 and Algorithm 1 and covered by plain tests only;
+      Kondylatos et al. (2025) use neither.
+    - >
+      ``DeepEnsemble.fit`` is a generic independent-training loop (any loss, an optimizer per
+      member, member-seeded shuffling). It does not reproduce the reference training script
+      (StepLR schedule, burned-area loss scaling, validation monitoring); train the members with
+      that recipe to reproduce the paper.
+    - >
+      The reference members return logits and ``wildfire_forecasting`` returns log-probabilities;
+      the ensemble applies a softmax to either, so the probabilities are the same (checked).
+    - >
+      The epistemic term is computed as a population variance (``var(unbiased=False)``) instead of
+      the reference's ``E[p^2] - E[p]^2``: the same quantity without cancellation error, equal
+      within 1e-6 in the oracle test.
+    - >
+      The aleatoric-noise heads (Collier et al.), Bayes-by-Backprop and MC-dropout-only models of
+      Kondylatos et al. (2025) are not part of this entry.
+tasks:
+  - classification
+  - segmentation
+  - regression
+example: |
+  import torch
+  from pyhazards.models import build_model
+  from pyhazards.models.deep_ensemble import input_range_epsilon
+
+  # Kondylatos et al. (2025): ten next-day danger LSTMs
+  ensemble = build_model(
+      name="deep_ensemble",
+      task="classification",
+      base_model="wildfire_forecasting",
+      base_kwargs={"hidden_size": 128},
+      num_members=10,
+  )
+  x = torch.randn(4, 45, 25)
+  log_probs = ensemble(x)  # log of the mean member probability, (4, 2)
+  terms = ensemble.predict_uncertainty(x)
+  print(terms["probs"].shape, terms["epistemic"].shape, terms["mutual_information"].shape)
+
+  # Algorithm 1: train each member on its own, optionally with FGSM adversarial examples
+  x_train, y_train = torch.randn(64, 45, 25), torch.randint(0, 2, (64,))
+  ensemble.fit(
+      x_train,
+      y_train,
+      loss_fn=torch.nn.NLLLoss(),
+      optimizer_factory=lambda params: torch.optim.Adam(params, lr=1e-3),
+      epochs=1,
+      adversarial_epsilon=input_range_epsilon(x_train),
+  )
+notes:
+  - >
+    Outputs per task: multi-class classification / segmentation give ``log`` of the mixture
+    probability (``exp`` for probabilities; ``nn.NLLLoss`` applies); one-channel binary outputs
+    give the logit of the mixture probability (``sigmoid`` for probabilities); regression gives
+    ``(mean, variance)``. With ``regression_output="gaussian"`` (default, the paper) members must
+    output ``2K`` channels along dim 1, K means then K raw variances; ``regression_output="point"``
+    uses point-prediction members and their spread as the variance.
+  - >
+    ``Trainer.fit`` refuses the ensemble (training the averaged output as one network would not
+    be a deep ensemble). Use ``ensemble.fit`` or train each of ``ensemble.members`` separately;
+    ``Trainer.evaluate`` and ``Trainer.predict`` work on the ensemble.
+  - >
+    The builder restores the global random state after seeding the members, so building an
+    ensemble does not change later random draws. Member ``m`` equals ``build_model(base_model,
+    ...)`` called right after ``torch.manual_seed(seeds[m])``.
+  - >
+    Cost scales with the number of members (and MC-dropout passes): ten 104k-parameter LSTMs for
+    the Kondylatos configuration, about 11M parameters for ten U-TAE members.
+smoke_test:
+  task: classification
+  build_kwargs:
+    base_model: wildfire_forecasting
+    num_members: 2
+  input:
+    kind: tensor
+    tensor:
+      shape: [2, 10, 25]
+  expected_output:
+    kind: tensor
+    shape: [2, 2]

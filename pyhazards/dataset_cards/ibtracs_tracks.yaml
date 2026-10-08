@@ -2,56 +2,94 @@ slug: ibtracs_tracks
 display_name: IBTrACS
 hazard_family: Tropical Cyclone
 source_role: Track Archive
-summary: Synthetic-backed storm-track adapter aligned to the IBTrACS tropical cyclone archive.
-provider: NOAA NCEI International Best Track Archive for Climate Stewardship surfaced through a PyHazards adapter
+summary: NOAA NCEI's International Best Track Archive for Climate Stewardship (v04r01), read from its CSV or netCDF files into best-track forecasting windows.
+provider: NOAA National Centers for Environmental Information (NCEI), merging the WMO Regional Specialized Meteorological Centres and other agencies
 geometry: Storm-track history sequences
-spatial_resolution: Storm-centered best-track sequences
-temporal_resolution: Historical track windows with forecast horizons
-update_cadence: Generated locally for smoke and benchmark-alignment runs
-period_of_record: Synthetic-backed benchmark adapter
-coverage: Benchmark-aligned tropical cyclone track and intensity samples
-formats: PyTorch tensors via the dataset registry
+spatial_resolution: Storm-centre positions (0.1 degree precision)
+temporal_resolution: Three-hourly track points (six-hourly synoptic times are used for samples)
+update_cadence: Updated by NCEI several times a week; PyHazards reads the file the user downloads
+period_of_record: 1842 to present (agency coverage varies by basin and era)
+coverage: All tropical cyclone basins (NA, SA, EP, WP, NI, SI, SP)
+formats: CSV (ibtracs.<subset>.list.v04r01.csv) or netCDF (IBTrACS.<subset>.v04r01.nc)
 overview:
-  - IBTrACS is the public storm-track adapter used by PyHazards for shared tropical cyclone benchmark runs.
-  - The current implementation is synthetic-backed, but it preserves the track-intensity forecasting surface used by the shared tropical cyclone evaluator.
+  - >
+    IBTrACS merges the best tracks of the WMO Regional Specialized Meteorological Centres and other
+    agencies into one archive with a merged position (``LAT`` / ``LON``) and each agency's own positions,
+    maximum sustained winds and central pressures (``USA_WIND``, ``TOKYO_WIND``, ``CMA_PRES``, ...).
+  - >
+    ``ibtracs_tracks`` reads an IBTrACS v04 CSV or netCDF file with PyHazards' own reader
+    (``pyhazards.datasets.tc.read_ibtracs``) and turns each storm into forecasting windows: ``history``
+    six-hourly observations of the chosen variables before a forecast time and the same variables at
+    ``lead_hours`` after it.
 data_characteristics:
-  - Storm-history sequences with future latitude, longitude, and intensity targets.
-  - Registry-backed benchmark adapter rather than a raw IBTrACS archive loader.
-  - Supports both basin-specific hurricane models and broader tropical cyclone adapters.
+  - >
+    Inputs ``(samples, history, V)`` and targets ``(samples, len(lead_hours), V)`` hold the ``variables``
+    in physical units (default latitude, longitude, maximum sustained wind in knots, central pressure in
+    hPa) from one ``agency`` (default ``usa``; ``wmo`` gives the WMO_WIND / WMO_PRES columns of the
+    responsible RSMC). Windows need every value present; spur tracks are skipped unless ``include_spur``.
+  - >
+    Winds are as reported by each agency, which use different averaging periods (1-minute for the US
+    agencies, 2-minute for CMA, 10-minute for most RSMCs); IBTrACS does not convert them.
+  - >
+    The merged ``LON`` stays continuous across the dateline (values above 180 occur); agency longitudes
+    are wrapped to [-180, 180) and are unwrapped inside each window. The track error of the benchmark is a
+    great-circle distance, which does not depend on the convention.
+  - >
+    CSV details handled by the reader: the second line holds units, missing values are a single space,
+    and ``NA`` (North Atlantic) is a basin code, not a missing value. The netCDF file (storm x date_time
+    arrays) gives the same table.
 typical_use_cases:
-  - Hurricast smoke tests.
-  - Shared tropical cyclone benchmark runs for track and intensity prediction.
-  - Benchmark-aligned validation for weather-model storm adapters.
+  - Ground truth for track and intensity forecasts scored by the PyHazards cyclone benchmark.
+  - Training and evaluating best-track (persistence, CLIPER-style or learned) track and intensity models.
 access_links:
-  - label: IBTrACS product page
+  - label: IBTrACS product page (NOAA NCEI)
     url: https://www.ncei.noaa.gov/products/international-best-track-archive
+  - label: v04r01 CSV files
+    url: https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/
+  - label: v04r01 netCDF files
+    url: https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/netcdf/
 inspection: null
 registry:
   name: ibtracs_tracks
   example: |
     from pyhazards.datasets import load_dataset
+    from pyhazards.datasets.tc import download_ibtracs
 
+    path = download_ibtracs("data/ibtracs", subset="NA")  # 58 MB; ALL is 333 MB
     data = load_dataset(
         "ibtracs_tracks",
-        micro=True,
-        history=6,
-        horizon=5,
+        path=str(path),
+        variables=["lat", "lon", "wind", "pres"],
+        history=4,
+        lead_hours=[24, 48, 72],
+        test_seasons=[2023, 2024],
     ).load()
-
-    train = data.get_split("train")
-    print(train.inputs.shape, train.targets.shape)
+    test = data.get_split("test")
+    print(test.inputs.shape, test.targets.shape, data.metadata["units"])
+  notes:
+    - "path= is an IBTrACS v04 CSV or netCDF file; alternatively cache_dir= with download=True fetches ibtracs.<subset>.list.v04r01.csv from NCEI."
+    - "Splits are by season: test_seasons / val_seasons (other seasons train); by default the last season is the test split and the one before validation."
+    - "Split metadata lists each sample's SID, name, basin, season and forecast time (iso_time)."
 primary_references:
-  - citation: IBTrACS
-    url: https://www.ncei.noaa.gov/products/international-best-track-archive
+  - citation: "Knapp, K. R., M. C. Kruk, D. H. Levinson, H. J. Diamond and C. J. Neumann (2010). The International Best Track Archive for Climate Stewardship (IBTrACS): Unifying tropical cyclone best track data. Bulletin of the American Meteorological Society 91, 363-376."
+    url: https://doi.org/10.1175/2009BAMS2755.1
+  - citation: "Gahtan, J., K. R. Knapp, C. J. Schreck, H. J. Diamond, J. P. Kossin and M. C. Kruk (2024). International Best Track Archive for Climate Stewardship (IBTrACS) Project, Version 4r01. NOAA National Centers for Environmental Information."
+    url: https://doi.org/10.25921/82ty-9e16
 pyhazards_usage:
-  - Use this adapter when you want the public IBTrACS-aligned storm-track surface exposed by the tropical cyclone benchmark.
-related_models:
-  - hurricast
-  - graphcast_tc
-  - pangu_tc
-  - fourcastnet_tc
+  - >
+    Score forecasts of any model that returns latitude, longitude and intensity at the dataset's lead times
+    with the ``tc`` benchmark (``tc.track_intensity``): great-circle track error in km and wind / pressure
+    MAE in knots / hPa, per lead time.
+related_models: []
 related_benchmarks:
   - tropical_cyclone_benchmark
   - ibtracs
 notes:
-  - This is a synthetic-backed benchmark adapter rather than a full IBTrACS ingestion pipeline.
+  - >
+    Terms of use (NCEI): IBTrACS follows the World Data Center for Meteorology policy of full and open
+    access, with WMO Resolution 40 as the guide for commercial use; it is not stated to be public domain.
+    PyHazards downloads it from NCEI on request and never redistributes it; tests use a 4-storm cut of the
+    official files (tests/fixtures/ibtracs).
+  - >
+    The files change several times a week, so they cannot be pinned by checksum; the dataset records the
+    sha256 of the file it read (metadata source_sha256).
